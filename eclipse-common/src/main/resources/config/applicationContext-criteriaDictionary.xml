@@ -1,0 +1,194 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans 
+    xmlns="http://www.springframework.org/schema/beans" 
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd">
+
+	<!-- ============================= -->
+	<!-- DICTIONNAIRE                  -->
+	<!-- ============================= -->
+	<bean id="criteriaDictionary"
+		class="fr.pharma.eclipse.dictionary.impl.CriteriaDictionaryImpl">
+		<property name="makers">
+			<map>
+				<entry
+					key="fr.pharma.eclipse.domain.criteria.stockage.PharmacieSearchCriteria"
+					value-ref="pharmacieSearchCriteriaMaker" />
+				<entry
+					key="fr.pharma.eclipse.domain.criteria.stockage.StockageSearchCriteria"
+					value-ref="stockageSearchCriteriaMaker" />
+				<entry
+					key="fr.pharma.eclipse.domain.criteria.acteur.PromoteurSearchCriteria"
+					value-ref="promoteurSearchCriteriaMaker" />
+				<entry key="fr.pharma.eclipse.domain.criteria.essai.EssaiSearchCriteria"
+					value-ref="essaiSearchCriteriaMaker" />
+				<entry
+					key="fr.pharma.eclipse.domain.criteria.acteur.PersonneSearchCriteria"
+					value-ref="personneSearchCriteriaMaker" />
+				<entry
+					key="fr.pharma.eclipse.domain.criteria.acteur.PharmacienSearchCriteria"
+					value-ref="pharmacienSearchCriteriaMaker" />
+				<entry
+					key="fr.pharma.eclipse.domain.criteria.acteur.ContactPromoteurSearchCriteria"
+					value-ref="contactPromoteurSearchCriteriaMaker" />
+				<entry
+					key="fr.pharma.eclipse.domain.criteria.acteur.ArcPromoteurSearchCriteria"
+					value-ref="arcPromoteurSearchCriteriaMaker" />
+				<entry
+					key="fr.pharma.eclipse.domain.criteria.acteur.InvestigateurSearchCriteria"
+					value-ref="investigateurSearchCriteriaMaker" />
+				<entry
+					key="fr.pharma.eclipse.domain.criteria.acteur.ArcInvestigateurSearchCriteria"
+					value-ref="arcInvestigateurSearchCriteriaMaker" />
+				<entry
+				key="fr.pharma.eclipse.domain.criteria.produit.ProduitSearchCriteria"
+				value-ref="produitSearchCriteriaMaker" />
+				<entry
+					key="fr.pharma.eclipse.domain.criteria.localisation.ServiceSearchCriteria"
+					value-ref="serviceSearchCriteriaMaker" />
+				<entry
+					key="fr.pharma.eclipse.domain.criteria.localisation.PoleSearchCriteria"
+					value-ref="poleSearchCriteriaMaker" />
+				<entry
+					key="fr.pharma.eclipse.domain.criteria.localisation.EtablissementSearchCriteria"
+					value-ref="etablissementSearchCriteriaMaker" />
+				<entry
+					key="fr.pharma.eclipse.domain.criteria.localisation.SiteSearchCriteria"
+					value-ref="siteSearchCriteriaMaker" />
+				<entry
+					key="fr.pharma.eclipse.domain.criteria.habilitation.HabilitationSearchCriteria"
+					value-ref="habilitationSearchCriteriaMaker" />
+				<entry
+					key="fr.pharma.eclipse.domain.criteria.sigrec.acteur.PromoteurSigrecSearchCriteria"
+					value-ref="promoteurSigrecSearchCriteriaMaker" />
+				<entry
+					key="fr.pharma.eclipse.domain.criteria.sigrec.essai.EssaiSigrecSearchCriteria"
+					value-ref="essaiSigrecSearchCriteriaMaker" />
+				<entry
+					key="fr.pharma.eclipse.domain.criteria.stock.MvtStockSearchCriteria"
+					value-ref="mouvementStockSearchCriteriaMaker" />
+				<entry
+					key="fr.pharma.eclipse.domain.criteria.patient.PatientSearchCriteria"
+					value-ref="patientSearchCriteriaMaker" />
+				<entry
+					key="fr.pharma.eclipse.domain.criteria.prescription.PrescriptionSearchCriteria"
+					value-ref="prescriptionSearchCriteriaMaker" />
+				<entry
+					key="fr.pharma.eclipse.domain.criteria.dispensation.DispensationSearchCriteria"
+					value-ref="dispensationSearchCriteriaMaker" />
+				<entry
+					key="fr.pharma.eclipse.domain.criteria.stock.StockSearchCriteria"
+					value-ref="stockSearchCriteriaMaker" />
+				<entry
+					key="fr.pharma.eclipse.domain.criteria.stock.ExtensionPeremptionSearchCriteria"
+					value-ref="extensionPeremptionSearchCriteriaMaker" />
+				<entry
+					key="fr.pharma.eclipse.domain.criteria.stock.DispensationProduitSearchCriteria"
+					value-ref="dispensationProduitSearchCriteriaMaker" />
+				<entry
+					key="fr.pharma.eclipse.domain.criteria.stock.PreparationEntreeSearchCriteria"
+					value-ref="preparationEntreeSearchCriteriaMaker" />
+				<entry
+					key="fr.pharma.eclipse.domain.criteria.dotation.DotationSearchCriteria"
+					value-ref="dotationSearchCriteriaMaker" />
+				<entry
+					key="fr.pharma.eclipse.domain.criteria.evenement.EvenementSearchCriteria"
+					value-ref="evenementSearchCriteriaMaker" />
+				<entry
+					key="fr.pharma.eclipse.domain.criteria.patient.InclusionSearchCriteria"
+					value-ref="inclusionSearchCriteriaMaker" />
+				<entry
+					key="fr.pharma.eclipse.domain.criteria.dispensation.ElementToCheckSearchCriteria"
+					value-ref="elementToCheckSearchCriteriaMaker" />
+				<entry
+					key="fr.pharma.eclipse.domain.criteria.surcout.GrilleModeleSearchCriteria"
+					value-ref="grilleModeleSearchCriteriaMaker" />
+				<entry
+					key="fr.pharma.eclipse.domain.criteria.ordonnancier.OrdonnancierSearchCriteria"
+					value-ref="ordonnancierSearchCriteriaMaker" />
+				<entry
+					key="fr.pharma.eclipse.domain.criteria.dispensation.DispensationForOrdoSearchCriteria"
+					value-ref="dispensationForOrdoSearchCriteriaMaker" />
+				<entry
+					key="fr.pharma.eclipse.domain.criteria.dispensation.ElementToCheckForOrdoSearchCriteria"
+					value-ref="elementToCheckForOrdoSearchCriteriaMaker" />
+				<entry
+					key="fr.pharma.eclipse.domain.criteria.incident.IncidentSearchCriteria"
+					value-ref="incidentSearchCriteriaMaker" />
+				<entry
+					key="fr.pharma.eclipse.domain.criteria.stock.RetourPatientSearchCriteria"
+					value-ref="retourPatientSearchCriteriaMaker" />
+				<entry
+					key="fr.pharma.eclipse.domain.criteria.design.PrescriptionTypeSearchCriteria"
+					value-ref="prescriptionTypeSearchCriteriaMaker" />
+				<entry
+					key="fr.pharma.eclipse.domain.criteria.prescription.ProduitPrescritSearchCriteria"
+					value-ref="produitPrescritSearchCriteriaMaker" />
+			</map>
+		</property>
+	</bean>
+
+	<!-- ======================================== -->
+	<!-- CRITERE DE RECHERCHE : ESSAI             -->
+	<!-- ======================================== -->
+	<bean id="essaiCriteria"
+		class="fr.pharma.eclipse.domain.criteria.essai.EssaiSearchCriteria"
+		scope="prototype">
+		<property name="activeOrder" value="numInterne" />
+	</bean>
+
+	<!-- ======================================== -->
+	<!-- CRITERE DE RECHERCHE : PERSONNE          -->
+	<!-- ======================================== -->
+	<bean id="personneCriteria"
+		class="fr.pharma.eclipse.domain.criteria.acteur.PersonneSearchCriteria"
+		scope="prototype">
+		<property name="activeOrder" value="nom" />
+	</bean>
+
+	<!-- ======================================== -->
+	<!-- CRITERE DE RECHERCHE : PHARMACIEN        -->
+	<!-- ======================================== -->
+	<bean id="pharmacienCriteria"
+		class="fr.pharma.eclipse.domain.criteria.acteur.PharmacienSearchCriteria"
+		scope="prototype">
+		<property name="activeOrder" value="nom" />
+	</bean>
+
+	<!-- ======================================== -->
+	<!-- CRITERE DE RECHERCHE : CONTACT PROMOTEUR -->
+	<!-- ======================================== -->
+	<bean id="contactPromoteurCriteria"
+		class="fr.pharma.eclipse.domain.criteria.acteur.ContactPromoteurSearchCriteria"
+		scope="prototype">
+		<property name="activeOrder" value="nom" />
+	</bean>
+
+	<!-- ======================================== -->
+	<!-- CRITERE DE RECHERCHE : ARC PROMOTEUR 	  -->
+	<!-- ======================================== -->
+	<bean id="arcPromoteurCriteria"
+		class="fr.pharma.eclipse.domain.criteria.acteur.ArcPromoteurSearchCriteria"
+		scope="prototype">
+		<property name="activeOrder" value="nom" />
+	</bean>
+
+	<!-- ======================================== -->
+	<!-- CRITERE DE RECHERCHE : INVESTIGATEUR 	  -->
+	<!-- ======================================== -->
+	<bean id="investigateurCriteria"
+		class="fr.pharma.eclipse.domain.criteria.acteur.InvestigateurSearchCriteria"
+		scope="prototype">
+		<property name="activeOrder" value="nom" />
+	</bean>
+
+	<!-- ======================================== -->
+	<!-- CRITERE DE RECHERCHE : ARC INVESTIGATEUR -->
+	<!-- ======================================== -->
+	<bean id="arcInvestigateurCriteria"
+		class="fr.pharma.eclipse.domain.criteria.acteur.ArcInvestigateurSearchCriteria"
+		scope="prototype">
+		<property name="activeOrder" value="nom" />
+	</bean>
+
+</beans>

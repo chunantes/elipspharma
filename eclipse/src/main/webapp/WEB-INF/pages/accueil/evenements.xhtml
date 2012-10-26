@@ -1,0 +1,53 @@
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+     xmlns:ui="http://java.sun.com/jsf/facelets"
+     xmlns:h="http://java.sun.com/jsf/html"
+     xmlns:f="http://java.sun.com/jsf/core"
+     xmlns:p="http://primefaces.prime.com.tr/ui">
+     
+	<div id="evenements" class="accueil" >
+		    	     	
+		<h2><h:outputText value="#{resourceBundle['accueil.evenements']}"/></h2>	
+		 
+			
+	    <p:dataTable id="evenements" value="#{accueilManager.evenements}" var="evenement" emptyMessage="#{resourceBundle['results.none']}"
+		 	selection="#{accueilManager.evenementSelected}" selectionMode="single"  
+			update="evenements"  scrollable="true" styleClass="dataTableScrollable"
+	    	onselectComplete="javascript:document.getElementById('editEssaiFromEvenementButton').click();" >
+			
+				<p:column id="essai" styleClass="panelCol_20">
+	   				<f:facet name="header">
+	   					<h:outputText value="#{resourceBundle['gestionEvenement.essai']}"/>
+	   				</f:facet>
+	   				<h:outputText value="#{evenement.essai.numInterne} #{evenement.essai.nom}"/>
+	   			</p:column>
+	   			
+	   			<p:column id="typeEvenement" styleClass="panelCol_20">
+	   				<f:facet name="header">
+	   					<h:outputText value="#{resourceBundle['gestionEvenement.typeEvenement']}"/>
+	   				</f:facet>
+	   				<h:outputText value="#{evenement.typeEvenement.libelle}"/>
+	   			</p:column>
+	   			
+	   			<p:column id="libelle" styleClass="panelCol_40">
+	   				<f:facet name="header">
+	   					<h:outputText value="#{resourceBundle['gestionEvenement.libelle']}"/>
+	   				</f:facet>
+	   				<h:outputText value="#{evenement.resultatVisite.libelle} - " rendered="#{evenement.typeEvenement eq VISITE and (evenement.resultatVisite ne null)}"/><h:outputText value="#{evenement.libelle}"/>
+	   			</p:column>
+	   			
+	   			<p:column id="date" styleClass="panelCol_20">
+	   				<f:facet name="header">
+	   					<h:outputText value="#{resourceBundle['gestionEvenement.date']}"/>
+	   				</f:facet>
+	   				<div align="center">
+	    				<h:outputText value="#{evenement.dateDebut.time}">
+	    					<f:convertDateTime pattern="#{resourceBundle['date.pattern.withHeures']}" />
+	    				</h:outputText>
+	   				</div>
+	   			</p:column>
+	  			
+		</p:dataTable>	   
+	  </div>
+
+     
+</ui:composition>

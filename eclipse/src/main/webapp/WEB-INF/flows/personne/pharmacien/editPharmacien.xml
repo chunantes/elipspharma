@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<flow xmlns="http://www.springframework.org/schema/webflow"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://www.springframework.org/schema/webflow
+    http://www.springframework.org/schema/webflow/spring-webflow-2.0.xsd" parent="main">
+
+	<!-- Variable d'entrée -->
+	<input name="idPharmacien" />
+	<input name="idPersonneSir" />
+
+	<on-start>
+		<evaluate expression="pharmacieSearchCriteria.clear()"/>
+		<evaluate expression="pharmacieService.getAll(pharmacieSearchCriteria)" result="pharmaciesManager.beans"/>
+	</on-start>
+
+	<decision-state id="createOrEdit">
+		<if test="idPharmacien==null" then="createFromScratchOrFromSir" else="edit"/>
+	</decision-state>
+	
+	<decision-state id="createFromScratchOrFromSir">
+		<if test="idPersonneSir==null" then="createFromScratch" else="createFromSir"/>
+	</decision-state>	
+	
+	<!-- Création From Scratch -->
+	<action-state id="createFromScratch">
+		<evaluate expression="pharmacienManager.setBean(pharmacienFactory.getInitializedObject())"/>
+		<transition to="initPharmacies"/>
+	</action-state>
+	
+	<!-- Création From Sir -->
+	<action-state id="createFromSir">
+		<evaluate expression="pharmacienManager.setBean(pharmacienFactory.getInitializedObject(idPersonneSir))"/>
+		<transition to="initPharmacies"/>
+	</action-state>
+	
+	<!-- Modification -->
+	<action-state id="edit">
+		<evaluate expression="pharmacienManager.setBean(pharmacienService.get(idPharmacien))"/>
+		<transition to="initPharmacies"/>
+	</action-state>
+
+	<!-- Initialisation de la liste des pharmacies -->
+	<action-state id="initPharmacies">
+		<evaluate expression="beanManagerHelper.updateSelectable(pharmacienManager.bean.pharmacies, pharmaciesManager.beans)" />
+		<transition to="editPharmacien"/>
+	</action-state>
+
+	<!-- Page principale -->
+	<view-state id="editPharmacien" view="../../../pages/personne/pharmacien/editPharmacien.xhtml">
+		<transition on="cancel" to="createOrEdit"/>
+		<transition on="save" to="comeback">
+			<evaluate expression="pharmacienService.save(pharmacienManager.bean)"/>
+		</transition>
+		<transition on="comeback" to="comeback"/>
+		<transition on="submit" to="editPharmacien"/>
+		<transition on="error" to="editPharmacien"/>
+	</view-state>
+	
+	<!-- Etat final -->
+	<end-state id="comeback"/>
+	
+</flow>

@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<bindings schemaLocation="sigrec_XML_schemav0.68.xsd" xmlns="http://java.sun.com/xml/ns/jaxb"
+	version="2.1">
+	<schemaBindings>
+		<package name="fr.pharma.eclipse.domain.model.sigrec" />
+	</schemaBindings>
+	<globalBindings>
+		<serializable uid="100" />
+	</globalBindings>
+</bindings>

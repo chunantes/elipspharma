@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-2.5.xsd">
+	
+	<!-- Fichier de configuration de ressources du projet -->
+	<bean id="messageSource"
+		class="org.springframework.context.support.ResourceBundleMessageSource">
+		<property name="basenames">
+			<list>
+				<value>ErrorResources</value>
+				<value>LabelResources</value>
+				<value>ParametrageIHM</value>
+				<value>config/project</value>
+			</list>
+		</property>
+		<property name="alwaysUseMessageFormat" value="true" />
+		<property name="useCodeAsDefaultMessage" value="true"/>
+	</bean>
+</beans>

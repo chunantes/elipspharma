@@ -1,0 +1,39 @@
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+     xmlns:ui="http://java.sun.com/jsf/facelets"
+     xmlns:h="http://java.sun.com/jsf/html"
+     xmlns:f="http://java.sun.com/jsf/core"
+	 xmlns:p="http://primefaces.prime.com.tr/ui"
+	 xmlns:c="http://java.sun.com/jsp/jstl/core">
+
+	<p:dataTable style="width:100%;" id="personnes" styleClass="tabContacts" value="#{pharmacieManager.getList('pharmaciens', false)}" var="personne" emptyMessage="#{resourceBundle['results.none']}" 
+		selection="#{personnesManager.beanSelected}" selectionMode="single" update="personnes"
+		onselectComplete="javascript:document.forms['formPharmacien'].editPharmacien.click();">	   
+       	<p:column id="promo_type" styleClass="panelCol_25">
+			<f:facet name="header">
+				<h:outputText value="#{resourceBundle['gestionPharmacie.personne.type']}"/>
+			</f:facet>
+			<h:outputText value="#{personne.typePharmacien.libelle}"/>
+	   	</p:column>
+	   	<p:column id="promo_nom" styleClass="panelCol_25">
+	   		<f:facet name="header">
+				<h:outputText value="#{resourceBundle['gestionPharmacie.personne.nom']}"/>
+				</f:facet>
+			<h:outputText value="#{personne.nom}"/>
+	   	</p:column>
+		<p:column id="promo_prenom" styleClass="panelCol_25">
+	   		<f:facet name="header">
+				<h:outputText value="#{resourceBundle['gestionPharmacie.personne.prenom']}"/>
+			</f:facet>
+			<h:outputText value="#{personne.prenom}"/>
+	   	</p:column>
+	   	<p:column id="telephone" styleClass="panelCol_25">
+	   		<f:facet name="header">
+				<h:outputText value="#{resourceBundle['gestionPharmacie.personne.telephone']}"/>
+			</f:facet>
+			<h:outputText value="#{personne.telephone}"/>
+	   	</p:column>
+	</p:dataTable>
+	
+
+		
+</ui:composition>

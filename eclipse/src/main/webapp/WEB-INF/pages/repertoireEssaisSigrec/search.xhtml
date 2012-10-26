@@ -1,0 +1,126 @@
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+     xmlns:ui="http://java.sun.com/jsf/facelets"
+     xmlns:h="http://java.sun.com/jsf/html"
+     xmlns:f="http://java.sun.com/jsf/core"
+     xmlns:p="http://primefaces.prime.com.tr/ui"
+     template="/WEB-INF/pages/template/template.xhtml">
+
+     <ui:define name="title">
+		<h:outputFormat value="#{resourceBundle['repertoireEssaisSigrec.title']}"/>
+     </ui:define>
+     
+     <ui:define name="body">
+     
+    	<h:form id="criteriaForm" prependId="false">
+    		<p:outputPanel id="searchCriteriaFragment">
+     			
+     			<div class="rechercheBox"> 
+    				<p:focus />
+	    			<h2 class="titleFloat"><h:outputText value="#{resourceBundle['repertoireEssaisSigrec.recherche']}"/></h2>
+	    			<fieldset>
+			    			    	
+			       	<div class="rechercheInside">
+			       		<div><label>#{resourceBundle['repertoireEssaisSigrec.promoteur']}</label></div>
+			           	<div>
+				           	<p:autoComplete id="promoteur" value="#{essaisSigrecManager.searchCriteria.promoteur}"
+		 									completeMethod="#{autoCompletePromoteurSigrecManager.complete}"
+		 									forceSelection="true"
+		 									var="promoteur"
+		 									itemLabel="#{promoteur.contact.raisonSociale}"
+		 									itemValue="#{promoteur}"
+		 									converter="#{promoteurSigrecConverter}" />
+			           	</div>
+			           
+			           	<div><label>#{resourceBundle['repertoireEssaisSigrec.numSigrec']}</label></div>
+			           	<div><h:inputText id="numSigrec" value="#{essaisSigrecManager.searchCriteria.numSigrec}"/></div>
+			           
+			           	<div><label>#{resourceBundle['repertoireEssaisSigrec.nomUsuel']}</label></div>
+			           	<div><h:inputText id="nomUsuel" value="#{essaisSigrecManager.searchCriteria.nom}"/></div>
+			           
+			           	<br />
+			           	<p:commandButton id="searchButton" action="search" ajax="false"
+			     			value="#{resourceBundle['btn.rechercher']}" title="#{resourceBundle['btn.rechercher']}">
+			     		</p:commandButton>
+			   		</div>
+		    	</fieldset>
+		    </div>
+		</p:outputPanel>
+	</h:form>
+     	
+    <p:outputPanel id="resultsFragment">     	
+		<h:form id="essaisSigrecForm" prependId="false">
+			 <div>
+			 	 <div style="float:left;">
+		    	 	<h2 class="titleFloat"><h:outputText value="#{resourceBundle['repertoireEssaisSigrec.resultats']}"/></h2>
+		    	 </div>
+		    	 <div class="export">
+			         <h:commandLink> 
+			         	<h:graphicImage library="images" name="excel.gif"
+	    					alt="#{resourceBundle['export.excel']}" title="#{resourceBundle['export.excel']}" />
+			             <p:dataExporter type="xls" target="essais" fileName="#{resourceBundle['export.essais.filename']}" encoding="iso-8859-1"/>  
+			         </h:commandLink>  
+			         <h:commandLink>  
+			         	<h:graphicImage library="images" name="pdf.gif" 
+	    					alt="#{resourceBundle['export.pdf']}" title="#{resourceBundle['export.pdf']}" />
+			             <p:dataExporter type="pdf" target="essais" fileName="#{resourceBundle['export.essais.filename']}" encoding="iso-8859-1"/>  
+			         </h:commandLink>  
+			         <h:commandLink>  
+			         	<h:graphicImage library="images" name="csv.gif" 
+	    					alt="#{resourceBundle['export.csv']}" title="#{resourceBundle['export.csv']}" />
+			             <p:dataExporter type="csv" target="essais" fileName="#{resourceBundle['export.essais.filename']}" encoding="iso-8859-1"/>  
+			         </h:commandLink>
+		         </div>
+	         </div>  
+	   		<div class="resultBox" style="width:680px;"> 
+	    		<p:messages/>
+	    			<fieldset>
+						<p:dataTable id="essais" value="#{essaisSigrecManager.beans}" var="essai" emptyMessage="#{resourceBundle['results.none']}" 
+							selection="#{essaisSigrecManager.beanSelected}" selectionMode="single"
+							onRowSelectUpdate="pannel_selectedEssai"
+							onselectComplete="document.getElementById('editButton').click()">
+						
+		    				<p:column id="promoteur" sortBy="#{essai.promoteur.contact.raisonSociale}">
+					    		<f:facet name="header">
+					    			<h:outputText value="#{resourceBundle['repertoireEssaisSigrec.promoteur']}"/>
+					    		</f:facet>
+					    		<h:outputText value="#{essai.promoteur.contact.raisonSociale}"/>
+				    		</p:column>
+				    		
+			    			<p:column id="numSigrec" sortBy="#{essai.detailRecherche.numEnregistrement}">
+			    				<f:facet name="header">
+			    					<h:outputText value="#{resourceBundle['repertoireEssaisSigrec.numSigrec']}"/>
+			    				</f:facet>
+			    				<h:outputText value="#{essai.detailRecherche.numEnregistrement}"/>
+			    			</p:column>
+			    			
+			    			<p:column id="nomUsuel" sortBy="#{essai.nom}">
+			    				<f:facet name="header">
+			    					<h:outputText value="#{resourceBundle['repertoireEssaisSigrec.nomUsuel']}"/>
+			    				</f:facet>
+			    					<h:outputText value="#{essai.nom}"/>
+			    			</p:column>
+			    		</p:dataTable>
+			    		<br />
+			    		<div class="actionButton">
+				    		<p:commandButton id="addButton" action="create" ajax="false"
+				    			value="#{resourceBundle['btn.createSigrec']}" title="#{resourceBundle['btn.createSigrec']}">
+				    		</p:commandButton>
+			    		</div>
+					</fieldset>
+				</div>
+			</h:form>
+		</p:outputPanel>
+		
+		<!-- Formulaire poste pour lancer l'edition d'un bean -->
+		<div style="display: none;">
+			<h:form id="editForm" prependId="false">
+				<p:outputPanel id="pannel_selectedEssai">
+					<h:inputHidden id="idEssaiSigrec" name="idEssaiSigrec" value="#{essaisSigrecManager.beanSelected.id}" />
+				</p:outputPanel>
+					<p:commandButton id="editButton" action="edit" ajax="false" value="edit" />
+			</h:form>
+		</div>
+        
+    </ui:define>
+     
+</ui:composition>

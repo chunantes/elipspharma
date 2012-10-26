@@ -1,0 +1,171 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<sigrec-multi-trials-transfert
+	xmlns="http://sigrec.ClinicalTrialApplication.xsd">
+	<multi-trial>
+		<trial trial-interne-identification="C98851009"
+			trial-sigrec-identification="SIGREC-0021A">
+			<sponsor-information>
+				<sponsor>
+					<ev-sponsor-sender-id>BAYER Santé</ev-sponsor-sender-id>
+					<sponsor-type type-id="1" />
+					<sponsor-contact-details>
+						<organisation>Organisation Bayer</organisation>
+						<address>2 rue de paris</address>
+						<post-code>44300</post-code>
+						<town-city>Nantes</town-city>
+						<telephone>0212457898</telephone>
+						<fax>0212457895</fax>
+						<email>mail@bayer.chunantes.fr</email>
+					</sponsor-contact-details>
+					<sponsor-intervenants>
+						<intervenant intervenant-id="2">
+							<civilite>Mr</civilite>
+							<num-adeli>0123456</num-adeli>
+							<id>0123456</id>
+							<nom>Arc Bayer</nom>
+							<prenom>Jean</prenom>
+							<titre>Arc Promoteur</titre>
+							<service>
+								<id>1</id>
+								<libelle>1</libelle>
+								<date-arrivee>2008-12-12</date-arrivee>
+								<date-depart>2012-12-12</date-depart>
+								<coordonnees>
+									<address>dsd</address>
+									<email>email</email>
+									<family-name>family-name</family-name>
+									<fax>fax</fax>
+									<given-name>given name</given-name>
+									<middle-name>modle name</middle-name>
+									<organisation>organisation</organisation>
+									<post-code>post code</post-code>
+									<telephone>telephone</telephone>
+									<town-city>tow</town-city>
+								</coordonnees>
+							</service>
+							<fonctions>
+								<fonction-id>201</fonction-id>
+								<fonction-libelle>201</fonction-libelle>
+							</fonctions>
+						</intervenant>
+					</sponsor-intervenants>
+				</sponsor>
+			</sponsor-information>
+			<trial-identification>
+				<abbreviated-title-trial na="N">Bayer Paracétamol</abbreviated-title-trial>
+				<eudract-number>EDRACT 11</eudract-number>
+				<full-title-trial>Essai Bayer sur l'impcat du paracétamol dans les mots de tetes</full-title-trial>
+			</trial-identification>
+			<general-information>
+				<planned-end-date>2011-01-01</planned-end-date>
+				<planned-start-date>2009-10-8</planned-start-date>
+				<total-trial-duration-ms-months>18</total-trial-duration-ms-months>
+				<trial-scope>
+					<dépistage>Y</dépistage>
+				</trial-scope>
+				<trial-design>
+					<double-blind>N</double-blind>
+					<single-blind>N</single-blind>
+					<number-of-sites>4</number-of-sites>
+					<number-of-sites-open>1</number-of-sites-open>
+				</trial-design>
+				<trial-type-and-phase>
+					<phase-two-a>Y</phase-two-a>
+					<phase-four>N</phase-four>
+				</trial-type-and-phase>
+				<objet-recherche>
+					<imagerie>N</imagerie>
+					<radiothérapie>Y</radiothérapie>
+				</objet-recherche>
+				<type-recherche>
+					<soins-courants>Y</soins-courants>
+					<observationnelle>N</observationnelle>
+				</type-recherche>
+			</general-information>
+			<regulatory-information>
+				<insurance-information>
+					<insurance>
+						<insurance-policy-number>Assur-1321</insurance-policy-number>
+						<beginning-validity-date>2009-02-02</beginning-validity-date>
+						<end-validity-date>2011-01-02</end-validity-date>
+						<given-name idnat="0">AXA</given-name>
+						<adress>2 rue de Poitiers</adress>
+						<post-code>44100</post-code>
+						<town-city>Nantes</town-city>
+						<country-iso-code>1</country-iso-code>
+						<amendments></amendments>
+					</insurance>
+				</insurance-information>
+				<cro>
+					<organization national-id="4" node-id="4">
+						<adress>54 rue de Besançon</adress>
+						<given-name>QUINTILES</given-name>
+						<post-code>44100</post-code>
+						<town-city>Nantes</town-city>
+					</organization>
+				</cro>
+			</regulatory-information>
+			<proposed-clinical-trial-sites>
+				<investigator>
+					<sponsor-investigator-number>127</sponsor-investigator-number>
+					<type-investigator>1</type-investigator>
+					<institution-finess>fin123</institution-finess>
+					<institution-name>Centre 127</institution-name>
+					<contact-details>
+						<address>3 rue ttt </address>
+						<email>centre1@ggg.cc</email>
+						<family-name>Dupond</family-name>
+						<fax>0245124512</fax>
+						<given-name>Centre 1</given-name>
+						<middle-name>Centre 1</middle-name>
+						<organisation>Centre 1</organisation>
+						<post-code>44000</post-code>
+						<telephone>021542124</telephone>
+						<town-city>Nantes</town-city>
+					</contact-details>
+					<intervenants>
+						<intervenant intervenant-id="212">
+							<civilite>Mlle</civilite>
+							<id>2222</id>
+							<num-adeli>numero adeli investigateur principal</num-adeli>
+							<prenom>Annie</prenom>
+							<nom>David</nom>
+							<titre>Docteur</titre>
+							<fonctions>
+								<fonction-id>101</fonction-id>
+								<fonction-libelle>101</fonction-libelle>
+							</fonctions>
+							<service>
+								<id>1</id>
+								<libelle>1</libelle>
+								<date-arrivee>2008-02-02</date-arrivee>
+								<date-depart>2014-02-02</date-depart>
+								<coordonnees></coordonnees>
+							</service>
+						</intervenant>
+
+						<intervenant intervenant-id="321">
+							<civilite>Mr</civilite>
+							<id>4444</id>
+							<num-adeli>numero adeli ARC Inves</num-adeli>
+							<prenom>Ronald</prenom>
+							<nom>Vincent</nom>
+							<titre>ARC</titre>
+							<fonctions>
+								<fonction-id>104</fonction-id>
+								<fonction-libelle>104</fonction-libelle>
+							</fonctions>
+							<service>
+								<id>5</id>
+								<libelle>5</libelle>
+								<date-arrivee>2006-02-02</date-arrivee>
+								<date-depart>2012-02-02</date-depart>
+								<coordonnees></coordonnees>
+							</service>
+						</intervenant>
+					</intervenants>
+				</investigator>
+			</proposed-clinical-trial-sites>
+		</trial>
+	</multi-trial>
+</sigrec-multi-trials-transfert>

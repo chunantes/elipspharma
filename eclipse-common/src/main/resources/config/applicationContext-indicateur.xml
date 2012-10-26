@@ -1,0 +1,107 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans 
+    xmlns="http://www.springframework.org/schema/beans" 
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd">
+
+	<!-- ============================= -->
+	<!-- Service Indicateur -->
+	<!-- ============================= -->
+	<bean id="indicateurService"
+		class="fr.pharma.eclipse.service.indicateur.impl.IndicateurServiceImpl">
+		<property name="builders">
+			<list>
+				<ref bean="miseEnPlaceBuilder" />
+				<ref bean="monitoringBuilder" />
+				<ref bean="auditInterneBuilder" />
+				<ref bean="auditExterneBuilder" />
+				<ref bean="clotureBuilder" />
+				<ref bean="receptionBuilder" />
+				<ref bean="preparationSterileBuilder" />
+				<ref bean="preparationNonSterileBuilder" />
+				<ref bean="dispensationBuilder"/>
+				<ref bean="nbPatientsBuilder"/>
+				<ref bean="essaiDispensationBuilder"/>
+				<ref bean="dispensationGlobaleBuilder"/>
+				<ref bean="ligneDispensationBuilder"/>
+				<ref bean="nbDotationBuilder"/>
+			</list>
+		</property>
+	</bean>
+
+	<!-- ============================= -->
+	<!-- BUILDERS -->
+	<!-- ============================= -->
+	<bean id="miseEnPlaceBuilder"
+		class="fr.pharma.eclipse.service.indicateur.builder.impl.GenericEvenementBuilder">
+		<property name="typeEvenement" ref="VISITE" />
+		<property name="typeVisite" ref="MISE_EN_PLACE" />
+		<property name="libelle" value="Mises en place" />
+	</bean>
+	<bean id="monitoringBuilder"
+		class="fr.pharma.eclipse.service.indicateur.builder.impl.GenericEvenementBuilder">
+		<property name="typeEvenement" ref="VISITE" />
+		<property name="typeVisite" ref="SUIVI_PHAMACIE" />
+		<property name="libelle" value="Visites de monitoring" />
+	</bean>
+	<bean id="auditInterneBuilder"
+		class="fr.pharma.eclipse.service.indicateur.builder.impl.GenericEvenementBuilder">
+		<property name="typeEvenement" ref="VISITE" />
+		<property name="typeVisite" ref="AUDIT_INTERNE" />
+		<property name="libelle" value="Audits internes" />
+	</bean>
+	<bean id="auditExterneBuilder"
+		class="fr.pharma.eclipse.service.indicateur.builder.impl.GenericEvenementBuilder">
+		<property name="typeEvenement" ref="VISITE" />
+		<property name="typeVisite" ref="AUDIT_EXTERNE" />
+		<property name="libelle" value="Audits externes" />
+	</bean>
+	<bean id="clotureBuilder"
+		class="fr.pharma.eclipse.service.indicateur.builder.impl.GenericEvenementBuilder">
+		<property name="typeEvenement" ref="VISITE" />
+		<property name="typeVisite" ref="CLOTURE" />
+		<property name="libelle" value="Clôtures" />
+	</bean>
+	<bean id="preparationSterileBuilder"
+		class="fr.pharma.eclipse.service.indicateur.builder.impl.PreparationBuilder">
+		<property name="libelle" value="Préparations stériles" />
+		<property name="sterile" value="true" />
+	</bean>
+	<bean id="preparationNonSterileBuilder"
+		class="fr.pharma.eclipse.service.indicateur.builder.impl.PreparationBuilder">
+		<property name="libelle" value="Préparations non stériles" />
+		<property name="sterile" value="false" />
+	</bean>
+	<bean id="dispensationBuilder"
+		class="fr.pharma.eclipse.service.indicateur.builder.impl.DispensationBuilder">
+		<property name="libelle" value="Dispensations nominatives" />
+	</bean>
+	<bean id="nbPatientsBuilder"
+		class="fr.pharma.eclipse.service.indicateur.builder.impl.NbPatientBuilder">
+		<property name="libelle" value="Nombre de patients avec au moins une dispensation" />
+	</bean>
+	<bean id="essaiDispensationBuilder"
+		class="fr.pharma.eclipse.service.indicateur.builder.impl.EssaiDispensationBuilder">
+		<property name="libelle" value="Essais actifs (essais &quot;activés - en cours&quot; avec au moins une dispensation sur la période)" />
+	</bean>
+	<bean id="receptionBuilder"
+		class="fr.pharma.eclipse.service.indicateur.builder.impl.GenericMvtStockBuilder">
+		<property name="libelle" value="Réceptions" />
+		<property name="type" ref="TYPE_MOUVEMENT_APPROVISIONNEMENT" />
+	</bean>
+	<bean id="dispensationGlobaleBuilder"
+		class="fr.pharma.eclipse.service.indicateur.builder.impl.GenericMvtStockBuilder">
+		<property name="libelle" value="Lignes de mise en dotation dans un service" />
+		<property name="type" ref="TYPE_MOUVEMENT_DOTATION" />
+	</bean>
+	<bean id="ligneDispensationBuilder"
+		class="fr.pharma.eclipse.service.indicateur.builder.impl.LigneDispensationBuilder">
+		<property name="libelle" value="Dispensations nominatives : nombre de lignes" />
+	</bean>
+	<bean id="nbDotationBuilder"
+		class="fr.pharma.eclipse.service.indicateur.builder.impl.NbDotationBuilder">
+		<property name="libelle" value="Dotations : nombre de mises en dotation" />
+	</bean>
+	
+
+</beans>

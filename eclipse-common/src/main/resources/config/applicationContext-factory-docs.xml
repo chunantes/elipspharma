@@ -1,0 +1,624 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans 
+    xmlns="http://www.springframework.org/schema/beans" 
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd">
+			
+	<!-- ============================== -->
+	<!-- FACTORY : FICHIER		    	-->
+	<!-- ============================== -->
+	<bean id="fichierFactory" class="fr.pharma.eclipse.factory.common.FichierFactory" />
+		
+
+	<!-- ============================== -->
+	<!-- FACTORY : DOCUMENTS ESSAI    	-->
+	<!-- ============================== -->
+	<bean id="docEclipseFactory" abstract="true"
+		class="fr.pharma.eclipse.factory.document.common.AbstractDocumentEclipseFactory">
+		<property name="fileHelper" ref="fileHelper" />	
+	</bean>
+	
+	<!-- Document AUTORITE_COMPETENTE -->
+	<bean id="DocumentAutoriteCompetente"
+		class="fr.pharma.eclipse.domain.model.essai.detail.administratif.document.DocumentAutoriteCompetente"
+		scope="prototype" />
+	<bean id="docAutoriteCompetenteSimpleFactory" class="fr.pharma.eclipse.factory.suivi.SuiviFactory">
+		<constructor-arg
+			value="fr.pharma.eclipse.domain.model.essai.detail.administratif.document.DocumentAutoriteCompetente" />
+	</bean>
+	<bean id="docAutoriteCompetenteWithParentFactory"
+		class="fr.pharma.eclipse.factory.common.BeanObjectWithParentFactory">
+		<property name="simpleFactory" ref="docAutoriteCompetenteSimpleFactory" />
+		<property name="propertyToStoreParent" value="detailAdministratif" />
+	</bean>
+	<bean id="docAutoriteCompetenteCompleteFactory"
+		parent="docEclipseFactory"
+		class="fr.pharma.eclipse.factory.document.essai.impl.DocumentEssaiFactoryImpl">
+		<property name="factoryWithParent" ref="docAutoriteCompetenteWithParentFactory" />	
+	</bean>
+	
+	<!-- Document COMITE_PROTEC_PERS -->
+	<bean id="DocumentComiteProtectionPers"
+		class="fr.pharma.eclipse.domain.model.essai.detail.administratif.document.DocumentComiteProtectionPers"
+		scope="prototype" />
+	<bean id="docComiteProtectionPersSimpleFactory" class="fr.pharma.eclipse.factory.suivi.SuiviFactory">
+		<constructor-arg
+			value="fr.pharma.eclipse.domain.model.essai.detail.administratif.document.DocumentComiteProtectionPers" />
+	</bean>
+	<bean id="docComiteProtectionPersWithParentFactory"
+		class="fr.pharma.eclipse.factory.common.BeanObjectWithParentFactory">
+		<property name="simpleFactory" ref="docComiteProtectionPersSimpleFactory" />
+		<property name="propertyToStoreParent" value="detailAdministratif" />
+	</bean>
+	<bean id="docComiteProtectionPersCompleteFactory"
+		parent="docEclipseFactory"
+		class="fr.pharma.eclipse.factory.document.essai.impl.DocumentEssaiFactoryImpl">
+		<property name="factoryWithParent" ref="docComiteProtectionPersWithParentFactory" />	
+	</bean>
+	
+	<!-- Document CONVENTION -->
+	<bean id="DocumentConvention"
+		class="fr.pharma.eclipse.domain.model.essai.detail.administratif.document.DocumentConvention"
+		scope="prototype" />
+	<bean id="docConventionSimpleFactory" class="fr.pharma.eclipse.factory.suivi.SuiviFactory">
+		<constructor-arg
+			value="fr.pharma.eclipse.domain.model.essai.detail.administratif.document.DocumentConvention" />
+	</bean>
+	<bean id="docConventionWithParentFactory"
+		class="fr.pharma.eclipse.factory.common.BeanObjectWithParentFactory">
+		<property name="simpleFactory" ref="docConventionSimpleFactory" />
+		<property name="propertyToStoreParent" value="detailAdministratif" />
+	</bean>
+	<bean id="docConventionCompleteFactory"
+		parent="docEclipseFactory"
+		class="fr.pharma.eclipse.factory.document.essai.impl.DocumentEssaiFactoryImpl">
+		<property name="factoryWithParent" ref="docConventionWithParentFactory" />	
+	</bean>
+	
+	<!-- Document ASSURANCE -->
+	<bean id="DocumentAssurance"
+		class="fr.pharma.eclipse.domain.model.essai.detail.administratif.document.DocumentAssurance"
+		scope="prototype" />
+	<bean id="docAssuranceSimpleFactory" class="fr.pharma.eclipse.factory.suivi.SuiviFactory">
+		<constructor-arg
+			value="fr.pharma.eclipse.domain.model.essai.detail.administratif.document.DocumentAssurance" />
+	</bean>
+	<bean id="docAssuranceWithParentFactory"
+		class="fr.pharma.eclipse.factory.common.BeanObjectWithParentFactory">
+		<property name="simpleFactory" ref="docAssuranceSimpleFactory" />
+		<property name="propertyToStoreParent" value="detailAdministratif" />
+	</bean>
+	<bean id="docAssuranceCompleteFactory"
+		parent="docEclipseFactory"
+		class="fr.pharma.eclipse.factory.document.essai.impl.DocumentEssaiFactoryImpl">
+		<property name="factoryWithParent" ref="docAssuranceWithParentFactory" />	
+	</bean>
+	
+	<!-- Document PROTOCOLE -->
+	<bean id="DocumentProtocole"
+		class="fr.pharma.eclipse.domain.model.essai.detail.administratif.document.DocumentProtocole"
+		scope="prototype" />
+	<bean id="docProtocoleSimpleFactory" class="fr.pharma.eclipse.factory.suivi.SuiviFactory">
+		<constructor-arg
+			value="fr.pharma.eclipse.domain.model.essai.detail.administratif.document.DocumentProtocole" />
+	</bean>
+	<bean id="docProtocoleWithParentFactory"
+		class="fr.pharma.eclipse.factory.common.BeanObjectWithParentFactory">
+		<property name="simpleFactory" ref="docProtocoleSimpleFactory" />
+		<property name="propertyToStoreParent" value="detailAdministratif" />
+	</bean>
+	<bean id="docProtocoleCompleteFactory"
+		parent="docEclipseFactory"
+		class="fr.pharma.eclipse.factory.document.essai.impl.DocumentEssaiFactoryImpl">
+		<property name="factoryWithParent" ref="docProtocoleWithParentFactory" />	
+	</bean>
+	
+	<!-- Document AUTRE -->
+	<bean id="DocumentAutre"
+		class="fr.pharma.eclipse.domain.model.essai.detail.autresdocs.document.DocumentAutre"
+		scope="prototype" />
+	<bean id="docAutreSimpleFactory" class="fr.pharma.eclipse.factory.suivi.SuiviFactory">
+		<constructor-arg
+			value="fr.pharma.eclipse.domain.model.essai.detail.autresdocs.document.DocumentAutre" />
+	</bean>
+	<bean id="docAutreWithParentFactory"
+		class="fr.pharma.eclipse.factory.common.BeanObjectWithParentFactory">
+		<property name="simpleFactory" ref="docAutreSimpleFactory" />
+		<property name="propertyToStoreParent" value="detailAutresDocuments" />
+	</bean>
+	<bean id="docAutreCompleteFactory"
+		parent="docEclipseFactory"
+		class="fr.pharma.eclipse.factory.document.essai.impl.DocumentEssaiFactoryImpl">
+		<property name="factoryWithParent" ref="docAutreWithParentFactory" />
+	</bean>	
+	
+	<!-- Document BROCHURE_PDUITS -->
+	<bean id="DocumentBrochureProduits"
+		class="fr.pharma.eclipse.domain.model.essai.detail.administratif.document.DocumentBrochureProduits"
+		scope="prototype" />
+	<bean id="docBrochureProduitsSimpleFactory" class="fr.pharma.eclipse.factory.suivi.SuiviFactory">
+		<constructor-arg
+			value="fr.pharma.eclipse.domain.model.essai.detail.administratif.document.DocumentBrochureProduits" />
+	</bean>
+	<bean id="docBrochureProduitsWithParentFactory"
+		class="fr.pharma.eclipse.factory.common.BeanObjectWithParentFactory">
+		<property name="simpleFactory" ref="docBrochureProduitsSimpleFactory" />
+		<property name="propertyToStoreParent" value="detailAdministratif" />
+	</bean>
+	<bean id="docBrochureProduitsCompleteFactory"
+		parent="docEclipseFactory"
+		class="fr.pharma.eclipse.factory.document.essai.impl.DocumentEssaiFactoryImpl">
+		<property name="factoryWithParent" ref="docBrochureProduitsWithParentFactory" />	
+	</bean>
+	
+	<!-- Document AUTORISATION_IMPORTATION -->
+	<bean id="DocumentAutorisationImportation"
+		class="fr.pharma.eclipse.domain.model.essai.detail.administratif.document.DocumentAutorisationImportation"
+		scope="prototype" />
+	<bean id="docAutorisationImportationSimpleFactory" class="fr.pharma.eclipse.factory.suivi.SuiviFactory">
+		<constructor-arg
+			value="fr.pharma.eclipse.domain.model.essai.detail.administratif.document.DocumentAutorisationImportation" />
+	</bean>
+	<bean id="docAutorisationImportationWithParentFactory"
+		class="fr.pharma.eclipse.factory.common.BeanObjectWithParentFactory">
+		<property name="simpleFactory" ref="docAutorisationImportationSimpleFactory" />
+		<property name="propertyToStoreParent" value="detailAdministratif" />
+	</bean>
+	<bean id="docAutorisationImportationCompleteFactory"
+		parent="docEclipseFactory"
+		class="fr.pharma.eclipse.factory.document.essai.impl.DocumentEssaiFactoryImpl">
+		<property name="factoryWithParent" ref="docAutorisationImportationWithParentFactory" />	
+	</bean>
+	
+	<!-- Document AUTORISATION_DISTRIBUTION -->
+	<bean id="DocumentAutorisationDistribution"
+		class="fr.pharma.eclipse.domain.model.essai.detail.administratif.document.DocumentAutorisationDistribution"
+		scope="prototype" />
+	<bean id="docAutorisationDistributionSimpleFactory" class="fr.pharma.eclipse.factory.suivi.SuiviFactory">
+		<constructor-arg
+			value="fr.pharma.eclipse.domain.model.essai.detail.administratif.document.DocumentAutorisationDistribution" />
+	</bean>
+	<bean id="docAutorisationDistributionWithParentFactory"
+		class="fr.pharma.eclipse.factory.common.BeanObjectWithParentFactory">
+		<property name="simpleFactory" ref="docAutorisationDistributionSimpleFactory" />
+		<property name="propertyToStoreParent" value="detailAdministratif" />
+	</bean>
+	<bean id="docAutorisationDistributionCompleteFactory"
+		parent="docEclipseFactory"
+		class="fr.pharma.eclipse.factory.document.essai.impl.DocumentEssaiFactoryImpl">
+		<property name="factoryWithParent" ref="docAutorisationDistributionWithParentFactory" />	
+	</bean>
+	
+	<!-- Document RESPONSABILITE_RANDOMISATION -->
+	<bean id="DocumentRespRandomisation"
+		class="fr.pharma.eclipse.domain.model.essai.detail.pharma.document.DocumentRespRandomisation"
+		scope="prototype" />
+	<bean id="docRespRandomisationSimpleFactory" class="fr.pharma.eclipse.factory.suivi.SuiviFactory">
+		<constructor-arg
+			value="fr.pharma.eclipse.domain.model.essai.detail.pharma.document.DocumentRespRandomisation" />
+	</bean>
+	<bean id="docRespRandomisationWithParentFactory"
+		class="fr.pharma.eclipse.factory.common.BeanObjectWithParentFactory">
+		<property name="simpleFactory" ref="docRespRandomisationSimpleFactory" />
+		<property name="propertyToStoreParent" value="detailDonneesPharma" />
+	</bean>
+	<bean id="docRespRandomisationCompleteFactory"
+		parent="docEclipseFactory"
+		class="fr.pharma.eclipse.factory.document.essai.impl.DocumentEssaiFactoryImpl">
+		<property name="factoryWithParent" ref="docRespRandomisationWithParentFactory" />	
+	</bean>
+	
+	<!-- Document RESPONSABILITE_COMMANDE -->
+	<bean id="DocumentRespCommande"
+		class="fr.pharma.eclipse.domain.model.essai.detail.pharma.document.DocumentRespCommande"
+		scope="prototype" />
+	<bean id="docRespCommandeSimpleFactory" class="fr.pharma.eclipse.factory.suivi.SuiviFactory">
+		<constructor-arg
+			value="fr.pharma.eclipse.domain.model.essai.detail.pharma.document.DocumentRespCommande" />
+	</bean>
+	<bean id="docRespCommandeWithParentFactory"
+		class="fr.pharma.eclipse.factory.common.BeanObjectWithParentFactory">
+		<property name="simpleFactory" ref="docRespCommandeSimpleFactory" />
+		<property name="propertyToStoreParent" value="detailDonneesPharma" />
+	</bean>
+	<bean id="docRespCommandeCompleteFactory"
+		parent="docEclipseFactory"
+		class="fr.pharma.eclipse.factory.document.essai.impl.DocumentEssaiFactoryImpl">
+		<property name="factoryWithParent" ref="docRespCommandeWithParentFactory" />	
+	</bean>
+	
+	<!-- Document RESPONSABILITE_INSU -->
+	<bean id="DocumentRespInsu"
+		class="fr.pharma.eclipse.domain.model.essai.detail.pharma.document.DocumentRespInsu"
+		scope="prototype" />
+	<bean id="docRespInsuSimpleFactory" class="fr.pharma.eclipse.factory.suivi.SuiviFactory">
+		<constructor-arg
+			value="fr.pharma.eclipse.domain.model.essai.detail.pharma.document.DocumentRespInsu" />
+	</bean>
+	<bean id="docRespInsuWithParentFactory"
+		class="fr.pharma.eclipse.factory.common.BeanObjectWithParentFactory">
+		<property name="simpleFactory" ref="docRespInsuSimpleFactory" />
+		<property name="propertyToStoreParent" value="detailDonneesPharma" />
+	</bean>
+	<bean id="docRespInsuCompleteFactory"
+		parent="docEclipseFactory"
+		class="fr.pharma.eclipse.factory.document.essai.impl.DocumentEssaiFactoryImpl">
+		<property name="factoryWithParent" ref="docRespInsuWithParentFactory" />	
+	</bean>
+	
+	<!-- Document MODALITE_REPCETION -->
+	<bean id="DocumentModaliteReception"
+		class="fr.pharma.eclipse.domain.model.essai.detail.pharma.document.DocumentModaliteReception"
+		scope="prototype" />
+	<bean id="docModaliteReceptionSimpleFactory" class="fr.pharma.eclipse.factory.suivi.SuiviFactory">
+		<constructor-arg
+			value="fr.pharma.eclipse.domain.model.essai.detail.pharma.document.DocumentModaliteReception" />
+	</bean>
+	<bean id="docModaliteReceptionWithParentFactory"
+		class="fr.pharma.eclipse.factory.common.BeanObjectWithParentFactory">
+		<property name="simpleFactory" ref="docModaliteReceptionSimpleFactory" />
+		<property name="propertyToStoreParent" value="detailDonneesPharma" />
+	</bean>
+	<bean id="docModaliteReceptionCompleteFactory"
+		parent="docEclipseFactory"
+		class="fr.pharma.eclipse.factory.document.essai.impl.DocumentEssaiFactoryImpl">
+		<property name="factoryWithParent" ref="docModaliteReceptionWithParentFactory" />	
+	</bean>
+	
+	<!-- Document MODALITE_DESTRUCTION -->
+	<bean id="DocumentModaliteDestruction"
+		class="fr.pharma.eclipse.domain.model.essai.detail.pharma.document.DocumentModaliteDestruction"
+		scope="prototype" />
+	<bean id="docModaliteDestructionSimpleFactory" class="fr.pharma.eclipse.factory.suivi.SuiviFactory">
+		<constructor-arg
+			value="fr.pharma.eclipse.domain.model.essai.detail.pharma.document.DocumentModaliteDestruction" />
+	</bean>
+	<bean id="docModaliteDestructionWithParentFactory"
+		class="fr.pharma.eclipse.factory.common.BeanObjectWithParentFactory">
+		<property name="simpleFactory" ref="docModaliteDestructionSimpleFactory" />
+		<property name="propertyToStoreParent" value="detailDonneesPharma" />
+	</bean>
+	<bean id="docModaliteDestructionCompleteFactory"
+		parent="docEclipseFactory"
+		class="fr.pharma.eclipse.factory.document.essai.impl.DocumentEssaiFactoryImpl">
+		<property name="factoryWithParent" ref="docModaliteDestructionWithParentFactory" />	
+	</bean>
+	
+	<!-- Document NUMEROTATION_CONDITIONNEMENT -->
+	<bean id="DocumentNumerotationConditionnement"
+		class="fr.pharma.eclipse.domain.model.essai.detail.pharma.document.DocumentNumerotationConditionnement"
+		scope="prototype" />
+	<bean id="docNumerotationConditionnementSimpleFactory" class="fr.pharma.eclipse.factory.suivi.SuiviFactory">
+		<constructor-arg
+			value="fr.pharma.eclipse.domain.model.essai.detail.pharma.document.DocumentNumerotationConditionnement" />
+	</bean>
+	<bean id="docNumerotationConditionnementWithParentFactory"
+		class="fr.pharma.eclipse.factory.common.BeanObjectWithParentFactory">
+		<property name="simpleFactory" ref="docNumerotationConditionnementSimpleFactory" />
+		<property name="propertyToStoreParent" value="detailDonneesPharma" />
+	</bean>
+	<bean id="docNumerotationConditionnementCompleteFactory"
+		parent="docEclipseFactory"
+		class="fr.pharma.eclipse.factory.document.essai.impl.DocumentEssaiFactoryImpl">
+		<property name="factoryWithParent" ref="docNumerotationConditionnementWithParentFactory" />	
+	</bean>
+	
+	<!-- Document MODALITE_REPCETION -->
+	<bean id="DocumentInformationConditionnement"
+		class="fr.pharma.eclipse.domain.model.essai.detail.pharma.document.DocumentInformationConditionnement"
+		scope="prototype" />
+	<bean id="docInformationConditionnementSimpleFactory" class="fr.pharma.eclipse.factory.suivi.SuiviFactory">
+		<constructor-arg
+			value="fr.pharma.eclipse.domain.model.essai.detail.pharma.document.DocumentInformationConditionnement" />
+	</bean>
+	<bean id="docInformationConditionnementWithParentFactory"
+		class="fr.pharma.eclipse.factory.common.BeanObjectWithParentFactory">
+		<property name="simpleFactory" ref="docInformationConditionnementSimpleFactory" />
+		<property name="propertyToStoreParent" value="detailDonneesPharma" />
+	</bean>
+	<bean id="docInformationConditionnementCompleteFactory"
+		parent="docEclipseFactory"
+		class="fr.pharma.eclipse.factory.document.essai.impl.DocumentEssaiFactoryImpl">
+		<property name="factoryWithParent" ref="docInformationConditionnementWithParentFactory" />	
+	</bean>
+	
+	<!-- Document CONTRE_ETIQUETTE -->
+	<bean id="DocumentContreEtiquette"
+		class="fr.pharma.eclipse.domain.model.essai.detail.pharma.document.DocumentContreEtiquette"
+		scope="prototype" />
+	<bean id="docContreEtiquetteSimpleFactory" class="fr.pharma.eclipse.factory.suivi.SuiviFactory">
+		<constructor-arg
+			value="fr.pharma.eclipse.domain.model.essai.detail.pharma.document.DocumentContreEtiquette" />
+	</bean>
+	<bean id="docContreEtiquetteWithParentFactory"
+		class="fr.pharma.eclipse.factory.common.BeanObjectWithParentFactory">
+		<property name="simpleFactory" ref="docContreEtiquetteSimpleFactory" />
+		<property name="propertyToStoreParent" value="detailDonneesPharma" />
+	</bean>
+	<bean id="docContreEtiquetteCompleteFactory"
+		parent="docEclipseFactory"
+		class="fr.pharma.eclipse.factory.document.essai.impl.DocumentEssaiFactoryImpl">
+		<property name="factoryWithParent" ref="docContreEtiquetteWithParentFactory" />	
+	</bean>
+	
+	<!-- Document CONSEIL PATIENT -->
+	<bean id="DocumentConseilPatient"
+		class="fr.pharma.eclipse.domain.model.essai.detail.pharma.document.DocumentConseilPatient"
+		scope="prototype" />
+	<bean id="docConseilPatientSimpleFactory" class="fr.pharma.eclipse.factory.suivi.SuiviFactory">
+		<constructor-arg
+			value="fr.pharma.eclipse.domain.model.essai.detail.pharma.document.DocumentConseilPatient" />
+	</bean>
+	<bean id="docConseilPatientWithParentFactory"
+		class="fr.pharma.eclipse.factory.common.BeanObjectWithParentFactory">
+		<property name="simpleFactory" ref="docConseilPatientSimpleFactory" />
+		<property name="propertyToStoreParent" value="detailDonneesPharma" />
+	</bean>
+	<bean id="docConseilPatientCompleteFactory"
+		parent="docEclipseFactory"
+		class="fr.pharma.eclipse.factory.document.essai.impl.DocumentEssaiFactoryImpl">
+		<property name="factoryWithParent" ref="docConseilPatientWithParentFactory" />	
+	</bean>
+	
+	<!-- Document AIDE_DISPENSATION -->
+	<bean id="DocumentAideDispensation"
+		class="fr.pharma.eclipse.domain.model.essai.detail.pharma.document.DocumentAideDispensation"
+		scope="prototype" />
+	<bean id="docAideDispensationSimpleFactory" class="fr.pharma.eclipse.factory.suivi.SuiviFactory">
+		<constructor-arg
+			value="fr.pharma.eclipse.domain.model.essai.detail.pharma.document.DocumentAideDispensation" />
+	</bean>
+	<bean id="docAideDispensationWithParentFactory"
+		class="fr.pharma.eclipse.factory.common.BeanObjectWithParentFactory">
+		<property name="simpleFactory" ref="docAideDispensationSimpleFactory" />
+		<property name="propertyToStoreParent" value="detailDonneesPharma" />
+	</bean>
+	<bean id="docAideDispensationCompleteFactory"
+		parent="docEclipseFactory"
+		class="fr.pharma.eclipse.factory.document.essai.impl.DocumentEssaiFactoryImpl">
+		<property name="factoryWithParent" ref="docAideDispensationWithParentFactory" />	
+	</bean>
+	
+	<!--  SURCOUTS  -->
+	<!-- Document PREVISIONNEL -->
+	<bean id="DocumentPrevisionnel"
+		class="fr.pharma.eclipse.domain.model.essai.detail.surcout.document.DocumentPrevisionnel"
+		scope="prototype" />
+	<bean id="docPrevisionnelSimpleFactory" class="fr.pharma.eclipse.factory.suivi.SuiviFactory">
+		<constructor-arg
+			value="fr.pharma.eclipse.domain.model.essai.detail.surcout.document.DocumentPrevisionnel" />
+	</bean>
+	<bean id="docPrevisionnelWithParentFactory"
+		class="fr.pharma.eclipse.factory.common.BeanObjectWithParentFactory">
+		<property name="simpleFactory" ref="docPrevisionnelSimpleFactory" />
+		<property name="propertyToStoreParent" value="detailSurcout" />
+	</bean>
+	<bean id="docPrevisionnelCompleteFactory"
+		parent="docEclipseFactory"
+		class="fr.pharma.eclipse.factory.document.essai.impl.DocumentEssaiFactoryImpl">
+		<property name="factoryWithParent" ref="docPrevisionnelWithParentFactory" />	
+	</bean>
+	
+	<!-- Document REEL -->
+	<bean id="DocumentReel"
+		class="fr.pharma.eclipse.domain.model.essai.detail.surcout.document.DocumentReel"
+		scope="prototype" />
+	<bean id="docReelSimpleFactory" class="fr.pharma.eclipse.factory.suivi.SuiviFactory">
+		<constructor-arg
+			value="fr.pharma.eclipse.domain.model.essai.detail.surcout.document.DocumentReel" />
+	</bean>
+	<bean id="docReelWithParentFactory"
+		class="fr.pharma.eclipse.factory.common.BeanObjectWithParentFactory">
+		<property name="simpleFactory" ref="docReelSimpleFactory" />
+		<property name="propertyToStoreParent" value="detailSurcout" />
+	</bean>
+	<bean id="docReelCompleteFactory"
+		parent="docEclipseFactory"
+		class="fr.pharma.eclipse.factory.document.essai.impl.DocumentEssaiFactoryImpl">
+		<property name="factoryWithParent" ref="docReelWithParentFactory" />	
+	</bean>
+	
+	<!-- =================== -->
+	<!-- 	PRODUITS		 -->
+	<!-- =================== -->
+	
+	<!-- Document RANDOMISATION -->
+	<bean id="DocumentRandomisation"
+		class="fr.pharma.eclipse.domain.model.produit.document.DocumentRandomisation"
+		scope="prototype" />
+	<bean id="docRandomisationSimpleFactory" class="fr.pharma.eclipse.factory.suivi.SuiviFactory">
+		<constructor-arg
+			value="fr.pharma.eclipse.domain.model.produit.document.DocumentRandomisation" />
+	</bean>
+	<bean id="docRandomisationWithParentFactory"
+		class="fr.pharma.eclipse.factory.common.BeanObjectWithParentFactory">
+		<property name="simpleFactory" ref="docRandomisationSimpleFactory" />
+		<property name="propertyToStoreParent" value="produit" />
+	</bean>
+	<bean id="docRandomisationCompleteFactory"
+		parent="docEclipseFactory"
+		class="fr.pharma.eclipse.factory.document.produit.impl.DocumentProduitFactoryImpl">
+		<property name="factoryWithParent" ref="docRandomisationWithParentFactory" />	
+	</bean>
+	
+	<!-- Document CONDITIONNEMENT -->
+	<bean id="DocumentConditionnement"
+		class="fr.pharma.eclipse.domain.model.produit.document.DocumentConditionnement"
+		scope="prototype" />
+	<bean id="docConditionnementFactory" class="fr.pharma.eclipse.factory.suivi.SuiviFactory">
+		<constructor-arg
+			value="fr.pharma.eclipse.domain.model.produit.document.DocumentConditionnement" />
+	</bean>
+	<bean id="docConditionnementWithParentFactory"
+		class="fr.pharma.eclipse.factory.common.BeanObjectWithParentFactory">
+		<property name="simpleFactory" ref="docConditionnementFactory" />
+		<property name="propertyToStoreParent" value="produit" />
+	</bean>
+	<bean id="docConditionnementCompleteFactory"
+		parent="docEclipseFactory"
+		class="fr.pharma.eclipse.factory.document.produit.impl.DocumentProduitFactoryImpl">
+		<property name="factoryWithParent" ref="docConditionnementWithParentFactory" />	
+	</bean>
+	
+	<!-- Document ETIQUETAGE -->
+	<bean id="DocumentEtiquetage"
+		class="fr.pharma.eclipse.domain.model.produit.document.DocumentEtiquetage"
+		scope="prototype" />
+	<bean id="docEtiquetageSimpleFactory" class="fr.pharma.eclipse.factory.suivi.SuiviFactory">
+		<constructor-arg
+			value="fr.pharma.eclipse.domain.model.produit.document.DocumentEtiquetage" />
+	</bean>
+	<bean id="docEtiquetageWithParentFactory"
+		class="fr.pharma.eclipse.factory.common.BeanObjectWithParentFactory">
+		<property name="simpleFactory" ref="docEtiquetageSimpleFactory" />
+		<property name="propertyToStoreParent" value="produit" />
+	</bean>
+	<bean id="docEtiquetageCompleteFactory"
+		parent="docEclipseFactory"
+		class="fr.pharma.eclipse.factory.document.produit.impl.DocumentProduitFactoryImpl">
+		<property name="factoryWithParent" ref="docEtiquetageWithParentFactory" />	
+	</bean>
+	
+	<!-- Document RECONSTITUTION SIMPLE -->
+	<bean id="DocumentReconstitutionSimple"
+		class="fr.pharma.eclipse.domain.model.produit.document.DocumentReconstitutionSimple"
+		scope="prototype" />
+	<bean id="docReconstitutionSimpleSimpleFactory" class="fr.pharma.eclipse.factory.suivi.SuiviFactory">
+		<constructor-arg
+			value="fr.pharma.eclipse.domain.model.produit.document.DocumentReconstitutionSimple" />
+	</bean>
+	<bean id="docReconstitutionWithParentFactory"
+		class="fr.pharma.eclipse.factory.common.BeanObjectWithParentFactory">
+		<property name="simpleFactory" ref="docReconstitutionSimpleSimpleFactory" />
+		<property name="propertyToStoreParent" value="produit" />
+	</bean>
+	<bean id="docReconstitutionCompleteFactory"
+		parent="docEclipseFactory"
+		class="fr.pharma.eclipse.factory.document.produit.impl.DocumentProduitFactoryImpl">
+		<property name="factoryWithParent" ref="docReconstitutionWithParentFactory" />	
+	</bean>
+	
+	<!-- Document RECONSTITUTION PSM -->
+	<bean id="DocumentReconstitutionPSM"
+		class="fr.pharma.eclipse.domain.model.produit.document.DocumentReconstitutionPSM"
+		scope="prototype" />
+	<bean id="docReconstitutionPSMSimpleFactory" class="fr.pharma.eclipse.factory.suivi.SuiviFactory">
+		<constructor-arg
+			value="fr.pharma.eclipse.domain.model.produit.document.DocumentReconstitutionPSM" />
+	</bean>
+	<bean id="docReconstitutionPSMWithParentFactory"
+		class="fr.pharma.eclipse.factory.common.BeanObjectWithParentFactory">
+		<property name="simpleFactory" ref="docReconstitutionPSMSimpleFactory" />
+		<property name="propertyToStoreParent" value="produit" />
+	</bean>
+	<bean id="docReconstitutionPSMCompleteFactory"
+		parent="docEclipseFactory"
+		class="fr.pharma.eclipse.factory.document.produit.impl.DocumentProduitFactoryImpl">
+		<property name="factoryWithParent" ref="docReconstitutionPSMWithParentFactory" />	
+	</bean>
+	
+	<!-- Document FABRICATION -->
+	<bean id="DocumentFabrication"
+		class="fr.pharma.eclipse.domain.model.produit.document.DocumentFabrication"
+		scope="prototype" />
+	<bean id="docFabricationSimpleFactory" class="fr.pharma.eclipse.factory.suivi.SuiviFactory">
+		<constructor-arg
+			value="fr.pharma.eclipse.domain.model.produit.document.DocumentFabrication" />
+	</bean>
+	<bean id="docFabricationWithParentFactory"
+		class="fr.pharma.eclipse.factory.common.BeanObjectWithParentFactory">
+		<property name="simpleFactory" ref="docFabricationSimpleFactory" />
+		<property name="propertyToStoreParent" value="produit" />
+	</bean>
+	<bean id="docFabricationCompleteFactory"
+		parent="docEclipseFactory"
+		class="fr.pharma.eclipse.factory.document.produit.impl.DocumentProduitFactoryImpl">
+		<property name="factoryWithParent" ref="docFabricationWithParentFactory" />	
+	</bean>
+	
+	<!-- =================== -->
+	<!-- 	STOCKS   		 -->
+	<!-- =================== -->
+	
+	<!-- Document DESTRUCTION -->
+	<bean id="DocumentDestruction" class="fr.pharma.eclipse.domain.model.stock.document.DocumentDestruction" scope="prototype" />
+	<bean id="docDestructionSimpleFactory" class="fr.pharma.eclipse.factory.suivi.SuiviFactory">
+		<constructor-arg value="fr.pharma.eclipse.domain.model.stock.document.DocumentDestruction" />
+	</bean>
+	<bean id="docDestructionWithParentFactory" class="fr.pharma.eclipse.factory.common.BeanObjectWithParentFactory">
+		<property name="simpleFactory" ref="docDestructionSimpleFactory" />
+		<property name="propertyToStoreParent" value="mvtStock" />
+	</bean>
+	<bean id="docDestructionCompleteFactory" parent="docEclipseFactory" class="fr.pharma.eclipse.factory.document.stock.impl.DocumentStockFactoryImpl">
+		<property name="factoryWithParent" ref="docDestructionWithParentFactory" />	
+	</bean>
+		
+	<!-- Document APPRO -->
+	<bean id="DocumentAppro" class="fr.pharma.eclipse.domain.model.stock.document.DocumentAppro" scope="prototype" />
+	<bean id="docApproSimpleFactory" class="fr.pharma.eclipse.factory.suivi.SuiviFactory">
+		<constructor-arg value="fr.pharma.eclipse.domain.model.stock.document.DocumentAppro" />
+	</bean>
+	<bean id="docApproWithParentFactory" class="fr.pharma.eclipse.factory.common.BeanObjectWithParentFactory">
+		<property name="simpleFactory" ref="docApproSimpleFactory" />
+		<property name="propertyToStoreParent" value="mvtStock" />
+	</bean>
+	<bean id="docApproCompleteFactory" parent="docEclipseFactory" class="fr.pharma.eclipse.factory.document.stock.impl.DocumentStockFactoryImpl">
+		<property name="factoryWithParent" ref="docApproWithParentFactory" />	
+	</bean>
+		
+	<!-- Document RETOUR PROMOTEUR -->
+	<bean id="DocumentRetourPromoteur" class="fr.pharma.eclipse.domain.model.stock.document.DocumentRetourPromoteur" scope="prototype" />
+	<bean id="docRetourPromoteurSimpleFactory" class="fr.pharma.eclipse.factory.suivi.SuiviFactory">
+		<constructor-arg value="fr.pharma.eclipse.domain.model.stock.document.DocumentRetourPromoteur" />
+	</bean>
+	<bean id="docRetourPromoteurWithParentFactory" class="fr.pharma.eclipse.factory.common.BeanObjectWithParentFactory">
+		<property name="simpleFactory" ref="docRetourPromoteurSimpleFactory" />
+		<property name="propertyToStoreParent" value="mvtStock" />
+	</bean>
+	<bean id="docRetourPromoteurCompleteFactory" parent="docEclipseFactory" class="fr.pharma.eclipse.factory.document.stock.impl.DocumentStockFactoryImpl">
+		<property name="factoryWithParent" ref="docRetourPromoteurWithParentFactory" />	
+	</bean>	
+	
+	<!-- =================== -->
+	<!-- 	PHARMACIEN		 -->
+	<!-- =================== -->
+	
+	<!-- Document CV -->
+	<bean id="DocumentCV"
+		class="fr.pharma.eclipse.domain.model.acteur.document.DocumentCV"
+		scope="prototype" />
+	<bean id="docCVSimpleFactory" class="fr.pharma.eclipse.factory.suivi.SuiviFactory">
+		<constructor-arg
+			value="fr.pharma.eclipse.domain.model.acteur.document.DocumentCV" />
+	</bean>
+	<bean id="docCVWithParentFactory"
+		class="fr.pharma.eclipse.factory.common.BeanObjectWithParentFactory">
+		<property name="simpleFactory" ref="docCVSimpleFactory" />
+		<property name="propertyToStoreParent" value="pharmacien" />
+	</bean>
+	<bean id="docCVCompleteFactory"
+		parent="docEclipseFactory"
+		class="fr.pharma.eclipse.factory.document.pharmacien.impl.DocumentPharmacienFactoryImpl">
+		<property name="factoryWithParent" ref="docCVWithParentFactory" />	
+	</bean>
+	
+	<!-- Document FORMATION -->
+	<bean id="DocumentValidationFormation"
+		class="fr.pharma.eclipse.domain.model.acteur.document.DocumentValidationFormation"
+		scope="prototype" />
+	<bean id="docValidationFormationSimpleFactory" class="fr.pharma.eclipse.factory.suivi.SuiviFactory">
+		<constructor-arg
+			value="fr.pharma.eclipse.domain.model.acteur.document.DocumentValidationFormation" />
+	</bean>
+	<bean id="docValidationFormationWithParentFactory"
+		class="fr.pharma.eclipse.factory.common.BeanObjectWithParentFactory">
+		<property name="simpleFactory" ref="docValidationFormationSimpleFactory" />
+		<property name="propertyToStoreParent" value="pharmacien" />
+	</bean>
+	<bean id="docValidationFormationCompleteFactory"
+		parent="docEclipseFactory"
+		class="fr.pharma.eclipse.factory.document.pharmacien.impl.DocumentPharmacienFactoryImpl">
+		<property name="factoryWithParent" ref="docValidationFormationWithParentFactory" />	
+	</bean>
+
+</beans>

@@ -1,0 +1,101 @@
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:p="http://primefaces.prime.com.tr/ui"
+	xmlns:c="http://java.sun.com/jsp/jstl/core"
+	template="/WEB-INF/pages/template/template.xhtml">
+
+	<ui:define name="title">
+		<h:outputFormat value="#{resourceBundle['editInclusion.title']}" />
+	</ui:define>
+
+	<ui:define name="body">
+
+		<h:form id="patientFormForInclusion" prependId="false">
+			<p:focus />
+			<fieldset style="width: 960px;"><p:messages id="messages" />
+			</fieldset>
+			<fieldset>
+			<table class="stock large" cellpadding="0" cellspacing="0" border="0"
+				width="100%">
+				<tr>
+					<td><h:panelGrid id="panelReceptionLot" columns="4"
+						columnClasses="panelCol_25,panelCol_25,panelCol_25,panelCol_25"
+						cellpadding="0" cellspacing="0" border="0" width="100%">
+
+						<!-- Selection du patient -->
+						<h:outputLabel id="labelPatient" for="patientAutoCom"
+							styleClass="mandatory"
+							value="#{resourceBundle['editInclusion.patient']}" />
+						<p:autoComplete id="patientAutoCom" var="patient" 
+							value="#{inclusionManager.bean.patient}" 
+							selectListener="#{inclusionManager.handleSelectPatient }"
+							completeMethod="#{autoCompletePatientManager.complete}"
+							forceSelection="false" style="width : 190px;"
+							itemLabel="#{patient.numeroIpp} #{patient.nom} #{patient.prenom}"
+							itemValue="#{patient}" converter="#{patientConverter}"
+							onSelectUpdate="messages,essaiAutoCom,num_inclusion,inclure editPatient" />
+						<!-- ATTENTION : on ne met pas a jour directement le form car sinon les libelles 'mandatory' ne sont pas
+										re-traites en javascript -->
+
+						<p:outputPanel id="editPatient">
+							<p:commandButton type="button" immediate="true"
+								onclick="document.forms['formPatient'].hideEditButton.click();"
+								value="#{resourceBundle['btn.modifierPatient']}"
+								title="#{resourceBundle['btn.modifierPatient']}" rendered="#{inclusionManager.bean.patient != null}" />
+						</p:outputPanel>
+						<h:panelGroup />
+
+						<!-- Selection de l'essai -->
+						<h:outputLabel id="labelEssai" for="essaiAutoCom"
+							styleClass="mandatory"
+							value="#{resourceBundle['editInclusion.essai']}" />
+						<p:autoComplete  
+							disabled="#{not inclusionManager.valid}" id="essaiAutoCom"
+							value="#{inclusionManager.bean.essai}"  style="width : 190px;"
+							completeMethod="#{autoCompleteEssaiManager.complete}"
+							forceSelection="true" var="essai"
+							itemLabel="#{essai.numInterne} #{essai.nom} #{essai.promoteur.raisonSociale}"
+							itemValue="#{essai}" converter="#{essaiConverter}" />
+						<h:panelGroup />
+						<h:panelGroup />
+
+						<!-- Nom protocole -->
+						<h:outputLabel id="labelNumInclusion" for="num_inclusion"
+							styleClass="mandatory"
+							value="#{resourceBundle['editPrescription.numInclusion']}" />
+						<h:inputText id="num_inclusion" 
+							disabled="#{not inclusionManager.valid}" 
+							value="#{inclusionManager.bean.numInclusion}" />
+						<h:panelGroup />
+						<h:panelGroup />
+					</h:panelGrid></td>
+				</tr>
+			</table> 
+
+		
+
+			</fieldset>
+			<div class="actionButton">
+			<p:commandButton oncomplete="document.forms['formPatient'].hideSaveButton.click();"
+				disabled="#{not inclusionManager.valid}" id="inclure"
+				value="#{resourceBundle['btn.inclure']}"
+				title="#{resourceBundle['btn.inclure']}" /></div> 
+				<div class="basicButton">
+				
+				           	<p:commandButton id="ajoutPatient" oncomplete="document.forms['formPatient'].hideAddButton.click();" 
+								value="#{resourceBundle['btn.creerPatient']}"
+								title="#{resourceBundle['btn.creerPatient']}"/>
+			</div>	
+		</h:form>
+		<div style="display: none;">
+		<h:form id="formPatient" prependId="false">
+			<p:commandButton id="hideEditButton" action="editPatient" ajax="false"/>
+			<p:commandButton id="hideAddButton" action="ajouterPatient" ajax="false"/>
+			<p:commandButton id="hideSaveButton" action="save" ajax="false"/>
+		</h:form>
+		</div>
+
+	</ui:define>
+</ui:composition>

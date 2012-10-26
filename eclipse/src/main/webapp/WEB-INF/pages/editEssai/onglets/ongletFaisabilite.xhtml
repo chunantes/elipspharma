@@ -1,0 +1,299 @@
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+     xmlns:ui="http://java.sun.com/jsf/facelets"
+     xmlns:h="http://java.sun.com/jsf/html"
+     xmlns:f="http://java.sun.com/jsf/core"
+     xmlns:p="http://primefaces.prime.com.tr/ui"
+     xmlns:sf="http://www.springframework.org/tags/faces"
+     xmlns:c="http://java.sun.com/jsp/jstl/core">
+    
+    <c:set var="idOnglet_faisabilite">ONG_FAISABILITE</c:set>
+    <c:set var="detailFaisabilite" value="#{essaiManager.bean.detailFaisabilite}" />
+    <input type="hidden" id="currentView" name="currentView" value="#{idOnglet_faisabilite}" />
+    
+	<p:focus context="def_panel_conclusion" />
+    
+	<!-- Conclusion -->
+   	<p:panel id="def_panel_conclusion" header="#{resourceBundle['editEssai.onglet.faisab.conclusion.title']}"
+	      collapsed="false" closable="false">
+    	<h:panelGrid id="def_panel_prev" columns="2" columnClasses="panelCol_50, panelCol_50">
+    		<h:panelGrid id="def_panel_prev_gauche" columns="2" columnClasses="panelCol_50, panelCol_50">
+	    		<h:outputLabel id="labelDefConclFavo" for="def_concl_favo" value="#{resourceBundle['editEssai.onglet.faisab.conclusion.favo']}" />
+	    		<h:selectOneRadio id="def_concl_favo" value="#{detailFaisabilite.infosConclusion.favorable}" styleClass="selectRadio">
+	    			<f:selectItem itemLabel="#{resourceBundle['boolean.oui']}" itemValue="true" itemDescription="#{resourceBundle['boolean.oui']}"/>
+	    			<f:selectItem itemLabel="#{resourceBundle['boolean.non']}" itemValue="false" itemDescription="#{resourceBundle['boolean.non']}"/>
+	    		</h:selectOneRadio>
+	    		
+	    		<h:outputLabel id="labelDefConclDateDelib" for="def_concl_dateDelib" value="#{resourceBundle['editEssai.onglet.faisab.conclusion.dateDelib']}" />
+	    		<p:calendar id="def_concl_dateDelib" value="#{detailFaisabilite.infosConclusion.dateDeliberation}" 
+	    			effect="#{resourceBundle['effect.calendar']}" locale="#{resourceBundle['date.locale']}" showButtonPanel="true" navigator="true" 
+	    			converter="#{calendarConverter}" />
+	    			
+	    		<h:outputLabel id="labelDefConclConvSignee" for="def_concl_convSignee" value="#{resourceBundle['editEssai.onglet.faisab.conclusion.convSignee']}" />
+	    		<h:selectOneRadio id="def_concl_convSignee" value="#{detailFaisabilite.infosConclusion.convSignee}" styleClass="selectRadio">
+	    			<f:selectItem itemLabel="#{resourceBundle['boolean.oui']}" itemValue="true" itemDescription="#{resourceBundle['boolean.oui']}"/>
+	    			<f:selectItem itemLabel="#{resourceBundle['boolean.non']}" itemValue="false" itemDescription="#{resourceBundle['boolean.non']}"/>
+	    		</h:selectOneRadio>
+    		
+	    		<h:outputLabel id="labelDefConclDateAccord" for="def_concl_dateAccord" value="#{resourceBundle['editEssai.onglet.faisab.conclusion.dateAccord']}" />
+	    	<p:calendar id="def_concl_dateAccord" value="#{essaiManager.bean.dateSignature}" immediate="true" onSelectUpdate="dar_conv_date @this" 
+	    			effect="#{resourceBundle['effect.calendar']}" locale="#{resourceBundle['date.locale']}" selectListener="#{essaiManager.getBean()}" showButtonPanel="true" navigator="true" 
+	    			converter="#{calendarConverter}"  />
+    		</h:panelGrid>
+    		<h:panelGrid id="def_panel_prev_droit" columns="2" columnClasses="panelCol_25, panelCol_75">
+	    		<c:set var="lastCommentaireConcl" value="#{essaiManager.getLastCommentaire(enumManager.getEnumValue('TypeCommentaireEssai','FAISABILITE_CONCL'))}" />
+		    	<h:outputLink id="labelDefConclComm" for="def_concl_comm" value="javascript:void(0)" onclick="popupCommentairesFaisabConcl.show()" 
+		    		styleClass="clickable" title="#{resourceBundle['commentaire.popupLink.title']}">#{resourceBundle['editEssai.onglet.faisab.conclusion.commentaires']}</h:outputLink>
+   				<p:outputPanel id="def_concl_pannelCommentaires" style="display:block;margin-top:10px;">		
+			    	<c:choose>
+			    		<c:when test="${lastCommentaireConcl != null}">
+						    <h:inputTextarea id="def_concl_comm" value="#{lastCommentaireConcl.libelle}" disabled="true" 
+						    	rows="#{resourceBundle['textarea.rows.default']}" />
+			    		</c:when>
+			    		<c:otherwise>
+						    <h:inputTextarea id="def_concl_comm" value="" disabled="true" 
+						    	rows="#{resourceBundle['textarea.rows.default']}" />
+						</c:otherwise>
+			    	</c:choose>
+			    </p:outputPanel>
+    		</h:panelGrid>
+    	</h:panelGrid>
+   	</p:panel>
+    
+    <!-- Detail -->
+    <p:panel id="def_panel_detail" header="#{resourceBundle['editEssai.onglet.faisab.etude.title']}"
+   		  collapsed="false" closable="false"><!-- styleClass="toggablePanel" -->
+
+    	<h:panelGrid id="def_panelGrid_detail_blocA" columns="2" columnClasses="def_panelGrid_detail_col1,def_panelGrid_detail_col2">
+    		<h:outputLabel id="labelDefDetPresta" for="def_det_presta" value="#{resourceBundle['editEssai.onglet.faisab.etude.prestaPharma']}" />
+	    	<p:outputPanel id="def_panel_detail_blocD">
+	    		<h:selectOneRadio id="def_det_presta" value="#{detailFaisabilite.infosEtude.prestaParticulieresPharmacie}" styleClass="selectRadio">
+	    			<f:selectItem itemLabel="#{resourceBundle['boolean.oui']}" itemValue="true" itemDescription="#{resourceBundle['boolean.oui']}" />
+	    			<f:selectItem itemLabel="#{resourceBundle['boolean.non']}" itemValue="false" itemDescription="#{resourceBundle['boolean.non']}"/>
+	    			<f:ajax render="def_refreshOutPanBy_def_det_presta" />
+	    		</h:selectOneRadio>
+    		</p:outputPanel>
+    	</h:panelGrid>
+    	
+    	<p:outputPanel id="def_refreshOutPanBy_def_det_presta">
+	   		<p:outputPanel id="def_panel_detail_blocB" rendered="#{detailFaisabilite.infosEtude.prestaParticulieresPharmacie == true}">
+		    	<h:panelGrid id="def_panelGrid_detail_bloc1" columns="2" columnClasses="def_panelGrid_detail_col1,def_panelGrid_detail_col2">
+		    		<h:outputLabel id="labelDefDetAchatPduit" for="def_det_achatPduits" value="#{resourceBundle['editEssai.onglet.faisab.etude.achatsPUI']}" />
+		    		<h:selectOneRadio id="def_det_achatPduits" value="#{detailFaisabilite.infosEtude.achatsProduitsPUI}" styleClass="selectRadio">
+		    			<f:selectItem itemLabel="#{resourceBundle['boolean.oui']}" itemValue="true" itemDescription="#{resourceBundle['boolean.oui']}"/>
+		    			<f:selectItem itemLabel="#{resourceBundle['boolean.non']}" itemValue="false" itemDescription="#{resourceBundle['boolean.non']}"/>
+		    			<f:ajax render="def_refreshOutPanBy_def_det_achatPduits" />
+		    		</h:selectOneRadio>
+		    	</h:panelGrid>
+	
+		    	<!-- Bloc achats de produits -->
+		    	<p:outputPanel id="def_refreshOutPanBy_def_det_achatPduits">
+			   		<p:panel id="def_panel_detail_bloc2" rendered="#{detailFaisabilite.infosEtude.achatsProduitsPUI == true}">
+				    	<h:panelGrid id="def_panel_detail_bloc2_pg1" columns="2" columnClasses="def_panelGrid_detail_col1,def_panelGrid_detail_col2">
+				    		<h:outputLabel id="labelDefDetRefPduits" for="def_det_refPduits" value="#{resourceBundle['editEssai.onglet.faisab.etude.referencement']}" />
+				    		<h:selectOneRadio id="def_det_refPduits" value="#{detailFaisabilite.infosEtude.refProduitsCHU}" styleClass="selectRadio">
+				    			<f:selectItem itemLabel="#{resourceBundle['boolean.oui']}" itemValue="true" itemDescription="#{resourceBundle['boolean.oui']}"/>
+				    			<f:selectItem itemLabel="#{resourceBundle['boolean.non']}" itemValue="false" itemDescription="#{resourceBundle['boolean.non']}"/>
+				    		</h:selectOneRadio>
+				    		
+				    		<h:outputLabel id="labelDefDetAccord" for="def_det_accord" value="#{resourceBundle['editEssai.onglet.faisab.etude.accordPharmaCentrale']}" />
+				    		<h:selectOneRadio id="def_det_accord" value="#{detailFaisabilite.infosEtude.accordPharmaCentrale}" styleClass="selectRadio">
+				    			<f:selectItem itemLabel="#{resourceBundle['boolean.oui']}" itemValue="true" itemDescription="#{resourceBundle['boolean.oui']}"/>
+				    			<f:selectItem itemLabel="#{resourceBundle['boolean.non']}" itemValue="false" itemDescription="#{resourceBundle['boolean.non']}"/>
+				    		</h:selectOneRadio>
+				    		
+				    		<h:outputLabel id="labelDefService" for="def_det_service" value="#{resourceBundle['editEssai.onglet.faisab.etude.services']}" />
+							<p:outputPanel id="def_det_resultsServices" style="display:block;margin-top:10px;"> 
+								<p:dataTable id="def_det_service" value="#{essaiManager.getList('detailFaisabilite.infosEtude.servicesImputation', false)}" var="service" emptyMessage="#{resourceBundle['results.none']}" >
+									<p:column id="nom">
+										<f:facet name="header">
+											<h:outputLink value="javascript:void(0)" onclick="popupDefService.show()">#{resourceBundle['editEssai.common.selectionServices']}</h:outputLink>
+										</f:facet>
+										<h:outputText value="#{service.nom}" />
+									</p:column>
+								</p:dataTable>
+							</p:outputPanel>
+				    		
+				    		<c:set var="lastCommentaireAchatPduits" value="#{essaiManager.getLastCommentaire(enumManager.getEnumValue('TypeCommentaireEssai','FAISABILITE_ACHAT_PROD'))}" />
+					    	<h:outputLink id="labelDefAchatPduits" for="def_panel_detail_bloc2_comm" value="javascript:void(0)" onclick="popupCommentairesFaisabAchatsPduits.show()" 
+					    		styleClass="clickable" title="#{resourceBundle['commentaire.popupLink.title']}">#{resourceBundle['editEssai.onglet.faisab.etude.commentairesAchatsPUI']}</h:outputLink>
+			   				<p:outputPanel id="def_panel_detail_bloc2_pannelCommentaires" style="display:block;margin-top:10px;">		
+						    	<c:choose>
+						    		<c:when test="${lastCommentaireAchatPduits != null}">
+									    <h:inputTextarea id="def_panel_detail_bloc2_comm" value="#{lastCommentaireAchatPduits.libelle}" disabled="true" 
+									    	rows="#{resourceBundle['textarea.rows.default']}" cols="10" />
+						    		</c:when>
+						    		<c:otherwise>
+									    <h:inputTextarea id="def_panel_detail_bloc2_comm" value="" disabled="true"
+									    	rows="#{resourceBundle['textarea.rows.default']}" cols="10" />
+									</c:otherwise>
+						    	</c:choose>
+						    </p:outputPanel>
+				    	</h:panelGrid>
+			   		</p:panel>
+		    	</p:outputPanel>
+		
+		    	<h:panelGrid id="def_panelGrid_detail_bloc3" columns="2" columnClasses="def_panelGrid_detail_col1,def_panelGrid_detail_col2">
+		    		<h:outputLabel id="labelDefDetDmdImport" for="def_det_dmdImport" value="#{resourceBundle['editEssai.onglet.faisab.etude.dmdImportation']}" />
+		    		<h:selectOneRadio id="def_det_dmdImport" value="#{detailFaisabilite.infosEtude.demandeImportation}" styleClass="selectRadio">
+		    			<f:selectItem itemLabel="#{resourceBundle['boolean.oui']}" itemValue="true" itemDescription="#{resourceBundle['boolean.oui']}"/>
+		    			<f:selectItem itemLabel="#{resourceBundle['boolean.non']}" itemValue="false" itemDescription="#{resourceBundle['boolean.non']}"/>
+		    		</h:selectOneRadio>
+		    		
+		    		<h:outputLabel id="labelDefDetRandom" for="def_det_random" value="#{resourceBundle['editEssai.onglet.faisab.etude.randomPharma']}" />
+		    		<h:selectOneRadio id="def_det_random" value="#{detailFaisabilite.infosEtude.randomisationParPharma}" styleClass="selectRadio">
+		    			<f:selectItem itemLabel="#{resourceBundle['boolean.oui']}" itemValue="true" itemDescription="#{resourceBundle['boolean.oui']}"/>
+		    			<f:selectItem itemLabel="#{resourceBundle['boolean.non']}" itemValue="false" itemDescription="#{resourceBundle['boolean.non']}"/>
+		    			<f:ajax render="def_refreshOutPanBy_def_det_random" />
+		    		</h:selectOneRadio>
+		    		
+		    	</h:panelGrid>
+		
+		    	<!-- Bloc randomisation -->
+		    	<p:outputPanel id="def_refreshOutPanBy_def_det_random">
+			   		<p:panel id="def_panel_detail_bloc4" rendered="#{detailFaisabilite.infosEtude.randomisationParPharma == true}">
+			   			<h:panelGrid id="def_panel_detail_bloc4_pg1" columns="2" columnClasses="def_panelGrid_detail_col1,def_panelGrid_detail_col2">
+				    		<h:outputLabel id="labelDefDetRandomGarde" for="def_det_randomGarde" value="#{resourceBundle['editEssai.onglet.faisab.etude.randomEnGarde']}" />
+				    		<h:selectOneRadio id="def_det_randomGarde" value="#{detailFaisabilite.infosEtude.randomisationPossEnGarde}" styleClass="selectRadio">
+				    			<f:selectItem itemLabel="#{resourceBundle['boolean.oui']}" itemValue="true" itemDescription="#{resourceBundle['boolean.oui']}"/>
+				    			<f:selectItem itemLabel="#{resourceBundle['boolean.non']}" itemValue="false" itemDescription="#{resourceBundle['boolean.non']}"/>
+				    		</h:selectOneRadio>
+			   			</h:panelGrid>
+			   		</p:panel>
+		    	</p:outputPanel>
+		
+		    	<h:panelGrid id="def_panelGrid_detail_bloc5" columns="2" columnClasses="def_panelGrid_detail_col1,def_panelGrid_detail_col2">
+		    		<h:outputLabel id="labelDefDetGestAveugle" for="def_det_gestAveugle" value="#{resourceBundle['editEssai.onglet.faisab.etude.gestionAveugle']}" />
+		    		<h:selectOneRadio id="def_det_gestAveugle" value="#{detailFaisabilite.infosEtude.gestionAveugle}" styleClass="selectRadio">
+		    			<f:selectItem itemLabel="#{resourceBundle['boolean.oui']}" itemValue="true" itemDescription="#{resourceBundle['boolean.oui']}"/>
+		    			<f:selectItem itemLabel="#{resourceBundle['boolean.non']}" itemValue="false" itemDescription="#{resourceBundle['boolean.non']}"/>
+		    		</h:selectOneRadio>
+		    		
+		    		<h:outputLabel id="labelDefDetDispPossGarde" for="def_det_dispPossGarde" value="#{resourceBundle['editEssai.onglet.faisab.etude.dispPossible']}" />
+		    		<h:selectOneRadio id="def_det_dispPossGarde" value="#{detailFaisabilite.infosEtude.dispensationPossEnGarde}" styleClass="selectRadio">
+		    			<f:selectItem itemLabel="#{resourceBundle['boolean.oui']}" itemValue="true" itemDescription="#{resourceBundle['boolean.oui']}"/>
+		    			<f:selectItem itemLabel="#{resourceBundle['boolean.non']}" itemValue="false" itemDescription="#{resourceBundle['boolean.non']}"/>
+		    		</h:selectOneRadio>
+		    		
+		    		<h:outputLabel id="labelDefDetDispPossPharma" for="def_det_dispPossPharma" value="#{resourceBundle['editEssai.onglet.faisab.etude.distribAutresPharmas']}" />
+		    		<h:selectOneRadio id="def_det_dispPossPharma" value="#{detailFaisabilite.infosEtude.distribAutresPharmaPossible}" styleClass="selectRadio">
+		    			<f:selectItem itemLabel="#{resourceBundle['boolean.oui']}" itemValue="true" itemDescription="#{resourceBundle['boolean.oui']}"/>
+		    			<f:selectItem itemLabel="#{resourceBundle['boolean.non']}" itemValue="false" itemDescription="#{resourceBundle['boolean.non']}"/>
+		    			<f:ajax render="def_refreshOutPanBy_def_det_dispPossPharma" />
+		    		</h:selectOneRadio>
+		    	</h:panelGrid>
+		
+		    	<!-- Bloc distribution -->
+		    	<p:outputPanel id="def_refreshOutPanBy_def_det_dispPossPharma">
+			   		<p:panel id="def_panel_detail_bloc6" rendered="#{detailFaisabilite.infosEtude.distribAutresPharmaPossible == true}">
+			   			<h:panelGrid id="def_panel_detail_bloc6_pg1" columns="2" columnClasses="def_panelGrid_detail_col1,def_panelGrid_detail_col2">
+				    		<h:outputLabel id="labelDefDetCircuit" for="def_det_circuit" value="#{resourceBundle['editEssai.onglet.faisab.etude.circuitDef']}" />
+				    		<h:selectOneRadio id="def_det_circuit" value="#{detailFaisabilite.infosEtude.circuitDistribDefini}" styleClass="selectRadio">
+				    			<f:selectItem itemLabel="#{resourceBundle['boolean.oui']}" itemValue="true" itemDescription="#{resourceBundle['boolean.oui']}"/>
+				    			<f:selectItem itemLabel="#{resourceBundle['boolean.non']}" itemValue="false" itemDescription="#{resourceBundle['boolean.non']}"/>
+				    		</h:selectOneRadio>
+				    		
+				    		<h:outputLabel id="labelDefDetSocTransp" for="def_det_socTransp" value="#{resourceBundle['editEssai.onglet.faisab.etude.socTranspDef']}" />
+				    		<h:selectOneRadio id="def_det_socTransp" value="#{detailFaisabilite.infosEtude.socTransportDefinie}" styleClass="selectRadio">
+				    			<f:selectItem itemLabel="#{resourceBundle['boolean.oui']}" itemValue="true" itemDescription="#{resourceBundle['boolean.oui']}"/>
+				    			<f:selectItem itemLabel="#{resourceBundle['boolean.non']}" itemValue="false" itemDescription="#{resourceBundle['boolean.non']}"/>
+				    		</h:selectOneRadio>
+				    		
+				    		<h:outputLabel id="labelDefDetSuiviTemp" for="def_det_suiviTemp" value="#{resourceBundle['editEssai.onglet.faisab.etude.suiviTemp']}" />
+				    		<h:selectOneRadio id="def_det_suiviTemp" value="#{detailFaisabilite.infosEtude.suiviTempNecessairePdtTransp}" styleClass="selectRadio">
+				    			<f:selectItem itemLabel="#{resourceBundle['boolean.oui']}" itemValue="true" itemDescription="#{resourceBundle['boolean.oui']}"/>
+				    			<f:selectItem itemLabel="#{resourceBundle['boolean.non']}" itemValue="false" itemDescription="#{resourceBundle['boolean.non']}"/>
+				    		</h:selectOneRadio>
+				    		
+				    		<h:outputLabel id="labelDefDetSuiviStocks" for="def_det_suiviStocks" value="#{resourceBundle['editEssai.onglet.faisab.etude.suiviStocks']}" />
+				    		<h:selectOneRadio id="def_det_suiviStocks" value="#{detailFaisabilite.infosEtude.suiviStocksParPharmacie}" styleClass="selectRadio">
+				    			<f:selectItem itemLabel="#{resourceBundle['boolean.oui']}" itemValue="true" itemDescription="#{resourceBundle['boolean.oui']}"/>
+				    			<f:selectItem itemLabel="#{resourceBundle['boolean.non']}" itemValue="false" itemDescription="#{resourceBundle['boolean.non']}"/>
+				    		</h:selectOneRadio>
+				    		
+				    		<c:set var="lastCommentaireDistrib" value="#{essaiManager.getLastCommentaire(enumManager.getEnumValue('TypeCommentaireEssai','FAISABILITE_DISTRIB_PHARMA'))}" />
+					    	<h:outputLink id="labelDefCommDistrib" for="def_panel_detail_bloc6_comm" value="javascript:void(0)" onclick="popupCommentairesFaisabDistrib.show()" 
+					    		styleClass="clickable" title="#{resourceBundle['commentaire.popupLink.title']}">#{resourceBundle['editEssai.onglet.faisab.etude.commentairesDistrib']}</h:outputLink>
+			  				<p:outputPanel id="def_panel_detail_bloc6_pannelCommentaires" style="display:block;margin-top:10px;">		
+						    	<c:choose>
+						    		<c:when test="${lastCommentaireDistrib != null}">
+									    <h:inputTextarea id="def_panel_detail_bloc6_comm" value="#{lastCommentaireDistrib.libelle}" disabled="true" 
+									    	rows="#{resourceBundle['textarea.rows.default']}" cols="10" />
+						    		</c:when>
+						    		<c:otherwise>
+									    <h:inputTextarea id="def_panel_detail_bloc6_comm" value="" disabled="true" 
+									    	rows="#{resourceBundle['textarea.rows.default']}" cols="10" />
+									</c:otherwise>
+						    	</c:choose>
+						    </p:outputPanel>
+			   			</h:panelGrid>
+			   		</p:panel>
+		    	</p:outputPanel>
+		
+		    	<h:panelGrid id="def_panelGrid_detail_bloc7" columns="2" columnClasses="def_panelGrid_detail_col1,def_panelGrid_detail_col2">
+		    		<h:outputLabel id="labelDefDetReconst" for="def_det_suiviReconst" value="#{resourceBundle['editEssai.onglet.faisab.etude.reconstitutions']}" />
+		    		<h:selectOneRadio id="def_det_suiviReconst" value="#{detailFaisabilite.infosEtude.reconstitutions}" styleClass="selectRadio">
+		    			<f:selectItem itemLabel="#{resourceBundle['boolean.oui']}" itemValue="true" itemDescription="#{resourceBundle['boolean.oui']}"/>
+		    			<f:selectItem itemLabel="#{resourceBundle['boolean.non']}" itemValue="false" itemDescription="#{resourceBundle['boolean.non']}"/>
+		    		</h:selectOneRadio>
+		    		
+		    		<h:outputLabel id="labelDefDetPrepa" for="def_det_prepa" value="#{resourceBundle['editEssai.onglet.faisab.etude.preparations']}" />
+		    		<h:selectOneRadio id="def_det_prepa" value="#{detailFaisabilite.infosEtude.preparations}" styleClass="selectRadio">
+		    			<f:selectItem itemLabel="#{resourceBundle['boolean.oui']}" itemValue="true" itemDescription="#{resourceBundle['boolean.oui']}"/>
+		    			<f:selectItem itemLabel="#{resourceBundle['boolean.non']}" itemValue="false" itemDescription="#{resourceBundle['boolean.non']}"/>
+		    		</h:selectOneRadio>
+		    		
+		    		<h:outputLabel id="labelDefDetEtiquet" for="def_det_etiquet" value="#{resourceBundle['editEssai.onglet.faisab.etude.etiquetages']}" />
+		    		<h:selectOneRadio id="def_det_etiquet" value="#{detailFaisabilite.infosEtude.etiquetagesPduits}" styleClass="selectRadio">
+		    			<f:selectItem itemLabel="#{resourceBundle['boolean.oui']}" itemValue="true" itemDescription="#{resourceBundle['boolean.oui']}"/>
+		    			<f:selectItem itemLabel="#{resourceBundle['boolean.non']}" itemValue="false" itemDescription="#{resourceBundle['boolean.non']}"/>
+		    		</h:selectOneRadio>
+		    		
+		    		<h:outputLabel id="labelDefDetConditiont" for="def_det_conditiont" value="#{resourceBundle['editEssai.onglet.faisab.etude.conditionnement']}" />
+		    		<h:selectOneRadio id="def_det_conditiont" value="#{detailFaisabilite.infosEtude.conditionnementPduits}" styleClass="selectRadio">
+		    			<f:selectItem itemLabel="#{resourceBundle['boolean.oui']}" itemValue="true" itemDescription="#{resourceBundle['boolean.oui']}"/>
+		    			<f:selectItem itemLabel="#{resourceBundle['boolean.non']}" itemValue="false" itemDescription="#{resourceBundle['boolean.non']}"/>
+		    		</h:selectOneRadio>
+		    		
+		    		<h:outputLabel id="labelDefDetStab" for="def_det_stab" value="#{resourceBundle['editEssai.onglet.faisab.etude.donneesStabilite']}" />
+		    		<h:selectOneRadio id="def_det_stab" value="#{detailFaisabilite.infosEtude.donneesStabilite}" styleClass="selectRadio">
+		    			<f:selectItem itemLabel="#{resourceBundle['boolean.oui']}" itemValue="true" itemDescription="#{resourceBundle['boolean.oui']}"/>
+		    			<f:selectItem itemLabel="#{resourceBundle['boolean.non']}" itemValue="false" itemDescription="#{resourceBundle['boolean.non']}"/>
+		    		</h:selectOneRadio>
+		    		
+		    		<c:set var="lastCommentaireGlobal" value="#{essaiManager.getLastCommentaire(enumManager.getEnumValue('TypeCommentaireEssai','FAISABILITE_ETUDE'))}" />
+			    	<h:outputLink id="labelDefCommGlob" for="def_panel_detail_bloc7_comm" value="javascript:void(0)" onclick="popupCommentairesFaisabGlobal.show()" 
+			    		styleClass="clickable" title="#{resourceBundle['commentaire.popupLink.title']}">#{resourceBundle['editEssai.onglet.faisab.etude.commentaires']}</h:outputLink>
+					<p:outputPanel id="def_panel_detail_bloc7_pannelCommentaires" style="display:block;margin-top:10px;">		
+				    	<c:choose>
+				    		<c:when test="${lastCommentaireGlobal != null}">
+							    <h:inputTextarea id="def_panel_detail_bloc7_comm" value="#{lastCommentaireGlobal.libelle}" disabled="true" 
+							    	rows="#{resourceBundle['textarea.rows.default']}" cols="10" />
+				    		</c:when>
+				    		<c:otherwise>
+							    <h:inputTextarea id="def_panel_detail_bloc7_comm" value="" disabled="true" 
+							    	rows="#{resourceBundle['textarea.rows.default']}" cols="10" />
+							</c:otherwise>
+				    	</c:choose>
+				    </p:outputPanel>
+		    	</h:panelGrid>
+			</p:outputPanel>
+    	</p:outputPanel>
+	</p:panel>
+
+    
+    <!-- Suivi des modifications -->
+    <p:panel id="panel_pharma_suivi" styleClass="panelSuivi" rendered="#{essaiManager.hasLastModif(idOnglet_faisabilite)}"> 
+		<c:set var="lastModifOngFaisab" value="#{essaiManager.getLastModif(idOnglet_faisabilite)}" />
+		<h:outputText value="#{resourceBundle['suivi.part1']} " />
+		<h:outputText value="#{lastModifOngFaisab.dateMaj.time}">
+			<f:convertDateTime pattern="#{resourceBundle['date.pattern.withHeures']}"/>
+		</h:outputText>
+		<h:outputText value="#{resourceBundle['suivi.part2']} " />
+		<h:outputText value="#{lastModifOngFaisab.majPar}" />
+		<h:outputText value="#{resourceBundle['ponctuation.bracket.open']} " />
+		<h:outputLink id="labelPharmaModifs" value="javascript:void(0)" styleClass="clickable"
+			onclick="popupHistoOngFaisab.show()" title="#{resourceBundle['suivi.popupLink.title']}">#{resourceBundle['suivi.historique']}
+		</h:outputLink>
+		<h:outputText value="#{resourceBundle['ponctuation.bracket.close']} " />
+	</p:panel>
+</ui:composition>

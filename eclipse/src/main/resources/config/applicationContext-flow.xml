@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans 
+    xmlns="http://www.springframework.org/schema/beans" 
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd">
+
+
+	<!-- =============================== -->
+	<!-- COMMON		                     -->
+	<!-- =============================== -->
+	<bean id="flowExceptionHandler" class="fr.pharma.eclipse.flow.handler.FlowExceptionHandler">
+		<property name="handlers">
+			<map>
+				<entry key="ValidationException" value-ref="validationExceptionHandler"/>
+				<entry key="ConstraintViolationException" value-ref="constraintViolationExceptionHandler"/>
+				<entry key="ConcurrenceException" value-ref="concurrenceExceptionHandler"/>
+			</map>
+		</property>
+	</bean>
+
+	<bean id="validationExceptionHandler" class="fr.pharma.eclipse.flow.handler.ValidationExceptionHandler"/>
+	<bean id="constraintViolationExceptionHandler" class="fr.pharma.eclipse.flow.handler.ConstraintViolationExceptionHandler"/>
+	<bean id="concurrenceExceptionHandler" class="fr.pharma.eclipse.flow.handler.ConcurrenceExceptionHandler"/>
+
+</beans>

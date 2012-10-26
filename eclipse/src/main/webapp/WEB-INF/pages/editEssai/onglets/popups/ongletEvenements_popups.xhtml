@@ -1,0 +1,43 @@
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+     xmlns:ui="http://java.sun.com/jsf/facelets"
+     xmlns:h="http://java.sun.com/jsf/html"
+     xmlns:f="http://java.sun.com/jsf/core"
+     xmlns:p="http://primefaces.prime.com.tr/ui"
+     xmlns:sf="http://www.springframework.org/tags/faces">
+    
+	
+	<!-- Popup d'historique de l'onglet recherche -->
+	<p:dialog header="#{resourceBundle['incident.liste']}" widgetVar="popupListeIncident" styleClass="essaiTabPopup" resizable="true" modal="true" width="500">  
+	   <h:form id="dr_popupIncident_form">  
+		   <fieldset>
+		       <h:panelGrid columns="2" style="margin-bottom:10px" width="100%">  
+		  		<p:dataTable id="suivis" value="#{incidentManager.findIncidentsForEssai(essaiManager.bean)}" var="incident" emptyMessage="#{resourceBundle['results.none']}"
+		  			paginator="true" rows="#{resourceBundle['pagination.rowsPerPage']}"
+		  			paginatorTemplate="#{paginatorTemplate}">
+		  			<p:column id="date">
+		  				<f:facet name="header"><h:outputText value="#{resourceBundle['incident.date']}" /></f:facet>
+		  				<h:outputText value="#{incident.date.time}">
+							<f:convertDateTime pattern="#{resourceBundle['date.pattern.withHeures']}"/>
+						</h:outputText>
+		  			</p:column>
+		  			<p:column id="libelle">
+		  				<f:facet name="header">
+		  				<h:outputText value="#{resourceBundle['incident.libelle']}" />
+		  				</f:facet>
+		  				<h:outputText value="#{incident.libelle}" />
+		  			</p:column>
+		  			<p:column id="commentaire">
+		  				<f:facet name="header">
+		  				<h:outputText value="#{resourceBundle['incident.commentaire']}" />
+		  				</f:facet>
+		  				<h:outputText value="#{incident.commentaire}" />
+		  			</p:column>
+		  		</p:dataTable>		            
+		       </h:panelGrid>
+	       </fieldset>
+	       <div class="popupButton">
+	       	<p:commandButton value="#{resourceBundle['btn.fermer']}" oncomplete="popupListeIncident.hide();"/>
+	       </div>  
+	    </h:form>  
+	</p:dialog>
+</ui:composition>

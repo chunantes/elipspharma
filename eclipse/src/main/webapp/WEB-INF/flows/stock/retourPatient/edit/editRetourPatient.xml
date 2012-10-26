@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<flow xmlns="http://www.springframework.org/schema/webflow"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://www.springframework.org/schema/webflow
+    http://www.springframework.org/schema/webflow/spring-webflow-2.0.xsd"
+	parent="main">
+
+	<input name="idRetourPatient"/>
+
+	<!-- Démarrage -->
+	<on-start>
+		<evaluate expression="essaiSearchCriteria.clear()" />
+		<!-- Initialisation complétion automatique des essais -->
+		<evaluate expression="'numInterne'"
+			result="autoCompleteEssaiManager.searchCriteria.activeOrder" />
+		<evaluate expression="'numInterneOrNomOrPromoteur'"
+			result="autoCompleteEssaiManager.searchCriteriaProperty" />
+		<evaluate expression="retourPatientManager.init()" />
+	</on-start>
+	
+	<decision-state id="editOrCreate">
+		<if test="idRetourPatient == null" then="initEssai" else="edit"/>
+	</decision-state>
+	
+	<action-state id="initRecap">
+		<evaluate expression="retourPatientService.get(idRetourPatient)" result="retourPatientManager.result"/>
+		<transition to="recapRetourPatient"/>
+	</action-state>
+	
+	<action-state id="edit">
+		<evaluate expression="retourPatientService.get(idRetourPatient)" result="retourPatientManager.bean"/>
+		<transition to="editRetourPatient">
+			<evaluate expression="retourPatientManager.initDispensations()"/>
+		</transition>
+	</action-state>
+
+	<action-state id="initEssai">
+		<evaluate expression="retourPatientFactory.getInitializedObject()"
+			result="retourPatientManager.bean" />
+		<transition to="editRetourPatient" />
+	</action-state>
+
+	<!-- Page principale -->
+	<view-state id="editRetourPatient"
+		view="../../../../pages/stock/retourPatient/edit/editRetourPatient.xhtml">
+		<transition on="cancel" to="cancel" />
+		<transition on="save" to="recapRetourPatient">
+			<evaluate expression="retourPatientService.save(retourPatientManager.bean)" result="retourPatientManager.result"/>
+		</transition>
+		<transition on="error" to="editRetourPatient" />
+		
+	</view-state>
+
+	<!-- Page récapitulative de réception de stock -->
+	<view-state id="recapRetourPatient"
+		view="../../../../pages/stock/retourPatient/edit/recapRetourPatient.xhtml">
+		<transition on="cancel" to="cancel"/>
+	</view-state>
+	
+	<end-state id="cancel"/>
+
+</flow>

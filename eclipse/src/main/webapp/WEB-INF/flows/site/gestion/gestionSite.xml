@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<flow xmlns="http://www.springframework.org/schema/webflow"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://www.springframework.org/schema/webflow
+    http://www.springframework.org/schema/webflow/spring-webflow-2.0.xsd" parent="main">
+
+	<!-- Démarrage -->
+	<on-start>
+		<evaluate expression="siteSearchCriteria.clear()"/>
+		<evaluate expression="etablissementSearchCriteria.clear()"/>
+		<evaluate expression="siteService.getAll(siteSearchCriteria)" result="sitesManager.beans"/>
+		<evaluate expression="etablissementService.getAll(etablissementSearchCriteria)" result="etablissementsManager.beans"/>
+	</on-start>
+
+	<!-- Page principale -->
+	<view-state id="gestionSite" view="../../../pages/site/gestion/gestionSite.xhtml">
+		<transition on="search" to="search"/>
+		<transition on="delete" to="delete"/>
+		<transition on="edit" to="edit">
+			<set name="flashScope.idSite" value="sitesManager.beanSelected.id" type="java.lang.Long" />
+			<evaluate expression="null" result="sitesManager.beanSelected"/>
+		</transition>
+		<transition on="add" to="edit"/>
+		<transition on="error" to="gestionSite"/>
+	</view-state>
+	
+	<!-- Recherche -->
+	<action-state id="search">
+		<evaluate expression="siteService.getAll(siteSearchCriteria)" result="sitesManager.beans"/>
+		<transition to="gestionSite"/>
+	</action-state>
+	
+	<!-- Suppression -->
+	<action-state id="delete">
+		<evaluate expression="siteService.remove(sitesManager.beansSelected)"/>
+		<transition on="error" to="search"/>
+		<transition to="search"/>
+	</action-state>
+	
+	<!-- Edition -->
+	<subflow-state id="edit" subflow="site/edit">
+		<input name="idSite" value="flashScope.idSite"/>
+		<transition to="search"/>
+	</subflow-state>
+	
+</flow>

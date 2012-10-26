@@ -1,0 +1,61 @@
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+     xmlns:ui="http://java.sun.com/jsf/facelets"
+     xmlns:h="http://java.sun.com/jsf/html"
+     xmlns:f="http://java.sun.com/jsf/core"
+     xmlns:p="http://primefaces.prime.com.tr/ui"
+     xmlns:c="http://java.sun.com/jsp/jstl/core">
+	     
+	<!-- Produit -->
+   	<p:column>
+   		<f:facet name="header">
+			<h:outputLabel value="#{resourceBundle['stockSortie.produit']}"/>
+		</f:facet>
+		<h:outputText value="#{sortie.mvtSortie.produit.denomination}"/>
+	</p:column>
+	
+	<!-- Conditionnement -->
+	<p:column>
+		<f:facet name="header">
+			<h:outputLabel value="#{resourceBundle['stockSortie.conditionnement']}"/>
+		</f:facet>
+		<h:outputText value="#{sortie.mvtSortie.conditionnement.libelle}" />
+	</p:column>
+	
+	
+	<!-- Numero Lot Num traitement Quantite -->
+	<p:column>
+		<f:facet name="header">
+			<h:outputLabel value="#{resourceBundle['stockSortie.qteASortir']}"/>
+			<br />
+			<h:outputLabel value="[#{resourceBundle['stockSortie.numLot']} - #{resourceBundle['stockSortie.numeroTraitement']}]" />			
+		</f:facet>
+		
+		<div align="center">
+			<h:outputText value="#{sortie.qteCumulSortie}" />
+			<ui:repeat var="ligneStock" value="#{sortie.lignesStockCompletees}">
+				<br />				
+				<h:outputText value="#{ligneStock.qteASortir} x "/>
+				<h:outputText value="["/>
+				<h:outputText value="#{ligneStock.numLot} - " rendered="#{not empty ligneStock.numLot}" />
+				<h:outputText value="#{ligneStock.numTraitement}" rendered="#{not empty ligneStock.numTraitement}" />
+				<h:outputText value="]"/>
+			</ui:repeat>
+		</div>
+				
+	</p:column>
+	
+	<p:column>
+		<div align="center">
+			<p:commandLink ajax="false" action="modifySortie" style="margin-right:3px;">  
+				<h:graphicImage library="images" name="modify.gif" title="#{resourceBundle['stockSortie.modifySortie']}"/>
+				<f:setPropertyActionListener target="#{sortieManager.sortieCurrent}" value="#{sortie}"/>
+	        </p:commandLink>        
+
+			<p:commandLink ajax="false" action="delSortie">  
+				<h:graphicImage library="images" name="del.gif" title="#{resourceBundle['stockSortie.delSortie']}"/>
+				<f:setPropertyActionListener target="#{sortieManager.sortieToDelete}" value="#{sortie}"/>
+	        </p:commandLink>
+		</div>		
+	</p:column>
+    
+</ui:composition>

@@ -1,0 +1,73 @@
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+     xmlns:ui="http://java.sun.com/jsf/facelets"
+     xmlns:h="http://java.sun.com/jsf/html"
+     xmlns:f="http://java.sun.com/jsf/core"
+     xmlns:p="http://primefaces.prime.com.tr/ui"
+     xmlns:c="http://java.sun.com/jsp/jstl/core">
+	     
+	<!-- Produit -->
+   	<p:column sortBy="#{receptionLot.appro.produit.denomination}">
+   		<f:facet name="header">
+			<h:outputLabel value="#{resourceBundle['stockReception.produit']}"/>
+		</f:facet>
+		<h:outputText value="#{receptionLot.appro.produit.denomination}"/>
+	</p:column>
+	
+	<!-- Conditionnement -->
+	<p:column sortBy="#{receptionLot.appro.conditionnement.libelle}">
+		<f:facet name="header">
+			<h:outputLabel value="#{resourceBundle['stockReception.conditionnement']}"/>
+		</f:facet>
+		<h:outputText value="#{receptionLot.appro.conditionnement.libelle}" />
+	</p:column>
+	
+	<!-- Numero de lot -->
+	<p:column sortBy="#{receptionLot.appro.numLot}">
+		<f:facet name="header">
+			<h:outputLabel value="#{resourceBundle['stockReception.numLot']}"/>
+		</f:facet>
+		<h:outputText value="#{receptionLot.appro.numLot}" />
+	</p:column>
+	
+	<!-- Quantite -->
+	<p:column>
+	
+		<f:facet name="header">
+			<h:outputLabel value="#{resourceBundle['stockReception.quantite']}"/>
+		</f:facet>
+		
+		<div align="center">
+			<h:outputText value="#{receptionLot.appro.quantite}" 
+				rendered="#{receptionLot.appro.conditionnement != null and receptionLot.appro.conditionnement.modePrescription != 'NUM_TRAITEMENT'}"/>
+			
+			<h:outputText value="#{receptionLot.qteCumulNumsTraitements}" 
+				rendered="#{receptionLot.appro.conditionnement != null and receptionLot.appro.conditionnement.modePrescription == 'NUM_TRAITEMENT'}"/>
+		</div>
+
+	</p:column>
+	
+	<!-- Date de peremption -->
+	<p:column sortBy="#{receptionLot.appro.datePeremption}">
+		<f:facet name="header">
+			<h:outputLabel value="#{resourceBundle['stockReception.datePeremption']}"/>
+		</f:facet>
+		<div align="center">
+			<h:outputText value="#{receptionLot.appro.datePeremption}" converter="#{calendarConverter}"/>
+		</div>
+	</p:column>	
+	
+	<p:column>
+		<div align="center">
+			<p:commandLink ajax="false" action="modifyReceptionLot" style="margin-right:3px;">  
+				<h:graphicImage library="images" name="modify.gif" title="#{resourceBundle['stockReception.modifyReceptionLot']}"/>
+				<f:setPropertyActionListener target="#{approvisionnementManager.receptionCurrent}" value="#{receptionLot}"/>
+	        </p:commandLink>        
+
+			<p:commandLink ajax="false" action="delReceptionLot">  
+				<h:graphicImage library="images" name="del.gif" title="#{resourceBundle['stockReception.delReceptionLot']}"/>
+				<f:setPropertyActionListener target="#{approvisionnementManager.receptionToDelete}" value="#{receptionLot}"/>
+	        </p:commandLink>
+		</div>		
+	</p:column>
+    
+</ui:composition>

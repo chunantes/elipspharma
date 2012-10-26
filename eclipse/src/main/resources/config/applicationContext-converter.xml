@@ -1,0 +1,144 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<beans 
+    xmlns="http://www.springframework.org/schema/beans" 
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd">
+
+	<!-- =================== -->
+	<!-- CALENDAR CONVERTER  -->
+	<!-- =================== -->
+	<bean id="calendarConverter" class="fr.pharma.eclipse.converter.CalendarConverter" />
+	
+	<!-- ======================== -->
+	<!-- CALENDAR MOIS CONVERTER  -->
+	<!-- ======================== -->
+	<bean id="calendarMoisConverter" class="fr.pharma.eclipse.converter.CalendarMoisConverter" />
+
+	<!-- =============== -->
+	<!-- POLE CONVERTER  -->
+	<!-- =============== -->
+	<bean id="poleConverter" class="fr.pharma.eclipse.converter.GenericConverter">
+		<constructor-arg index="0" ref="poleService" />
+	</bean>
+
+	<!-- ======================== -->
+	<!-- ETABLISSEMENT CONVERTER  -->
+	<!-- ======================== -->
+	<bean id="etablissementConverter" class="fr.pharma.eclipse.converter.GenericConverter">
+		<constructor-arg index="0" ref="etablissementService" />
+	</bean>
+
+	<!-- ======================== -->
+	<!-- PHARMACIE CONVERTER      -->
+	<!-- ======================== -->
+	<bean id="pharmacieConverter" class="fr.pharma.eclipse.converter.GenericConverter">
+		<constructor-arg index="0" ref="pharmacieService" />
+	</bean>
+
+	<!-- ======================== -->
+	<!-- SITE CONVERTER           -->
+	<!-- ======================== -->
+	<bean id="siteConverter" class="fr.pharma.eclipse.converter.GenericConverter">
+		<constructor-arg index="0" ref="siteService" />
+	</bean>
+
+	<!-- ======================== -->
+	<!-- PROMOTEUR CONVERTER      -->
+	<!-- ======================== -->
+	<bean id="promoteurConverter" class="fr.pharma.eclipse.converter.GenericConverter">
+		<constructor-arg index="0" ref="promoteurService" />
+	</bean>
+
+	<!-- ========================== -->
+	<!-- PROMOTEUR SIGREC CONVERTER	-->
+	<!-- ========================== -->
+	<bean id="promoteurSigrecConverter" class="fr.pharma.eclipse.converter.GenericConverter">
+		<constructor-arg index="0" ref="promoteurSigrecService" />
+	</bean>
+
+	<!-- ======================== -->
+	<!-- SERVICE CONVERTER        -->
+	<!-- ======================== -->
+	<bean id="serviceConverter" class="fr.pharma.eclipse.converter.GenericConverter">
+		<constructor-arg index="0" ref="serviceService" />
+	</bean>
+
+	<!-- ======================== -->
+	<!-- INVESTIGATEUR CONVERTER  -->
+	<!-- ======================== -->
+	<bean id="investigateurConverter" class="fr.pharma.eclipse.converter.GenericConverter">
+		<constructor-arg index="0" ref="investigateurService" />
+	</bean>
+	
+	<!-- ======================== -->
+	<!-- ESSAI CONVERTER          -->
+	<!-- ======================== -->
+	<bean id="essaiConverter" class="fr.pharma.eclipse.converter.GenericConverter">
+		<constructor-arg index="0" ref="essaiService" />
+	</bean>
+	
+	<!-- ======================== -->
+	<!-- PATIENT CONVERTER        -->
+	<!-- ======================== -->
+	<bean id="patientConverter" class="fr.pharma.eclipse.converter.GenericConverter">
+		<constructor-arg index="0" ref="patientService" />
+	</bean>
+	
+	<!-- ======================== -->
+	<!-- PRODUIT CONVERTER        -->
+	<!-- ======================== -->
+	<bean id="produitConverter" class="fr.pharma.eclipse.converter.GenericConverter">
+		<constructor-arg index="0" ref="produitService" />
+	</bean>
+	
+	<!-- ========================= -->
+	<!-- CONDITIONNEMENT CONVERTER -->
+	<!-- ========================= -->
+	<bean id="conditionnementConverter" class="fr.pharma.eclipse.converter.GenericConverter">
+		<constructor-arg index="0" ref="conditionnementService" />
+	</bean>
+	
+	<!-- ========================= -->
+	<!-- GRILLEMODELE CONVERTER    -->
+	<!-- ========================= -->
+	<bean id="grilleModeleConverter" class="fr.pharma.eclipse.converter.GenericConverter">
+		<constructor-arg index="0" ref="grilleModeleService" />
+	</bean>
+	
+	<!-- ====================================== -->
+	<!-- ORDONNANCIER DISPENSATION CONVERTER    -->
+	<!-- ====================================== -->
+	<bean id="ordonnancierDispConverter" class="fr.pharma.eclipse.converter.GenericConverter">
+		<constructor-arg index="0" ref="ordonnancierDispService" />
+	</bean>
+	
+	<!-- ==================================================== -->
+	<!-- ORDONNANCIER FABRICATION/RECONSTITUTION CONVERTER    -->
+	<!-- ==================================================== -->
+	<bean id="ordonnancierFabReconstConverter" class="fr.pharma.eclipse.converter.GenericConverter">
+		<constructor-arg index="0" ref="ordonnancierFabReconstService" />
+	</bean>
+	
+	<!-- ==================================================== -->
+	<!-- DETAIL STOCKAGE CONVERTER    			              -->
+	<!-- ==================================================== -->
+	<bean id="detailStockageConverter" class="fr.pharma.eclipse.converter.GenericConverter">
+		<constructor-arg index="0" ref="detailStockageService" />
+	</bean>
+
+	<!-- ==================================================== -->
+	<!-- DESIGNS CONVERTER						              -->
+	<!-- ==================================================== -->
+	<bean id="designConverter" class="fr.pharma.eclipse.json.DesignConverter"/>
+	
+	<!-- ==================================================== -->
+	<!-- BRAS TO JSON CONVERTER					              -->
+	<!-- ==================================================== -->
+	<bean id="brasToJSONConverter" class="fr.pharma.eclipse.json.BrasToJSONConverter"/>
+
+	<!-- ==================================================== -->
+	<!-- SEQUENCE CONVERTER						              -->
+	<!-- ==================================================== -->
+	<bean id="sequenceToJSONConverter" class="fr.pharma.eclipse.json.SequenceToJSONConverter"/>
+</beans>

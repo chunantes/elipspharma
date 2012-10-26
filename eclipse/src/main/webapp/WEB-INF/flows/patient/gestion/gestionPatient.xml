@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<flow xmlns="http://www.springframework.org/schema/webflow"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://www.springframework.org/schema/webflow
+    http://www.springframework.org/schema/webflow/spring-webflow-2.0.xsd" parent="main">
+
+	<!-- Démarrage -->
+	<on-start>
+		<evaluate expression="patientSearchCriteria.clear()"/>
+		
+		
+		<evaluate expression="essaiSearchCriteria.clear()"/>
+		<evaluate expression="'numInterne'" result="autoCompleteEssaiManager.searchCriteria.activeOrder" />
+		<evaluate expression="'numInterneOrNomOrPromoteur'" result="autoCompleteEssaiManager.searchCriteriaProperty" />
+	</on-start>
+
+	<decision-state id="arcOrNot">
+		<if then="gestionPatient" test="userService.hasRole(patientsManager.roles)" else="search"/>
+	</decision-state>
+	
+
+	<!-- Page principale -->
+	<view-state id="gestionPatient" view="../../../pages/patient/gestion/gestionPatient.xhtml">
+		<transition on="search" to="search"/>
+		<transition on="delete" to="delete"/>
+			<transition on="edit" to="edit">
+			<set name="flashScope.idPatient" value="patientsManager.beanSelected.id" type="java.lang.Long" />
+			<evaluate expression="null" result="patientsManager.beanSelected"/>		
+		</transition>
+		<transition on="add" to="edit"/>
+		<transition on="error" to="gestionPatient"/>
+	</view-state>
+	
+	<!-- Recherche -->
+	<action-state id="search">
+		<evaluate expression="patientService.getAll(patientSearchCriteria)" result="patientsManager.beans"/>
+		<transition to="gestionPatient"/>
+	</action-state>
+	
+	<!-- Suppression -->
+	<action-state id="delete">
+		<evaluate expression="patientService.remove(patientsManager.beansSelected)"/>
+		<transition on="error" to="search"/>
+		<transition to="search"/>
+	</action-state>
+	
+	<!-- Edition -->
+	<subflow-state id="edit" subflow="patient/edit">
+		<input name="idPatient" value="flashScope.idPatient"/>
+		<transition to="search"/>
+	</subflow-state>
+	
+	<end-state id="comeback"/>
+	
+</flow>

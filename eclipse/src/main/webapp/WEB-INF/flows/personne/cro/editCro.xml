@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<flow xmlns="http://www.springframework.org/schema/webflow"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://www.springframework.org/schema/webflow
+    http://www.springframework.org/schema/webflow/spring-webflow-2.0.xsd" parent="main">
+
+	<!-- Variable d'entrée -->
+	<input name="idCro" />
+
+	<decision-state id="createOrEdit">
+		<if test="idCro==null" then="create" else="edit"/>
+	</decision-state>
+	
+	<!-- Création -->
+	<action-state id="create">
+		<evaluate expression="croManager.setBean(croFactory.getInitializedObject())"/>
+		<transition to="editCro"/>
+	</action-state>
+	
+	<!-- Modification -->
+	<action-state id="edit">
+		<evaluate expression="croManager.setBean(croService.get(idCro))"/>
+		<transition to="editCro"/>
+	</action-state>
+
+	<!-- Page principale -->
+	<view-state id="editCro" view="../../../pages/personne/cro/editCro.xhtml">
+		<transition on="cancel" to="createOrEdit"/>
+		<transition on="save" to="comeback">
+			<evaluate expression="croService.save(croManager.bean)"/>
+		</transition>
+		<transition on="comeback" to="comeback">
+			<set name="croManager.bean" value="null"/>
+		</transition>
+		<transition on="error" to="editCro"/>
+	</view-state>
+	
+	<!-- Etat final -->
+	<end-state id="comeback"/>
+	
+</flow>

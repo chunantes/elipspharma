@@ -1,0 +1,59 @@
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:p="http://primefaces.prime.com.tr/ui"
+	xmlns:c="http://java.sun.com/jsp/jstl/core">
+
+			<p:dataTable id="retoursPatient"
+				value="#{beanManagerHelper.returnAsDataModel(patientManager.bean.retours)}" var="retourPatient"
+				emptyMessage="#{resourceBundle['results.none']}" style="width:100%;"
+				selection="#{retoursPatientManager.beanSelected}"
+				rowSelectListener="#{retourPatientManager.setAction('edit')}"
+				selectionMode="single" update="retoursPatient"
+				onselectComplete="javascript:document.getElementById('editRetourButton').click();">
+
+				<p:column id="date" sortBy="#{retourPatient.date}" styleClass="panelCol_10">
+					<f:facet name="header">
+						<h:outputText
+							value="#{resourceBundle['gestionRetourPatient.date']}" />
+					</f:facet>
+					<h:outputText value="#{retourPatient.date.time}"
+						onverter="#{calendarConverter}" />
+				</p:column>
+				<p:column id="essai" sortBy="#{retourPatient.essai.nom}" styleClass="panelCol_20">
+					<f:facet name="header">
+						<h:outputText
+							value="#{resourceBundle['gestionRetourPatient.essai']}" />
+					</f:facet>
+					<h:outputText
+						value="#{retourPatient.essai.promoteur.raisonSociale} - #{retourPatient.essai.codePromoteur} - #{retourPatient.essai.nom}" />
+				</p:column>
+				<p:column id="produit" sortBy="#{retourPatient.produit.nom}" styleClass="panelCol_30">
+					<f:facet name="header">
+						<h:outputText
+							value="#{resourceBundle['gestionRetourPatient.produit']}" />
+					</f:facet>
+					<h:outputText value="#{retourPatient.produit.nom}" />
+				</p:column>
+				<p:column id="conditionnement" styleClass="panelCol_20"
+					sortBy="#{retourPatient.conditionnement.libelle}">
+					<f:facet name="header">
+						<h:outputText
+							value="#{resourceBundle['gestionRetourPatient.conditionnement']}" />
+					</f:facet>
+					<h:outputText value="#{retourPatient.conditionnement.libelle}" />
+				</p:column>
+				<p:column id="numOrdonnancier" styleClass="panelCol_20"
+					sortBy="#{retourPatient.numOrdonnancier}" style="display:none;">
+					<f:facet name="header">
+						<h:outputText
+							value="#{resourceBundle['gestionRetourPatient.numOrdonnancier']}" />
+					</f:facet>
+					<h:outputText value="#{retourPatient.numOrdonnancier}" />
+				</p:column>
+			</p:dataTable>
+			<br />
+
+
+</ui:composition>

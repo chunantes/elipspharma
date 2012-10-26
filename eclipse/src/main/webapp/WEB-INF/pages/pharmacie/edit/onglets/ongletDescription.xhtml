@@ -1,0 +1,78 @@
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:p="http://primefaces.prime.com.tr/ui"
+	xmlns:c="http://java.sun.com/jsp/jstl/core">
+
+	<p:focus />
+	<h:panelGrid width="50%" columns="2" cellpadding="4" cellspacing="0"
+		border="0" columnClasses="panelCol_45,panelCol_55">
+
+		<h:outputLabel styleClass="mandatory" id="nomLabel" for="nom"
+			value="#{resourceBundle['gestionPharmacie.nom']}" />
+		<h:inputText size="45" id="nom" value="#{pharmacieManager.bean.nom}"
+			required="true"
+			requiredMessage="#{resourceBundle['pharmacie.nom.notEmpty']}" />
+
+		<h:outputLabel styleClass="mandatory" id="etablissementLabel"
+			for="etablissementSelected"
+			value="#{resourceBundle['gestionPharmacie.etablissement']}" />
+		<h:selectOneMenu immediate="true" id="etablissementSelected"
+			value="#{pharmacieManager.bean.etablissement}"
+			converter="#{etablissementConverter}" required="true"
+			requiredMessage="#{resourceBundle['pharmacie.etablissement.notEmpty']}">
+			<f:selectItems value="#{etablissementsManager.beans}" var="item"
+				itemLabel="#{item.nom}" itemValue="#{item}" />
+			<f:ajax render="resultsSite"
+				listener="#{pharmacieManager.clearSites}" />
+		</h:selectOneMenu>
+
+		<h:outputLabel id="adresseLabel" for="adresse"
+			value="#{resourceBundle['gestionPharmacie.adresse']}" />
+		<h:inputTextarea size="45" id="adresse" rows="#{resourceBundle['textarea.rows.quatre']}"
+			value="#{pharmacieManager.bean.adresse}" />
+
+		<h:outputLabel id="adresseLivraisonLabel" for="adresseLivraison"
+			value="#{resourceBundle['gestionPharmacie.adresseLivraison']}" />
+		<h:inputTextarea size="45" id="adresseLivraison" rows="#{resourceBundle['textarea.rows.quatre']}"
+			value="#{pharmacieManager.bean.adresseLivraison}" />
+
+		<h:outputLabel id="telephoneLabel" for="telephone"
+			value="#{resourceBundle['gestionPharmacie.telephone']}" />
+		<h:inputText size="20" id="telephone"
+			value="#{pharmacieManager.bean.telephone}" />
+
+		<h:outputLabel id="faxLabel" for="fax"
+			value="#{resourceBundle['gestionPharmacie.fax']}" />
+		<h:inputText size="20" id="fax" value="#{pharmacieManager.bean.fax}" />
+
+		<h:outputLabel id="responsablePrincipalLabel"
+			for="responsablePrincipal"
+			value="#{resourceBundle['gestionPharmacie.responsablePrincipal']}" />
+		<h:inputText size="45" id="responsablePrincipal"
+			value="#{pharmacieManager.bean.responsablePrincipal}" />
+
+		<h:outputLabel styleClass="mandatory" id="sitesLabel" for="sites"
+			value="#{resourceBundle['gestionPharmacie.sites']}" />
+		<p:outputPanel id="resultsSite" style="display:block;margin-top:10px;">
+			<p:dataTable id="sites"
+				value="#{pharmacieManager.getList('sites', false)}" var="site"
+				emptyMessage="#{resourceBundle['results.none']}">
+				<p:column id="nom">
+					<f:facet name="header">
+						<p:commandLink value="#{resourceBundle['gestionPharmacie.sites']}"
+							onclick="popupSite.show();" immediate="true"
+							update="formPopupSite"
+							actionListener="#{pharmacieManager.getBean()}">
+							<h:outputText
+								value="#{resourceBundle['gestionPharmacie.selectionSites']}" />
+						</p:commandLink>
+					</f:facet>
+					<h:outputText value="#{site.nom}" />
+				</p:column>
+			</p:dataTable>
+		</p:outputPanel>
+	</h:panelGrid>
+
+</ui:composition>

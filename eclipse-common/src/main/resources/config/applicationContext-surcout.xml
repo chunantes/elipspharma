@@ -1,0 +1,115 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans 
+    xmlns="http://www.springframework.org/schema/beans" 
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd">
+	
+	<!-- ============================= -->
+	<!-- COUNTERS 			           -->
+	<!-- ============================= -->
+	
+	<!-- Dispensations -->
+	<bean id="dispensationCounter" class="fr.pharma.eclipse.service.surcout.counter.impl.DispensationCounter" />
+	
+	<!-- Dispensations renouvellement -->
+	<bean id="dispensationRenouvellementCounter" class="fr.pharma.eclipse.service.surcout.counter.impl.DispensationRenouvellementCounter" />
+	
+	<!-- Prescriptions -->
+	<bean id="prescriptionCounter" class="fr.pharma.eclipse.service.surcout.counter.impl.PrescriptionCounter" />
+	
+	<!-- Dispensations -->
+	<bean id="reetiquetageCounter" class="fr.pharma.eclipse.service.surcout.counter.impl.ReetiquetageCounter" />
+	
+	<!-- Dispensations -->
+	<bean id="destructionCounter" class="fr.pharma.eclipse.service.surcout.counter.impl.DestructionCounter" />
+
+	<!-- Approvisionnements -->
+	<bean id="approvisionnementCounter" class="fr.pharma.eclipse.service.surcout.counter.impl.ApprovisionnementCounter" />
+
+	<!-- Audits -->
+	<bean id="auditCounter" class="fr.pharma.eclipse.service.surcout.counter.impl.AuditCounter" />
+	
+	<!-- Preparations Steriles-->
+	<bean id="preparationSterileCounter" class="fr.pharma.eclipse.service.surcout.counter.impl.PreparationSterileCounter" />
+	
+	<!-- Preparations Non Steriles-->
+	<bean id="preparationNonSterileCounter" class="fr.pharma.eclipse.service.surcout.counter.impl.PreparationNonSterileCounter" />
+	
+	<!-- Dispensations -->
+	<bean id="visiteMonitoringCounter" class="fr.pharma.eclipse.service.surcout.counter.impl.VisiteMonitoringCounter" />
+	
+	<!-- ============================= -->
+	<!-- Checkers			           -->
+	<!-- ============================= -->
+	
+	<!-- Coinditions de conservations -->
+	<bean id="conditionConservationChecker" class="fr.pharma.eclipse.service.surcout.checker.impl.ConditionConservationChecker" />
+	
+	<!-- Tracabilite -->
+	<bean id="tracabiliteChecker" class="fr.pharma.eclipse.service.surcout.checker.impl.TracabiliteChecker" />
+		
+	<!-- ============================= -->
+	<!-- SUBPROCESSORS		           -->
+	<!-- ============================= -->
+	<bean id="abstractVariableSubProcessor" abstract="true" class="fr.pharma.eclipse.service.surcout.processor.impl.AbstractVariableSubProcessor">
+		<property name="acteCounters">
+			<map>
+				<entry key-ref="ACTE_DISPENSATION" value-ref="dispensationCounter"/>
+				<entry key-ref="ACTE_DISPENSATION_RENOUVELLEMENT" value-ref="dispensationRenouvellementCounter"/>
+				<entry key-ref="ACTE_PRESCRIPTION" value-ref="prescriptionCounter"/>
+				<entry key-ref="ACTE_REETIQUETAGE" value-ref="reetiquetageCounter"/>
+				<entry key-ref="ACTE_DESTRUCTION" value-ref="destructionCounter"/>
+				<entry key-ref="ACTE_DESTRUCTION" value-ref="destructionCounter"/>
+				<entry key-ref="ACTE_VISITE_MONITORING" value-ref="visiteMonitoringCounter"/>
+				<entry key-ref="ACTE_APPROVISIONNEMENT" value-ref="approvisionnementCounter"/>
+				<entry key-ref="ACTE_AUDIT" value-ref="auditCounter"/>
+				<entry key-ref="ACTE_PREPARATIONS_STERILES" value-ref="preparationSterileCounter"/>
+				<entry key-ref="ACTE_PREPARATIONS_NON_STERILES" value-ref="preparationNonSterileCounter"/>
+			</map>
+		</property>
+	</bean>
+	
+	<!-- Forfait -->
+	<bean id="forfaitSubProcessor" class="fr.pharma.eclipse.service.surcout.processor.impl.ForfaitSubProcessor" parent="abstractVariableSubProcessor"/>
+	
+	<!-- Forfait sur un an MEP -->
+	<bean id="forfaitAnSubProcessor" class="fr.pharma.eclipse.service.surcout.processor.impl.ForfaitAnSubProcessor" parent="abstractVariableSubProcessor"/>
+	
+	<!-- Unite an -->
+	<bean id="uniteAnSubProcessor" class="fr.pharma.eclipse.service.surcout.processor.impl.UniteAnSubProcessor" parent="abstractVariableSubProcessor"/>
+	
+	<!-- Unite -->
+	<bean id="uniteSubProcessor" class="fr.pharma.eclipse.service.surcout.processor.impl.UniteSubProcessor" parent="abstractVariableSubProcessor"/>
+	
+	<!-- ============================= -->
+	<!-- PROCESSORS			           -->
+	<!-- ============================= -->
+	
+	<!-- Fixe -->
+	<bean id="fixeProcessor" class="fr.pharma.eclipse.service.surcout.processor.impl.FixeProcessor">
+		<property name="checkers">
+			<map>
+				<entry key-ref="ACTE_CONSERVATION" value-ref="conditionConservationChecker"/>
+				<entry key-ref="ACTE_TRACABILITE" value-ref="tracabiliteChecker"/>
+			</map>
+		</property>
+	</bean>
+	
+	<!-- Variable -->
+	<bean id="variableProcessor" class="fr.pharma.eclipse.service.surcout.processor.impl.VariableProcessor">
+		<property name="subProcessors">
+			<map>
+				<entry key-ref="MODE_FORFAIT_AN" value-ref="forfaitAnSubProcessor"/>
+				<entry key-ref="MODE_UNITE_AN" value-ref="uniteAnSubProcessor"/>
+				<entry key-ref="MODE_FORFAIT" value-ref="forfaitSubProcessor"/>
+				<entry key-ref="MODE_UNITE" value-ref="uniteSubProcessor"/>
+			</map>
+		</property>
+	</bean>
+	
+	<!-- ============================= -->
+	<!-- SURCOUT FACADE		           -->
+	<!-- ============================= -->
+	<bean id="surcoutFacade" class="fr.pharma.eclipse.service.surcout.impl.SurcoutFacadeImpl"/>
+
+</beans>

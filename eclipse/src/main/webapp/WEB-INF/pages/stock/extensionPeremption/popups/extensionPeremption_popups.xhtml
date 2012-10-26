@@ -1,0 +1,173 @@
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:p="http://primefaces.prime.com.tr/ui"
+	xmlns:t="http://myfaces.apache.org/tomahawk"
+	xmlns:c="http://java.sun.com/jsp/jstl/core">
+	
+	 <h:form id="formPopupExtensionPeremption" prependId="false" enctype="multipart/form-data">
+	
+		<p:dialog header="#{resourceBundle['extensionPeremption.title']}" widgetVar="popupExtensionPeremption" resizable="true" modal="true" width="700" 
+			closeListener="#{extensionPeremptionManager.setBeanSelected(null)}" onCloseUpdate="appros" >
+			
+			<p:panel>
+	 	
+				<h:panelGrid columns="4" columnClasses="panelCol_25,panelCol_25,panelCol_25,panelCol_25" cellspacing="5" border="0" width="100%">
+	
+					<!-- Essai -->
+					<h:outputLabel value="#{resourceBundle['extensionPeremption.essai']}" />
+					<h:outputText value="#{extensionPeremptionManager.beanSelected.essai.numInterne} #{extensionPeremptionManager.beanSelected.essai.nom}"/>
+					
+					<!-- Pharmacie -->
+					<h:outputLabel value="#{resourceBundle['extensionPeremption.pharmacie']}" />
+					<h:outputText value="#{extensionPeremptionManager.beanSelected.pharmacie.nom}"/>
+					
+					<!-- Promoteur -->
+					<h:outputLabel value="#{resourceBundle['extensionPeremption.promoteur']}" />
+					<h:outputText value="#{extensionPeremptionManager.beanSelected.essai.promoteur.raisonSociale}"/>
+									
+					<!-- Code Promoteur -->
+					<h:outputLabel value="#{resourceBundle['extensionPeremption.codePromoteur']}" />
+					<h:outputText value="#{extensionPeremptionManager.beanSelected.essai.codePromoteur}"/>
+					
+					<!-- Receptionne par -->
+					<h:outputLabel value="#{resourceBundle['extensionPeremption.receptionnePar']}" />
+					<h:outputText value="#{extensionPeremptionManager.beanSelected.personne.prenom} #{extensionPeremptionManager.beanSelected.personne.nom}"/>
+	
+					<!-- Date de reception -->
+					<h:outputLabel value="#{resourceBundle['extensionPeremption.dateReception']}" />
+					<h:outputText value="#{extensionPeremptionManager.beanSelected.dateReception.time}">
+						<f:convertDateTime pattern="#{resourceBundle['date.pattern.withHeures']}"/>
+					</h:outputText>					
+					
+				</h:panelGrid>
+			
+			</p:panel>
+			
+			<br />
+			
+			<p:panel>
+			
+				<h:panelGrid columns="2" columnClasses="panelCol_25,panelCol_75" width="100%" cellspacing="5" border="0">			
+			
+					<!-- Approuve / Rejete -->
+					<h:outputLabel value="#{resourceBundle['extensionPeremption.etat.mandatory']}"/>
+					<h:outputText value="#{resourceBundle['extensionPeremption.etat.approuve']}" rendered="#{extensionPeremptionManager.beanSelected.approApprouve == true}" />
+					<h:outputText value="#{resourceBundle['extensionPeremption.etat.rejete']}" rendered="#{extensionPeremptionManager.beanSelected.approApprouve == false}" />
+				
+				</h:panelGrid>
+				
+				<h:panelGrid columns="2" columnClasses="panelCol_25,panelCol_75" width="100%" cellspacing="5" border="0" rendered="#{extensionPeremptionManager.beanSelected.approApprouve == false}">
+					<!-- Motif du refus -->
+					<h:outputLabel value="#{resourceBundle['extensionPeremption.etat.motifRefus']}"/>
+					<h:outputText value="#{extensionPeremptionManager.beanSelected.motifRefus.libelle}" rendered="#{not empty extensionPeremptionManager.beanSelected.motifRefus}" />
+					<h:panelGroup rendered="#{empty extensionPeremptionManager.beanSelected.motifRefus}"/>
+										
+	           		<!-- Commentaire du refus -->
+					<h:outputLabel value="#{resourceBundle['extensionPeremption.etat.commentaireRefus']}"/>
+					<h:inputTextarea tabindex="-1" style="width:100%;" 
+						value="#{extensionPeremptionManager.beanSelected.commentaireRefus}" 
+						rows="#{resourceBundle['textarea.rows.default']}"
+						disabled="true" />
+				</h:panelGrid>								
+			
+			</p:panel>
+			
+			<br />
+			<p:panel>
+			
+				<h:panelGrid columns="2" columnClasses="panelCol_25,panelCol_75" cellspacing="5" border="0" width="100%">
+				
+					<!-- Produit -->
+					<h:outputLabel value="#{resourceBundle['extensionPeremption.produit']}" />
+					<h:outputText value="#{extensionPeremptionManager.beanSelected.produit.denomination}"/>
+					
+					<!-- Conditionnement -->
+					<h:outputLabel value="#{resourceBundle['extensionPeremption.conditionnement']}" />
+					<h:outputText value="#{extensionPeremptionManager.beanSelected.conditionnement.libelle}"/>
+					
+					<!-- NumLot -->
+					<h:outputLabel value="#{resourceBundle['extensionPeremption.numLot']}"
+						rendered="#{not empty extensionPeremptionManager.beanSelected.numLot}" />
+					<h:outputText value="#{extensionPeremptionManager.beanSelected.numLot}"
+						rendered="#{not empty extensionPeremptionManager.beanSelected.numLot}" />					
+									
+					<!-- NumTraitement -->
+					<h:outputLabel value="#{resourceBundle['extensionPeremption.numTraitement']}"
+						rendered="#{not empty extensionPeremptionManager.beanSelected.numTraitement}" />
+					<h:outputText value="#{extensionPeremptionManager.beanSelected.numTraitement}"
+						rendered="#{not empty extensionPeremptionManager.beanSelected.numTraitement}" />
+						
+				</h:panelGrid>
+			</p:panel>
+
+			<br />
+			<p:panel>
+			
+				<h:panelGrid columns="2" columnClasses="panelCol_30,panelCol_70" cellspacing="5" border="0" width="100%">			
+						
+					<!-- Date de peremtion deja reporte -->	
+					<h:outputLabel value="#{resourceBundle['extensionPeremption.alreadyExtensionPeremption']}" />
+					<h:outputText value="#{resourceBundle['boolean.oui']}" rendered="#{extensionPeremptionManager.beanSelected.extensionPeremption == true}" />
+					<h:outputText value="#{resourceBundle['boolean.non']}" rendered="#{extensionPeremptionManager.beanSelected.extensionPeremption == false}" />
+					
+					<!-- Date de peremption actuelle -->
+					<h:outputLabel value="#{resourceBundle['extensionPeremption.datePeremptionActuelle']}" />
+					<h:outputText value="#{extensionPeremptionManager.beanSelected.datePeremption}" converter="#{calendarConverter}"/>
+					
+					<!-- Nouvelle date de peremption -->
+					<h:outputLabel value="#{resourceBundle['extensionPeremption.newDatePeremption']}" />
+	  				<p:calendar tabindex="-1" id="newDatePeremption" value="#{extensionPeremptionManager.beanSelected.datePeremption}" 
+	  					effect="#{resourceBundle['effect.calendar']}" locale="#{resourceBundle['date.locale']}" showButtonPanel="true" navigator="true" 
+	  					converter="#{calendarConverter}" />
+	  				
+	  				
+					<!-- Historique -->
+					<h:outputLabel value="#{resourceBundle['extensionPeremption.etat.historique']}"/>
+					<h:inputTextarea tabindex="-1" style="width:100%;" 
+						value="#{extensionPeremptionManager.beanSelected.historiqueExtensionPeremption}" 
+						rows="#{resourceBundle['textarea.rows.default']}"
+						readonly="true" />	
+	  				
+	  				<!-- Commentaire extension peremption -->
+	  				<h:outputLabel value="#{resourceBundle['extensionPeremption.commentaireExtensionPeremption']}" />
+	  				<h:inputTextarea tabindex="-1" style="width:100%;" value="#{extensionPeremptionManager.beanSelected.commentaireExtensionPeremption}" rows="3" />
+	  				
+										
+					
+				</h:panelGrid>
+
+				<!-- Fichier Certificat Analyse -->
+				<h:panelGroup id="panelCertificatAnalyse">
+					<h:panelGrid columns="2" columnClasses="panelCol_30,panelCol_70" cellspacing="5" border="0" width="100%" rendered="#{empty extensionPeremptionManager.beanSelected.documentAppro}">	
+						<h:outputLabel value="#{resourceBundle['extensionPeremption.certificatAnalyse']}" />
+						<t:inputFileUpload id="fichierCertificatAnalyse" size="30" value="#{extensionPeremptionManager.managerDocAppro.file}"/>
+					</h:panelGrid>		
+
+					<h:panelGrid columns="4" columnClasses="panelCol_40,panelCol_30,panelCol_20,panelCol_10" cellspacing="5" border="0" width="100%" rendered="#{not empty extensionPeremptionManager.beanSelected.documentAppro}">					
+						<h:outputLabel value="#{resourceBundle['extensionPeremption.certificatAnalyse']}" />
+						<h:outputText value="#{extensionPeremptionManager.beanSelected.documentAppro.nomUtilisateur}"
+							title="#{documentsIhmHelper.buildDocTitle(extensionPeremptionManager.beanSelected.documentAppro, resourceBundle['document.part1'], resourceBundle['document.part2'], resourceBundle['date.pattern.withHeures'])}" />
+						<p:commandButton value="#{resourceBundle['file.dwd']}" title="#{resourceBundle['file.dwd']}" immediate="true" ajax="false" >
+							<p:fileDownload value="#{fileDwdController.downloadDocument(extensionPeremptionManager.beanSelected, extensionPeremptionManager.beanSelected.documentAppro)}" />
+						</p:commandButton>
+						<p:commandLink update="panelCertificatAnalyse"
+							title="#{resourceBundle['document.del']}"
+							actionListener="#{extensionPeremptionManager.delDocAppro}">
+							<h:graphicImage library="images" name="del.gif" />
+						</p:commandLink>
+					</h:panelGrid>
+				</h:panelGroup>
+			
+			</p:panel>		
+			
+			<div class="popupButton">
+	        	<p:commandButton id="submitButton" ajax="false" value="#{resourceBundle['btn.valider']}" action="etendrePeremption" oncomplete="popupExtensionPeremption.hide();"/>
+	        	<p:commandButton immediate="true" value="#{resourceBundle['btn.fermer']}" onclick="popupExtensionPeremption.hide();"/>
+	        </div> 
+			
+		</p:dialog>
+	</h:form>
+	
+</ui:composition>

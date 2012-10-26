@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans 
+    xmlns="http://www.springframework.org/schema/beans" 
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd">
+
+	<!-- ============================= -->
+	<!-- COMMON SIR                    -->
+	<!-- ============================= -->					
+	<bean id="sirCommonDao" abstract="true" class="fr.pharma.eclipse.dao.sir.hibernate.GenericSirDaoHibernate">
+		<property name="criteriaDictionary" ref="sirCriteriaDictionary" />
+	</bean>
+
+	<!-- ============================= -->
+	<!-- PERSONNE SIR                  -->
+	<!-- ============================= -->
+	<bean id="personneSirDao" parent="sirCommonDao">
+		<constructor-arg index="0" value="fr.pharma.eclipse.domain.model.sir.PersonneSir"/>
+	</bean>
+	
+</beans>

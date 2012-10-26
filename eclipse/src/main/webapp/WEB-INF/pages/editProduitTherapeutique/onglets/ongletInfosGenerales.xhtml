@@ -1,0 +1,106 @@
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:p="http://primefaces.prime.com.tr/ui"
+	xmlns:sf="http://www.springframework.org/tags/faces">
+	 
+	 <!-- Gestion scroll et focus -->
+	<p:focus context="ig_panel_first" />
+	
+		<h:panelGrid id="ig_panel_first" columns="4"
+			columnClasses="panelCol_25, panelCol_25, panelCol_25, panelCol_25">
+	
+		<h:outputLabel id="labelMedNatureProduit" for="med_natureProduit"
+			value="#{resourceBundle['editProduit.onglet.generales.nature']}" />
+		<h:selectOneMenu id="med_natureProduit"
+			value="#{produitTherapeutiqueManager.bean.nature}">
+			<f:selectItem noSelectionOption="true" />
+			<f:selectItems value="#{enumManager.getValues('NatureProduit')}" />
+		</h:selectOneMenu>
+
+		
+		<h:outputLabel id="labelMedClasse" for="med_classe"
+			value="#{resourceBundle['editProduit.onglet.generales.classe']}" />
+		<h:inputText id="med_classe"
+			value="#{produitTherapeutiqueManager.bean.classeTherapeutique}" />
+
+		<h:outputLabel id="labelMedStup" for="med_code"
+			value="#{resourceBundle['editProduit.onglet.generales.stupefiant']}" />
+		<h:selectOneRadio id="med_stupefiant"
+			value="#{produitTherapeutiqueManager.bean.stupefiant}"
+			styleClass="selectRadio">
+			<f:selectItem itemLabel="#{resourceBundle['boolean.oui']}"
+				itemValue="true" itemDescription="#{resourceBundle['boolean.oui']}" />
+			<f:selectItem itemLabel="#{resourceBundle['boolean.non']}"
+				itemValue="false" itemDescription="#{resourceBundle['boolean.non']}" />
+		</h:selectOneRadio>
+
+		<h:outputLabel id="labelMedImputationUf" for="med_imput"
+			value="#{resourceBundle['editProduit.onglet.generales.imputationuf']}" />
+		<h:selectOneRadio id="med_imput"
+			value="#{produitTherapeutiqueManager.bean.imputationUf}"
+			styleClass="selectRadio">
+			<f:selectItem itemLabel="#{resourceBundle['boolean.oui']}"
+				itemValue="true" itemDescription="#{resourceBundle['boolean.oui']}" />
+			<f:selectItem itemLabel="#{resourceBundle['boolean.non']}"
+				itemValue="false" itemDescription="#{resourceBundle['boolean.non']}" />
+			<f:ajax render="panel_uf_label" />
+			<f:ajax render="panel_uf_input" />
+		</h:selectOneRadio>
+
+
+		<h:outputLabel id="labelMedMDSt" for="med_mds"
+			value="#{resourceBundle['editProduit.onglet.generales.mds']}" />
+		<h:selectOneRadio id="med_mds" value="#{produitTherapeutiqueManager.bean.mds}"
+			styleClass="selectRadio">
+			<f:selectItem itemLabel="#{resourceBundle['boolean.oui']}"
+				itemValue="true" itemDescription="#{resourceBundle['boolean.oui']}" />
+			<f:selectItem itemLabel="#{resourceBundle['boolean.non']}"
+				itemValue="false" itemDescription="#{resourceBundle['boolean.non']}" />
+		</h:selectOneRadio>
+
+		<p:outputPanel id="panel_uf_label">
+			<h:outputLabel id="labelMedUf" for="prod_imput"
+				value="#{resourceBundle['editProduit.onglet.generales.uf']}"
+				rendered="#{produitTherapeutiqueManager.bean.imputationUf == true}" />
+
+			<h:panelGroup
+				rendered="#{produitTherapeutiqueManager.bean.imputationUf != true }" />
+		</p:outputPanel>
+		
+	<p:outputPanel id="panel_uf_input">
+
+				<p:outputPanel id="resultsServices_prod"
+					style="display:block;margin-top:10px;"
+					rendered="#{produitTherapeutiqueManager.bean.imputationUf == true}">
+					<p:dataTable id="common_service_prod"
+						value="#{produitTherapeutiqueManager.getList('services', false)}"
+						var="service" emptyMessage="#{resourceBundle['results.none']}">
+						<p:column id="nom_service_prod">
+							<f:facet name="header">
+								<h:outputLink value="javascript:void(0)"
+									onclick="popupService.show()">#{resourceBundle['editEssai.common.selectionServices']}</h:outputLink>
+							</f:facet>
+							<h:outputText value="#{service.nom}" />
+						</p:column>
+					</p:dataTable>
+				</p:outputPanel>
+
+				<h:panelGroup
+					rendered="#{produitTherapeutiqueManager.bean.imputationUf != true }" />
+			</p:outputPanel>
+		
+		<h:outputLabel id="labelProdTypeProduit" for="prod_typeProduitThe"
+			value="#{resourceBundle['editProduit.onglet.generales.type.thera']}" />
+		<h:selectOneMenu id="prod_typeProduitThe"
+			value="#{produitTherapeutiqueManager.bean.typeProduitTherapeutique}">
+			<f:selectItem noSelectionOption="true" />
+			<f:selectItems value="#{enumManager.getValues('TypeProduitTherapeutique')}" />
+		</h:selectOneMenu>
+		<h:panelGroup />
+		<h:panelGroup />
+		
+	</h:panelGrid>
+	
+</ui:composition>

@@ -1,0 +1,172 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<persistence 
+	xmlns="http://java.sun.com/xml/ns/persistence"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://java.sun.com/xml/ns/persistence
+                        http://java.sun.com/xml/ns/persistence/persistence_1_0.xsd"
+	version="1.0">
+	
+	<!-- ============================= -->
+	<!-- JPA ECLIPSE                   -->
+	<!-- ============================= -->	
+	<persistence-unit name="eclipse" transaction-type="RESOURCE_LOCAL" >
+		<class>fr.pharma.eclipse.domain.model.acteur.ArcInvestigateur</class>
+		<class>fr.pharma.eclipse.domain.model.acteur.ArcPromoteur</class>
+		<class>fr.pharma.eclipse.domain.model.acteur.ContactPromoteur</class>
+		<class>fr.pharma.eclipse.domain.model.acteur.Cro</class>
+		<class>fr.pharma.eclipse.domain.model.acteur.DirectionRecherche</class>
+		<class>fr.pharma.eclipse.domain.model.acteur.Investigateur</class>
+		<class>fr.pharma.eclipse.domain.model.acteur.Personne</class>
+		<class>fr.pharma.eclipse.domain.model.acteur.Pharmacien</class>
+		<class>fr.pharma.eclipse.domain.model.acteur.Promoteur</class>
+		<class>fr.pharma.eclipse.domain.model.essai.detail.recherche.DetailRecherche</class>
+		<class>fr.pharma.eclipse.domain.model.essai.detail.recherche.CommentaireEssaiRecherche</class>
+		<class>fr.pharma.eclipse.domain.model.essai.detail.contact.DetailContacts</class>
+		<class>fr.pharma.eclipse.domain.model.essai.detail.dates.DetailDates</class>
+		<class>fr.pharma.eclipse.domain.model.essai.detail.faisabilite.DetailFaisabilite</class>
+		<class>fr.pharma.eclipse.domain.model.essai.detail.faisabilite.CommentaireEssaiFaisabilite</class>
+		<class>fr.pharma.eclipse.domain.model.essai.detail.faisabilite.CommentaireConclusionFaisabilite</class>
+		<class>fr.pharma.eclipse.domain.model.essai.detail.faisabilite.CommentaireFaisabiliteAchatProduits</class>
+		<class>fr.pharma.eclipse.domain.model.essai.detail.faisabilite.CommentaireFaisabiliteDistributionPharmacies</class>
+		<class>fr.pharma.eclipse.domain.model.essai.detail.faisabilite.CommentaireFaisabiliteGlobal</class>
+		<class>fr.pharma.eclipse.domain.model.essai.detail.administratif.DetailAdministratif</class>
+		<class>fr.pharma.eclipse.domain.model.essai.detail.administratif.CommentaireEssaiArchivage</class>
+		<class>fr.pharma.eclipse.domain.model.essai.detail.administratif.document.DocumentAdministratif</class>
+		<class>fr.pharma.eclipse.domain.model.essai.detail.administratif.document.DocumentAutoriteCompetente</class>
+		<class>fr.pharma.eclipse.domain.model.essai.detail.administratif.document.DocumentComiteProtectionPers</class>
+		<class>fr.pharma.eclipse.domain.model.essai.detail.administratif.document.DocumentConvention</class>
+		<class>fr.pharma.eclipse.domain.model.essai.detail.administratif.document.DocumentAssurance</class>
+		<class>fr.pharma.eclipse.domain.model.essai.detail.administratif.document.DocumentProtocole</class>
+		<class>fr.pharma.eclipse.domain.model.essai.detail.administratif.document.DocumentBrochureProduits</class>
+		<class>fr.pharma.eclipse.domain.model.essai.detail.administratif.document.DocumentAutorisationDistribution</class>
+		<class>fr.pharma.eclipse.domain.model.essai.detail.administratif.document.DocumentAutorisationImportation</class>
+		<class>fr.pharma.eclipse.domain.model.essai.detail.produit.DetailProduit</class>
+		<class>fr.pharma.eclipse.domain.model.essai.detail.pharma.DetailDonneesPharma</class>
+		<class>fr.pharma.eclipse.domain.model.essai.detail.pharma.document.DocumentDonneesPharma</class>
+		<class>fr.pharma.eclipse.domain.model.essai.detail.pharma.document.DocumentRespRandomisation</class>
+		<class>fr.pharma.eclipse.domain.model.essai.detail.pharma.document.DocumentRespCommande</class>
+		<class>fr.pharma.eclipse.domain.model.essai.detail.pharma.document.DocumentRespInsu</class>
+		<class>fr.pharma.eclipse.domain.model.essai.detail.pharma.document.DocumentModaliteReception</class>
+		<class>fr.pharma.eclipse.domain.model.essai.detail.pharma.document.DocumentModaliteDestruction</class>
+		<class>fr.pharma.eclipse.domain.model.essai.detail.pharma.document.DocumentNumerotationConditionnement</class>
+		<class>fr.pharma.eclipse.domain.model.essai.detail.pharma.document.DocumentInformationConditionnement</class>
+		<class>fr.pharma.eclipse.domain.model.essai.detail.pharma.document.DocumentContreEtiquette</class>
+		<class>fr.pharma.eclipse.domain.model.essai.detail.pharma.document.DocumentConseilPatient</class>
+		<class>fr.pharma.eclipse.domain.model.essai.detail.pharma.document.DocumentAideDispensation</class>
+		<class>fr.pharma.eclipse.domain.model.essai.detail.surcout.document.DocumentPrevisionnel</class>
+		<class>fr.pharma.eclipse.domain.model.essai.detail.surcout.document.DocumentReel</class>
+		<class>fr.pharma.eclipse.domain.model.essai.detail.autresdocs.document.DocumentAutre</class>
+		<class>fr.pharma.eclipse.domain.model.essai.detail.design.DetailDesign</class>
+		<class>fr.pharma.eclipse.domain.model.essai.detail.autresdocs.DetailAutresDocuments</class>
+		<class>fr.pharma.eclipse.domain.model.essai.detail.surcout.DetailSurcout</class>
+		<class>fr.pharma.eclipse.domain.model.essai.Essai</class>
+		<class>fr.pharma.eclipse.domain.model.essai.detail.etat.DetailEtatEssai</class>
+		<class>fr.pharma.eclipse.domain.model.habilitation.Habilitation</class>
+		<class>fr.pharma.eclipse.domain.model.localisation.Etablissement</class>
+		<class>fr.pharma.eclipse.domain.model.localisation.Pole</class>
+		<class>fr.pharma.eclipse.domain.model.localisation.Service</class>
+		<class>fr.pharma.eclipse.domain.model.localisation.Site</class>
+		<class>fr.pharma.eclipse.domain.model.sigrec.acteur.ARCInvestigateurSigrec</class>
+		<class>fr.pharma.eclipse.domain.model.sigrec.acteur.ARCPromoteurSigrec</class>
+		<class>fr.pharma.eclipse.domain.model.sigrec.acteur.CentreSigrec</class>
+		<class>fr.pharma.eclipse.domain.model.sigrec.acteur.CoInvestigateurSigrec</class>
+		<class>fr.pharma.eclipse.domain.model.sigrec.acteur.ContactSigrec</class>
+		<class>fr.pharma.eclipse.domain.model.sigrec.acteur.CROSigrec</class>
+		<class>fr.pharma.eclipse.domain.model.sigrec.acteur.InvestigateurSigrec</class>
+		<class>fr.pharma.eclipse.domain.model.sigrec.acteur.PromoteurSigrec</class>
+		<class>fr.pharma.eclipse.domain.model.sigrec.essai.detail.AssuranceSigrec</class>
+		<class>fr.pharma.eclipse.domain.model.sigrec.essai.detail.DetailRechercheSigrec</class>
+		<class>fr.pharma.eclipse.domain.model.sigrec.essai.detail.PrevisionSigrec</class>
+		<class>fr.pharma.eclipse.domain.model.produit.Medicament</class>
+		<class>fr.pharma.eclipse.domain.model.produit.DispositifMedical</class>
+		<class>fr.pharma.eclipse.domain.model.produit.ProduitTherapeutique</class>
+		<class>fr.pharma.eclipse.domain.model.produit.Preparation</class>
+		<class>fr.pharma.eclipse.domain.model.produit.Produit</class>
+		<class>fr.pharma.eclipse.domain.model.produit.detail.DetailLogistique</class>
+		<class>fr.pharma.eclipse.domain.model.produit.detail.DetailStockage</class>
+		<class>fr.pharma.eclipse.domain.model.produit.Conditionnement</class>
+		<class>fr.pharma.eclipse.domain.model.produit.document.DocumentActesPharma</class>
+		<class>fr.pharma.eclipse.domain.model.produit.document.DocumentRandomisation</class>
+		<class>fr.pharma.eclipse.domain.model.produit.document.DocumentFabrication</class>
+		<class>fr.pharma.eclipse.domain.model.produit.document.DocumentEtiquetage</class>
+		<class>fr.pharma.eclipse.domain.model.produit.document.DocumentConditionnement</class>
+		<class>fr.pharma.eclipse.domain.model.produit.document.DocumentReconstitutionSimple</class>
+		<class>fr.pharma.eclipse.domain.model.produit.document.DocumentReconstitutionPSM</class>
+		<class>fr.pharma.eclipse.domain.model.sigrec.essai.EssaiSigrec</class>
+		<class>fr.pharma.eclipse.domain.model.stockage.Pharmacie</class>
+		<class>fr.pharma.eclipse.domain.model.stockage.Stockage</class>
+		<class>fr.pharma.eclipse.domain.model.suivi.acteur.PersonneSuivi</class>
+		<class>fr.pharma.eclipse.domain.model.suivi.acteur.PromoteurSuivi</class>
+		<class>fr.pharma.eclipse.domain.model.suivi.essai.detail.DetailAdministratifSuivi</class>
+		<class>fr.pharma.eclipse.domain.model.suivi.essai.detail.DetailDatesSuivi</class>
+		<class>fr.pharma.eclipse.domain.model.suivi.essai.detail.DetailFaisabiliteSuivi</class>
+		<class>fr.pharma.eclipse.domain.model.suivi.essai.detail.DetailRechercheSuivi</class>
+		<class>fr.pharma.eclipse.domain.model.suivi.essai.detail.DetailContactsSuivi</class>
+		<class>fr.pharma.eclipse.domain.model.suivi.essai.detail.DetailProduitSuivi</class>
+		<class>fr.pharma.eclipse.domain.model.suivi.essai.detail.DetailDonneesPharmaSuivi</class>
+		<class>fr.pharma.eclipse.domain.model.suivi.essai.detail.DetailDesignSuivi</class>
+		<class>fr.pharma.eclipse.domain.model.suivi.essai.detail.DetailAutresDocumentsSuivi</class>
+		<class>fr.pharma.eclipse.domain.model.suivi.essai.detail.DetailSurcoutSuivi</class>
+		<class>fr.pharma.eclipse.domain.model.suivi.essai.EssaiSuivi</class>
+		<class>fr.pharma.eclipse.domain.model.suivi.localisation.EtablissementSuivi</class>
+		<class>fr.pharma.eclipse.domain.model.suivi.localisation.PoleSuivi</class>
+		<class>fr.pharma.eclipse.domain.model.suivi.localisation.ServiceSuivi</class>
+		<class>fr.pharma.eclipse.domain.model.suivi.localisation.SiteSuivi</class>
+		<class>fr.pharma.eclipse.domain.model.suivi.stockage.PharmacieSuivi</class>
+		<class>fr.pharma.eclipse.domain.model.suivi.produit.ProduitSuivi</class>
+		<class>fr.pharma.eclipse.domain.model.stock.MvtStock</class>
+		<class>fr.pharma.eclipse.domain.model.stock.document.DocumentMvtStock</class>
+		<class>fr.pharma.eclipse.domain.model.stock.document.DocumentDestruction</class>
+		<class>fr.pharma.eclipse.domain.model.stock.document.DocumentRetourPromoteur</class>
+		<class>fr.pharma.eclipse.domain.model.stock.document.DocumentAppro</class>
+		<class>fr.pharma.eclipse.domain.model.stock.Approvisionnement</class>
+		<class>fr.pharma.eclipse.domain.model.stock.RetourPromoteur</class>
+		<class>fr.pharma.eclipse.domain.model.stock.CessionPui</class>
+		<class>fr.pharma.eclipse.domain.model.stock.Destruction</class>
+		<class>fr.pharma.eclipse.domain.model.stock.PreparationSortie</class>
+		<class>fr.pharma.eclipse.domain.model.stock.PreparationEntree</class>
+		<class>fr.pharma.eclipse.domain.model.stock.AutreSortie</class>
+		<class>fr.pharma.eclipse.domain.model.design.Bras</class>
+		<class>fr.pharma.eclipse.domain.model.design.Sequence</class>
+		<class>fr.pharma.eclipse.domain.model.design.PrescriptionType</class>
+		<class>fr.pharma.eclipse.domain.model.patient.Patient</class>
+		<class>fr.pharma.eclipse.domain.model.suivi.patient.PatientSuivi</class>
+		<class>fr.pharma.eclipse.domain.model.patient.HistoriquePatient</class>
+		<class>fr.pharma.eclipse.domain.model.prescription.Prescription</class>
+		<class>fr.pharma.eclipse.domain.model.prescription.ProduitPrescrit</class>
+		<class>fr.pharma.eclipse.domain.model.patient.Inclusion</class>
+		<class>fr.pharma.eclipse.domain.model.dispensation.Dispensation</class>
+		<class>fr.pharma.eclipse.domain.model.dispensation.ElementToCheck</class>
+		<class>fr.pharma.eclipse.domain.model.stock.DispensationProduit</class>
+		<class>fr.pharma.eclipse.domain.model.stock.DispensationGlobale</class>
+		<class>fr.pharma.eclipse.domain.model.dotation.Dotation</class>
+		<class>fr.pharma.eclipse.domain.model.evenement.Evenement</class>
+		<class>fr.pharma.eclipse.domain.model.suivi.evenement.EvenementSuivi</class>
+		<class>fr.pharma.eclipse.domain.model.surcout.GrilleModele</class>
+		<class>fr.pharma.eclipse.domain.model.surcout.Categorie</class>
+		<class>fr.pharma.eclipse.domain.model.surcout.Theme</class>
+		<class>fr.pharma.eclipse.domain.model.surcout.Item</class>
+		<class>fr.pharma.eclipse.domain.model.surcout.Grille</class>
+		<class>fr.pharma.eclipse.domain.model.surcout.DonneesPrevision</class>
+		<class>fr.pharma.eclipse.domain.model.surcout.regle.Regle</class>
+		<class>fr.pharma.eclipse.domain.model.ordonnancier.OrdonnancierDisp</class>
+		<class>fr.pharma.eclipse.domain.model.ordonnancier.OrdonnancierFabReconst</class>
+		<class>fr.pharma.eclipse.domain.model.incident.Incident</class>
+		<class>fr.pharma.eclipse.domain.model.suivi.incident.IncidentSuivi</class>
+		<class>fr.pharma.eclipse.domain.model.stock.RetourPatient</class>
+		<class>fr.pharma.eclipse.domain.model.acteur.document.DocumentCV</class>
+		<class>fr.pharma.eclipse.domain.model.acteur.document.DocumentValidationFormation</class>
+		
+		<exclude-unlisted-classes>true</exclude-unlisted-classes>
+	</persistence-unit>
+	
+	<!-- ============================= -->
+	<!-- JPA SIR                       -->
+	<!-- ============================= -->	
+	<persistence-unit name="sir" transaction-type="RESOURCE_LOCAL" >
+		<class>fr.pharma.eclipse.domain.model.sir.PersonneSir</class>
+		<exclude-unlisted-classes>true</exclude-unlisted-classes>
+	</persistence-unit>
+	
+</persistence>

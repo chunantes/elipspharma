@@ -1,0 +1,111 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="justHeader" pageWidth="595" pageHeight="842" whenNoDataType="AllSectionsNoDetail" columnWidth="555" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20">
+	<property name="ireport.zoom" value="1.024520183047609"/>
+	<property name="ireport.x" value="0"/>
+	<property name="ireport.y" value="0"/>
+	<subDataset name="Table Dataset 1"/>
+	<subDataset name="Table Dataset 2"/>
+	<subDataset name="dataset1"/>
+	<parameter name="SUBREPORT_DIR" class="java.lang.String"/>
+	<field name="headSousTitre" class="java.lang.String"/>
+	<field name="headProcessus" class="java.lang.String"/>
+	<field name="headThemes" class="java.lang.String"/>
+	<field name="headUrlImage" class="java.lang.String"/>
+	<field name="headDiffusionPar" class="java.lang.String"/>
+	<background>
+		<band splitType="Stretch"/>
+	</background>
+	<title>
+		<band splitType="Stretch"/>
+	</title>
+	<pageHeader>
+		<band height="98" splitType="Stretch">
+			<rectangle>
+				<reportElement mode="Transparent" x="130" y="0" width="295" height="48"/>
+			</rectangle>
+			<staticText>
+				<reportElement x="425" y="0" width="130" height="16"/>
+				<textElement textAlignment="Center" lineSpacing="1_1_2">
+					<font size="8"/>
+				</textElement>
+				<text><![CDATA[Diffusion par :]]></text>
+			</staticText>
+			<textField isBlankWhenNull="true">
+				<reportElement x="425" y="16" width="130" height="32"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle" markup="none">
+					<font size="10"/>
+				</textElement>
+				<textFieldExpression class="java.lang.String"><![CDATA[$F{headDiffusionPar}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="132" y="67" width="291" height="20"/>
+				<textElement lineSpacing="Single" markup="none">
+					<font fontName="Arial" size="10" isBold="false" isStrikeThrough="false"/>
+				</textElement>
+				<textFieldExpression class="java.lang.String"><![CDATA["Thème(s) : "+$F{headThemes}]]></textFieldExpression>
+			</textField>
+			<rectangle>
+				<reportElement mode="Transparent" x="425" y="48" width="130" height="37"/>
+			</rectangle>
+			<textField evaluationTime="Report">
+				<reportElement x="510" y="48" width="45" height="37"/>
+				<textElement verticalAlignment="Middle"/>
+				<textFieldExpression class="java.lang.String"><![CDATA[" " + $V{PAGE_NUMBER}]]></textFieldExpression>
+			</textField>
+			<rectangle>
+				<reportElement mode="Transparent" x="425" y="0" width="130" height="48"/>
+			</rectangle>
+			<textField isBlankWhenNull="true">
+				<reportElement x="130" y="16" width="295" height="32"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle" lineSpacing="Single" markup="none">
+					<font fontName="Arial" size="10" isBold="false" isStrikeThrough="false"/>
+				</textElement>
+				<textFieldExpression class="java.lang.String"><![CDATA[$F{headSousTitre}]]></textFieldExpression>
+			</textField>
+			<image>
+				<reportElement x="12" y="7" width="113" height="69"/>
+				<imageExpression class="java.lang.String"><![CDATA[$F{headUrlImage}]]></imageExpression>
+			</image>
+			<rectangle>
+				<reportElement mode="Transparent" x="130" y="48" width="295" height="37"/>
+			</rectangle>
+			<staticText>
+				<reportElement x="130" y="1" width="295" height="25"/>
+				<textElement textAlignment="Center" lineSpacing="1_1_2" markup="none">
+					<font fontName="Arial" size="12" isBold="false" isStrikeThrough="false"/>
+				</textElement>
+				<text><![CDATA[IMPRIME]]></text>
+			</staticText>
+			<textField>
+				<reportElement x="425" y="48" width="85" height="37"/>
+				<textElement textAlignment="Right" verticalAlignment="Middle"/>
+				<textFieldExpression class="java.lang.String"><![CDATA["Page "+$V{PAGE_NUMBER}+" /"]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="132" y="48" width="291" height="20"/>
+				<textElement lineSpacing="Single" markup="none">
+					<font fontName="Arial" size="10" isBold="false" isStrikeThrough="false"/>
+				</textElement>
+				<textFieldExpression class="java.lang.String"><![CDATA["Processus : "+$F{headProcessus}]]></textFieldExpression>
+			</textField>
+			<rectangle>
+				<reportElement mode="Transparent" x="0" y="0" width="130" height="85"/>
+			</rectangle>
+		</band>
+	</pageHeader>
+	<columnHeader>
+		<band splitType="Stretch"/>
+	</columnHeader>
+	<detail>
+		<band height="79" splitType="Stretch"/>
+	</detail>
+	<columnFooter>
+		<band splitType="Stretch"/>
+	</columnFooter>
+	<pageFooter>
+		<band splitType="Stretch"/>
+	</pageFooter>
+	<summary>
+		<band splitType="Stretch"/>
+	</summary>
+</jasperReport>

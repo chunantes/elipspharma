@@ -1,0 +1,49 @@
+
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:p="http://primefaces.prime.com.tr/ui"
+	xmlns:t="http://myfaces.apache.org/tomahawk"
+	xmlns:c="http://java.sun.com/jsp/jstl/core">
+
+
+	<!-- **************************************** -->
+	<!-- Popup des documents RANDOMISATION 		  -->
+	<!-- **************************************** -->
+	<p:dialog widgetVar="popupDocRandomisation"
+		header="#{resourceBundle['editProduit.onglet.actes.randomisation.doc']}"
+		styleClass="essaiTabPopup popupCommWithHisto"
+		resizable="true" modal="true"
+		width="#{resourceBundle['popup.documents.simple.width']}" height="#{resourceBundle['popup.documents.simple.height']}">
+
+		<h:form id="rando_popDocs_form" prependId="false"
+			enctype="multipart/form-data">
+			<!-- nouveau document -->
+			<h3><h:outputFormat
+				value="#{resourceBundle['document.nouveau']}" /></h3>
+			<fieldset><c:set var="enumValueRando"
+				value="#{enumManager.getEnumValue('TypeDocumentProduit','RANDOMISATION')}" />
+			<p:outputPanel id="rando_out_pan_file"
+				style="display:block;margin-top:10px;">
+				<h:panelGrid columns="2" style="margin-bottom:10px" width="100%">
+					<h:outputLabel id="labelInputRandoFile" for="input_rando_file"
+						value="#{resourceBundle['document.fichier']}" />
+					<t:inputFileUpload id="input_rando_file" size="30"
+						value="#{dispositifMedicalManager.getDocumentManager(enumValueRando).file}" />
+
+				</h:panelGrid>
+			</p:outputPanel></fieldset>
+			<!-- historique -->
+			<div class="popupButton"><p:commandButton
+				value="#{resourceBundle['btn.ajouter']}" ajax="false"
+				action="submit"
+				actionListener="#{dispositifMedicalManager.ajouterDocument(enumValueRando)}"
+				update="fichier"
+				oncomplete="popupDocRandomisation.hide();" /><p:commandButton
+				value="#{resourceBundle['btn.fermer']}"
+				oncomplete="popupDocRandomisation.hide();" /></div>
+		</h:form>
+	</p:dialog>
+
+</ui:composition>

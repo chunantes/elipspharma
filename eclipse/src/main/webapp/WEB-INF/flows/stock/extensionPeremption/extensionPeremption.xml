@@ -1,0 +1,60 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<flow xmlns="http://www.springframework.org/schema/webflow"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://www.springframework.org/schema/webflow
+    http://www.springframework.org/schema/webflow/spring-webflow-2.0.xsd" parent="main">
+
+	<input name="idEssai"/>
+
+	<!-- Démarrage -->
+	<on-start>
+		<!-- Récupération des pharmacies -->
+		<evaluate expression="pharmacieSearchCriteria.clear()"/>
+		<evaluate expression="pharmacieService.getAll(pharmacieSearchCriteria)" result="pharmaciesManager.beans"/>
+		<!-- Initialisation complétion automatique des essais -->
+		<evaluate expression="essaiSearchCriteria.clear()"/>
+		<evaluate expression="'numInterne'" result="autoCompleteEssaiManager.searchCriteria.activeOrder" />
+		<evaluate expression="'numInterneOrNomOrPromoteur'" result="autoCompleteEssaiManager.searchCriteriaProperty" />
+		<!-- Purge du critère de recherche -->
+		<evaluate expression="extensionPeremptionSearchCriteria.clear()"/>
+		<!-- Initialisation manager extension peremption -->
+		<evaluate expression="extensionPeremptionManager.init()" />
+		<!-- Purge des résultats -->
+		<evaluate expression="new java.util.ArrayList()" result="extensionPeremptionManager.beans"/>
+	</on-start>
+	
+	<decision-state id="isForEssai">
+		<if then="initEssai" test="idEssai != null" else="extensionPeremption"/>
+	</decision-state>
+
+	<action-state id="initEssai">
+		<evaluate expression="essaiService.get(idEssai)" result="extensionPeremptionSearchCriteria.essai"/>
+		<transition to="search"/>
+	</action-state>
+	
+	<!-- Page principale -->
+	<view-state id="extensionPeremption" view="../../../pages/stock/extensionPeremption/extensionPeremption.xhtml">
+		<transition on="search" to="search"/>
+		<transition on="error" to="extensionPeremption"/>
+		<transition on="etendrePeremption" to="search">
+			<evaluate expression="extensionPeremptionManager.addDocAppro()" />
+			<evaluate expression="extensionPeremptionManager.beanSelected.setExtensionPeremption(true)" />
+			<evaluate expression="extensionPeremptionManager.addHistorique()" />
+			<evaluate expression="approvisionnementService.save(extensionPeremptionManager.beanSelected)" />
+			<evaluate expression="extensionPeremptionManager.setBeanSelected(null)" />
+		</transition>
+		
+		<transition on="goStockConsultationFluxForEssai" to="consulterFluxForEssai" />
+		<transition on="goStockConsultationForEssai" to="consulterStockForEssai" />
+		<transition on="goStockReceptionForEssai" to="receptionForEssai" /> 
+		<transition on="goStockSortieForEssai" to="sortieForEssai" /> 
+		
+	</view-state>
+	
+	<!-- Recherche -->
+	<action-state id="search">
+		<evaluate expression="approvisionnementService.getAll(extensionPeremptionSearchCriteria)" result="extensionPeremptionManager.beans"/>
+		<transition to="extensionPeremption"/>
+	</action-state>	
+	
+</flow>

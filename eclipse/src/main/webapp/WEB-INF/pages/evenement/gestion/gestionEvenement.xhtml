@@ -1,0 +1,141 @@
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+     xmlns:ui="http://java.sun.com/jsf/facelets"
+     xmlns:h="http://java.sun.com/jsf/html"
+     xmlns:f="http://java.sun.com/jsf/core"
+	 xmlns:p="http://primefaces.prime.com.tr/ui"
+	 xmlns:c="http://java.sun.com/jsp/jstl/core"
+     template="/WEB-INF/pages/template/template.xhtml">
+     
+     
+     <ui:define name="title">
+		<h:outputFormat value="#{resourceBundle['gestionEvenement.title']}"/>
+     </ui:define>
+     
+     <ui:define name="body">
+
+		<h:form id="criteriaForm" prependId="false">
+    		<p:outputPanel id="searchCriteriaFragment">
+     			<div class="rechercheBox">
+     				<p:focus />
+	    			<h2 class="titleFloat"><h:outputText value="#{resourceBundle['recherche']}"/></h2>
+	    			<fieldset>
+			       	<div class="rechercheInside">
+			       	
+			       		<!-- Essai Promoteur -->
+			       		<div><label>#{resourceBundle['gestionEvenement.essaiPromoteur']}</label></div>
+			           	<div>
+ 							<p:autoComplete id="essai" value="#{evenementsManager.searchCriteria.essai}" 
+ 								immediate="true"
+ 								completeMethod="#{autoCompleteEssaiManager.complete}"
+ 								forceSelection="true"
+ 								var="essai"
+ 								itemLabel="#{essai.numInterne} #{essai.nom} - #{essai.promoteur.raisonSociale}"
+ 								itemValue="#{essai}"
+ 								converter="#{essaiConverter}" />
+			           	</div>
+			           	
+						<!-- Type evenement -->
+			           	<div><label>#{resourceBundle['gestionEvenement.typeEvenement']}</label></div>
+			           	<div>
+			           		<h:selectOneMenu immediate="true" style="width:200px;" id="typeEvenement" value="#{evenementsManager.searchCriteria.typeEvenement}">
+			           			<f:selectItem noSelectionOption="true"/>
+			           			<f:selectItems value="#{enumManager.getValues('TypeEvenement')}"/>
+			           			<f:ajax listener="#{evenementsManager.handleSelectTypeEvenement}" render="criteresVisite"/>
+			           		</h:selectOneMenu>
+			           	</div>
+			           	
+						<h:panelGroup id="criteresVisite">
+							<h:panelGroup id="detailCriteresVisite" rendered="#{evenementsManager.searchCriteria.typeEvenement == 'VISITE'}">
+								<!-- Type visite -->
+								<br />
+					           	<div><label>#{resourceBundle['gestionEvenement.typeVisite']}</label></div>
+					           	<div>
+					           		<h:selectOneMenu style="width:200px;" id="typeVisite" value="#{evenementsManager.searchCriteria.typeVisite}">
+					           			<f:selectItem noSelectionOption="true"/>
+					           			<f:selectItems value="#{enumManager.getValues('TypeVisite')}"/>
+					           		</h:selectOneMenu>
+					           	</div>
+					           	
+								<!-- Resultat visite -->
+								<br />
+					           	<div><label>#{resourceBundle['gestionEvenement.resultatVisite']}</label></div>
+					           	<div>
+					           		<h:selectOneMenu style="width:200px;" id="resultatVisite" value="#{evenementsManager.searchCriteria.resultatVisite}">
+					           			<f:selectItem noSelectionOption="true"/>
+					           			<f:selectItems value="#{enumManager.getValues('ResultatVisite')}"/>
+					           		</h:selectOneMenu>
+					           	</div>
+				           	</h:panelGroup>
+			           	</h:panelGroup>
+			           	
+			           	<!-- Prevu du -->
+			           	<br />
+			           	<div><label>#{resourceBundle['gestionEvenement.prevuDu']}</label></div>
+			           	<div>
+   							<p:calendar id="dateDebut" value="#{evenementsManager.searchCriteria.dateDebut}" 
+   								effect="#{resourceBundle['effect.calendar']}" locale="#{resourceBundle['date.locale']}" showButtonPanel="true" navigator="true" 
+   								converter="#{calendarConverter}" />			           		
+			           	</div>		           	
+			           	
+			           	<!-- Au -->
+			           	<div><label>#{resourceBundle['gestionEvenement.au']}</label></div>
+			           	<div>
+   							<p:calendar id="dateFin" value="#{evenementsManager.searchCriteria.dateFin}" 
+   								effect="#{resourceBundle['effect.calendar']}" locale="#{resourceBundle['date.locale']}" showButtonPanel="true" navigator="true" 
+   								converter="#{calendarConverter}" />			           		
+			           	</div>			           			           	
+			           	
+			           	<br />
+			           	<p:commandButton id="searchButton" action="search" ajax="false"
+			     			value="#{resourceBundle['btn.rechercher']}" title="#{resourceBundle['btn.rechercher']}">
+			     		</p:commandButton>
+			   		</div>
+		    		</fieldset>
+		    	</div>
+			</p:outputPanel>
+		</h:form>
+		
+		<p:outputPanel id="resultsFragment">
+			<h:form id="evenementsForm" prependId="false">
+				<div class="resultBox" style="width:680px;"> 
+					
+					<p:schedule  startWeekday="1" draggable="false" resizable="false"  value="#{evenementsManager.eventModel}"  
+			             editable="true" widgetVar="schedule" locale="#{EclipseConstants.LOCALE }" minTime="8" maxTime="20"
+			             eventSelectListener="#{evenementsManager.onEventSelect}"  
+               			 onEventSelectComplete="editerEvenement();">  
+			  			
+			  		</p:schedule>
+			  		
+					
+		   		</div>
+		   		<br />
+				<div class="actionButton">
+					<p:commandButton id="addButton" action="add" ajax="false"
+						value="#{resourceBundle['btn.ajouter']}" title="#{resourceBundle['btn.ajouter']}"/>
+				</div>		   			
+    		</h:form>
+   		</p:outputPanel>		
+   		
+   		<div style="display:none;">
+	   		<h:form id="formEdit" prependId="false">
+	   			<p:commandButton id="editEvenement" action="edit" ajax="false" />
+	   		</h:form>
+   		</div>
+
+     <h:outputScript library="js" name="schedule.js" target="head"/>
+     <script language="javascript">
+     	var nbClicsSurUnEvenement = 0;
+     	
+     	// Fonction permettant d'acceder à la page d'un évènement.
+     	// Cette fonction permet de soumettre le formulaire formEdit en empêchant le double-clic. 
+     	// En effet, ce dernier soumettrait 2 fois le formulaire ce qui aboutirait à une erreur 500.
+     	function editerEvenement(){
+     		if(nbClicsSurUnEvenement == 0){
+     			nbClicsSurUnEvenement++;
+     			document.forms['formEdit'].editEvenement.click();
+     		}
+     	}
+     </script>  
+     </ui:define>
+     
+</ui:composition>

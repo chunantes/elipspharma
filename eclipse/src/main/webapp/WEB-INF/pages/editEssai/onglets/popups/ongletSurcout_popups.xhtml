@@ -1,0 +1,153 @@
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:p="http://primefaces.prime.com.tr/ui"
+	xmlns:t="http://myfaces.apache.org/tomahawk"
+	xmlns:c="http://java.sun.com/jsp/jstl/core">
+
+	
+	<!-- **************************************** -->
+    <!-- Popup des documents PREVISIONNELS		  -->
+    <!-- **************************************** -->
+    <p:dialog widgetVar="popupDocPrevisionnel" header="#{resourceBundle['editEssai.ongletsurcout.previsionnel.popup.title']}"
+    	resizable="true" modal="true" 
+    	styleClass="essaiTabPopup popupDocsWithHisto"
+    	width="#{resourceBundle['popup.documents.withHisto.width']}" height="#{resourceBundle['popup.documents.withHisto.height']}">  
+
+		<h:form id="previsionnel_popDocs_form" prependId="false" enctype="multipart/form-data">
+			<!-- historique -->
+			<h3><h:outputFormat value="#{resourceBundle['document.historique']}" /></h3>
+			<fieldset>
+				<p:outputPanel id="preivisionnel_popDocs_outp_listeDocs" style="display:block;margin-top:10px;width:100%">
+					<p:panel styleClass="popupScrollable" style="margin-bottom:10px">
+			 			<div align="center">
+							<p:dataTable id="previsionnel_popDocs_dataTable_docs" value="#{essaiManager.getList('detailSurcout.documentsPrevisionnels', false)}" var="document" emptyMessage="#{resourceBundle['results.none']}">
+								<p:column id="nom" style="width: 120px;">
+									<f:facet name="header"><h:outputText value="#{resourceBundle['document.nomUser']}" /></f:facet>
+									<h:outputText value="#{document.nomUtilisateur}" />
+								</p:column>
+								<p:column id="date" style="width: 60px;">
+									<f:facet name="header"><h:outputText value="#{resourceBundle['suivi.date']}" /></f:facet>
+									<h:outputText value="#{document.dateMaj.time}">
+										<f:convertDateTime pattern="#{resourceBundle['date.pattern.withHeures']}"/>
+									</h:outputText>
+								</p:column>
+								<p:column id="auteur" style="width: 50px;">
+									<f:facet name="header"><h:outputText value="#{resourceBundle['suivi.auteur']}" /></f:facet>
+									<h:outputText value="#{document.majPar}" />
+								</p:column>
+								<p:column id="commentaire">
+									<f:facet name="header"><h:outputText value="#{resourceBundle['document.commentaire']}" /></f:facet>
+									<h:outputText value="#{document.commentaire}" />
+								</p:column>
+								<p:column id="dwd" style="width: 95px;">
+									<p:commandButton value="#{resourceBundle['file.dwd']}" title="#{resourceBundle['file.dwd']}" ajax="false">
+										<p:fileDownload value="#{fileDwdController.downloadDocument(essaiManager.bean, document)}" />
+									</p:commandButton>  
+								</p:column>
+							</p:dataTable>		            
+						</div>
+					</p:panel>
+				</p:outputPanel>
+			</fieldset>
+			<!-- nouveau document -->
+			<h3><h:outputFormat value="#{resourceBundle['document.nouveau']}" /></h3>
+			<fieldset>
+				<c:set var="enumValuePrev" value="#{enumManager.getEnumValue('TypeDocumentEssai','PREVISIONNEL')}" />
+				<p:outputPanel id="previsionnel_popDocs_outp_libDoc" style="display:block;margin-top:10px;">
+					<h:panelGrid columns="2" style="margin-bottom:10px" width="100%" columnClasses="panelCol_15,panelCol_85">
+						<h:outputLabel id="labelPrevDocsFile" for="previsionnel_popupDocs_file" value="#{resourceBundle['document.fichier']}" />
+						<t:inputFileUpload id="previsionnel_popupDocs_file" size="#{resourceBundle['popup.documents.withHisto.filedownload.size']}" value="#{essaiManager.getDocumentManager(enumValuePrev, true).file}" />
+						
+						<h:outputLabel id="labelPrevDocsFileCom" for="prevision_popupDocs_comm" value="#{resourceBundle['document.commentaire']}" />
+						<h:inputTextarea id="prevision_popupDocs_comm" value="#{essaiManager.getDocumentManager(enumValuePrev, true).commentaire}"
+							styleClass="editCommentaire" 
+							rows="#{resourceBundle['textarea.rows.filedownload']}" />
+					</h:panelGrid>
+				</p:outputPanel>				
+			</fieldset>
+			<div class="popupButton">
+				<p:commandButton value="#{resourceBundle['btn.ajouter']}"
+					ajax="false" action="submit"
+					actionListener="#{essaiManager.ajouterDocument(enumValuePrev, true)}"
+					update="previsionnel_lastDoc, previsionnel_popDocs_outp_libDoc, previsionnel_popDocs_outp_listeDocs"
+					oncomplete="popupDocPrevisionnel.hide();" />
+	       			<p:commandButton value="#{resourceBundle['btn.fermer']}" oncomplete="popupDocPrevisionnel.hide();"/>
+	       		</div>
+		</h:form>
+	</p:dialog>
+	
+	<!-- **************************************** -->
+    <!-- Popup des documents REELS				  -->
+    <!-- **************************************** -->
+    <p:dialog widgetVar="popupDocReel" header="#{resourceBundle['editEssai.ongletsurcout.reel.popup.title']}"
+    	resizable="true" modal="true" 
+    	styleClass="essaiTabPopup popupDocsWithHisto"
+    	width="#{resourceBundle['popup.documents.withHisto.width']}" height="#{resourceBundle['popup.documents.withHisto.height']}">  
+
+		<h:form id="reel_popDocs_form" prependId="false" enctype="multipart/form-data">
+			<!-- historique -->
+			<h3><h:outputFormat value="#{resourceBundle['document.historique']}" /></h3>
+			<fieldset>
+				<p:outputPanel id="reel_popDocs_outp_listeDocs" style="display:block;margin-top:10px;width:100%">
+					<p:panel styleClass="popupScrollable" style="margin-bottom:10px">
+			 			<div align="center">
+							<p:dataTable id="reel_popDocs_dataTable_docs" value="#{essaiManager.getList('detailSurcout.documentsReels', false)}" var="document" emptyMessage="#{resourceBundle['results.none']}">
+								<p:column id="nom" style="width: 120px;">
+									<f:facet name="header"><h:outputText value="#{resourceBundle['document.nomUser']}" /></f:facet>
+									<h:outputText value="#{document.nomUtilisateur}" />
+								</p:column>
+								<p:column id="date" style="width: 60px;">
+									<f:facet name="header"><h:outputText value="#{resourceBundle['suivi.date']}" /></f:facet>
+									<h:outputText value="#{document.dateMaj.time}">
+										<f:convertDateTime pattern="#{resourceBundle['date.pattern.withHeures']}"/>
+									</h:outputText>
+								</p:column>
+								<p:column id="auteur" style="width: 50px;">
+									<f:facet name="header"><h:outputText value="#{resourceBundle['suivi.auteur']}" /></f:facet>
+									<h:outputText value="#{document.majPar}" />
+								</p:column>
+								<p:column id="commentaire">
+									<f:facet name="header"><h:outputText value="#{resourceBundle['document.commentaire']}" /></f:facet>
+									<h:outputText value="#{document.commentaire}" />
+								</p:column>
+								<p:column id="dwd" style="width: 95px;">
+									<p:commandButton value="#{resourceBundle['file.dwd']}" title="#{resourceBundle['file.dwd']}" ajax="false">
+										<p:fileDownload value="#{fileDwdController.downloadDocument(essaiManager.bean, document)}" />
+									</p:commandButton>  
+								</p:column>
+							</p:dataTable>		            
+						</div>
+					</p:panel>
+				</p:outputPanel>
+			</fieldset>
+			<!-- nouveau document -->
+			<h3><h:outputFormat value="#{resourceBundle['document.nouveau']}" /></h3>
+			<fieldset>
+				<c:set var="enumValueReel" value="#{enumManager.getEnumValue('TypeDocumentEssai','REEL')}" />
+				<p:outputPanel id="reel_popDocs_outp_libDoc" style="display:block;margin-top:10px;">
+					<h:panelGrid columns="2" style="margin-bottom:10px" width="100%" columnClasses="panelCol_15,panelCol_85">
+						<h:outputLabel id="labelReelDocsFile" for="reel_popupDocs_file" value="#{resourceBundle['document.fichier']}" />
+						<t:inputFileUpload id="reel_popupDocs_file" size="#{resourceBundle['popup.documents.withHisto.filedownload.size']}" value="#{essaiManager.getDocumentManager(enumValueReel, true).file}" />
+						
+						<h:outputLabel id="labelReelDocsFileCom" for="reel_popupDocs_comm" value="#{resourceBundle['document.commentaire']}" />
+						<h:inputTextarea id="reel_popupDocs_comm" value="#{essaiManager.getDocumentManager(enumValueReel, true).commentaire}"
+							styleClass="editCommentaire" 
+							rows="#{resourceBundle['textarea.rows.filedownload']}" />
+					</h:panelGrid>
+				</p:outputPanel>				
+			</fieldset>
+			<div class="popupButton">
+				<p:commandButton value="#{resourceBundle['btn.ajouter']}"
+					ajax="false" action="submit"
+					actionListener="#{essaiManager.ajouterDocument(enumValueReel, true)}"
+					update="reel_lastDoc, reel_popDocs_outp_libDoc, reel_popDocs_outp_listeDocs"
+					oncomplete="popupDocReel.hide();" />
+	       			<p:commandButton value="#{resourceBundle['btn.fermer']}" oncomplete="popupDocReel.hide();"/>
+	       		</div>
+		</h:form>
+	</p:dialog>
+
+
+</ui:composition>

@@ -1,0 +1,86 @@
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:p="http://primefaces.prime.com.tr/ui"
+	xmlns:c="http://java.sun.com/jsp/jstl/core"
+	xmlns:sf="http://www.springframework.org/tags/faces">
+	
+	<!-- Gestion scroll et focus -->
+	<script type="text/javascript">
+		launchScrollEditProduit();
+	</script>
+	<p:focus context="conditionnements" />
+
+	<fieldset>
+		<p:dataTable id="conditionnements"  styleClass="tabPrescriptions"
+			value="#{produitTherapeutiqueManager.getList('conditionnements', false)}"
+			var="conditionnement"
+			emptyMessage="#{resourceBundle['results.none']}"
+			selection="#{conditionnementsManager.beanSelected}"
+			selectionMode="single" 
+			rowSelectListener="#{conditionnementManager.editConditionnement(conditionnementsManager.beanSelected)}"
+			onRowSelectComplete="javascript:popupEditionCondAutreProd.show(); disableConditionnementSelectionStyle();"
+			update="formConditionnement stockPanel prescriptionPanel">
+
+			<p:column id="conditionnement_libelle"
+				sortBy="#{conditionnement.libelle}">
+				<f:facet name="header">
+					<h:outputText
+						value="#{resourceBundle['editProduit.onglet.prescription.conditionnement.libelle']}" />
+				</f:facet>
+				<h:outputText value="#{conditionnement.libelle}" />
+			</p:column>
+
+			<p:column id="conditionnement_voie_administration"
+				sortBy="#{conditionnement.voieAdministration}">
+				<f:facet name="header">
+					<h:outputText
+						value="#{resourceBundle['editProduit.onglet.prescription.conditionnement.voie']}" />
+				</f:facet>
+				<h:outputText value="#{conditionnement.voieAdministration}" />
+			</p:column>
+
+			<p:column id="conditionnement_dosage"
+				sortBy="#{conditionnement.dosage}">
+				<f:facet name="header">
+					<h:outputText
+						value="#{resourceBundle['editProduit.onglet.prescription.conditionnement.dosage']}" />
+				</f:facet>
+				<h:outputText value="#{conditionnement.dosage} " /> <h:outputText value="#{conditionnement.uniteDosage}" />
+			</p:column>
+
+			<p:column id="conditionnement_mode_prescription"
+				sortBy="#{conditionnement.modePrescription.libelle}">
+				<f:facet name="header">
+					<h:outputText
+						value="#{resourceBundle['editProduit.onglet.prescription.conditionnement.mode']}" />
+				</f:facet>
+				<h:outputText value="#{conditionnement.modePrescription.libelle}" />
+			</p:column>
+
+			<p:column>
+				<div align="center"><h:selectBooleanCheckbox immediate="true" 
+					value="#{conditionnement.selected}" /></div>
+			</p:column>
+
+		</p:dataTable>
+		<div class="actionButton">
+			<p:commandButton
+				id="addConditionnement" 
+				actionListener="#{conditionnementsManager.initAjout(conditionnementFactory.getInitializedObject(produitTherapeutiqueManager.bean))}" ajax="true"
+				immediate="true" update="formConditionnement err" oncomplete="popupEditionCondAutreProd.show();"
+				value="#{resourceBundle['btn.ajouter']}"
+				title="#{resourceBundle['btn.ajouter']}">
+			</p:commandButton>
+			<p:commandButton id="deleteConditionnement" 
+				actionListener="#{conditionnementsManager.remove(produitTherapeutiqueManager.bean)}" ajax="true"
+				value="#{resourceBundle['btn.supprimer']}" update="conditionnements common_outp_msgs" oncomplete="scrollToErrorIfExist()"
+				title="#{resourceBundle['btn.supprimer']}">
+			</p:commandButton>
+		</div>
+	</fieldset>
+
+</ui:composition>
+
+

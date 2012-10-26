@@ -1,0 +1,234 @@
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:p="http://primefaces.prime.com.tr/ui"
+     xmlns:c="http://java.sun.com/jsp/jstl/core"
+	xmlns:sf="http://www.springframework.org/tags/faces">
+
+	<c:set var="idOnglet_surcout">ONG_SURCOUTS</c:set>
+	<input type="hidden" id="currentView" name="currentView" value="#{idOnglet_surcout}" />
+	
+	
+	<p:focus context="surc_panel_modele" />
+
+	<h:panelGrid id="surc_panel_modele" columns="4" columnClasses="panelCol_25,panelCol_25,panelCol_25,panelCol_25" >
+
+		<!-- Selection de la grille modele -->
+		<h:outputLabel id="grilleModeleLabel" for="grilleModele" 
+			value="#{resourceBundle['gestionGrille.grilleModele']}" />
+		<h:selectOneMenu id="grilleModele"  immediate="true" disabled="#{grilleManager.grilleModeleSelected != null}"
+		value="#{grilleManager.grilleModeleSelected}" converter="#{grilleModeleConverter}" onchange="launchScrollEditEssai();"> 
+			<f:selectItem noSelectionOption="true" itemLabel="" itemValue="null" />
+			<f:selectItems value="#{grilleManager.getGrillesModeles()}" var="item" itemLabel="#{item.nom}" itemValue="#{item}"/>
+			<f:ajax render="grilleSurcout infoPrevisionPanel infoReelPanel" listener="#{grilleManager.handleSelectGrilleModele}" process="grilleSurcout"/> 
+		</h:selectOneMenu>
+		<p:commandLink ajax="false" onclick="showWait();" 	rendered="#{essaiManager.isSurcoutPrevisionnelEditable() }" 
+				title="#{resourceBundle['designable.bras.del']}"
+				actionListener="#{grilleManager.removeGrille()}">
+				<h:graphicImage library="images" name="del.gif" />
+			</p:commandLink>
+		<h:panelGroup rendered="#{!essaiManager.isSurcoutPrevisionnelEditable() and grilleManager.bean != null}"/>
+		<h:panelGroup/>
+	</h:panelGrid>
+	
+	<!-- tableau des items de la grille -->
+	<p:outputPanel id="grilleSurcout">
+		<p:dataTable id="themes" value="#{beanManagerHelper.returnAsDataModel(grilleManager.findThemes())}" var="theme" emptyMessage="#{resourceBundle['results.none']}" rendered="#{grilleManager.bean != null}" style="width:100%;" >
+		
+		
+			<!-- nom du theme -->
+			<p:column id="theme" styleClass="panelCol_10" >
+				<f:facet name="header">
+					<h:outputText value="#{resourceBundle['gestionGrille.theme']}"/>
+				</f:facet>
+				<h:outputText value="#{theme}"/>
+			</p:column>
+			
+			<p:column id="categories" styleClass="panelCol_90" >
+			
+				<f:facet name="header">
+					<h:outputText value="#{resourceBundle['gestionGrille.categorie']}"/>
+				</f:facet>
+				<!-- Categories -->
+				<p:dataTable id="items" value="#{beanManagerHelper.returnAsDataModel(grilleManager.findItemForTheme(theme))}" var="item" style="width:100%;"  emptyMessage="#{resourceBundle['results.none']}" >
+				
+	
+					<p:column id="categorie" styleClass="panelCol_25">
+						
+						<h:outputText value="#{item.categorie}"/>
+					</p:column>
+					
+					<!-- Liste des regles (couts) a appliquer -->
+					<p:column id="regles" styleClass="panelCol_45">
+							
+							
+						<ui:repeat var="regle" value="#{beanManagerHelper.returnAsDataModel(item.regles)}" >
+							
+							<div class="ligne_regle" style="width:100%;">
+							
+							<h:outputText value="#{regle.toString()}"/> 
+							
+							</div>
+						</ui:repeat> 
+					</p:column>
+				</p:dataTable>
+			</p:column>
+		</p:dataTable>
+	</p:outputPanel>
+	
+	<p:outputPanel id="infoPrevisionPanel">
+	<!-- Panneau de renseignement des informations pour le previsionnel -->
+	<p:panel id="infoPrevision" rendered="#{grilleManager.bean != null}" header="#{resourceBundle['gestionGrille.previsionnel.title']}">
+		<h:panelGrid columns="4" columnClasses="panelCol_25,panelCol_25,panelCol_25,panelCol_25">
+			<h:outputLabel id="labelNbDispensations" for="nb_dispensations" value="#{resourceBundle['gestionGrille.prevision.nbDispensations']}" converterMessage="#{resourceBundle['gestionGrille.dispensation.invalid_type']}" styleClass="mandatory"/>
+	 		<h:inputText id="nb_dispensations" value="#{essaiManager.bean.detailSurcout.donneesPrevision.nbDispensations}" immediate="true" disabled="#{!essaiManager.isSurcoutPrevisionnelEditable()}"/>
+	 		
+	 		<h:outputLabel id="labelNbDispensationsRen" for="nb_dispensationsRen" value="#{resourceBundle['gestionGrille.prevision.nbDispensationsRenouvellement']}" converterMessage="#{resourceBundle['gestionGrille.dispensation.invalid_type']}" styleClass="mandatory"/>
+	 		<h:inputText id="nb_dispensationsRen" value="#{essaiManager.bean.detailSurcout.donneesPrevision.nbDispensationsRenouvellement}" immediate="true" disabled="#{!essaiManager.isSurcoutPrevisionnelEditable()}"/>
+	 		
+			<h:outputLabel id="labelNbPrescriptions" for="nb_prescriptions" value="#{resourceBundle['gestionGrille.prevision.nbPrescriptions']}"  converterMessage="#{resourceBundle['gestionGrille.prescription.invalid_type']}" styleClass="mandatory"/>
+	 		<h:inputText id="nb_prescriptions" value="#{essaiManager.bean.detailSurcout.donneesPrevision.nbPrescriptions}" immediate="true" disabled="#{!essaiManager.isSurcoutPrevisionnelEditable()}"/>
+	 		
+			<h:outputLabel id="labelNbDestructions" for="nb_destructions" value="#{resourceBundle['gestionGrille.prevision.nbDestructions']}" converterMessage="#{resourceBundle['gestionGrille.destruction.invalid_type']}" styleClass="mandatory"/>
+	 		<h:inputText id="nb_destructions" value="#{essaiManager.bean.detailSurcout.donneesPrevision.nbDestructions}" immediate="true"  disabled="#{!essaiManager.isSurcoutPrevisionnelEditable()}"/>
+	 		
+			<h:outputLabel id="labelNbReetiquetage" for="nb_reetiquetages" value="#{resourceBundle['gestionGrille.prevision.nbReetiquetages']}" converterMessage="#{resourceBundle['gestionGrille.etiquetage.invalid_type']}" styleClass="mandatory"/>
+	 		<h:inputText id="nb_reetiquetages"  value="#{essaiManager.bean.detailSurcout.donneesPrevision.nbReetiquetages}" immediate="true" disabled="#{!essaiManager.isSurcoutPrevisionnelEditable()}"/>
+	 		
+	 		<h:outputLabel id="labelNbAnnees" for="nb_annees" value="#{resourceBundle['gestionGrille.prevision.nbAnnees']}" converterMessage="#{resourceBundle['gestionGrille.nbAnnees.invalid_type']}" styleClass="mandatory"/>
+	 		<h:inputText id="nb_annees"  value="#{essaiManager.bean.detailSurcout.donneesPrevision.nbAnnees}" immediate="true" disabled="#{!essaiManager.isSurcoutPrevisionnelEditable()}"/>
+	 			
+	 		<!-- Nombre de patients prevus Local -->
+			<h:outputLabel id="labelNbPatients2" for="nb_patients_prevus2"
+				value="#{resourceBundle['editEssai.onglet.pharma.nbPatients']}" styleClass="mandatory"/>
+			<h:inputText id="nb_patients_prevus2"
+				value="#{essaiManager.bean.detailDonneesPharma.infosGenerales.nbPatientsPrevus}"
+				converterMessage="#{resourceBundle['essai.detailPharma.nbPatients.invalid_type']}"  disabled="#{!essaiManager.isSurcoutPrevisionnelEditable()}"/>
+				
+			<h:outputLabel id="labelNbVisiteMioni" for="nb_visiteMonitoring"
+				value="#{resourceBundle['editEssai.onglet.surcout.nbVisiteMonitoring']}" styleClass="mandatory"/>
+			<h:inputText id="nb_visiteMonitoring"
+				value="#{essaiManager.bean.detailSurcout.donneesPrevision.nbVisiteMonitoring}"
+				converterMessage="#{resourceBundle['essai.detailPharma.nbVisiteMonitoring.invalid_type']}"  disabled="#{!essaiManager.isSurcoutPrevisionnelEditable()}"/>
+			
+			<!-- Approvisionnements -->	
+	 		<h:outputLabel id="labelNbAppros" for="nb_approvisionnements" value="#{resourceBundle['gestionGrille.prevision.nbAppros']}" converterMessage="#{resourceBundle['gestionGrille.nbAppros.invalid_type']}" styleClass="mandatory"/>
+	 		<h:inputText id="nb_approvisionnements"  value="#{essaiManager.bean.detailSurcout.donneesPrevision.nbApprovisionnements}" immediate="true" disabled="#{!essaiManager.isSurcoutPrevisionnelEditable()}"/>
+	 		
+	 		<!-- Audits -->
+	 		<h:outputLabel id="labelNbAudits" for="nb_audits" value="#{resourceBundle['gestionGrille.prevision.nbAudits']}" converterMessage="#{resourceBundle['gestionGrille.nbAudits.invalid_type']}" styleClass="mandatory"/>
+	 		<h:inputText id="nb_audits"  value="#{essaiManager.bean.detailSurcout.donneesPrevision.nbAudits}" immediate="true" disabled="#{!essaiManager.isSurcoutPrevisionnelEditable()}"/>
+	 		
+	 		<!-- Preparations steriles -->
+	 		<h:outputLabel id="labelNbPreparationsSteriles" for="nb_PreparationsSteriles" value="#{resourceBundle['gestionGrille.prevision.nbPreparationsSteriles']}" converterMessage="#{resourceBundle['gestionGrille.nbPreparationsSteriles.invalid_type']}" styleClass="mandatory"/>
+	 		<h:inputText id="nb_PreparationsSteriles"  value="#{essaiManager.bean.detailSurcout.donneesPrevision.nbPreparationsSteriles}" immediate="true" disabled="#{!essaiManager.isSurcoutPrevisionnelEditable()}"/>
+	 		
+	 		<!-- Preparations non steriles -->
+	 		<h:outputLabel id="labelNbPreparationsNonSteriles" for="nb_PreparationsNonSteriles" value="#{resourceBundle['gestionGrille.prevision.nbPreparationsNonSteriles']}" converterMessage="#{resourceBundle['gestionGrille.nbPreparationsNonSteriles.invalid_type']}" styleClass="mandatory"/>
+	 		<h:inputText id="nb_PreparationsNonSteriles"  value="#{essaiManager.bean.detailSurcout.donneesPrevision.nbPreparationsNonSteriles}" immediate="true" disabled="#{!essaiManager.isSurcoutPrevisionnelEditable()}"/>
+			
+			<h:panelGroup/>	
+		</h:panelGrid>
+		
+		<p:outputPanel id="previsionnel_lastDoc">
+			<c:set var="lastDocPrev" value="#{essaiManager.getLastDocument(enumManager.getEnumValue('TypeDocumentEssai','PREVISIONNEL'))}" />
+		   <h:panelGrid id="dar_prev" columns="3" columnClasses="panelCol_25 selectRadio, panelCol_25, panelCol_50">
+		   	<p:column>
+				<h:outputLink id="labelPrev" value="javascript:void(0)" onclick="popupDocPrevisionnel.show()" 
+					styleClass="clickable" title="#{resourceBundle['document.popupLink.title']}">#{resourceBundle['editEssai.onglet.surcout.previsionnel']}</h:outputLink>
+		   	</p:column>
+		   	<p:column colspan="2">
+				<c:choose>
+					<c:when test="#{lastDocPrev != null}">
+						<h:outputText value="#{lastDocPrev.nomUtilisateur}" title="#{documentsIhmHelper.buildDocTitle(lastDocPrev, resourceBundle['document.part1'], resourceBundle['document.part2'], resourceBundle['date.pattern.withHeures'])}" />
+					</c:when>
+					<c:otherwise>
+				    	<h:panelGroup />
+					</c:otherwise>
+				</c:choose>
+		   	</p:column>
+		   	<p:column colspan="2">
+				<c:choose>
+					<c:when test="#{lastDocPrev != null}">
+						<p:commandButton value="#{resourceBundle['file.dwd']}" title="#{resourceBundle['file.dwd']}" ajax="false">
+							<p:fileDownload value="#{fileDwdController.downloadDocument(essaiManager.bean, lastDocPrev)}" />
+						</p:commandButton>
+					</c:when>
+					<c:otherwise>
+				    	<h:panelGroup />
+					</c:otherwise>
+				</c:choose>
+		   	</p:column>
+		   </h:panelGrid>
+		</p:outputPanel>
+				
+		<p:outputPanel id="excelPrevisionnel">
+			<p:commandButton action="processCalculPrevision" onclick="showWait();" value="#{resourceBundle['export.excel.surcout.previsionnel']}"  ajax="false" title="#{resourceBundle['export.excel.surcout.previsionnel']}" update="@form" process="@this"/>
+				
+		</p:outputPanel>
+		
+		</p:panel>
+	</p:outputPanel>
+	
+	<p:outputPanel id="infoReelPanel">
+	<!-- Panneau de renseignement des informations pour le calcul reel -->
+	<p:panel id="infoReel" rendered="#{grilleManager.bean != null}" header="#{resourceBundle['gestionGrille.reel.title']}">
+		<h:panelGrid columns="4" columnClasses="panelCol_25,panelCol_25,panelCol_25,panelCol_25">
+			<h:outputLabel id="labelDateDebut" for="dateDebut" value="#{resourceBundle['gestionGrille.reel.dateDebut']}" />
+    		<p:calendar id="dateDebut" value="#{grilleManager.dateDebut}" 
+    			effect="#{resourceBundle['effect.calendar']}" locale="#{resourceBundle['date.locale']}" showButtonPanel="true" navigator="true" 
+    			converter="#{calendarConverter}" />
+	 		<h:panelGroup/>
+	 		<h:panelGroup/>
+			<h:outputLabel id="labelDateFin" for="dateFin" value="#{resourceBundle['gestionGrille.reel.dateFin']}" />
+    		<p:calendar id="dateFin" value="#{grilleManager.dateFin}" 
+    			effect="#{resourceBundle['effect.calendar']}" locale="#{resourceBundle['date.locale']}" showButtonPanel="true" navigator="true" 
+    			converter="#{calendarConverter}" />
+	 		<h:panelGroup/>
+	 		<h:panelGroup/>
+		</h:panelGrid>
+		
+		<p:outputPanel id="reel_lastDoc">
+			<c:set var="lastDocReel" value="#{essaiManager.getLastDocument(enumManager.getEnumValue('TypeDocumentEssai','REEL'))}" />
+		   <h:panelGrid id="dar_reel" columns="3" columnClasses="panelCol_25 selectRadio, panelCol_25, panelCol_50">
+		   	<p:column>
+				<h:outputLink id="labelReel" value="javascript:void(0)" onclick="popupDocReel.show()" 
+					styleClass="clickable" title="#{resourceBundle['document.popupLink.title']}">#{resourceBundle['editEssai.onglet.surcout.reel']}</h:outputLink>
+		   	</p:column>
+		   	<p:column colspan="2">
+				<c:choose>
+					<c:when test="#{lastDocReel != null}">
+						<h:outputText value="#{lastDocReel.nomUtilisateur}" title="#{documentsIhmHelper.buildDocTitle(lastDocReel, resourceBundle['document.part1'], resourceBundle['document.part2'], resourceBundle['date.pattern.withHeures'])}" />
+					</c:when>
+					<c:otherwise>
+				    	<h:panelGroup />
+					</c:otherwise>
+				</c:choose>
+		   	</p:column>
+		   	<p:column colspan="2">
+				<c:choose>
+					<c:when test="#{lastDocReel != null}">
+						<p:commandButton value="#{resourceBundle['file.dwd']}" title="#{resourceBundle['file.dwd']}" ajax="false">
+							<p:fileDownload value="#{fileDwdController.downloadDocument(essaiManager.bean, lastDocReel)}" />
+						</p:commandButton>
+					</c:when>
+					<c:otherwise>
+				    	<h:panelGroup />
+					</c:otherwise>
+				</c:choose>
+		   	</p:column>
+		   </h:panelGrid>
+		</p:outputPanel>
+		
+		 
+		 <!-- Informations generales -->
+		<p:outputPanel id="excelReel">
+			<p:commandButton action="processCalculReel" onclick="showWait();" value="#{resourceBundle['export.excel.surcout.reel']}"  title="#{resourceBundle['export.excel.surcout.reel']}" ajax="false" update="excelReel" process="@this"/>
+				
+		 </p:outputPanel>
+		
+		</p:panel>
+	</p:outputPanel>
+	
+</ui:composition>

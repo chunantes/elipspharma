@@ -1,0 +1,192 @@
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:p="http://primefaces.prime.com.tr/ui"
+	xmlns:t="http://myfaces.apache.org/tomahawk"
+	xmlns:c="http://java.sun.com/jsp/jstl/core">
+
+	<!--  Popup d'edition d'un theme -->
+	<p:dialog header="#{resourceBundle['gestionGrilleModele.addTheme']}"
+		widgetVar="popupEditTheme" styleClass="essaiTabPopup"
+		resizable="true" modal="true" width="500" >
+		<h:form id="formTheme">
+			<h:panelGrid width="100%" columns="2"
+							cellpadding="0" cellspacing="0" border="0"
+							columnClasses="panelCol_25,panelCol_75">
+				<h:outputLabel id="labelNomTheme" for="nom_theme" 
+					value="#{resourceBundle['gestionGrilleModele.theme.nom']}" />
+				<h:inputText id="nom_theme" value="#{grilleModeleManager.theme.libelle}" maxlength="250" />
+			</h:panelGrid>
+				<div class="popupButton"><p:commandButton  ajax="false"
+					value="#{resourceBundle['btn.valider']}" 
+					action="#{grilleModeleManager.addTheme()}" update="themes"
+					process="@form" oncomplete="popupEditTheme.hide();">
+				</p:commandButton></div>
+		</h:form>
+	</p:dialog>
+
+	<!--  Popup d'edition d'une categorie -->
+	<p:dialog header="#{resourceBundle['gestionGrilleModele.addCategorie']}"
+		widgetVar="popupEditCategorie" styleClass="essaiTabPopup"
+		resizable="true" modal="true" width="600" >
+		<h:form id="formCategorie">
+			<h:panelGrid columns="2" style="width:100%"
+							cellpadding="0" cellspacing="0" border="0" 
+							columnClasses="panelCol_25,panelCol_75">
+				<h:outputLabel id="labelNomCategorie" for="nom_categorie" 
+					value="#{resourceBundle['gestionGrilleModele.categorie.nom']}" />
+				<h:inputText id="nom_categorie" value="#{grilleModeleManager.categorie.libelle}" maxlength="180"/>
+				
+				<h:outputLabel id="labelActe" for="acte" 
+					value="#{resourceBundle['gestionGrilleModele.categorie.acte']}" />
+				<h:selectOneMenu id="acte" value="#{grilleModeleManager.categorie.acte}" 
+		 			required="true" requiredMessage="#{resourceBundle['grilleModele.acte.notEmpty']}">
+		 			<f:selectItem noSelectionOption="true"/>
+			     	<f:selectItems value="#{enumManager.getValues('Acte')}" />
+				</h:selectOneMenu>
+				
+			</h:panelGrid> 
+					<div class="popupButton"><p:commandButton ajax="false"
+					value="#{resourceBundle['btn.valider']}"   
+					action="#{grilleModeleManager.addCategorie()}" update="themes"
+					process="@form" oncomplete="popupEditCategorie.hide();"> 
+				</p:commandButton></div>
+		</h:form>
+	</p:dialog>
+	
+	<!--  Popup d'ajout d'une regle de calcul de cout -->
+	<p:dialog header="#{resourceBundle['gestionGrille.addRegle']}"
+		id="idPopupEditRegle" widgetVar="popupEditRegle"
+		styleClass="essaiTabPopup"
+		closeListener="#{grilleModeleManager.setRegle(null) }" resizable="true"
+		modal="true" width="500">
+		<h:form id="regle_form">
+
+			<p:focus />
+			<p:messages id="errors" />
+
+			<h:panelGrid width="100%" columns="2"
+							cellpadding="0" cellspacing="0" border="0"
+							columnClasses="panelCol_25,panelCol_75">
+
+				<!-- Choix du type de cout. -->
+				<h:outputLabel styleClass="mandatory" id="labelTypeCout"
+					for="typeCout"
+					value="#{resourceBundle['gestionGrille.regle.typeCout']}" />
+				<h:selectOneMenu id="typeCout" immediate="true"
+					value="#{grilleModeleManager.regle.type}">
+					<f:selectItem noSelectionOption="true" />
+					<f:selectItems value="#{enumManager.getValues('TypeCout')}" />
+					<f:ajax render="couts form3" execute="@this"
+						listener="#{grilleModeleManager.nothing }" />
+				</h:selectOneMenu>
+
+				<!-- Perimetre -->
+				<h:outputLabel styleClass="mandatory" id="labelPerimetre"
+					for="perimetre"
+					value="#{resourceBundle['gestionGrille.regle.perimetre']}" />
+				<h:selectOneMenu id="perimetre"
+					value="#{grilleModeleManager.regle.perimetre}">
+					<f:selectItem noSelectionOption="true" />
+					<f:selectItems value="#{enumManager.getValues('PerimetreCout')}" />
+				</h:selectOneMenu>
+			</h:panelGrid>
+
+			<!-- Si cout fixe -->
+			<p:outputPanel id="couts">
+
+				<!--  SI FIXE -->
+				<h:panelGrid width="100%" columns="2"
+							cellpadding="0" cellspacing="0" border="0"
+							columnClasses="panelCol_25,panelCol_75"
+					rendered="#{grilleModeleManager.regle.type.equals(COUT_FIXE)}">
+					<!-- Premiere annee -->
+					<h:outputLabel id="premiereAnneeLabel" for="premiereAnnee"
+						styleClass="mandatory"
+						value="#{resourceBundle['gestionGrille.regle.premiereAnnee']}" />
+					<h:inputText id="premiereAnnee"
+						value="#{grilleModeleManager.regle.premiereAnnee}"
+						disabled="#{prescriptionManager.readOnly}" />
+
+					<!-- Annees suivantes -->
+					<h:outputLabel id="anneesSuivantesLabel" for="anneesSuivantes"
+						styleClass="mandatory"
+						value="#{resourceBundle['gestionGrille.regle.anneesSuivantes']}" />
+					<h:inputText id="anneesSuivantes"
+						value="#{grilleModeleManager.regle.anneesSuivantes}" />
+				</h:panelGrid>
+
+				<!-- Si VARIABLE -->
+				<h:panelGrid width="100%" columns="2"
+							cellpadding="0" cellspacing="0" border="0"
+							columnClasses="panelCol_25,panelCol_75"
+					rendered="#{grilleModeleManager.regle.type.equals(COUT_VARIABLE)}">
+					<h:outputLabel styleClass="mandatory" id="labelModeCalcul"
+						for="modeCalcul"
+						value="#{resourceBundle['gestionGrille.regle.modeCalcul']}" />
+					<h:selectOneMenu id="modeCalcul" immediate="true"
+						value="#{grilleModeleManager.regle.mode}">
+						<f:selectItem noSelectionOption="true" />
+						<f:selectItems value="#{enumManager.getValues('ModeCalcul')}" />
+						<f:ajax render="form3" execute="@this"
+							listener="#{grilleModeleManager.nothing }" />
+					</h:selectOneMenu>
+
+				</h:panelGrid>
+			</p:outputPanel>
+
+			<p:outputPanel id="form3">
+
+				<h:panelGrid width="100%" columns="2"
+							cellpadding="0" cellspacing="0" border="0"
+							columnClasses="panelCol_25,panelCol_75"
+					rendered="#{grilleModeleManager.regle.type.equals(COUT_VARIABLE)}">
+
+					<!-- Debut -->
+					<h:outputLabel id="labelDebut" for="debut"
+						styleClass="mandatory"
+						value="#{resourceBundle['gestionGrille.regle.debut']}" />
+					<h:inputText id="debut"
+						value="#{grilleModeleManager.regle.min}" />
+
+					<!-- Fin -->
+					<h:outputLabel id="labelFin" for="fin"
+						styleClass="mandatory"
+						value="#{resourceBundle['gestionGrille.regle.fin']}" />
+					<h:inputText id="fin"
+						value="#{grilleModeleManager.regle.max}" />
+
+					<!-- Prix du lot -->
+					<h:outputLabel id="labelPrix" for="prix"
+						styleClass="mandatory"
+						value="#{resourceBundle['gestionGrille.regle.montant']}" />
+					<h:inputText id="prix"
+						value="#{grilleModeleManager.regle.montant}" />
+				</h:panelGrid>
+
+
+			</p:outputPanel>
+
+
+			<div class="popupButton"><p:commandButton id="submitButton"
+				value="#{resourceBundle['btn.valider']}" process="@form"
+				actionListener="#{grilleModeleManager.addRegle()}"
+				oncomplete="actionPopup(xhr, status,args);"
+				update="errors,themes" /></div>
+		</h:form>
+	</p:dialog>
+	
+	
+	<script type="text/javascript">
+		function actionPopup(xhr, status, args)
+		{
+				var isValid = args.isValid;
+				if (isValid){
+					popupEditRegle.hide();
+				}
+				showIcons();
+	   	}
+	</script>
+
+</ui:composition>

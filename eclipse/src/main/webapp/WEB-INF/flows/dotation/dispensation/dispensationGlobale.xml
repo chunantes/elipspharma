@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<flow xmlns="http://www.springframework.org/schema/webflow"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://www.springframework.org/schema/webflow
+    http://www.springframework.org/schema/webflow/spring-webflow-2.0.xsd" parent="main">
+    
+	<!-- Démarrage -->
+	<on-start>
+		<!-- Récupération des pharmacies -->
+		<evaluate expression="pharmacieSearchCriteria.clear()"/>
+		<evaluate expression="pharmacieService.getAll(pharmacieSearchCriteria)" result="pharmaciesManager.beans"/>
+		<!-- Initialisation complétion automatique des essais -->
+		<evaluate expression="essaiSearchCriteria.clear()"/>
+		<evaluate expression="'numInterne'" result="autoCompleteEssaiManager.searchCriteria.activeOrder" />
+		<evaluate expression="'numInterneOrNomOrPromoteur'" result="autoCompleteEssaiManager.searchCriteriaProperty" />
+		<!-- Initialisation complétion automatique des services -->
+		<evaluate expression="serviceSearchCriteria.clear()"/>
+		<evaluate expression="'nom'" result="autoCompleteServiceManager.searchCriteria.activeOrder" />
+		<evaluate expression="'nom'" result="autoCompleteServiceManager.searchCriteriaProperty" />
+		<!-- Purge du critère de recherche -->
+		<evaluate expression="dotationSearchCriteria.clear()"/>
+		<!-- Initialisation manager dispensation gloable -->
+		<evaluate expression="dispensationGlobaleManager.init()" />
+		<!-- Purge des résultats -->
+		<evaluate expression="new java.util.ArrayList()" result="dispensationGlobaleManager.beans"/>
+	</on-start>    
+    
+    <!-- Page principale -->
+	<view-state id="dispensationGlobale" view="../../../pages/dotation/dispensation/dispensationGlobale.xhtml">
+		<transition on="traiterDotation" to="traiterDotation"/>
+		<transition on="search" to="search"/>
+	</view-state>
+    
+	<!-- Recherche -->
+	<action-state id="search">
+		<evaluate expression="dotationService.getAll(dotationSearchCriteria)" result="dispensationGlobaleManager.beans"/>
+		<transition to="dispensationGlobale"/>
+	</action-state>
+	
+	<!-- Sous-flow de traitement de dotation (sortie) -->
+	<subflow-state id="traiterDotation" subflow="dotation/dispensation/sortie">
+		<transition to="search">
+			<evaluate expression="null" result="dispensationGlobaleManager.beanSelected"/>
+		</transition>
+	</subflow-state>	   
+    
+</flow>

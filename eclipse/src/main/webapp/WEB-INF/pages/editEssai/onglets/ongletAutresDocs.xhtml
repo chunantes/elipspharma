@@ -1,0 +1,99 @@
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+     xmlns:ui="http://java.sun.com/jsf/facelets"
+     xmlns:h="http://java.sun.com/jsf/html"
+     xmlns:f="http://java.sun.com/jsf/core"
+     xmlns:p="http://primefaces.prime.com.tr/ui"
+     xmlns:t="http://myfaces.apache.org/tomahawk"
+     xmlns:sf="http://www.springframework.org/tags/faces"
+     xmlns:c="http://java.sun.com/jsp/jstl/core">
+    
+    <c:set var="idOnglet_autresDocs">ONG_AUTRES_DOCS</c:set>
+    <input type="hidden" id="currentView" name="currentView" value="#{idOnglet_autresDocs}" />
+
+	<p:focus context="ad_docs_listeDocs" />
+    
+   	<fieldset>
+	    <!-- *************************************** -->
+	    <!-- Historique		   						 -->
+		<!-- *************************************** -->
+   		<p:outputPanel id="ad_docs_listeDocs" style="display:block;margin-top:10px;">
+   			<p:panel id="ad_docs_listeDocs_panel" header="#{resourceBundle['editEssai.onglet.autresDocs.blocListe.title']}"
+		     collapsed="#{empty essaiManager.bean.detailAutresDocuments.documents}" 
+		   		closable="false">
+				<h:panelGrid columns="2" style="margin-bottom:10px" width="100%">  
+					<p:dataTable id="ad_docs_dataTable_docs" value="#{essaiManager.getList('detailAutresDocuments.documents', false)}" var="document" emptyMessage="#{resourceBundle['results.none']}"
+						styleClass="tabAutresDocs" 
+						paginator="true" rows="#{resourceBundle['pagination.rowsPerPage']}"
+			  			paginatorTemplate="#{paginatorTemplate}">
+						<p:column id="nom" style="width: 20%">
+							<f:facet name="header"><h:outputText value="#{resourceBundle['document.nomUser']}" /></f:facet>
+							<h:outputText value="#{document.nomUtilisateur}" />
+						</p:column>
+						<p:column id="date" style="width: 15%">
+							<f:facet name="header"><h:outputText value="#{resourceBundle['suivi.date']}" /></f:facet>
+							<h:outputText value="#{document.dateMaj.time}">
+								<f:convertDateTime pattern="#{resourceBundle['date.pattern.withHeures']}"/>
+							</h:outputText>
+						</p:column>
+						<p:column id="auteur" style="width: 15%">
+							<f:facet name="header"><h:outputText value="#{resourceBundle['suivi.auteur']}" /></f:facet>
+							<h:outputText value="#{document.majPar}" />
+						</p:column>
+						<p:column id="commentaire" style="width: 40%">
+							<f:facet name="header"><h:outputText value="#{resourceBundle['document.commentaire']}" /></f:facet>
+							<h:outputText value="#{document.commentaire}" />
+						</p:column>
+						<p:column id="dwd" style="width: 10%">
+							<p:commandButton value="#{resourceBundle['file.dwd']}" title="#{resourceBundle['file.dwd']}" ajax="false">
+								<p:fileDownload value="#{fileDwdController.downloadDocument(essaiManager.bean, document)}" />
+							</p:commandButton>  
+						</p:column>
+					</p:dataTable>		            
+				</h:panelGrid>
+			</p:panel>
+		</p:outputPanel>
+		
+	    <!-- *************************************** -->
+	    <!-- Nouveau document						 -->
+	    <!-- *************************************** -->
+   		<c:set var="enumValueAutre" value="#{enumManager.getEnumValue('TypeDocumentEssai','AUTRE')}" />
+		<p:outputPanel id="ad_docs_outp_libDoc" style="display:block;margin-top:10px;">
+			<p:panel id="ad_docs_libDoc_panel" header="#{resourceBundle['document.nouveau']}">
+				<h:panelGrid columns="2" style="margin-bottom:10px" width="100%">
+					<h:outputLabel id="labelADdocsFile" for="ad_docs_file" value="#{resourceBundle['document.fichier']}" />
+					<t:inputFileUpload id="ad_docs_file" value="#{essaiManager.getDocumentManager(enumValueAutre, true).file}"
+						size="#{resourceBundle['popup.documents.withHisto.filedownload.size']}" />
+					
+					<h:outputLabel id="labelADdocsCom" for="ad_docs_comm" value="#{resourceBundle['document.commentaire']}" />
+					<h:inputTextarea id="ad_docs_comm" 
+						value="#{essaiManager.getDocumentManager(enumValueAutre, true).commentaire}" 
+						rows="#{resourceBundle['textarea.rows.default']}" />
+				</h:panelGrid>
+				<div style="text-align: right;">
+					<p:commandButton value="#{resourceBundle['btn.ajouter']}" title="#{resourceBundle['btn.ajouter']}"
+						ajax="false" action="submit"
+						actionListener="#{essaiManager.ajouterDocument(enumValueAutre, true)}"
+						update="ad_docs_outp_libDoc, ad_docs_listeDocs" />
+				</div>
+		   	</p:panel>
+		</p:outputPanel>	
+   	</fieldset>
+		
+    
+    <!-- Suivi des modifications -->
+    <p:panel id="ad_suivi" styleClass="panelSuivi" rendered="#{essaiManager.hasLastModif(idOnglet_autresDocs)}"> 
+		<c:set var="lastModifOngAutresDocs" value="#{essaiManager.getLastModif(idOnglet_autresDocs)}" />
+		<h:outputText value="#{resourceBundle['suivi.part1']} " />
+		<h:outputText value="#{lastModifOngAutresDocs.dateMaj.time}">
+			<f:convertDateTime pattern="#{resourceBundle['date.pattern.withHeures']}"/>
+		</h:outputText>
+		<h:outputText value="#{resourceBundle['suivi.part2']} " />
+		<h:outputText value="#{lastModifOngAutresDocs.majPar}" />
+		<h:outputText value="#{resourceBundle['ponctuation.bracket.open']} " />
+		<h:outputLink id="labelADModifs" value="javascript:void(0)" styleClass="clickable"
+			onclick="popupHistoOngAutresDocs.show()" title="#{resourceBundle['suivi.popupLink.title']}">#{resourceBundle['suivi.historique']}
+		</h:outputLink>
+		<h:outputText value="#{resourceBundle['ponctuation.bracket.close']} " />
+	</p:panel>
+	
+</ui:composition>

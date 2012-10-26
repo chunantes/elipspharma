@@ -1,0 +1,295 @@
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+     xmlns:ui="http://java.sun.com/jsf/facelets"
+     xmlns:h="http://java.sun.com/jsf/html"
+     xmlns:f="http://java.sun.com/jsf/core"
+     xmlns:p="http://primefaces.prime.com.tr/ui"
+     xmlns:c="http://java.sun.com/jsp/jstl/core"
+     template="/WEB-INF/pages/template/template.xhtml">
+
+     <ui:define name="title">
+		<h:outputFormat value="#{resourceBundle['gestionRetourPatient.title']}"/>
+     </ui:define>
+     
+     <ui:define name="body">
+     	
+     	<h:form id="retourPatientForm" prependId="false">
+     		
+     		<fieldset style="width:960px;">
+     			<p:messages />
+     		</fieldset>
+     		<fieldset>
+				<table class="stock large" cellpadding="0" cellspacing="0" border="0" width="100%">
+			 		<tr>
+			 			<td>					
+							<h:panelGrid id="panelRetourPatientReception" columns="4" columnClasses="panelCol_25,panelCol_25,panelCol_25,panelCol_25" cellpadding="0" cellspacing="0" border="0" width="100%">
+
+								<!-- Essai Promoteur -->
+	 							<h:outputLabel id="labelEssai" for="essai_input" value="#{resourceBundle['gestionRetourPatient.essaiPromoteur.mandatory']}" />
+	 							<p:autoComplete immediate="true" id="essai_input" value="#{retourPatientManager.essaiSelected}" 
+	 								required="true" requiredMessage="#{resourceBundle['retourPatient.essai.notEmpty']}"
+	 								selectListener="#{retourPatientManager.handleSelectEssai}"
+	 								completeMethod="#{autoCompleteEssaiManager.complete}"
+	 								forceSelection="true" rendered="#{retourPatientManager.bean.id eq null}"
+	 								var="essai" style="width:190px;" 
+	 								itemLabel="#{essai.numInterne} #{essai.nom} - #{essai.promoteur.raisonSociale}"
+	 								itemValue="#{essai}"
+	 								converter="#{essaiConverter}"
+	 								onSelectUpdate="patient pharmacie produit"/>
+	 								<h:outputText value="#{retourPatientManager.bean.essai.numInterne} #{retourPatientManager.bean.essai.nom} - #{retourPatientManager.bean.essai.promoteur.raisonSociale}" 
+	 							 rendered="#{retourPatientManager.action eq 'edit'}"/>
+								<h:panelGroup />	 								
+								<h:panelGroup />	 								 
+	 									
+								<!-- Patient -->
+								<h:outputLabel id="labelPatient" for="patient" value="#{resourceBundle['gestionRetourPatient.patient.mandatory']}"/>
+								<h:selectOneMenu converter="#{patientConverter}"  rendered="#{retourPatientManager.bean.id eq null}"
+									 id="patient" value="#{retourPatientManager.patientSelected}" styleClass="selectRadio" immediate="true">
+									<f:selectItem noSelectionOption="true" itemLabel="" itemValue="" />
+									<f:selectItems value="#{retourPatientManager.patients}" var="patient" itemLabel="#{patient.nom}" itemValue="#{patient}"/>
+									<f:ajax render="@this numOrdonnancierPanel" listener="#{retourPatientManager.handleSelectPatient}"/>
+								</h:selectOneMenu>
+	 							<h:outputText value="#{retourPatientManager.bean.patient.nom} "  
+	 							 rendered="#{retourPatientManager.action eq 'edit'}"/>
+								<h:panelGroup />	 								
+								<h:panelGroup />
+											
+								<!-- Pharmacie -->
+								<h:outputLabel id="labelPharmacie" for="pharmacie" value="#{resourceBundle['gestionRetourPatient.pharmacie.mandatory']}"/>
+								<h:selectOneMenu converter="#{pharmacieConverter}" rendered="#{retourPatientManager.bean.id eq null}" required="true" requiredMessage="#{resourceBundle['retourPatient.pharmacie.notEmpty']}"
+									 id="pharmacie" value="#{retourPatientManager.pharmacieSelected}" styleClass="selectRadio" immediate="true">
+									<f:selectItem noSelectionOption="true" itemLabel="" itemValue="" />
+									<f:selectItems value="#{retourPatientManager.pharmacies}" var="pharmacie" itemLabel="#{pharmacie.nom}" itemValue="#{pharmacie}"/>
+									<f:ajax listener="#{retourPatientManager.handleSelectPharmacie}" render="produit"/>
+								</h:selectOneMenu>
+	 							<h:outputText value="#{retourPatientManager.bean.detailStockage.pharmacie.nom}"  
+	 							 rendered="#{retourPatientManager.action eq 'edit'}"/>
+								<h:panelGroup />	 								
+								<h:panelGroup />
+								
+								<!-- Produit -->
+								<h:outputLabel id="labelProduit" for="produit" value="#{resourceBundle['gestionRetourPatient.produit.mandatory']}"/>
+								<h:selectOneMenu converter="#{produitConverter}" rendered="#{retourPatientManager.bean.id eq null}" required="true" requiredMessage="#{resourceBundle['retourPatient.produit.notEmpty']}"
+									 id="produit" value="#{retourPatientManager.produitSelected}" styleClass="selectRadio" immediate="true">
+									<f:selectItem noSelectionOption="true" itemLabel="" itemValue="" />
+									<f:selectItems value="#{retourPatientManager.produits}" var="produit" itemLabel="#{produit.nom}" itemValue="#{produit}"/>
+									<f:ajax listener="#{retourPatientManager.handleSelectProduit}" render="conditionnement" />
+								</h:selectOneMenu>
+	 							<h:outputText value="#{retourPatientManager.bean.produit.nom} "  
+	 							 rendered="#{retourPatientManager.action eq 'edit'}"/>
+								<h:panelGroup />	 								
+								<h:panelGroup />
+									
+								<!-- Conditionnement -->
+								<h:outputLabel id="labelConditionnement" for="conditionnement" value="#{resourceBundle['gestionRetourPatient.conditionnement.mandatory']}"/>
+								<h:selectOneMenu converter="#{conditionnementConverter}" rendered="#{retourPatientManager.bean.id eq null}" immediate="true" required="true" requiredMessage="#{resourceBundle['retourPatient.conditionnement.notEmpty']}"
+									 id="conditionnement" value="#{retourPatientManager.conditionnementSelected}" styleClass="selectRadio">
+									<f:selectItem noSelectionOption="true" itemLabel="" itemValue="" />
+									<f:selectItems value="#{retourPatientManager.conditionnements}" var="conditionnement" itemLabel="#{conditionnement.libelle}" itemValue="#{conditionnement}"/>
+									<f:ajax listener="#{retourPatientManager.handleSelectConditionnement}" render="stockage" />
+								</h:selectOneMenu>
+	 							<h:outputText value="#{retourPatientManager.bean.conditionnement.libelle} "  
+	 							 rendered="#{retourPatientManager.action eq 'edit'}"/>
+								<h:panelGroup />
+								<h:panelGroup/>
+									
+								<!-- Conditionnement -->
+								<h:outputLabel id="labelStockages" for="stockage" value="#{resourceBundle['gestionRetourPatient.stockage.mandatory']}"/>
+								<h:selectOneMenu converter="#{detailStockageConverter}" rendered="#{retourPatientManager.bean.id eq null}" immediate="true" required="true" requiredMessage="#{resourceBundle['retourPatient.stockage.notEmpty']}"
+									 id="stockage" value="#{retourPatientManager.bean.detailStockage}" styleClass="selectRadio">
+									<f:selectItem noSelectionOption="true" itemLabel="" itemValue="" />
+									<f:selectItems value="#{retourPatientManager.stockages}" var="stockage" itemLabel="#{stockage.nom}" itemValue="#{stockage}"/>
+								</h:selectOneMenu>
+	 							<h:outputText value="#{retourPatientManager.bean.detailStockage.nom} "  
+	 							 rendered="#{retourPatientManager.action eq 'edit'}"/>
+								<h:panelGroup />
+								<h:panelGroup/>
+								
+								<!-- Date -->
+								<h:outputLabel id="labelDate" for="date" value="#{resourceBundle['gestionRetourPatient.date']}"/>
+								<p:calendar id="dd_prev_debutEtude" required="true" requiredMessage="#{resourceBundle['retourPatient.date.notEmpty']}" value="#{retourPatientManager.bean.date}"  
+						    		effect="#{resourceBundle['effect.calendar']}" locale="#{resourceBundle['date.locale']}" showButtonPanel="true" navigator="true" 
+						    		converter="#{calendarConverter}" />			
+								<h:panelGroup />
+								<h:panelGroup/>			
+								
+								<!-- Quantite -->
+								<h:outputLabel id="labelQuanti" for="quantite" 
+									value="#{resourceBundle['gestionRetourPatient.quantite.mandatory']}"/>
+								<h:inputText id="quantite" required="true" requiredMessage="#{resourceBundle['retourPatient.quantite.notEmpty']}"
+									value="#{retourPatientManager.bean.quantite}" converterMessage="#{resourceBundle['retourPatient.quantite.nb.invalid_type']}"/>
+								<h:panelGroup />
+								<h:panelGroup/>
+								
+								
+								<!-- Type -->
+								<h:outputLabel id="typeRetourLibe" for="typeRetour" value="#{resourceBundle['gestionRetourPatient.type']}"/>
+								<h:selectOneMenu style="width:200px;" id="typeRetour" value="#{retourPatientManager.bean.type}">
+				           			<f:selectItems value="#{enumManager.getValues('TypeRetour')}"/>
+				           			<f:ajax render="panelCommentaireType"/>
+				           		</h:selectOneMenu>
+								<h:panelGroup />
+								<h:panelGroup/>		
+							</h:panelGrid>
+							
+							<h:panelGrid id="panelCommentaireType" columns="2" columnClasses="panelCol_25,panelCol_75" cellpadding="0" cellspacing="0" border="0" width="100%">
+								<h:outputLabel id="commentaireLibEntame" for="commentaireEntame" value="#{resourceBundle['gestionRetourPatient.contenuRetourne']}" rendered="#{retourPatientManager.bean.type == 'ENTAME'}"/>
+								<h:inputTextarea id="commentaireEntame" rendered="#{retourPatientManager.bean.type == 'ENTAME'}"
+									value="#{retourPatientManager.bean.commentaireEntame}"
+									rows="#{resourceBundle['textarea.rows.default']}" />
+							</h:panelGrid>
+							
+							<h:panelGrid id="numOrdonnancierPanel" columns="4" columnClasses="panelCol_25,panelCol_25,panelCol_25,panelCol_25" cellpadding="0" cellspacing="0" border="0" width="100%" >
+								
+								<!-- Numero d'ordonnancier -->
+								<h:outputLabel id="labelNumOrdonnancier" for="numOrdonnancier" rendered="#{(retourPatientManager.bean.patient ne null) and (retourPatientManager.bean.essai ne null)}"
+									value="#{resourceBundle['gestionRetourPatient.numOrdonnancier']}"/>
+								<h:inputText id="numOrdonnancier" required="true" value="#{retourPatientManager.bean.numOrdonnancier}" rendered="#{(retourPatientManager.bean.patient ne null) and (retourPatientManager.bean.essai ne null)}"/>
+								
+								<h:panelGroup rendered="#{(retourPatientManager.bean.patient ne null) and (retourPatientManager.bean.essai ne null)}">
+								
+								<p:commandButton value="#{resourceBundle['gestionRetourPatient.rechercherDispensation']}"  style="width:190px;"
+								title="#{resourceBundle['retourPatient.rechercherDispensation']}" oncomplete="numOrdonnancierPopup.show();" 
+								ajax="true" update="dispensationForm" actionListener="#{retourPatientManager.initDispensations()}" />
+								</h:panelGroup>
+								<h:panelGroup rendered="#{(retourPatientManager.bean.patient ne null) and (retourPatientManager.bean.essai ne null)}"/>
+								
+								<!-- Numero de lot -->
+								<h:outputLabel id="labelNumlot" for="numLot" rendered="#{(retourPatientManager.bean.patient ne null) and (retourPatientManager.bean.essai ne null)}"
+									value="#{resourceBundle['gestionRetourPatient.numLot']}"/>
+								<h:inputText id="numLot" required="true" value="#{retourPatientManager.bean.numLot}" rendered="#{(retourPatientManager.bean.patient ne null) and (retourPatientManager.bean.essai ne null)}"/>
+								<h:panelGroup/>
+								<h:panelGroup/>
+								
+								<h:outputLabel id="labelNumTraitement" for="numTraitement" rendered="#{(retourPatientManager.bean.patient ne null) and (retourPatientManager.bean.essai ne null)}"
+									value="#{resourceBundle['gestionRetourPatient.numTraitement']}"/>
+								<h:inputText id="numTraitement"  value="#{retourPatientManager.bean.numTraitement}" rendered="#{(retourPatientManager.bean.patient ne null) and (retourPatientManager.bean.essai ne null)}"/>
+								<h:panelGroup/>
+								<h:panelGroup/> 
+								
+							</h:panelGrid>
+							
+							<h:panelGrid columns="2" columnClasses="panelCol_25,panelCol_75" cellpadding="0" cellspacing="0" border="0" width="100%">
+								<h:outputLabel id="labelCommentaire" for="commentaire" value="#{resourceBundle['gestionRetourPatient.commentaire']}" />
+								<h:inputTextarea id="commentaire"
+									value="#{retourPatientManager.bean.commentaire}"
+									rows="#{resourceBundle['textarea.rows.default']}" />
+							</h:panelGrid>
+							
+							
+							<p:panel header="${resourceBundle['gestionRetourPatient.etat']}">
+								
+								<h:panelGrid columns="4" columnClasses="panelCol_25,panelCol_25,panelCol_25,panelCol_25" cellpadding="0" cellspacing="0" border="0" width="100%">
+									<h:outputLabel id="labelEtat" for="etat" value="#{resourceBundle['gestionRetourPatient.etat']}"/>
+									<h:outputText id="etat" value="#{retourPatientManager.bean.etat.libelle}" />
+									
+									<!-- Date -->
+									<h:outputLabel id="labelDateEtat" for="dateEtat" value="#{resourceBundle['gestionRetourPatient.dateEtat']}"/>
+									<h:outputText id="dateEtat" value="#{retourPatientManager.bean.dateEtat.time}" >
+										<f:convertDateTime pattern="#{resourceBundle['date.pattern.default']}"/>
+									</h:outputText>			
+								</h:panelGrid>	
+							
+								<h:panelGrid columns="2" columnClasses="panelCol_25,panelCol_75" cellpadding="0" cellspacing="0" border="0" width="100%">
+									<h:outputLabel id="labelCommentaireEtat" for="commentaireEtat" value="#{resourceBundle['gestionRetourPatient.commentaireEtat']}" />
+									<h:inputTextarea id="commentaireEtat" readonly="true"
+										value="#{retourPatientManager.bean.commentaireEtat}"
+										rows="#{resourceBundle['textarea.rows.default']}" />
+								</h:panelGrid>
+							</p:panel>
+						</td>
+					</tr>
+			 	</table>
+		 	</fieldset>
+		 	<div class="actionButton" style="margin-right:36px;">
+    			<p:commandButton id="saveButton" action="save" ajax="false" value="#{resourceBundle['btn.enregistrer']}" title="#{resourceBundle['btn.enregistrer']}"/>
+	   			<p:commandButton  onclick="document.forms['hiddenForm'].cancelButton.click();"
+	   				value="#{resourceBundle['btn.annuler']}" title="#{resourceBundle['btn.annuler']}"/>
+		   	</div>
+	
+			
+		</h:form>
+		
+		<h:form id="hiddenForm" prependId="false" style="display:none;">
+		<p:commandButton id="cancelButton" action="cancel" ajax="false"
+	   				value="#{resourceBundle['btn.annuler']}" title="#{resourceBundle['btn.annuler']}"/>
+	   				
+		</h:form>
+			<p:dialog onCloseUpdate="numOrdonnancier"
+				header="#{resourceBundle['gestionRetourPatient.rechercherDispensation']}"
+				widgetVar="numOrdonnancierPopup" resizable="true" modal="true"
+				width="800" >
+				<!-- Historique des changement des donnees poid taille sf -->
+				<h:form id="dispensationForm">
+					
+					<p:dataTable id="dispensations" value="#{retourPatientManager.dispensations}" var="dispensation" emptyMessage="#{resourceBundle['results.none']}">
+						
+									    		
+			    			<p:column id="date" sortBy="#{dispensation.date}">
+			    				<f:facet name="header">
+			    					<h:outputText value="#{resourceBundle['gestionRetourPatient.date']}"/>
+			    				</f:facet>
+			    				<h:outputText value="#{dispensation.dateDispensation.time}" onverter="#{calendarConverter}"/>
+			    			</p:column>	
+			    			
+			    			<p:column id="numero" sortBy="#{dispensation.numero}">
+			    				<f:facet name="header">
+			    					<h:outputText value="#{resourceBundle['gestionRetourPatient.numOrdonnancier']}"/>
+			    				</f:facet>
+			    				<h:outputText value="#{dispensation.numOrdonnancier}"/>
+			    			</p:column>
+			    			
+			    			<p:column id="produits" >
+			    				<f:facet name="header">
+			    					<h:outputText value="#{resourceBundle['gestionRetourPatient.produits']}"/>
+			    				</f:facet>
+			    				<h:outputText value="#{dispensation.produitsPrescritsAsString}"/>
+			    			</p:column>
+			    			
+			    			<p:column id="pharmacie" >
+			    				<f:facet name="header">
+			    					<h:outputText value="#{resourceBundle['gestionRetourPatient.pharmacie']}"/>
+			    				</f:facet>
+			    				<h:outputText value="#{dispensation.pharmacie.nom}"/>
+			    			</p:column>
+			    			<p:column id="lignes" >
+			    				<f:facet name="header">
+			    					<h:outputText value="#{resourceBundle['gestionRetourPatient.ligneDispensation']}"/>
+			    				</f:facet>
+				    			<p:dataTable id="dispensationsOProd" value="#{beanManagerHelper.returnAsDataModel(dispensation.dispensationsProduit)}" var="dispensationProd" emptyMessage="#{resourceBundle['results.none']}"
+					    			selection="#{retourPatientManager.dispensationSelected}" selectionMode="single"
+									update="numOrdonnancier numLot numTraitement" rowSelectListener="#{retourPatientManager.handleSelectDispensation()}"
+									onRowSelectComplete="numOrdonnancierPopup.hide();">
+									
+									<p:column id="numlot" >
+					    				<f:facet name="header">
+						    				<h:outputText value="#{resourceBundle['gestionRetourPatient.numLot']}"/>
+							    		</f:facet>
+							    		<h:outputText value="#{dispensationProd.numLot}"/>
+						    		</p:column>
+						    		
+									<p:column id="numTraitement" >
+					    				<f:facet name="header">
+						    				<h:outputText value="#{resourceBundle['gestionRetourPatient.numTraitement']}"/>
+							    		</f:facet>
+							    		<h:outputText value="#{dispensationProd.numTraitement}" rendered="#{dispensationProd.numTraitement ne null}"/>
+						    		</p:column>
+									
+								</p:dataTable>	
+							</p:column>
+					</p:dataTable>		
+						
+				</h:form>
+			</p:dialog>
+		
+		
+		
+    </ui:define>
+    
+     
+</ui:composition>
+
+
+	 					
+									
+								
+							

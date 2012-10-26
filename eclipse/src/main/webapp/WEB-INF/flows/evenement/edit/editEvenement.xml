@@ -1,0 +1,67 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<flow xmlns="http://www.springframework.org/schema/webflow"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://www.springframework.org/schema/webflow
+    http://www.springframework.org/schema/webflow/spring-webflow-2.0.xsd" parent="main">
+
+	<!-- Variable d'entrée -->
+	<input name="idEvenement" />
+	<input name="idEssai" />
+
+	<!-- Démarrage -->
+	<on-start>
+		<!-- Initialisation complétion automatique des essais -->
+		<evaluate expression="essaiSearchCriteria.clear()"/>
+		<evaluate expression="'numInterne'" result="autoCompleteEssaiManager.searchCriteria.activeOrder" />
+		<evaluate expression="'numInterneOrNomOrPromoteur'" result="autoCompleteEssaiManager.searchCriteriaProperty" />
+	</on-start>
+
+	<decision-state id="createOrEdit">
+		<if test="idEvenement==null" then="create" else="edit"/>
+	</decision-state>
+	
+	<!-- Création -->
+	<action-state id="create">
+		<evaluate expression="evenementManager.setBean(evenementFactory.getInitializedObject())"/>
+		<transition to="decisionSetEssai"/>
+	</action-state>
+	
+	<!-- Modification -->
+	<action-state id="edit">
+		<evaluate expression="evenementManager.setBean(evenementService.get(idEvenement))"/>
+		<transition to="decisionSetEssai"/>
+	</action-state>
+
+	<!-- Decision state sur valorisation de l'essai -->
+	<decision-state id="decisionSetEssai">
+		<if test="idEssai==null" then="editEvenement" else="setEssai" />
+	</decision-state>
+	
+	<!-- Valorisation de l'essai -->
+	<action-state id="setEssai">
+		<evaluate expression="evenementManager.bean.setEssai(essaiService.get(idEssai))"/>
+		<transition to="editEvenement"/>
+	</action-state>
+
+	<!-- Page principale -->
+	<view-state id="editEvenement" view="../../../pages/evenement/edit/editEvenement.xhtml">
+		<transition on="cancel" to="createOrEdit"/>
+		<transition on="save" to="comeback">
+			<evaluate expression="evenementService.save(evenementManager.bean)"/>
+		</transition>
+		<transition on="delete" to="delete"/>
+		<transition on="error" to="editEvenement"/>
+		<transition on="comeback" to="comeback"/>
+	</view-state>
+	
+	<!-- Etat final -->
+	<end-state id="comeback"/>
+	
+	<!-- Suppression -->
+	<action-state id="delete">
+		<evaluate expression="evenementService.remove(evenementManager.bean)"/>
+		<transition on="error" to="editEvenement"/>
+		<transition to="comeback"/>
+	</action-state>
+	
+</flow>

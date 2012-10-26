@@ -1,0 +1,51 @@
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+     xmlns:ui="http://java.sun.com/jsf/facelets"
+     xmlns:h="http://java.sun.com/jsf/html"
+     xmlns:f="http://java.sun.com/jsf/core"
+	 xmlns:p="http://primefaces.prime.com.tr/ui"
+	 xmlns:c="http://java.sun.com/jsp/jstl/core">
+	 
+	<p:dialog id="dialog" header="#{resourceBundle['editPharmacie.stockage']}" widgetVar="popupStockage" resizable="true" modal="true" width="600"> 
+	    <h:form id="formPopupStockage" prependId="false">
+			<p:focus /> 
+	    	<p:messages id="errors"/>
+	    	<h:panelGrid id="panelPopupStockage" columns="2" cellspacing="5" columnClasses="panelCol_40,panelCol_60" width="100%">
+	    	
+	    		<h:outputLabel id="nomStockageLabel" for="nomStockage" value="#{resourceBundle['stockage.nom.mandatory']}" />
+				<h:inputText size="40" id="nomStockage" value="#{pharmacieManager.stockageCurrent.nom}" required="true" requiredMessage="#{resourceBundle['stockage.nom.notEmpty']}" />
+	    
+	    		<h:outputLabel id="conservationStockageLabel" for="conservationStockage" value="#{resourceBundle['stockage.conservation']}" />
+	  			<h:selectOneMenu style="width:255px;" id="conservationStockage" value="#{pharmacieManager.stockageCurrent.conservation}">
+			    	<f:selectItem noSelectionOption="true"/>
+			        <f:selectItems value="#{enumManager.getValues('ConditionConservation')}"/>
+			    </h:selectOneMenu>
+
+	    		<h:outputLabel id="identifiantStockageLabel" for="identifiantStockage" value="#{resourceBundle['stockage.identifiantStockage']}" />
+	    		<h:inputText size="40" id="identifiantStockage" value="#{pharmacieManager.stockageCurrent.identifiantStockage}" />
+			    
+	    		<h:outputLabel id="identifiantSondeTempLabel" for="identifiantSondeTemp" value="#{resourceBundle['stockage.identifiantSondeTemp']}" />
+	    		<h:inputText size="40" id="identifiantSondeTemp" value="#{pharmacieManager.stockageCurrent.identifiantSondeTemp}" />
+	    					    
+	    		<h:outputLabel id="identifiantEnregistreurTempLabel" for="identifiantEnregistreurTemp" value="#{resourceBundle['stockage.identifiantEnregistreurTemp']}" />
+	    		<h:inputText size="40" id="identifiantEnregistreurTemp" value="#{pharmacieManager.stockageCurrent.identifiantEnregistreurTemp}" />			    
+	    
+	    	</h:panelGrid>
+	    
+	        <div class="popupButton">
+	        	<p:commandButton id="submitPopupStockageButton" update="errors treeStockages" process="formPopupStockage" value="#{resourceBundle['btn.valider']}" 
+	        		actionListener="#{pharmacieManager.updateStockages}" oncomplete="actionPopupStockage(xhr, status, args);"/>
+	        </div>  
+	    </h:form>  
+	</p:dialog>
+	
+	<script type="text/javascript">
+		function actionPopupStockage(xhr, status, args)
+		{
+			var isValid = args.isValid;
+			if (isValid){
+				popupStockage.hide();
+			}
+	   	}
+	</script>
+	
+</ui:composition>	   	

@@ -1,0 +1,161 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans 
+    xmlns="http://www.springframework.org/schema/beans" 
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd">
+	
+	<!-- ======================================== -->
+	<!-- HELPER : Documents					      -->
+	<!-- ======================================== -->
+	<bean id="documentsIhmHelper" class="fr.pharma.eclipse.helper.DocumentsHelper" />
+	
+	<!-- ======================================== -->
+	<!-- HELPER : BeanWithNom				      -->
+	<!-- ======================================== -->
+	<bean id="beanWithNomHelper" class="fr.pharma.eclipse.helper.BeanWithNomHelper" />
+
+	<!-- ======================================== -->
+	<!-- HELPER : Fichier					      -->
+	<!-- ======================================== -->
+	<bean id="fichierFiller" class="fr.pharma.eclipse.file.FichierFiller">
+		<property name="fileHelper" ref="fileHelper" />
+	</bean>
+	
+	<!-- =============================================== -->
+	<!-- HELPER : SAISIE AUTO DES NUMEROS DE TRAITEMENT  -->
+	<!-- =============================================== -->
+	<bean id="autoSaisieNumTraitement" class="fr.pharma.eclipse.component.stock.helper.AutoSaisieNumTraitement"
+		scope="session" lazy-init="true"/>
+	
+	<!-- =============================================== -->
+	<!-- HELPERS : récupération des contacts de la base	 -->
+	<!-- =============================================== -->
+	<bean id="promoteurSeeker" class="fr.pharma.eclipse.component.essai.seeker.impl.PromoteurSeeker">
+		<property name="service" ref="contactPromoteurService" />
+	</bean>
+	<bean id="arcPromoteurSeeker" class="fr.pharma.eclipse.component.essai.seeker.impl.ArcPromoteurSeeker">
+		<property name="service" ref="arcPromoteurService" />
+	</bean>
+	<bean id="croSeeker" class="fr.pharma.eclipse.component.essai.seeker.impl.CroSeeker">
+		<property name="service" ref="croService" />
+	</bean>
+	<bean id="drcSeeker" class="fr.pharma.eclipse.component.essai.seeker.impl.DRCSeeker" >
+		<property name="service" ref="directionRechercheService" />
+	</bean>
+	<bean id="pharmacienSeeker" class="fr.pharma.eclipse.component.essai.seeker.impl.PharmaciensSeeker" >
+		<property name="service" ref="pharmacienService" />
+	</bean>
+	<bean id="investigateurSeeker" class="fr.pharma.eclipse.component.essai.seeker.impl.InvestigateurSeeker" >
+		<property name="service" ref="investigateurService" />
+	</bean>
+	<bean id="arcInvestigateurSeeker" class="fr.pharma.eclipse.component.essai.seeker.impl.ArcInvestigateurSeeker" >
+		<property name="service" ref="arcInvestigateurService" />
+	</bean>
+	
+	<!-- ================================================= -->
+	<!-- HELPERS : Filtre des contacts "habilitables"	   -->
+	<!-- ================================================= -->
+	<bean id="selectableContactsFilter" class="fr.pharma.eclipse.component.essai.helper.SelectableContactsFilter" />
+	
+	<!-- ================================================= -->
+	<!-- HELPERS : Récupérateur de contacts "habilitables" -->
+	<!-- ================================================= -->
+	<bean id="contactsEssaiRetriever" class="fr.pharma.eclipse.component.essai.helper.SelectableContactsRetriever">
+		<property name="filter" ref="selectableContactsFilter" />
+		<property name="contactsSeekers">
+			<list>
+				<ref bean="croSeeker" />
+				<ref bean="promoteurSeeker" />
+				<ref bean="arcPromoteurSeeker" />
+				<ref bean="drcSeeker" />
+				<ref bean="pharmacienSeeker" />
+				<ref bean="investigateurSeeker" />
+				<ref bean="arcInvestigateurSeeker" />
+			</list>
+		</property>
+	</bean>
+
+	<!-- ================================================= -->
+	<!-- HELPERS : Initialiseurs de droits d'habilitations -->
+	<!-- ================================================= -->
+	<bean id="simpleDroitHabilitationInitializer" abstract="true" 
+		class="fr.pharma.eclipse.component.essai.helper.impl.SimpleDroitHabilitationInitializer">
+	</bean>
+	<bean id="arcInvDroitHabilitationInitializer" parent="simpleDroitHabilitationInitializer">
+		<constructor-arg index="0" value="ARC_INVESTIGATEUR" />
+	</bean>
+	<bean id="arcPromDroitHabilitationInitializer" parent="simpleDroitHabilitationInitializer">
+		<constructor-arg index="0" value="ARC_PROMOTEUR" />
+	</bean>
+	<bean id="croDroitHabilitationInitializer" parent="simpleDroitHabilitationInitializer">
+		<constructor-arg index="0" value="CRO" />
+	</bean>
+	<bean id="drcAdmDroitHabilitationInitializer" parent="simpleDroitHabilitationInitializer">
+		<constructor-arg index="0" value="DIRECTION_RECHERCHE_ADMINISTRATIF" />
+	</bean>
+	<bean id="drcPharmacoDroitHabilitationInitializer" parent="simpleDroitHabilitationInitializer">
+		<constructor-arg index="0" value="DIRECTION_RECHERCHE_PHARMACOVIGILANT" />
+	</bean>
+	<bean id="promoteurDroitHabilitationInitializer" parent="simpleDroitHabilitationInitializer">
+		<constructor-arg index="0" value="PROMOTEUR" />
+	</bean>
+	<bean id="pharmacienDroitHabilitationInitializer" class="fr.pharma.eclipse.component.essai.helper.impl.PharmacienDroitHabilitationInitializer" />
+	<bean id="investDroitHabilitationInitializer" class="fr.pharma.eclipse.component.essai.helper.impl.InvestigateurDroitHabilitationInitializer" />
+	
+	<!-- ================================================= -->
+	<!-- HELPERS : PRESCRIPTION							   -->
+	<!-- ================================================= -->
+	<bean id="prescriptionManagerHelper" class="fr.pharma.eclipse.component.prescription.helper.PrescriptionManagerHelper" />
+	
+	<!-- ================================================= -->
+	<!-- HELPERS : DISPENSATION			 			       -->
+	<!-- ================================================= -->
+	<bean id="dispensationManagerHelper" class="fr.pharma.eclipse.component.dispensation.helper.DispensationManagerHelper" >
+		<property name="strategy">
+			<map>
+				<entry key-ref="TYPE_NOMINATIVE" value-ref="nominativeFinder"/>
+				<entry key-ref="TYPE_GLOBALE" value-ref="globaleFinder"/>
+			</map>
+		</property>
+	</bean>
+	<bean id="nominativeFinder" class="fr.pharma.eclipse.component.dispensation.helper.finder.NominativeFinder"/>
+	<bean id="globaleFinder" class="fr.pharma.eclipse.component.dispensation.helper.finder.GlobaleFinder"/>
+	
+	<!-- ================================================= -->
+	<!-- HELPER GESTION DES FICHIERS SOR SORTIE STOCK      -->
+	<!-- ================================================= -->
+	<bean id="sortieFileHelper" class="fr.pharma.eclipse.component.stock.helper.SortieFileHelper" scope="session" lazy-init="true" />	
+	
+	<!-- ================================================= -->
+	<!-- HELPER CONSEIL DISPENSATION					   -->
+	<!-- ================================================= -->
+	<bean id="conseilHelper" class="fr.pharma.eclipse.component.dispensation.helper.ConseilHelper" scope="session" lazy-init="true" />	
+	
+	<!-- ================================================= -->
+	<!-- HELPER CONDITIONNEMENT							   -->
+	<!-- ================================================= -->
+	<bean id="conditionnementHelper" class="fr.pharma.eclipse.component.produit.helper.ConditionnementHelper"/>
+	
+	<!-- ================================================= -->
+	<!-- HELPER PRESCRIPTION TYPE						   -->
+	<!-- ================================================= -->
+	<bean id="prescriptionTypeHelper" class="fr.pharma.eclipse.component.design.helper.PrescriptionTypeHelper"/>
+	
+	<!-- ================================================= -->
+	<!-- HELPER PRODUIT PRESCRIT TYPE						   -->
+	<!-- ================================================= -->
+	<bean id="produitPrescritHelper" class="fr.pharma.eclipse.component.prescription.helper.ProduitPrescritHelper"/>
+	 
+	
+	<!-- ================================================= -->
+	<!-- HELPER PRODUIT									   -->
+	<!-- ================================================= -->
+	<bean id="produitHelper" class="fr.pharma.eclipse.component.produit.helper.ProduitHelper"/>
+	
+	<!-- ================================================= -->
+	<!-- HELPER PERSONNE 								   -->
+	<!-- ================================================= -->
+	<bean id="personneHelper" class="fr.pharma.eclipse.component.acteur.helper.PersonneHelper"/>
+	
+	
+</beans>

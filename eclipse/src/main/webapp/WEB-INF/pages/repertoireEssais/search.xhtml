@@ -1,0 +1,215 @@
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+     xmlns:ui="http://java.sun.com/jsf/facelets"
+     xmlns:h="http://java.sun.com/jsf/html"
+     xmlns:f="http://java.sun.com/jsf/core"
+     xmlns:p="http://primefaces.prime.com.tr/ui"
+     template="/WEB-INF/pages/template/template.xhtml">
+
+     <ui:define name="title">
+		<h:outputFormat value="#{resourceBundle['repertoireEssais.title']}"/>
+     </ui:define>
+     
+     <ui:define name="body">
+     
+    	<h:form id="criteriaForm">
+    		<p:outputPanel id="searchCriteriaFragment">
+     			
+     			<div class="rechercheBox"> 
+    				<p:focus />
+	    			<h2 class="titleFloat"><h:outputText value="#{resourceBundle['recherche']}"/></h2>
+	    			<fieldset>
+			    			    	
+			       	<div class="rechercheInside">
+			       		<div><label>#{resourceBundle['repertoireEssais.promoteur']}</label></div>
+			           	<div>
+				           	<p:autoComplete id="promoteur" value="#{essaisManager.searchCriteria.promoteur}"
+		 									completeMethod="#{autoCompletePromoteurManager.complete}"
+		 									forceSelection="true"
+		 									var="promoteur"
+		 									itemLabel="#{promoteur.raisonSociale}"
+		 									itemValue="#{promoteur}"
+		 									converter="#{promoteurConverter}" />
+			           	</div>
+			           
+			           	<div><label>#{resourceBundle['repertoireEssais.numInterne']}</label></div>
+			           	<div><h:inputText id="numInterne" value="#{essaisManager.searchCriteria.numInterne}"/></div>
+			           	
+			           	<div><label>#{resourceBundle['editEssai.onglet.administratif.ac.numAC']}</label></div>
+			           	<div><h:inputText id="numEudract" value="#{essaisManager.searchCriteria.numEudract}"/></div>
+			           
+			           	<div><label>#{resourceBundle['repertoireEssais.dci']}</label></div>
+			           	<div><h:inputText id="dci" value="#{essaisManager.searchCriteria.dci}"/></div>
+			           
+			           	<div><label>#{resourceBundle['repertoireEssais.nomUsuel']}</label></div>
+			           	<div><h:inputText id="nomUsuel" value="#{essaisManager.searchCriteria.nom}"/></div>
+			           
+			           	<div><label>#{resourceBundle['repertoireEssais.investigateurPrincipal']}</label></div>
+			           	<div>
+							<p:autoComplete id="investigateurPrincipal" value="#{essaisManager.searchCriteria.investigateur}"
+		 									completeMethod="#{autoCompleteInvestigateurManager.complete}"
+		 									forceSelection="true"
+		 									var="investigateur"
+		 									itemLabel="#{investigateur.nom} #{investigateur.prenom}"
+		 									itemValue="#{investigateur}"
+		 									converter="#{investigateurConverter}" />			           	
+			           	</div>
+			           
+			           	<div><label>#{resourceBundle['repertoireEssais.etat']}</label></div>
+			           	<div>
+			           		<h:selectOneMenu id="etat" value="#{essaisManager.searchCriteria.etat}">
+			           			<f:selectItem noSelectionOption="true"/>
+			           			<f:selectItems value="#{enumManager.getValues('EtatEssai')}"/>
+			           		</h:selectOneMenu>
+			           	</div>
+	
+						<br />
+			           	<div><label>#{resourceBundle['repertoireEssais.site']}</label></div>
+			           	<div>
+				             <h:selectOneMenu id="site" value="#{essaisManager.searchCriteria.site}" converter="#{siteConverter}">
+				             	<f:selectItem noSelectionOption="true" itemLabel="" itemValue=""/>
+				             	<f:selectItems value="#{sitesManager.beans}" var="item" itemLabel="#{item.nom}" itemValue="#{item}"/>
+				             </h:selectOneMenu>	
+			           	</div>
+	
+						<br />
+			           	<div><label>#{resourceBundle['repertoireEssais.pharmacie']}</label></div>
+			           	<div>
+				             <h:selectOneMenu id="pharmacie" value="#{essaisManager.searchCriteria.pharmacie}" converter="#{pharmacieConverter}">
+				             	<f:selectItem noSelectionOption="true" itemLabel="" itemValue=""/>
+				             	<f:selectItems value="#{pharmaciesManager.beans}" var="item" itemLabel="#{item.nom}" itemValue="#{item}"/>
+				             </h:selectOneMenu>								
+			           	</div>
+			           	
+			           	<br />
+			           	<div><label>#{resourceBundle['repertoireEssais.service']}</label></div>
+			           	<div>
+			           		<p:autoComplete id="service" value="#{essaisManager.searchCriteria.service}"
+		 									completeMethod="#{autoCompleteServiceManager.complete}"
+		 									forceSelection="true"
+		 									var="service"
+		 									itemLabel="#{service.nom}"
+		 									itemValue="#{service}"
+		 									converter="#{serviceConverter}" />
+			           	</div>
+			           
+			           	<div><label>#{resourceBundle['repertoireEssais.motsCles']}</label></div>
+			           	<div><h:inputText id="motsCles" value="#{essaisManager.searchCriteria.motsCles}"/></div>
+			           	
+			           	<br />
+			           	<p:commandButton id="searchButton" action="search" ajax="false"
+			     			value="#{resourceBundle['btn.rechercher']}" title="#{resourceBundle['btn.rechercher']}">
+			     		</p:commandButton>
+			   		</div>
+		    	</fieldset>
+		    	<br />
+		    	<br />
+		    </div>
+		</p:outputPanel>
+	</h:form>
+     	
+    <p:outputPanel id="resultsFragment">     	
+		<h:form id="essaisForm" prependId="false">
+			 <div>
+			 	 <div style="float:left;">
+		    	 	<h2 class="titleFloat"><h:outputText value="#{resourceBundle['resultats']}"/></h2>
+		    	 </div>
+		    	 <div class="export">
+			         <h:commandLink> 
+			         	<h:graphicImage library="images" name="excel.gif"
+	    					alt="#{resourceBundle['export.excel']}" title="#{resourceBundle['export.excel']}" />
+			             <p:dataExporter type="xls" target="essais" fileName="#{resourceBundle['export.essais.filename']}" encoding="iso-8859-1"/>  
+			         </h:commandLink>  
+			         <h:commandLink>  
+			         	<h:graphicImage library="images" name="pdf.gif" 
+	    					alt="#{resourceBundle['export.pdf']}" title="#{resourceBundle['export.pdf']}" />
+			             <p:dataExporter type="pdf" target="essais" fileName="#{resourceBundle['export.essais.filename']}" encoding="iso-8859-1"/>  
+			         </h:commandLink>  
+			         <h:commandLink>  
+			         	<h:graphicImage library="images" name="csv.gif" 
+	    					alt="#{resourceBundle['export.csv']}" title="#{resourceBundle['export.csv']}" />
+			             <p:dataExporter type="csv" target="essais" fileName="#{resourceBundle['export.essais.filename']}"  encoding="iso-8859-1"/>  
+			         </h:commandLink>
+		         </div>
+	         </div>  
+	   		<div class="resultBox" style="width:680px;">
+	    		<p:messages/>
+	    			<fieldset>
+						<p:dataTable id="essais" value="#{essaisManager.beans}" var="essai" emptyMessage="#{resourceBundle['results.none']}" 
+							selection="#{essaisManager.beanSelected}" selectionMode="single"
+							onRowSelectUpdate="pannel_selectedEssai" onRowSelectStart="showWait();"
+							onselectComplete="document.getElementById('editButton').click()" >
+						
+		    				<p:column id="promoteur" sortBy="#{essai.promoteur.raisonSociale}">
+					    		<f:facet name="header">
+					    			<h:outputText value="#{resourceBundle['repertoireEssais.promoteur']}"/>
+					    		</f:facet>
+					    		<h:outputText value="#{essai.promoteur.raisonSociale}"/>
+				    		</p:column>
+				    		
+			    			<p:column id="numInterne" sortBy="#{essai.numInterne}">
+			    				<f:facet name="header" title="otott">
+			    					<h:outputText value="#{resourceBundle['repertoireEssais.numInt']} / #{resourceBundle['repertoireEssais.eudract']}" />
+			    				</f:facet>
+			    				<h:outputText value="#{essai.numInterne} / "/>
+			    				 <h:outputText value="${essai.detailAdministratif.infosAC.numIdentAC}"/>
+			    			</p:column>
+			    			
+			    			<p:column id="nomUsuel" sortBy="#{essai.nom}"> 
+			    				<f:facet name="header">
+			    					<h:outputText value="#{resourceBundle['repertoireEssais.nomUsuel']}"/>
+			    				</f:facet>
+			    					<h:outputText value="#{essai.nom}"/>
+			    			</p:column>
+	
+			    			<p:column id="dci" sortBy="#{essai.dci}">
+			    				<f:facet name="header">
+			    					<h:outputText value="#{resourceBundle['repertoireEssais.dci']}"/>
+			    				</f:facet>
+			    				<h:outputText value="#{essai.dci}"/>
+			    			</p:column>
+			    			
+			    			<p:column id="investigateurLocal" sortBy="#{essaisManager.getInvestigateurPrincipal(essai)}" style="display:none;">
+			    				<f:facet name="header">
+			    					<h:outputText value="#{resourceBundle['repertoireEssais.investigateurPrincipal']}"/>
+			    				</f:facet>
+			    				<h:outputText value="#{essaisManager.getInvestigateurPrincipal(essai)}"/>
+			    			</p:column>
+			    			
+			    			<p:column id="etat" sortBy="#{essai.etat.libelle}">
+			    				<f:facet name="header">
+			    					<h:outputText value="#{resourceBundle['repertoireEssais.etat']}"/>
+			    				</f:facet>
+			    				<h:outputText value="#{essai.etat.libelle}"/>
+			    			</p:column>
+			    		</p:dataTable>
+					</fieldset>
+					<br />
+					<br /> 
+				</div>
+			</h:form>
+		</p:outputPanel>
+		
+		<!-- Formulaire poste pour lancer l'edition d'un bean -->
+		<div style="display: none;">
+			<h:form id="editForm" prependId="false">
+				<p:outputPanel id="pannel_selectedEssai">
+					<h:inputHidden id="idEssai" name="idEssai" value="#{essaisManager.beanSelected.id}" />
+				</p:outputPanel>
+					<p:commandButton id="editButton" action="edit" ajax="false" value="edit" />
+			</h:form>
+		</div>
+		<script type="text/javascript">
+			// permet d'afficher le libellé complet de l'entete numero interne au survol du curseur
+			thNumInterne = document.getElementById('essais:numInterne');
+			if(thNumInterne != null){
+				thNumInterne.setAttribute("title", "#{resourceBundle['repertoireEssais.numInterne']} / #{resourceBundle['repertoireEssais.eudract']}");
+			}
+			
+			// on change l'action du formulaire "editForm" afin de changer de conversation quand on accède à un essai (on ne veut pas aller dans un sous flow).
+			document.getElementById("editForm").action = "${facesContext.externalContext.request.contextPath}/flows/editEssai";
+			
+		</script>        
+    </ui:define>
+     
+</ui:composition>
+

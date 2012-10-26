@@ -1,0 +1,314 @@
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+     xmlns:ui="http://java.sun.com/jsf/facelets"
+     xmlns:h="http://java.sun.com/jsf/html"
+     xmlns:f="http://java.sun.com/jsf/core"
+     xmlns:p="http://primefaces.prime.com.tr/ui"
+     xmlns:sf="http://www.springframework.org/tags/faces"
+     xmlns:c="http://java.sun.com/jsp/jstl/core">
+    
+     <c:set var="idOnglet_prod">ONG_PRODUITS</c:set>
+    <input type="hidden" id="currentView" name="currentView" value="#{idOnglet_prod}" />
+     <c:set var="detailProduit" value="#{essaiManager.bean.detailProduit}" />
+     
+	<p:focus context="produits_panel_medicaments" />
+    
+	<!-- Medicaments -->    
+    <fieldset>
+	<p:panel id="produits_panel_medicaments" header="#{resourceBundle['editEssai.onglet.produit.medicament.title']}"
+	      collapsed="#{empty detailProduit.medicaments}" 
+   		closable="false" >
+		    <p:dataTable id="medicaments" styleClass="tabProduits" value="#{essaiManager.getList('detailProduit.medicaments', true)}" var="medicament" emptyMessage="#{resourceBundle['results.none']}"
+			 			selection="#{produitsManager.medicamentSelected}" selectionMode="single" update="medicaments"  onRowSelectStart="showWait();"
+						onselectComplete="javascript:document.getElementById('editMedicament').click();">	    		
+	   					
+	   				<!-- Nature -->
+					<p:column id="medicament_nature" styleClass="panelCol_20" sortBy="#{medicament.nature.libelle}" >
+		 				<f:facet name="header">
+							<h:outputText value="#{resourceBundle['editEssai.onglet.produit.generale.nature']}"/>
+						</f:facet>
+		   				<h:outputText value="#{medicament.nature.libelle}"/>
+			    	</p:column>
+			    	
+	   				<!-- Denomination -->
+					<p:column id="medicament_denomination" styleClass="panelCol_30" sortBy="#{medicament.denomination}" >
+		 				<f:facet name="header">
+							<h:outputText value="#{resourceBundle['editEssai.onglet.produit.medicament.denomination']}"/>
+						</f:facet>
+		   				<h:outputText value="#{medicament.denomination}"  style="color:red;" rendered="#{medicament.detailLogistique.detailsStockages.isEmpty()}"/>
+		   				<h:outputText value="#{medicament.denomination}"  rendered="#{not medicament.detailLogistique.detailsStockages.isEmpty()}"/>
+			    	</p:column>
+			    	
+	   				<!-- dci -->
+					<p:column id="medicament_dci" styleClass="panelCol_20" sortBy="#{medicament.dci}">
+		 				<f:facet name="header">
+							<h:outputText value="#{resourceBundle['editEssai.onglet.produit.medicament.dci']}"/>
+						</f:facet>
+		   				<h:outputText value="#{medicament.dci}"/>
+			    	</p:column>
+			    	
+	   				<!-- Code -->
+					<p:column id="medicament_code"  styleClass="panelCol_15" sortBy="#{medicament.code}">
+		 				<f:facet name="header">
+							<h:outputText value="#{resourceBundle['editEssai.onglet.produit.medicament.code']}"/>
+						</f:facet>
+		   				<h:outputText value="#{medicament.code}"/>
+			    	</p:column>
+			    			
+	   				<!-- Alerte activee sur le produit -->
+	   				<p:column id="medicament_alerteActive"  sortBy="#{medicament.alerteActive}"  styleClass="panelCol_10">
+		 				<f:facet name="header">
+							<h:outputText value="#{resourceBundle['editEssai.onglet.produit.alerteActive']}"/>
+						</f:facet>
+						<div align="center">
+			   				<h:outputText value="#{resourceBundle['boolean.oui']}" rendered="#{medicament.alerteActive == true}"/>	   				
+			   				<h:outputText value="#{resourceBundle['boolean.non']}" rendered="#{medicament.alerteActive == false}"/>
+		   				</div>	   				
+	   				</p:column>
+	   				
+			    	<p:column  styleClass="panelCol_5"> 
+			    		<div align="center" >			    			
+			    			<h:selectBooleanCheckbox  value="#{medicament.selected}" styleClass="check" onclick="javascript:checkUniqueness('check',this)" rendered="#{not droitAccesHelper.isEssaiLectureSeule()}"/>
+			    		</div>
+			    	</p:column>
+			    			 
+			</p:dataTable>
+		</p:panel>   		
+      </fieldset>
+      
+     <!-- Dispositifs medicaux -->
+    <fieldset>
+	<p:panel id="produits_panel_dms" header="#{resourceBundle['editEssai.onglet.produit.dm.title']}"
+	      collapsed="#{empty detailProduit.dispositifsMedicaux}" 
+   		closable="false">
+		    <p:dataTable id="dms" styleClass="tabProduits" value="#{essaiManager.getList('detailProduit.dispositifsMedicaux', true)}" var="dm" emptyMessage="#{resourceBundle['results.none']}"
+			 			selection="#{produitsManager.dmSelected}" selectionMode="single" update="dms" onRowSelectStart="showWait();"
+						onselectComplete="javascript:document.getElementById('editDispositifMedical').click();">	  		
+	   					
+	   				<!-- Nature -->
+					<p:column id="dm_nature"  styleClass="panelCol_20" sortBy="#{dm.nature.libelle}" >
+		 				<f:facet name="header">
+							<h:outputText value="#{resourceBundle['editEssai.onglet.produit.generale.nature']}"/>
+						</f:facet>
+		   				<h:outputText value="#{dm.nature.libelle}"/>
+			    	</p:column>
+			    	
+	   				<!-- Denomination -->
+					<p:column id="dm_denomination_"  styleClass="panelCol_30" sortBy="#{dm.denomination}">
+		 				<f:facet name="header">
+							<h:outputText value="#{resourceBundle['editProduit.onglet.generales.denomination']}"/>
+						</f:facet>
+		   				<h:outputText value="#{dm.denomination}" style="color:red;" rendered="#{dm.detailLogistique.detailsStockages.isEmpty()}"/>
+		   				<h:outputText value="#{dm.denomination}"  rendered="#{not dm.detailLogistique.detailsStockages.isEmpty()}"/>
+			    	</p:column>
+			    	  		
+	   				<!-- Modele -->
+					<p:column id="dm_modele"  styleClass="panelCol_15" sortBy="#{dm.modele}">
+		 				<f:facet name="header">
+							<h:outputText value="#{resourceBundle['editProduit.onglet.generales.modele']}"/>
+						</f:facet>
+		   				<h:outputText value="#{dm.modele}"/>
+			    	</p:column>
+			    	  		
+	   				<!-- Code -->
+					<p:column id="dm_code"  styleClass="panelCol_10" sortBy="#{dm.code}">
+		 				<f:facet name="header">
+							<h:outputText value="#{resourceBundle['editProduit.onglet.generales.code']}"/>
+						</f:facet>
+		   				<h:outputText value="#{dm.code}"/>
+			    	</p:column>
+			    	  		
+	   				<!-- Fournisseur -->
+					<p:column id="dm_fournisseur"  styleClass="panelCol_10" sortBy="#{dm.fournisseur}">
+		 				<f:facet name="header">
+							<h:outputText value="#{resourceBundle['editProduit.onglet.generales.fournisseur']}"/>
+						</f:facet>
+		   				<h:outputText value="#{dm.fournisseur}"/>
+			    	</p:column>
+			    	
+	   				<!-- Alerte activee sur le produit -->
+	   				<p:column id="dm_alerteActive"  styleClass="panelCol_10" sortBy="#{dm.alerteActive}">
+		 				<f:facet name="header">
+							<h:outputText value="#{resourceBundle['editEssai.onglet.produit.alerteActive']}"/>
+						</f:facet>
+						<div align="center">
+			   				<h:outputText value="#{resourceBundle['boolean.oui']}" rendered="#{dm.alerteActive == true}"/>	   				
+			   				<h:outputText value="#{resourceBundle['boolean.non']}" rendered="#{dm.alerteActive == false}"/>
+		   				</div>	   				
+	   				</p:column>
+			    			  			
+	   				<!-- Case a cocher -->
+			    	<p:column  styleClass="panelCol_5">
+			    		<div align="center" >			    			
+			    			<h:selectBooleanCheckbox value="#{dm.selected}" styleClass="check" onclick="javascript:checkUniqueness('check',this)" rendered="#{not droitAccesHelper.isEssaiLectureSeule()}"/>
+			    		</div>
+			    	</p:column>
+			    			 
+			</p:dataTable>
+			    		
+		</p:panel>   		
+      </fieldset>
+      
+      
+    <!-- Autres produits therapeutiques -->  
+    <fieldset>
+	<p:panel id="produits_panel_produitsthera" header="#{resourceBundle['editEssai.onglet.produit.produitthera.title']}"
+	      collapsed="#{empty detailProduit.produitsTherapeutiques}" 
+   		closable="false">
+		    <p:dataTable id="produitsTheras" styleClass="tabProduits" value="#{essaiManager.getList('detailProduit.produitsTherapeutiques', true)}" var="produitThera" emptyMessage="#{resourceBundle['results.none']}"
+			 			selection="#{produitsManager.produitTheraSelected}" selectionMode="single" update="produitsTheras" onRowSelectStart="showWait();"
+						onselectComplete="javascript:document.getElementById('editProduitTherapeutique').click();">	 
+	   					
+	   				<!-- Nature -->
+					<p:column styleClass="panelCol_20" id="prod_nature" sortBy="#{produitThera.nature.libelle}"  >
+		 				<f:facet name="header">
+							<h:outputText value="#{resourceBundle['editEssai.onglet.produit.generale.nature']}"/>
+						</f:facet>
+		   				<h:outputText value="#{produitThera.nature.libelle}"/>
+			    	</p:column>
+			    	
+						<!-- Denomination -->
+					<p:column styleClass="panelCol_30" id="produitThera_denomination" sortBy="#{produitThera.denomination}">
+		 				<f:facet name="header">
+							<h:outputText value="#{resourceBundle['editEssai.onglet.produit.medicament.denomination']}"/>
+						</f:facet>
+		   				<h:outputText value="#{produitThera.denomination}" style="color:red;" rendered="#{produitThera.detailLogistique.detailsStockages.isEmpty()}" />
+		   				<h:outputText value="#{produitThera.denomination}" rendered="#{not produitThera.detailLogistique.detailsStockages.isEmpty()}" />
+			    	</p:column>
+			    	
+	   				<!-- Code -->
+					<p:column styleClass="panelCol_20" id="produitThera_code" sortBy="#{produitThera.code}">
+		 				<f:facet name="header">
+							<h:outputText value="#{resourceBundle['editEssai.onglet.produit.medicament.code']}"/>
+						</f:facet>
+		   				<h:outputText value="#{produitThera.code}"/>
+			    	</p:column>
+			    	
+			    	<!-- Type de produit therapeutique annexe -->
+					<p:column styleClass="panelCol_15" id="produitThera_type" sortBy="#{produitThera.typeProduitTherapeutique.libelle}">
+		 				<f:facet name="header">
+							<h:outputText value="#{resourceBundle['editProduit.onglet.generales.type.thera']}"/>
+						</f:facet>
+		   				<h:outputText value="#{produitThera.typeProduitTherapeutique.libelle}"/>
+			    	</p:column>
+	   				
+	   				<!-- Alerte activee sur le produit -->
+	   				<p:column styleClass="panelCol_10" id="produitThera_alerteActive" sortBy="#{produitThera.alerteActive}">
+		 				<f:facet name="header">
+							<h:outputText value="#{resourceBundle['editEssai.onglet.produit.alerteActive']}"/>
+						</f:facet>
+						<div align="center">
+			   				<h:outputText value="#{resourceBundle['boolean.oui']}" rendered="#{produitThera.alerteActive == true}"/>	   				
+			   				<h:outputText value="#{resourceBundle['boolean.non']}" rendered="#{produitThera.alerteActive == false}"/>
+		   				</div>	   				
+	   				</p:column>	   				
+			    			
+			    	<p:column styleClass="panelCol_5" >
+			    		<div align="center" >			    			
+			    			<h:selectBooleanCheckbox styleClass="check" value="#{produitThera.selected}" onclick="javascript:checkUniqueness('check',this)" rendered="#{not droitAccesHelper.isEssaiLectureSeule()}"/>
+			    		</div>
+			    	</p:column>
+			    			 
+			</p:dataTable>
+			    		
+		</p:panel> 
+      
+      </fieldset>
+      
+    <!-- Preparations -->  
+    <fieldset>
+	<p:panel id="produits_panel_preparations" header="#{resourceBundle['editEssai.onglet.produit.preparation.title']}"
+	      collapsed="#{empty detailProduit.preparations}" 
+   		closable="false">
+		    <p:dataTable id="preparations" styleClass="tabProduits" value="#{essaiManager.getList('detailProduit.preparations', true)}" var="preparation" emptyMessage="#{resourceBundle['results.none']}"
+			 			selection="#{produitsManager.preparationSelected}" selectionMode="single" update="preparations" onRowSelectStart="showWait();"
+						onselectComplete="javascript:document.getElementById('editPreparation').click();">	 
+	   					
+						<!-- Denomination -->
+					<p:column styleClass="panelCol_40" id="preparation_denomination" sortBy="#{preparation.denomination}">
+		 				<f:facet name="header">
+							<h:outputText value="#{resourceBundle['editEssai.onglet.produit.medicament.denomination']}"/>
+						</f:facet>
+		   				<h:outputText value="#{preparation.denomination}" style="color:red;" rendered="#{preparation.detailLogistique.detailsStockages.isEmpty()}" />
+		   				<h:outputText value="#{preparation.denomination}" rendered="#{not preparation.detailLogistique.detailsStockages.isEmpty()}" />
+			    	</p:column>
+			    	
+	   				<!-- Code -->
+					<p:column styleClass="panelCol_30" id="preparation_code" sortBy="#{preparation.code}">
+		 				<f:facet name="header">
+							<h:outputText value="#{resourceBundle['editEssai.onglet.produit.medicament.code']}"/>
+						</f:facet>
+		   				<h:outputText value="#{preparation.code}"/>
+			    	</p:column>
+			    	
+	   				<!-- Alerte activee sur le produit -->
+	   				<p:column styleClass="panelCol_10" id="preparation_alerteActive" sortBy="#{preparation.alerteActive}">
+		 				<f:facet name="header">
+							<h:outputText value="#{resourceBundle['editEssai.onglet.produit.alerteActive']}"/>
+						</f:facet>
+						<div align="center">
+			   				<h:outputText value="#{resourceBundle['boolean.oui']}" rendered="#{preparation.alerteActive == true}"/>	   				
+			   				<h:outputText value="#{resourceBundle['boolean.non']}" rendered="#{preparation.alerteActive == false}"/>
+		   				</div>	   				
+	   				</p:column>	   				
+			    			
+			    	<p:column styleClass="panelCol_5" >
+			    		<div align="center" >			    			
+			    			<h:selectBooleanCheckbox styleClass="check" value="#{preparation.selected}" onclick="javascript:checkUniqueness('check',this)" rendered="#{not droitAccesHelper.isEssaiLectureSeule()}"/>
+			    		</div>
+			    	</p:column>
+			    			 
+			</p:dataTable>
+			    		
+		</p:panel> 
+		
+		
+		<div class="actionButton">
+				<p:commandButton id="dupliquerButtonProduitThera" action="dupliquer" ajax="false" onclick="showWait();" disabled="#{droitAccesHelper.isEssaiLectureSeule()}"
+					value="#{resourceBundle['btn.dupliquer']}" title="#{resourceBundle['btn.dupliquer']}">
+				</p:commandButton>
+    			  <p:menuButton id="produitAddButton" value="#{resourceBundle['btn.ajouter']}" appendToBody="true" disabled="#{droitAccesHelper.isEssaiLectureSeule()}" >
+			        <p:menuitem value="#{resourceBundle['editMedicament.title']}" onclick="showWait();"   
+			           action="addMedicament" ajax="false"/>
+			        <p:menuitem value="#{resourceBundle['editDm.title']}" onclick="showWait();"   
+			           action="addDm" ajax="false"/>
+			        <p:menuitem value="#{resourceBundle['editProduitThera.title']}" onclick="showWait();"  
+			            action="addProduitThera" ajax="false"/>
+			        <p:menuitem value="#{resourceBundle['editPreparation.title']}" onclick="showWait();"  
+			            action="addPreparation" ajax="false"/>
+			    </p:menuButton>  
+				<p:commandButton id="deleteButtonProduitThera" action="delete" ajax="false" onclick="showWait();" disabled="#{droitAccesHelper.isEssaiLectureSeule()}"
+					value="#{resourceBundle['btn.supprimer']}" title="#{resourceBundle['btn.supprimer']}">
+				</p:commandButton>
+			</div> 
+			
+			<div style="display:none;">
+			    <p:commandButton id="editMedicament" action="editMedicament" ajax="false" />
+			    <p:commandButton id="editDispositifMedical" action="editDispositifMedical" ajax="false"/>
+			    <p:commandButton id="editProduitTherapeutique" action="editProduitTherapeutique" ajax="false"/>
+			    <p:commandButton id="editPreparation" action="editPreparation" ajax="false"/>
+			</div>		
+		
+			    		
+      </fieldset>
+      
+      
+      
+        <!-- ********************************** -->
+    <!-- Suivi								-->
+    <!-- ********************************** -->
+    <p:panel id="prod_panel_suivi" styleClass="panelSuivi" rendered="#{essaiManager.hasLastModif(idOnglet_prod)}"> 
+		<c:set var="lastModifOngProd" value="#{essaiManager.getLastModif(idOnglet_prod)}" />
+		<h:outputText value="#{resourceBundle['suivi.part1']} " />
+		<h:outputText value="#{lastModifOngProd.dateMaj.time}">
+			<f:convertDateTime pattern="#{resourceBundle['date.pattern.withHeures']}"/>
+		</h:outputText>
+		<h:outputText value="#{resourceBundle['suivi.part2']} " />
+		<h:outputText value="#{lastModifOngProd.majPar}" />
+		<h:outputText value="#{resourceBundle['ponctuation.bracket.open']} " />
+		<h:outputLink id="labelProdModifs" value="javascript:void(0)" styleClass="clickable"
+			onclick="popupHistoOngProd.show()" title="#{resourceBundle['suivi.popupLink.title']}">#{resourceBundle['suivi.historique']}
+		</h:outputLink>
+		<h:outputText value="#{resourceBundle['ponctuation.bracket.close']} " />
+	</p:panel>
+    
+</ui:composition>

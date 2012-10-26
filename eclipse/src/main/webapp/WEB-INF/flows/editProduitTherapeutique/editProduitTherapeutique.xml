@@ -1,0 +1,115 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<flow xmlns="http://www.springframework.org/schema/webflow"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://www.springframework.org/schema/webflow
+    http://www.springframework.org/schema/webflow/spring-webflow-2.0.xsd"
+	parent="main">
+
+	<!-- Variable d'entrée -->
+	<input name="idProduitThera" />
+
+	<on-start>
+			<evaluate expression="pharmacieSearchCriteria.clear()" />
+		<evaluate expression="pharmacieService.getAll(pharmacieSearchCriteria, true)"
+			result="pharmaciesManager.beans" />
+		<evaluate expression="produitTherapeutiqueManager.init()"/>
+		<evaluate expression="produitTherapeutiqueManager.setIndexOngletCourant(0)" />
+	</on-start>
+
+	<decision-state id="createOrEdit">
+		<if test="idProduitThera==null" then="createFromScratch" else="edit" />
+	</decision-state>
+
+	<!-- Création From Scratch -->
+	<action-state id="createFromScratch">
+		<evaluate
+			expression="produitTherapeutiqueManager.setBean(produitTherapeutiqueFactory.getInitializedObject(essaiManager.getBean()))" />
+		<transition to="initServices" />
+	</action-state>
+
+	<!-- Modification -->
+	<action-state id="edit">
+		<evaluate
+			expression="produitTherapeutiqueManager.setBean(produitTherapeutiqueFactory.getInitializedObjectFromEssai(essaiManager.getBean(), idProduitThera))" />
+		<transition to="initServices" />
+	</action-state>
+
+	<!-- Initialisation des listes de services -->
+	<action-state id="initServices">
+		<evaluate expression="'nom'"
+			result="servicesProduitGlobalManager.searchCriteria.activeOrder" />
+		<transition to="applyGetAll" />
+	</action-state>
+	<action-state id="applyGetAll">
+		<evaluate
+			expression="selectableBeanFactory.getInitializedObjects(serviceService.getAll(servicesProduitGlobalManager.searchCriteria))"
+			result="servicesProduitGlobalManager.beans" result-type="java.util.List" />
+		<transition to="prepareSelected" />
+	</action-state>
+	<action-state id="prepareSelected">
+		<evaluate
+			expression="beanManagerHelper.updateSelectableWrapped(produitTherapeutiqueManager.bean.services, servicesProduitGlobalManager.beans)" />
+		<transition to="editProduitThera" />
+	</action-state>
+
+	<!-- Page principale -->
+	<view-state id="editProduitThera"
+		view="../../pages/editProduitTherapeutique/editProduitTherapeutique.xhtml">
+		<on-render>
+			<evaluate expression="produitTherapeutiqueService.reattach(produitTherapeutiqueManager.bean)"
+				result="produitTherapeutiqueManager.bean" />
+		</on-render>
+
+		<!-- Annuler -->
+		<transition on="cancel" to="createOrEdit" />
+		
+		<transition on="submit" to="editProduitThera" />
+
+		<!-- Sauvegarde de l'essai en restant sur le produit -->
+		<transition on="save" to="editProduitThera">
+			<evaluate expression="produitsManager.addToEssaiCollection(essaiManager.bean, produitTherapeutiqueManager.bean)"/>
+			<evaluate expression="produitTherapeutiqueManager.setIndexOngletCourant(0)"/>
+			<evaluate
+				expression="produitTherapeutiqueService.addMaj(produitTherapeutiqueManager.bean)" />
+			<evaluate expression="essaiService.save(essaiManager.bean)"  result="essaiManager.bean" />
+			<evaluate expression="essaiManager.getProduitByName(produitTherapeutiqueManager.bean)" result="produitTherapeutiqueManager.bean"/>
+			<set name="produitTherapeutiqueManager.enregistre" value="true" />
+		</transition>
+
+		<!-- Sauvegarde de l'essai et retour à l'essai -->
+		<transition on="saveAndReturn" to="comeback">
+			<evaluate expression="produitsManager.addToEssaiCollection(essaiManager.bean, produitTherapeutiqueManager.bean)"/>
+			<evaluate expression="produitTherapeutiqueManager.setIndexOngletCourant(0)"/>
+			<evaluate
+				expression="produitTherapeutiqueService.addMaj(produitTherapeutiqueManager.bean)" />
+			<evaluate expression="essaiService.save(essaiManager.bean)" result="essaiManager.bean"/>
+			<evaluate expression="essaiManager.getProduitByName(produitTherapeutiqueManager.bean)" result="produitTherapeutiqueManager.bean"/>
+			<set name="produitTherapeutiqueManager.enregistre" value="true" />
+		</transition>
+
+		<!-- Initialisation d'un conditionnement -->
+		<transition on="initConditionnement" to="editProduitThera">
+			<evaluate
+				expression="conditionnementManager.setBean(conditionnementFactory.getInitializedObject(produitTherapeutiqueManager.bean))" />
+			<set name="conditionnementsManager.editFlag" value="true"></set>
+		</transition>
+
+
+		<!--  Retour à l'essai -->
+		<transition on="comeback" to="comeback"/>
+
+		<!--  Erreur -->
+		<transition on="error" to="editProduitThera" />
+	</view-state>
+	
+
+	
+
+	<!-- Retour à l'essai -->
+<!--	<subflow-state id="comeback" subflow="editEssai">-->
+<!--		<input name="idEssai" required="true" value="essaiManager.bean.id" />-->
+<!--		<input name="idOnglet" required="true" value="'ONG_PRODUITS'" />-->
+<!--	</subflow-state>-->
+<end-state id="comeback"/>
+
+</flow>

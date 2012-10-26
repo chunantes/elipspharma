@@ -1,0 +1,198 @@
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:p="http://primefaces.prime.com.tr/ui"
+	xmlns:c="http://java.sun.com/jsp/jstl/core"
+	xmlns:sf="http://www.springframework.org/tags/faces">
+
+	<c:set var="idOnglet_design">ONG_DESIGN</c:set>
+	<c:set var="detailDonneesPharma"
+		value="#{essaiManager.bean.ssign}" />
+	<input type="hidden" id="currentView" name="currentView"
+		value="#{idOnglet_design}" />
+
+	<p:focus context="treeDesign" />
+	
+	<h:panelGrid columns="4"
+		columnClasses="panelCol_20,panelCol_30,panelCol_20,panelCol_30">
+
+		<h:outputLabel id="labelTypeDesign" for="typeDesign"
+			value="#{resourceBundle['editEssai.onglet.design.type']}" />
+		<h:selectOneMenu id="typeDesign"
+			value="#{essaiManager.bean.detailDesign.type}"
+			styleClass="selectRadio">
+		<f:selectItem noSelectionOption="true" />
+		<f:selectItems
+			value="#{enumManager.getValues('TypeDesign')}" />
+		</h:selectOneMenu>
+		
+		<h:panelGroup/>
+		<h:panelGroup/>
+	</h:panelGrid>		
+
+	<p:treeTable id="treeDesign" value="#{designsManager.root}" 
+		var="designable" expanded="false">
+		<p:column styleClass="ligneDesign_#{designable.type.libelle}">
+			<f:facet name="header">
+				<h:outputText value="#{resourceBundle['designable.nom']}" />
+			</f:facet>
+			<h:outputText value="#{designable.nom}" />
+		</p:column>
+
+		<p:column  styleClass="ligneDesign_#{designable.type.libelle}">
+			<f:facet name="header">
+				<p:commandLink ajax="true" immediate="true"
+					update="design_popupChoixType" process="@this"
+					title="#{resourceBundle['designable.addBras']}"
+					actionListener="#{designsManager.initBras}"
+					oncomplete="popupChoixDesign.show();">
+					<h:graphicImage library="images" name="add.gif" />
+				</p:commandLink>
+			</f:facet>
+			<div align="center"><!-- Ajout --> <p:commandLink
+				update="design_popupChoixType" 
+				rendered="#{designable.type eq 'BRAS'}" 
+				title="#{resourceBundle['designable.addBrasOrSequence']}" 
+				actionListener="#{designsManager.initBras}"
+				oncomplete="popupChoixDesign.show();"> 
+				<h:graphicImage library="images" name="add.gif" />
+				<f:attribute name="designableParent" value="#{designable}" />
+			</p:commandLink> <!-- Edition d'un bras --> <p:commandLink
+				update="design_popupChoixType" 
+				rendered="#{designable.type eq 'BRAS' }"
+				title="#{resourceBundle['designable.bras.modify']}" 
+				style="margin-right:5px;" immediate="true" 
+				actionListener="#{designsManager.editBras}" process="@this"
+				oncomplete="popupChoixDesign.show();">
+				<h:graphicImage library="images" name="modify.gif" />
+				<f:attribute name="brasCurrent" value="#{designable}" />
+			</p:commandLink> 
+			
+			<!--  Edition d'une sequence  --> 
+			
+			<p:commandLink ajax="false" styleClass="sequence_#{designable.id}"
+				rendered="#{designable.type eq 'SEQUENCE' }" action="editSequence"
+				title="#{resourceBundle['designable.sequence.modify']}"
+				style="margin-right:5px;">
+				<f:param name="id" value="#{designable.id}" />
+				<h:graphicImage library="images" name="modify.gif" />
+			</p:commandLink></div>
+		</p:column>
+
+		<p:column  styleClass="ligneDesign_#{designable.type.libelle}">
+			<f:facet name="header">
+				<h:outputText value="#{resourceBundle['designable.debut']}" />
+			</f:facet>
+			<h:outputText value="#{designable.debut}" />
+		</p:column>
+		<p:column  styleClass="ligneDesign_#{designable.type.libelle}">
+			<f:facet name="header">
+				<h:outputText value="#{resourceBundle['designable.fin']}" />
+			</f:facet>
+			<h:outputText value="#{designable.fin}" />
+		</p:column>
+		<p:column  styleClass="ligneDesign_#{designable.type.libelle}">
+			<f:facet name="header">
+				<h:outputText value="#{resourceBundle['designable.libelleProduit']}" />
+			</f:facet>
+			<h:outputText value="#{designable.libelleProduit}" />
+		</p:column>
+
+		<p:column  styleClass="ligneDesign_#{designable.type.libelle}">
+			<div align="center"><!--  Suppression d'une sequence  --> <p:commandLink
+				ajax="true" rendered="#{designable.type eq 'SEQUENCE' }"
+				title="#{resourceBundle['designable.sequence.del']}"
+				oncomplete="document.forms['hiddenForm'].removeSequenceButton.click();"
+				actionListener="#{designsManager.setCurrent(designable) }">
+				<h:graphicImage library="images" name="del.gif" />
+			</p:commandLink> <!--  Suppression d'un bras  --> <p:commandLink ajax="true"
+				rendered="#{designable.type eq 'BRAS' }"
+				title="#{resourceBundle['designable.bras.del']}"
+				oncomplete="document.forms['hiddenForm'].removeBrasButton.click();"
+				actionListener="#{designsManager.setCurrent(designable) }">
+				<h:graphicImage library="images" name="del.gif" />
+			</p:commandLink></div>
+		</p:column>
+	</p:treeTable>
+
+	<!-- Champ contenant les ids des nodes to expand -->
+	<h:inputHidden id="idsNodesToExpand"
+		value="#{designsManager.idsNodesToExpand}" />
+	
+	<h:panelGrid columns="4" columnClasses="panelCol_25,panelCol_25,panelCol_25,panelCol_25">
+		<h:outputLabel id="labelDateDebutChrono" for="dateDebutChrono" value="#{resourceBundle['editEssai.onglet.design.date.debutChrono']}" />
+	   	<p:calendar id="dateDebutChrono" selectListener="#{designsManager.selectDateListener}" value="#{designsManager.dateDebut}" immediate="true" onSelectUpdate="@this" 
+	    	effect="#{resourceBundle['effect.calendar']}" locale="#{resourceBundle['date.locale']}" showButtonPanel="true" navigator="true" 
+	    	converter="#{calendarConverter}"  />
+	    
+	    <p:commandButton value="#{resourceBundle['editEssai.onglet.design.generer']}" ajax="false" update="buttonRefresh" action="initDesignChrono" onclick="showWait();"   />
+	    <h:panelGroup/>
+	</h:panelGrid>
+
+	<br />
+	<h:panelGrid columns="4" columnClasses="panelCol_20,panelCol_50,panelCol_15,panelCol_15" rendered="#{designsManager.jsonDate != null and designsManager.json!=null}">
+		<h:outputLabel id="zoomChrono"  value="#{resourceBundle['editEssai.onglet.design.zoom']}" />
+		<h:panelGroup><div id="slider" style="width:80%;"/></h:panelGroup>
+		<p:commandButton title="#{resourceBundle['editEssai.onglet.design.zoom.semaine']}" value="#{resourceBundle['editEssai.onglet.design.zoom.semaine']}" onclick="display(#{designsManager.jsonDate}, #{designsManager.json}, 97, 'week'); jQuery('#slider').slider({value: 97});"/>
+		<p:commandButton title="#{resourceBundle['editEssai.onglet.design.zoom.mois']}" value="#{resourceBundle['editEssai.onglet.design.zoom.mois']}" onclick="display(#{designsManager.jsonDate}, #{designsManager.json}, 23.3, 'month'); jQuery('#slider').slider({value: 10});"/>
+		
+	</h:panelGrid>
+	<br />
+	<div id="ganttChart"></div>
+
+	<!-- Suivi des modifications -->
+	<p:panel id="design_suivi" styleClass="panelSuivi"
+		rendered="#{essaiManager.hasLastModif(idOnglet_design)}">
+		<c:set var="lastModifOngDesign"
+			value="#{essaiManager.getLastModif(idOnglet_design)}" />
+		<h:outputText value="#{resourceBundle['suivi.part1']} " />
+		<h:outputText value="#{lastModifOngDesign.dateMaj.time}">
+			<f:convertDateTime
+				pattern="#{resourceBundle['date.pattern.withHeures']}" />
+		</h:outputText>
+		<h:outputText value="#{resourceBundle['suivi.part2']} " />
+		<h:outputText value="#{lastModifOngDesign.majPar}" />
+		<h:outputText value="#{resourceBundle['ponctuation.bracket.open']} " />
+		<h:outputLink id="labelDesignModifs" value="javascript:void(0)"
+			styleClass="clickable" onclick="popupHistoOngDesign.show()"
+			title="#{resourceBundle['suivi.popupLink.title']}">#{resourceBundle['suivi.historique']}
+		</h:outputLink>
+		<h:outputText value="#{resourceBundle['ponctuation.bracket.close']} " />
+	</p:panel>
+
+	
+	<script type="text/javascript">
+		jQuery(document).ready(function() {
+			expand();
+		});
+		 
+	</script>
+	
+	<p:outputPanel id="panelSliderJavascript">
+		<c:if test="#{designsManager.jsonDate != null and designsManager.json!=null}">
+		
+			<script type="text/javascript">
+				jQuery(document).ready(function() {
+					display(#{designsManager.jsonDate}, #{designsManager.json}, 23.3, 'month'); 
+					
+					jQuery('.ganttview-block').click(function(){
+						var id = jQuery(this).attr('sequence');
+						jQuery('.sequence_'+id).click();
+					});
+				});
+			
+				jQuery("#slider").slider({
+					min : 2,
+					max : 200,
+					value: 23.3,
+					step : 1,
+					stop: function(event, ui) {
+						display(#{designsManager.jsonDate}, #{designsManager.json}, jQuery('#slider').slider('value'));
+					}
+				});
+			</script>
+		</c:if>
+	</p:outputPanel>
+
+</ui:composition>

@@ -1,0 +1,192 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans 
+    xmlns="http://www.springframework.org/schema/beans" 
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd">
+
+
+	<!-- ============================= -->
+	<!-- BUILDER					   -->
+	<!-- ============================= -->
+	<bean id="conseilDispensationBuilder"
+		class="fr.pharma.eclipse.service.dispensation.builder.impl.ConseilDispensationBuilderImpl">
+		<property name="checkers">
+			<list>
+				<ref local="produitNotNullChecker" />
+				<ref local="conditionnementNotNullChecker" />
+				<ref local="modePrescriptionNotNullChecker" />
+<!--				<ref local="debutNotNullChecker" />-->
+<!--				<ref local="debutNbNotNullChecker" />-->
+<!--				<ref local="debutUniteNotNullChecker" />-->
+				<ref local="dureeNotNullChecker" />
+				<ref local="dureeNbNotNullChecker" />
+				<ref local="dureeUniteNotNullChecker" />
+				<ref local="frequenceNotNullChecker" />
+				<ref local="frequenceNbNotNullChecker" />
+				<ref local="frequenceTypeRegulariteNotNullChecker" />
+			</list>
+		</property>
+		<property name="processors">
+			<map>
+				<entry key-ref="MODE_CONDITIONNEMENT_PRIMAIRE" value-ref="conditionnementFormeProcessor"/>
+				<entry key-ref="MODE_FORME_GALENIQUE" value-ref="conditionnementFormeProcessor"/>
+			</map>
+		</property>
+		<property name="formatters">
+			<map>
+				<entry key-ref="MODE_CONDITIONNEMENT_PRIMAIRE" value-ref="conditionnementFormatter"/>
+				<entry key-ref="MODE_FORME_GALENIQUE" value-ref="conditionnementFormatter"/>
+			</map>
+		</property>
+	</bean>
+
+	<!-- ============================= -->
+	<!-- CHECKER					   -->
+	<!-- ============================= -->
+	<bean id="produitNotNullChecker"
+		class="fr.pharma.eclipse.service.dispensation.checker.impl.GenericNotNullChecker">
+		<constructor-arg index="0" value="produit" />
+	</bean>
+	<bean id="conditionnementNotNullChecker"
+		class="fr.pharma.eclipse.service.dispensation.checker.impl.GenericNotNullChecker">
+		<constructor-arg index="0" value="conditionnement" />
+	</bean>
+	<bean id="modePrescriptionNotNullChecker"
+		class="fr.pharma.eclipse.service.dispensation.checker.impl.GenericNotNullChecker">
+		<constructor-arg index="0" value="conditionnement.modePrescription" />
+	</bean>
+	
+	<!-- Début -->
+	<bean id="debutNotNullChecker"
+		class="fr.pharma.eclipse.service.dispensation.checker.impl.GenericNotNullChecker">
+		<constructor-arg index="0" value="debut" />
+	</bean>
+	<bean id="debutNbNotNullChecker"
+		class="fr.pharma.eclipse.service.dispensation.checker.impl.GenericNotNullChecker">
+		<constructor-arg index="0" value="debut.nb" />
+	</bean>
+	<bean id="debutUniteNotNullChecker"
+		class="fr.pharma.eclipse.service.dispensation.checker.impl.GenericNotNullChecker">
+		<constructor-arg index="0" value="debut.unite" />
+	</bean>
+	
+	<!--  Durée -->
+	<bean id="dureeNotNullChecker"
+		class="fr.pharma.eclipse.service.dispensation.checker.impl.GenericNotNullChecker">
+		<constructor-arg index="0" value="duree" />
+	</bean>
+	<bean id="dureeNbNotNullChecker"
+		class="fr.pharma.eclipse.service.dispensation.checker.impl.GenericNotNullChecker">
+		<constructor-arg index="0" value="duree.nb" />
+	</bean>
+	<bean id="dureeUniteNotNullChecker"
+		class="fr.pharma.eclipse.service.dispensation.checker.impl.GenericNotNullChecker">
+		<constructor-arg index="0" value="duree.unite" />
+	</bean>
+	
+	<!-- Fréquence -->
+	<bean id="frequenceNotNullChecker"
+		class="fr.pharma.eclipse.service.dispensation.checker.impl.GenericNotNullChecker">
+		<constructor-arg index="0" value="frequence" />
+	</bean>
+	<bean id="frequenceNbNotNullChecker"
+		class="fr.pharma.eclipse.service.dispensation.checker.impl.GenericNotNullChecker">
+		<constructor-arg index="0" value="frequence.nbFrequence" />
+	</bean>
+	<bean id="frequenceNbUniteTempsNotNullChecker"
+		class="fr.pharma.eclipse.service.dispensation.checker.impl.GenericNotNullChecker">
+		<constructor-arg index="0" value="frequence.nbUniteTempsFrequence" />
+	</bean>
+	<bean id="frequenceUniteNotNullChecker"
+		class="fr.pharma.eclipse.service.dispensation.checker.impl.GenericNotNullChecker">
+		<constructor-arg index="0" value="frequence.uniteFrequence" />
+	</bean>
+	<bean id="frequenceTypeRegulariteNotNullChecker"
+		class="fr.pharma.eclipse.service.dispensation.checker.impl.GenericNotNullChecker">
+		<constructor-arg index="0" value="frequence.typeRegularite" />
+	</bean>
+
+	<!-- ============================= -->
+	<!-- CONVERTER					   -->
+	<!-- ============================= -->
+	<bean id="minuteConverter" class="fr.pharma.eclipse.service.dispensation.processor.helper.UniteTempsConverter">
+		<property name="conversion">
+			<map>
+				<entry key-ref="UNITE_TEMPS_MINUTE" value="1"/>
+				<entry key-ref="UNITE_TEMPS_HEURE" value="24"/>
+				<entry key-ref="UNITE_TEMPS_JOURS" value="1440"/>
+				<entry key-ref="UNITE_TEMPS_SEMAINE" value="10080"/>
+				<entry key-ref="UNITE_TEMPS_MOIS" value="302400"/>
+			</map>
+		</property>
+	</bean>
+	<bean id="heureConverter" class="fr.pharma.eclipse.service.dispensation.processor.helper.UniteTempsConverter">
+		<property name="conversion">
+			<map>
+				<entry key-ref="UNITE_TEMPS_HEURE" value="1"/>
+				<entry key-ref="UNITE_TEMPS_JOURS" value="24"/>
+				<entry key-ref="UNITE_TEMPS_SEMAINE" value="168"/>
+				<entry key-ref="UNITE_TEMPS_MOIS" value="5040"/>
+			</map>
+		</property>
+	</bean>
+	<bean id="joursConverter" class="fr.pharma.eclipse.service.dispensation.processor.helper.UniteTempsConverter">
+		<property name="conversion">
+			<map>
+				<entry key-ref="UNITE_TEMPS_JOURS" value="1"/>
+				<entry key-ref="UNITE_TEMPS_SEMAINE" value="7"/>
+				<entry key-ref="UNITE_TEMPS_MOIS" value="30"/>
+			</map>
+		</property>
+	</bean>
+	<bean id="semaineConverter" class="fr.pharma.eclipse.service.dispensation.processor.helper.UniteTempsConverter">
+		<property name="conversion">
+			<map>
+				<entry key-ref="UNITE_TEMPS_SEMAINE" value="1"/>
+				<entry key-ref="UNITE_TEMPS_MOIS" value="7"/>
+			</map>
+		</property>
+	</bean>
+	<bean id="moisConverter" class="fr.pharma.eclipse.service.dispensation.processor.helper.UniteTempsConverter">
+		<property name="conversion">
+			<map>
+				<entry key-ref="UNITE_TEMPS_MOIS" value="1"/>
+			</map>
+		</property>
+	</bean>
+	
+	<!-- Helper de gestion de frequences -->
+	<bean id="frequenceHelper" class="fr.pharma.eclipse.service.dispensation.processor.helper.FrequenceHelper">
+		<property name="conversionStrategy">
+			<map>
+				<entry key-ref="UNITE_TEMPS_MINUTE" value-ref="minuteConverter"/>
+				<entry key-ref="UNITE_TEMPS_HEURE" value-ref="heureConverter"/>
+				<entry key-ref="UNITE_TEMPS_JOURS" value-ref="joursConverter" />
+				<entry key-ref="UNITE_TEMPS_SEMAINE" value-ref="semaineConverter"/>
+				<entry key-ref="UNITE_TEMPS_MOIS" value-ref="moisConverter"/>
+			</map>
+		</property>
+	</bean>
+	
+	<!-- ============================= -->
+	<!-- PROCESSORS					   -->
+	<!-- ============================= -->
+	<bean id="genericConseilProcessor" class="fr.pharma.eclipse.service.dispensation.processor.impl.GenericConseilDispensationProcessor" abstract="true">
+		<property name="frequenceHelper" ref="frequenceHelper"/>
+	</bean>
+	
+	<bean id="dosageProcessor" class="fr.pharma.eclipse.service.dispensation.processor.impl.DosageProcessor" parent="genericConseilProcessor"/>
+	<bean id="dosageKgProcessor" class="fr.pharma.eclipse.service.dispensation.processor.impl.DosageKgProcessor" parent="genericConseilProcessor"/>
+	<bean id="dosageSCProcessor" class="fr.pharma.eclipse.service.dispensation.processor.impl.DosageSCProcessor" parent="genericConseilProcessor"/>
+	<bean id="conditionnementFormeProcessor" class="fr.pharma.eclipse.service.dispensation.processor.impl.ConditionnementFormeProcessor" parent="genericConseilProcessor"/>
+	
+	<!-- ============================= -->
+	<!-- FORMATTERS					   -->
+	<!-- ============================= -->
+	<bean id="genericFormatter" abstract="true" class="fr.pharma.eclipse.service.dispensation.formatter.impl.GenericConseilFormatter"/>
+	
+	<bean id="dosageFormatter" class="fr.pharma.eclipse.service.dispensation.formatter.impl.DosageFormatter" parent="genericFormatter"/>
+	<bean id="dosageKgFormatter" class="fr.pharma.eclipse.service.dispensation.formatter.impl.DosageKgFormatter" parent="genericFormatter"/> 
+	<bean id="dosageSCFormatter" class="fr.pharma.eclipse.service.dispensation.formatter.impl.DosageSCFormatter" parent="genericFormatter"/> 
+	<bean id="conditionnementFormatter" class="fr.pharma.eclipse.service.dispensation.formatter.impl.ConditionnementPrimaireFormatter" parent="genericFormatter"/>
+</beans>

@@ -1,0 +1,45 @@
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+     xmlns:ui="http://java.sun.com/jsf/facelets"
+     xmlns:h="http://java.sun.com/jsf/html"
+     xmlns:f="http://java.sun.com/jsf/core"
+     xmlns:p="http://primefaces.prime.com.tr/ui">
+     
+     <div id="actualites" class="accueil" > 
+		 <h2><h:outputText value="#{resourceBundle['accueil.actualites']}"/></h2>
+		    		
+	    <p:dataTable id="essaisActualites" value="#{accueilManager.essaisActualites}"  scrollable="true" var="essaiActualite" emptyMessage="#{resourceBundle['results.none']}"
+		 	selection="#{accueilManager.essaiSelected}" selectionMode="single" 
+			update="essaisActualites" styleClass="dataTableScrollable" onRowSelectStart="showWait();"
+	    	onselectComplete="javascript:document.getElementById('editEssaiButton').click();" >
+			
+   			<p:column id="essai" styleClass="panelCol_20">
+   				<f:facet name="header">
+   					<h:outputText value="#{resourceBundle['actualites.essai']}"/>
+   				</f:facet>
+   				<h:outputText value="#{essaiActualite.numInterne} #{essaiActualite.nom}"/>
+   			</p:column>
+   			
+   			<p:column id="promoteur" styleClass="panelCol_20"> 
+   				<f:facet name="header">
+   					<h:outputText value="#{resourceBundle['actualites.promoteur']}"/> 
+   				</f:facet>
+   				<h:outputText value="#{essaiActualite.promoteur.raisonSociale}"/>
+   			</p:column>
+   			
+   			<p:column id="codePromoteur" styleClass="panelCol_40">
+   				<f:facet name="header">
+   					<h:outputText value="#{resourceBundle['actualites.codePromoteur']}"/>
+   				</f:facet>
+   				<h:outputText value="#{essaiActualite.codePromoteur}"/>
+   			</p:column>
+   			
+   			<p:column id="dci" styleClass="panelCol_20">
+   				<f:facet name="header">
+   					<h:outputText value="#{resourceBundle['actualites.dci']}"/>
+   				</f:facet> 
+   				<h:outputText value="#{essaiActualite.dci}"/>
+   			</p:column>
+   			
+		</p:dataTable>	  
+   		</div>
+</ui:composition>

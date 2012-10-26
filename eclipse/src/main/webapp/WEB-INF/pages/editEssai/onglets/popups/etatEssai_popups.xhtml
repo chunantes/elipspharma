@@ -1,0 +1,91 @@
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+     xmlns:ui="http://java.sun.com/jsf/facelets"
+     xmlns:h="http://java.sun.com/jsf/html"
+     xmlns:f="http://java.sun.com/jsf/core"
+     xmlns:p="http://primefaces.prime.com.tr/ui"
+     xmlns:sf="http://www.springframework.org/tags/faces">
+     
+     <!-- Popup de changement etat essai -->
+    <p:dialog widgetVar="popupEtatEssai" header="#{resourceBundle['editEssai.onglet.recherche.etat']}"  
+		resizable="true" modal="true" 
+		styleClass="essaiTabPopup popupCommWithHisto"
+		width="#{resourceBundle['popup.comments.withHisto.width']}"
+		closeListener="#{essaiManager.resetChangementEtat()}"
+		onCloseUpdate="formPopupEtatEssai" >
+		
+		<h:form id="formPopupEtatEssai" prependId="false">
+		
+			<!-- Historique Etat essai -->
+			<h3><h:outputFormat value="#{resourceBundle['editEssai.onglet.recherche.etat.historique']}" /></h3>
+			<fieldset>
+				<p:outputPanel style="display:block;margin-top:10px;">
+					<p:panel styleClass="popupScrollable" style="margin-bottom:10px">
+			 			<div align="center">
+							<h:panelGrid columns="2" style="margin-bottom:10px" width="100%">  
+								<p:dataTable id="popupEtatEssaiTabHisto" value="#{essaiManager.getList('detailsEtatEssai', false)}" var="detailEtatEssai" emptyMessage="#{resourceBundle['results.none']}">
+									<p:column id="etat">
+										<f:facet name="header">
+											<h:outputText value="#{resourceBundle['editEssai.onglet.recherche.etat.historique.etat']}"/>
+										</f:facet>
+										<h:outputText value="#{detailEtatEssai.etatEssai.libelle}" />									
+									</p:column>
+									<p:column id="commentaire">
+										<f:facet name="header">
+											<h:outputText value="#{resourceBundle['editEssai.onglet.recherche.etat.historique.commentaire']}"/>
+										</f:facet>
+										<h:outputText value="#{detailEtatEssai.commentaire}" />
+									</p:column>
+									<p:column id="date">
+										<f:facet name="header">
+											<h:outputText value="#{resourceBundle['editEssai.onglet.recherche.etat.historique.date']}"/>
+										</f:facet>
+										<h:outputText value="#{detailEtatEssai.dateMaj.time}">
+											<f:convertDateTime pattern="#{resourceBundle['date.pattern.withHeures']}"/>
+										</h:outputText>
+									</p:column>
+									<p:column id="auteur">
+										<f:facet name="header">
+											<h:outputText value="#{resourceBundle['editEssai.onglet.recherche.etat.historique.auteur']}"/>
+										</f:facet>
+										<h:outputText value="#{detailEtatEssai.majPar}" />
+									</p:column>
+								</p:dataTable>		            
+							</h:panelGrid>
+						</div>
+					</p:panel>
+				</p:outputPanel>
+			
+				<!-- Changement Etat Essai -->
+				<h3><h:outputFormat value="#{resourceBundle['editEssai.onglet.recherche.etat.changement']}"/></h3>
+				<p:outputPanel style="display:block;margin-top:10px;">
+				
+					<h:panelGrid columns="2" width="100%" columnClasses="panelCol_20,panelCol_80">
+						<!-- Etat essai -->
+						<h:outputLabel id="labelPopupEtatEssaiEtat" value="#{resourceBundle['editEssai.onglet.recherche.etat']}" />
+		           		<h:selectOneMenu style="width:280px;" id="popupEtatEssai_etat" value="#{essaiManager.etatChgtEtat}">
+		           			<f:selectItems value="#{enumManager.getValues('EtatEssai')}"/>
+		           		</h:selectOneMenu>	
+		           		<!-- Commentaire -->						
+						<h:outputLabel id="labelPopupEtatEssaiCommentaire" value="#{resourceBundle['editEssai.onglet.recherche.commentaire']}" />
+						<h:inputTextarea id="popupEtatEssai_commentaire" value="#{essaiManager.commentaireChgtEtat}" rows="#{resourceBundle['textarea.rows.default']}" />
+					</h:panelGrid>
+					
+				</p:outputPanel>
+			</fieldset>
+			
+			<div class="popupButton">
+				<p:commandButton value="#{resourceBundle['btn.changerEtat']}" 
+					actionListener="#{essaiManager.ajouterDetailEtatEssai()}"
+					update="formPopupEtatEssai panelEtatEssai"
+					oncomplete="popupEtatEssai.hide();" />
+       			<p:commandButton value="#{resourceBundle['btn.fermer']}"
+					actionListener="#{essaiManager.resetChangementEtat()}"
+					update="formPopupEtatEssai panelEtatEssai"       			
+       				oncomplete="popupEtatEssai.hide();"/>
+       		</div>   
+		
+		</h:form>
+		
+	</p:dialog>  
+     
+</ui:composition>

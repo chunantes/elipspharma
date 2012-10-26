@@ -1,0 +1,1107 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<beans 
+    xmlns="http://www.springframework.org/schema/beans" 
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xmlns:util="http://www.springframework.org/schema/util"
+    xsi:schemaLocation="
+    	http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd
+    	http://www.springframework.org/schema/util http://www.springframework.org/schema/util/spring-util.xsd">
+
+	<!-- ================== -->
+	<!-- SCOPE REGISTAR     -->
+	<!-- ================== -->
+	<bean id="scopeRegistrar" class="org.springframework.webflow.scope.ScopeRegistrar" />
+
+	<!-- ================== -->
+	<!-- HELPER MANAGER     -->
+	<!-- ================== -->
+	<bean id="beanManagerHelper" class="fr.pharma.eclipse.component.helper.BeanManagerHelper">
+		<property name="beanHelper" ref="commonServicesHelper" />
+	</bean>
+
+	<bean id="genericBeanManager" class="fr.pharma.eclipse.component.BeanManager"
+		abstract="true">
+		<property name="helper" ref="beanManagerHelper" />
+	</bean>
+
+	<!-- =================== -->
+	<!-- REDIRECTION HANDLER -->
+	<!-- =================== -->
+	<bean id="redirectHandler" class="fr.pharma.eclipse.redirect.RedirectHandler" />
+
+	<!-- ================== -->
+	<!-- PHARMACIE MANAGER  -->
+	<!-- ================== -->
+	<bean id="pharmacieManager" class="fr.pharma.eclipse.component.stockage.PharmacieManager"
+		parent="genericBeanManager" scope="session" lazy-init="true">
+		<constructor-arg index="0" ref="pharmacieService" />
+	</bean>
+
+	<!-- =============================== -->
+	<!-- HELPER TREE STOCKAGE PHARMACIE  -->
+	<!-- =============================== -->
+	<bean id="treeStockageHelper"
+		class="fr.pharma.eclipse.component.stockage.helper.TreeStockageHelper" />
+
+	<!-- ================== -->
+	<!-- PHARMACIES MANAGER -->
+	<!-- ================== -->
+	<bean id="pharmaciesManager" class="fr.pharma.eclipse.component.BeansManager"
+		scope="session" lazy-init="true">
+		<constructor-arg index="0" ref="pharmacieSearchCriteria" />
+	</bean>
+	<bean id="pharmaciePrincipaleManager" class="fr.pharma.eclipse.component.BeansManager"
+		scope="session" lazy-init="true">
+		<constructor-arg index="0" ref="pharmacieSearchCriteria" />
+	</bean>
+
+	<!-- ============================ -->
+	<!-- PHARMACIE SELECTABLE MANAGER -->
+	<!-- ============================ -->
+	<bean id="pharmaciesEssaiPharmaManager" class="fr.pharma.eclipse.component.SelectableBeansManager"
+		scope="session" lazy-init="true">
+		<constructor-arg index="0" ref="pharmacieSearchCriteria" />
+	</bean>
+	
+	<!-- ============================ -->
+	<!-- ETABLISSEMENT SELECTABLE MANAGER -->
+	<!-- ============================ -->
+	<bean id="etablissementsEssaiPharmaManager" class="fr.pharma.eclipse.component.SelectableBeansManager"
+		scope="session" lazy-init="true">
+		<constructor-arg index="0" ref="etablissementSearchCriteria" />
+	</bean>
+
+	<!-- ====================== -->
+	<!-- ETABLISSEMENT MANAGER  -->
+	<!-- ====================== -->
+	<bean id="etablissementManager" class="fr.pharma.eclipse.component.BeanManager"
+		parent="genericBeanManager" scope="session" lazy-init="true">
+		<constructor-arg index="0" ref="etablissementService" />
+	</bean>
+
+	<!-- ====================== -->
+	<!-- ETABLISSEMENTS MANAGER -->
+	<!-- ====================== -->
+	<bean id="etablissementsManager" class="fr.pharma.eclipse.component.BeansManager"
+		scope="session" lazy-init="true">
+		<constructor-arg index="0" ref="etablissementSearchCriteria" />
+	</bean>
+
+	<!-- ====================== -->
+	<!-- SITE MANAGER           -->
+	<!-- ====================== -->
+	<bean id="siteManager" class="fr.pharma.eclipse.component.BeanManager"
+		parent="genericBeanManager" scope="session" lazy-init="true">
+		<constructor-arg index="0" ref="siteService" />
+	</bean>
+
+	<!-- ====================== -->
+	<!-- SITES MANAGER          -->
+	<!-- ====================== -->
+	<bean id="sitesManager" class="fr.pharma.eclipse.component.BeansManager"
+		scope="session" lazy-init="true">
+		<constructor-arg index="0" ref="siteSearchCriteria" />
+	</bean>
+
+	<!-- ====================== -->
+	<!-- SERVICE MANAGER        -->
+	<!-- ====================== -->
+	<bean id="serviceManager" class="fr.pharma.eclipse.component.service.ServiceManager"
+		parent="genericBeanManager" scope="session" lazy-init="true">
+		<constructor-arg index="0" ref="serviceService" />
+	</bean>
+	<bean id="autoCompleteServiceManager" class="fr.pharma.eclipse.component.AutoCompleteBeansManager"
+		scope="session" lazy-init="true">
+		<property name="searchCriteria" ref="serviceSearchCriteria" />
+		<property name="service" ref="serviceService" />
+	</bean>
+
+	<!-- ====================== -->
+	<!-- SERVICES MANAGER       -->
+	<!-- ====================== -->
+	<bean id="servicesManager" class="fr.pharma.eclipse.component.BeansManager"
+		scope="session" lazy-init="true">
+		<constructor-arg index="0" ref="serviceSearchCriteria" />
+	</bean>
+
+	<!-- ============================ -->
+	<!-- SERVICES SELECTABLE MANAGER  -->
+	<!-- ============================ -->
+	<bean id="servicesEssaiGlobalManager" class="fr.pharma.eclipse.component.SelectableBeansManager"
+		scope="session" lazy-init="true">
+		<constructor-arg index="0" ref="serviceSearchCriteria" />
+	</bean>
+	<bean id="servicesProduitGlobalManager" class="fr.pharma.eclipse.component.SelectableBeansManager"
+		scope="session" lazy-init="true">
+		<constructor-arg index="0" ref="serviceSearchCriteria" />
+	</bean>
+	<bean id="servicesEssaiFaisabManager" class="fr.pharma.eclipse.component.SelectableBeansManager"
+		scope="session" lazy-init="true">
+		<constructor-arg index="0" ref="serviceSearchCriteria" />
+	</bean>
+
+	<!-- ====================== -->
+	<!-- PROMOTEUR MANAGER      -->
+	<!-- ====================== -->
+	<bean id="promoteurManager" class="fr.pharma.eclipse.component.BeanManager"
+		parent="genericBeanManager" scope="session" lazy-init="true">
+		<constructor-arg index="0" ref="promoteurService" />
+	</bean>
+	<bean id="autoCompletePromoteurManager" class="fr.pharma.eclipse.component.AutoCompleteBeansManager"
+		scope="session" lazy-init="true">
+		<property name="searchCriteria" ref="promoteurSearchCriteria" />
+		<property name="service" ref="promoteurService" />
+	</bean>
+
+	<!-- ====================== -->
+	<!-- PROMOTEURS MANAGER     -->
+	<!-- ====================== -->
+	<bean id="promoteursManager" class="fr.pharma.eclipse.component.BeansManager"
+		scope="session" lazy-init="true">
+		<constructor-arg index="0" ref="promoteurSearchCriteria" />
+	</bean>
+
+	<!-- ====================== -->
+	<!-- POLE MANAGER           -->
+	<!-- ====================== -->
+	<bean id="poleManager" class="fr.pharma.eclipse.component.BeanManager"
+		parent="genericBeanManager" scope="session" lazy-init="true">
+		<constructor-arg index="0" ref="poleService" />
+	</bean>
+
+	<!-- ====================== -->
+	<!-- POLES MANAGER          -->
+	<!-- ====================== -->
+	<bean id="polesManager" class="fr.pharma.eclipse.component.BeansManager"
+		scope="session" lazy-init="true">
+		<constructor-arg index="0" ref="poleSearchCriteria" />
+	</bean>
+
+	<!-- ====================== -->
+	<!-- INVESTIGATEUR MANAGER  -->
+	<!-- ====================== -->
+	<bean id="investigateurManager" class="fr.pharma.eclipse.component.BeanManager"
+		parent="genericBeanManager" scope="session" lazy-init="true">
+		<constructor-arg index="0" ref="investigateurService" />
+	</bean>
+	<bean id="autoCompleteInvestigateurManager" class="fr.pharma.eclipse.component.AutoCompleteBeansManager"
+		scope="session" lazy-init="true">
+		<property name="searchCriteria" ref="personneSearchCriteria" />
+		<property name="service" ref="investigateurService" />
+	</bean>
+
+	<!-- ====================== -->
+	<!-- ARC PROMOTEUR MANAGER  -->
+	<!-- ====================== -->
+	<bean id="arcPromoteurManager" class="fr.pharma.eclipse.component.BeanManager"
+		parent="genericBeanManager" scope="session" lazy-init="true">
+		<constructor-arg index="0" ref="arcPromoteurService" />
+	</bean>
+
+	<!-- ========================== -->
+	<!-- ARC INVESTIGATEUR MANAGER  -->
+	<!-- ========================== -->
+	<bean id="arcInvestigateurManager" class="fr.pharma.eclipse.component.BeanManager"
+		parent="genericBeanManager" scope="session" lazy-init="true">
+		<constructor-arg index="0" ref="arcInvestigateurService" />
+	</bean>
+
+	<!-- ========================== -->
+	<!-- PHARMACIEN MANAGER         -->
+	<!-- ========================== -->
+	<bean id="pharmacienManager" class="fr.pharma.eclipse.component.acteur.PharmacienManager"
+		parent="genericBeanManager" scope="session" lazy-init="true">
+		<constructor-arg index="0" ref="pharmacienService" />
+		<property name="documentService" ref="documentService"/>
+		<property name="documentsManagers"> 
+			<map>
+				<entry key="CV" value-ref="documentCVPharmacienManager" />
+				<entry key="VALIDATION_FORMATION" value-ref="documentValidationFormationPharmacienManager" />
+			</map>
+		</property>
+	</bean>
+	
+	<!-- ================================== -->
+	<!-- DOCUMENT PHARMACIEN MANAGER       	-->
+	<!-- ================================== -->
+	<bean id="genericDocumentPharmacienManager" abstract="true"
+		class="fr.pharma.eclipse.component.acteur.GenericDocumentManager">
+		<property name="docService" ref="documentService" />
+		<property name="fichierFiller" ref="fichierFiller" />
+	</bean>
+	<bean id="documentCVPharmacienManager" parent="genericDocumentPharmacienManager"
+		scope="session" lazy-init="true">
+		<constructor-arg index="0" value="CV" />
+		<property name="factory" ref="docCVCompleteFactory" />
+	</bean>
+	<bean id="documentValidationFormationPharmacienManager" parent="genericDocumentPharmacienManager"
+		scope="session" lazy-init="true">
+		<constructor-arg index="0" value="VALIDATION_FORMATION" />
+		<property name="factory" ref="docValidationFormationCompleteFactory" />
+	</bean>
+
+	<!-- ========================== -->
+	<!-- CRO MANAGER                -->
+	<!-- ========================== -->
+	<bean id="croManager" class="fr.pharma.eclipse.component.BeanManager"
+		parent="genericBeanManager" scope="session" lazy-init="true">
+		<constructor-arg index="0" ref="croService" />
+	</bean>
+
+	<!-- ============================ -->
+	<!-- DIRECTION RECHERCHE MANAGER  -->
+	<!-- ============================ -->
+	<bean id="directionRechercheManager" class="fr.pharma.eclipse.component.BeanManager"
+		parent="genericBeanManager" scope="session" lazy-init="true">
+		<constructor-arg index="0" ref="directionRechercheService" />
+	</bean>
+
+	<!-- ========================== -->
+	<!-- CONTACT PROMOTEUR MANAGER  -->
+	<!-- ========================== -->
+	<bean id="contactPromoteurManager" class="fr.pharma.eclipse.component.BeanManager"
+		parent="genericBeanManager" scope="session" lazy-init="true">
+		<constructor-arg index="0" ref="contactPromoteurService" />
+	</bean>
+
+	<!-- ====================== -->
+	<!-- MEDICAMENT  MANAGER    -->
+	<!-- ====================== -->
+	<bean id="medicamentManager" class="fr.pharma.eclipse.component.produit.ProduitManager"
+		parent="genericBeanManager" scope="session" lazy-init="true">
+		<constructor-arg index="0" ref="medicamentService" />
+		<property name="documentService" ref="documentService" />
+		<property name="documentsManagers">
+			<map>
+				<entry key="CONDITIONNEMENT" value-ref="documentConditionnementProduitManager" />
+				<entry key="RECONSTITUTION_SIMPLE" value-ref="documentReconstitutionSimpleProduitManager" />
+				<entry key="RECONSTITUTION_PSM" value-ref="documentReconstitutionPSMProduitManager" />
+				<entry key="ETIQUETAGE" value-ref="documentEtiquetageProduitManager" />
+				<entry key="FABRICATION" value-ref="documentFabricationProduitManager" />
+			</map>
+		</property>
+		
+	</bean>
+
+	<!-- ====================== -->
+	<!-- DM  MANAGER    		-->
+	<!-- ====================== -->
+	<bean id="dispositifMedicalManager" class="fr.pharma.eclipse.component.produit.ProduitManager"
+		parent="genericBeanManager" scope="session" lazy-init="true">
+		<constructor-arg index="0" ref="dispositifMedicalService" />
+		<property name="documentService" ref="documentService" />
+		<property name="documentsManagers">
+			<map>
+				<entry key="RANDOMISATION" value-ref="documentRandomisationProduitManager" />
+			</map>
+		</property>
+	</bean>
+
+	<!-- ====================== -->
+	<!-- PRODUIT THE  MANAGER 	-->
+	<!-- ====================== -->
+	<bean id="produitTherapeutiqueManager" class="fr.pharma.eclipse.component.produit.ProduitManager"
+		parent="genericBeanManager" scope="session" lazy-init="true">
+		<constructor-arg index="0" ref="produitTherapeutiqueService" />
+		<property name="documentService" ref="documentService" />
+		<property name="documentsManagers">
+			<map>
+				<entry key="CONDITIONNEMENT" value-ref="documentConditionnementProduitManager" />
+				<entry key="RECONSTITUTION_SIMPLE" value-ref="documentReconstitutionSimpleProduitManager" />
+				<entry key="RECONSTITUTION_PSM" value-ref="documentReconstitutionPSMProduitManager" />
+				<entry key="ETIQUETAGE" value-ref="documentEtiquetageProduitManager" />
+				<entry key="FABRICATION" value-ref="documentFabricationProduitManager" />
+			</map>
+		</property>
+	</bean>
+	
+	<!-- ====================== -->
+	<!-- PREPARATION MANAGER 	-->
+	<!-- ====================== -->
+	<bean id="preparationManager" class="fr.pharma.eclipse.component.produit.ProduitManager"
+		parent="genericBeanManager" scope="session" lazy-init="true">
+		<constructor-arg index="0" ref="preparationService" />
+		<property name="documentService" ref="documentService" />
+		<property name="documentsManagers">
+			<map>
+			</map>
+		</property>
+	</bean>
+
+	<!-- ====================== -->
+	<!-- PERSONNES MANAGER      -->
+	<!-- ====================== -->
+	<bean id="personnesManager" class="fr.pharma.eclipse.component.acteur.PersonnesManager"
+		scope="session" lazy-init="true">
+		<constructor-arg index="0" ref="personneSearchCriteria" />
+	</bean>
+
+	<!-- ========================== -->
+	<!-- PERSONNES SIR MANAGER      -->
+	<!-- ========================== -->
+	<bean id="personnesSirManager" class="fr.pharma.eclipse.component.sir.PersonnesSirManager"
+		scope="session" lazy-init="true">
+		<constructor-arg index="0" ref="personneSirSearchCriteria" />
+	</bean>
+
+	<!-- ====================== -->
+	<!-- PRODUITS  MANAGER      -->
+	<!-- ====================== -->
+	<bean id="produitsManager" class="fr.pharma.eclipse.component.produit.ProduitsManager"
+		scope="session" lazy-init="true">
+		<constructor-arg index="0" ref="produitSearchCriteria" />
+		<property name="typeProduitDictionary">
+			<map>
+				<entry key-ref="TYPE_PRODUIT_MEDICAMENT" value="medicaments" />
+				<entry key-ref="TYPE_DISPOSITIF_MEDICAL" value="dispositifsMedicaux" />
+				<entry key-ref="TYPE_PRODUIT_THERAPEUTIQUE" value="produitsTherapeutiques" />
+				<entry key-ref="TYPE_PREPARATION" value="preparations" />
+			</map>
+		</property>
+	</bean>
+
+	<!-- ======================== -->
+	<!-- CONDITIONNEMENTS MANAGER -->
+	<!-- ======================== -->
+	<bean id="conditionnementsManager"
+		class="fr.pharma.eclipse.component.produit.ConditionnementsManager"
+		scope="session" lazy-init="true">
+		<constructor-arg index="0" ref="conditionnementSearchCriteria" />
+		<property name="redirectDictionary" ref="redirectProduitDictionary" />
+	</bean>
+
+	<util:map id="redirectProduitDictionary">
+		<entry key-ref="TYPE_PRODUIT_MEDICAMENT" value="editMedicament?idMedicament=" />
+		<entry key-ref="TYPE_DISPOSITIF_MEDICAL" value="editDispositifMedical?idDm=" />
+		<entry key-ref="TYPE_PRODUIT_THERAPEUTIQUE" value="editProduitTherapeutique?idProduitThera=" />
+	</util:map>
+
+	<!-- ========================== -->
+	<!-- CONDITIONNEMENT MANAGER 	-->
+	<!-- ========================== -->
+	<bean id="conditionnementManager"
+		class="fr.pharma.eclipse.component.produit.ConditionnementManager"
+		parent="genericBeanManager" scope="session" lazy-init="true">
+		<constructor-arg index="0" ref="conditionnementService" />
+		<property name="builders">
+			<map>
+				<entry key-ref="MODE_NUM_TRAITEMENT" value-ref="numTraitementBuilder"/>
+				<entry key-ref="MODE_FORME_GALENIQUE" value-ref="galeniqueBuilder"/>
+				<entry key-ref="MODE_CONDITIONNEMENT_PRIMAIRE" value-ref="conditionnementPrimaireBuilder"/>
+				<entry key-ref="MODE_DOSE" value-ref="doseBuilder"/>
+				<entry key-ref="MODE_DOSE_KG" value-ref="doseKgBuilder"/>
+				<entry key-ref="MODE_DOSE_SURFACE" value-ref="doseSCBuilder"/>
+			</map>
+		</property>
+	</bean>
+
+	<!-- Builders d'unite de prescription -->
+	<bean id="numTraitementBuilder" class="fr.pharma.eclipse.component.produit.builder.impl.NumTraitementBuilder" />
+	<bean id="galeniqueBuilder" class="fr.pharma.eclipse.component.produit.builder.impl.GaleniqueBuilder" />
+	<bean id="conditionnementPrimaireBuilder" class="fr.pharma.eclipse.component.produit.builder.impl.ConditionnementPrimaireBuilder" />
+	<bean id="doseBuilder" class="fr.pharma.eclipse.component.produit.builder.impl.DosageBuilder" />
+	<bean id="doseKgBuilder" class="fr.pharma.eclipse.component.produit.builder.impl.DosageKgBuilder" />
+	<bean id="doseSCBuilder" class="fr.pharma.eclipse.component.produit.builder.impl.DosageSCBuilder" />
+
+	<!-- ======================== -->
+	<!-- CONDITIONNEMENTS MANAGER -->
+	<!-- ======================== -->
+	<bean id="detailsStockagesManager"
+		class="fr.pharma.eclipse.component.produit.DetailsStockagesManager"
+		scope="session" lazy-init="true">
+		<constructor-arg index="0" ref="detailStockageSearchCriteria" />
+		<property name="redirectDictionary" ref="redirectProduitDictionary" />
+	</bean>
+
+	<!-- ========================== -->
+	<!-- DETAILSTOCKAGE MANAGER 	-->
+	<!-- ========================== -->
+	<bean id="detailStockageManager"
+		class="fr.pharma.eclipse.component.produit.DetailStockageManager"
+		parent="genericBeanManager" scope="session" lazy-init="true">
+		<constructor-arg index="0" ref="detailStockageService" />
+	</bean>
+
+	<!-- ================================== -->
+	<!-- DOCUMENT PRODUIT MANAGER          	-->
+	<!-- ================================== -->
+	<bean id="genericDocumentManager" abstract="true"
+		class="fr.pharma.eclipse.component.produit.GenericDocumentManager">
+		<property name="docService" ref="documentService" />
+		<property name="fichierFiller" ref="fichierFiller" />
+	</bean>
+	<bean id="documentRandomisationProduitManager" parent="genericDocumentManager"
+		scope="session" lazy-init="true">
+		<constructor-arg index="0" value="RANDOMISATION" />
+		<property name="factory" ref="docRandomisationCompleteFactory" />
+	</bean>
+	<bean id="documentFabricationProduitManager" parent="genericDocumentManager"
+		scope="session" lazy-init="true">
+		<constructor-arg index="0" value="FABRICATION" />
+		<property name="factory" ref="docFabricationCompleteFactory" />
+	</bean>
+	<bean id="documentEtiquetageProduitManager" parent="genericDocumentManager"
+		scope="session" lazy-init="true">
+		<constructor-arg index="0" value="ETIQUETAGE" />
+		<property name="factory" ref="docEtiquetageCompleteFactory" />
+	</bean>
+	<bean id="documentReconstitutionSimpleProduitManager" parent="genericDocumentManager"
+		scope="session" lazy-init="true">
+		<constructor-arg index="0" value="RECONSTITUTION_SIMPLE" />
+		<property name="factory" ref="docReconstitutionCompleteFactory" />
+	</bean>
+	<bean id="documentReconstitutionPSMProduitManager" parent="genericDocumentManager"
+		scope="session" lazy-init="true">
+		<constructor-arg index="0" value="RECONSTITUTION_PSM" />
+		<property name="factory" ref="docReconstitutionPSMCompleteFactory" />
+	</bean>
+	<bean id="documentConditionnementProduitManager" parent="genericDocumentManager"
+		scope="session" lazy-init="true">
+		<constructor-arg index="0" value="CONDITIONNEMENT" />
+		<property name="factory" ref="docConditionnementCompleteFactory" />
+	</bean>
+
+	<!-- ================== -->
+	<!-- DESIGNS MANAGER	-->
+	<!-- ================== -->
+	<bean id="designsManager" class="fr.pharma.eclipse.component.design.DesignsManager"
+		scope="conversation" lazy-init="true">
+		<property name="essaiManager" ref="essaiManager" />
+	</bean>
+
+
+	<!-- ================== -->
+	<!-- SEQUENCE MANAGER  	-->
+	<!-- ================== -->
+	<bean id="sequenceManager" class="fr.pharma.eclipse.component.BeanManager"
+		parent="genericBeanManager" scope="session" lazy-init="true">
+		<constructor-arg index="0" ref="sequenceService" />
+	</bean>
+
+
+	<!-- ======================== -->
+	<!-- PRESCRIPTIONTYPE MANAGER -->
+	<!-- ======================== -->
+	<bean id="prescriptionTypeManager" class="fr.pharma.eclipse.component.design.PrescriptionTypeManager"
+		parent="genericBeanManager" scope="session" lazy-init="true">
+		<constructor-arg index="0" ref="prescriptionTypeService" />
+	</bean>
+	
+	<!-- =========================== -->
+	<!-- PPRESCRIPTIONs TYPE MANAGER -->
+	<!-- =========================== -->
+	<bean id="prescriptionsManager" class="fr.pharma.eclipse.component.prescription.PrescriptionsManager" 
+		scope="session" lazy-init="true">
+		<constructor-arg index="0" ref="prescriptionSearchCriteria" />
+	</bean>
+	
+	<!-- ========================== --> 
+	<!-- PRESCRIPTION MANAGER 		-->
+	<!-- ========================== -->
+	<bean id="prescriptionManager" class="fr.pharma.eclipse.component.prescription.PrescriptionManager"
+		parent="genericBeanManager" scope="conversation" lazy-init="true">
+		<constructor-arg index="0" ref="prescriptionService" />
+	</bean>
+	
+	<!-- ====================== -->
+	<!-- PPRESCRIPTIONs MANAGER -->
+	<!-- ====================== -->
+	<bean id="prescriptionsTypeManager" class="fr.pharma.eclipse.component.BeansManager"
+		scope="session" lazy-init="true">
+		<constructor-arg index="0" ref="prescriptionTypeSearchCriteria" />
+	</bean>
+	
+	<!-- ========================= -->
+	<!-- PRODUITSPRESCRITS MANAGER -->
+	<!-- ========================= -->
+	<bean id="produitsPrescritsManager" class="fr.pharma.eclipse.component.BeansManager"
+		scope="session" lazy-init="true">
+		<constructor-arg index="0" ref="produitPrescritSearchCriteria" />
+	</bean>
+
+	<!-- ========================== -->
+	<!-- PRODUITPRESCRIT MANAGER  	-->
+	<!-- ========================== -->
+	<bean id="produitPrescritManager" class="fr.pharma.eclipse.component.prescription.ProduitPrescritManager"
+		parent="genericBeanManager" scope="session" lazy-init="true">
+		<constructor-arg index="0" ref="produitPrescritService" />
+	</bean>
+	
+	<!-- ========================== -->
+	<!-- DISPENSATION MANAGER 		-->
+	<!-- ========================== -->
+	<bean id="dispensationManager" class="fr.pharma.eclipse.component.dispensation.DispensationManager"
+		parent="genericBeanManager" scope="conversation" lazy-init="true">
+		<constructor-arg index="0" ref="dispensationService" />
+	</bean>
+	
+	<!-- =========================== -->
+	<!-- DISPENSATIONS MANAGER -->
+	<!-- =========================== -->
+	<bean id="dispensationsManager" class="fr.pharma.eclipse.component.dispensation.DispensationsManager" 
+		scope="session" lazy-init="true">
+		<constructor-arg index="0" ref="dispensationSearchCriteria" />
+	</bean>
+	
+	<!-- ==================== -->
+	<!-- INCLUSION	 MANAGER  -->
+	<!-- ==================== -->
+	<bean id="inclusionManager" class="fr.pharma.eclipse.component.inclusion.InclusionManager"
+		parent="genericBeanManager" scope="session" lazy-init="true">
+		<constructor-arg index="0" ref="inclusionService" />
+	</bean>
+	
+
+	<!-- =============================== -->
+	<!-- HELPER TREE STOCKAGE PHARMACIE  -->
+	<!-- =============================== -->
+	<bean id="treeDesignHelper"
+		class="fr.pharma.eclipse.component.design.helper.TreeDesignHelper">
+		<property name="helper" ref="designHelper" />
+	</bean>
+
+	<!-- ========================== -->
+	<!-- APPROVISIONNEMENT MANAGER 	-->
+	<!-- ========================== -->
+	<bean id="approvisionnementManager"
+		class="fr.pharma.eclipse.component.stock.ApprovisionnementManager"
+		scope="session" lazy-init="true">
+			<property name="approFactorys">
+			<map>
+				<entry key-ref="TYPE_MOUVEMENT_PREPARATION_ENTREE" value-ref="preparationEntreeFactory"/>
+				<entry key-ref="TYPE_MOUVEMENT_APPROVISIONNEMENT" value-ref="approvisionnementFactory"/>
+				<entry key-ref="TYPE_MOUVEMENT_ENTREE_CORRECTIVE" value-ref="entreeCorrectiveFactory"/>
+			</map>
+		</property>
+	</bean>
+	
+	<!-- ========================== -->
+	<!-- DEMANDE DOTATION MANAGER 	-->
+	<!-- ========================== -->
+	<bean id="demandeDotationManager" 
+		class="fr.pharma.eclipse.component.dotation.DemandeDotationManager"
+		scope="session" lazy-init="true">
+	</bean>
+	
+	<!-- ========================== -->
+	<!-- SORTIE MANAGER         	-->
+	<!-- ========================== -->
+	<bean id="sortieManager"
+		class="fr.pharma.eclipse.component.stock.SortieManager"
+		scope="session" lazy-init="true">
+	</bean>
+	
+	<util:map id="mapFactoriesByTypeMouvement" map-class="java.util.HashMap">
+		<entry key-ref="TYPE_MOUVEMENT_CESSION_PUI" value-ref="cessionPuiFactory"/>
+		<entry key-ref="TYPE_MOUVEMENT_DESTRUCTION" value-ref="destructionFactory"/>
+		<entry key-ref="TYPE_MOUVEMENT_RETOUR_PROMOTEUR" value-ref="retourPromoteurFactory"/>
+		<entry key-ref="TYPE_MOUVEMENT_AUTRE_SORTIE" value-ref="autreSortieFactory"/>
+		<entry key-ref="TYPE_MOUVEMENT_DISPENSATION" value-ref="dispensationProduitFactory"/>
+		<entry key-ref="TYPE_MOUVEMENT_PREPARATION_SORTIE" value-ref="preparationSortieFactory"/>
+	</util:map>
+
+	<!-- ================================== -->
+	<!-- DOCUMENT STOCK MANAGER          	-->
+	<!-- ================================== -->
+	<bean id="genericStockManager" abstract="true"
+		class="fr.pharma.eclipse.component.stock.GenericStockManager">
+		<property name="docService" ref="documentService" />
+		<property name="fichierFiller" ref="fichierFiller" />
+	</bean>
+	<bean id="documentDestructionStockManager" parent="genericStockManager"
+		scope="session" lazy-init="true">
+		<constructor-arg index="0" value="DESTRUCTION" />
+		<property name="factory" ref="docDestructionCompleteFactory" />
+	</bean>
+	<bean id="documentApproStockManager" parent="genericStockManager"
+		scope="session" lazy-init="true">
+		<constructor-arg index="0" value="APPRO" />
+		<property name="factory" ref="docApproCompleteFactory" />
+	</bean>
+	<bean id="documentRetourPromoteurStockManager" parent="genericStockManager"
+		scope="session" lazy-init="true">
+		<constructor-arg index="0" value="RETOUR_PROMOTEUR" />
+		<property name="factory" ref="docRetourPromoteurCompleteFactory" />
+	</bean>
+
+	<!-- ========================== -->
+	<!-- MOUVEMENTS STOCK MANAGER 	-->
+	<!-- ========================== -->	
+	<bean id="mouvementsStockManager" class="fr.pharma.eclipse.component.BeansManager"
+		scope="session" lazy-init="true">
+		<constructor-arg index="0" ref="mouvementStockSearchCriteria" />
+	</bean>
+	
+	<!-- ========================== -->
+	<!-- FLUX STOCK MANAGER 		-->
+	<!-- ========================== -->	
+	<bean id="fluxStockManager" class="fr.pharma.eclipse.component.stock.FluxStockManager"
+		scope="session" lazy-init="true">
+	</bean>
+		
+	<!-- ========================== -->
+	<!-- STOCK MANAGER          	-->
+	<!-- ========================== -->	
+	<bean id="stockManager" class="fr.pharma.eclipse.component.stock.StockManager"
+		scope="session" lazy-init="true">
+		<constructor-arg index="0" ref="stockSearchCriteria" />
+	</bean>	
+
+	<!-- ============================== -->
+	<!-- EXTENSION PEREMPTION MANAGER 	-->
+	<!-- ============================== -->	
+	<bean id="extensionPeremptionManager" class="fr.pharma.eclipse.component.stock.ExtensionPeremptionManager"
+		scope="session" lazy-init="true">
+		<constructor-arg index="0" ref="extensionPeremptionSearchCriteria" />
+	</bean>
+	
+	<!-- ============================== -->
+	<!-- DISPENSATION GLOBALE MANAGER 	-->
+	<!-- ============================== -->	
+	<bean id="dispensationGlobaleManager" class="fr.pharma.eclipse.component.dotation.DispensationGlobaleManager"
+		scope="session" lazy-init="true">
+		<constructor-arg index="0" ref="dotationSearchCriteria" />
+	</bean>
+
+	<!-- ============================ -->
+	<!-- PHARMACIE SELECTABLE MANAGER -->
+	<!-- ============================ -->
+	<bean id="selectableContactsManager" class="fr.pharma.eclipse.component.SelectableBeansManager"
+		scope="session" lazy-init="true">
+		<constructor-arg index="0" ref="personneSearchCriteria" />
+	</bean>
+	<bean id="contactsEssaiManager" class="fr.pharma.eclipse.component.essai.ContactsManager"
+		scope="session" lazy-init="true">
+		<property name="helper" ref="beanManagerHelper" />
+		<property name="contactsRetriever" ref="contactsEssaiRetriever" />
+		<property name="userService" ref="userService" />
+		<property name="selectableContactsManager" ref="selectableContactsManager" />
+		<property name="habilitationFactory" ref="habilitationFactory" />
+		<property name="habilitationsHelper" ref="habilitationsHelper" />
+		<property name="selectableBeanFactory" ref="selectableBeanFactory" />
+		<property name="initializers">
+			<map>
+				<entry key="ARC_INVESTIGATEUR" value-ref="arcInvDroitHabilitationInitializer" />
+				<entry key="ARC_PROMOTEUR" value-ref="arcPromDroitHabilitationInitializer" />
+				<entry key="CRO" value-ref="croDroitHabilitationInitializer" />
+				<entry key="DIRECTION_RECHERCHE_ADMINISTRATIF" value-ref="drcAdmDroitHabilitationInitializer" />
+				<entry key="DIRECTION_RECHERCHE_PHARMACOVIGILANT" value-ref="drcPharmacoDroitHabilitationInitializer" />
+				<entry key="INVESTIGATEUR" value-ref="investDroitHabilitationInitializer" />
+				<entry key="PHARMACIEN" value-ref="pharmacienDroitHabilitationInitializer" />
+				<entry key="PROMOTEUR" value-ref="promoteurDroitHabilitationInitializer" />
+			</map>
+		</property>
+	</bean>
+
+	<!-- ================================== -->
+	<!-- COMMENTAIRE ESSAI MANAGER          -->
+	<!-- ================================== -->
+	<bean id="commentaireRechercheEssaiManager"
+		class="fr.pharma.eclipse.component.essai.GenericCommentaireManager"
+		scope="session" lazy-init="true">
+		<constructor-arg index="0" value="RECHERCHE" />
+		<property name="factory" ref="commentaireEssaiRechercheWithParentFactory" />
+	</bean>
+	<bean id="commentaireFaisabiliteConclusionEssaiManager"
+		class="fr.pharma.eclipse.component.essai.GenericCommentaireManager"
+		scope="session" lazy-init="true">
+		<constructor-arg index="0" value="FAISABILITE_CONCL" />
+		<property name="factory"
+			ref="commentaireConclusionFaisabiliteWithParentFactory" />
+	</bean>
+	<bean id="commentaireFaisabiliteAchatProduitsManager"
+		class="fr.pharma.eclipse.component.essai.GenericCommentaireManager"
+		scope="session" lazy-init="true">
+		<constructor-arg index="0" value="FAISABILITE_ACHAT_PROD" />
+		<property name="factory"
+			ref="commentaireFaisabiliteAchatProduitsWithParentFactory" />
+	</bean>
+	<bean id="commentaireFaisabiliteDistributionPharmaciesManager"
+		class="fr.pharma.eclipse.component.essai.GenericCommentaireManager"
+		scope="session" lazy-init="true">
+		<constructor-arg index="0" value="FAISABILITE_DISTRIB_PHARMA" />
+		<property name="factory"
+			ref="commentaireFaisabiliteDistributionPharmaciesWithParentFactory" />
+	</bean>
+	<bean id="commentaireFaisabiliteGlobalManager"
+		class="fr.pharma.eclipse.component.essai.GenericCommentaireManager"
+		scope="session" lazy-init="true">
+		<constructor-arg index="0" value="FAISABILITE_ETUDE" />
+		<property name="factory"
+			ref="commentaireFaisabiliteGlobalWithParentFactory" />
+	</bean>
+	<bean id="commentaireEssaiArchivageManager"
+		class="fr.pharma.eclipse.component.essai.GenericCommentaireManager"
+		scope="session" lazy-init="true">
+		<constructor-arg index="0" value="ADMINREG_ARCHIVAGE" />
+		<property name="factory" ref="commentaireEssaiArchivageWithParentFactory" />
+	</bean>
+
+	<!-- ================================== -->
+	<!-- DOCUMENT ESSAI MANAGER          	-->
+	<!-- ================================== -->
+	<!-- Collections de documents -->
+	<bean id="genericDocumentEssaiManager" abstract="true"
+		class="fr.pharma.eclipse.component.essai.GenericDocumentEssaiManager">
+		<property name="docService" ref="documentService" />
+		<property name="fichierFiller" ref="fichierFiller" />
+	</bean>
+	<bean id="documentACEssaiManager" parent="genericDocumentEssaiManager"
+		scope="session" lazy-init="true">
+		<constructor-arg index="0" value="AUTORITE_COMPETENTE" />
+		<property name="factory" ref="docAutoriteCompetenteCompleteFactory" />
+	</bean>
+	<bean id="documentCPPEssaiManager" parent="genericDocumentEssaiManager"
+		scope="session" lazy-init="true">
+		<constructor-arg index="0" value="COMITE_PROTEC_PERS" />
+		<property name="factory" ref="docComiteProtectionPersCompleteFactory" />
+	</bean>
+	<bean id="documentConventionEssaiManager" parent="genericDocumentEssaiManager"
+		scope="session" lazy-init="true">
+		<constructor-arg index="0" value="CONVENTION" />
+		<property name="factory" ref="docConventionCompleteFactory" />
+	</bean>
+	<bean id="documentAssuranceEssaiManager" parent="genericDocumentEssaiManager"
+		scope="session" lazy-init="true">
+		<constructor-arg index="0" value="ASSURANCE" />
+		<property name="factory" ref="docAssuranceCompleteFactory" />
+	</bean>
+	<bean id="documentProtocoleEssaiManager" class="fr.pharma.eclipse.component.essai.DocumentProtocoleManager"
+		scope="session" lazy-init="true">
+		<constructor-arg index="0" value="PROTOCOLE" />
+		<property name="factory" ref="docProtocoleCompleteFactory" />
+		<property name="docService" ref="documentService" />
+		<property name="fichierFiller" ref="fichierFiller" />
+	</bean>
+	<bean id="documentBrochureProduitsEssaiManager" class="fr.pharma.eclipse.component.essai.DocumentBrochureProduitsManager"
+		scope="session" lazy-init="true">
+		<constructor-arg index="0" value="BROCHURE_PDUITS" />
+		<property name="factory" ref="docBrochureProduitsCompleteFactory" />
+		<property name="docService" ref="documentService" />
+		<property name="fichierFiller" ref="fichierFiller" />
+	</bean>
+	<bean id="documentAutorisationImportationEssaiManager" parent="genericDocumentEssaiManager"
+		scope="session" lazy-init="true">
+		<constructor-arg index="0" value="AUTORISATION_IMPORTATION" />
+		<property name="factory" ref="docAutorisationImportationCompleteFactory" />
+	</bean>
+	<bean id="documentAutorisationDistributionEssaiManager" parent="genericDocumentEssaiManager"
+		scope="session" lazy-init="true">
+		<constructor-arg index="0" value="AUTORISATION_DISTRIBUTION" />
+		<property name="factory" ref="docAutorisationDistributionCompleteFactory" />
+	</bean>
+	<bean id="documentAutreEssaiManager" parent="genericDocumentEssaiManager"
+		scope="session" lazy-init="true">
+		<constructor-arg index="0" value="AUTRE" />
+		<property name="factory" ref="docAutreCompleteFactory" />
+	</bean>
+
+	<!-- Documents uniques -->
+	<bean id="documentRespRandomisationManager" parent="genericDocumentEssaiManager"
+		scope="session" lazy-init="true">
+		<constructor-arg index="0" value="RESPONSABILITE_RANDOMISATION" />
+		<property name="factory" ref="docRespRandomisationCompleteFactory" />
+	</bean>
+	<bean id="documentRespInsuManager" parent="genericDocumentEssaiManager"
+		scope="session" lazy-init="true">
+		<constructor-arg index="0" value="RESPONSABILITE_INSU" />
+		<property name="factory" ref="docRespInsuCompleteFactory" />
+	</bean>
+	<bean id="documentRespCommandeManager" parent="genericDocumentEssaiManager"
+		scope="session" lazy-init="true">
+		<constructor-arg index="0" value="RESPONSABILITE_COMMANDE" />
+		<property name="factory" ref="docRespCommandeCompleteFactory" />
+	</bean>
+	<bean id="documentModaliteReceptionManager" parent="genericDocumentEssaiManager"
+		scope="session" lazy-init="true">
+		<constructor-arg index="0" value="MODALITE_RECEPTION" />
+		<property name="factory" ref="docModaliteReceptionCompleteFactory" />
+	</bean>
+	<bean id="documentModaliteDestructionManager" parent="genericDocumentEssaiManager"
+		scope="session" lazy-init="true">
+		<constructor-arg index="0" value="MODALITE_DESTRUCTION" />
+		<property name="factory" ref="docModaliteDestructionCompleteFactory" />
+	</bean>
+	<bean id="documentNumerotationConditionnementManager" parent="genericDocumentEssaiManager"
+		scope="session" lazy-init="true">
+		<constructor-arg index="0" value="NUMEROTATION_CONDITIONNEMENT" />
+		<property name="factory"
+			ref="docNumerotationConditionnementCompleteFactory" />
+	</bean>
+	<bean id="documentInformationConditionnementManager" parent="genericDocumentEssaiManager"
+		scope="session" lazy-init="true">
+		<constructor-arg index="0" value="INFORMATION_CONDITIONNEMENT" />
+		<property name="factory" ref="docInformationConditionnementCompleteFactory" />
+	</bean>
+	<bean id="documentContreEtiquetteManager" parent="genericDocumentEssaiManager"
+		scope="session" lazy-init="true">
+		<constructor-arg index="0" value="CONTRE_ETIQUETTE" />
+		<property name="factory" ref="docContreEtiquetteCompleteFactory" />
+	</bean>
+	<bean id="documentConseilPatientManager" parent="genericDocumentEssaiManager"
+		scope="session" lazy-init="true">
+		<constructor-arg index="0" value="CONSEIL_PATIENT" />
+		<property name="factory" ref="docConseilPatientCompleteFactory" />
+	</bean>
+	<bean id="documentAideDispensationManager" parent="genericDocumentEssaiManager"
+		scope="session" lazy-init="true">
+		<constructor-arg index="0" value="AIDE_DISPENSATION" />
+		<property name="factory" ref="docAideDispensationCompleteFactory" />
+	</bean>
+	
+	<!-- SURCOUTS -->
+	<bean id="documentPrevisionnelManager" parent="genericDocumentEssaiManager"
+		scope="session" lazy-init="true">
+		<constructor-arg index="0" value="PREVISIONNEL" />
+		<property name="factory" ref="docPrevisionnelCompleteFactory" />
+	</bean>
+	<bean id="documentReelManager" parent="genericDocumentEssaiManager"
+		scope="session" lazy-init="true">
+		<constructor-arg index="0" value="REEL" />
+		<property name="factory" ref="docReelCompleteFactory" />
+	</bean>
+
+	<!-- ====================== -->
+	<!-- ESSAI MANAGER          -->
+	<!-- ====================== -->
+	<bean id="dicoDernieresModifsEssai"
+		class="fr.pharma.eclipse.component.essai.helper.DicoSuivisEssai"
+		scope="session" lazy-init="true">
+		<property name="helper" ref="beanManagerHelper" />
+	</bean>
+	<bean id="essaiManager" class="fr.pharma.eclipse.component.essai.EssaiManager"
+		parent="genericBeanManager" scope="conversation" lazy-init="false">
+		<constructor-arg index="0" ref="essaiService" />
+		<property name="documentService" ref="documentService" />
+		<property name="contactsManager" ref="contactsEssaiManager" />
+		<property name="dicoDernieresModifs" ref="dicoDernieresModifsEssai" />
+		<property name="commentairesManagers">
+			<map>
+				<entry key="RECHERCHE" value-ref="commentaireRechercheEssaiManager" />
+				<entry key="FAISABILITE_CONCL" value-ref="commentaireFaisabiliteConclusionEssaiManager" />
+				<entry key="FAISABILITE_ACHAT_PROD" value-ref="commentaireFaisabiliteAchatProduitsManager" />
+				<entry key="FAISABILITE_DISTRIB_PHARMA"
+					value-ref="commentaireFaisabiliteDistributionPharmaciesManager" />
+				<entry key="FAISABILITE_ETUDE" value-ref="commentaireFaisabiliteGlobalManager" />
+				<entry key="ADMINREG_ARCHIVAGE" value-ref="commentaireEssaiArchivageManager" />
+			</map>
+		</property>
+		<property name="documentsCollectionManagers">
+			<map>
+				<entry key="PREVISIONNEL" value-ref="documentPrevisionnelManager" />
+				<entry key="REEL" value-ref="documentReelManager" />
+				<entry key="AUTORITE_COMPETENTE" value-ref="documentACEssaiManager" />
+				<entry key="COMITE_PROTEC_PERS" value-ref="documentCPPEssaiManager" />
+				<entry key="CONVENTION" value-ref="documentConventionEssaiManager" />
+				<entry key="ASSURANCE" value-ref="documentAssuranceEssaiManager" />
+				<entry key="PROTOCOLE" value-ref="documentProtocoleEssaiManager" />
+				<entry key="BROCHURE_PDUITS" value-ref="documentBrochureProduitsEssaiManager" />
+				<entry key="AUTORISATION_IMPORTATION" value-ref="documentAutorisationImportationEssaiManager" />
+				<entry key="AUTORISAITON_DISTRIBUTION" value-ref="documentAutorisationDistributionEssaiManager" />
+				<entry key="AUTRE" value-ref="documentAutreEssaiManager" />
+			</map>
+		</property>
+		<property name="documentsManagers">
+			<map>
+				<entry key="RESPONSABILITE_RANDOMISATION" value-ref="documentRespRandomisationManager" />
+				<entry key="RESPONSABILITE_INSU" value-ref="documentRespInsuManager" />
+				<entry key="RESPONSABILITE_COMMANDE" value-ref="documentRespCommandeManager" />
+				<entry key="MODALITE_RECEPTION" value-ref="documentModaliteReceptionManager" />
+				<entry key="MODALITE_DESTRUCTION" value-ref="documentModaliteDestructionManager" />
+				<entry key="NUMEROTATION_CONDITIONNEMENT" value-ref="documentNumerotationConditionnementManager" />
+				<entry key="INFORMATION_CONDITIONNEMENT" value-ref="documentInformationConditionnementManager" />
+				<entry key="CONTRE_ETIQUETTE" value-ref="documentContreEtiquetteManager" />
+				<entry key="CONSEIL_PATIENT" value-ref="documentConseilPatientManager" />
+				<entry key="AIDE_DISPENSATION" value-ref="documentAideDispensationManager" />
+
+			</map>
+		</property>
+	</bean>
+
+	<!-- ====================== -->
+	<!-- ESSAI MANAGER          -->
+	<!-- ====================== -->
+	<bean id="essaisManager" class="fr.pharma.eclipse.component.essai.EssaisManager"
+		scope="session" lazy-init="true">
+		<constructor-arg index="0" ref="essaiSearchCriteria" />
+	</bean>
+	<bean id="essaiSigrecManager" class="fr.pharma.eclipse.component.BeanManager"
+		parent="genericBeanManager" scope="session" lazy-init="true">
+		<constructor-arg index="0" ref="essaiSigrecService" />
+	</bean>
+	
+	<!-- ====================== -->
+	<!-- PATIENT MANAGER        -->
+	<!-- ====================== -->
+	<bean id="patientManager" class="fr.pharma.eclipse.component.patient.PatientManager"
+		parent="genericBeanManager" scope="conversation" lazy-init="true">
+		<constructor-arg index="0" ref="patientService" />
+	</bean>
+
+	<!-- ====================== -->
+	<!-- PATIENTS MANAGER          -->
+	<!-- ====================== -->
+	<bean id="patientsManager" class="fr.pharma.eclipse.component.patient.PatientsManager"
+		scope="session" lazy-init="true">
+		<constructor-arg index="0" ref="patientSearchCriteria" />
+	</bean>
+	
+	<!-- ====================== -->
+	<!-- EVENEMENTS             -->
+	<!-- ====================== -->
+	<bean id="evenementsManager" class="fr.pharma.eclipse.component.evenement.EvenementsManager"
+		scope="session" lazy-init="true">
+		<constructor-arg index="0" ref="evenementSearchCriteria" />
+	</bean>
+	
+	<!-- ====================== -->
+	<!-- EVENEMENT             -->
+	<!-- ====================== -->
+	<bean id="evenementManager" class="fr.pharma.eclipse.component.evenement.EvenementManager"
+		scope="session" lazy-init="true">
+		<constructor-arg index="0" ref="evenementService" />
+	</bean>
+	
+	<!-- ====================== -->
+	<!-- INCIDENTS        	    -->
+	<!-- ====================== -->
+	<bean id="incidentsManager" class="fr.pharma.eclipse.component.BeansManager"
+		scope="session" lazy-init="true">
+		<constructor-arg index="0" ref="incidentSearchCriteria" />
+	</bean>
+	
+	<!-- ====================== -->
+	<!-- INCIDENT	            -->
+	<!-- ====================== -->
+	<bean id="incidentManager" class="fr.pharma.eclipse.component.incident.IncidentManager" 
+		scope="session" lazy-init="true">
+		<constructor-arg index="0" ref="incidentService" />
+		<property name="helper" ref="beanManagerHelper" />
+	</bean>
+	
+	<!-- ====================== -->
+	<!-- ESSAIS MANAGER SIGREC  -->
+	<!-- ====================== -->
+	<bean id="essaisSigrecManager" class="fr.pharma.eclipse.component.BeansManager"
+		scope="session" lazy-init="true">
+		<constructor-arg index="0" ref="essaiSigrecSearchCriteria" />
+	</bean>
+
+	<!-- ========================== -->
+	<!-- PROMOTEUR SIGREC MANAGER	-->
+	<!-- ========================== -->
+	<bean id="autoCompletePromoteurSigrecManager" class="fr.pharma.eclipse.component.AutoCompleteBeansManager"
+		scope="session" lazy-init="true">
+		<property name="searchCriteria" ref="promoteurSigrecSearchCriteria" />
+		<property name="service" ref="promoteurSigrecService" />
+	</bean>
+
+	<!-- ============================ -->
+	<!-- ESSAI AUTO COMPLETE MANAGER  -->
+	<!-- ============================ -->
+	<bean id="autoCompleteEssaiManager" class="fr.pharma.eclipse.component.AutoCompleteBeansManager"
+		scope="session" lazy-init="true">
+		<property name="searchCriteria" ref="essaiSearchCriteria" />
+		<property name="service" ref="essaiService" />
+	</bean>
+	
+	<!-- ============================ -->
+	<!-- PATIENT AUTO COMPLETE MANAGER-->
+	<!-- ============================ -->
+	<bean id="autoCompletePatientManager" class="fr.pharma.eclipse.component.AutoCompleteBeansManager"
+		scope="session" lazy-init="true">
+		<property name="searchCriteria" ref="patientSearchCriteria" />
+		<property name="service" ref="patientService" />
+	</bean>
+
+
+	<!-- ============================ -->
+	<!-- ACCUEIL MANAGER              -->
+	<!-- ============================ -->
+	<bean id="accueilManager" class="fr.pharma.eclipse.component.accueil.AccueilManager" scope="session" lazy-init="true"/>
+
+	<!-- ======================== -->
+	<!-- GRILLES MODELE MANAGER   -->
+	<!-- ======================== -->
+	<bean id="grillesModeleManager"
+		class="fr.pharma.eclipse.component.BeansManager"
+		scope="session" lazy-init="true">
+		<constructor-arg index="0" ref="grilleModeleSearchCriteria" />
+	</bean>
+
+	<!-- ========================== -->
+	<!-- GRILLE MODELE MANAGER    	-->
+	<!-- ========================== -->
+	<bean id="grilleModeleManager" class="fr.pharma.eclipse.component.surcout.GrilleModeleManager"
+		parent="genericBeanManager" scope="session" lazy-init="true">
+		<constructor-arg index="0" ref="grilleModeleService" />
+	</bean>
+
+	<!-- ========================== -->
+	<!-- GRILLE  MANAGER    		-->
+	<!-- ========================== -->
+	<bean id="grilleManager" class="fr.pharma.eclipse.component.surcout.GrilleManager"
+		parent="genericBeanManager" scope="conversation" lazy-init="true">
+		<constructor-arg index="0" ref="grilleService" />
+	</bean>
+	
+	<!-- =================================== -->
+	<!-- ORDONNANCIER DISPENSATION MANAGER   -->
+	<!-- =================================== -->
+	<bean id="ordonnancierDispManager"
+		class="fr.pharma.eclipse.component.ordonnancier.OrdonnancierDispManager"
+		scope="session" lazy-init="true">
+		<constructor-arg index="0" ref="ordonnancierSearchCriteria" />
+	</bean>
+		
+	<!-- ============================================= -->
+	<!-- DUPLICATA ORDONNANCIER DISPENSATION MANAGER   -->
+	<!-- ============================================= -->
+	<bean id="duplicataOrdonnancierDispManager"
+		class="fr.pharma.eclipse.component.ordonnancier.DuplicataOrdonnancierDispManager"
+		scope="session" lazy-init="true">
+		<constructor-arg index="0" ref="ordonnancierSearchCriteria" />
+	</bean>	
+	
+	<!-- ================================================= -->
+	<!-- ORDONNANCIER FABRICATION/RECONSTITUTION MANAGER   -->
+	<!-- ================================================= -->
+	<bean id="ordonnancierFabReconstManager"
+		class="fr.pharma.eclipse.component.ordonnancier.OrdonnancierFabReconstManager"
+		scope="session" lazy-init="true">
+		<constructor-arg index="0" ref="ordonnancierSearchCriteria" />
+	</bean>	
+
+	<!-- =========================================================== -->
+	<!-- DUPLICATA ORDONNANCIER FABRICATION/RECONSTITUTION MANAGER   -->
+	<!-- =========================================================== -->
+	<bean id="duplicataOrdonnancierFabReconstManager"
+		class="fr.pharma.eclipse.component.ordonnancier.DuplicataOrdonnancierFabReconstManager"
+		scope="session" lazy-init="true">
+		<constructor-arg index="0" ref="ordonnancierSearchCriteria" />
+	</bean>	
+
+	<!-- ====================== -->
+	<!-- RETOUR PATIENT MANAGER -->
+	<!-- ====================== -->
+	<bean id="retourPatientManager" class="fr.pharma.eclipse.component.stock.RetourPatientManager"
+		parent="genericBeanManager" scope="session" lazy-init="true">
+		<constructor-arg index="0" ref="retourPatientService" />
+	</bean>
+
+	<!-- ====================== -->
+	<!-- RETOURS PATIENT MANAGER-->
+	<!-- ====================== -->
+	<bean id="retoursPatientManager" class="fr.pharma.eclipse.component.stock.RetoursPatientManager" 
+	scope="session" lazy-init="true">
+		<constructor-arg index="0" ref="retourPatientSearchCriteria" />
+	</bean>
+
+	<!-- ====================== -->
+	<!-- INDICATEUR MANAGER 	-->
+	<!-- ====================== -->
+	<bean id="indicateurManager" class="fr.pharma.eclipse.component.indicateur.IndicateurManager" 
+	scope="session" lazy-init="true"/>
+
+</beans>

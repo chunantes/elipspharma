@@ -1,0 +1,257 @@
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:p="http://primefaces.prime.com.tr/ui"
+	xmlns:c="http://java.sun.com/jsp/jstl/core"
+	xmlns:security="http://www.springframework.org/security/tags"
+	template="/WEB-INF/pages/template/template.xhtml">
+
+	<ui:define name="title">
+		<h:outputFormat value="#{resourceBundle['gestionPatient.title']}" />
+	</ui:define>
+
+	<ui:define name="body">
+
+		<h:form id="editPatient" styleClass="editPatient" prependId="false">
+			<p:messages />
+			<fieldset><p:focus /> <p:panel id="panel"
+				header="#{resourceBundle['gestionPatient.patient']}">
+				<h:panelGrid id="panelGrid" columns="4" width="100%"
+					columnClasses="panelCol_25, panelCol_25, panelCol_25, panelCol_25">
+
+					<!-- Numero ipp -->
+					<h:outputLabel styleClass="mandatory" id="numIppLabel"
+						for="num_ipp" value="#{resourceBundle['gestionPatient.ipp']}" />
+					<h:inputText maxlength="9" id="num_ipp"
+						value="#{patientManager.bean.numeroIpp}" required="true"
+						requiredMessage="#{resourceBundle['patient.ipp.notEmpty']}" />
+					<h:panelGroup />
+					<h:panelGroup />
+					
+					<!-- Numero Sejour -->
+					<h:outputLabel id="numSejour"
+						for="num_sejour" value="#{resourceBundle['gestionPatient.sejour']}" />
+					<h:inputText  id="num_sejour"
+						value="#{patientManager.bean.numeroSejour}" />
+					<h:panelGroup />
+					<h:panelGroup />
+					
+ 
+					<!-- Civilite -->
+					<h:outputLabel styleClass="mandatory" id="labelcivilite"
+						for="civilite"
+						value="#{resourceBundle['gestionPatient.civilite']}" />
+					<h:selectOneRadio id="civilite"
+						value="#{patientManager.bean.civilite }">
+						<f:selectItems value="#{enumManager.getValues('Civilite')}" />
+					</h:selectOneRadio>
+
+					<h:panelGroup />
+					<panelGroup />
+
+
+					<!-- nom et prenom -->
+					<h:outputLabel styleClass="mandatory" id="nomLabel" for="nom"
+						value="#{resourceBundle['gestionPatient.nom']}" />
+					<h:inputText maxlength="255" id="nom"
+						value="#{patientManager.bean.nom}" required="true"
+						requiredMessage="#{resourceBundle['patient.nom.notEmpty']}"
+						valueChangeListener="#{patientManager.updateInitiales}"
+						onchange=";" immediate="true">
+						<f:ajax render="initiales" />
+					</h:inputText>
+					<h:outputLabel styleClass="mandatory" id="prenomLabel" for="prenom"
+						value="#{resourceBundle['gestionPatient.prenom']}" />
+					<h:inputText maxlength="255" id="prenom"
+						valueChangeListener="#{patientManager.updateInitiales}"
+						onchange=";" immediate="true"
+						value="#{patientManager.bean.prenom}" required="true"
+						requiredMessage="#{resourceBundle['patient.prenom.notEmpty']}">
+						<f:ajax render="initiales" />
+					</h:inputText>
+
+					<!-- Nom de jeune fille et initiales -->
+					<h:outputLabel id="nomJeuneFilleLabel" for="nomJeuneFille"
+						value="#{resourceBundle['gestionPatient.nomJeuneFille']}" />
+					<h:inputText maxlength="255" id="nomJeuneFille"
+						value="#{patientManager.bean.nomJeuneFille}" />
+					<h:outputLabel id="initialesLabale" for="initiales"
+						value="#{resourceBundle['gestionPatient.initiales']}" />
+					<h:inputText maxlength="6" id="initiales" readonly="true"
+						value="#{patientManager.bean.initiales}" />
+
+
+					<!-- Date de naissance -->
+					<h:outputLabel id="labelDateNaissance" for="date_naissance" styleClass="mandatory"
+						value="#{resourceBundle['gestionPatient.dateNaissance']}" />
+					<p:calendar id="date_naissance" required="true"  requiredMessage="#{resourceBundle['patient.dateNaissance.notEmpty']}"
+						onSelectUpdate="@this" selectListener="#{patientManager.reinit()}"
+						value="#{patientManager.bean.dateNaissance}"
+						effect="#{resourceBundle['effect.calendar']}"
+						locale="#{resourceBundle['date.locale']}" showButtonPanel="true"
+						navigator="true" converter="#{calendarConverter}" />
+					<h:panelGroup />
+					<h:panelGroup />
+
+					<!-- adresse et telephone -->
+					<h:outputLabel id="adresseLabel" for="adresse"
+						value="#{resourceBundle['gestionPatient.adresse']}" />
+					<h:inputTextarea id="adresse"
+						value="#{patientManager.bean.adresse}"
+						rows="#{resourceBundle['textarea.rows.default']}" />
+					<h:outputLabel id="telephoneLabel" for="telephone"
+						value="#{resourceBundle['gestionPatient.telephone']}" />
+					<h:inputText maxlength="255" id="telephone"
+						value="#{patientManager.bean.telephone}" />
+
+					<!-- Code postal et ville -->
+					<h:outputLabel id="codePostalLabel" for="codePostal"
+						value="#{resourceBundle['gestionPatient.codePostal']}" />
+					<h:inputText maxlength="255" id="codePostal"
+						value="#{patientManager.bean.codePostal}" />
+					<h:outputLabel id="villeLabel" for="ville"
+						value="#{resourceBundle['gestionPatient.ville']}" />
+					<h:inputText maxlength="255" id="ville"
+						value="#{patientManager.bean.ville}" />
+
+				</h:panelGrid>
+
+			</p:panel> <!-- Donnees taille poid surface --> <p:panel id="donnees"
+				header="#{resourceBundle['gestionPatient.donnees']}">
+
+				<p:dataTable id="donneesPhysio"
+					value="#{patientManager.getList('historiquePatient', true)}"
+					rows="1" var="historique"
+					emptyMessage="#{resourceBundle['results.none']}">
+
+					<!-- Date -->
+					<p:column id="dateDonneePhysio" sortBy="#{historique.date}">
+						<f:facet name="header">
+							<h:outputText value="#{resourceBundle['gestionPatient.date']}" />
+						</f:facet>
+						<h:outputText value="#{historique.date.time}">
+							<f:convertDateTime
+								pattern="#{resourceBundle['date.pattern.withHeures']}" />
+						</h:outputText>
+					</p:column>
+
+					<!-- Poids (kg) -->
+					<p:column id="poidDonneePhysio" sortBy="#{historique.poid}">
+						<f:facet name="header">
+							<h:outputText value="#{resourceBundle['gestionPatient.poid']}" />
+						</f:facet>
+						<h:outputText value="#{historique.poid}" />
+					</p:column>
+
+					<!-- Taille -->
+					<p:column id="tailleDonneePhysio" sortBy="#{historique.taille}">
+						<f:facet name="header">
+							<h:outputText value="#{resourceBundle['gestionPatient.taille']}" />
+						</f:facet>
+						<h:outputText value="#{historique.taille}" />
+					</p:column>
+
+					<!-- Surface corporelle -->
+					<p:column id="surfaceDonneePhysio"
+						sortBy="#{historique.surfaceCorporelle}">
+						<f:facet name="header">
+							<h:outputText value="#{resourceBundle['gestionPatient.surface']}" />
+						</f:facet>
+						<h:outputText value="#{historique.surfaceCorporelle}">
+							<f:convertNumber maxFractionDigits="3" />
+						</h:outputText>
+					</p:column>
+
+					<!-- Commentaire -->
+					<p:column id="commentaireDonneePhysio"
+						sortBy="#{historique.commentaire}">
+						<f:facet name="header">
+							<h:outputText
+								value="#{resourceBundle['gestionPatient.commentaire']}" />
+						</f:facet>
+						<h:outputText value="#{historique.commentaire}" />
+					</p:column>
+				</p:dataTable>
+				<br />
+				<p:commandButton id="histoButton" style="float:left;" type="button"
+					ajax="false" onclick="popupHistorique.show();"
+					value="#{resourceBundle['btn.historique']}"
+					title="#{resourceBundle['btn.historique']}">
+				</p:commandButton>
+				<p:commandButton id="addHistoButton" immediate="true"
+					actionListener="#{patientManager.initHistorique()}"
+					style="float:right;" ajax="true" update="descriptionForm"
+					oncomplete="popupAjoutHistorique.show();"
+					value="#{resourceBundle['btn.ajouter']}"
+					title="#{resourceBundle['btn.ajouter']}">
+				</p:commandButton>
+				<br />
+				<br />
+			</p:panel> <p:tabView effect="opacity" effectDuration="normal" cache="true"
+				styleClass="essaiTabView" id="tabPatient"
+				tabChangeListener="#{patientManager.onOngletChange}"
+				activeIndex="#{patientManager.indexOngletCourant}">
+				<p:tab id="ONG_ESSAI"
+					title="#{resourceBundle['gestionPatient.onglet.essai.title']}">
+					<ui:include
+						src="/WEB-INF/pages/patient/edit/onglets/ongletEssai.xhtml" />
+				</p:tab>
+				
+				<p:tab id="ONG_PRESCRIPTION"
+					title="#{resourceBundle['gestionPatient.onglet.prescription.title']}">
+					<ui:include
+						src="/WEB-INF/pages/patient/edit/onglets/ongletPrescription.xhtml" />
+				</p:tab>
+				<security:authorize
+					ifNotGranted="ROLE_INVESTIGATEUR,ROLE_ARC_INVESTIGATEUR">				
+					<p:tab id="ONG_DISPENSATION"
+						title="#{resourceBundle['gestionPatient.onglet.dispensation.title']}">
+						<ui:include
+							src="/WEB-INF/pages/patient/edit/onglets/ongletDispensation.xhtml" />
+					</p:tab>
+				</security:authorize>
+				<security:authorize
+					ifNotGranted="ROLE_INVESTIGATEUR,ROLE_ARC_INVESTIGATEUR">				
+					<p:tab id="ONG_RETOUR"
+						title="#{resourceBundle['gestionPatient.onglet.retour.title']}">
+						<ui:include
+							src="/WEB-INF/pages/patient/edit/onglets/ongletRetour.xhtml" />
+					</p:tab>
+				</security:authorize>	
+			</p:tabView>
+			</fieldset>
+
+			<br />
+			<div class="actionButton"><p:commandButton id="saveButton"
+				action="save" ajax="false"
+				value="#{resourceBundle['btn.enregistrer']}"
+				title="#{resourceBundle['btn.enregistrer']}" /> <p:commandButton
+				id="cancelButton" immediate="true" action="cancel" ajax="false"
+				value="#{resourceBundle['btn.annuler']}"
+				title="#{resourceBundle['btn.annuler']}" /></div>
+			<div class="basicButton">
+			<div class="retourButton"><p:commandButton id="returnButton"
+				onclick="document.forms['hiddenForm'].hideReturnButton.click();"
+				value="#{resourceBundle['btn.retour']}"
+				title="#{resourceBundle['btn.retour']}" /></div>
+			</div>
+
+		</h:form>
+
+		<div style="display: none;"><h:form id="hiddenForm"
+			prependId="false">
+			<p:commandButton id="hideReturnButton" action="comeback" ajax="false" />
+	  		  <p:commandButton id="editPrescriptionButton" action="editPrescription" ajax="false"/>
+	  		  <p:commandButton id="editDispensationButton" action="editDispensation" ajax="false"/>
+					<p:commandButton id="editRetourButton" action="editRetour" ajax="false" />
+		</h:form></div>
+
+
+		<!-- Popup de l'onglet prescription  -->
+		<ui:include
+			src="/WEB-INF/pages/patient/edit/onglets/popups/ongletDescription_popups.xhtml" />
+
+	</ui:define>
+
+</ui:composition>

@@ -1,0 +1,71 @@
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:p="http://primefaces.prime.com.tr/ui"
+	xmlns:sf="http://www.springframework.org/tags/faces"
+	xmlns:c="http://java.sun.com/jsp/jstl/core">
+
+  <!-- Gestion scroll et focus -->
+	<script type="text/javascript">
+		launchScrollEditProduit();
+	</script>
+	
+	<c:set var="dm" value="#{dispositifMedicalManager.bean}" />
+	<h:panelGrid id="oap_panel_first" columns="3"
+		columnClasses="panelCol_25,panelCol_25,panelCol_50">
+
+		<h:outputLabel id="labelDmRand" for="dm_rand"
+			value="#{resourceBundle['editProduit.onglet.actes.randominsation']}" />
+		<h:selectOneRadio id="dm_rand" value="#{dm.randomisation}"
+			styleClass="selectRadio">
+			<f:selectItem itemLabel="#{resourceBundle['boolean.oui']}"
+				itemValue="true" itemDescription="#{resourceBundle['boolean.oui']}" />
+			<f:selectItem itemLabel="#{resourceBundle['boolean.non']}"
+				itemValue="false" itemDescription="#{resourceBundle['boolean.non']}" />
+			<f:ajax render="fichier" />
+		</h:selectOneRadio>
+
+		<h:panelGroup id="fichier">
+			<p:outputPanel id="rando_doc"
+				rendered="#{dm.randomisation and dm.id !=null}">
+				<c:set var="doc" value="#{dm.documentRandomisation}" />
+				<h:panelGrid id="rando_doc_grid" columns="3"
+					columnClasses="panelCol_25,panelCol_25,panelCol_50">
+					<c:if test="#{doc == null }">
+						<p:commandLink id="label_rando_doc" value="#{resourceBundle['editEssai.onglet.administratif.ac.doc']}"
+							onclick="popupDocRandomisation.show()" styleClass="clickable"
+							title="#{resourceBundle['document.popupLink.title']}"/>
+					</c:if>
+					<c:if test="#{doc != null}">
+						<h:outputText value="#{doc.nomUtilisateur}"
+							title="#{documentsIhmHelper.buildDocTitle(doc, resourceBundle['document.part1'], resourceBundle['document.part2'], resourceBundle['date.pattern.withHeures'])}" />
+						<p:commandButton value="#{resourceBundle['file.dwd']}"
+							title="#{resourceBundle['file.dwd']}" ajax="false">
+							<p:fileDownload
+								value="#{fileDwdController.downloadDocument(dispositifMedicalManager.bean, doc)}" />
+						</p:commandButton>
+						<p:commandLink ajax="false"
+							title="#{resourceBundle['document.del']}"
+							actionListener="#{dispositifMedicalManager.supprimerDocument(enumManager.getEnumValue('TypeDocumentProduit','RANDOMISATION'))}">
+							<h:graphicImage library="images" name="del.gif" />
+						</p:commandLink>
+					</c:if>
+				</h:panelGrid>
+			</p:outputPanel>
+		</h:panelGroup>
+
+	</h:panelGrid>
+	
+	<h:panelGrid columns="2" columnClasses="panelCol_25,panelCol_75">
+
+		<h:outputLabel id="labelMedConseils" for="dm_conseils"
+			value="#{resourceBundle['editProduit.onglet.generales.conseils']}" />
+		<h:inputTextarea id="dm_conseils" rows="#{resourceBundle['textarea.rows.big']}"
+			value="#{dispositifMedicalManager.bean.conseils}" />
+		<h:panelGroup />
+
+	</h:panelGrid>	
+	
+
+</ui:composition>

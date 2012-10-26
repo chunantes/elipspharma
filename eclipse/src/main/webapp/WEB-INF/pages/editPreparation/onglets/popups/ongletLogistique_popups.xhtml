@@ -1,0 +1,190 @@
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+     xmlns:ui="http://java.sun.com/jsf/facelets"
+     xmlns:h="http://java.sun.com/jsf/html"
+     xmlns:f="http://java.sun.com/jsf/core"
+	 xmlns:p="http://primefaces.prime.com.tr/ui"
+	 xmlns:c="http://java.sun.com/jsp/jstl/core">
+	 
+	<p:dialog id="dialogStockage" widgetVar="popupStockage" header="#{resourceBundle['editProduit.onglet.logistique.stockage.select']}" resizable="true" modal="true" width="#{resourceBundle['popup.stockage.site.width']}"> 
+	    <h:form id="formPopupStockage" prependId="false">
+			<h:inputHidden id="hidden"/>
+	    
+	    	<p:tree id="treeStockages" value="#{detailStockageManager.stockagesSelectable}" var="stockage" selectionMode="single" 
+	    		selection="#{detailStockageManager.nodeSelected}">  
+         		<p:treeNode>  
+             		<h:outputText value="#{stockage.nom}" />  
+         		</p:treeNode>  
+     		</p:tree>
+	    
+	        <div class="popupButton">
+	        	<p:commandButton id="submitPopupStockageButton" process="@form" update="formStockage" value="#{resourceBundle['btn.valider']}" 
+	        		actionListener="#{detailStockageManager.updateStockage}" oncomplete="popupStockage.hide();"/>
+	        </div>  
+	    </h:form>  
+	</p:dialog>
+	 
+	<p:dialog id="dialogStockageRetour" widgetVar="popupStockageRetour" header="#{resourceBundle['editProduit.onglet.logistique.stockage.select']}" resizable="true" modal="true" width="#{resourceBundle['popup.stockage.site.width']}"> 
+	    <h:form id="formPopupStockageRetour" prependId="false">
+			<h:inputHidden id="hiddenRetour"/>
+	    
+	    	<p:tree id="treeStockagesRetour" value="#{detailStockageManager.stockagesSelectable}" var="stockageRetour" selectionMode="single" 
+	    		selection="#{detailStockageManager.nodeSelected}">  
+         		<p:treeNode>  
+             		<h:outputText value="#{stockageRetour.nom}" />  
+         		</p:treeNode>  
+     		</p:tree>
+	    
+	        <div class="popupButton">
+	        	<p:commandButton id="submitPopupStockageButtonRetour" process="@form" update="formStockageRetour" value="#{resourceBundle['btn.valider']}" 
+	        		actionListener="#{detailStockageManager.updateStockage}" oncomplete="popupStockageRetour.hide();"/>
+	        </div>  
+	    </h:form>  
+	</p:dialog>
+	
+	<!--  Pop-up d'edition d'un detail de stockage -->
+	<p:dialog id="idPopupEditionStockage" widgetVar="popupEditionStockage" 
+		header="#{resourceBundle['stockage.edit']}"
+		resizable="true" modal="true" width="#{resourceBundle['popup.produit.logistique.stockage.width']}"
+		closeListener="#{detailsStockagesManager.reinit()}">
+		<h:form id="formStockage" prependId="false">
+			<p:focus /> 
+			<p:messages />
+			
+			<h:panelGrid columns="2"
+				border="0" cellpadding="5" cellspacing="0"
+				columnClasses="panelCol_40,panelCol_60">
+
+				<!-- Pharmacie de retour -->
+				<h:outputLabel id="labelPharmacie" for="pharmacie"
+					styleClass="mandatory"
+					value="#{resourceBundle['editProduit.onglet.logistique.pharmacie']}" />
+				<h:selectOneMenu id="pharmacie"
+					value="#{detailStockageManager.bean.pharmacie}"
+					required="true" requiredMessage="#{resourceBundle['produit.stockage.pharmacie.notEmpty']}"	
+					styleClass="selectRadio" converter="#{pharmacieConverter}">
+					<f:selectItem noSelectionOption="true" itemLabel="" itemValue="" />
+					<f:selectItems value="#{pharmaciesManager.beans}" var="item"
+						itemLabel="#{item.nom}" itemValue="#{item}" />
+					<f:ajax execute="@this" render="stockage"
+						listener="#{detailStockageManager.majPharmacie}" />
+				</h:selectOneMenu>
+
+				<!-- Site de Stockage -->
+				<h:outputLabel id="labelStockage"
+					value="#{resourceBundle['editProduit.onglet.logistique.stockage']}" />
+				<h:panelGrid cellpadding="0" cellspacing="0" columns="3"
+					columnClasses="colWidth200,colImg,colImg">
+					<c:choose>
+						<c:when test="#{detailStockageManager.bean.stockage != null}">
+							<h:outputText id="stockage"
+								value="#{detailStockageManager.bean.stockage.nomComplet}" />
+						</c:when>
+						<c:otherwise>
+							<h:outputText id="stockage" value="" />
+						</c:otherwise>
+					</c:choose>
+					<p:commandLink update="treeStockages" 
+						title="#{resourceBundle['editProduit.onglet.logistique.stockage.select']}"
+						oncomplete="popupStockage.show();">
+						<h:graphicImage library="images" name="modify.gif" />
+					</p:commandLink>
+					<p:commandLink process="@this" update="stockage"
+						title="#{resourceBundle['editProduit.onglet.logistique.stockage.del']}"
+						actionListener="#{detailStockageManager.majPharmacie}">
+						<h:graphicImage library="images" name="del.gif" />
+					</p:commandLink>
+				</h:panelGrid>
+
+				<!-- Identifiant de stockage -->
+				<h:outputLabel id="labeloIdStock" for="id_stock"
+					value="#{resourceBundle['editProduit.onglet.logistique.idstockage']}" />
+				<h:inputText id="id_stock"
+					value="#{detailStockageManager.bean.identifiantStockage}" />
+
+			</h:panelGrid>
+
+			<div class="popupButton">
+				<p:commandButton id="submitButtonDetailStockage"
+					value="#{resourceBundle['btn.valider']}"
+					update="@form stockages"
+					ajax="true"
+					actionListener="#{detailsStockagesManager.addStockage(preparationManager.bean, detailStockageManager.bean)}"
+						oncomplete="closePopup(xhr, status, args, popupEditionStockage)" />
+			</div>
+		</h:form>
+	</p:dialog>
+	
+	<!--  Pop-up d'edition d'un detail de stockage retour -->
+	<p:dialog id="idPopupEditionStockageRetour" widgetVar="popupEditionStockageRetour" 
+		header="#{resourceBundle['stockage.edit']}"
+		resizable="true" modal="true" width="#{resourceBundle['popup.produit.logistique.stockage.width']}"
+		closeListener="#{detailsStockagesManager.reinit()}">
+		<h:form id="formStockageRetour" prependId="false">
+			<p:focus />
+			<p:messages />
+
+			<h:panelGrid columns="2"
+				border="0" cellpadding="5" cellspacing="0"
+				columnClasses="panelCol_40,panelCol_60">
+
+				<!-- Pharmacie de retour -->
+				<h:outputLabel id="labelPharmacieRetour" for="pharmacie"
+					styleClass="mandatory"
+					value="#{resourceBundle['editProduit.onglet.logistique.pharmacie']}" />
+				<h:selectOneMenu id="pharmacieRetour"
+					required="true" requiredMessage="#{resourceBundle['produit.stockage.pharmacie.notEmpty']}"	
+					value="#{detailStockageManager.bean.pharmacie}" immediate="true"
+					styleClass="selectRadio" converter="#{pharmacieConverter}">
+					<f:selectItem noSelectionOption="true" itemLabel="" itemValue="" />
+					<f:selectItems value="#{pharmaciesManager.beans}" var="item"
+						itemLabel="#{item.nom}" itemValue="#{item}" />
+					<f:ajax execute="@this" render="stockageRetour"
+						listener="#{detailStockageManager.majPharmacie}" />
+				</h:selectOneMenu>
+
+				<!-- Site de Stockage -->
+				<h:outputLabel id="labelStockageRetour"
+					value="#{resourceBundle['editProduit.onglet.logistique.stockage']}" />
+				<h:panelGrid cellpadding="0" cellspacing="0" columns="3"
+					columnClasses="colWidth200,colImg,colImg">
+					<c:choose>
+						<c:when test="#{detailStockageManager.bean.stockage != null}">
+							<h:outputText id="stockageRetour" 
+								value="#{detailStockageManager.bean.stockage.nomComplet}" />
+						</c:when>
+						<c:otherwise>
+							<h:outputText id="stockageRetour" value="" />
+						</c:otherwise>
+					</c:choose>
+					<p:commandLink update="treeStockagesRetour"
+						title="#{resourceBundle['editProduit.onglet.logistique.stockage.select']}"
+						oncomplete="popupStockageRetour.show();">
+						<h:graphicImage library="images" name="modify.gif" />
+					</p:commandLink>
+					<p:commandLink process="@this" update="stockageRetour"
+						title="#{resourceBundle['editProduit.onglet.logistique.stockage.del']}"
+						actionListener="#{detailStockageManager.majPharmacie}">
+						<h:graphicImage library="images" name="del.gif" />
+					</p:commandLink>
+				</h:panelGrid>
+
+				<!-- Identifiant de stockage -->
+				<h:outputLabel id="labeloIdStockRetour" for="id_stockRetour"
+					value="#{resourceBundle['editProduit.onglet.logistique.idstockage']}" />
+				<h:inputText id="id_stockRetour"
+					value="#{detailStockageManager.bean.identifiantStockage}" />
+
+			</h:panelGrid>
+
+			<div class="popupButton">
+				<p:commandButton id="submitButtonDetailStockageRetour"
+					value="#{resourceBundle['btn.valider']}"
+					update="@form stockages_retours"
+					ajax="true" 
+					actionListener="#{detailsStockagesManager.addStockageRetour(preparationManager.bean, detailStockageManager.bean)}"
+					oncomplete="closePopup(xhr, status, args, popupEditionStockageRetour)" />
+			</div>
+		</h:form>
+	</p:dialog>
+	
+</ui:composition>	 

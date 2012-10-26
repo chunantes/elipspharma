@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<flow xmlns="http://www.springframework.org/schema/webflow"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://www.springframework.org/schema/webflow
+    http://www.springframework.org/schema/webflow/spring-webflow-2.0.xsd"
+	parent="main">
+
+	<!-- Démarrage -->
+	<on-start>
+		<evaluate expression="essaiSearchCriteria.clear()" />
+		<evaluate expression="patientSearchCriteria.clear()" />
+		<!-- Initialisation complétion automatique des essais -->
+		<evaluate expression="'numInterne'"
+			result="autoCompleteEssaiManager.searchCriteria.activeOrder" />
+		<evaluate expression="'numInterneOrNomOrPromoteur'"
+			result="autoCompleteEssaiManager.searchCriteriaProperty" />
+		<evaluate expression="'numeroIpp'"
+			result="autoCompletePatientManager.searchCriteria.activeOrder" />
+		<set name="prescriptionsManager.beans" value="null"/>
+		<evaluate expression="'numeroIppOrNomOrPrenom'"
+			result="autoCompletePatientManager.searchCriteriaProperty" />
+		<evaluate expression="prescriptionSearchCriteria.clear()" />
+	</on-start>
+
+	<!-- Page principale -->
+	<view-state id="gestionDispensation"
+		view="../../../pages/dispensation/prescription/search.xhtml">
+
+		<!-- Recherche -->
+		<transition on="search" to="search" />
+
+		<!-- Dispenser -->
+		<transition on="dispenser" to="dispenser">
+			<set name="flashScope.idPrescription" value="prescriptionsManager.beanSelected.id"
+				type="java.lang.Long" />
+			<evaluate expression="prescriptionsManager.validForDispensation()"/>	
+			<evaluate expression="null" result="prescriptionsManager.beanSelected" />
+		</transition>
+		<!-- Erreur -->
+		<transition on="error" to="gestionDispensation" />
+	</view-state>
+
+	<!-- Recherche -->
+	<action-state id="search">
+		<evaluate expression="prescriptionService.getAll(prescriptionSearchCriteria)"
+			result="prescriptionsManager.beans" />
+		<transition to="gestionDispensation"/>
+	</action-state>
+
+	<!-- Dispenser -->
+	<subflow-state id="dispenser" subflow="dispensation/edit">
+		<input name="idPrescription" value="flashScope.idPrescription" />
+		<transition to="search" />
+	</subflow-state>
+
+
+</flow>

@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<flow xmlns="http://www.springframework.org/schema/webflow"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://www.springframework.org/schema/webflow
+    http://www.springframework.org/schema/webflow/spring-webflow-2.0.xsd" parent="main">
+    
+	<!-- Démarrage -->
+	<on-start>
+		<evaluate expression="ordonnancierSearchCriteria.clear()"/>
+		<evaluate expression="duplicataOrdonnancierFabReconstManager.init()"/>
+	</on-start>      
+    
+    <!-- Page principale -->
+	<view-state id="duplicataFabReconst" view="../../../../pages/ordonnancier/fabReconst/duplicata/duplicataFabReconst.xhtml">
+		<transition on="getDuplicataOrdonnancierFabReconst" to="printDuplicataFabReconst"/>
+		<transition on="error" to="duplicataFabReconst" />
+	</view-state>
+    
+	<view-state id="printDuplicataFabReconst" view="../../../../pages/ordonnancier/fabReconst/duplicata/printDuplicataFabReconst.xhtml">
+    	
+    </view-state>    
+    
+</flow>

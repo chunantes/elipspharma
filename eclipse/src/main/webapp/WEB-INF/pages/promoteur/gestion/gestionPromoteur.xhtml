@@ -1,0 +1,137 @@
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+     xmlns:ui="http://java.sun.com/jsf/facelets"
+     xmlns:h="http://java.sun.com/jsf/html"
+     xmlns:f="http://java.sun.com/jsf/core"
+	 xmlns:p="http://primefaces.prime.com.tr/ui"
+	 xmlns:c="http://java.sun.com/jsp/jstl/core"
+     template="/WEB-INF/pages/template/template.xhtml">
+     
+     <ui:define name="title">
+		<h:outputFormat value="#{resourceBundle['gestionPromoteur.title']}"/>
+     </ui:define>
+     
+     <ui:define name="body">
+     	<p:outputPanel id="searchCriteriaFragment">
+   			<h:form id="criteriaForm">
+     			<div class="rechercheBox">
+     				<h2 class="titleFloat"><h:outputText value="#{resourceBundle['recherche']}"/></h2>
+     				<p:focus />
+	     			<fieldset>
+	     				<div class="rechercheInside">
+	     			
+	     					<div><label>#{resourceBundle['gestionPromoteur.raisonSociale']}</label></div>
+		     				<div><h:inputText id="raisonSociale" value="#{promoteursManager.searchCriteria.raisonSociale}" /></div>
+	     			
+	     					<div><label>#{resourceBundle['gestionPromoteur.type']}</label></div>
+		     				<div>
+								<h:selectOneMenu id="typeSearchCriteria" value="#{promoteursManager.searchCriteria.type}">
+				           			<f:selectItem noSelectionOption="true"/>
+				           			<f:selectItems value="#{enumManager.getValues('TypePromoteur')}"/>
+			           			</h:selectOneMenu>
+		     				</div>
+		     				
+		     				<br />
+		     				<p:commandButton id="searchButton" action="search" ajax="false"
+		     					value="#{resourceBundle['btn.rechercher']}" title="#{resourceBundle['btn.rechercher']}">
+		     				</p:commandButton>
+	     				</div>
+	     			</fieldset>
+	     			<br />
+	     				<div id="basicButton">
+	     				
+				    		<p:commandButton id="addButton" action="add" ajax="false"
+				    			value="#{resourceBundle['btn.ajouter']}" title="#{resourceBundle['btn.ajouter']}">
+				    		</p:commandButton>
+	     				</div>
+     			</div>
+    		</h:form>
+     	</p:outputPanel>
+     	
+     	<p:outputPanel id="resultsFragment">
+			<h:form id="promoteursForm" prependId="false">
+				<div>
+				 	 <div style="float:left;">
+			    	 	<h2 class="titleFloat"><h:outputText value="#{resourceBundle['resultats']}"/></h2>
+			    	 </div>			
+			    	 <div class="export">
+				         <h:commandLink> 
+				         	<h:graphicImage library="images" name="excel.gif"
+		    					alt="#{resourceBundle['export.excel']}" title="#{resourceBundle['export.excel']}" />
+				             <p:dataExporter type="xls" target="promoteurs" fileName="#{resourceBundle['export.promoteurs.filename']}" 
+				             	excludeColumns="3" encoding="iso-8859-1"/>
+				         </h:commandLink>  
+				         <h:commandLink>  
+				         	<h:graphicImage library="images" name="pdf.gif" 
+		    					alt="#{resourceBundle['export.pdf']}" title="#{resourceBundle['export.pdf']}" />
+				             <p:dataExporter type="pdf" target="promoteurs" fileName="#{resourceBundle['export.promoteurs.filename']}" 
+				             	excludeColumns="3" encoding="iso-8859-1"/>  
+				         </h:commandLink>  
+				         <h:commandLink>  
+				         	<h:graphicImage library="images" name="csv.gif" 
+		    					alt="#{resourceBundle['export.csv']}" title="#{resourceBundle['export.csv']}" />
+				             <p:dataExporter type="csv" target="promoteurs" fileName="#{resourceBundle['export.promoteurs.filename']}" 
+				             	excludeColumns="3" encoding="iso-8859-1"/>  
+				         </h:commandLink>
+			         </div>
+		        </div>						
+				<div class="resultBox" style="width:680px;"> 
+				<p:messages/>
+			    	<fieldset>
+			    	
+			    		<p:dataTable id="promoteurs" value="#{promoteursManager.beans}" var="promoteur" emptyMessage="#{resourceBundle['results.none']}"
+			    			selection="#{promoteursManager.beanSelected}" selectionMode="single"
+							update="promoteurs"
+							onselectComplete="javascript:document.getElementById('editButton').click();">	
+			    		
+			    			<p:column id="raisonSociale" sortBy="#{promoteur.raisonSociale}">
+			    				<f:facet name="header">
+			    					<h:outputText value="#{resourceBundle['gestionPromoteur.raisonSociale']}"/>
+			    				</f:facet>
+			    				<h:outputText value="#{promoteur.raisonSociale}"/>
+			    			</p:column>
+			    			<p:column id="identifiant" sortBy="#{promoteur.identifiant}">
+			    				<f:facet name="header">
+			    					<h:outputText value="#{resourceBundle['gestionPromoteur.identifiant']}"/>
+			    				</f:facet>
+			    				<h:outputText value="#{promoteur.identifiant}"/>
+			    			</p:column>
+			    			<p:column id="type" sortBy="#{promoteur.type.libelle}">
+			    				<f:facet name="header">
+			    					<h:outputText value="#{resourceBundle['gestionPromoteur.type']}"/>
+			    				</f:facet>
+			    				<h:outputText value="#{promoteur.type.libelle}"/>
+			    			</p:column>
+			    			<p:column>
+			    				<f:facet name="header">
+			    					<div align="center">
+			    						<input type="checkbox" id="select_all" onclick="javascript:selectAll(this)" />
+			    					</div>
+			    				</f:facet>
+			    				<div align="center">			    			
+			    					<h:selectBooleanCheckbox value="#{promoteur.selected}"/>
+			    				</div>
+			    			</p:column> 
+			    		</p:dataTable>
+			    		<br />
+	     				
+			    		<div class="actionButton">
+				    		<p:commandButton id="deleteButton" action="delete" ajax="false"
+				    			value="#{resourceBundle['btn.supprimer']}" title="#{resourceBundle['btn.supprimer']}">
+				    		</p:commandButton>
+				    		<p:commandButton id="addButton" action="add" ajax="false"
+				    			value="#{resourceBundle['btn.ajouter']}" title="#{resourceBundle['btn.ajouter']}">
+				    		</p:commandButton>
+				    		
+							<div style="display:none;">
+					    		<p:commandButton id="editButton" action="edit" ajax="false"/>
+					    	</div>				    		
+				    		
+				    	</div>
+	    			</fieldset>
+   				</div>
+    		</h:form>
+   		</p:outputPanel>
+     	
+     </ui:define>
+     
+</ui:composition>

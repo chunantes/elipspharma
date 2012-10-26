@@ -1,0 +1,536 @@
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+     xmlns:ui="http://java.sun.com/jsf/facelets"
+     xmlns:h="http://java.sun.com/jsf/html"
+     xmlns:f="http://java.sun.com/jsf/core"
+     xmlns:p="http://primefaces.prime.com.tr/ui"
+     xmlns:c="http://java.sun.com/jsp/jstl/core">
+    
+    <c:set var="idOnglet_adm">ONG_ADMIN_REG</c:set>
+    <c:set var="detailAdmin" value="#{essaiManager.bean.detailAdministratif}" />
+    <input type="hidden" id="currentView" name="currentView" value="#{idOnglet_adm}" />
+    
+	<p:focus context="dar_panel_ac" />
+    
+    <!-- ********************************** -->
+    <!-- Autorite competente 				-->
+    <!-- ********************************** -->
+    <p:panel id="dar_panel_ac" header="#{resourceBundle['editEssai.onglet.administratif.ac.title']}"
+	      collapsed="false" closable="false">
+	    <h:panelGrid id="dar_panelGr_ac_main" columns="1">
+		    <h:panelGrid id="dar_panelGr_ac_haut" columns="4" columnClasses="panelCol_25, panelCol_25, panelCol_25, panelCol_25">
+		    	<h:outputLabel id="labelDarACAcc" for="dar_ac_accord" value="#{resourceBundle['editEssai.onglet.administratif.ac.acc']}" />
+		    	<h:selectOneRadio id="dar_ac_accord" value="#{detailAdmin.infosAC.accordAC}" styleClass="selectRadio">
+	    			<f:selectItem itemLabel="#{resourceBundle['boolean.oui']}" itemValue="true" itemDescription="#{resourceBundle['boolean.oui']}" />
+	    			<f:selectItem itemLabel="#{resourceBundle['boolean.non']}" itemValue="false" itemDescription="#{resourceBundle['boolean.non']}"/>
+	    		</h:selectOneRadio>
+	    		
+		    	<h:outputLabel id="labelDarACType" for="dar_ac_type" value="#{resourceBundle['editEssai.onglet.administratif.ac.ac']}" />
+		    	<h:selectOneMenu id="dar_ac_type" value="#{detailAdmin.infosAC.typeAC}" styleClass="selectRadio">
+	    			<f:selectItem noSelectionOption="true"/>
+		         	<f:selectItems value="#{enumManager.getValues('TypeAC')}" />
+	    		</h:selectOneMenu>
+	    		
+		    	<h:outputLabel id="labelDarACNom" for="dar_ac_nom" value="#{resourceBundle['editEssai.onglet.administratif.ac.nomAC']}" />
+		    	<h:inputText id="dar_ac_nom" value="#{detailAdmin.infosAC.nomAC}" />
+	    		
+		    	<h:outputLabel id="labelDarACNum" for="dar_ac_num" value="#{resourceBundle['editEssai.onglet.administratif.ac.numAC']}" />
+		    	<h:inputText id="dar_ac_num" value="#{detailAdmin.infosAC.numIdentAC}" />
+				
+				<h:outputLabel id="labelDarACDate" for="dar_ac_date" value="#{resourceBundle['editEssai.onglet.administratif.ac.dateAC']}" />
+	    		<p:calendar id="dar_ac_date" value="#{detailAdmin.infosAC.dateAC}" 
+	    			effect="#{resourceBundle['effect.calendar']}" locale="#{resourceBundle['date.locale']}" showButtonPanel="true" navigator="true" 
+	    			converter="#{calendarConverter}" />
+	    			
+		    	<h:panelGroup />
+		    	<h:panelGroup />
+				
+		    </h:panelGrid>
+			<p:outputPanel id="dar_ac_lastDoc">
+				<c:set var="lastDocAC" value="#{essaiManager.getLastDocument(enumManager.getEnumValue('TypeDocumentEssai','AUTORITE_COMPETENTE'))}" />
+			    <h:panelGrid id="dar_panelGr_ac_bas" columns="3" columnClasses="panelCol_25 selectRadio, panelCol_25, panelCol_50">
+			    	<p:column>
+						<p:commandLink id="labelDarACDoc"  value="#{resourceBundle['editEssai.onglet.administratif.ac.doc']}" onclick="popupDocAdminAC.show()"
+							styleClass="clickable" title="#{resourceBundle['document.popupLink.title']}"/>
+						<br />
+						<p:columnGroup>
+							<h:outputLabel for="checkDarACDoc" value="#{resourceBundle['document.dossierPapier']}" />
+							<h:selectBooleanCheckbox id="checkDarACDoc" value="#{detailAdmin.infosAC.docsDossierPapier}" />
+						</p:columnGroup>
+			    	</p:column>
+			    	<p:column colspan="2">
+						<c:choose>
+							<c:when test="#{lastDocAC != null}">
+								<h:outputText value="#{lastDocAC.nomUtilisateur}" title="#{documentsIhmHelper.buildDocTitle(lastDocAC, resourceBundle['document.part1'], resourceBundle['document.part2'], resourceBundle['date.pattern.withHeures'])}" />
+							</c:when>
+							<c:otherwise>
+						    	<h:panelGroup />
+							</c:otherwise>
+						</c:choose>
+			    	</p:column>
+			    	<p:column colspan="2">
+						<c:choose>
+							<c:when test="#{lastDocAC != null}">
+								<p:commandButton value="#{resourceBundle['file.dwd']}" title="#{resourceBundle['file.dwd']}" ajax="false">
+									<p:fileDownload value="#{fileDwdController.downloadDocument(essaiManager.bean, lastDocAC)}" />
+								</p:commandButton>
+							</c:when>
+							<c:otherwise>
+						    	<h:panelGroup />
+							</c:otherwise>
+						</c:choose>
+			    	</p:column>
+			    </h:panelGrid>
+			</p:outputPanel>
+	    </h:panelGrid>
+	</p:panel>
+    
+    <!-- ********************************** -->
+    <!-- Comite de protection des personnes -->
+    <!-- ********************************** -->
+    <p:panel id="dar_panel_cpp" header="#{resourceBundle['editEssai.onglet.administratif.cpp.title']}"
+	      collapsed="false" closable="false">
+   		<h:panelGrid id="dar_panelGr_cpp_main" columns="1">
+		    <h:panelGrid id="dar_panelGr_cpp_haut" columns="4" columnClasses="panelCol_25, panelCol_25, panelCol_25, panelCol_25">
+		    	<h:outputLabel id="labelDarCPPAcc" for="dar_cpp_accord" value="#{resourceBundle['editEssai.onglet.administratif.cpp.acc']}" />
+		    	<h:selectOneRadio id="dar_cpp_accord" value="#{detailAdmin.infosCPP.accordCPP}" styleClass="selectRadio">
+	    			<f:selectItem itemLabel="#{resourceBundle['boolean.oui']}" itemValue="true" itemDescription="#{resourceBundle['boolean.oui']}" />
+	    			<f:selectItem itemLabel="#{resourceBundle['boolean.non']}" itemValue="false" itemDescription="#{resourceBundle['boolean.non']}"/>
+	    		</h:selectOneRadio>
+	    		<h:panelGroup />
+	    		<h:panelGroup />
+	    		
+		    	<h:outputLabel id="labelDarCPPNom" for="dar_cpp_nom" value="#{resourceBundle['editEssai.onglet.administratif.cpp.nom']}" />
+		    	<h:inputText id="dar_cpp_nom" value="#{detailAdmin.infosCPP.nomCPP}" />
+	    		<h:panelGroup />
+	    		<h:panelGroup />
+				
+				<h:outputLabel id="labelDarCPPDate" for="dar_cpp_date" value="#{resourceBundle['editEssai.onglet.administratif.cpp.dateAC']}" />
+	    		<p:calendar id="dar_cpp_date" value="#{detailAdmin.infosCPP.dateCPP}" 
+	    			effect="#{resourceBundle['effect.calendar']}" locale="#{resourceBundle['date.locale']}" showButtonPanel="true" navigator="true" 
+	    			converter="#{calendarConverter}" />
+	    		<h:panelGroup />
+	    		<h:panelGroup />
+		    </h:panelGrid>
+		    <p:outputPanel id="dar_cpp_lastDoc">
+				<c:set var="lastDocCPP" value="#{essaiManager.getLastDocument(enumManager.getEnumValue('TypeDocumentEssai','COMITE_PROTEC_PERS'))}" />
+			    <h:panelGrid id="dar_panelGr_cpp_bas" columns="3" columnClasses="panelCol_25 selectRadio, panelCol_25, panelCol_50">
+			    	<p:column>
+						<p:commandLink id="labelDarCPPDoc" value="#{resourceBundle['editEssai.onglet.administratif.cpp.doc']}" onclick="popupDocAdminCPP.show()" 
+							styleClass="clickable" title="#{resourceBundle['document.popupLink.title']}"/>
+						<br />
+						<p:columnGroup>
+							<h:outputLabel for="checkDarCPPDoc" value="#{resourceBundle['document.dossierPapier']}" />
+							<h:selectBooleanCheckbox id="checkDarCPPDoc" value="#{detailAdmin.infosCPP.docsDossierPapier}" />
+						</p:columnGroup>
+			    	</p:column>
+			    	<p:column colspan="2">
+						<c:choose>
+							<c:when test="#{lastDocCPP != null}">
+								<h:outputText value="#{lastDocCPP.nomUtilisateur}" title="#{documentsIhmHelper.buildDocTitle(lastDocCPP, resourceBundle['document.part1'], resourceBundle['document.part2'], resourceBundle['date.pattern.withHeures'])}" />
+							</c:when>
+							<c:otherwise>
+						    	<h:panelGroup />
+							</c:otherwise>
+						</c:choose>
+			    	</p:column>
+			    	<p:column colspan="2">
+						<c:choose>
+							<c:when test="#{lastDocCPP != null}">
+								<p:commandButton value="#{resourceBundle['file.dwd']}" title="#{resourceBundle['file.dwd']}" ajax="false">
+									<p:fileDownload value="#{fileDwdController.downloadDocument(essaiManager.bean, lastDocCPP)}" />
+								</p:commandButton>
+							</c:when>
+							<c:otherwise>
+						    	<h:panelGroup />
+							</c:otherwise>
+						</c:choose>
+			    	</p:column>
+			    </h:panelGrid>
+			</p:outputPanel>
+   		</h:panelGrid>
+	</p:panel>
+    
+    <!-- ********************************** -->
+    <!-- Convention/Avenants				-->
+    <!-- ********************************** -->
+    <p:panel id="dar_panel_conv" header="#{resourceBundle['editEssai.onglet.administratif.conv.title']}"
+	      collapsed="false" closable="false">
+   		<h:panelGrid id="dar_panelGr_conv_main" columns="1">
+		    <h:panelGrid id="dar_panelGr_conv_haut" columns="4" columnClasses="panelCol_25, panelCol_25, panelCol_25, panelCol_25">
+		    	<h:outputLabel id="labelDarConvSign" for="dar_conv_signee" value="#{resourceBundle['editEssai.onglet.administratif.conv.signee']}" />
+		    	<h:selectOneRadio id="dar_conv_signee" value="#{detailAdmin.infosConvention.convSignee}" styleClass="selectRadio">
+	    			<f:selectItem itemLabel="#{resourceBundle['boolean.oui']}" itemValue="true" itemDescription="#{resourceBundle['boolean.oui']}" />
+	    			<f:selectItem itemLabel="#{resourceBundle['boolean.non']}" itemValue="false" itemDescription="#{resourceBundle['boolean.non']}"/>
+	    		</h:selectOneRadio>
+		    	
+		    	<h:outputLabel id="labelDarConvDate" for="dar_conv_date" value="#{resourceBundle['editEssai.onglet.administratif.conv.date']}" />
+		    	<p:calendar id="dar_conv_date" value="#{essaiManager.bean.dateSignature}"  onSelectUpdate="def_concl_dateAccord @this"  selectListener="#{essaiManager.getBean()}"
+	    			effect="#{resourceBundle['effect.calendar']}" locale="#{resourceBundle['date.locale']}" immediate="true" showButtonPanel="true" navigator="true" 
+	    			converter="#{calendarConverter}" />
+		    </h:panelGrid>
+		    <p:outputPanel id="dar_conv_lastDoc">
+				<c:set var="lastDocCV" value="#{essaiManager.getLastDocument(enumManager.getEnumValue('TypeDocumentEssai','CONVENTION'))}" />
+			    <h:panelGrid id="dar_panelGr_conv_bas" columns="3" columnClasses="panelCol_25 selectRadio, panelCol_25, panelCol_50">
+			    	<p:column>
+						<p:commandLink id="labelDarCVDoc" value="#{resourceBundle['editEssai.onglet.administratif.conv.doc']}" onclick="popupDocAdminCV.show()" 
+							styleClass="clickable" title="#{resourceBundle['document.popupLink.title']}"/>
+						<br />
+						<p:columnGroup>
+							<h:outputLabel for="checkDarConvDoc" value="#{resourceBundle['document.dossierPapier']}" />
+							<h:selectBooleanCheckbox id="checkDarConvDoc" value="#{detailAdmin.infosConvention.docsDossierPapier}" />
+						</p:columnGroup>
+			    	</p:column>
+			    	<p:column colspan="2">
+						<c:choose>
+							<c:when test="#{lastDocCV != null}">
+								<h:outputText value="#{lastDocCV.nomUtilisateur}" title="#{documentsIhmHelper.buildDocTitle(lastDocCV, resourceBundle['document.part1'], resourceBundle['document.part2'], resourceBundle['date.pattern.withHeures'])}" />
+								
+							</c:when>
+							<c:otherwise>
+						    	<h:panelGroup />
+							</c:otherwise>
+						</c:choose>
+			    	</p:column>
+			    	<p:column colspan="2">
+						<c:choose>
+							<c:when test="#{lastDocCV != null}">
+								<p:commandButton value="#{resourceBundle['file.dwd']}" title="#{resourceBundle['file.dwd']}" ajax="false">
+									<p:fileDownload value="#{fileDwdController.downloadDocument(essaiManager.bean, lastDocCV)}" />
+								</p:commandButton>
+							</c:when>
+							<c:otherwise>
+						    	<h:panelGroup />
+							</c:otherwise>
+						</c:choose>
+			    	</p:column>
+			    </h:panelGrid>
+			</p:outputPanel>
+   		</h:panelGrid>
+	</p:panel>
+    
+    <!-- ********************************** -->
+    <!-- Assurance							-->
+    <!-- ********************************** -->
+    <p:panel id="dar_panel_assu" header="#{resourceBundle['editEssai.onglet.administratif.assu.title']}"
+	      collapsed="false" closable="false">
+   		<h:panelGrid id="dar_panelGr_assu_main" columns="1">
+		    <h:panelGrid id="dar_panelGr_assu" columns="4" columnClasses="panelCol_25, panelCol_25, panelCol_25, panelCol_25">
+		    	<h:outputLabel id="labelDarAssuNom" for="dar_assu_nom" value="#{resourceBundle['editEssai.onglet.administratif.assu.nom']}" />
+		    	<h:inputText id="dar_assu_nom" value="#{detailAdmin.infosAssurance.nomCompagnie}" />
+		    	<h:panelGroup />
+		    	<h:panelGroup />
+		    	
+		    	<h:outputLabel id="labelDarAssuNumContract" for="dar_assu_numContrat" value="#{resourceBundle['editEssai.onglet.administratif.assu.numero']}" />
+		    	<h:inputText id="dar_assu_numContrat" value="#{detailAdmin.infosAssurance.numeroContrat}" />
+		    	<h:outputLabel id="labelDarAssuNumAvt" for="dar_assu_numAvt" value="#{resourceBundle['editEssai.onglet.administratif.assu.avenant']}" />
+		    	<h:inputText id="dar_assu_numAvt" value="#{detailAdmin.infosAssurance.numeroAvenant}" />
+		    </h:panelGrid>
+		    <p:outputPanel id="dar_assu_lastDoc">
+				<c:set var="lastDocAssu" value="#{essaiManager.getLastDocument(enumManager.getEnumValue('TypeDocumentEssai','ASSURANCE'))}" />
+			    <h:panelGrid id="dar_panelGr_assu_bas" columns="3" columnClasses="panelCol_25 selectRadio, panelCol_25, panelCol_50">
+			    	<p:column>
+						<p:commandLink id="labelDarAssuDoc" value="#{resourceBundle['editEssai.onglet.administratif.assu.doc']}" onclick="popupDocAdminAssu.show()" 
+							styleClass="clickable" title="#{resourceBundle['document.popupLink.title']}"/>
+						<br />
+						<p:columnGroup>
+							<h:outputLabel for="checkDarAssuDoc" value="#{resourceBundle['document.dossierPapier']}" />
+							<h:selectBooleanCheckbox id="checkDarAssuDoc" value="#{detailAdmin.infosAssurance.docsDossierPapier}" />
+						</p:columnGroup>
+			    	</p:column>
+			    	<p:column colspan="2">
+						<c:choose>
+							<c:when test="#{lastDocAssu != null}">
+								<h:outputText value="#{lastDocAssu.nomUtilisateur}" title="#{documentsIhmHelper.buildDocTitle(lastDocAssu, resourceBundle['document.part1'], resourceBundle['document.part2'], resourceBundle['date.pattern.withHeures'])}" />
+							</c:when>
+							<c:otherwise>
+						    	<h:panelGroup />
+							</c:otherwise>
+						</c:choose>
+			    	</p:column>
+			    	<p:column colspan="2">
+						<c:choose>
+							<c:when test="#{lastDocAssu != null}">
+								<p:commandButton value="#{resourceBundle['file.dwd']}" title="#{resourceBundle['file.dwd']}" ajax="false">
+									<p:fileDownload value="#{fileDwdController.downloadDocument(essaiManager.bean, lastDocAssu)}" />
+								</p:commandButton>
+							</c:when>
+							<c:otherwise>
+						    	<h:panelGroup />
+							</c:otherwise>
+						</c:choose>
+			    	</p:column>
+			    </h:panelGrid>
+			</p:outputPanel>
+   		</h:panelGrid>
+	</p:panel>
+    
+    <!-- ********************************** -->
+    <!-- Protocole							-->
+    <!-- ********************************** -->
+    <p:panel id="dar_panel_proto" header="#{resourceBundle['editEssai.onglet.administratif.proto.title']}"
+	      collapsed="false" closable="false">
+   		<h:panelGrid id="dar_panelGr_proto_main" columns="1">
+   			<p:outputPanel id="dar_proto_lastDoc">
+				<c:set var="lastDocProto" value="#{essaiManager.getLastDocument(enumManager.getEnumValue('TypeDocumentEssai','PROTOCOLE'))}" />
+			    <h:panelGrid id="dar_panelGr_proto_bas" columns="4" columnClasses="panelCol_25 selectRadio, panelCol_25, panelCol_25">
+			    	<p:column>
+						<p:commandLink id="labelDarProtoDoc" value="#{resourceBundle['editEssai.onglet.administratif.proto.doc']}" onclick="popupDocAdminProto.show()"
+							styleClass="clickable" title="#{resourceBundle['document.popupLink.title']}"/>
+						<br />
+						<p:columnGroup>
+							<h:outputLabel for="checkDarProtoDoc" value="#{resourceBundle['document.dossierPapier']}" />
+							<h:selectBooleanCheckbox id="checkDarProtoDoc" value="#{detailAdmin.infosProtocole.docsDossierPapier}" />
+						</p:columnGroup>
+			    	</p:column>
+			    	<p:column colspan="1">
+						<c:choose>
+							<c:when test="#{lastDocProto != null}">
+								<h:outputText value="#{lastDocProto.typeDocumentProtocole.libelle} (Version : #{lastDocProto.version} du " />
+								<h:outputText value="#{lastDocProto.dateMaj.time}">
+									<f:convertDateTime pattern="#{resourceBundle['date.pattern.default']}"/>
+								</h:outputText>
+								<h:outputText value=")"/>
+							</c:when>
+							<c:otherwise>
+						    	<h:panelGroup />
+							</c:otherwise>
+						</c:choose>
+			    	</p:column>
+			    	<p:column colspan="1">
+						<c:choose>
+							<c:when test="#{lastDocProto != null}">
+								<h:outputText value="#{lastDocProto.nomUtilisateur}" title="#{documentsIhmHelper.buildDocTitle(lastDocProto, resourceBundle['document.part1'], resourceBundle['document.part2'], resourceBundle['date.pattern.withHeures'])}" />
+							</c:when>
+							<c:otherwise>
+						    	<h:panelGroup />
+							</c:otherwise>
+						</c:choose>
+			    	</p:column>
+			    	<p:column colspan="1">
+						<c:choose>
+							<c:when test="#{lastDocProto != null}">
+								<p:commandButton value="#{resourceBundle['file.dwd']}" title="#{resourceBundle['file.dwd']}" ajax="false" rendered="#{not empty lastDocProto.nomUtilisateur}">
+									<p:fileDownload value="#{fileDwdController.downloadDocument(essaiManager.bean, lastDocProto)}" />
+								</p:commandButton>
+							</c:when> 
+							<c:otherwise>
+						    	<h:panelGroup />
+							</c:otherwise>
+						</c:choose>
+			    	</p:column>
+			    </h:panelGrid> 
+			</p:outputPanel>
+   		</h:panelGrid>
+	</p:panel>
+    
+    <!-- ********************************** -->
+    <!-- Brochure produits					-->
+    <!-- ********************************** -->
+    <p:panel id="dar_panel_broPro" header="#{resourceBundle['editEssai.onglet.administratif.broPro.title']}"
+	      collapsed="false" closable="false">
+				<c:set var="lastDocBro" value="#{essaiManager.getLastDocument(enumManager.getEnumValue('TypeDocumentEssai','BROCHURE_PDUITS'))}" />
+   		<h:panelGrid id="dar_panelGr_broPro_main" columns="1">
+   			<p:outputPanel id="dar_broPro_lastDoc">
+			    <h:panelGrid id="dar_panelGr_broPro_bas" columns="4" columnClasses="panelCol_25 selectRadio, panelCol_25, panelCol_25, panelCol_25">
+					<p:column>
+						<p:commandLink id="labelDarBroProDoc" value="#{resourceBundle['editEssai.onglet.administratif.broPro.doc']}" onclick="popupDocAdminBroPro.show()" 
+							styleClass="clickable" title="#{resourceBundle['document.popupLink.title']}"/>
+						<br />
+						<p:columnGroup>
+							<h:outputLabel for="checkDarBroProDoc" value="#{resourceBundle['document.dossierPapier']}" />
+							<h:selectBooleanCheckbox id="checkDarBroProDoc" value="#{detailAdmin.infosBrochure.docsDossierPapier}" />
+						</p:columnGroup>
+			    	</p:column>
+			    	<p:column colspan="1">
+						<c:choose>
+							<c:when test="#{lastDocBro!= null}">
+								<h:outputText value="#{lastDocBro.typeDocumentBrochure.libelle} (Version : #{lastDocBro.version} du " />
+								<h:outputText value="#{lastDocBro.dateMaj.time}">
+									<f:convertDateTime pattern="#{resourceBundle['date.pattern.default']}"/>
+								</h:outputText>
+								<h:outputText value=")"/>
+							</c:when>
+							<c:otherwise>
+						    	<h:panelGroup />
+							</c:otherwise>
+						</c:choose>
+			    	</p:column> 
+			    	<p:column colspan="1">
+						<c:choose>
+							<c:when test="#{lastDocBro!= null}">
+							<h:outputText value="#{lastDocBro.nomUtilisateur}" title="#{documentsIhmHelper.buildDocTitle(lastDocBro, resourceBundle['document.part1'], resourceBundle['document.part2'], resourceBundle['date.pattern.withHeures'])}" />
+							</c:when>
+							<c:otherwise>
+						    	<h:panelGroup />
+							</c:otherwise>
+						</c:choose>
+			    	</p:column>
+			    	<p:column colspan="1">
+						<c:choose>
+							<c:when test="#{lastDocBro != null}">
+								<p:commandButton value="#{resourceBundle['file.dwd']}" title="#{resourceBundle['file.dwd']}" ajax="false" rendered="#{not empty lastDocBro.nomUtilisateur}">
+									<p:fileDownload value="#{fileDwdController.downloadDocument(essaiManager.bean, lastDocBro)}" />
+								</p:commandButton>
+							</c:when>
+							<c:otherwise>
+						    	<h:panelGroup />
+							</c:otherwise>
+						</c:choose>
+			    	</p:column>
+			    </h:panelGrid>
+			</p:outputPanel>
+   		</h:panelGrid>
+	</p:panel>
+    
+    <!-- ********************************** -->
+    <!-- AUTORISATION_IMPORTATION			-->
+    <!-- ********************************** -->
+    <p:panel id="dar_panel_autorisationImportation" header="#{resourceBundle['editEssai.onglet.administratif.autorisationImportation.title']}"
+	      collapsed="false" closable="false">
+   		<h:panelGrid id="dar_panelGr_autorisationImportation_main" columns="1">
+   			<p:outputPanel id="dar_autorisationImportation_lastDoc">
+				<c:set var="lastDocAutorisationImportation" value="#{essaiManager.getLastDocument(enumManager.getEnumValue('TypeDocumentEssai','AUTORISATION_IMPORTATION'))}" />
+			    <h:panelGrid id="dar_panelGr_autorisationImportation_bas" columns="3" columnClasses="panelCol_25 selectRadio, panelCol_25, panelCol_50">
+					<p:column>
+						<p:commandLink id="labelDarAutorisationImportationDoc" value="#{resourceBundle['editEssai.onglet.administratif.autorisationImportation.doc']}" onclick="popupDocAdminAutorisationImportation.show()" 
+							styleClass="clickable" title="#{resourceBundle['document.popupLink.title']}"/>
+						<br />
+						<p:columnGroup>
+							<h:outputLabel for="checkDarAutorisationImportationDoc" value="#{resourceBundle['document.dossierPapier']}" />
+							<h:selectBooleanCheckbox id="checkDarAutorisationImportationDoc" value="#{detailAdmin.infosBrochure.docsDossierPapier}" />
+						</p:columnGroup>
+			    	</p:column>
+			    	<p:column colspan="2">
+						<c:choose>
+							<c:when test="#{lastDocAutorisationImportation != null}">
+							<h:outputText value="#{lastDocAutorisationImportation.nomUtilisateur}" title="#{documentsIhmHelper.buildDocTitle(lastDocAutorisationImportation, resourceBundle['document.part1'], resourceBundle['document.part2'], resourceBundle['date.pattern.withHeures'])}" />
+							</c:when>
+							<c:otherwise>
+						    	<h:panelGroup />
+							</c:otherwise>
+						</c:choose>
+			    	</p:column>
+			    	<p:column colspan="2">
+						<c:choose>
+							<c:when test="#{lastDocAutorisationImportation != null}">
+								<p:commandButton value="#{resourceBundle['file.dwd']}" title="#{resourceBundle['file.dwd']}" ajax="false">
+									<p:fileDownload value="#{fileDwdController.downloadDocument(essaiManager.bean, lastDocAutorisationImportation)}" />
+								</p:commandButton>
+							</c:when>
+							<c:otherwise>
+						    	<h:panelGroup />
+							</c:otherwise>
+						</c:choose>
+			    	</p:column>
+			    </h:panelGrid>
+			</p:outputPanel>
+   		</h:panelGrid>
+	</p:panel>
+    
+    <!-- ********************************** -->
+    <!-- AUTORISATION_DISTRIBUTION			-->
+    <!-- ********************************** -->
+    <p:panel id="dar_panel_autorisationDistribution" header="#{resourceBundle['editEssai.onglet.administratif.autorisationDistribution.title']}"
+	      collapsed="false" closable="false">
+   		<h:panelGrid id="dar_panelGr_autorisationDistribution_main" columns="1">
+   			<p:outputPanel id="dar_autorisationDistribution_lastDoc">
+				<c:set var="lastDocAutorisationDistribution" value="#{essaiManager.getLastDocument(enumManager.getEnumValue('TypeDocumentEssai','AUTORISATION_DISTRIBUTION'))}" />
+			    <h:panelGrid id="dar_panelGr_autorisationDistribution_bas" columns="3" columnClasses="panelCol_25 selectRadio, panelCol_25, panelCol_50">
+					<p:column>
+						<p:commandLink id="labelDarAutorisationDistributionDoc" value="#{resourceBundle['editEssai.onglet.administratif.autorisationDistribution.doc']}" onclick="popupDocAdminAutorisationDistribution.show()" 
+							styleClass="clickable" title="#{resourceBundle['document.popupLink.title']}"/>
+						<br />
+						<p:columnGroup>
+							<h:outputLabel for="checkDarAutorisationDistributionDoc" value="#{resourceBundle['document.dossierPapier']}" />
+							<h:selectBooleanCheckbox id="checkDarAutorisationDistributionDoc" value="#{detailAdmin.infosBrochure.docsDossierPapier}" />
+						</p:columnGroup>
+			    	</p:column>
+			    	<p:column colspan="2">
+						<c:choose>
+							<c:when test="#{lastDocAutorisationDistribution != null}">
+							<h:outputText value="#{lastDocAutorisationDistribution.nomUtilisateur}" title="#{documentsIhmHelper.buildDocTitle(lastDocAutorisationDistribution, resourceBundle['document.part1'], resourceBundle['document.part2'], resourceBundle['date.pattern.withHeures'])}" />
+							</c:when>
+							<c:otherwise>
+						    	<h:panelGroup />
+							</c:otherwise>
+						</c:choose>
+			    	</p:column>
+			    	<p:column colspan="2">
+						<c:choose>
+							<c:when test="#{lastDocAutorisationDistribution != null}">
+								<p:commandButton value="#{resourceBundle['file.dwd']}" title="#{resourceBundle['file.dwd']}" ajax="false">
+									<p:fileDownload value="#{fileDwdController.downloadDocument(essaiManager.bean, lastDocAutorisationDistribution)}" />
+								</p:commandButton>
+							</c:when>
+							<c:otherwise>
+						    	<h:panelGroup />
+							</c:otherwise>
+						</c:choose>
+			    	</p:column>
+			    </h:panelGrid>
+			</p:outputPanel>
+   		</h:panelGrid>
+	</p:panel>
+    
+    
+    <!-- ********************************** -->
+    <!-- Archivage							-->
+    <!-- ********************************** -->
+    <p:panel id="dar_panel_archi" header="#{resourceBundle['editEssai.onglet.administratif.archi.title']}"
+	      collapsed="false" closable="false">
+	    <h:panelGrid id="dar_panelGr_archi" columns="2" columnClasses="panelCol_50, panelCol_50">
+		    <h:panelGrid id="dar_panelGr_archi_gauche" columns="2" columnClasses="panelCol_50, panelCol_50">
+		    	<h:outputLabel id="labelDarArchiDate" for="dar_archi_date" value="#{resourceBundle['editEssai.onglet.administratif.archi.date']}" />
+		    	<p:calendar id="dar_archi_date" value="#{detailAdmin.infosArchivage.date}" 
+	    			effect="#{resourceBundle['effect.calendar']}" locale="#{resourceBundle['date.locale']}" showButtonPanel="true" navigator="true" 
+	    			converter="#{calendarConverter}" />
+		    	
+		    	<h:outputLabel id="labelDarArchiIdent" for="dar_archi_ident" value="#{resourceBundle['editEssai.onglet.administratif.archi.ident']}" />
+		    	<h:inputText id="dar_archi_ident" value="#{detailAdmin.infosArchivage.identification}" />
+		    	
+		    	<h:outputLabel id="labelDarArchiLieu" for="dar_archi_lieu" value="#{resourceBundle['editEssai.onglet.administratif.archi.lieu']}" />
+		    	<h:inputText id="dar_archi_lieu" value="#{detailAdmin.infosArchivage.lieu}" />
+		    	
+		    	<h:outputLabel id="labelDarArchiDuree" for="dar_archi_duree" value="#{resourceBundle['editEssai.onglet.administratif.archi.duree']}" />
+		    	<h:inputText id="dar_archi_duree" value="#{detailAdmin.infosArchivage.duree}" converterMessage="#{resourceBundle['essai.detailAdmin.infosArchi.duree.invalid_type']}" />
+		    </h:panelGrid>
+		    <h:panelGrid id="dar_panelGr_archi_droit" columns="2" columnClasses="panelCol_25, panelCol_75">
+		    	<c:set var="lastCommentaireArchi" value="#{essaiManager.getLastCommentaire(enumManager.getEnumValue('TypeCommentaireEssai','ADMINREG_ARCHIVAGE'))}" />
+		    	<p:commandLink id="labelDarArchiCommentaires" value="#{resourceBundle['editEssai.onglet.administratif.archi.comm']}" onclick="popupCommentairesAdminArchi.show()" 
+		    		styleClass="clickable" title="#{resourceBundle['suivi.popupLink.title']}"/>
+				<p:outputPanel id="dr_pannelDarArchiCommentaires" style="display:block;margin-top:10px;">		
+			    	<c:choose>
+			    		<c:when test="${lastCommentaireArchi != null}">
+						    <h:inputTextarea id="dar_archi_commentaires" 
+						    	value="#{lastCommentaireArchi.libelle}" disabled="true" 
+						    	rows="#{resourceBundle['textarea.rows.default']}" />
+			    		</c:when>
+			    		<c:otherwise>
+						    <h:inputTextarea id="dar_archi_commentaires" 
+						    	value="" disabled="true" 
+						    	rows="#{resourceBundle['textarea.rows.default']}" />
+						</c:otherwise>
+			    	</c:choose>
+			    </p:outputPanel>
+		    </h:panelGrid>
+	    </h:panelGrid>
+	</p:panel>
+    
+    <!-- ********************************** -->
+    <!-- Suivi								-->
+    <!-- ********************************** -->
+    <p:panel id="dar_panel_suivi" styleClass="panelSuivi" rendered="#{essaiManager.hasLastModif(idOnglet_adm)}"> 
+		<c:set var="lastModifOngAdmin" value="#{essaiManager.getLastModif(idOnglet_adm)}" />
+		<h:outputText value="#{resourceBundle['suivi.part1']} " />
+		<h:outputText value="#{lastModifOngAdmin.dateMaj.time}">
+			<f:convertDateTime pattern="#{resourceBundle['date.pattern.withHeures']}"/>
+		</h:outputText>
+		<h:outputText value="#{resourceBundle['suivi.part2']} " />
+		<h:outputText value="#{lastModifOngAdmin.majPar}" />
+		<h:outputText value="#{resourceBundle['ponctuation.bracket.open']} " />
+		<h:outputLink id="labelDARModifs" value="javascript:void(0)" styleClass="clickable"
+			onclick="popupHistoOngAdmin.show()" title="#{resourceBundle['suivi.popupLink.title']}">#{resourceBundle['suivi.historique']}
+		</h:outputLink>
+		<h:outputText value="#{resourceBundle['ponctuation.bracket.close']} " />
+	</p:panel>
+</ui:composition>

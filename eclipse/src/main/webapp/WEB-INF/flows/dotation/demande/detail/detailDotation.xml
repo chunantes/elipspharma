@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<flow xmlns="http://www.springframework.org/schema/webflow"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://www.springframework.org/schema/webflow
+    http://www.springframework.org/schema/webflow/spring-webflow-2.0.xsd" parent="main">
+
+	<!-- Page principale -->
+	<view-state id="detailDotation" view="../../../../pages/dotation/demande/detailDotation.xhtml">
+		<transition on="save" to="comeback">
+			<evaluate expression="demandeDotationManager.validate()" />
+			<evaluate expression="demandeDotationManager.addDotationToDotations()"/>
+		</transition>
+		<transition on="comeback" to="comeback"/>
+		<transition on="error" to="detailDotation"/>
+	</view-state>
+	
+	<!-- Etat final -->
+	<end-state id="comeback"/>
+	
+</flow>

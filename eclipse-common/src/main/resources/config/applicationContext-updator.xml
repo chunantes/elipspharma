@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans 
+    xmlns="http://www.springframework.org/schema/beans" 
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd">
+
+	<!-- ================================ -->
+	<!-- ESSAI : SAVE UPDATORS       	  -->
+	<!-- ================================ -->
+	<bean id="detailFaisabiliteBeforeSaveUpdator" class="fr.pharma.eclipse.service.essai.updator.impl.DetailFaisabiliteBeforeSaveUpdator">
+		<property name="reinitializer" ref="beanPropReinitializer" />	
+	</bean>		
+	<bean id="dciBeforeSaveUpdator" class="fr.pharma.eclipse.service.essai.updator.impl.DciProduitEvalueBeforeSaveUpdator"/>
+	<bean id="contactsEssaiBeforeSaveUpdator" class="fr.pharma.eclipse.service.essai.updator.impl.ContactsEssaiBeforeSaveUpdator">
+		<property name="pharmacienService" ref="personneService" />
+		<property name="habilitationFactory" ref="habilitationFactory" />
+	</bean>
+	<bean id="etatBeforeSaveUpdator" class="fr.pharma.eclipse.service.essai.updator.impl.EtatBeforeSaveUpdator"/>
+	
+	<!-- ================================ -->
+	<!-- EVENEMENT : SAVE UPDATORS        -->
+	<!-- ================================ -->
+	<bean id="clotureUpdator" class="fr.pharma.eclipse.service.evenement.updator.impl.ClotureUpdator"/>
+	<bean id="preclotureUpdator" class="fr.pharma.eclipse.service.evenement.updator.impl.PreclotureUpdator"/>
+	<bean id="dateMepUpdator" class="fr.pharma.eclipse.service.evenement.updator.impl.DateMepUpdator"/>
+
+	<!-- ================================ -->
+	<!-- INCLUSION : SAVE UPDATORS        -->
+	<!-- ================================ -->
+	<bean id="dateInclusionSaveUpdator" class="fr.pharma.eclipse.service.patient.updator.impl.DateInclusionUpdator" />
+	
+</beans>

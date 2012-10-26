@@ -1,0 +1,766 @@
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+     xmlns:ui="http://java.sun.com/jsf/facelets"
+     xmlns:h="http://java.sun.com/jsf/html"
+     xmlns:f="http://java.sun.com/jsf/core"
+     xmlns:p="http://primefaces.prime.com.tr/ui"
+     xmlns:t="http://myfaces.apache.org/tomahawk"
+	 xmlns:c="http://java.sun.com/jsp/jstl/core">
+    
+    <!-- **************************************** -->
+    <!-- Popup d'historique de l'onglet admin/reg -->
+    <!-- **************************************** -->
+	<p:dialog widgetVar="popupHistoOngAdmin" header="#{resourceBundle['suivi.historique']}"
+		resizable="true" modal="true"
+		styleClass="essaiTabPopup"
+		width="500">  
+	   <h:form id="dar_popupHisto_form">  
+	   	   <h3>
+	   	   		<h:outputFormat value="#{resourceBundle['editEssai.common.onglet']} #{resourceBundle['editEssai.onglet.administratif.title']}" />
+	   	   </h3>
+		   <fieldset>
+		       <h:panelGrid columns="2" style="margin-bottom:10px" width="100%">  
+		  		<p:dataTable id="suivis" value="#{essaiManager.getList('detailAdministratif.modifs', false)}" var="modif" emptyMessage="#{resourceBundle['results.none']}"
+		  			paginator="true" rows="#{resourceBundle['pagination.rowsPerPage']}"
+		  			paginatorTemplate="#{paginatorTemplate}">
+		  			<p:column id="date">
+		  				<f:facet name="header">
+		  					<h:outputText value="#{resourceBundle['suivi.date']}" />
+		  				</f:facet>
+		  				<h:outputText value="#{modif.dateMaj.time}">
+						<f:convertDateTime pattern="#{resourceBundle['date.pattern.withHeures']}"/>
+					</h:outputText>
+		  			</p:column>
+		  			<p:column id="auteur">
+		  				<f:facet name="header"><h:outputText value="#{resourceBundle['suivi.auteur']}" /></f:facet>
+	  					<h:outputText value="#{modif.majPar}" />
+		  			</p:column>
+		  		</p:dataTable>		            
+		       </h:panelGrid>
+	       </fieldset>
+	       <div class="popupButton">
+	       		<p:commandButton value="#{resourceBundle['btn.fermer']}" oncomplete="popupHistoOngAdmin.hide();"/>
+	       </div>  
+	    </h:form>  
+	</p:dialog>
+    
+    <!-- **************************************** -->
+    <!-- Popup des commentaires d'archivage		  -->
+    <!-- **************************************** -->
+    <p:dialog widgetVar="popupCommentairesAdminArchi" header="#{resourceBundle['editEssai.onglet.administratif.archi.comm']}" 
+    	resizable="true" modal="true"
+    	styleClass="essaiTabPopup popupCommWithHisto"
+    	width="#{resourceBundle['popup.comments.withHisto.width']}">
+
+		<h:form id="dar_archi_popupCommentaires_form" prependId="false">
+			<!-- historique -->
+			<h3><h:outputFormat value="#{resourceBundle['editEssai.onglet.recherche.commentaires.historique']}" /></h3>
+			<fieldset>
+				<p:outputPanel id="dar_archi_popupCommentaires_outp_listeCommentaires" style="display:block;margin-top:10px;">
+					<p:panel styleClass="popupScrollable" style="margin-bottom:10px">
+			 			<div align="center">
+							<h:panelGrid columns="2" style="margin-bottom:10px" width="100%">  
+								<p:dataTable id="dar_archi_popupCommentaires_dataTable_commentaires" value="#{essaiManager.getList('detailAdministratif.infosArchivage.commentaires', false)}" var="commentaire" emptyMessage="#{resourceBundle['results.none']}">
+									<p:column id="libelle">
+										<f:facet name="header"><h:outputText value="#{resourceBundle['editEssai.onglet.recherche.commentaires.historique.libelle']}" /></f:facet>
+										<h:outputText value="#{commentaire.libelle}" />
+									</p:column>
+									<p:column id="date">
+										<f:facet name="header"><h:outputText value="#{resourceBundle['editEssai.onglet.recherche.commentaires.historique.date']}" /></f:facet>
+										<h:outputText value="#{commentaire.dateMaj.time}">
+											<f:convertDateTime pattern="#{resourceBundle['date.pattern.withHeures']}"/>
+										</h:outputText>
+									</p:column>
+									<p:column id="auteur">
+										<f:facet name="header"><h:outputText value="#{resourceBundle['editEssai.onglet.recherche.commentaires.historique.auteur']}" /></f:facet>
+										<h:outputText value="#{commentaire.majPar}" />
+									</p:column>
+								</p:dataTable>		            
+							</h:panelGrid>
+						</div>
+					</p:panel>
+				</p:outputPanel>
+			</fieldset>
+			<!-- nouveau commentaire -->
+			<h3><h:outputFormat value="#{resourceBundle['editEssai.onglet.recherche.commentaires.nouveau']}" /></h3>
+			<fieldset>
+				<p:outputPanel id="dar_archi_popupCommentaires_outp_libCommentaire" style="display:block;margin-top:10px;">
+					<h:panelGrid columns="1" style="margin-bottom:10px" width="100%">  
+						<h:inputTextarea id="dar_archi_popupCom_nouveauComm" 
+							value="#{essaiManager.getCommentaireManager('ADMINREG_ARCHIVAGE').libelle}"
+							rows="#{resourceBundle['textarea.rows.default']}" />
+					</h:panelGrid>
+				</p:outputPanel>
+			</fieldset>
+			<div class="popupButton">
+				<p:commandButton value="#{resourceBundle['btn.ajouter']}" 
+					actionListener="#{essaiManager.ajouterCommentaire(enumManager.getEnumValue('TypeCommentaireEssai','ADMINREG_ARCHIVAGE'))}"
+					update="dr_pannelDarArchiCommentaires, dar_archi_popupCommentaires_outp_libCommentaire, dar_archi_popupCommentaires_outp_listeCommentaires"
+					oncomplete="popupCommentairesAdminArchi.hide();" />
+       			<p:commandButton value="#{resourceBundle['btn.fermer']}" oncomplete="popupCommentairesAdminArchi.hide();"/>
+       		</div>   
+		</h:form>
+	</p:dialog>
+	
+	<!-- **************************************** -->
+    <!-- Popup des documents AUTORITE_COMPETENTE  -->
+    <!-- **************************************** -->
+    <p:dialog widgetVar="popupDocAdminAC" header="#{resourceBundle['editEssai.onglet.administratif.ac.doc.popup.title']}"
+    	resizable="true" modal="true"    
+    	styleClass="essaiTabPopup popupDocsWithHisto"
+    	width="#{resourceBundle['popup.documents.withHisto.width']}" height="#{resourceBundle['popup.documents.withHisto.height']}">  
+
+		<h:form id="dar_ac_popDocs_form" prependId="false" enctype="multipart/form-data">
+			<!-- historique -->
+			<h3><h:outputFormat value="#{resourceBundle['document.historique']}" /></h3>
+			<fieldset>
+				<p:outputPanel id="dar_ac_popDocs_outp_listeDocs" style="display:block;margin-top:10px;width:100%">
+					<p:panel styleClass="popupScrollable" style="margin-bottom:10px">
+			 			<div align="center">
+							<p:dataTable id="dar_ac_popDocs_dataTable_docs" value="#{essaiManager.getList('detailAdministratif.infosAC.documents', false)}" var="document" emptyMessage="#{resourceBundle['results.none']}">
+								<p:column id="nom" style="width: 120px;">
+									<f:facet name="header"><h:outputText value="#{resourceBundle['document.nomUser']}" /></f:facet>
+									<h:outputText value="#{document.nomUtilisateur}" />
+								</p:column>
+								<p:column id="date" style="width: 60px;">
+									<f:facet name="header"><h:outputText value="#{resourceBundle['suivi.date']}" /></f:facet>
+									<h:outputText value="#{document.dateMaj.time}">
+										<f:convertDateTime pattern="#{resourceBundle['date.pattern.withHeures']}"/>
+									</h:outputText>
+								</p:column>
+								<p:column id="auteur" style="width: 50px;">
+									<f:facet name="header"><h:outputText value="#{resourceBundle['suivi.auteur']}" /></f:facet>
+									<h:outputText value="#{document.majPar}" />
+								</p:column>
+								<p:column id="commentaire">
+									<f:facet name="header"><h:outputText value="#{resourceBundle['document.commentaire']}" /></f:facet>
+									<h:outputText value="#{document.commentaire}" />
+								</p:column>
+								<p:column id="dwd" style="width: 95px;">
+									<p:commandButton value="#{resourceBundle['file.dwd']}" title="#{resourceBundle['file.dwd']}" ajax="false">
+										<p:fileDownload value="#{fileDwdController.downloadDocument(essaiManager.bean, document)}" />
+									</p:commandButton>  
+								</p:column>
+							</p:dataTable>		            
+						</div>
+					</p:panel>
+				</p:outputPanel>
+			</fieldset>
+			<!-- nouveau document -->
+			<h3><h:outputFormat value="#{resourceBundle['document.nouveau']}" /></h3>
+			<fieldset>
+				<c:set var="enumValueAC" value="#{enumManager.getEnumValue('TypeDocumentEssai','AUTORITE_COMPETENTE')}" />
+				<p:outputPanel id="dar_ac_popDocs_outp_libDoc" style="display:block;margin-top:10px;">
+					<h:panelGrid columns="2" style="margin-bottom:10px" width="100%" columnClasses="panelCol_15,panelCol_85">
+						<h:outputLabel id="labelDARACpopDocsFile" for="dar_ac_popupDocs_file" value="#{resourceBundle['document.fichier']}" />
+						<t:inputFileUpload id="dar_ac_popupDocs_file" size="#{resourceBundle['popup.documents.withHisto.filedownload.size']}" value="#{essaiManager.getDocumentManager(enumValueAC, true).file}" />
+						
+						<h:outputLabel id="labelDARACpopDocsCom" for="dar_ac_popupDocs_comm" value="#{resourceBundle['document.commentaire']}" />
+						<h:inputTextarea id="dar_ac_popupDocs_comm" value="#{essaiManager.getDocumentManager(enumValueAC, true).commentaire}"
+							styleClass="editCommentaire" 
+							rows="#{resourceBundle['textarea.rows.filedownload']}" />
+					</h:panelGrid>
+				</p:outputPanel>				
+			</fieldset>
+			<div class="popupButton">
+				<p:commandButton value="#{resourceBundle['btn.ajouter']}"
+					ajax="false" action="submit"
+					actionListener="#{essaiManager.ajouterDocument(enumValueAC, true)}"
+					update="dar_ac_lastDoc, dar_ac_popDocs_outp_libDoc, dar_ac_popDocs_outp_listeDocs"
+					oncomplete="popupDocAdminAC.hide();" />
+	       			<p:commandButton value="#{resourceBundle['btn.fermer']}" oncomplete="popupDocAdminAC.hide();"/>
+	       		</div>
+		</h:form>
+	</p:dialog>
+	
+	<!-- **************************************** -->
+    <!-- Popup des documents COMITE_PROTEC_PERS	  -->
+    <!-- **************************************** -->
+    <p:dialog widgetVar="popupDocAdminCPP" header="#{resourceBundle['editEssai.onglet.administratif.cpp.doc.popup.title']}"
+    	resizable="true" modal="true" 
+    	styleClass="essaiTabPopup popupDocsWithHisto" 
+    	width="#{resourceBundle['popup.documents.withHisto.width']}" height="#{resourceBundle['popup.documents.withHisto.height']}">  
+
+		<h:form id="dar_cpp_popDocs_form" prependId="false" enctype="multipart/form-data">
+			<!-- historique -->
+			<h3><h:outputFormat value="#{resourceBundle['document.historique']}" /></h3>
+			<fieldset>
+				<p:outputPanel id="dar_cpp_popDocs_outp_listeDocs" style="display:block;margin-top:10px;">
+					<p:panel styleClass="popupScrollable" style="margin-bottom:10px">
+			 			<div align="center">
+							<h:panelGrid columns="2" style="margin-bottom:10px" width="100%">  
+								<p:dataTable id="dar_cpp_popDocs_dataTable_docs" value="#{essaiManager.getList('detailAdministratif.infosCPP.documents', false)}" var="document" emptyMessage="#{resourceBundle['results.none']}">
+									<p:column id="nom" style="width: 120px;">
+										<f:facet name="header"><h:outputText value="#{resourceBundle['document.nomUser']}" /></f:facet>
+										<h:outputText value="#{document.nomUtilisateur}" />
+									</p:column>
+									<p:column id="date" style="width: 60px;">
+										<f:facet name="header"><h:outputText value="#{resourceBundle['suivi.date']}" /></f:facet>
+										<h:outputText value="#{document.dateMaj.time}">
+											<f:convertDateTime pattern="#{resourceBundle['date.pattern.withHeures']}"/>
+										</h:outputText>
+									</p:column>
+									<p:column id="auteur" style="width: 50px;">
+										<f:facet name="header"><h:outputText value="#{resourceBundle['suivi.auteur']}" /></f:facet>
+										<h:outputText value="#{document.majPar}" />
+									</p:column>
+									<p:column id="commentaire">
+										<f:facet name="header"><h:outputText value="#{resourceBundle['document.commentaire']}" /></f:facet>
+										<h:outputText value="#{document.commentaire}" />
+									</p:column>
+									<p:column id="dwd" style="width: 95px;">
+										<p:commandButton value="#{resourceBundle['file.dwd']}" title="#{resourceBundle['file.dwd']}" ajax="false">
+											<p:fileDownload value="#{fileDwdController.downloadDocument(essaiManager.bean, document)}" />
+										</p:commandButton>
+									</p:column>
+								</p:dataTable>		            
+							</h:panelGrid>
+						</div>
+					</p:panel>
+				</p:outputPanel>
+			</fieldset>
+			<!-- nouveau document -->
+			<h3><h:outputFormat value="#{resourceBundle['document.nouveau']}" /></h3>
+			<fieldset>
+				<c:set var="enumValueCPP" value="#{enumManager.getEnumValue('TypeDocumentEssai','COMITE_PROTEC_PERS')}" />
+				<p:outputPanel id="dar_cpp_popDocs_outp_libDoc" style="display:block;margin-top:10px;">
+					<h:panelGrid columns="2" style="margin-bottom:10px" width="100%" columnClasses="panelCol_15,panelCol_85">
+						<h:outputLabel id="labelDARCPPpopDocsFile" for="dar_cpp_popupDocs_file" value="#{resourceBundle['document.fichier']}" />
+						<t:inputFileUpload id="dar_cpp_popupDocs_file" size="#{resourceBundle['popup.documents.withHisto.filedownload.size']}" value="#{essaiManager.getDocumentManager(enumValueCPP, true).file}" />
+						
+						<h:outputLabel id="labelDARCPPpopDocsCom" for="dar_cpp_popupDocs_comm" value="#{resourceBundle['document.commentaire']}" />
+						<h:inputTextarea id="dar_cpp_popupDocs_comm" value="#{essaiManager.getDocumentManager(enumValueCPP, true).commentaire}"
+							styleClass="editCommentaire"  
+							rows="#{resourceBundle['textarea.rows.filedownload']}" />
+					</h:panelGrid>
+				</p:outputPanel>				
+			</fieldset>
+			<div class="popupButton">
+				<p:commandButton value="#{resourceBundle['btn.ajouter']}"
+					ajax="false" action="submit"
+					actionListener="#{essaiManager.ajouterDocument(enumValueCPP, true)}"
+					update="dar_cpp_lastDoc, dar_cpp_popDocs_outp_libDoc, dar_cpp_popDocs_outp_listeDocs"
+					oncomplete="popupDocAdminCPP.hide();" />
+       			<p:commandButton value="#{resourceBundle['btn.fermer']}" oncomplete="popupDocAdminCPP.hide();"/>
+       		</div>   
+		</h:form>
+	</p:dialog>
+	
+	<!-- **************************************** -->
+    <!-- Popup des documents CONVENTION			  -->
+    <!-- **************************************** -->
+    <p:dialog widgetVar="popupDocAdminCV" header="#{resourceBundle['editEssai.onglet.administratif.conv.doc.popup.title']}" 
+    	resizable="true" modal="true"
+    	styleClass="essaiTabPopup popupDocsWithHisto" 
+    	width="#{resourceBundle['popup.documents.withHisto.width']}" height="#{resourceBundle['popup.documents.withHisto.height']}">  
+
+		<h:form id="dar_conv_popDocs_form" prependId="false" enctype="multipart/form-data">
+			<!-- historique -->
+			<h3><h:outputFormat value="#{resourceBundle['document.historique']}" /></h3>
+			<fieldset>
+				<p:outputPanel id="dar_conv_popDocs_outp_listeDocs" style="display:block;margin-top:10px;">
+					<p:panel styleClass="popupScrollable" style="margin-bottom:10px">
+			 			<div align="center">
+							<h:panelGrid columns="2" style="margin-bottom:10px" width="100%">  
+								<p:dataTable id="dar_conv_popDocs_dataTable_docs" value="#{essaiManager.getList('detailAdministratif.infosConvention.documents', false)}" var="document" emptyMessage="#{resourceBundle['results.none']}">
+									<p:column id="nom" style="width: 120px;">
+										<f:facet name="header"><h:outputText value="#{resourceBundle['document.nomUser']}" /></f:facet>
+										<h:outputText value="#{document.nomUtilisateur}" />
+									</p:column>
+									<p:column id="date" style="width: 60px;">
+										<f:facet name="header"><h:outputText value="#{resourceBundle['suivi.date']}" /></f:facet>
+										<h:outputText value="#{document.dateMaj.time}">
+											<f:convertDateTime pattern="#{resourceBundle['date.pattern.withHeures']}"/>
+										</h:outputText>
+									</p:column>
+									<p:column id="auteur" style="width: 50px;">
+										<f:facet name="header"><h:outputText value="#{resourceBundle['suivi.auteur']}" /></f:facet>
+										<h:outputText value="#{document.majPar}" />
+									</p:column>
+									<p:column id="commentaire">
+										<f:facet name="header"><h:outputText value="#{resourceBundle['document.commentaire']}" /></f:facet>
+										<h:outputText value="#{document.commentaire}" />
+									</p:column>
+									<p:column id="dwd" style="width: 95px;">
+										<p:commandButton value="#{resourceBundle['file.dwd']}" title="#{resourceBundle['file.dwd']}" ajax="false">
+											<p:fileDownload value="#{fileDwdController.downloadDocument(essaiManager.bean, document)}" />
+										</p:commandButton>
+									</p:column>
+								</p:dataTable>		            
+							</h:panelGrid>
+						</div>
+					</p:panel>
+				</p:outputPanel>
+			</fieldset>
+			<!-- nouveau document -->
+			<h3><h:outputFormat value="#{resourceBundle['document.nouveau']}" /></h3>
+			<fieldset>
+				<c:set var="enumValueCV" value="#{enumManager.getEnumValue('TypeDocumentEssai','CONVENTION')}" />
+				<p:outputPanel id="dar_conv_popDocs_outp_libDoc" style="display:block;margin-top:10px;">
+					<h:panelGrid columns="2" style="margin-bottom:10px" width="100%" columnClasses="panelCol_15,panelCol_85">
+						<h:outputLabel id="labelDARCVpopDocsFile" for="dar_conv_popupDocs_file" value="#{resourceBundle['document.fichier']}" />
+						<t:inputFileUpload id="dar_conv_popupDocs_file" size="#{resourceBundle['popup.documents.withHisto.filedownload.size']}" value="#{essaiManager.getDocumentManager(enumValueCV, true).file}" />
+						
+						<h:outputLabel id="labelDARCVpopDocsCom" for="dar_conv_popupDocs_comm" value="#{resourceBundle['document.commentaire']}" />
+						<h:inputTextarea id="dar_conv_popupDocs_comm" value="#{essaiManager.getDocumentManager(enumValueCV, true).commentaire}" 
+							styleClass="editCommentaire" 
+							rows="#{resourceBundle['textarea.rows.filedownload']}" />
+					</h:panelGrid>
+				</p:outputPanel>				
+			</fieldset>
+			<div class="popupButton">
+				<p:commandButton value="#{resourceBundle['btn.ajouter']}"
+					ajax="false" action="submit"
+					actionListener="#{essaiManager.ajouterDocument(enumValueCV, true)}"
+					update="dar_conv_lastDoc, dar_conv_popDocs_outp_libDoc, dar_conv_popDocs_outp_listeDocs"
+					oncomplete="popupDocAdminCV.hide();" />
+       			<p:commandButton value="#{resourceBundle['btn.fermer']}" oncomplete="popupDocAdminCV.hide();"/>
+       		</div>   
+		</h:form>
+	</p:dialog>
+	
+	<!-- **************************************** -->
+    <!-- Popup des documents ASSURANCE	 		  -->
+    <!-- **************************************** -->
+    <p:dialog widgetVar="popupDocAdminAssu" header="#{resourceBundle['editEssai.onglet.administratif.assu.doc.popup.title']}"
+    	resizable="true" modal="true"
+    	styleClass="essaiTabPopup popupDocsWithHisto"
+    	width="#{resourceBundle['popup.documents.withHisto.width']}" height="#{resourceBundle['popup.documents.withHisto.height']}">  
+
+		<h:form id="dar_assu_popDocs_form" prependId="false" enctype="multipart/form-data">
+			<!-- historique -->
+			<h3><h:outputFormat value="#{resourceBundle['document.historique']}" /></h3>
+			<fieldset>
+				<p:outputPanel id="dar_assu_popDocs_outp_listeDocs" style="display:block;margin-top:10px;">
+					<p:panel styleClass="popupScrollable" style="margin-bottom:10px">
+			 			<div align="center">
+							<h:panelGrid columns="2" style="margin-bottom:10px" width="100%">  
+								<p:dataTable id="dar_assu_popDocs_dataTable_docs" value="#{essaiManager.getList('detailAdministratif.infosAssurance.documents', false)}" var="document" emptyMessage="#{resourceBundle['results.none']}">
+									<p:column id="nom" style="width: 120px;">
+										<f:facet name="header"><h:outputText value="#{resourceBundle['document.nomUser']}" /></f:facet>
+										<h:outputText value="#{document.nomUtilisateur}" />
+									</p:column>
+									<p:column id="date" style="width: 60px;">
+										<f:facet name="header"><h:outputText value="#{resourceBundle['suivi.date']}" /></f:facet>
+										<h:outputText value="#{document.dateMaj.time}">
+											<f:convertDateTime pattern="#{resourceBundle['date.pattern.withHeures']}"/>
+										</h:outputText>
+									</p:column>
+									<p:column id="auteur" style="width: 50px;">
+										<f:facet name="header"><h:outputText value="#{resourceBundle['suivi.auteur']}" /></f:facet>
+										<h:outputText value="#{document.majPar}" />
+									</p:column>
+									<p:column id="commentaire">
+										<f:facet name="header"><h:outputText value="#{resourceBundle['document.commentaire']}" /></f:facet>
+										<h:outputText value="#{document.commentaire}" />
+									</p:column>
+									<p:column id="dwd" style="width: 95px;">
+										<p:commandButton value="#{resourceBundle['file.dwd']}" title="#{resourceBundle['file.dwd']}" ajax="false">
+											<p:fileDownload value="#{fileDwdController.downloadDocument(essaiManager.bean, document)}" />
+										</p:commandButton>
+									</p:column>
+								</p:dataTable>		            
+							</h:panelGrid>
+						</div>
+					</p:panel>
+				</p:outputPanel>
+			</fieldset>
+			<!-- nouveau document -->
+			<h3><h:outputFormat value="#{resourceBundle['document.nouveau']}" /></h3>
+			<fieldset>
+				<c:set var="enumValueAssu" value="#{enumManager.getEnumValue('TypeDocumentEssai','ASSURANCE')}" />
+				<p:outputPanel id="dar_assu_popDocs_outp_libDoc" style="display:block;margin-top:10px;">
+					<h:panelGrid columns="2" style="margin-bottom:10px" width="100%" columnClasses="panelCol_15,panelCol_85">
+						<h:outputLabel id="labelDARAssupopDocsFile" for="dar_assu_popupDocs_file" value="#{resourceBundle['document.fichier']}" />
+						<t:inputFileUpload id="dar_assu_popupDocs_file" size="#{resourceBundle['popup.documents.withHisto.filedownload.size']}" value="#{essaiManager.getDocumentManager(enumValueAssu, true).file}" />
+						
+						<h:outputLabel id="labelDARAssupopDocsCom" for="dar_assu_popupDocs_comm" value="#{resourceBundle['document.commentaire']}" />
+						<h:inputTextarea id="dar_assu_popupDocs_comm" value="#{essaiManager.getDocumentManager(enumValueAssu, true).commentaire}"
+							styleClass="editCommentaire" 
+							rows="#{resourceBundle['textarea.rows.filedownload']}" />
+					</h:panelGrid>
+				</p:outputPanel>				
+			</fieldset>
+			<div class="popupButton">
+				<p:commandButton value="#{resourceBundle['btn.ajouter']}"
+					ajax="false" action="submit"
+					actionListener="#{essaiManager.ajouterDocument(enumValueAssu, true)}"
+					update="dar_assu_lastDoc, dar_assu_popDocs_outp_libDoc, dar_assu_popDocs_outp_listeDocs"
+					oncomplete="popupDocAdminAssu.hide();" />
+       			<p:commandButton value="#{resourceBundle['btn.fermer']}" oncomplete="popupDocAdminAssu.hide();"/>
+       		</div>   
+		</h:form>
+	</p:dialog>
+	
+	<!-- **************************************** -->
+    <!-- Popup des documents PROTOCOLE	  		  -->
+    <!-- **************************************** -->
+    <p:dialog widgetVar="popupDocAdminProto" header="#{resourceBundle['editEssai.onglet.administratif.proto.doc.popup.title']}" 
+    	resizable="true" modal="true" 
+    	styleClass="essaiTabPopup popupDocsWithHisto" 
+    	width="730" height="610">  
+
+		<h:form id="dar_proto_popDocs_form" prependId="false" enctype="multipart/form-data">
+			<!-- historique -->
+			<h3><h:outputFormat value="#{resourceBundle['document.historique']}" /></h3>
+			<fieldset>
+				<p:outputPanel id="dar_proto_popDocs_outp_listeDocs" style="display:block;margin-top:10px;">
+					<p:panel styleClass="popupScrollable" style="margin-bottom:10px">
+			 			<div align="center">
+							<h:panelGrid columns="2" style="margin-bottom:10px" width="100%">  
+								<p:dataTable id="dar_proto_popDocs_dataTable_docs" value="#{essaiManager.getList('detailAdministratif.infosProtocole.documents', false)}" var="document" emptyMessage="#{resourceBundle['results.none']}">
+									<p:column id="nom" style="width: 120px;">
+										<f:facet name="header"><h:outputText value="#{resourceBundle['document.nomUser']}" /></f:facet>
+										<h:outputText value="#{document.nomUtilisateur}" />
+									</p:column>
+									<p:column id="version" style="width: 60px;">
+										<f:facet name="header"><h:outputText value="#{resourceBundle['editEssai.onglet.administratif.proto.version']}" /></f:facet>
+										<h:outputText value="#{document.version}" />
+									</p:column>
+									<p:column id="type" style="width: 60px;">
+										<f:facet name="header"><h:outputText value="#{resourceBundle['editEssai.onglet.administratif.proto.typeDocProto']}" /></f:facet>
+										<h:outputText value="#{document.typeDocumentProtocole}" />
+									</p:column>
+									<p:column id="date" style="width: 60px;">
+										<f:facet name="header"><h:outputText value="#{resourceBundle['suivi.date']}" /></f:facet>
+										<h:outputText value="#{document.dateMaj.time}">
+											<f:convertDateTime pattern="#{resourceBundle['date.pattern.default']}"/>
+										</h:outputText>
+									</p:column>
+									<p:column id="auteur" style="width: 50px;">
+										<f:facet name="header"><h:outputText value="#{resourceBundle['suivi.auteur']}" /></f:facet>
+										<h:outputText value="#{document.majPar}" />
+									</p:column>
+									<p:column id="commentaire">
+										<f:facet name="header"><h:outputText value="#{resourceBundle['document.commentaire']}" /></f:facet>
+										<h:outputText value="#{document.commentaire}" />
+									</p:column>
+									<p:column id="dwd" style="width: 95px;">
+										<p:commandButton value="#{resourceBundle['file.dwd']}" title="#{resourceBundle['file.dwd']}" ajax="false" rendered="#{not empty document.nomUtilisateur}">
+											<p:fileDownload value="#{fileDwdController.downloadDocument(essaiManager.bean, document)}" />
+										</p:commandButton>
+									</p:column>
+								</p:dataTable>		            
+							</h:panelGrid>
+						</div>
+					</p:panel>
+				</p:outputPanel>
+			</fieldset>
+			<!-- nouveau document -->
+			<h3><h:outputFormat value="#{resourceBundle['document.nouveau']}" /></h3>
+			<fieldset>
+				<c:set var="enumValueProto" value="#{enumManager.getEnumValue('TypeDocumentEssai','PROTOCOLE')}" />
+				<p:outputPanel id="dar_proto_popDocs_outp_libDoc" style="display:block;margin-top:10px;">
+					<h:panelGrid columns="4" style="margin-bottom:10px" width="100%" columnClasses="panelCol_25,panelCol_25,panelCol_25,panelCol_25">
+					
+						<!-- Type Document protocole -->
+						<h:outputLabel id="labelTypeDocumentProtocole" for="typeDocumentProtocole" styleClass="mandatory"
+							value="#{resourceBundle['editEssai.onglet.administratif.proto.typeDocProto']}" />
+						<h:selectOneMenu id="typeDocumentProtocole" required="true" requiredMessage="#{resourceBundle['editEssai.onglet.admin.type.notEmpty']}"
+							value="#{documentProtocoleEssaiManager.typeDocumentProtocole}"
+						styleClass="selectRadio">
+						<f:selectItem noSelectionOption="true" />
+						<f:selectItems
+							value="#{enumManager.getValues('TypeDocumentProtocole')}" />
+						</h:selectOneMenu>
+						<h:panelGroup/>
+						<h:panelGroup/>
+						
+						<!-- Version -->
+				    	<h:outputLabel id="labelversionDocProto" for="versionDocProto" value="#{resourceBundle['editEssai.onglet.administratif.proto.version']}" styleClass="mandatory"/>
+				    	<h:inputText id="versionDocProto" required="true"  requiredMessage="#{resourceBundle['editEssai.onglet.admin.version.notEmpty']}" value="#{documentProtocoleEssaiManager.version}" />
+						<h:panelGroup/>
+						<h:panelGroup/>
+						
+						<!-- Date -->
+						<h:outputLabel id="labelDocProDate" for="docProDate" value="#{resourceBundle['editEssai.onglet.administratif.proto.date']}" styleClass="mandatory"/>
+			    		<p:calendar id="docProDate" required="true" value="#{documentProtocoleEssaiManager.date}" 
+			    			effect="#{resourceBundle['effect.calendar']}" locale="#{resourceBundle['date.locale']}"  requiredMessage="#{resourceBundle['editEssai.onglet.admin.date.notEmpty']}" showButtonPanel="true" navigator="true" 
+			    			converter="#{calendarConverter}" />
+						<h:panelGroup/>
+						<h:panelGroup/>
+							
+						<h:outputLabel id="labelDARProtopopDocsFile" for="dar_proto_popupDocs_file" value="#{resourceBundle['document.fichier']}" />
+						<t:inputFileUpload id="dar_proto_popupDocs_file" size="#{resourceBundle['popup.documents.withHisto.filedownload.size']}" value="#{documentProtocoleEssaiManager.file}" />
+						<h:panelGroup/>
+						<h:panelGroup/>
+						
+						<h:outputLabel id="labelDARProtopopDocsCom" for="dar_proto_popupDocs_comm" value="#{resourceBundle['document.commentaire']}" />
+						<h:inputTextarea id="dar_proto_popupDocs_comm" value="#{documentProtocoleEssaiManager.commentaire}"
+							styleClass="editCommentaire" 
+							rows="#{resourceBundle['textarea.rows.filedownload']}" />
+						<h:panelGroup/>
+						<h:panelGroup/>
+					</h:panelGrid>
+				</p:outputPanel>				
+			</fieldset>
+			<div class="popupButton">
+				<p:commandButton value="#{resourceBundle['btn.ajouter']}"
+					ajax="false" action="submit"
+					actionListener="#{essaiManager.ajouterDocument(enumValueProto, true)}"
+					update="dar_proto_lastDoc, dar_proto_popDocs_outp_libDoc, dar_proto_popDocs_outp_listeDocs"/>
+       			<p:commandButton value="#{resourceBundle['btn.fermer']}" oncomplete="popupDocAdminProto.hide();"/>
+       		</div>   
+		</h:form>
+	</p:dialog>
+	
+	<!-- **************************************** -->
+    <!-- Popup des documents BROCHURE_PDUITS	  -->
+    <!-- **************************************** -->
+    <p:dialog widgetVar="popupDocAdminBroPro" header="#{resourceBundle['editEssai.onglet.administratif.broPro.doc.popup.title']}" 
+    	resizable="true" modal="true"
+    	styleClass="essaiTabPopup popupDocsWithHisto" 
+    	    	width="730" height="610">    
+
+		<h:form id="dar_broPro_popDocs_form" prependId="false" enctype="multipart/form-data">
+			<!-- historique -->
+			<h3><h:outputFormat value="#{resourceBundle['document.historique']}" /></h3>
+			<fieldset>
+				<p:outputPanel id="dar_broPro_popDocs_outp_listeDocs" style="display:block;margin-top:10px;">
+					<p:panel styleClass="popupScrollable" style="margin-bottom:10px">
+			 			<div align="center">
+							<h:panelGrid columns="2" style="margin-bottom:10px" width="100%">  
+								<p:dataTable id="dar_broPro_popDocs_dataTable_docs" value="#{essaiManager.getList('detailAdministratif.infosBrochure.documents', false)}" var="document" emptyMessage="#{resourceBundle['results.none']}">
+									<p:column id="nom" style="width: 120px;">
+										<f:facet name="header"><h:outputText value="#{resourceBundle['document.nomUser']}" /></f:facet>
+										<h:outputText value="#{document.nomUtilisateur}" />
+									</p:column>
+										<p:column id="version" style="width: 60px;">
+										<f:facet name="header"><h:outputText value="#{resourceBundle['editEssai.onglet.administratif.broPro.version']}" /></f:facet>
+										<h:outputText value="#{document.version}" />
+									</p:column>
+									<p:column id="type" style="width: 60px;">
+										<f:facet name="header"><h:outputText value="#{resourceBundle['editEssai.onglet.administratif.broPro.typeDocBroPro']}" /></f:facet>
+										<h:outputText value="#{document.typeDocumentBrochure}" />
+									</p:column>
+									<p:column id="date" style="width: 60px;">
+										<f:facet name="header"><h:outputText value="#{resourceBundle['suivi.date']}" /></f:facet>
+										<h:outputText value="#{document.dateMaj.time}">
+											<f:convertDateTime pattern="#{resourceBundle['date.pattern.withHeures']}"/>
+										</h:outputText>
+									</p:column>
+									<p:column id="auteur" style="width: 50px;">
+										<f:facet name="header"><h:outputText value="#{resourceBundle['suivi.auteur']}" /></f:facet>
+										<h:outputText value="#{document.majPar}" />
+									</p:column>
+									<p:column id="commentaire">
+										<f:facet name="header"><h:outputText value="#{resourceBundle['document.commentaire']}" /></f:facet>
+										<h:outputText value="#{document.commentaire}" />
+									</p:column>
+									<p:column id="dwd" style="width: 95px;">
+										<p:commandButton value="#{resourceBundle['file.dwd']}" title="#{resourceBundle['file.dwd']}" ajax="false" rendered="#{not empty document.nomUtilisateur}">
+											<p:fileDownload value="#{fileDwdController.downloadDocument(essaiManager.bean, document)}" />
+										</p:commandButton>
+									</p:column>
+								</p:dataTable>		            
+							</h:panelGrid>
+						</div>
+					</p:panel>
+				</p:outputPanel>
+			</fieldset>
+			<!-- nouveau document -->
+			<h3><h:outputFormat value="#{resourceBundle['document.nouveau']}" /></h3>
+			<fieldset>
+				<c:set var="enumValueBroPro" value="#{enumManager.getEnumValue('TypeDocumentEssai','BROCHURE_PDUITS')}" />
+				<p:outputPanel id="dar_broPro_popDocs_outp_libDoc" style="display:block;margin-top:10px;">
+				<h:panelGrid columns="4" style="margin-bottom:10px" width="100%" columnClasses="panelCol_25,panelCol_25,panelCol_25,panelCol_25">
+					
+						<!-- Type Document protocole -->
+						<h:outputLabel id="labelTypeDocumentBroPropop" for="typeDocumentBroPropop" styleClass="mandatory"
+							value="#{resourceBundle['editEssai.onglet.administratif.broPro.typeDocBroPro']}" />
+						<h:selectOneMenu id="typeDocumentBroPropop" required="true" requiredMessage="#{resourceBundle['editEssai.onglet.admin.type.notEmpty']}"
+							value="#{documentBrochureProduitsEssaiManager.typeDocumentBrochure}"
+							styleClass="selectRadio">
+							<f:selectItem noSelectionOption="true" />
+							<f:selectItems 
+								value="#{enumManager.getValues('TypeDocumentBrochure')}" />
+						</h:selectOneMenu>
+						<h:panelGroup/>
+						<h:panelGroup/>
+						
+						<!-- Version -->
+				    	<h:outputLabel id="labelversionDocBroPropop" for="versionDocProto" value="#{resourceBundle['editEssai.onglet.administratif.broPro.version']}" styleClass="mandatory"/>
+				    	<h:inputText id="versionDocBroPropop" required="true"  requiredMessage="#{resourceBundle['editEssai.onglet.admin.version.notEmpty']}" value="#{documentBrochureProduitsEssaiManager.version}" />
+						<h:panelGroup/>
+						<h:panelGroup/>
+						
+						<!-- Date -->
+						<h:outputLabel id="labelDocBroPropopDate" for="docBroPropopDate" value="#{resourceBundle['editEssai.onglet.administratif.broPro.date']}" styleClass="mandatory"/>
+			    		<p:calendar id="docBroPropopDate" required="true" value="#{documentBrochureProduitsEssaiManager.date}" 
+			    			effect="#{resourceBundle['effect.calendar']}" locale="#{resourceBundle['date.locale']}"  requiredMessage="#{resourceBundle['editEssai.onglet.admin.date.notEmpty']}" showButtonPanel="true" navigator="true" 
+			    			converter="#{calendarConverter}" />
+						<h:panelGroup/>
+						<h:panelGroup/>
+							
+						<h:outputLabel id="labelDARBroPropopDocsFile" for="dar_broPro_popupDocs_file" value="#{resourceBundle['document.fichier']}" />
+						<t:inputFileUpload id="dar_broPro_popupDocs_file" size="#{resourceBundle['popup.documents.withHisto.filedownload.size']}" value="#{documentBrochureProduitsEssaiManager.file}" />
+						<h:panelGroup/>
+						<h:panelGroup/>
+						
+								<h:outputLabel id="labelDARBroPropopDocsCom" for="dar_broPro_popupDocs_comm" value="#{resourceBundle['document.commentaire']}" />
+						<h:inputTextarea id="dar_broPro_popupDocs_comm" value="#{documentBrochureProduitsEssaiManager.commentaire}"
+							styleClass="editCommentaire" 
+							rows="#{resourceBundle['textarea.rows.filedownload']}" />
+						<h:panelGroup/>
+						<h:panelGroup/>
+						
+					</h:panelGrid>
+				</p:outputPanel>				
+			</fieldset>
+			<div class="popupButton">
+				<p:commandButton value="#{resourceBundle['btn.ajouter']}"
+					ajax="false" action="submit"
+					actionListener="#{essaiManager.ajouterDocument(enumValueBroPro, true)}"
+					update="dar_broPro_lastDoc, dar_broPro_popDocs_outp_libDoc, dar_broPro_popDocs_outp_listeDocs"
+					oncomplete="popupDocAdminBroPro.hide();" />
+       			<p:commandButton value="#{resourceBundle['btn.fermer']}" oncomplete="popupDocAdminBroPro.hide();"/>
+       		</div>   
+		</h:form>
+	</p:dialog>
+	
+	<!-- ******************************************** -->
+    <!-- Popup des documents AUTORISATION_IMPORTATION -->
+    <!-- ********************************************* -->
+    <p:dialog widgetVar="popupDocAdminAutorisationImportation" header="#{resourceBundle['editEssai.onglet.administratif.autorisationImportation.doc.popup.title']}" 
+    	resizable="true" modal="true"
+    	styleClass="essaiTabPopup popupDocsWithHisto" 
+    	width="#{resourceBundle['popup.documents.withHisto.width']}" height="#{resourceBundle['popup.documents.withHisto.height']}">  
+
+		<h:form id="dar_autorisationImportation_popDocs_form" prependId="false" enctype="multipart/form-data">
+			<!-- historique -->
+			<h3><h:outputFormat value="#{resourceBundle['document.historique']}" /></h3>
+			<fieldset>
+				<p:outputPanel id="dar_autorisationImportation_popDocs_outp_listeDocs" style="display:block;margin-top:10px;">
+					<p:panel styleClass="popupScrollable" style="margin-bottom:10px">
+			 			<div align="center">
+							<h:panelGrid columns="2" style="margin-bottom:10px" width="100%">  
+								<p:dataTable id="dar_autorisationImportation_popDocs_dataTable_docs" value="#{essaiManager.getList('detailAdministratif.infosAutorisationImportation.documents', false)}" var="document" emptyMessage="#{resourceBundle['results.none']}">
+									<p:column id="nom" style="width: 120px;">
+										<f:facet name="header"><h:outputText value="#{resourceBundle['document.nomUser']}" /></f:facet>
+										<h:outputText value="#{document.nomUtilisateur}" />
+									</p:column>
+									<p:column id="date" style="width: 60px;">
+										<f:facet name="header"><h:outputText value="#{resourceBundle['suivi.date']}" /></f:facet>
+										<h:outputText value="#{document.dateMaj.time}">
+											<f:convertDateTime pattern="#{resourceBundle['date.pattern.withHeures']}"/>
+										</h:outputText>
+									</p:column>
+									<p:column id="auteur" style="width: 50px;">
+										<f:facet name="header"><h:outputText value="#{resourceBundle['suivi.auteur']}" /></f:facet>
+										<h:outputText value="#{document.majPar}" />
+									</p:column>
+									<p:column id="commentaire">
+										<f:facet name="header"><h:outputText value="#{resourceBundle['document.commentaire']}" /></f:facet>
+										<h:outputText value="#{document.commentaire}" />
+									</p:column>
+									<p:column id="dwd" style="width: 95px;">
+										<p:commandButton value="#{resourceBundle['file.dwd']}" title="#{resourceBundle['file.dwd']}" ajax="false">
+											<p:fileDownload value="#{fileDwdController.downloadDocument(essaiManager.bean, document)}" />
+										</p:commandButton>
+									</p:column>
+								</p:dataTable>		            
+							</h:panelGrid>
+						</div>
+					</p:panel>
+				</p:outputPanel>
+			</fieldset>
+			<!-- nouveau document -->
+			<h3><h:outputFormat value="#{resourceBundle['document.nouveau']}" /></h3>
+			<fieldset>
+				<c:set var="enumValueAutorisationImportation" value="#{enumManager.getEnumValue('TypeDocumentEssai','AUTORISATION_IMPORTATION')}" />
+				<p:outputPanel id="dar_autorisationImportation_popDocs_outp_libDoc" style="display:block;margin-top:10px;">
+					<h:panelGrid columns="2" style="margin-bottom:10px" width="100%" columnClasses="panelCol_15,panelCol_85">
+						<h:outputLabel id="labelDARAutorisationImportationpopDocsFile" for="dar_autorisationImportation_popupDocs_file" value="#{resourceBundle['document.fichier']}" />
+						<t:inputFileUpload id="dar_autorisationImportation_popupDocs_file" size="#{resourceBundle['popup.documents.withHisto.filedownload.size']}" value="#{essaiManager.getDocumentManager(enumValueAutorisationImportation, true).file}" />
+						
+						<h:outputLabel id="labelDARAutorisationImportationpopDocsCom" for="dar_autorisationImportation_popupDocs_comm" value="#{resourceBundle['document.commentaire']}" />
+						<h:inputTextarea id="dar_autorisationImportation_popupDocs_comm" value="#{essaiManager.getDocumentManager(enumValueAutorisationImportation, true).commentaire}"
+							styleClass="editCommentaire" 
+							rows="#{resourceBundle['textarea.rows.filedownload']}" />
+					</h:panelGrid>
+				</p:outputPanel>				
+			</fieldset>
+			<div class="popupButton">
+				<p:commandButton value="#{resourceBundle['btn.ajouter']}"
+					ajax="false" action="submit"
+					actionListener="#{essaiManager.ajouterDocument(enumValueAutorisationImportation, true)}"
+					update="dar_autorisationImportation_lastDoc, dar_autorisationImportation_popDocs_outp_libDoc, dar_autorisationImportation_popDocs_outp_listeDocs"
+					oncomplete="popupDocAdminAutorisationImportation.hide();" />
+       			<p:commandButton value="#{resourceBundle['btn.fermer']}" oncomplete="popupDocAdminAutorisationImportation.hide();"/>
+       		</div>   
+		</h:form>
+	</p:dialog>
+	
+	<!-- ********************************************* -->
+    <!-- Popup des documents AUTORISATION_DISTRIBUTION -->
+    <!-- ********************************************* -->
+    <p:dialog widgetVar="popupDocAdminAutorisationDistribution" header="#{resourceBundle['editEssai.onglet.administratif.autorisationDistribution.doc.popup.title']}" 
+    	resizable="true" modal="true"
+    	styleClass="essaiTabPopup popupDocsWithHisto" 
+    	width="#{resourceBundle['popup.documents.withHisto.width']}" height="#{resourceBundle['popup.documents.withHisto.height']}">  
+
+		<h:form id="dar_autorisationDistribution_popDocs_form" prependId="false" enctype="multipart/form-data">
+			<!-- historique -->
+			<h3><h:outputFormat value="#{resourceBundle['document.historique']}" /></h3>
+			<fieldset>
+				<p:outputPanel id="dar_autorisationDistribution_popDocs_outp_listeDocs" style="display:block;margin-top:10px;">
+					<p:panel styleClass="popupScrollable" style="margin-bottom:10px">
+			 			<div align="center">
+							<h:panelGrid columns="2" style="margin-bottom:10px" width="100%">  
+								<p:dataTable id="dar_autorisationDistribution_popDocs_dataTable_docs" value="#{essaiManager.getList('detailAdministratif.infosAutorisationDistribution.documents', false)}" var="document" emptyMessage="#{resourceBundle['results.none']}">
+									<p:column id="nom" style="width: 120px;">
+										<f:facet name="header"><h:outputText value="#{resourceBundle['document.nomUser']}" /></f:facet>
+										<h:outputText value="#{document.nomUtilisateur}" />
+									</p:column>
+									<p:column id="date" style="width: 60px;">
+										<f:facet name="header"><h:outputText value="#{resourceBundle['suivi.date']}" /></f:facet>
+										<h:outputText value="#{document.dateMaj.time}">
+											<f:convertDateTime pattern="#{resourceBundle['date.pattern.withHeures']}"/>
+										</h:outputText>
+									</p:column>
+									<p:column id="auteur" style="width: 50px;">
+										<f:facet name="header"><h:outputText value="#{resourceBundle['suivi.auteur']}" /></f:facet>
+										<h:outputText value="#{document.majPar}" />
+									</p:column>
+									<p:column id="commentaire">
+										<f:facet name="header"><h:outputText value="#{resourceBundle['document.commentaire']}" /></f:facet>
+										<h:outputText value="#{document.commentaire}" />
+									</p:column>
+									<p:column id="dwd" style="width: 95px;">
+										<p:commandButton value="#{resourceBundle['file.dwd']}" title="#{resourceBundle['file.dwd']}" ajax="false">
+											<p:fileDownload value="#{fileDwdController.downloadDocument(essaiManager.bean, document)}" />
+										</p:commandButton>
+									</p:column>
+								</p:dataTable>		            
+							</h:panelGrid>
+						</div>
+					</p:panel>
+				</p:outputPanel>
+			</fieldset>
+			<!-- nouveau document -->
+			<h3><h:outputFormat value="#{resourceBundle['document.nouveau']}" /></h3>
+			<fieldset>
+				<c:set var="enumValueAutorisationDistribution" value="#{enumManager.getEnumValue('TypeDocumentEssai','AUTORISATION_DISTRIBUTION')}" />
+				<p:outputPanel id="dar_autorisationDistribution_popDocs_outp_libDoc" style="display:block;margin-top:10px;">
+					<h:panelGrid columns="2" style="margin-bottom:10px" width="100%" columnClasses="panelCol_15,panelCol_85">
+						<h:outputLabel id="labelDARAutorisationDistributionpopDocsFile" for="dar_autorisationDistribution_popupDocs_file" value="#{resourceBundle['document.fichier']}" />
+						<t:inputFileUpload id="dar_autorisationDistribution_popupDocs_file" size="#{resourceBundle['popup.documents.withHisto.filedownload.size']}" value="#{essaiManager.getDocumentManager(enumValueAutorisationDistribution, true).file}" />
+						
+						<h:outputLabel id="labelDARAutorisationDistributionpopDocsCom" for="dar_autorisationDistribution_popupDocs_comm" value="#{resourceBundle['document.commentaire']}" />
+						<h:inputTextarea id="dar_autorisationDistribution_popupDocs_comm" value="#{essaiManager.getDocumentManager(enumValueAutorisationDistribution, true).commentaire}"
+							styleClass="editCommentaire" 
+							rows="#{resourceBundle['textarea.rows.filedownload']}" />
+					</h:panelGrid>
+				</p:outputPanel>				
+			</fieldset>
+			<div class="popupButton">
+				<p:commandButton value="#{resourceBundle['btn.ajouter']}"
+					ajax="false" action="submit"
+					actionListener="#{essaiManager.ajouterDocument(enumValueAutorisationDistribution, true)}"
+					update="dar_autorisationDistribution_lastDoc, dar_autorisationDistribution_popDocs_outp_libDoc, dar_autorisationDistribution_popDocs_outp_listeDocs"
+					oncomplete="popupDocAdminAutorisationDistribution.hide();" />
+       			<p:commandButton value="#{resourceBundle['btn.fermer']}" oncomplete="popupDocAdminAutorisationDistribution.hide();"/>
+       		</div>   
+		</h:form>
+	</p:dialog>
+    
+</ui:composition>

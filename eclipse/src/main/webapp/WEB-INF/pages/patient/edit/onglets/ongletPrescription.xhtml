@@ -1,0 +1,58 @@
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:p="http://primefaces.prime.com.tr/ui"
+	xmlns:c="http://java.sun.com/jsp/jstl/core">
+	
+	<p:dataTable id="prescriptions" style="width:100%"
+		value="#{beanManagerHelper.returnAsDataModel(patientManager.prescriptions)}"
+		var="prescription" selection="#{prescriptionsManager.beanSelected}" selectionMode="single"
+		update="prescriptions" onselectComplete="javascript:document.forms['hiddenForm'].editPrescriptionButton.click();"	
+		emptyMessage="#{resourceBundle['results.none']}">
+
+		<!-- Essai -->
+		<p:column id="Essai" >
+			<f:facet name="header">
+				<h:outputText value="#{resourceBundle['gestionPatient.prescription.essai']}" />
+			</f:facet>
+			<h:outputText value="#{prescription.inclusion.essai.nom} - #{prescription.inclusion.essai.codePromoteur}"/>
+		</p:column>
+		
+		<!-- Date -->
+		<p:column id="datePrescription">
+			<f:facet name="header">
+				<h:outputText value="#{resourceBundle['gestionPatient.prescription.date']}" />
+			</f:facet>
+			<h:outputText value="#{prescription.datePrescription.time}">
+				<f:convertDateTime
+					pattern="#{resourceBundle['date.pattern.default']}" />
+			</h:outputText>
+		</p:column>
+		
+		<!-- Bras -->
+		<p:column id="brasSequence" >
+			<f:facet name="header">
+				<h:outputText value="#{resourceBundle['gestionPatient.prescription.bras.sequence']}" />
+			</f:facet>
+			<h:outputText value="#{prescription.sequence.parent.nomComplet} - #{prescription.sequence.nom}" />
+		</p:column>
+		
+		<!-- Numero -->
+		<p:column id="numeroPrescription" >
+			<f:facet name="header">
+				<h:outputText value="#{resourceBundle['gestionPatient.prescription.numero']}" />
+			</f:facet> 
+			<h:outputText value="#{prescription.numPrescription}" />
+		</p:column>
+		
+		<!-- Libelle patient -->
+		<p:column id="libelleProduitsPrescrits" >
+			<f:facet name="header">
+				<h:outputText value="#{resourceBundle['gestionPatient.prescription.produits.libelle']}" />
+			</f:facet>
+			<h:outputText value="#{prescription.libelleProduitsPrescrits}" />
+		</p:column>
+		
+	</p:dataTable>	
+</ui:composition>

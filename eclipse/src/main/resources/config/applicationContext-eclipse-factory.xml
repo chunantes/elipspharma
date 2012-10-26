@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans 
+    xmlns="http://www.springframework.org/schema/beans" 
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd">
+
+	<!-- ======================================== -->
+	<!-- FABRIQUE : DefaultStreamedContent        -->
+	<!-- ======================================== -->
+	<bean id="defaultStreamContentFactory" class="fr.pharma.eclipse.factory.primefaces.DefaultStreamedContentFactory">
+		<property name="fileHelper" ref="fileHelper" />
+		<property name="dicoExtensions">
+			<map>
+				<entry key="text" value="text/plain"/>
+				<entry key="csv" value="text/csv"/>
+				<entry key="xls" value="application/vnd.ms-excel"/>
+				<entry key="doc" value="application/msword"/>
+				<entry key="ppt" value="application/mspowerpoint"/>
+				<entry key="pps" value="application/vnd.ms-powerpoint"/>
+				<entry key="pdf" value="application/pdf"/>
+				<entry key="zip" value="application/zip"/>
+				<entry key="jpg" value="application/jpeg"/>
+				<entry key="jpeg" value="application/pjpeg"/>
+				<entry key="png" value="application/png"/>
+				<entry key="gif" value="image/gif"/>
+			</map>
+		</property>
+	</bean>
+	
+	<!-- ======================================== -->
+	<!-- FABRIQUE : SelectableBeanFactory	      -->
+	<!-- ======================================== -->
+	<bean id="selectableBeanFactory" class="fr.pharma.eclipse.factory.wrapper.SelectableBeanFactory" />
+
+</beans>

@@ -1,0 +1,90 @@
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:p="http://primefaces.prime.com.tr/ui"
+	xmlns:c="http://java.sun.com/jsp/jstl/core">
+
+	<p:panel header="#{resourceBundle['gestionPatient.essai.enCours']}">
+		<p:outputPanel rendered="#{patientManager.inclusionCourante != null}">
+			<table><tbody><tr><td>
+			<h:panelGrid columns="2"
+				columnClasses="panelCol_50, panelCol_50">
+		
+				<!-- Essai clinique -->
+				<h:outputLabel id="labelEssaiClinique" for="essai_clinique"
+					value="#{resourceBundle['gestionPatient.essai.numInterne']}" />
+				<h:outputText id="essai_clinique"
+					value="#{patientManager.inclusionCourante.essai.numInterne}"/>
+				<h:outputLabel id="labelEssaiNom" for="essai_nom"
+					value="#{resourceBundle['gestionPatient.essai.nom']}" />
+				<h:outputText id="essai_nom" 
+					value="#{patientManager.inclusionCourante.essai.nom}"/>
+				<h:outputLabel id="labelEssaiCode" for="essai_code"
+					value="#{resourceBundle['gestionPatient.essai.code']}" />
+				<h:outputText id="essai_code" 
+					value="#{patientManager.inclusionCourante.essai.codePromoteur}"/>
+				<h:outputLabel id="labelEssaiPromoteur" for="essai_promoteur"
+					value="#{resourceBundle['gestionPatient.essai.promoteur']}" />
+				<h:outputText id="essai_promoteur" 
+					value="#{patientManager.inclusionCourante.essai.promoteur.raisonSociale}"/>
+			</h:panelGrid>
+			</td>
+			<td>
+			<h:panelGrid columns="2"
+				columnClasses="panelCol_50, panelCol_50">
+		
+				<!-- Numero inclusion -->
+				<h:outputLabel id="labelNumInclu" for="num_inclu"
+					value="#{resourceBundle['gestionPatient.numInclusion']}" />
+				<h:inputText id="num_inclu" 
+					value="#{patientManager.inclusionCourante.numInclusion}" />
+					
+				<!-- Numero randomisation -->
+				<h:outputLabel id="labelNumRando" for="num_rando"
+					value="#{resourceBundle['gestionPatient.numRandomisation']}" />
+				<h:inputText id="num_rando" 
+					value="#{patientManager.inclusionCourante.numRandomisation}" />
+			</h:panelGrid>
+			</td>
+			
+			</tr></tbody></table>
+			<p:commandButton ajax="false" action="desinclure" immediate="true" 
+					value="#{resourceBundle['btn.desinclure']}"
+					title="#{resourceBundle['btn.desinclure']}"/>
+		</p:outputPanel>
+		
+		<p:outputPanel rendered="#{patientManager.inclusionCourante == null }">
+			<h3><h:outputText  value="#{resourceBundle['gestionPatient.essai.none']}"/></h3>
+		</p:outputPanel>
+	</p:panel>
+	
+	<p:panel header="#{resourceBundle['gestionPatient.essai.historique']}">
+		<p:dataTable id="essaisHistorique" value="#{patientManager.getList('inclusions', false)}" var="inclusion" emptyMessage="#{resourceBundle['results.none']}" style="width:100%;">
+			
+		  		<p:column id="essai">
+		  			<f:facet name="header">
+		  			<h:outputText value="#{resourceBundle['gestionPatient.essai']}" />
+		  			</f:facet>
+		  			<h:outputText value="#{inclusion.essai.nom}" />
+		  		</p:column>
+				<p:column id="dateInclusion">
+			  		<f:facet name="header">
+			  			<h:outputText value="#{resourceBundle['gestionPatient.dateInclusion']}" />
+			  		</f:facet>
+			  		<h:outputText value="#{inclusion.dateInclusion.time}">
+						<f:convertDateTime pattern="#{resourceBundle['date.pattern.withHeures']}"/>
+					</h:outputText>
+		  		</p:column>
+		  		<p:column id="dateDesinclusion">
+		  			<f:facet name="header">
+		  			<h:outputText value="#{resourceBundle['gestionPatient.dateDesinclusion']}" />
+		  			</f:facet>
+		  			<h:outputText value="#{inclusion.dateDesinclusion.time}" rendered="#{inclusion.dateDesinclusion != null}">
+		  					<f:convertDateTime pattern="#{resourceBundle['date.pattern.withHeures']}"/>
+		  			</h:outputText>
+		  			<h:outputText value="#{nonApplicable}" rendered="#{inclusion.dateDesinclusion == null}"/>
+		  		</p:column>
+		</p:dataTable>
+	</p:panel>
+</ui:composition>

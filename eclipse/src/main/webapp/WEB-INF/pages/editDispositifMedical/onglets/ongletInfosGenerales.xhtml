@@ -1,0 +1,131 @@
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:p="http://primefaces.prime.com.tr/ui"
+	xmlns:sf="http://www.springframework.org/tags/faces">
+	
+	 <!-- Gestion scroll et focus -->
+	<p:focus context="panel_dm_identification" />
+	
+	<p:panel id="panel_dm_identification"
+		header="#{resourceBundle['editProduit.onglet.generales.identification.title']}"
+		 collapsed="false" closable="false">
+		<h:panelGrid columns="4"
+			columnClasses="panelCol_25, panelCol_25, panelCol_25, panelCol_25">
+			
+			<h:outputLabel id="labelDMNatureProduit" for="dm_natureProduit"
+				value="#{resourceBundle['editProduit.onglet.generales.nature']}" />
+			<h:selectOneMenu id="dm_natureProduit"
+				value="#{dispositifMedicalManager.bean.nature}">
+				<f:selectItem noSelectionOption="true" />
+				<f:selectItems value="#{enumManager.getValues('NatureDM')}" />
+			</h:selectOneMenu>
+
+			<h:outputLabel id="labelDMNomenclature" for="dm_nomenclature"
+				value="#{resourceBundle['editProduit.onglet.generales.nomenclature']}" />
+			<h:inputText id="dm_nomenclature"
+				value="#{dispositifMedicalManager.bean.nomenclature}" />
+
+			
+			<h:outputLabel id="labelDMClasse" for="dm_classeProduit"
+				value="#{resourceBundle['editProduit.onglet.generales.classe']}" />
+			<h:selectOneMenu id="dm_classeProduit"
+				value="#{dispositifMedicalManager.bean.classe}">
+				<f:selectItem noSelectionOption="true" />
+				<f:selectItems value="#{enumManager.getValues('ClasseDM')}" />
+			</h:selectOneMenu>
+
+			
+			<h:outputLabel id="labelDMCodeLppr" for="dm_marquageCodeLppr"
+				value="#{resourceBundle['editProduit.onglet.generales.codelppr']}" />
+			<h:inputText id="dm_marquageCodeLppr"
+				value="#{dispositifMedicalManager.bean.codeLppr}" />
+
+			<h:outputLabel id="labelDMstatutLpp" for="dm_marquagestatutLpp"
+				value="#{resourceBundle['editProduit.onglet.generales.statutlpp']}" />
+			<h:inputText id="dm_marquagestatutLpp"
+				value="#{dispositifMedicalManager.bean.statutLpp}" />
+		</h:panelGrid>
+	</p:panel>
+
+	<p:panel id="panel_dm_gestion"
+		header="#{resourceBundle['editProduit.onglet.generales.gestion.title']}"
+		 
+		collapsed="false" closable="false">
+		<h:panelGrid columns="4"
+			columnClasses="panelCol_25, panelCol_25, panelCol_25, panelCol_25">
+
+			<h:outputLabel id="labelDMcodeLogicielGestion"
+				for="dm_codeLogicielGestion"
+				value="#{resourceBundle['editProduit.onglet.generales.code.logiciel']}" />
+			<h:inputText id="dm_codeLogicielGestion"
+				value="#{dispositifMedicalManager.bean.codeLogicielGestion}" />
+			<h:outputLabel id="labelMedImputationUf" for="dm_imput"
+				value="#{resourceBundle['editProduit.onglet.generales.imputationuf']}" />
+			<h:selectOneRadio id="dm_imput"
+				value="#{dispositifMedicalManager.bean.imputationUf}"
+				styleClass="selectRadio">
+				<f:selectItem itemLabel="#{resourceBundle['boolean.oui']}"
+					itemValue="true" itemDescription="#{resourceBundle['boolean.oui']}" />
+				<f:selectItem itemLabel="#{resourceBundle['boolean.non']}"
+					itemValue="false"
+					itemDescription="#{resourceBundle['boolean.non']}" />
+				<f:ajax render="panel_uf_label" />
+				<f:ajax render="panel_uf_input" />
+			</h:selectOneRadio>
+
+			<h:outputLabel id="labelDMMarquage" for="dm_marquageCE"
+				value="#{resourceBundle['editProduit.onglet.generales.marquage']}" />
+			<h:selectOneRadio id="dm_marquageCE"
+				value="#{dispositifMedicalManager.bean.marquageCE}"
+				styleClass="selectRadio">
+				<f:selectItem itemLabel="#{resourceBundle['boolean.oui']}"
+					itemValue="true" itemDescription="#{resourceBundle['boolean.oui']}" />
+				<f:selectItem itemLabel="#{resourceBundle['boolean.non']}"
+					itemValue="false"
+					itemDescription="#{resourceBundle['boolean.non']}" />
+			</h:selectOneRadio>
+
+			<p:outputPanel id="panel_uf_label">
+				<h:outputLabel id="labelMedUf" for="dm_imput"
+					value="#{resourceBundle['editProduit.onglet.generales.uf']}"
+					rendered="#{dispositifMedicalManager.bean.imputationUf == true}" />
+
+				<h:panelGroup
+					rendered="#{dispositifMedicalManager.bean.imputationUf != true }" />
+			</p:outputPanel>
+
+			
+		<p:outputPanel id="panel_uf_input">
+
+				<p:outputPanel id="resultsServices_dm"
+					style="display:block;margin-top:10px;"
+					rendered="#{dispositifMedicalManager.bean.imputationUf == true}">
+					<p:dataTable id="common_service_dm"
+						value="#{dispositifMedicalManager.getList('services', false)}"
+						var="service" emptyMessage="#{resourceBundle['results.none']}">
+						<p:column id="nom_service_dm">
+							<f:facet name="header">
+								<h:outputLink value="javascript:void(0)"
+									onclick="popupService.show()">#{resourceBundle['editEssai.common.selectionServices']}</h:outputLink>
+							</f:facet>
+							<h:outputText value="#{service.nom}" />
+						</p:column>
+					</p:dataTable>
+				</p:outputPanel>
+
+				<h:panelGroup
+					rendered="#{dispositifMedicalManager.bean.imputationUf != true }" />
+			</p:outputPanel>
+
+			<h:outputLabel id="labelDMnumeroMarche" for="dm_numeroMarche"
+				value="#{resourceBundle['editProduit.onglet.generales.numero.marche']}" />
+			<h:inputText id="dm_numeroMarche"
+				value="#{dispositifMedicalManager.bean.numeroMarche}" />
+			<h:panelGroup />
+			<h:panelGroup />
+		</h:panelGrid>
+	</p:panel>
+
+</ui:composition>

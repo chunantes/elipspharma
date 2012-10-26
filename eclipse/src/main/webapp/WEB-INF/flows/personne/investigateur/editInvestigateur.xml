@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<flow xmlns="http://www.springframework.org/schema/webflow"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://www.springframework.org/schema/webflow
+    http://www.springframework.org/schema/webflow/spring-webflow-2.0.xsd" parent="main">
+
+	<!-- Variable d'entrée -->
+	<input name="idInvestigateur" />
+	<input name="idPersonneSir" />
+
+	<on-start>
+		<evaluate expression="serviceSearchCriteria.clear()"/>
+		<evaluate expression="serviceService.getAll(serviceSearchCriteria)" result="servicesManager.beans"/>
+	</on-start>
+
+	<decision-state id="createOrEdit">
+		<if test="idInvestigateur==null" then="createFromScratchOrFromSir" else="edit"/>
+	</decision-state>
+	
+	<decision-state id="createFromScratchOrFromSir">
+		<if test="idPersonneSir==null" then="createFromScratch" else="createFromSir"/>
+	</decision-state>	
+	
+	<!-- Création From Sir -->
+	<action-state id="createFromSir">
+		<evaluate expression="investigateurManager.setBean(investigateurFactory.getInitializedObject(idPersonneSir))"/>
+		<transition to="initServices"/>
+	</action-state>
+	
+	<!-- Création From Scratch -->
+	<action-state id="createFromScratch">
+		<evaluate expression="investigateurManager.setBean(investigateurFactory.getInitializedObject())"/>
+		<transition to="initServices"/>
+	</action-state>
+	
+	<!-- Modification -->
+	<action-state id="edit">
+		<evaluate expression="investigateurManager.setBean(investigateurService.get(idInvestigateur))"/>
+		<transition to="initServices"/>
+	</action-state>
+
+	<!-- Initialisation de la liste des services -->
+	<action-state id="initServices">
+		<evaluate expression="beanManagerHelper.updateSelectable(investigateurManager.bean.services, servicesManager.beans)" />
+		<transition to="editInvestigateur"/>
+	</action-state>
+
+	<!-- Page principale -->
+	<view-state id="editInvestigateur" view="../../../pages/personne/investigateur/editInvestigateur.xhtml">
+		<transition on="cancel" to="createOrEdit"/>
+		<transition on="save" to="comeback">
+			<evaluate expression="investigateurService.save(investigateurManager.bean)"/>
+		</transition>
+		<transition on="comeback" to="comeback"/>
+		<transition on="error" to="editInvestigateur"/>
+	</view-state>
+	
+	<!-- Etat final -->
+	<end-state id="comeback"/>
+	
+</flow>

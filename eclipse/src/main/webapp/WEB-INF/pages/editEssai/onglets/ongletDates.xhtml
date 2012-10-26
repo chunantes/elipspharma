@@ -1,0 +1,122 @@
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+     xmlns:ui="http://java.sun.com/jsf/facelets"
+     xmlns:h="http://java.sun.com/jsf/html"
+     xmlns:f="http://java.sun.com/jsf/core"
+     xmlns:p="http://primefaces.prime.com.tr/ui"
+     xmlns:sf="http://www.springframework.org/tags/faces"
+     xmlns:c="http://java.sun.com/jsp/jstl/core">
+    
+    <c:set var="idOnglet_dates">ONG_DATES</c:set>
+    <input type="hidden" id="currentView" name="currentView" value="#{idOnglet_dates}" />
+    
+	<p:focus context="dd_panel_prev" />
+    
+    <!-- Dates previsionnelles -->
+    <h2><h:outputFormat value="#{resourceBundle['editEssai.onglet.dates.prev.title']}"/></h2>
+    <fieldset>
+    	<h:panelGrid id="dd_panel_prev" columns="4" columnClasses="dd_panelCol, dd_panelCol, dd_panelCol, dd_panelCol">
+    		<h:outputLabel id="labelDDprevDebutEtude" for="dd_prev_debutEtude" value="#{resourceBundle['editEssai.onglet.dates.prev.debutEtude']}" />
+    		<p:calendar id="dd_prev_debutEtude" value="#{essaiManager.bean.detailDates.debutEtudePrev}" 
+    			effect="#{resourceBundle['effect.calendar']}" locale="#{resourceBundle['date.locale']}" showButtonPanel="true" navigator="true" 
+    			converter="#{calendarConverter}" />
+    		
+    		<h:outputLabel id="labelDDprevFinEtude" for="dd_prev_finEtude" value="#{resourceBundle['editEssai.onglet.dates.prev.finEtude']}" />
+    		<p:calendar id="dd_prev_finEtude" value="#{essaiManager.bean.detailDates.finEtudePrev}" 
+    			effect="#{resourceBundle['effect.calendar']}" locale="#{resourceBundle['date.locale']}" showButtonPanel="true" navigator="true" 
+    			converter="#{calendarConverter}" />
+    		
+    		<h:outputLabel id="labelDDprevactivation" for="dd_prev_activation" value="#{resourceBundle['editEssai.onglet.dates.prev.activation']}" />
+    		<p:calendar id="dd_prev_activation" value="#{essaiManager.bean.detailDates.activationPrev}" 
+    			effect="#{resourceBundle['effect.calendar']}" locale="#{resourceBundle['date.locale']}" showButtonPanel="true" navigator="true" 
+    			converter="#{calendarConverter}" />
+    		
+    		<h:panelGroup />
+    		<h:panelGroup />
+    		
+    		<h:outputLabel id="labelDDprevDebutf" for="dd_prev_debutIncl" value="#{resourceBundle['editEssai.onglet.dates.prev.debutInclusion']}" />
+    		<p:calendar id="dd_prev_debutIncl" value="#{essaiManager.bean.detailDates.debutInclusionPrev}" 
+    			effect="#{resourceBundle['effect.calendar']}" locale="#{resourceBundle['date.locale']}" showButtonPanel="true" navigator="true" 
+    			converter="#{calendarConverter}" />
+    		
+    		<h:outputLabel id="labelDDprevFinIncl" for="dd_prev_finIncl" value="#{resourceBundle['editEssai.onglet.dates.prev.finInclusion']}" />
+    		<p:calendar id="dd_prev_finIncl" value="#{essaiManager.bean.detailDates.finInclusionPrev}" 
+    			effect="#{resourceBundle['effect.calendar']}" locale="#{resourceBundle['date.locale']}" showButtonPanel="true" navigator="true" 
+    			converter="#{calendarConverter}" />
+    	</h:panelGrid>
+    </fieldset>
+    
+    <!-- Dates reelles -->
+    <h2><h:outputFormat value="#{resourceBundle['editEssai.onglet.dates.reel.title']}"/></h2>
+    <fieldset>
+    	<h:panelGrid id="dd_panel_reel" columns="4" columnClasses="dd_panelCol, dd_panelCol, dd_panelCol, dd_panelCol">
+    		<h:outputLabel id="labelDDreelActivation" for="dd_reel_activation" value="#{resourceBundle['editEssai.onglet.dates.reel.activation']}" />
+    		<p:calendar id="dd_reel_activation" value="#{essaiManager.bean.detailDates.activation}"  disabled="true"
+    			effect="#{resourceBundle['effect.calendar']}" locale="#{resourceBundle['date.locale']}" showButtonPanel="true" navigator="true" 
+    			converter="#{calendarConverter}" />
+    		
+    		<h:panelGroup />
+    		<h:panelGroup />
+    		
+    		<h:outputLabel id="labelDDreelDebutEtude" for="dd_reel_debutEtude" value="#{resourceBundle['editEssai.onglet.dates.reel.debutEtude']}" />
+    		<p:calendar id="dd_reel_debutEtude" value="#{essaiManager.bean.detailDates.debutEtude}" disabled="true"
+    			effect="#{resourceBundle['effect.calendar']}" locale="#{resourceBundle['date.locale']}" showButtonPanel="true" navigator="true" 
+    			converter="#{calendarConverter}" />
+    		
+    		<h:outputLabel id="labelDDreelFinEtude" for="dd_reel_finEtude" value="#{resourceBundle['editEssai.onglet.dates.reel.finEtude']}" />
+    		<p:calendar id="dd_reel_finEtude" value="#{essaiManager.bean.detailDates.finEtude}" 
+    			effect="#{resourceBundle['effect.calendar']}" locale="#{resourceBundle['date.locale']}" showButtonPanel="true" navigator="true" 
+    			converter="#{calendarConverter}" />
+    		
+    		<h:outputLabel id="labelDDreelDebutIncl" for="dd_reel_debutIncl" value="#{resourceBundle['editEssai.onglet.dates.reel.debutInclusion']}" />
+    		<p:calendar id="dd_reel_debutIncl" value="#{essaiManager.bean.detailDates.debutInclusion}"  disabled="true"
+    			effect="#{resourceBundle['effect.calendar']}" locale="#{resourceBundle['date.locale']}" showButtonPanel="true" navigator="true" 
+    			converter="#{calendarConverter}" />
+    		
+    		<h:outputLabel id="labelDDreelFinIncl" for="dd_reel_finIncl" value="#{resourceBundle['editEssai.onglet.dates.reel.finInclusion']}" />
+    		<p:calendar id="dd_reel_finIncl" value="#{essaiManager.bean.detailDates.finInclusion}" 
+    			effect="#{resourceBundle['effect.calendar']}" locale="#{resourceBundle['date.locale']}" showButtonPanel="true" navigator="true" 
+    			converter="#{calendarConverter}" />
+    		
+    		<h:outputLabel id="labelDDreelFinDisp" for="dd_reel_finDisp" value="#{resourceBundle['editEssai.onglet.dates.reel.finDispensations']}" />
+    		<p:calendar id="dd_reel_finDisp" value="#{essaiManager.bean.detailDates.finDispensations}" 
+    			effect="#{resourceBundle['effect.calendar']}" locale="#{resourceBundle['date.locale']}" showButtonPanel="true" navigator="true" 
+    			converter="#{calendarConverter}" />
+    		
+    		<h:panelGroup />
+    		<h:panelGroup />
+    		
+    		<h:outputLabel id="labelDDreelPreCloture" for="dd_reel_preCloture" value="#{resourceBundle['editEssai.onglet.dates.reel.preCloture']}" />
+    		<p:calendar id="dd_reel_preCloture" value="#{essaiManager.bean.detailDates.preCloture}" 
+    			effect="#{resourceBundle['effect.calendar']}" locale="#{resourceBundle['date.locale']}" showButtonPanel="true" navigator="true" 
+    			converter="#{calendarConverter}" />
+    		
+    		<h:panelGroup />
+    		<h:panelGroup />
+    		
+    		<h:outputLabel id="labelDDreelCloture" for="dd_reel_cloture" value="#{resourceBundle['editEssai.onglet.dates.reel.cloture']}" />
+    		<p:calendar id="dd_reel_cloture" value="#{essaiManager.bean.detailDates.cloture}" disabled="true"
+    			effect="#{resourceBundle['effect.calendar']}" locale="#{resourceBundle['date.locale']}" showButtonPanel="true" navigator="true" 
+    			converter="#{calendarConverter}" />
+    		
+    		<h:panelGroup />
+    		<h:panelGroup />
+    	</h:panelGrid>
+    </fieldset>
+    
+    <!-- Suivi des modifications -->
+    <p:panel id="dd_suivi" styleClass="panelSuivi" rendered="#{essaiManager.hasLastModif(idOnglet_dates)}"> 
+		<c:set var="lastModifOngRecherche" value="#{essaiManager.getLastModif(idOnglet_dates)}" />
+		<h:outputText value="#{resourceBundle['suivi.part1']} " />
+		<h:outputText value="#{lastModifOngRecherche.dateMaj.time}">
+			<f:convertDateTime pattern="#{resourceBundle['date.pattern.withHeures']}"/>
+		</h:outputText>
+		<h:outputText value="#{resourceBundle['suivi.part2']} " />
+		<h:outputText value="#{lastModifOngRecherche.majPar}" />
+		<h:outputText value="#{resourceBundle['ponctuation.bracket.open']} " />
+		<h:outputLink id="labelDDModifs" value="javascript:void(0)" styleClass="clickable"
+			onclick="popupHistoOngDates.show()" title="#{resourceBundle['suivi.popupLink.title']}">#{resourceBundle['suivi.historique']}
+		</h:outputLink>
+		<h:outputText value="#{resourceBundle['ponctuation.bracket.close']} " />
+	</p:panel>
+	
+</ui:composition>

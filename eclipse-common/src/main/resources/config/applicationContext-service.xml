@@ -1,0 +1,577 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans 
+    xmlns="http://www.springframework.org/schema/beans" 
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xmlns:util="http://www.springframework.org/schema/util"
+    xsi:schemaLocation="
+    	http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd
+    	http://www.springframework.org/schema/util http://www.springframework.org/schema/util/spring-util.xsd">
+	
+	<!-- ============================= -->
+	<!-- HELPERS COMMUNS               -->
+	<!-- ============================= -->
+	<bean id="commonServicesHelper" class="fr.pharma.eclipse.service.helper.common.BeanHelper" />
+	<bean id="beanPropReinitializer" class="fr.pharma.eclipse.service.helper.common.BeanPropertyReinitializer" />
+	<bean id="fileHelper" class="fr.pharma.eclipse.utils.file.FileHelper" />
+	<bean id="habilitationsHelper" class="fr.pharma.eclipse.service.habilitation.helper.HabilitationsHelper" />
+	<bean id="droitAccesHelper" class="fr.pharma.eclipse.service.helper.DroitAccesHelper"/>
+	
+	<!-- ======================================== -->
+	<!-- HELPER : Design					      -->
+	<!-- ======================================== -->
+	<bean id="timeHelper" class="fr.pharma.eclipse.service.helper.design.TimeHelper" />
+	<bean id="designHelper" class="fr.pharma.eclipse.service.helper.design.DesignHelper" />
+						
+	<!-- ============================= -->
+	<!-- COMMON                        -->
+	<!-- ============================= -->					
+	<bean id="commonService" abstract="true" class="fr.pharma.eclipse.service.common.impl.GenericServiceImpl"/>
+	
+	<!-- ============================= -->
+	<!-- PHARMACIE                      -->
+	<!-- ============================= -->		
+	<bean id="pharmacieService" class="fr.pharma.eclipse.service.stockage.impl.PharmacieServiceImpl">
+		<constructor-arg index="0" ref="pharmacieDao" />
+		<property name="removeValidator" ref="pharmacieRemoveValidator"/>
+	</bean>
+	
+	<!-- ============================= -->
+	<!-- PROMOTEUR                     -->
+	<!-- ============================= -->		
+	<bean id="promoteurService" class="fr.pharma.eclipse.service.acteur.impl.PromoteurServiceImpl">
+		<constructor-arg index="0" ref="promoteurDao" />
+		<property name="removeValidator" ref="promoteurRemoveValidator"/>
+	</bean>
+	
+	<!-- ============================= -->
+	<!-- ESSAI                         -->
+	<!-- ============================= -->		
+	<bean id="essaiService" class="fr.pharma.eclipse.service.essai.impl.EssaiServiceImpl">
+		<constructor-arg index="0" ref="essaiDao" />
+		<property name="beanHelper" ref="commonServicesHelper" />
+		<property name="beforeSaveUpdators">
+			<list>
+				<ref bean="detailFaisabiliteBeforeSaveUpdator" />
+				<ref bean="dciBeforeSaveUpdator" />
+				<ref bean="contactsEssaiBeforeSaveUpdator" />
+				<ref bean="etatBeforeSaveUpdator"/>
+			</list>
+		</property>
+		<property name="saveValidators">
+			<list>
+				<ref bean="essaiGlobalInfosSaveValidator"/>
+				<ref bean="essaiOngDatesSaveValidator"/>
+				<ref bean="essaiNumInterneSaveValidator"/>
+			</list>
+		</property>
+		<property name="mapFactories">
+			<map>
+				<entry key="GENERAL" value-ref="essaiSuiviWithParentFactory" />
+				<entry key="ONG_RECHERCHE" value-ref="detailRechercheSuiviWithParentFactory" />
+				<entry key="ONG_CONTACTS" value-ref="detailContactsSuiviWithParentFactory" />
+				<entry key="ONG_FAISABILITE" value-ref="detailFaisabiliteSuiviWithParentFactory" />
+				<entry key="ONG_DATES" value-ref="detailDatesSuiviWithParentFactory" />
+				<entry key="ONG_ADMIN_REG" value-ref="detailAdministratifSuiviWithParentFactory" />
+				<entry key="ONG_PRODUITS" value-ref="detailProduitSuiviWithParentFactory" />
+				<entry key="ONG_DATA_PHARMA" value-ref="detailDonneesPharmaSuiviWithParentFactory" />
+				<entry key="ONG_DESIGN" value-ref="detailDesignSuiviWithParentFactory" />
+				<entry key="ONG_AUTRES_DOCS" value-ref="detailAutresDocsSuiviWithParentFactory" />
+				<entry key="ONG_SURCOUTS" value-ref="detailSurcoutSuiviWithParentFactory" />
+			</map>
+		</property>
+	</bean>
+	
+	<!-- ============================= -->
+	<!-- ESSAI : DETAIL RECHERCHE      -->
+	<!-- ============================= -->		
+	<bean id="detailRechercheService" parent="commonService">
+		<constructor-arg index="0" ref="detailRechercheDao" />
+	</bean>
+	
+	<!-- ============================= -->
+	<!-- PASSWORD ENCODER              -->
+	<!-- ============================= -->	
+	<bean id="passwordEncoder" class="org.springframework.security.authentication.encoding.Md5PasswordEncoder"/>
+	
+	<!-- ============================= -->
+	<!-- PASSWORD ENCODER HELPER       -->
+	<!-- ============================= -->
+	<bean id="passwordEncoderHelper" class="fr.pharma.eclipse.service.acteur.helper.PasswordEncoderHelper">
+		<property name="passwordEncoder" ref="passwordEncoder"/>
+	</bean>	
+	
+	<!-- ============================= -->
+	<!-- PERSONNE                      -->
+	<!-- ============================= -->	
+	<bean id="personneService" class="fr.pharma.eclipse.service.acteur.impl.PersonneServiceImpl">
+		<constructor-arg index="0" ref="personneDao" />
+		<property name="removeValidator" ref="personneRemoveValidator"/>
+	</bean>
+	
+	<!-- ============================= -->
+	<!-- INVESTIGATEUR                 -->
+	<!-- ============================= -->		
+	<bean id="investigateurService" class="fr.pharma.eclipse.service.acteur.impl.PersonneServiceImpl">
+		<constructor-arg index="0" ref="investigateurDao" />
+		<property name="saveValidator" ref="investigateurSaveValidator"/>
+	</bean>
+	
+	<!-- ============================= -->
+	<!-- ARC PROMOTEUR                 -->
+	<!-- ============================= -->		
+	<bean id="arcPromoteurService" class="fr.pharma.eclipse.service.acteur.impl.PersonneServiceImpl">
+		<constructor-arg index="0" ref="arcPromoteurDao" />
+	</bean>
+	
+	<!-- ============================= -->
+	<!-- ARC INVESTIGATEUR             -->
+	<!-- ============================= -->		
+	<bean id="arcInvestigateurService" class="fr.pharma.eclipse.service.acteur.impl.PersonneServiceImpl">
+		<constructor-arg index="0" ref="arcInvestigateurDao" />
+		<property name="saveValidator" ref="arcInvestigateurSaveValidator"/>
+	</bean>
+	
+	<!-- ============================= -->
+	<!-- PHARMACIEN                    -->
+	<!-- ============================= -->		
+	<bean id="pharmacienService" class="fr.pharma.eclipse.service.acteur.impl.PersonneServiceImpl">
+		<constructor-arg index="0" ref="pharmacienDao" />
+		<property name="saveValidator" ref="pharmacienSaveValidator"/>
+	</bean>
+	
+	<!-- ============================= -->
+	<!-- CRO                           -->
+	<!-- ============================= -->		
+	<bean id="croService" class="fr.pharma.eclipse.service.acteur.impl.PersonneServiceImpl">
+		<constructor-arg index="0" ref="croDao" />
+	</bean>
+	
+	<!-- ============================= -->
+	<!-- DIRECTION RECHERCHE           -->
+	<!-- ============================= -->		
+	<bean id="directionRechercheService" class="fr.pharma.eclipse.service.acteur.impl.PersonneServiceImpl">
+		<constructor-arg index="0" ref="directionRechercheDao" />
+	</bean>
+	
+	<!-- ============================= -->
+	<!-- CONTACT PROMOTEUR             -->
+	<!-- ============================= -->		
+	<bean id="contactPromoteurService" class="fr.pharma.eclipse.service.acteur.impl.PersonneServiceImpl">
+		<constructor-arg index="0" ref="contactPromoteurDao" />
+	</bean>
+	
+	<!-- ============================= -->
+	<!-- SERVICE                       -->
+	<!-- ============================= -->
+	<bean id="serviceService" class="fr.pharma.eclipse.service.localisation.impl.ServiceServiceImpl">
+		<constructor-arg index="0" ref="serviceDao" />
+		<property name="removeValidator" ref="serviceRemoveValidator"/>
+		<property name="saveValidator" ref="serviceSaveValidator"/>
+	</bean>
+	
+	<!-- ============================= -->
+	<!-- POLE                          -->
+	<!-- ============================= -->		
+	<bean id="poleService" class="fr.pharma.eclipse.service.localisation.impl.PoleServiceImpl">
+		<constructor-arg index="0" ref="poleDao"/>
+		<property name="removeValidator" ref="poleRemoveValidator"/>
+		<property name="saveValidator" ref="poleSaveValidator"/>
+	</bean>
+	
+	<!-- ============================= -->
+	<!-- ETABLISSEMENT                 -->
+	<!-- ============================= -->		
+	<bean id="etablissementService" class="fr.pharma.eclipse.service.localisation.impl.EtablissementServiceImpl">
+		<constructor-arg index="0" ref="etablissementDao"/>
+		<property name="removeValidator" ref="etablissementRemoveValidator"/>
+		<property name="saveValidator" ref="etablissementSaveValidator"/>
+	</bean>
+	
+	<!-- ============================= -->
+	<!-- SITE                          -->
+	<!-- ============================= -->		
+	<bean id="siteService" class="fr.pharma.eclipse.service.localisation.impl.SiteServiceImpl">
+		<constructor-arg index="0" ref="siteDao"/>
+		<property name="removeValidator" ref="siteRemoveValidator"/>
+	</bean>
+	
+	<!-- ============================= -->
+	<!-- HABILITATION                  -->
+	<!-- ============================= -->		
+	<bean id="habilitationService" class="fr.pharma.eclipse.service.habilitation.impl.HabilitationServiceImpl">
+		<constructor-arg index="0" ref="habilitationDao"/>
+	</bean>
+	
+	<!-- ============================= -->
+	<!-- STOCKAGE                      -->
+	<!-- ============================= -->		
+	<bean id="stockageService" class="fr.pharma.eclipse.service.stockage.impl.StockageServiceImpl">
+		<constructor-arg index="0" ref="stockageDao"/>
+	</bean>
+	
+	<!-- ============================= -->
+	<!-- USER                          -->
+	<!-- ============================= -->		
+	<bean id="userService" class="fr.pharma.eclipse.service.user.impl.UserServiceImpl"/>
+
+	<!-- ============================= -->
+	<!-- PRODUIT                       -->
+	<!-- ============================= -->	
+	<bean id="produitService" class="fr.pharma.eclipse.service.produit.impl.ProduitServiceImpl">
+		<constructor-arg index="0" ref="produitDao" />
+		<property name="removeValidator" ref="produitRemoveValidator"/>
+	</bean>
+	
+	<!-- ============================= -->
+	<!-- MEDICAMENT					   -->
+	<!-- ============================= -->		
+	<bean id="medicamentService" class="fr.pharma.eclipse.service.produit.impl.ProduitServiceImpl">
+		<constructor-arg index="0" ref="medicamentDao"/>
+	</bean>
+	
+	<!-- ============================= -->
+	<!-- DISPOSITIF MEDICAL            -->
+	<!-- ============================= -->		
+	<bean id="dispositifMedicalService" class="fr.pharma.eclipse.service.produit.impl.ProduitServiceImpl">
+		<constructor-arg index="0" ref="dispositifMedicalDao"/>
+	</bean>
+	
+	<!-- ============================= -->
+	<!-- PRODUIT THERAPEUTIQUE         -->
+	<!-- ============================= -->		
+	<bean id="produitTherapeutiqueService" class="fr.pharma.eclipse.service.produit.impl.ProduitServiceImpl">
+		<constructor-arg index="0" ref="produitTherapeutiqueDao"/>
+	</bean>
+	
+	<!-- ============================= -->
+	<!-- PREPARATIONS				   -->
+	<!-- ============================= -->		
+	<bean id="preparationService" class="fr.pharma.eclipse.service.produit.impl.ProduitServiceImpl">
+		<constructor-arg index="0" ref="preparationDao"/>
+	</bean>
+	
+	<!-- ============================= -->
+	<!-- MOUVEMENT STOCK               -->
+	<!-- ============================= -->	
+	<bean id="mouvementStockService" class="fr.pharma.eclipse.service.stock.impl.MvtStockServiceImpl">
+		<constructor-arg index="0" ref="mouvementStockDao" />
+	</bean>
+	
+	<!-- ============================= -->
+	<!-- STOCK                         -->
+	<!-- ============================= -->	
+	<bean id="stockService" class="fr.pharma.eclipse.service.stock.impl.StockServiceImpl"/>
+	
+	<!-- ============================= -->
+	<!-- ETAT STOCK                    -->
+	<!-- ============================= -->	
+	<bean id="etatStockService" class="fr.pharma.eclipse.service.stock.impl.EtatStockServiceImpl"/>
+
+	<!-- ============================= -->
+	<!-- SORTIE                        -->
+	<!-- ============================= -->
+	<bean id="sortieService" class="fr.pharma.eclipse.service.stock.impl.SortieServiceImpl"/>	
+		
+	<!-- ============================= -->
+	<!-- APPROVISIONNEMENT             -->
+	<!-- ============================= -->	
+	<bean id="approvisionnementService" class="fr.pharma.eclipse.service.stock.impl.ApprovisionnementServiceImpl">
+		<constructor-arg index="0" ref="approvisionnementDao" />
+		<property name="approFactorys">
+			<map>
+				<entry key-ref="TYPE_MOUVEMENT_PREPARATION_ENTREE" value-ref="preparationEntreeFactory"/>
+				<entry key-ref="TYPE_MOUVEMENT_APPROVISIONNEMENT" value-ref="approvisionnementFactory"/>
+				<entry key-ref="TYPE_MOUVEMENT_ENTREE_CORRECTIVE" value-ref="entreeCorrectiveFactory"/>
+			</map>
+		</property>
+	</bean>
+	
+	<!-- ============================= -->
+	<!-- DISPENSATION GLOBALE          -->
+	<!-- ============================= -->	
+	<bean id="dispensationGlobaleService" class="fr.pharma.eclipse.service.stock.impl.MvtStockServiceImpl">
+		<constructor-arg index="0" ref="dispensationGlobaleDao" />
+	</bean>
+	<bean id="dispensationGlobaleHelper" class="fr.pharma.eclipse.service.stock.helper.DispensationGlobaleHelper"/>
+		
+	<!-- ============================= -->
+	<!-- RETOUR PROMOTEUR              -->
+	<!-- ============================= -->	
+	<bean id="retourPromoteurService" class="fr.pharma.eclipse.service.stock.impl.MvtStockServiceImpl">
+		<constructor-arg index="0" ref="retourPromoteurDao" />
+	</bean>
+		
+	<!-- ============================= -->
+	<!-- CESSION PUI                   -->
+	<!-- ============================= -->	
+	<bean id="cessionPuiService" class="fr.pharma.eclipse.service.stock.impl.MvtStockServiceImpl">
+		<constructor-arg index="0" ref="cessionPuiDao" />
+	</bean>
+		
+	<!-- ============================= -->
+	<!-- DESTRUCTION                   -->
+	<!-- ============================= -->	
+	<bean id="destructionService" class="fr.pharma.eclipse.service.stock.impl.MvtStockServiceImpl">
+		<constructor-arg index="0" ref="destructionDao" />
+	</bean>
+		
+	<!-- ============================= -->
+	<!-- DESTRUCTION                   -->
+	<!-- ============================= -->	
+	<bean id="preparationSortieService" class="fr.pharma.eclipse.service.stock.impl.MvtStockServiceImpl">
+		<constructor-arg index="0" ref="preparationSortieDao" />
+	</bean>
+		
+	<!-- ============================= -->
+	<!-- AUTRE SORTIE                  -->
+	<!-- ============================= -->	
+	<bean id="autreSortieService" class="fr.pharma.eclipse.service.stock.impl.MvtStockServiceImpl">
+		<constructor-arg index="0" ref="autreSortieDao" />
+	</bean>	
+	
+	<!-- ============================= -->
+	<!-- CONDITIONNEMENT		       -->
+	<!-- ============================= -->		
+	<bean id="conditionnementService" parent="commonService">
+		<constructor-arg index="0" ref="conditionnementDao"/>
+	</bean>	
+	
+	<!-- ============================= -->
+	<!-- DETAIL STOCKAGE		       -->
+	<!-- ============================= -->		
+	<bean id="detailStockageService" parent="commonService">
+		<constructor-arg index="0" ref="detailStockageDao"/>
+	</bean>	
+	
+	<!-- ============================= -->
+	<!-- SEQUENCE				       -->
+	<!-- ============================= -->		
+	<bean id="sequenceService" parent="commonService">
+		<constructor-arg index="0" ref="sequenceDao"/>
+	</bean>	
+	
+	<!-- ============================= -->
+	<!-- PRESCRIPTIONTYPE		       -->
+	<!-- ============================= -->		
+	<bean id="prescriptionTypeService" parent="commonService">
+		<constructor-arg index="0" ref="prescriptionTypeDao"/>
+	</bean>	
+	
+	<!-- ============================= -->
+	<!-- PATIENT                       -->
+	<!-- ============================= -->		
+	<bean id="patientService" class="fr.pharma.eclipse.service.patient.impl.PatientServiceImpl">
+		<constructor-arg index="0" ref="patientDao"/>
+		<property name="removeValidator" ref="patientRemoveValidator"/>
+	</bean>
+	
+	<!-- ============================= -->
+	<!-- STRATEGIE SURFACE CORPORELLE  -->
+	<!-- ============================= -->
+	<bean id="surfaceCorporelleStrategy" class="fr.pharma.eclipse.service.patient.dictionary.SurfaceCorporelleDictionary">
+		<property name="dictionary">
+			<map>
+				<entry key-ref="DUBOIS" value-ref="duboisProcessor"/>
+				<entry key-ref="MOSTELLER" value-ref="mostellerProcessor"/>
+			</map>
+		</property>
+	</bean>		
+	<bean id="duboisProcessor" class="fr.pharma.eclipse.service.patient.dictionary.processor.DuboisProcessor"/>
+	<bean id="mostellerProcessor" class="fr.pharma.eclipse.service.patient.dictionary.processor.MostellerProcessor"/>
+	
+	<!-- ============================= -->
+	<!-- PRESCRIPTION                  -->
+	<!-- ============================= -->		
+	<bean id="prescriptionService" class="fr.pharma.eclipse.service.prescription.impl.PrescriptionServiceImpl">
+		<constructor-arg index="0" ref="prescriptionDao"/>
+		<property name="removeValidator" ref="prescriptionRemoveValidator"/>
+	</bean>
+	
+	<!-- ============================= -->
+	<!-- PRODUITPRESCRIT               -->
+	<!-- ============================= -->		
+	<bean id="produitPrescritService" parent="commonService">
+		<constructor-arg index="0" ref="produitPrescritDao"/>
+	</bean>
+	
+	<!-- ============================= -->
+	<!-- INCLUSION	                   -->
+	<!-- ============================= -->		
+	<bean id="inclusionService" class="fr.pharma.eclipse.service.patient.impl.InclusionServiceImpl">
+		<constructor-arg index="0" ref="inclusionDao"/>
+		<property name="updator" ref="dateInclusionSaveUpdator"/>
+	</bean>
+	
+	<!-- ============================= -->
+	<!-- DISPENSATION                   -->
+	<!-- ============================= -->		
+	<bean id="dispensationService" class="fr.pharma.eclipse.service.dispensation.impl.DispensationServiceImpl">
+		<constructor-arg index="0" ref="dispensationDao"/>
+	</bean>
+	
+	<!-- ============================= -->
+	<!-- DISPENSATIONPRODUIT           -->
+	<!-- ============================= -->		
+	<bean id="dispensationProduitService" parent="mouvementStockService">
+		<constructor-arg index="0" ref="mouvementStockDao"/>
+	</bean>
+
+	<!-- ============================= -->
+	<!-- PREPARATION ENTREE            -->
+	<!-- ============================= -->		
+	<bean id="preparationEntreeStockService" parent="mouvementStockService">
+		<constructor-arg index="0" ref="mouvementStockDao"/>
+	</bean>
+	
+	<!-- ============================= -->
+	<!-- DOTATION                      -->
+	<!-- ============================= -->		
+	<bean id="dotationService" class="fr.pharma.eclipse.service.dotation.impl.DotationServiceImpl" >
+		<constructor-arg index="0" ref="dotationDao"/>
+	</bean>
+	
+	<!-- ============================= -->
+	<!-- ACTUALITE                      -->
+	<!-- ============================= -->		
+	<bean id="actualiteService" class="fr.pharma.eclipse.service.actualite.impl.ActualiteServiceImpl" />
+
+	<!-- ============================= -->
+	<!-- BUILDERS ALERTE               -->
+	<!-- ============================= -->
+	<bean id="alerteDdeDotationBuilder" class="fr.pharma.eclipse.service.alerte.builder.impl.AlerteDdeDotationBuilder"/>
+	<bean id="alerteDateFinEssaiBuilder" class="fr.pharma.eclipse.service.alerte.builder.impl.AlerteDateFinEssaiBuilder"/>
+	<bean id="alerteResultVisiteBuilder" class="fr.pharma.eclipse.service.alerte.builder.impl.AlerteResultVisiteBuilder"/>
+	<bean id="alerteDestructionEssaiBuilder" class="fr.pharma.eclipse.service.alerte.builder.impl.AlerteDestructionEssaiBuilder"/>
+	<bean id="alerteProduitPeremptionBuilder" class="fr.pharma.eclipse.service.alerte.builder.impl.AlerteProduitPeremptionBuilder"/>
+	<bean id="alerteProduitQteStockBuilder" class="fr.pharma.eclipse.service.alerte.builder.impl.AlerteProduitQteStockBuilder"/>
+	<bean id="alerteCessionPUIBuilder" class="fr.pharma.eclipse.service.alerte.builder.impl.AlerteCessionPUIBuilder"/>
+	
+	<!-- ============================= -->
+	<!-- MAP BUILDERS ALERTE           -->
+	<!-- ============================= -->	
+	<util:map id="mapAlerteBuilders" map-class="java.util.TreeMap">
+		<entry key-ref="TYPE_ALERTE_DDES_DOTATIONS" value-ref="alerteDdeDotationBuilder"/>
+		<entry key-ref="TYPE_ALERTE_DATE_FIN_ESSAI" value-ref="alerteDateFinEssaiBuilder"/>
+		<entry key-ref="TYPE_ALERTE_RESULT_VISITE" value-ref="alerteResultVisiteBuilder"/>
+		<entry key-ref="TYPE_ALERTE_DESTRUCTION_ESSAI" value-ref="alerteDestructionEssaiBuilder"/>
+		<entry key-ref="TYPE_ALERTE_PRODUIT_PEREMPTION" value-ref="alerteProduitPeremptionBuilder"/>
+		<entry key-ref="TYPE_ALERTE_STOCK_SEUIL" value-ref="alerteProduitQteStockBuilder"/>
+		<entry key-ref="TYPE_ALERTE_CESSION_PUI" value-ref="alerteCessionPUIBuilder"/>
+	</util:map>
+	
+	<!-- ============================= -->
+	<!-- ALERTE                        -->
+	<!-- ============================= -->		
+	<bean id="alerteService" class="fr.pharma.eclipse.service.alerte.impl.AlerteServiceImpl" />
+	
+	<!-- ============================= -->
+	<!-- EVENEMENT                     -->
+	<!-- ============================= -->		
+	<bean id="evenementService" class="fr.pharma.eclipse.service.evenement.impl.EvenementServiceImpl" >
+		<constructor-arg index="0" ref="evenementDao"/>
+		<property name="updators">
+			<list>
+				<ref bean="preclotureUpdator" />
+				<ref bean="clotureUpdator" />
+				<ref bean="dateMepUpdator" />
+				
+			</list>
+		</property>
+	</bean>
+	
+	<!-- ============================= -->
+	<!-- INCIDENT	                   -->
+	<!-- ============================= -->		
+	<bean id="incidentService" class="fr.pharma.eclipse.service.incident.impl.IncidentServiceImpl" >
+		<constructor-arg index="0" ref="incidentDao"/>
+	</bean>
+	
+	<!-- ============================= -->
+	<!-- ELEMENTTOCHECK                -->
+	<!-- ============================= -->		
+	<bean id="elementToCheckService"  class="fr.pharma.eclipse.service.dispensation.impl.ElementToCheckServiceImpl">
+		<constructor-arg index="0" ref="elementToCheckDao"/>
+	</bean>
+	
+	<!-- ============================= -->
+	<!-- GRILLEMOMDELE 		           -->
+	<!-- ============================= -->		
+	<bean id="grilleModeleService"  class="fr.pharma.eclipse.service.surcout.impl.GrilleModeleServiceImpl">
+		<constructor-arg index="0" ref="grilleModeleDao"/>
+		<property name="saveValidators">
+			<list>
+				<ref bean="grilleSaveValidator"/>
+			</list>
+		</property>
+	</bean>
+	
+	<!-- ============================= -->
+	<!-- GRILLE			               -->
+	<!-- ============================= -->		
+	<bean id="grilleService"  class="fr.pharma.eclipse.service.surcout.impl.GrilleServiceImpl">
+		<constructor-arg index="0" ref="grilleDao"/>
+		<property name="processors">
+			<list>
+				<ref bean="fixeProcessor"/>
+				<ref bean="variableProcessor"/>
+			</list>
+		</property>
+		<property name="acteCounters">
+			<map>
+				<entry key-ref="ACTE_DISPENSATION_RENOUVELLEMENT" value-ref="dispensationRenouvellementCounter"/>
+				<entry key-ref="ACTE_DISPENSATION" value-ref="dispensationCounter"/>
+				<entry key-ref="ACTE_PRESCRIPTION" value-ref="prescriptionCounter"/>
+				<entry key-ref="ACTE_REETIQUETAGE" value-ref="reetiquetageCounter"/>
+				<entry key-ref="ACTE_DESTRUCTION" value-ref="destructionCounter"/>
+				<entry key-ref="ACTE_APPROVISIONNEMENT" value-ref="approvisionnementCounter"/>
+				<entry key-ref="ACTE_AUDIT" value-ref="auditCounter"/>
+				<entry key-ref="ACTE_PREPARATIONS_STERILES" value-ref="preparationSterileCounter"/>
+				<entry key-ref="ACTE_PREPARATIONS_NON_STERILES" value-ref="preparationNonSterileCounter"/>
+			</map>
+		</property>
+	</bean>
+	
+	<!-- ============================= -->
+	<!-- ORDONNANCIER DISPENSATION     -->
+	<!-- ============================= -->		
+	<bean id="ordonnancierDispService" class="fr.pharma.eclipse.service.ordonnancier.impl.OrdonnancierDispServiceImpl">
+		<constructor-arg index="0" ref="ordonnancierDispDao"/>
+	</bean>
+	
+	<!-- =========================================== -->
+	<!-- ORDONNANCIER FABRICATION / RECONSTITUTION   -->
+	<!-- =========================================== -->		
+	<bean id="ordonnancierFabReconstService" class="fr.pharma.eclipse.service.ordonnancier.impl.OrdonnancierFabReconstServiceImpl">
+		<constructor-arg index="0" ref="ordonnancierFabReconstDao"/>
+	</bean>
+	
+	<!-- ============================= -->
+	<!--  RETOUR PATIENT 			   -->
+	<!-- ============================= -->		
+	<bean id="retourPatientService" class="fr.pharma.eclipse.service.stock.impl.RetourPatientServiceImpl">
+		<constructor-arg index="0" ref="retourPatientDao" />
+	</bean>
+	
+	<!-- ============================== SIGREC ================================= -->
+		
+	<!-- ============================= -->
+	<!-- PROMOTEUR SIGREC              -->
+	<!-- ============================= -->		
+	<bean id="promoteurSigrecService" parent="commonService">
+		<constructor-arg index="0" ref="promoteurSigrecDao"/>
+	</bean>
+	
+	<!-- ============================= -->
+	<!-- ESSAI SIGREC                  -->
+	<!-- ============================= -->		
+	<bean id="essaiSigrecService" parent="commonService">
+		<constructor-arg index="0" ref="essaiSigrecDao"/>
+	</bean>
+	
+	<!-- ============================= -->
+	<!-- CENTRE SIGREC                  -->
+	<!-- ============================= -->		
+	<bean id="centreSigrecService" parent="commonService">
+		<constructor-arg index="0" ref="centreSigrecDao"/>
+	</bean>
+</beans>

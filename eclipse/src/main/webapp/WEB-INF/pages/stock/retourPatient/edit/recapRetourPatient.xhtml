@@ -1,0 +1,206 @@
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+     xmlns:ui="http://java.sun.com/jsf/facelets"
+     xmlns:h="http://java.sun.com/jsf/html"
+     xmlns:f="http://java.sun.com/jsf/core"
+     xmlns:p="http://primefaces.prime.com.tr/ui"
+     xmlns:c="http://java.sun.com/jsp/jstl/core"
+     template="/WEB-INF/pages/template/template.xhtml">
+     
+     <ui:define name="title">
+		<h:outputFormat value="#{resourceBundle['gestionRetourPatient.recapitulatif']}"/>
+     </ui:define>
+     
+     <ui:define name="body">
+     	<h:form id="formRecapRetourPatient" prependId="false">
+
+			<c:set var="result" value="#{retourPatientManager.result}"/>
+
+   		
+	   			<div align="right" style="margin-right:45px;margin-bottom:3px;">
+			   		<h:outputLink id="print" value="#">  
+						<p:printer target="formRecapRetourPatient" />  
+				    	<h:graphicImage library="images" name="imprimer.gif" title="#{resourceBundle['btn.imprimer']}"/>
+				 	</h:outputLink>
+				</div>
+					
+					<fieldset>
+   			
+		 		<h2><h:outputText value="#{resourceBundle['gestionRetourPatient.essai']}" /></h2>
+				<table class="stock large" cellpadding="0" cellspacing="0" border="0" width="100%">
+					<tr>
+		 				<td>
+							<h:panelGrid id="panelGeneral" columns="4" columnClasses="panelCol_25,panelCol_25,panelCol_25,panelCol_25" cellpadding="0" cellspacing="0" border="0" width="100%">
+	
+								<!-- Essai -->
+		 						<h:outputLabel id="labelEssai" for="essai" value="#{resourceBundle['gestionRetourPatient.essai']}" />
+								<h:outputText id="essai" value="#{result.essai.numInterne} #{result.essai.nom}"/>
+								
+								<!-- Pharmacie -->
+		 						<h:outputLabel id="labelPharmacie" for="pharmacie" value="#{resourceBundle['gestionRetourPatient.pharmacie']}" />
+								<h:outputText id="pharmacie" value="#{result.detailStockage.pharmacie.nom}"/>
+								
+								<!-- Promoteur -->
+		 						<h:outputLabel id="labelPromoteur" for="promoteur" value="#{resourceBundle['gestionRetourPatient.promoteur']}" />
+								<h:outputText id="promoteur" value="#{result.essai.promoteur.raisonSociale}"/>
+												
+								<!-- Date -->
+								<h:outputLabel id="labelDate" for="date" value="#{resourceBundle['gestionRetourPatient.date']}"/>
+								<h:outputText id="date" value="#{result.date}" converter="#{calendarConverter}"/>
+	
+								<!-- Code Promoteur -->
+		 						<h:outputLabel id="labelCodePromoteur" for="codePromoteur" value="#{resourceBundle['gestionRetourPatient.codePromoteur']}" />
+								<h:outputText id="codePromoteur" value="#{result.essai.codePromoteur}"/>
+								
+								<!-- Receptionne par -->
+		 						<h:outputLabel id="labelReceptionnePar" for="receptionnePar" value="#{resourceBundle['gestionRetourPatient.receptionnePar']}" />
+								<h:outputText id="receptionnePar" value="#{result.personne.prenom} #{result.personne.nom}"/>
+								
+							</h:panelGrid>
+							
+						</td>
+					</tr>
+				 </table>
+				</fieldset>
+			
+				<p:outputPanel rendered="#{result.patient != null }">
+					<fieldset>
+						<h2><h:outputText value="#{resourceBundle['gestionRetourPatient.patient']}" /></h2>
+					
+						<table class="stock large" cellpadding="0" cellspacing="0" border="0" width="100%">
+							<tr>
+				 				<td>		
+										
+							 		<h:panelGrid id="panelPatientGrid" columns="4" columnClasses="panelCol_25,panelCol_25,panelCol_25,panelCol_25" cellpadding="0" cellspacing="0" border="0" width="100%" >
+							 			
+							 			<!-- Nom -->
+								 		<h:outputLabel id="labelNom" for="nom" value="#{resourceBundle['gestionRetourPatient.nom']}" />
+										<h:outputText id="nom" value="#{result.patient.nom}"/>
+										
+							 			<!-- Prenom -->
+								 		<h:outputLabel id="labelPrenom" for="prenom" value="#{resourceBundle['gestionRetourPatient.prenom']}" />
+										<h:outputText id="prenom" value="#{result.patient.prenom}"/>
+																	
+										<!-- Date -->
+										<h:outputLabel id="labelDateNaissance" for="dateNaissance" value="#{resourceBundle['gestionRetourPatient.dateNaissance']}"/>
+										<h:outputText id="dateNaissance" value="#{result.patient.dateNaissance}" converter="#{calendarConverter}"/>
+												
+										<!-- Numero ipp -->
+								 		<h:outputLabel id="labelNumIpp" for="numIpp" value="#{resourceBundle['gestionRetourPatient.numIpp']}" />
+										<h:outputText id="numIpp" value="#{result.patient.numeroIpp}"/>
+												
+							 		</h:panelGrid>
+								</td>
+							</tr>
+						 </table>
+					 </fieldset>		
+				</p:outputPanel>	
+				<br />
+				 			
+			 	<fieldset>	
+			 	<h2><h:outputText value="#{resourceBundle['gestionRetourPatient.produit']}"/></h2>	
+					<table class="stock large" cellpadding="0" cellspacing="0" border="0" width="100%">
+						<tr>
+			 				<td>		
+									
+				 			
+				 			
+				 			<h:panelGrid id="panelProduitGrid" columns="4" columnClasses="panelCol_25,panelCol_25,panelCol_25,panelCol_25" cellpadding="0" cellspacing="0" border="0" width="100%">
+					 			
+					 			<!-- Produit -->
+						 		<h:outputLabel id="labelProduit" for="produit" value="#{resourceBundle['gestionRetourPatient.produit']}" />
+								<h:outputText id="produit" value="#{result.produit.nom}"/>
+										
+								<!-- Conditionnement -->
+						 		<h:outputLabel id="labelConditionnement" for="conditionnement" value="#{resourceBundle['gestionRetourPatient.conditionnement']}" />
+								<h:outputText id="conditionnement" value="#{result.conditionnement.libelle}"/>
+										
+								<!-- Stckage -->
+						 		<h:outputLabel id="labelStockage" for="stockage" value="#{resourceBundle['gestionRetourPatient.stockage']}" />
+								<h:outputText id="stockage" value="#{result.detailStockage.nom}"/>
+										
+								<!-- Quantite -->
+						 		<h:outputLabel id="labelQuantite" for="quantite" value="#{resourceBundle['gestionRetourPatient.quantite']}" />
+								<h:outputText id="quantite" value="#{result.quantite}"/>
+										
+								<!-- numero de lot -->
+						 		<h:outputLabel id="labelNumLot" for="numLot" value="#{resourceBundle['gestionRetourPatient.numLot']}" />
+								<h:outputText id="numLot" value="#{result.numLot}"/>
+										
+								<!-- numero de traitement -->
+						 		<h:outputLabel id="labelNumTraitment" for="numTraitement" value="#{resourceBundle['gestionRetourPatient.numTraitement']}" />
+								<h:outputText id="numTraitement" value="#{result.numTraitement}"/>
+								
+							</h:panelGrid>
+							
+							<h:panelGrid id="comm" columns="2" columnClasses="panelCol_25 ,panelCol_75" cellpadding="0" cellspacing="0" border="0" width="100%">
+										
+								<!-- commentaire -->
+						 		<h:outputLabel id="labelCommentaire" for="commentaire" value="#{resourceBundle['gestionRetourPatient.commentaire']}" />
+								<h:outputText id="commentaire" value="#{result.commentaire}"/>
+								
+							</h:panelGrid>
+		
+						</td>
+					</tr>
+				 </table>
+			 </fieldset>
+			 
+			 <fieldset>	
+			 	<h2><h:outputText value="#{resourceBundle['gestionRetourPatient.infoComp']}"/></h2>	
+					<table class="stock large" cellpadding="0" cellspacing="0" border="0" width="100%">
+						<tr>
+			 				<td>		
+				 			
+				 			<h:panelGrid columns="4" columnClasses="panelCol_25,panelCol_25,panelCol_25,panelCol_25" cellpadding="0" cellspacing="0" border="0" width="100%">
+					 			
+					 			<!-- Type -->
+						 		<h:outputLabel id="labelType" for="type" value="#{resourceBundle['gestionRetourPatient.type']}" />
+								<h:outputText id="type" value="#{retourPatientManager.result.type.libelle}"/>
+								
+						 		<h:outputLabel id="labelNumOr" for="NumOr" value="#{resourceBundle['gestionRetourPatient.numOrdonnancier']}" />
+								<h:outputText id="NumOr" value="#{retourPatientManager.result.numOrdonnancier}"/>
+							</h:panelGrid>
+							
+							<h:panelGrid id="panelCommentaireType" columns="2" columnClasses="panelCol_25,panelCol_75" cellpadding="0" cellspacing="0" border="0" width="100%">
+								<h:outputLabel id="commentaireLibEntame" for="commentaireEntame" value="#{resourceBundle['gestionRetourPatient.contenuRetourne']}" rendered="#{retourPatientManager.result.type == 'ENTAME'}"/>
+								<h:outputText id="commentaireEntame" rendered="#{retourPatientManager.result.type == 'ENTAME'}"
+									value="#{retourPatientManager.result.commentaireEntame}"/>
+							</h:panelGrid>
+							
+							<h:panelGrid columns="4" columnClasses="panelCol_25,panelCol_25,panelCol_25,panelCol_25" cellpadding="0" cellspacing="0" border="0" width="100%">	
+										
+								<!-- Etat -->
+						 		<h:outputLabel id="labelEtat" for="etat" value="#{resourceBundle['gestionRetourPatient.etat']}" />
+								<h:outputText id="etat" value="#{result.etat.libelle}"/>
+										
+								<!-- Date du dernier changement -->
+						 		<h:outputLabel id="dateDerChgLi" for="dateDerChg" value="#{resourceBundle['gestionRetourPatient.dateEtat']}" />
+								<h:outputText id="dateDerChg" value="#{result.dateEtat.time}">
+										<f:convertDateTime pattern="#{resourceBundle['date.pattern.default']}"/>
+								</h:outputText>
+										
+								</h:panelGrid>
+							
+							<h:panelGrid columns="2" columnClasses="panelCol_25,panelCol_75" cellpadding="0" cellspacing="0" border="0" width="100%">
+								<h:outputLabel id="commentaireEtatLib" for="commentaireEtat" value="#{resourceBundle['gestionRetourPatient.commentaireEtat']}"/>
+								<h:outputText id="commentaireEtat"
+									value="#{retourPatientManager.result.commentaireEtat}"/>
+							</h:panelGrid>
+								
+						</td>
+					</tr>
+				 </table>
+			 </fieldset>
+			 
+			 <div class="bascicButton" style="margin-right:36px;">
+	   			<p:commandButton id="cancelButton" action="cancel" ajax="false"
+	   				value="#{resourceBundle['btn.retour']}" title="#{resourceBundle['btn.retour']}"/>
+		   	</div>
+			 		 		
+		</h:form>
+		
+		
+	</ui:define>
+	
+	
+</ui:composition>

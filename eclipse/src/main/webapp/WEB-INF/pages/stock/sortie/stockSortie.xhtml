@@ -1,0 +1,300 @@
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+     xmlns:ui="http://java.sun.com/jsf/facelets"
+     xmlns:h="http://java.sun.com/jsf/html"
+     xmlns:f="http://java.sun.com/jsf/core"
+     xmlns:p="http://primefaces.prime.com.tr/ui"
+     xmlns:t="http://myfaces.apache.org/tomahawk"
+     xmlns:c="http://java.sun.com/jsp/jstl/core"
+	xmlns:security="http://www.springframework.org/security/tags"
+     template="/WEB-INF/pages/template/template.xhtml">
+
+     <ui:define name="title">
+		<h:outputFormat value="#{resourceBundle['stockPreparation.title']} - " rendered="#{sortieManager.typeSortie == 'PREPARATION_SORTIE'}"/> <h:outputFormat value="#{resourceBundle['stockSortie.title']}"/>
+		<h:form prependId="false">
+			<p:commandLink id="incidentButton" styleClass="incident" actionListener="#{incidentManager.init(sortieManager.essaiSelected)}" ajax="true" update="incident_form"  oncomplete="popupIncident.show();" >
+				<h:graphicImage library="images" name="incident.png" />
+				<p:tooltip for="incidentButton" value="#{resourceBundle['incident.ajouter']}"/>
+			</p:commandLink>
+		</h:form>
+     </ui:define>
+     
+     <ui:define name="body">
+     	
+     	<h:form id="stockSortie" prependId="false" enctype="multipart/form-data">
+     		
+     		<fieldset style="width:960px;">
+     			<p:messages />
+     		</fieldset>
+     		
+     			<p:focus />
+     			
+			<fieldset>
+				<table class="stock large" cellpadding="0" cellspacing="0" border="0" width="100%">
+			 		<tr>
+			 			<td>					
+							<h:panelGrid id="panelStockSortie" columns="2" columnClasses="panelCol_25,panelCol_75" cellpadding="0" cellspacing="0" border="0" width="100%">
+
+								<!-- Essai Promoteur -->
+	 							<h:outputLabel id="labelEssai" for="essai" value="#{resourceBundle['stockSortie.essaiPromoteur.mandatory']}" />
+	 							<p:autoComplete immediate="true" style="width:250px;" id="essai" value="#{sortieManager.essaiSelected}" 
+	 								required="true" requiredMessage="#{resourceBundle['sortie.essai.notEmpty']}"
+	 								selectListener="#{sortieManager.handleSelectEssai}"
+	 								completeMethod="#{autoCompleteEssaiManager.complete}"
+	 								forceSelection="true"
+	 								var="essai" 
+	 								itemLabel="#{essai.numInterne} #{essai.nom} - #{essai.promoteur.raisonSociale}"
+	 								itemValue="#{essai}"
+	 								converter="#{essaiConverter}"
+	 								onSelectUpdate="pharmacie panelModalitesDestruction panelPreparation" 
+	 								rendered="#{empty sortieManager.sorties}"/>
+	 							<h:outputText value="#{sortieManager.essaiSelected.numInterne} #{sortieManager.essaiSelected.nom} - #{sortieManager.essaiSelected.promoteur.raisonSociale}" rendered="#{not empty sortieManager.sorties}"/>	
+	 									
+								<!-- Pharmacie -->
+								<h:outputLabel id="labelPharmacie" for="pharmacie" value="#{resourceBundle['stockSortie.pharmacie.mandatory']}"/>
+								<h:selectOneMenu style="width:250px;" converter="#{pharmacieConverter}" required="true" requiredMessage="#{resourceBundle['sortie.pharmacie.notEmpty']}"
+									 id="pharmacie" value="#{sortieManager.pharmacieSelected}" styleClass="selectRadio" immediate="true"
+									 rendered="#{empty sortieManager.sorties}">
+									<f:selectItem noSelectionOption="true" itemLabel="" itemValue="" />
+									<f:selectItems value="#{sortieManager.pharmacies}" var="pharmacie" itemLabel="#{pharmacie.nom}" itemValue="#{pharmacie}"/>
+									<f:ajax listener="#{sortieManager.handleSelectPharmacie}"/>
+								</h:selectOneMenu>
+								<h:outputText value="#{sortieManager.pharmacieSelected.nom}" rendered="#{not empty sortieManager.sorties}"/>								
+								
+							</h:panelGrid>
+							
+							<p:outputPanel id="panelPreparation">
+								<h:panelGrid columns="2" columnClasses="panelCol_25,panelCol_75" cellpadding="0" cellspacing="0" border="0" width="100%"
+								rendered="#{sortieManager.essaiSelected != null and sortieManager.typeSortie == 'PREPARATION_SORTIE'}">
+									
+									<h:outputLabel id="labelAideDispensation" for="aideDispensation" value="#{resourceBundle['stockSortie.aideDispensation']}"/> 
+									<h:inputTextarea id="aideDispensation"
+										value="#{sortieManager.essaiSelected.detailDonneesPharma.infosDispensations.aideDispensation}" readonly="true"
+										rows="#{resourceBundle['textarea.rows.default']}" />
+									
+										
+									<c:if test="#{sortieManager.essaiSelected.detailDonneesPharma.infosDispensations.documentAideDispensation != null}">
+										<h:outputText value="#{sortieManager.essaiSelected.detailDonneesPharma.infosDispensations.documentAideDispensation.nomUtilisateur}"
+											title="#{documentsIhmHelper.buildDocTitle(sortieManager.essaiSelected.detailDonneesPharma.infosDispensations.documentAideDispensation, resourceBundle['document.part1'], resourceBundle['document.part2'], resourceBundle['date.pattern.withHeures'])}" />
+										<p:commandButton value="#{resourceBundle['file.dwd']}"
+											title="#{resourceBundle['file.dwd']}" ajax="false">
+											<p:fileDownload
+												value="#{fileDwdController.downloadDocument(sortieManager.essaiSelected, sortieManager.essaiSelected.detailDonneesPharma.infosDispensations.documentAideDispensation)}" />
+										</p:commandButton>
+									</c:if>		
+								</h:panelGrid>
+							</p:outputPanel>
+							
+							<h:panelGrid columns="2" columnClasses="panelCol_25,panelCol_75" cellpadding="0" cellspacing="0" border="0" width="100%" rendered="#{sortieManager.typeSortie != 'PREPARATION_SORTIE'}">	
+								<!-- Type Mouvement sortie -->
+								<h:outputLabel id="labelTypeSortie" for="typeSortie" value="#{resourceBundle['stockSortie.typeSortie.mandatory']}"/> 
+				           		<h:selectOneMenu immediate="true" id="typeSortie" style="width:250px;" value="#{sortieManager.typeSortie}" required="true" requiredMessage="#{resourceBundle['sortie.typeSortie.notEmpty']}"
+				           		     rendered="#{empty sortieManager.sorties}" >
+				           			<f:selectItem noSelectionOption="true"/>
+				           			<f:selectItems value="#{enumManager.getValues('TypeMvtStockSortieSaufPreparation')}"/>
+				           			<f:ajax listener="#{sortieManager.handleSelectTypeSortie}" render="panelCession panelTransport panelModalitesDestruction" />
+				           		</h:selectOneMenu>
+								<h:outputText value="#{sortieManager.typeSortie.libelle}" rendered="#{not empty sortieManager.sorties}"/>
+							
+								<!-- Raison de la sortie -->
+								<h:outputLabel id="labelRaisonSortie" for="raisonSortie" value="#{resourceBundle['stockSortie.raisonSortie.mandatory']}"/>
+				           		<h:selectOneMenu immediate="true" id="raisonSortie" style="width:250px;" value="#{sortieManager.raisonSortie}" 
+				           		     rendered="#{empty sortieManager.sorties}" >
+				           			<f:selectItem noSelectionOption="true"/>
+				           			<f:selectItems value="#{enumManager.getValues('RaisonSortie')}"/>
+				           			<f:ajax listener="#{sortieManager.handleSelectRaisonSortie}" render="panelCommentaireRaison"/>
+				           		</h:selectOneMenu>
+								<h:outputText value="#{sortieManager.raisonSortie.libelle}" rendered="#{not empty sortieManager.sorties}"/>
+							
+							
+							</h:panelGrid>
+							
+							<h:panelGrid id="panelCommentaireRaison" columns="2" columnClasses="panelCol_25,panelCol_75" cellpadding="0" cellspacing="0" border="0" width="100%"  rendered="#{sortieManager.typeSortie != 'PREPARATION_SORTIE'}">	
+								<h:outputLabel id="labelCommentaireRaison" for="commentaireRaison" value="#{resourceBundle['stockSortie.commentaireRaison.mandatory']}" rendered="#{sortieManager.raisonSortie == 'AUTRE'}" />
+									<h:inputTextarea id="commentaireRaison" required="true" requiredMessage="#{resourceBundle['stockSortie.commentaireRaison.error']}"
+										value="#{sortieManager.commentaireRaison}" readonly="#{not empty sortieManager.sorties}"
+										rows="#{resourceBundle['textarea.rows.default']}" rendered="#{sortieManager.raisonSortie == 'AUTRE'}" />
+							</h:panelGrid>
+							
+							<h:panelGrid id="panelTransport" columns="2" columnClasses="panelCol_25,panelCol_75" cellpadding="0" cellspacing="0" border="0" width="100%">
+								<!-- Nom de la societe de transport -->
+								<h:outputLabel id="labelNomSocieteTransport" for="nomSocieteTransport" value="#{resourceBundle['stockSortie.nomSocieteTransport']}" rendered="#{not empty sortieManager.typeSortie and sortieManager.typeSortie == 'RETOUR_PROMOTEUR'}"/>
+								<h:inputText id="nomSocieteTransport" value="#{sortieManager.nomSocieteTransport}" style="width:250px;" rendered="#{not empty sortieManager.typeSortie and sortieManager.typeSortie == 'RETOUR_PROMOTEUR'}" />
+								
+								<!-- Nom de la reference envoi -->
+								<h:outputLabel id="labelReferenceEnvoi" for="referenceEnvoi" value="#{resourceBundle['stockSortie.referenceEnvoi']}" rendered="#{not empty sortieManager.typeSortie and sortieManager.typeSortie == 'RETOUR_PROMOTEUR'}" />
+								<h:inputText id="referenceEnvoi" value="#{sortieManager.referenceEnvoi}" style="width:250px;" rendered="#{not empty sortieManager.typeSortie and sortieManager.typeSortie == 'RETOUR_PROMOTEUR'}" />
+				           	</h:panelGrid>
+							
+							<h:panelGrid id="panelCession" columns="2" columnClasses="panelCol_25,panelCol_75" cellpadding="0" cellspacing="0" border="0" width="100%">
+								<!-- Pharmacie -->
+								<h:outputLabel id="labelEtab" for="etablissement" styleClass="mandatory" value="#{resourceBundle['stockSortie.etablissementDest']}" rendered="#{not empty sortieManager.typeSortie and sortieManager.typeSortie == 'CESSION_PUI'}" />
+
+								<h:selectOneMenu style="width:250px;" converter="#{etablissementConverter}" required="true" requiredMessage="#{resourceBundle['sortie.etablissement.notEmpty']}"
+									 id="etablissement" value="#{sortieManager.etablissementDest}" styleClass="selectRadio" immediate="true"
+									 rendered="#{not empty sortieManager.typeSortie and sortieManager.typeSortie == 'CESSION_PUI'}" >
+									<f:selectItem noSelectionOption="true" itemLabel="" itemValue="" />
+									<f:selectItems value="#{sortieManager.etablissementsDest}" var="etablissement" itemLabel="#{etablissement.nom}" itemValue="#{etablissement}"/>
+									<f:ajax listener="#{sortieManager.handleSelectEtablissement}" render="pharmacie2"/>
+								</h:selectOneMenu>
+
+								<h:outputLabel id="labelPharmacie2" styleClass="mandatory" for="pharmacie2" value="#{resourceBundle['stockSortie.pharmacieDest']}" rendered="#{not empty sortieManager.typeSortie and sortieManager.typeSortie == 'CESSION_PUI'}" />
+
+								<h:selectOneMenu style="width:250px;" converter="#{pharmacieConverter}" required="true" requiredMessage="#{resourceBundle['sortie.pharmacie.notEmpty']}"
+									 id="pharmacie2" value="#{sortieManager.pharmacieDest}" styleClass="selectRadio" immediate="true"
+									 rendered="#{not empty sortieManager.typeSortie and sortieManager.typeSortie == 'CESSION_PUI'}" >
+									<f:selectItem noSelectionOption="true" itemLabel="" itemValue="" />
+									<f:selectItems value="#{sortieManager.pharmaciesDest}" var="pharmacie" itemLabel="#{pharmacie.nom}" itemValue="#{pharmacie}"/>
+								</h:selectOneMenu>
+				           	</h:panelGrid>
+
+							<!-- Modalites de destruction -->
+							<p:outputPanel id="panelModalitesDestruction" >
+								<h:panelGrid columns="2" columnClasses="panelCol_25, panelCol_75" cellpadding="0" cellspacing="0" border="0" width="100%" 
+									rendered="#{sortieManager.essaiSelected != null and not empty sortieManager.typeSortie and sortieManager.typeSortie == 'DESTRUCTION'}">
+									
+									<h:outputLabel id="labelModalite" for="modalite" value="#{resourceBundle['stockSortie.modaliteDestruction']}" />
+									<h:inputTextarea id="modalite" disabled="true" 
+										value="#{sortieManager.essaiSelected.detailDonneesPharma.infosComplementaires.modaliteDestruction}"
+										rows="#{resourceBundle['textarea.rows.default']}" />
+								
+								</h:panelGrid>								
+							</p:outputPanel>							
+
+													
+							
+							<h:panelGrid id="panelCommentaire" columns="2" columnClasses="panelCol_25,panelCol_75" cellpadding="0" cellspacing="0" border="0" width="100%">
+								<!-- Commentaire -->
+								<h:outputLabel id="commentaireSortie" for="commentaire" value="#{resourceBundle['stockSortie.commentaire']}"/>
+								<h:inputTextarea  id="commentaire" 
+									value="#{sortieManager.commentaire}" 
+									rows="#{resourceBundle['textarea.rows.default']}" />				           										
+							</h:panelGrid>								
+
+						</td>
+					</tr>
+			 	</table>
+		   	<div style="width:960px;">
+		   	   	<c:if test="#{sortieManager.essaiSelected!=null and essaiManager.bean != null and sortieManager.essaiSelected.id == essaiManager.bean.id}">
+				<div style="float:left;">
+			   		<div class="retourButton">
+			   		
+			   		<security:authorize
+						ifAnyGranted="ROLE_PHARMACIEN_INTERNE,ROLE_PHARMACIEN_INTERNE_GARDE,ROLE_PHARMACIEN_EXTERNE,ROLE_PHARMACIEN_PREPARATEUR,ROLE_PHARMACIEN_TITULAIRE,ROLE_PHARMACIEN_ASSISTANT,ROLE_PHARMACIEN_ATTACHE,ROLE_ADMIN">				
+						<p:menuButton  value="#{resourceBundle['btn.stock']}" >
+							  <p:menuitem immediate="true" value="#{resourceBundle['btn.consultationFlux']}"   
+					           onclick="document.forms['formHide'].goStockConsultationFluxForEssai.click();"/>
+					        <p:menuitem  immediate="true" value="#{resourceBundle['btn.consultationStock']}"   
+					           onclick="document.forms['formHide'].goStockConsultationForEssai.click();" />
+					        <p:menuitem immediate="true" value="#{resourceBundle['btn.extensionPeremption']}"   
+					          onclick="document.forms['formHide'].goStockExtensionPeremptionForEssai.click();"  />
+					        <p:menuitem immediate="true" value="#{resourceBundle['btn.reception']}"   
+					            onclick="document.forms['formHide'].goStockReceptionForEssai.click();"  />
+						</p:menuButton>
+					</security:authorize>	
+					</div>	
+				</div>
+			</c:if>
+			   	<div class="actionButton" style="margin-bottom:6px;margin-top:1px;">
+					<!-- Bouton ajout d'une sortie -->
+					<p:commandButton id="addSortieButton" action="addSortie" ajax="false" 
+						value="#{resourceBundle['btn.addSortie']}" title="#{resourceBundle['btn.addSortie']}"/>
+			 	</div>
+			 </div>
+			 
+			
+			</fieldset>	
+			
+		 	<!-- Sorties -->
+			<h:panelGroup id="sorties">
+				<p:panel id="panelSorties" style="width:955px;" rendered="#{not empty sortieManager.sorties}">
+					<p:dataTable var="sortie" value="#{sortieManager.sorties}">
+			     		<ui:include src="/WEB-INF/pages/stock/sortie/detailSortie.xhtml"/>
+					</p:dataTable>
+				</p:panel>
+			</h:panelGroup>		
+			
+		   <div class="actionButton" style="margin-right:36px;">
+    			<p:commandButton id="saveButton" action="save" ajax="false" rendered="#{not empty sortieManager.sorties and sortieManager.typeSortie != 'PREPARATION_SORTIE'}" 
+    				value="#{resourceBundle['btn.enregistrer']}" title="#{resourceBundle['btn.enregistrer']}"/>
+    			<p:commandButton id="suivantButton" action="suivant" ajax="false" rendered="#{not empty sortieManager.sorties and sortieManager.typeSortie == 'PREPARATION_SORTIE'}" 
+    				value="#{resourceBundle['btn.suivant']}" title="#{resourceBundle['btn.suivant']}"/>
+	   			<p:commandButton update="@form" id="cancelButton" immediate="true" action="cancel" ajax="false" rendered="#{not empty sortieManager.sorties}"
+	   				value="#{resourceBundle['btn.annuler']}" title="#{resourceBundle['btn.annuler']}"/>
+		   	</div>
+		</h:form>
+		
+		
+		<div style="display: none;">
+		    <h:form id="formHide" prependId="false">
+		        <p:commandButton id="goStockConsultationFluxForEssai"  value="#{resourceBundle['btn.consultationFlux']}"   
+				           action="goStockConsultationFluxForEssai" ajax="false"/>
+				           
+		        <p:commandButton id="goStockConsultationForEssai"  value="#{resourceBundle['btn.consultationStock']}"   
+				           action="goStockConsultationForEssai" ajax="false"/>
+				           
+		        <p:commandButton id="goStockExtensionPeremptionForEssai" value="#{resourceBundle['btn.extensionPeremption']}"   
+				            action="goStockExtensionPeremptionForEssai" ajax="false"/>
+				           
+		        <p:commandButton id="goStockReceptionForEssai" value="#{resourceBundle['btn.reception']}"   
+				            action="goStockReceptionForEssai" ajax="false"/>
+		    </h:form>
+		</div>
+		
+			<!-- Popup d'ajout d'un incident -->
+		 <p:dialog header="#{resourceBundle['incident.ajouter']}" widgetVar="popupIncident" styleClass="essaiTabPopup" resizable="true" modal="true" width="500" closeListener="#{incidentManager.reinit() }">  
+		     <h:form id="incident_form">
+		     
+		  	   <p:outputPanel rendered="#{sortieManager.essaiSelected == null}" >
+			     	<!-- essai  -->
+					<h3><h:outputFormat value="#{resourceBundle['incident.essai']}" /></h3>
+					<fieldset>
+						<p:outputPanel id="dr_popupIncident_outp_essai" style="display:block;margin-top:10px;" >
+							<h:panelGrid columns="1" style="margin-bottom:10px" width="100%">  
+								
+								<p:autoComplete id="essai" value="#{incidentManager.bean.essai}" 
+	 								completeMethod="#{autoCompleteEssaiManager.complete}"
+	 								forceSelection="true"
+	 								var="essai"
+	 								itemLabel="#{essai.numInterne} #{essai.nom} - #{essai.promoteur.raisonSociale}"
+	 								itemValue="#{essai}"
+	 								converter="#{essaiConverter}"/>
+	
+							</h:panelGrid>
+						</p:outputPanel>
+					</fieldset>
+				</p:outputPanel>
+		     
+		         <!-- Libelle  -->
+				<h3><h:outputFormat value="#{resourceBundle['incident.libelle']}" /></h3>
+				<fieldset>
+					<p:outputPanel id="dr_popupIncident_outp_lib" style="display:block;margin-top:10px;">
+						<h:panelGrid columns="1" style="margin-bottom:10px" width="100%">  
+							<h:inputText id="dr_popupIncident_lib"
+								value="#{incidentManager.bean.libelle}" />
+						</h:panelGrid>
+					</p:outputPanel>
+				</fieldset>
+				
+				<!-- Commentaire -->
+				<h3><h:outputFormat value="#{resourceBundle['incident.commentaire']}" /></h3>
+				<fieldset>
+					<p:outputPanel id="dr_popupIncident_outp_comm" style="display:block;margin-top:10px;">
+						<h:panelGrid columns="1" style="margin-bottom:10px" width="100%">  
+							<h:inputTextarea id="dr_popupIncident_comm"
+								value="#{incidentManager.bean.commentaire}" 
+								rows="#{resourceBundle['textarea.rows.default']}" />
+						</h:panelGrid>
+					</p:outputPanel>
+				</fieldset>
+				<div class="popupButton">
+					<p:commandButton value="#{resourceBundle['btn.ajouter']}" 
+						actionListener="#{incidentManager.ajouterIncident()}" 
+						oncomplete="popupIncident.hide();"/>
+	       			<p:commandButton value="#{resourceBundle['btn.fermer']}" oncomplete="popupIncident.hide();"/>
+	       		</div>   
+		     </h:form>  
+		 </p:dialog>	
+		
+    </ui:define>
+     
+</ui:composition>

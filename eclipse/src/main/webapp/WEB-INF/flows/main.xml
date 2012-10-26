@@ -1,0 +1,222 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<flow xmlns="http://www.springframework.org/schema/webflow"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://www.springframework.org/schema/webflow
+    http://www.springframework.org/schema/webflow/spring-webflow-2.0.xsd" >
+
+	<!-- Page accueil -->
+	<view-state id="main" view="../pages/main.xhtml">
+		<on-render>
+			<!-- Calcul des informations sur la page accueil -->
+			<evaluate expression="accueilManager.buildInfosAccueil()" />
+		</on-render>
+		<transition on="editEssai" to="viewEssai">
+			<set name="flashScope.idEssai" value="accueilManager.essaiSelected.id" type="java.lang.Long" />
+			<evaluate expression="accueilManager.setEssaiSelected(null)"/>
+		</transition>
+		<transition on="editEssaiFromEvenement" to="viewEssai">
+			<set name="flashScope.idEssai" value="accueilManager.evenementSelected.essai.id" type="java.lang.Long" />
+			<set name="flashScope.idOnglet" value="'ONG_EVTS'" />
+			<evaluate expression="accueilManager.setEvenementSelected(null)"/>
+		</transition>
+	</view-state>
+	
+	 <!-- Détail Essai -->
+    <subflow-state id="viewEssai" subflow="editEssai">
+    	<input name="idEssai" value="flashScope.idEssai" type="java.lang.Long" />
+    	<input name="idOnglet" value="flashScope.idOnglet" />
+    	<transition to="main" />
+    </subflow-state>
+    
+	<subflow-state id="viewEffectuerPrescription" subflow="prescription/edit">
+		<transition to="main"/>
+	</subflow-state>
+	
+	<subflow-state id="viewConsulterPrescription" subflow="prescription/gestion">
+		<transition to="main"/>
+	</subflow-state>
+	
+	<subflow-state id="viewEffectuerDispensation" subflow="dispensation/prescription">
+		<transition to="main"/>
+	</subflow-state>
+	
+	<subflow-state id="viewConsulterDispensation" subflow="dispensation/gestion">
+		<transition to="main"/>
+	</subflow-state>
+	
+	<!-- Dispensation globale (traitement demande dotation) -->
+	<subflow-state id="viewDispensationGlobale" subflow="dotation/dispensation">
+		<transition to="main"/>
+	</subflow-state>
+	
+	<subflow-state id="viewInclusion" subflow="inclusion/edit">
+		<transition to="main"/>
+	</subflow-state>
+	
+	<!-- Demande dotation -->
+	<subflow-state id="viewDemandeDotation" subflow="dotation/demande">
+		<transition to="main"/>
+	</subflow-state>
+	
+	<!-- Stock Reception --> 
+	<subflow-state id="viewStockReception" subflow="stock/reception"/>
+	
+	<!-- Stock Consultation Flux --> 
+	<subflow-state id="viewStockConsultationFlux" subflow="stock/consultationFlux"/>
+	
+	<!-- Stock Consultation --> 
+	<subflow-state id="viewStockConsultation" subflow="stock/consultation"/>
+	
+	<!-- Stock Extension de Peremption -->
+	<subflow-state id="viewStockExtensionPeremption" subflow="stock/extensionPeremption"/>
+	
+	<!-- Stock Sortie -->
+	<subflow-state id="viewStockSortie" subflow="stock/sortie"/>
+	
+	<!-- Stock Sortie -->
+	<subflow-state id="viewStockPreparation" subflow="stock/preparation"/>
+	
+	<!-- Gestion des essais -->
+	<subflow-state id="viewRepertoireEssais" subflow="repertoireEssais"/>
+	
+	<!-- Gestion des essais SIGREC -->
+	<subflow-state id="viewRepertoireEssaisSigrec" subflow="repertoireEssaisSigrec"/>
+	
+	<!-- Gestion des établissements -->
+    <subflow-state id="viewGestionEtablissement" subflow="etablissement/gestion"/>
+    
+    <!-- Gestion des personnes -->
+    <subflow-state id="viewGestionPersonne" subflow="personne/gestion"/>
+    
+    <!-- Gestion des pharmacies -->
+    <subflow-state id="viewGestionPharmacie" subflow="pharmacie/gestion"/>
+    
+    <!-- Gestion des poles -->
+    <subflow-state id="viewGestionPole" subflow="pole/gestion"/>
+    
+    <!-- Gestion des patients  -->
+    <subflow-state id="viewGestionPatient" subflow="patient/gestion"/>
+    
+    <!-- Gestion des promoteurs -->
+    <subflow-state id="viewGestionPromoteur" subflow="promoteur/gestion"/>
+    
+    <!-- Gestion des services -->
+    <subflow-state id="viewGestionService" subflow="service/gestion"/>
+    
+    <!-- Gestion des sites -->
+    <subflow-state id="viewGestionSite" subflow="site/gestion"/>
+    
+    <!-- Gestion des événements -->
+	<subflow-state id="viewGestionEvenement" subflow="evenement/gestion"/>
+    
+    <!-- Gestion des incidents -->
+	<subflow-state id="viewGestionIncident" subflow="incident/gestion"/>
+	
+    <!-- Gestion des modèles de grilles -->
+	<subflow-state id="viewGestionGrilleModele" subflow="surcout/grilleModele/gestion"/>
+	
+	<!-- Ordonnancier des dispensations -->
+	<subflow-state id="viewOrdonnancierDisp" subflow="ordonnancier/dispensation/impression"/>
+
+	<!-- Duplicata Ordonnancier des dispensations -->
+	<subflow-state id="viewDuplicataOrdonnancierDisp" subflow="ordonnancier/dispensation/duplicata"/>
+	
+	<!-- Ordonnancier des fabrications / reconstitutions -->
+	<subflow-state id="viewOrdonnancierFabReconst" subflow="ordonnancier/fabReconst/impression"/>	
+	
+	<!-- Duplicata Ordonnancier des fabrications / reconstitutions -->
+	<subflow-state id="viewDuplicataOrdonnancierFabReconst" subflow="ordonnancier/fabReconst/duplicata"/>
+	
+	<!-- Retour patient -->
+	<subflow-state id="viewRetourPatient" subflow="stock/retourPatient/gestion"/>
+	
+	<!-- Indicateur -->
+	<subflow-state id="viewIndicateur" subflow="indicateur"/>
+	
+	<!-- Accueil -->
+	<subflow-state id="accueil" subflow="main" />
+	
+	
+	<!-- Sous flow consulter les flux  -->
+	<subflow-state id="consulterFluxForEssai" subflow="stock/consultationFlux">
+		<input name="idEssai" value="essaiManager.bean.id"/>
+		<transition to="viewEditEssai" />
+	</subflow-state>
+
+	<!-- Sous flow consulter les stocks  -->
+	<subflow-state id="consulterStockForEssai" subflow="stock/consultation">
+		<input name="idEssai" value="essaiManager.bean.id"/>
+		<transition to="viewEditEssai" />
+	</subflow-state>
+
+	<!-- Sous flow extension peremption  -->
+	<subflow-state id="extensionPeremptionForEssai" subflow="stock/extensionPeremption">
+		<input name="idEssai" value="essaiManager.bean.id"/>
+		<transition to="viewEditEssai" />
+	</subflow-state>
+
+	<!-- Sous flow reception de stock  -->
+	<subflow-state id="receptionForEssai" subflow="stock/reception">
+		<input name="idEssai" value="essaiManager.bean.id"/>
+		<transition to="viewEditEssai" />
+	</subflow-state>
+
+	<!-- Sous flow sortie de stock  -->
+	<subflow-state id="sortieForEssai" subflow="stock/sortie">
+		<input name="idEssai" value="essaiManager.bean.id"/>
+		<transition to="viewEditEssai" />
+	</subflow-state>
+	
+	
+
+	<!-- Global transitions -->
+	<global-transitions>
+	
+		<transition on="goIndicateur" to="viewIndicateur" /> 
+		<transition on="goConsulterPrescription" to="viewConsulterPrescription" /> 
+		<transition on="goEffectuerPrescription" to="viewEffectuerPrescription" /> 
+		<transition on="goConsulterDispensation" to="viewConsulterDispensation" /> 
+		<transition on="goEffectuerDispensation" to="viewEffectuerDispensation" /> 
+		<transition on="goDispensationGlobale" to="viewDispensationGlobale" /> 
+		<transition on="goInclusion" to="viewInclusion" /> 
+		<transition on="goDemandeDotation" to="viewDemandeDotation" /> 
+		<transition on="goStockConsultationFlux" to="viewStockConsultationFlux" />
+		<transition on="goStockConsultation" to="viewStockConsultation" />
+		<transition on="goStockExtensionPeremption" to="viewStockExtensionPeremption" />
+		<transition on="goStockReception" to="viewStockReception" /> 
+		<transition on="goStockSortie" to="viewStockSortie" /> 
+		<transition on="goStockPreparation" to="viewStockPreparation" /> 
+		<transition on="goRepertoireEssais" to="viewRepertoireEssais" />
+		<transition on="goRepertoireEssaisSigrec" to="viewRepertoireEssaisSigrec" />
+    	<transition on="goGestionEtablissement" to="viewGestionEtablissement"/>
+    	<transition on="goGestionPersonne" to="viewGestionPersonne"/>
+    	<transition on="goGestionPharmacie" to="viewGestionPharmacie"/>
+    	<transition on="goGestionPole" to="viewGestionPole"/>
+    	<transition on="goGestionPromoteur" to="viewGestionPromoteur"/>
+    	<transition on="goGestionService" to="viewGestionService"/>
+    	<transition on="goGestionSite" to="viewGestionSite"/>
+    	<transition on="goGestionPatient" to="viewGestionPatient"/>
+    	<transition on="goGestionEvenement" to="viewGestionEvenement"/>
+    	<transition on="goGestionIncident" to="viewGestionIncident"/>
+    	<transition on="goGestionGrilleModele" to="viewGestionGrilleModele"/>
+    	<transition on="goOrdonnancierDisp" to="viewOrdonnancierDisp"/>
+    	<transition on="goDuplicataOrdonnancierDisp" to="viewDuplicataOrdonnancierDisp"/>
+    	<transition on="goOrdonnancierFabReconst" to="viewOrdonnancierFabReconst"/>
+    	<transition on="goDuplicataOrdonnancierFabReconst" to="viewDuplicataOrdonnancierFabReconst"/>
+		<transition on="goStockConsultationFluxForEssai" to="consulterFluxForEssai" />
+		<transition on="goStockConsultationForEssai" to="consulterStockForEssai" />
+		<transition on="goStockExtensionPeremptionForEssai" to="extensionPeremptionForEssai" />
+		<transition on="goStockReceptionForEssai" to="receptionForEssai" /> 
+		<transition on="goStockSortieForEssai" to="sortieForEssai" /> 
+		<transition on="goRetourPatient" to="viewRetourPatient" /> 
+    	
+    	<transition on="launchModeAdmin" to="accueil" >
+			<evaluate expression="userService.setAdministrateur()"/>
+		</transition>
+		
+	</global-transitions>
+	
+	<!-- Handler Exception -->
+	<exception-handler bean="flowExceptionHandler"/>
+
+</flow>

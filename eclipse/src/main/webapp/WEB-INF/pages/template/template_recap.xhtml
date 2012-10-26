@@ -1,0 +1,71 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:ui="http://java.sun.com/jsf/facelets" xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:sf="http://www.springframework.org/tags/faces" xmlns:p="http://primefaces.prime.com.tr/ui"
+	xmlns:c="http://java.sun.com/jsp/jstl/core">
+	
+<f:view contentType="text/html; charset=UTF-8" encoding="UTF-8">
+
+	<h:head>
+	    <link rel="icon" href="#{facesContext.externalContext.requestContextPath}/resources/images/favicon.ico"  type="image/x-icon"/>
+		<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+		<title>
+			<h:outputText value="#{resourceBundle['eclipse.title']}" />
+		</title>
+		
+		<h:outputScript library="js" name="menu.js"/>
+		<link type="text/css" rel="stylesheet" href="#{facesContext.externalContext.requestContextPath}/themes/base/skin.css" /> 
+		<link type="text/css" rel="stylesheet" href="#{facesContext.externalContext.requestContextPath}/resources/css/eclipse.css" /> 
+		<link type="text/css" rel="stylesheet" href="#{facesContext.externalContext.requestContextPath}/resources/css/menu.css" /> 
+			
+		<link type="text/css" rel="stylesheet" href="#{facesContext.externalContext.requestContextPath}/resources/css/jquery.ganttView.css" /> 
+		
+		<h:outputScript library="primefaces" name="jquery/jquery.js" target="head"/>
+		<h:outputScript library="primefaces" name="jquery/ui/jquery-ui.js" target="head"/>
+		<!-- h:outputScript library="js" name="jquery-ui-1.8.4.js"/ -->
+		<h:outputScript library="js" name="jquery.scrollTo-1.4.2-min.js" target="head"/>
+		<h:outputScript library="js" name="jquery.ganttView.js" target="head"/>
+		
+		<h:outputScript library="js" name="main.js" target="head"/> 
+		<h:outputScript library="js" name="date.js" target="head"/>
+		<h:outputScript library="js" name="data.js" target="head"/>
+	 
+		 
+		<script type="text/javascript"> 
+			jQuery(document).ready(function() {
+				preparePage();
+			});
+		</script>
+		
+	</h:head>
+	
+<h:body>
+
+	<ui:include src="/WEB-INF/pages/common/header.xhtml" />
+
+	<div class="main">
+	
+		<ui:insert name="title"/>
+		<br />
+	    <ui:insert name="body"/>
+	
+	 
+	</div>
+	
+<br /><br />
+
+		<div class="popWait">
+			<div style="margin:250px; font-size: 18px; " >
+					<h:outputText value="#{resourceBundle['patientez']}" />
+				</div>
+			</div>
+	    <div class="footerTab">
+	    	<div class="footer">
+	<ui:include src="/WEB-INF/pages/common/footer.xhtml" />
+			</div>
+	    </div>
+</h:body>
+
+</f:view>
+</html>

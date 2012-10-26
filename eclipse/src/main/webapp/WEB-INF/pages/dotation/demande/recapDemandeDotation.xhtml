@@ -1,0 +1,21 @@
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+     xmlns:ui="http://java.sun.com/jsf/facelets"
+     xmlns:h="http://java.sun.com/jsf/html"
+     xmlns:f="http://java.sun.com/jsf/core"
+     xmlns:p="http://primefaces.prime.com.tr/ui"
+     xmlns:c="http://java.sun.com/jsp/jstl/core"
+     template="/WEB-INF/pages/template/template.xhtml">
+
+     <ui:define name="title">
+		<h:outputFormat value="#{resourceBundle['demandeDotation.title']}"/>
+     </ui:define>
+     
+     <ui:define name="body">
+     
+         <fieldset style="width:960px;">
+     			<p:messages />
+     	 </fieldset>
+     
+     </ui:define>
+     
+</ui:composition>

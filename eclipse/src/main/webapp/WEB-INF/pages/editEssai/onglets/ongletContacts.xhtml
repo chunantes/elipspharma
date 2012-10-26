@@ -1,0 +1,328 @@
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+     xmlns:ui="http://java.sun.com/jsf/facelets"
+     xmlns:h="http://java.sun.com/jsf/html"
+     xmlns:f="http://java.sun.com/jsf/core"
+     xmlns:p="http://primefaces.prime.com.tr/ui"
+     xmlns:c="http://java.sun.com/jsp/jstl/core">
+    
+    <c:set var="idOnglet_contacts">ONG_CONTACTS</c:set>
+    <input type="hidden" id="currentView" name="currentView" value="#{idOnglet_contacts}" />
+	<p:focus context="dc_outpanel_habilitations" />
+    
+    <c:set var="detailContacts" value="#{essaiManager.bean.detailContacts}" />
+    <p:outputPanel id="dc_outpanel_habilitations">
+	    <fieldset>
+		    <!-- ********************************** -->
+		    <!-- GROUPE PROMOTEURS					-->
+		    <!-- ********************************** -->
+		    <p:panel id="dc_panel_promo" header="#{resourceBundle['editEssai.onglet.contacts.promo.title']}"
+			      collapsed="#{essaiManager.getGroupePromoteurs().getRowCount() == 0}" 
+		   		closable="false">
+		   		<p:dataTable id="promoteurs" styleClass="tabContacts" value="#{essaiManager.getGroupePromoteurs()}" var="habilit_promo" emptyMessage="#{resourceBundle['results.none']}"
+		   			selection="#{essaiManager.selectedHabilitation}" selectionMode="single"
+		   			onRowSelectComplete="popupInfosContact.show(); disableHabilitationSelectionStyle();"
+		   			onRowSelectUpdate="dc_popupInfosContact_form">
+		   			<p:column id="promo_type">
+		   				<f:facet name="header">
+							<h:outputText value="#{resourceBundle['gestionContactPromoteur.type']}"/>
+						</f:facet>
+						<h:outputText value="#{habilit_promo.personne.type.libelle}"/>
+		   			</p:column>
+		   			<p:column id="promo_habilitation">
+		   				<f:facet name="header">
+							<h:outputText value="#{resourceBundle['editEssai.onglet.contacts.tab.habilitation']}"/>
+						</f:facet>
+						<h:outputText value="#{habilit_promo.droit.libelle}"/>
+		   			</p:column>
+		   			<p:column id="promo_nom">
+		   				<f:facet name="header">
+							<h:outputText value="#{resourceBundle['gestionContactPromoteur.nom']}"/>
+						</f:facet>
+						<h:outputText value="#{habilit_promo.personne.nom}"/>
+		   			</p:column>
+		   			<p:column id="promo_prenom">
+		   				<f:facet name="header">
+							<h:outputText value="#{resourceBundle['gestionContactPromoteur.prenom']}"/>
+						</f:facet>
+						<h:outputText value="#{habilit_promo.personne.prenom}"/>
+		   			</p:column>
+		   			<p:column id="promo_tel">
+		   				<f:facet name="header">
+							<h:outputText value="#{resourceBundle['gestionContactPromoteur.telephone']}"/>
+						</f:facet>
+						<h:outputText value="#{habilit_promo.personne.telephone}"/>
+		   			</p:column>
+		   			<p:column id="promo_mail">
+		   				<f:facet name="header">
+							<h:outputText value="#{resourceBundle['gestionContactPromoteur.mail']}"/>
+						</f:facet>
+						<h:outputText value="#{habilit_promo.personne.mail}"/>
+		   			</p:column>
+		   			<p:column id="promo_actif">
+		   				<f:facet name="header">
+							<h:outputText value="#{resourceBundle['editEssai.onglet.contacts.tab.actif']}"/>
+						</f:facet>
+						<c:set var="promo_cleActif" value="boolean.#{habilit_promo.active}" />
+						<h:outputText value="#{resourceBundle[promo_cleActif]}"/>
+		   			</p:column>
+		   			<p:column style="width:5%">
+			    		<f:facet name="header">
+			    		</f:facet>
+			    		<div align="center">
+		    				<h:selectBooleanCheckbox value="#{habilit_promo.selected}" rendered="#{habilit_promo.isDesactivable() and habilit_promo.isActive()}" />
+			    		</div>
+			    	</p:column>
+				</p:dataTable>
+		   	</p:panel>
+	    
+	    <!-- ********************************** -->
+	    <!-- GROUPE INVESTIGATEURS				-->
+	    <!-- ********************************** -->
+	    <p:panel id="dc_panel_invest" header="#{resourceBundle['editEssai.onglet.contacts.invest.title']}"
+		      collapsed="#{essaiManager.getGroupeInvestigateurs().getRowCount() == 0}" 
+	   		closable="false">
+	   		<p:dataTable id="investigateurs" styleClass="tabContacts" value="#{essaiManager.getGroupeInvestigateurs()}" var="habilit_invest" emptyMessage="#{resourceBundle['results.none']}"
+	   			selection="#{essaiManager.selectedHabilitation}" selectionMode="single"
+	   			onRowSelectComplete="popupInfosContact.show(); disableHabilitationSelectionStyle();"
+	   			onRowSelectUpdate="dc_popupInfosContact_form">
+	   			<p:column id="invest_type">
+	   				<f:facet name="header">
+						<h:outputText value="#{resourceBundle['gestionContactPromoteur.type']}"/>
+					</f:facet>
+					<h:outputText value="#{habilit_invest.personne.type.libelle}"/>
+	   			</p:column>
+	   			<p:column id="invest_habilitation">
+	   				<f:facet name="header">
+						<h:outputText value="#{resourceBundle['editEssai.onglet.contacts.tab.habilitation']}"/>
+					</f:facet>
+					<h:outputText value="#{habilit_invest.droit.libelle}"/>
+	   			</p:column>
+	   			<p:column id="invest_nom">
+	   				<f:facet name="header">
+						<h:outputText value="#{resourceBundle['gestionContactPromoteur.nom']}"/>
+					</f:facet>
+					<h:outputText value="#{habilit_invest.personne.nom}"/>
+	   			</p:column>
+	   			<p:column id="invest_prenom">
+	   				<f:facet name="header">
+						<h:outputText value="#{resourceBundle['gestionContactPromoteur.prenom']}"/>
+					</f:facet>
+					<h:outputText value="#{habilit_invest.personne.prenom}"/>
+	   			</p:column>
+	   			<p:column id="invest_tel">
+	   				<f:facet name="header">
+						<h:outputText value="#{resourceBundle['gestionContactPromoteur.telephone']}"/>
+					</f:facet>
+					<h:outputText value="#{habilit_invest.personne.telephone}"/>
+	   			</p:column>
+	   			<p:column id="invest_mail">
+	   				<f:facet name="header">
+						<h:outputText value="#{resourceBundle['gestionContactPromoteur.mail']}"/>
+					</f:facet>
+					<h:outputText value="#{habilit_invest.personne.mail}"/>
+	   			</p:column>
+	   			<p:column id="invest_actif">
+	   				<f:facet name="header">
+						<h:outputText value="#{resourceBundle['editEssai.onglet.contacts.tab.actif']}"/>
+					</f:facet>
+					<c:set var="invest_cleActif" value="boolean.#{habilit_invest.active}" />
+					<h:outputText value="#{resourceBundle[invest_cleActif]}"/>
+	   			</p:column>
+	   			<p:column style="width:5%">
+		    		<f:facet name="header">
+		    		</f:facet>
+		    		<div align="center">
+		    			<h:selectBooleanCheckbox value="#{habilit_invest.selected}" rendered="#{habilit_invest.isDesactivable() and habilit_invest.isActive()}"/>			    			
+		    		</div>
+		    	</p:column>
+			</p:dataTable>
+	   	</p:panel>
+	    
+	    <!-- ********************************** -->
+	    <!-- GROUPE DRC							-->
+	    <!-- ********************************** -->
+	    <p:panel id="dc_panel_drc" header="#{resourceBundle['editEssai.onglet.contacts.drc.title']}"
+		      collapsed="#{essaiManager.getGroupeDRC().getRowCount() == 0}" 
+	   		closable="false">
+	   		<p:dataTable id="drcs" styleClass="tabContacts" value="#{essaiManager.getGroupeDRC()}" var="habilit_drc" emptyMessage="#{resourceBundle['results.none']}"
+	   			selection="#{essaiManager.selectedHabilitation}" selectionMode="single"
+	   			onRowSelectComplete="popupInfosContact.show(); disableHabilitationSelectionStyle();"
+	   			onRowSelectUpdate="dc_popupInfosContact_form">
+	   			<p:column id="drc_type">
+	   				<f:facet name="header">
+						<h:outputText value="#{resourceBundle['gestionContactPromoteur.type']}"/>
+					</f:facet>
+					<h:outputText value="#{habilit_drc.personne.type.libelle}"/>
+	   			</p:column>
+	   			<p:column id="drc_habilitation">
+	   				<f:facet name="header">
+						<h:outputText value="#{resourceBundle['editEssai.onglet.contacts.tab.habilitation']}"/>
+					</f:facet>
+					<h:outputText value="#{habilit_drc.droit.libelle}"/>
+	   			</p:column>
+	   			<p:column id="drc_nom">
+	   				<f:facet name="header">
+						<h:outputText value="#{resourceBundle['gestionContactPromoteur.nom']}"/>
+					</f:facet>
+					<h:outputText value="#{habilit_drc.personne.nom}"/>
+	   			</p:column>
+	   			<p:column id="drc_prenom">
+	   				<f:facet name="header">
+						<h:outputText value="#{resourceBundle['gestionContactPromoteur.prenom']}"/>
+					</f:facet>
+					<h:outputText value="#{habilit_drc.personne.prenom}"/>
+	   			</p:column>
+	   			<p:column id="drc_tel">
+	   				<f:facet name="header">
+						<h:outputText value="#{resourceBundle['gestionContactPromoteur.telephone']}"/>
+					</f:facet>
+					<h:outputText value="#{habilit_drc.personne.telephone}"/>
+	   			</p:column>
+	   			<p:column id="drc_mail">
+	   				<f:facet name="header">
+						<h:outputText value="#{resourceBundle['gestionContactPromoteur.mail']}"/>
+					</f:facet>
+					<h:outputText value="#{habilit_drc.personne.mail}"/>
+	   			</p:column>
+	   			<p:column id="drc_actif">
+	   				<f:facet name="header">
+						<h:outputText value="#{resourceBundle['editEssai.onglet.contacts.tab.actif']}"/>
+					</f:facet>
+					<c:set var="drc_cleActif" value="boolean.#{habilit_drc.active}" />
+					<h:outputText value="#{resourceBundle[drc_cleActif]}"/>
+	   			</p:column>
+	   			<p:column style="width:5%">
+		    		<f:facet name="header">
+		    		</f:facet>
+		    		<div align="center">
+		    			<h:selectBooleanCheckbox value="#{habilit_drc.selected}" rendered="#{habilit_drc.isDesactivable() and habilit_drc.isActive()}"/>    			
+		    		</div>
+		    	</p:column>
+			</p:dataTable>
+	   	</p:panel>
+	    
+	    <!-- ********************************** -->
+	    <!-- GROUPE PHARMACIENS					-->
+	    <!-- ********************************** -->
+	    <p:panel id="dc_panel_pharma" header="#{resourceBundle['editEssai.onglet.contacts.pharma.title']}"
+		      collapsed="#{essaiManager.getGroupePharmaciens().getRowCount() == 0}" 
+	   		closable="false">
+	   		<p:dataTable id="pharmaciens" styleClass="tabContacts" value="#{essaiManager.getGroupePharmaciens()}" var="habilit_pharma" emptyMessage="#{resourceBundle['results.none']}"
+	   			selection="#{essaiManager.selectedHabilitation}" selectionMode="single"
+	   			onRowSelectComplete="popupInfosContact.show(); disableHabilitationSelectionStyle();"
+	   			onRowSelectUpdate="dc_popupInfosContact_form">
+	   			<p:column id="pharma_type">
+	   				<f:facet name="header">
+						<h:outputText value="#{resourceBundle['gestionContactPromoteur.type']}"/>
+					</f:facet>
+					<h:outputText value="#{habilit_pharma.personne.type.libelle}"/>
+	   			</p:column>
+	   			<p:column id="pharma_habilitation">
+	   				<f:facet name="header">
+						<h:outputText value="#{resourceBundle['editEssai.onglet.contacts.tab.habilitation']}"/>
+					</f:facet>
+					<h:outputText value="#{habilit_pharma.droit.libelle}"/>
+	   			</p:column>
+	   			<p:column id="pharma_nom">
+	   				<f:facet name="header">
+						<h:outputText value="#{resourceBundle['gestionContactPromoteur.nom']}"/>
+					</f:facet>
+					<h:outputText value="#{habilit_pharma.personne.nom}"/>
+	   			</p:column>
+	   			<p:column id="pharma_prenom">
+	   				<f:facet name="header">
+						<h:outputText value="#{resourceBundle['gestionContactPromoteur.prenom']}"/>
+					</f:facet>
+					<h:outputText value="#{habilit_pharma.personne.prenom}"/>
+	   			</p:column>
+	   			<p:column id="pharma_tel">
+	   				<f:facet name="header">
+						<h:outputText value="#{resourceBundle['gestionContactPromoteur.telephone']}"/>
+					</f:facet>
+					<h:outputText value="#{habilit_pharma.personne.telephone}"/>
+	   			</p:column>
+	   			<p:column id="pharma_mail">
+	   				<f:facet name="header">
+						<h:outputText value="#{resourceBundle['gestionContactPromoteur.mail']}"/>
+					</f:facet>
+					<h:outputText value="#{habilit_pharma.personne.mail}"/>
+	   			</p:column>
+	   			<p:column id="pharma_actif">
+	   				<f:facet name="header">
+						<h:outputText value="#{resourceBundle['editEssai.onglet.contacts.tab.actif']}"/>
+					</f:facet>
+					<c:set var="pharma_cleActif" value="boolean.#{habilit_pharma.active}" />
+					<h:outputText value="#{resourceBundle[pharma_cleActif]}"/>
+	   			</p:column>
+	   			<p:column style="width:5%">
+		    		<f:facet name="header">
+		    		</f:facet>
+		    		<div align="center">
+		    			<h:selectBooleanCheckbox value="#{habilit_pharma.selected}" rendered="#{habilit_pharma.isDesactivable() and habilit_pharma.isActive()}"/>			    			
+		    		</div>
+		    	</p:column>
+			</p:dataTable>
+	   	</p:panel>
+		   	<div class="actionButton">
+		   		 <p:menuButton id="addPersonneButton" value="#{resourceBundle['btn.ajouterPersonne']}" appendToBody="true" >
+		   		 
+			        <p:menuitem value="#{resourceBundle['addArcInvestigateur.title']}" action="addArcInvestigateur" ajax="false"/>
+			        
+			        <p:menuitem value="#{resourceBundle['addArcPromoteur.title']}" action="addArcPromoteur" ajax="false"/>
+			        
+			        <p:menuitem value="#{resourceBundle['addCro.title']}" action="addCro" ajax="false"/>
+			        
+			    </p:menuButton>  
+			    
+		   		 <p:menuButton id="addContactButton" value="#{resourceBundle['btn.ajouter']}" appendToBody="true" >
+			        <p:menuitem update="popupSelectionContact,dc_popupSelectionContact_form" oncomplete="popupSelectionContact.show();" process="@this"
+			        value="#{resourceBundle['addArcInvestigateur.title']}" actionListener="#{essaiManager.calculatePersons(enumManager.getEnumValue('TypeContact', 'ARC_INVESTIGATEUR'))}"/>
+			        
+			        <p:menuitem update="popupSelectionContact,dc_popupSelectionContact_form" oncomplete="popupSelectionContact.show();" process="@this" 
+			        value="#{resourceBundle['addArcPromoteur.title']}" actionListener="#{essaiManager.calculatePersons(enumManager.getEnumValue('TypeContact', 'ARC_PROMOTEUR'))}"/>
+			        
+			        <p:menuitem update="popupSelectionContact,dc_popupSelectionContact_form" oncomplete="popupSelectionContact.show();" process="@this" 
+			        value="#{resourceBundle['addCro.title']}" actionListener="#{essaiManager.calculatePersons(enumManager.getEnumValue('TypeContact', 'CRO'))}"/>
+			        
+			        <p:menuitem update="popupSelectionContact,dc_popupSelectionContact_form" oncomplete="popupSelectionContact.show();"  process="@this"
+			        value="#{resourceBundle['addDirAdmin.title']}" actionListener="#{essaiManager.calculatePersons(enumManager.getEnumValue('TypeContact', 'DIRECTION_RECHERCHE_ADMINISTRATIF'))}"/>
+			        
+			        <p:menuitem update="popupSelectionContact,dc_popupSelectionContact_form" oncomplete="popupSelectionContact.show();"  process="@this"
+			        value="#{resourceBundle['addDirPharma.title']}" actionListener="#{essaiManager.calculatePersons(enumManager.getEnumValue('TypeContact', 'DIRECTION_RECHERCHE_PHARMACOVIGILANT'))}"/>
+			        
+			        <p:menuitem update="popupSelectionContact,dc_popupSelectionContact_form" oncomplete="popupSelectionContact.show();" process="@this" 
+			        value="#{resourceBundle['addInvestigateur.title']}" actionListener="#{essaiManager.calculatePersons(enumManager.getEnumValue('TypeContact', 'INVESTIGATEUR'))}"/>
+			        
+			        <p:menuitem update="popupSelectionContact,dc_popupSelectionContact_form" oncomplete="popupSelectionContact.show();"  process="@this"
+			        value="#{resourceBundle['addPharmacien.title']}" actionListener="#{essaiManager.calculatePersons(enumManager.getEnumValue('TypeContact', 'PHARMACIEN'))}"/>
+			        
+			        <p:menuitem update="popupSelectionContact,dc_popupSelectionContact_form" oncomplete="popupSelectionContact.show();" process="@this" 
+			        value="#{resourceBundle['addPromoteur.title']}" actionListener="#{essaiManager.calculatePersons(enumManager.getEnumValue('TypeContact', 'PROMOTEUR'))}"/>
+			    </p:menuButton>  
+		   	
+				<p:commandButton id="removeContactButton"
+					value="#{resourceBundle['btn.disable']}" title="#{resourceBundle['btn.disable']}"
+					update="dc_panel_pharma dc_panel_drc dc_panel_invest dc_panel_promo" actionListener="#{essaiManager.disableContacts}" />
+			</div>
+	    </fieldset>
+    </p:outputPanel>
+    <fieldset>
+	    <!-- ********************************** -->
+	    <!-- Suivi								-->
+	    <!-- ********************************** -->
+	    <p:panel id="dc_panel_suivi" styleClass="panelSuivi" rendered="#{essaiManager.hasLastModif(idOnglet_contacts)}"> 
+			<c:set var="lastModifOngContacts" value="#{essaiManager.getLastModif(idOnglet_contacts)}" />
+			<h:outputText value="#{resourceBundle['suivi.part1']} " />
+			<h:outputText value="#{lastModifOngContacts.dateMaj.time}">
+				<f:convertDateTime pattern="#{resourceBundle['date.pattern.withHeures']}"/>
+			</h:outputText>
+			<h:outputText value="#{resourceBundle['suivi.part2']} " />
+			<h:outputText value="#{lastModifOngContacts.majPar}" />
+			<h:outputText value="#{resourceBundle['ponctuation.bracket.open']} " />
+			<h:outputLink id="labelDCModifs" value="javascript:void(0)" styleClass="clickable"
+				onclick="popupHistoOngContacts.show()" title="#{resourceBundle['suivi.popupLink.title']}">#{resourceBundle['suivi.historique']}
+			</h:outputLink>
+			<h:outputText value="#{resourceBundle['ponctuation.bracket.close']} " />
+		</p:panel>
+	</fieldset>
+</ui:composition>

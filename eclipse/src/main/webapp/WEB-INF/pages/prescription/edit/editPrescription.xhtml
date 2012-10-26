@@ -1,0 +1,485 @@
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:p="http://primefaces.prime.com.tr/ui"
+	xmlns:c="http://java.sun.com/jsp/jstl/core"
+	xmlns:security="http://www.springframework.org/security/tags"
+	template="/WEB-INF/pages/template/template.xhtml">
+
+	<ui:define name="title">
+		<h:outputFormat
+			value="#{resourceBundle['effectuerPrescription.title']}" />
+	</ui:define>
+
+	<ui:define name="body">
+		<h:form id="formForPrescription" prependId="false">
+		
+			<p:outputPanel id="common_outp_msgs" style="display:block;margin-top:10px;">
+				<p:messages/>
+			</p:outputPanel>
+			
+				<div class="rechercheBox">
+
+					<h2 class="titleFloat"><h:outputText
+						value="#{resourceBundle['prescription.infoPatient']}" />
+					</h2>
+					
+					<!-- Focus sur le premier element de la page -->
+					<p:focus />
+					<fieldset>
+						<div class="rechercheInside">
+						
+							<!-- Affichage du champ de recherche si aucun patient n'est selectionne -->
+							<h:panelGrid columns="1" columnClasses="panelCol_100" rendered="#{ not prescriptionManager.valid}" cellpadding="0" cellspacing="0" border="0" width="100%">
+
+								<!-- Selection du patient -->
+								<h:outputLabel id="labelPatient" for="patientAutoCom"
+									value="#{resourceBundle['prescription.patient']}" />
+								<p:autoComplete immediate="true" 
+									selectListener="#{prescriptionManager.handleSelectPatient }"
+									id="patientAutoCom"
+									value="#{prescriptionManager.patientSelected}" required="true"
+									requiredMessage="#{resourceBundle['prescription.patient.notEmpty']}"
+									completeMethod="#{autoCompletePatientManager.complete}"
+									forceSelection="true" var="patient"
+									onSelectUpdate="@form,prescriptionForm,produitPrescrit_form"
+									itemLabel="#{patient.numeroIpp} #{patient.nom} - #{patient.prenom}"
+									itemValue="#{patient}" converter="#{patientConverter}" />
+							</h:panelGrid>
+
+							<h:panelGrid columns="1" columnClasses="panelCol_100" rendered="#{droitAccesHelper.isPatientVisible() and prescriptionManager.valid }" cellpadding="0" cellspacing="0" border="0" width="100%">
+
+								<!-- Nom -->
+								<h:outputLabel
+									value="#{resourceBundle['prescription.patient.nom']}"
+									for="patient_nom" />
+								<h:outputText id="patient_nom" 
+									value="#{prescriptionManager.patientSelected.nom}" />
+								<br />
+								<!-- Prenom -->
+								<h:outputLabel
+									value="#{resourceBundle['prescription.patient.prenom']}"
+									for="patient_prenom" />
+								<h:outputText id="patient_prenom"
+									value="#{prescriptionManager.patientSelected.prenom}" />
+								<br />
+			
+								<!-- Nom de jeune fille -->
+								<h:outputLabel
+									value="#{resourceBundle['prescription.patient.nomJeuneFille']}"
+									for="patient_nomJeuneFille" />
+								<h:outputText id="patient_nomJeuneFille"
+									value="#{prescriptionManager.patientSelected.nomJeuneFille}" />
+								<br />
+			
+								<!-- Numero IPP -->
+								<h:outputLabel
+									value="#{resourceBundle['prescription.patient.ipp']}"
+									for="patient_ipp" />
+								<h:outputText id="patient_ipp"
+									value="#{prescriptionManager.patientSelected.numeroIpp}" />
+								<br />
+								
+								
+								<!-- Date de naissance -->
+								<h:outputLabel
+									value="#{resourceBundle['prescription.patient.dateNaissance']}"
+									for="patient_dateNaissance" />
+								<h:outputText id="patient_dateNaissance"
+									value="#{prescriptionManager.patientSelected.dateNaissance.time}">
+									<f:convertDateTime
+										pattern="#{resourceBundle['date.pattern.default']}" />
+								</h:outputText>
+								<br />
+								
+							</h:panelGrid>
+								
+							<h:panelGrid columns="1" columnClasses="panelCol_100" rendered="#{!droitAccesHelper.isPatientVisible() and prescriptionManager.valid}" cellpadding="0" cellspacing="0" border="0" width="100%">
+								<!-- Initiales -->
+								<h:outputLabel
+									value="#{resourceBundle['prescription.patient.initiales']}"
+									for="initiales" />
+								<h:outputText id="initiales" 
+									value="#{prescriptionManager.patientSelected.initiales}" />
+							</h:panelGrid>	
+								
+								
+							<h:panelGrid columns="1" columnClasses="panelCol_100" rendered="#{prescriptionManager.valid}" cellpadding="0" cellspacing="0" border="0" width="100%">
+								<!-- Poid -->
+								<h:outputLabel
+									value="#{resourceBundle['prescription.patient.poid']}"
+									for="patient_poid" />
+								<h:outputText id="patient_poid"
+									value="#{prescriptionManager.patientSelected.poid}" />
+								<br />
+
+								<!-- Taille -->
+								<h:outputLabel
+									value="#{resourceBundle['prescription.patient.taille']}"
+									for="patient_taille" />
+								<h:outputText id="patient_taille"
+									value="#{prescriptionManager.patientSelected.taille}" />
+								<br />
+			
+								<!-- Surface corporelle -->
+								<h:outputLabel
+									value="#{resourceBundle['prescription.patient.surface']}"
+									for="patient_surface" />
+								<h:outputText id="patient_surface"
+									value="#{prescriptionManager.patientSelected.surface}">
+									<f:convertNumber maxFractionDigits="3"/>
+									</h:outputText>
+								<br />
+							</h:panelGrid>
+							
+							<br />
+							<p:commandButton id="editPatient"  process="@this"  rendered="#{prescriptionManager.valid and !prescriptionManager.readOnly}"
+								action="editPatient" immediate="true" 
+								value="#{resourceBundle['btn.modifierPatient']}"
+								title="#{resourceBundle['btn.modifierPatient']}">
+								<f:param name="idPatient" value="#{prescriptionManager.patientSelected.id}" />
+							</p:commandButton>
+						</div>
+					</fieldset>
+				</div>
+				
+				<div class="resultBox" style="width: 700px;">
+						
+					<!-- INFOS ESSAI -->
+					<h2><h:outputFormat class="titleFloat"
+						value="#{resourceBundle['prescription.infoEssai']}" />
+					</h2>
+					<fieldset>
+						<table class="big" style="width: 690px" cellpadding="0" cellspacing="0" border="0" width="100%">
+							<tr>
+								<td>
+									<!-- Si aucun patient inclu n'est selectionne -->
+									<h:panelGrid id="panelEssai_choix" rendered="#{not prescriptionManager.valid}" 
+										columns="3" columnClasses="panelCol_20,panelCol_30,panelCol_50" cellpadding="0" cellspacing="0" border="0" width="100%">
+										<!-- Selection de l'essai -->
+										<h:outputLabel id="labelEssai" for="essaiAutoCom"
+											styleClass="mandatory"
+											value="#{resourceBundle['editPrescription.essai']}" />
+										<p:autoComplete immediate="true" style="width:150px;"
+											id="essaiAutoCom" value="#{prescriptionManager.essaiSelected}"
+											required="true"  selectListener="#{patientsManager.handleSelectEssai}"
+											requiredMessage="#{resourceBundle['prescription.essai.notEmpty']}"
+											completeMethod="#{autoCompleteEssaiManager.complete}"
+											onSelectUpdate="@form"
+											forceSelection="true" var="essai"
+											itemLabel="#{essai.numInterne} #{essai.nom} #{essai.promoteur.raisonSociale}"
+											itemValue="#{essai}" converter="#{essaiConverter}" />
+									</h:panelGrid>
+
+									<!-- Si patient inclu selectionne -->
+									<h:panelGrid id="panelEssai_infos" rendered="#{prescriptionManager.valid}" 
+										columns="1" columnClasses="panelCol_100" cellpadding="0" cellspacing="0" border="0" width="100%">
+										<h:panelGrid id="panelEssai_infos_haut" rendered="#{prescriptionManager.valid}" 
+											columns="4" columnClasses="panelCol_20,panelCol_30,panelCol_20,panelCol_30" cellpadding="0" cellspacing="0" border="0" width="100%">
+											<!--  Nom Promoteur -->
+											<h:outputLabel id="labelEssaiPromoteur" for="essai_promoteur"
+												value="#{resourceBundle['editPrescription.essai']}" />
+											<h:outputText id="essai_promoteur"
+												value="#{prescriptionManager.bean.inclusion.essai.numInterne} #{prescriptionManager.bean.inclusion.essai.nom} #{prescriptionManager.bean.inclusion.essai.promoteur.raisonSociale}" />
+												
+										 	<!-- Debut traitement -->
+											<h:outputLabel id="labelDateDebuTraitement" for="date_debut_traitement"
+												value="#{resourceBundle['editPrescription.dateDebutTraitement']}" />
+											<p:calendar id="date_debut_traitement" disabled="#{prescriptionManager.readOnly}"  
+												value="#{prescriptionManager.bean.dateDebutTraitement}"
+												effect="#{resourceBundle['effect.calendar']}"
+												locale="#{resourceBundle['date.locale']}" showButtonPanel="true"
+												navigator="true" converter="#{calendarConverter}" />
+											
+											<!-- Numero sigrec -->
+											<h:outputLabel id="labelNumSigrec" for="num_sigrec"
+												value="#{resourceBundle['editPrescription.numSigrec']}" />
+											<h:outputText id="num_sigrec" 
+												value="#{prescriptionManager.bean.inclusion.essai.detailRecherche.numEnregistrement}" />
+												
+											<!-- Code promoteur -->
+											<h:outputLabel id="labelCodePromoteur" for="code_promoteur"
+												value="#{resourceBundle['editPrescription.codePromoteur']}" />
+											<h:outputText id="code_promoteur"
+												value="#{prescriptionManager.bean.inclusion.essai.codePromoteur}" />
+												
+											<!-- Numero inclusion -->
+											<h:outputLabel id="labelNumInclusion" for="num_inclusion"
+												value="#{resourceBundle['editPrescription.numInclusion']}" />
+											<h:inputText id="num_inclusion" value="#{prescriptionManager.bean.inclusion.numInclusion}" disabled="#{prescriptionManager.readOnly}"/>
+											
+											<security:authorize ifAnyGranted="ROLE_INVESTIGATEUR">
+													<!-- Investigateur -->
+													<c:set var="#{prescriptionManager.bean.investigateur}" value="#{userService.personne}"/>
+													<h:outputLabel id="labelInvestigateur" for="num_investigateur"
+														value="#{resourceBundle['editPrescription.investigateur']}" />
+													<h:outputText id="num_investigateur" value="#{userService.personne.nom} #{userService.personne.prenom}" />
+											</security:authorize>
+											<security:authorize ifAnyGranted="ROLE_PHARMACIEN,ROLE_PHARMACIEN_INTERNE,ROLE_PHARMACIEN_EXTERNE,ROLE_PHARMACIEN_PREPARATEUR,ROLE_PHARMACIEN_TITULAIRE,ROLE_PHARMACIEN_INTERNE_GARDE,ROLE_PHARMACIEN_ATTACHE,ROLE_PHARMACIEN_ASSISTANT,ROLE_ADMIN">
+													<!-- Numero inclusion -->
+													<h:outputLabel id="labelInvestigateur" for="investigateurForPharmacien" styleClass="mandatory"
+														value="#{resourceBundle['editPrescription.investigateur']}" />
+													<h:selectOneMenu id="investigateurForPharmacien" value="#{prescriptionManager.bean.investigateur}" converter="#{investigateurConverter}"
+													disabled="#{prescriptionManager.readOnly}" required="true" requiredMessage="#{resourceBundle['prescription.investigateur.notEmpty']}"> 
+													<f:selectItem noSelectionOption="true" itemLabel="" itemValue=""/>
+													<f:selectItems value="#{prescriptionManager.getInvestigateurs()}" var="item" itemLabel="#{item.nom} #{item.prenom}" itemValue="#{item}"/>
+												</h:selectOneMenu>
+											</security:authorize>
+											
+											<!-- Num randomisation -->
+											<h:outputLabel id="labelNumRandomisation" for="num_randomisation"
+												value="#{resourceBundle['editPrescription.numRandomisation']}" />
+											<h:inputText id="num_randomisation" disabled="#{prescriptionManager.readOnly}" value="#{prescriptionManager.bean.inclusion.numRandomisation}" />
+											
+											<!-- Service investigateur -->
+											<h:outputLabel id="labelServiceInvestigateur" for="serviceInvestigateur" styleClass="mandatory"
+												value="#{resourceBundle['editPrescription.service']}" />
+											<h:selectOneMenu id="serviceInvestigateur" disabled="#{prescriptionManager.readOnly}" value="#{prescriptionManager.bean.service}" converter="#{serviceConverter}"
+												required="true" requiredMessage="#{resourceBundle['prescription.service.notEmpty']}">
+												<f:selectItem noSelectionOption="true" itemLabel="" itemValue=""/>
+												<f:selectItems value="#{prescriptionManager.services}" var="item" itemLabel="#{item.nom}" itemValue="#{item}"/>
+											</h:selectOneMenu>
+											
+												<!-- Num randomisation -->
+											<h:outputLabel id="labelNumVisite" for="num_visite"
+												value="#{resourceBundle['editPrescription.numVisite']}" />
+											<h:inputText id="num_visite" disabled="#{prescriptionManager.readOnly}" value="#{prescriptionManager.bean.numVisite}" />
+											
+											<h:panelGroup/>
+											<h:panelGroup/>
+										</h:panelGrid>
+										
+										<!--  Si on est pas dans un essai en double aveugle, on affiche l'arbre de selection de la sequence -->
+										<h:panelGrid id="panelEssai_infos_base" rendered="#{prescriptionManager.valid and not(droitAccesHelper.isEssaiDoubleAveugle(prescriptionManager.bean.essai))}" 
+											columns="2" columnClasses="panelCol_20,panelCol_80" cellpadding="0" cellspacing="0" border="0" width="100%">
+											<!-- Bras et sequence -->	
+											<h:outputLabel id="labelSequence" for="sequence" styleClass="mandatory"
+												value="#{resourceBundle['editPrescription.design']}" />
+											<h:panelGroup>
+												<c:choose>
+													<c:when test="#{prescriptionManager.bean.sequence != null}">
+														<h:outputText id="sequenceSelected" style="margin-right: 10px;"
+															value="#{prescriptionManager.bean.sequence.parent.nomComplet} #{prescriptionManager.bean.sequence.nom}" />
+													</c:when>
+													<c:otherwise>
+														<h:outputText id="sequenceSelected" style="margin-right: 10px;" value="" />
+													</c:otherwise>
+												</c:choose>
+												<p:commandLink id="sequence"
+													update="treeDesign" rendered="#{not prescriptionManager.readOnly}"
+													title="#{resourceBundle['editPrescription.design.select']}"
+													oncomplete="popupDesign.show();">
+													<h:graphicImage library="images" name="modify.gif" />
+												</p:commandLink>
+											</h:panelGroup>
+										</h:panelGrid>
+										
+										<!-- Affichage de la liste des bras si on est dans un essai en double aveugle. -->
+										<h:panelGrid id="panelEssai_infos_sequence" rendered="#{droitAccesHelper.isEssaiDoubleAveugle(prescriptionManager.bean.essai)}" 
+											columns="2" columnClasses="panelCol_20,panelCol_80" cellpadding="0" cellspacing="0" border="0" width="100%">
+											<!-- Bras et sequence -->	
+											<h:outputLabel id="labelDesign" for="design" 
+												value="#{resourceBundle['editPrescription.design']}" />
+											<h:outputText id="design" value="#{designHelper.getBrasAsString(prescriptionManager.bean.essai)}"/>	
+										</h:panelGrid>
+									</h:panelGrid>
+								</td>
+							</tr>
+						</table>
+				</fieldset>
+				
+				<!-- INFOS PRESCRIPTION -->
+				<p:outputPanel rendered="#{prescriptionManager.valid }" >				
+					<h2><h:outputFormat class="titleFloat"
+					value="#{resourceBundle['editPrescription.prescription']}" /></h2>
+					
+					<fieldset>
+						<table class="big" style="width: 690px" cellpadding="0" cellspacing="0" border="0" >
+							<tr>
+								<td>
+									<h:panelGrid id="panelPrescription" columns="4" columnClasses="panelCol_20,panelCol_30,panelCol_20,panelCol_30" cellpadding="0" cellspacing="0" border="0">
+										<!-- Date de prescription -->
+										<h:outputLabel id="labelDatePrescription" for="datePrescription"
+											styleClass="mandatory"
+											value="#{resourceBundle['editPrescription.datePrescription']}" />
+										<p:calendar id="datePrescription" disabled="#{prescriptionManager.readOnly}"
+											value="#{prescriptionManager.bean.datePrescription}"
+											effect="#{resourceBundle['effect.calendar']}"
+											locale="#{resourceBundle['date.locale']}" showButtonPanel="true"
+											navigator="true" converter="#{calendarConverter}" />
+ 
+										<!-- Num prescription -->
+										<h:outputLabel id="labelNumPrescription" for="numPrescription"
+											value="#{resourceBundle['editPrescription.numPrescription']}" />
+										<h:inputText id="numPrescription" value="#{prescriptionManager.bean.numPrescription}" disabled="#{prescriptionManager.readOnly}"/>
+									</h:panelGrid>
+									
+									<!-- Si l'essai n'est pas en double aveugle -->
+									<p:panel id="produitsPrescritsPanel" header="#{resourceBundle['editPrescription.produitsPrescrits']}"
+										style="width: 99%;margin-top: 10px;" rendered="#{prescriptionManager.valid and not(droitAccesHelper.isEssaiDoubleAveugle(prescriptionManager.bean.essai))}" 
+										closable="false">
+								   		
+								   		<p:dataTable id="pdtsPrescrits" value="#{prescriptionManager.getList('produitsPrescrits', false)}" 
+											    	var="produit"  
+											    	emptyMessage="#{resourceBundle['results.none']}">	    		
+										   			
+										   			<!-- Nom -->
+													<p:column id="produit_nom" sortBy="#{produit.nom}">
+											 			<f:facet name="header">
+															<h:outputText value="#{resourceBundle['editPrescription.produitPrescrit.nom']}"/>
+														</f:facet>
+											   			<h:outputText value="#{produit.produit.nom}"/>
+												    </p:column>
+												    	  		
+										   			<!-- Code -->
+													<p:column id="produit_code">
+											 			<f:facet name="header">
+															<h:outputText value="#{resourceBundle['editPrescription.produitPrescrit.code']}"/>
+														</f:facet>
+											   			<h:outputText value="#{produit.produit.code}"/>
+												    </p:column>
+												      		
+										   			<!-- Mode de prescription -->
+													<p:column id="produit_modePrescription">
+											 			<f:facet name="header">
+															<h:outputText value="#{resourceBundle['editPrescription.produitPrescrit.modePrescription']}"/>
+														</f:facet>
+											   			<h:outputText value="#{produit.conditionnement.modePrescription.libelle}"/>
+												    </p:column>
+												      		
+										   			<!-- Posologie -->
+													<p:column id="produit_posologie">
+											 			<f:facet name="header">
+															<h:outputText value="#{resourceBundle['editPrescription.produitPrescrit.posologie']}"/>
+														</f:facet>
+											   			<h:outputText value="#{produit.dosageAsString} #{produit.frequence}"/>
+												    </p:column>
+												      		
+										   			<!-- Duree -->
+													<p:column id="produit_duree">
+											 			<f:facet name="header">
+															<h:outputText value="#{resourceBundle['editPrescription.produitPrescrit.duree']}"/>
+														</f:facet>
+											   			<h:outputText value="#{produit.duree}"/>
+												    </p:column>
+												      		
+										   			<!-- Numero de traitement -->
+													<p:column id="produit_numeroTraitement">
+											 			<f:facet name="header">
+															<h:outputText value="#{resourceBundle['editPrescription.produitPrescrit.numTraitement']}"/>
+														</f:facet>
+											   			<h:inputText value="#{produit.numTraitement}" rendered="#{produit.conditionnement.modePrescription == 'NUM_TRAITEMENT'}" disabled="#{prescriptionManager.readOnly}"/>
+												    </p:column>
+												    
+												    <!-- Actions -->
+												   	<p:column>
+														<f:facet name="header">
+															<h:outputText
+																value="#{resourceBundle['editPrescription.choix']}" />
+														</f:facet>
+														<div align="center">
+														
+<!--															  Edition d'un produit prescrit -->
+															 <p:commandLink immediate="true" title="#{resourceBundle['produitPrescrit.modify']}" style="margin-right:5px;" actionListener="#{produitPrescritManager.editProduitPrescrit}" rendered="#{not prescriptionManager.readOnly  and !droitAccesHelper.isLectureSeule()}" oncomplete="document.forms['formReturn'].editProduitPrescrit.click();">  
+															 	<h:graphicImage library="images" name="modify.gif"/>
+															 	<f:attribute name="produitCurrent" value="#{produit}"/>
+												             </p:commandLink> 			
+															
+															<!--  Suppression d'un produit prescrit  --> 
+															 <p:commandLink immediate="true" ajax="true" title="#{resourceBundle['produitPrescrit.del']}" rendered="#{not prescriptionManager.readOnly and !droitAccesHelper.isLectureSeule()}" actionListener="#{prescriptionManager.delProduitPrescrit}" update="produitsPrescritsPanel">  
+															 	<h:graphicImage library="images" name="del.gif"/>
+															 	<f:attribute name="produitToDelete" value="#{produit}"/>
+												             </p:commandLink>			
+												             
+														</div>
+													</p:column>
+												    		  			
+												</p:dataTable>
+									</p:panel>  
+											<!-- Si l'essai est en double aveugle -->
+											<h:panelGrid columns="2"  rendered="#{droitAccesHelper.isEssaiDoubleAveugle(prescriptionManager.bean.essai)}"  columnClasses="panelCol_20,panelCol_80" cellpadding="0" cellspacing="0" border="0" >
+													
+												<h:outputLabel
+													value="#{resourceBundle['editPrescription.produits']}" />
+												<h:outputText value="#{produitHelper.getProduitsAsString(prescriptionManager.bean.essai)}"/>	
+									    	</h:panelGrid>
+									<br />
+									<p:commandButton id="addProduitPrescrit"  rendered="#{prescriptionManager.valid and not(droitAccesHelper.isEssaiDoubleAveugle(prescriptionManager.bean.essai))}"
+										 process="@this" disabled="#{prescriptionManager.readOnly or droitAccesHelper.isLectureSeule()}"
+										style="float:right;" update="produitPrescrit_form"
+										oncomplete="popupEditProduitPrescrit.show();" actionListener="#{produitPrescritManager.initProduitPrescrit()}"
+										value="#{resourceBundle['btn.ajouter']}"
+										title="#{resourceBundle['btn.ajouter']}">
+									</p:commandButton>
+								</td>
+							</tr>
+							
+							<tr>
+								<td>
+									<h:panelGrid id="panelPrescription2" columns="2" columnClasses="panelCol_25,panelCol_75" cellpadding="0" cellspacing="0" border="0" >
+										<!-- Date de prescription -->
+										<h:outputLabel id="labelCOmmentairePrescription" for="commentairePrescription" rendered="#{not(droitAccesHelper.isEssaiDoubleAveugle(prescriptionManager.bean.essai))}"
+											value="#{resourceBundle['editPrescription.commentaire']}" />
+										<h:outputLabel id="labelCOmmentairePrescriptionDouble" for="commentairePrescription" rendered="#{droitAccesHelper.isEssaiDoubleAveugle(prescriptionManager.bean.essai)}"
+											value="#{resourceBundle['editPrescription.commentaire.double']}" /> 
+											
+										<h:inputTextarea id="commentairePrescription" 
+										   	value="#{prescriptionManager.bean.commentaire}" disabled="#{prescriptionManager.readOnly or droitAccesHelper.isLectureSeule()}" style="width:500px"
+										   	rows="#{resourceBundle['textarea.rows.default']}" />
+											
+									</h:panelGrid>
+								</td>
+							</tr>
+							
+						</table>
+						
+						</fieldset>
+					</p:outputPanel>
+					<div class="basicButton">
+					
+						<p:commandButton rendered="#{prescriptionManager.valid and not(droitAccesHelper.isEssaiDoubleAveugle(prescriptionManager.bean.essai))}" image="ui-icon ui-icon-disk" value="#{resourceBundle['export.jasper.modelePrescNominative']}" title="#{resourceBundle['export.jasper.modelePrescNominative']}" ajax="false">
+							<p:fileDownload value="#{jasperReportDwdController.downloadRapport(prescriptionManager.bean, enumManager.getEnumValue('TypeRapportJasper','MODELE_PRESCRIPTION_NOMINATIVE'))}" />
+						</p:commandButton>
+					
+						<p:commandButton rendered="#{prescriptionManager.valid and droitAccesHelper.isEssaiDoubleAveugle(prescriptionManager.bean.essai)}" image="ui-icon ui-icon-disk" value="#{resourceBundle['export.jasper.modelePrescNominative']}" title="#{resourceBundle['export.jasper.modelePrescNominative']}" ajax="false">
+							<p:fileDownload value="#{jasperReportDwdController.downloadRapport(prescriptionManager.bean.essai, enumManager.getEnumValue('TypeRapportJasper','MODELE_PRESCRIPTION_NOMINATIVE'))}" />
+						</p:commandButton>
+					</div>
+					
+					<div class="actionButton simple">
+					<p:commandButton id="saveButton"
+						action="save" ajax="false" rendered="#{prescriptionManager.valid }" disabled="#{prescriptionManager.readOnly or droitAccesHelper.isLectureSeule()}"
+						value="#{resourceBundle['btn.prescrire']}" 
+						title="#{resourceBundle['btn.prescrire']}" />
+						<security:authorize
+							ifAnyGranted="ROLE_PHARMACIEN,ROLE_PHARMACIEN_INTERNE,ROLE_PHARMACIEN_EXTERNE,ROLE_PHARMACIEN_PREPARATEUR,ROLE_PHARMACIEN_TITULAIRE,ROLE_ADMIN">
+							<p:commandButton id="saveButtonAndDispense"
+							action="saveAndDispense" ajax="false" rendered="#{prescriptionManager.valid }" disabled="#{prescriptionManager.readOnly}"
+							value="#{resourceBundle['btn.prescrireAndDispense']}" 
+							title="#{resourceBundle['btn.prescrireAndDispense']}" />
+						</security:authorize>
+						
+						</div>
+		   	
+					
+					</div>
+				<br />
+				
+			</h:form>
+			
+			
+		<div style="display: none;">
+				<h:form id="formReturn" prependId="false">
+		  			<p:commandButton id="hideReturnButton" action="comeback" ajax="false"/>
+		  			<p:commandButton id="editProduitPrescrit" update="produitPrescrit_form" onclick="popupEditProduitPrescrit.show();" />
+		 		</h:form>
+		 		
+	
+	 		</div>
+		<!-- Popups d'edition -->
+		<ui:include
+			src="/WEB-INF/pages/prescription/edit/popup/editPrescription_popups.xhtml" />
+
+	</ui:define>
+</ui:composition>

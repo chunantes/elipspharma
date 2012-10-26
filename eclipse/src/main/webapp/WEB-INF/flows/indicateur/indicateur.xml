@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<flow xmlns="http://www.springframework.org/schema/webflow"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://www.springframework.org/schema/webflow
+    http://www.springframework.org/schema/webflow/spring-webflow-2.0.xsd"
+	parent="main">
+
+	<!-- Démarrage -->
+	<on-start>
+		<evaluate expression="pharmacieSearchCriteria.clear()" />
+		<evaluate expression="pharmacieService.getAll(pharmacieSearchCriteria)"
+			result="pharmaciesManager.beans" />
+		<evaluate expression="indicateurManager.init()" />
+	</on-start>
+
+	<view-state id="indicateurView" view="../../pages/indicateur/indicateur.xhtml">
+
+		<!-- Generer -->
+		<transition on="generer" to="indicateurView">
+			<evaluate
+				expression="indicateurService.generateIndicateur(indicateurManager.pharmacie, indicateurManager.dateDebut, indicateurManager.dateFin)"
+				result="indicateurManager.indicateurs" />
+		</transition>
+
+		<!-- Retour -->
+		<transition on="comeback" to="comeback" />
+
+		<!-- Erreur -->
+		<transition on="error" to="indicateurView" />
+	</view-state>
+
+	<!-- Etat final -->
+	<end-state id="comeback" />
+</flow>

@@ -1,0 +1,139 @@
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+     xmlns:ui="http://java.sun.com/jsf/facelets"
+     xmlns:h="http://java.sun.com/jsf/html"
+     xmlns:f="http://java.sun.com/jsf/core"
+     xmlns:p="http://primefaces.prime.com.tr/ui"
+     xmlns:sf="http://www.springframework.org/tags/faces"
+     xmlns:security="http://www.springframework.org/security/tags">
+    
+	<security:authorize
+		ifAnyGranted="ROLE_PHARMACIEN,ROLE_PHARMACIEN_INTERNE,ROLE_PHARMACIEN_EXTERNE,ROLE_PHARMACIEN_PREPARATEUR,ROLE_PHARMACIEN_TITULAIRE,ROLE_ADMIN">
+		
+		<p:panel id="panelAlertes" header="#{resourceBundle['accueil.alertes']}" closable="false" >
+			    		
+		    <p:dataTable id="alertes" value="#{essaiManager.alertes}" var="alerte" emptyMessage="#{resourceBundle['results.none']}" style="width:100%">
+				
+	   			<p:column id="essai" styleClass="panelCol_20">
+	   				<f:facet name="header">
+	   					<h:outputText value="#{resourceBundle['alerte.essai']}"/>
+	   				</f:facet>
+	   				<h:outputText value="#{alerte.essai.numInterne} #{alerte.essai.nom}"/>
+		   		</p:column>
+	   			
+	   			<p:column id="pharmacie" styleClass="panelCol_20">
+	   				<f:facet name="header">
+	   					<h:outputText value="#{resourceBundle['alerte.pharmacie']}"/>
+	   				</f:facet>
+	   				<h:outputText value="#{alerte.pharmacie.nom}"/>
+	   			</p:column>
+	   			
+	   			<p:column id="typeAlerte" styleClass="panelCol_20">
+	   				<f:facet name="header">
+	   					<h:outputText value="#{resourceBundle['alerte.typeAlerte']}"/>
+	   				</f:facet>
+	   				<h:outputText value="#{alerte.typeAlerte.libelle}"/>
+	   			</p:column>
+	   			
+	   			<p:column id="libelle" styleClass="panelCol_40">
+	   				<f:facet name="header">
+	   					<h:outputText value="#{resourceBundle['alerte.libelle']}"/>
+	   				</f:facet>
+	   				<h:outputText value="#{alerte.libelle}"/>
+	   			</p:column>
+	   			
+			</p:dataTable>	    		
+	   		
+	 	</p:panel>
+	 </security:authorize>    
+    
+	<p:panel id="panelEvenements" header="#{resourceBundle['editEssai.onglet.evenements.title']}" closable="false" >
+		    		
+	    <p:dataTable id="evenements" value="#{essaiManager.getList('evenements', false)}" var="evenement" emptyMessage="#{resourceBundle['results.none']}"
+		 	selection="#{essaiManager.evenementSelected}" selectionMode="single"
+			update="evenements" style="width:100%;"
+	    	onselectComplete="javascript:document.getElementById('editEvenementButton').click();" >
+			
+	   			<p:column id="typeEvenement" styleClass="panelCol_10">
+	   				<f:facet name="header">
+	   					<h:outputText value="#{resourceBundle['gestionEvenement.typeEvenement']}"/>
+	   				</f:facet>
+	   				<h:outputText value="#{evenement.typeEvenement.libelle}"/>
+	   			</p:column>
+	   			
+	   			<p:column id="libelle" styleClass="panelCol_60">
+	   				<f:facet name="header">
+	   					<h:outputText value="#{resourceBundle['gestionEvenement.libelle']}"/>
+	   				</f:facet>
+	   				<h:outputText value="#{evenement.resultatVisite.libelle} - " rendered="#{evenement.typeEvenement eq VISITE and (evenement.resultatVisite ne null)}"/><h:outputText value="#{evenement.libelle}"/>
+	   			</p:column>
+	   			
+	   			<p:column id="date" styleClass="panelCol_20">
+	   				<f:facet name="header">
+	   					<h:outputText value="#{resourceBundle['gestionEvenement.date']}"/>
+	   				</f:facet>
+	   				<div align="center">
+	    				<h:outputText value="#{evenement.dateDebut.time}">
+	    					<f:convertDateTime pattern="#{resourceBundle['date.pattern.withHeures']}" />
+	    				</h:outputText>
+	   				</div>
+	   			</p:column>
+	   			
+	   			<p:column id="action" styleClass="panelCol_10">
+	   				<f:facet name="header">
+	   					<p:commandLink ajax="false" action="addEvenement" rendered="#{not droitAccesHelper.isEssaiLectureSeule()}">  
+							<h:graphicImage library="images" name="add.gif" title="#{resourceBundle['gestionEvenement.addFromEssai']}"/>
+				        </p:commandLink>
+	   				</f:facet>
+	   				<div align="center">
+						<p:commandLink ajax="false" action="delEvenement" immediate="true" rendered="#{not droitAccesHelper.isEssaiLectureSeule()}">
+							<h:graphicImage library="images" name="del.gif" title="#{resourceBundle['gestionEvenement.del']}"/>
+							<f:setPropertyActionListener target="#{essaiManager.evenementSelected}" value="#{evenement}"/>
+				        </p:commandLink>	   				
+	   				</div>
+	   			</p:column>
+	  			
+		</p:dataTable>
+		
+		<!-- Boutons caches redirection -->
+		<div style="display:none;">
+			<p:commandButton id="editEvenementButton" action="editEvenement" ajax="false"/>
+		</div>    		   		
+	  		
+	</p:panel>    	
+	
+	<p:panel id="panelIncidents" header="#{resourceBundle['accueil.incidents']}" closable="false" >
+			    		
+		    <p:dataTable id="incidents" value="#{incidentManager.findIncidentsForEssai(essaiManager.bean)}" var="incident" emptyMessage="#{resourceBundle['results.none']}" style="width:100%"  liveScroll="true" rows="5">
+				
+	   			<p:column id="date" styleClass="panelCol_20">
+	   				<f:facet name="header">
+	   					<h:outputText value="#{resourceBundle['incident.date']}"/>
+	   				</f:facet>
+	   				<h:outputText value="#{incident.date.time}">
+	   					<f:convertDateTime pattern="#{resourceBundle['date.pattern.withHeures']}" />
+	   				</h:outputText>
+	   			</p:column>
+	   			
+	   			<p:column id="libelle" styleClass="panelCol_30">
+	   				<f:facet name="header">
+	   					<h:outputText value="#{resourceBundle['incident.libelle']}"/>
+	   				</f:facet>
+	   				<h:outputText value="#{incident.libelle}"/>
+	   			</p:column>
+	   			
+	   			<p:column id="commentaire" styleClass="panelCol_50">
+	   				<f:facet name="header">
+	   					<h:outputText value="#{resourceBundle['incident.commentaire']}"/>
+	   				</f:facet>
+	   				<h:outputText value="#{incident.commentaire}"/>
+	   			</p:column>
+	   			
+			</p:dataTable>	   
+			
+			<br /> 		
+	   		
+	   		<p:commandButton  ajax="true" onclick="popupListeIncident.show();" immediate="true" value="#{resourceBundle['incident.voir']}" title="#{resourceBundle['incident.voir']}"/>
+	   		
+	 	</p:panel>
+      
+</ui:composition>

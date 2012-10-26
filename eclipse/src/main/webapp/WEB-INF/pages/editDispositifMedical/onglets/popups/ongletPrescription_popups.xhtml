@@ -1,0 +1,192 @@
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:p="http://primefaces.prime.com.tr/ui"
+	xmlns:c="http://java.sun.com/jsp/jstl/core">
+	
+	<!--  Pop-up d'edition -->
+	<p:dialog 
+		widgetVar="popupEdition"
+		id="idPopupEditionCondDm" closeListener="#{conditionnementsManager.reinit()}"
+		header="#{resourceBundle['editProduit.conditionnement.edit']}"
+		onHide="javascript:forceScrollEditProduitImmediate();"
+		resizable="true" modal="true" width="800">
+		
+		
+		<h:form id="formConditionnement" prependId="false">
+			<p:messages id="errors"/>
+			<h:panelGrid columns="4" width="100%"
+							border="0" cellpadding="5" cellspacing="0"
+							columnClasses="panelCol_25,panelCol_25,panelCol_25,panelCol_25">
+
+				<!--  Libelle -->						
+				<h:outputLabel id="labelCondLibelle1" for="cond_libelle1" styleClass="mandatory"
+							value="#{resourceBundle['editProduit.onglet.prescription.conditionnement.libelle']}" />
+				<h:inputText id="cond_libelle1" required="true" requiredMessage="#{resourceBundle['conditionnement.libelle.notEmpty']}"
+					value="#{conditionnementManager.bean.libelle}" />
+					<h:panelGrid/>
+					<h:panelGrid/>
+							
+			</h:panelGrid>				
+							
+			<!--  Panneau stock -->
+			<p:panel id="stockPanel" header="#{resourceBundle['editProduit.onglet.prescription.conditionnement.stock']}">
+			
+				<h:panelGrid columns="4" width="100%" id="panGrid1"
+						border="0" cellpadding="5" cellspacing="0"
+						columnClasses="panelCol_25,panelCol_25,panelCol_25,panelCol_25">
+				
+					<!-- Unite de gestion -->
+					<h:outputLabel id="labelCondUniteGestion1"
+						for="cond_unite_gestion1" styleClass="mandatory"
+						value="#{resourceBundle['editProduit.onglet.prescription.conditionnement.unite.gestion']}" />
+					<h:selectOneMenu id="cond_unite_gestion1" immediate="true" required="true" requiredMessage="#{resourceBundle['conditionnement.uniteGestion.notEmpty']}"
+  						value="#{conditionnementManager.bean.uniteGestion}">
+						<f:selectItem noSelectionOption="true" />
+						<f:selectItems value="#{enumManager.getValues('UniteGestion')}" />
+						<f:ajax render="pane_forme panGrid1 prescriptionGridPan" listener="#{conditionnementManager.handleUniteGestion}" process="@form"/>
+					</h:selectOneMenu>
+						
+					<!-- Forme -->
+					<h:outputLabel id="labelCondForme" for="cond_forme" styleClass="mandatory"
+						value="#{resourceBundle['editProduit.onglet.prescription.conditionnement.forme']}" />
+						
+					<p:outputPanel id="pane_forme">	
+						<h:selectOneMenu id="cond_forme" required="true" requiredMessage="#{resourceBundle['conditionnement.forme.notEmpty']}" immediate="true"
+							value="#{conditionnementManager.bean.forme}" rendered="#{conditionnementManager.bean.uniteGestion != enumManager.getEnumValue('UniteGestion', 'KIT')}"> 
+							<f:selectItem noSelectionOption="true" />
+							<f:selectItems value="#{enumManager.getValues('FormeConditionnement')}" />
+							<f:ajax render="panGrid1" listener="#{conditionnementManager.handleForme}" process="@form"/>
+						</h:selectOneMenu>		
+						<h:selectOneMenu id="cond_forme2" required="true" requiredMessage="#{resourceBundle['conditionnement.forme.notEmpty']}" immediate="true"
+							value="#{conditionnementManager.bean.forme}" rendered="#{conditionnementManager.bean.uniteGestion eq enumManager.getEnumValue('UniteGestion', 'KIT')}">
+							<f:selectItems value="#{enumManager.getEnumValueAsSelectItem('FormeConditionnement', 'CONDITIONNEMENT_PRIMAIRE')}" />
+							<f:ajax render="panGrid1" listener="#{conditionnementManager.handleForme}" process="@form"/>
+						</h:selectOneMenu>		
+					</p:outputPanel>
+				 
+					<!-- Nombre d'unite par conteneur --> 
+					<h:outputLabel id="labelNbUnite1" for="cond_nb_unite1" rendered="#{not(conditionnementManager.bean.uniteGestion.type eq  enumManager.getEnumValue('TypeUniteGestion', 'VOLUME') and conditionnementManager.bean.forme eq  enumManager.getEnumValue('FormeConditionnement', 'CONDITIONNEMENT_PRIMAIRE'))}"
+						value="#{resourceBundle['editProduit.onglet.prescription.conditionnement.nb']}" styleClass="mandatory"/>
+					<h:inputText id="cond_nb_unite1" required="true" requiredMessage="#{resourceBundle['conditionnement.nbUniteConteneur.notEmpty']}"
+						value="#{conditionnementManager.bean.nbUnitePrescription}" rendered="#{not(conditionnementManager.bean.uniteGestion.type eq  enumManager.getEnumValue('TypeUniteGestion', 'VOLUME') and conditionnementManager.bean.forme eq  enumManager.getEnumValue('FormeConditionnement', 'CONDITIONNEMENT_PRIMAIRE'))}"
+						converterMessage="#{resourceBundle['prescription.conditionnement.nb.invalid_type']}" >
+							<f:ajax render="resume" listener="#{conditionnementManager.buildResume()}"/>
+					</h:inputText>
+					<!-- Contenance -->
+					<h:outputLabel id="labelCondContenance" for="cond_contenance"  rendered="#{conditionnementManager.bean.uniteGestion.type eq  enumManager.getEnumValue('TypeUniteGestion', 'VOLUME') and conditionnementManager.bean.forme eq  enumManager.getEnumValue('FormeConditionnement', 'CONDITIONNEMENT_PRIMAIRE')}"
+						value="#{resourceBundle['editProduit.onglet.prescription.conditionnement.contenance']}" styleClass="mandatory"/>
+					<h:panelGrid columns="2" width="100%"  rendered="#{conditionnementManager.bean.uniteGestion.type eq  enumManager.getEnumValue('TypeUniteGestion', 'VOLUME') and conditionnementManager.bean.forme eq  enumManager.getEnumValue('FormeConditionnement', 'CONDITIONNEMENT_PRIMAIRE')}"
+						border="0" cellpadding="5" cellspacing="0"
+						columnClasses="panelCol_50,panelCol_50">
+						
+						<h:inputText id="cond_contenance"  required="true" requiredMessage="#{resourceBundle['conditionnement.uniteContenance.notEmpty']}"
+							value="#{conditionnementManager.bean.contenance}"
+							converterMessage="#{resourceBundle['prescription.conditionnement.contenance.invalid_type']}">
+							<f:ajax render="resume" listener="#{conditionnementManager.buildResume()}"/>
+						</h:inputText>
+					
+						<h:selectOneMenu id="cond_uniteContenance" required="true" requiredMessage="#{resourceBundle['conditionnement.uniteContenance.notEmpty']}"
+							value="#{conditionnementManager.bean.uniteContenance}">
+							<f:selectItem noSelectionOption="true" />
+							<f:selectItems value="#{enumManager.getValues('UniteDosage')}" />
+							<f:ajax render="resume" listener="#{conditionnementManager.buildResume()}"/>
+						</h:selectOneMenu>	
+							
+					</h:panelGrid>	
+					
+					
+					<!-- Dosage -->
+					<h:outputLabel id="labelCondDosage1" for="cond_dosage1" 
+						value="#{resourceBundle['editProduit.onglet.prescription.conditionnement.dosage']}" />
+					<h:panelGrid columns="2" width="100%"
+						border="0" cellpadding="5" cellspacing="0"
+						columnClasses="panelCol_50,panelCol_50">
+						
+						<h:inputText id="cond_dosage1" 
+							value="#{conditionnementManager.bean.dosage}"
+							converterMessage="#{resourceBundle['prescription.conditionnement.dosage.invalid_type']}" >
+							<f:ajax render="resume" listener="#{conditionnementManager.buildResume()}"/>
+						</h:inputText>
+					
+						<h:selectOneMenu id="cond_uniteDosage" required="true"
+							value="#{conditionnementManager.bean.uniteDosage}">
+							<f:selectItem noSelectionOption="true" />
+							<f:selectItems value="#{enumManager.getValues('UniteDosage')}" />
+							<f:ajax render="resume" listener="#{conditionnementManager.buildResume()}"/>
+						</h:selectOneMenu>	
+							
+					</h:panelGrid>
+				
+				</h:panelGrid>
+				
+				<h:panelGrid columns="4" width="100%"
+					border="0" cellpadding="5" cellspacing="0"
+					columnClasses="panelCol_25,panelCol_25,panelCol_25,panelCol_25">
+						
+					<!-- Voie d'administration -->
+					<h:outputLabel id="labelCondVoieAdministration1"
+						for="cond_voie_admin1" styleClass="mandatory"
+						value="#{resourceBundle['editProduit.onglet.prescription.conditionnement.voie']}" />
+					<h:selectOneMenu id="cond_voie_admin1" required="true" immediate="true" requiredMessage="#{resourceBundle['conditionnement.voie.notEmpty']}"
+						value="#{conditionnementManager.bean.voieAdministration}">
+						<f:selectItem noSelectionOption="true" />
+						<f:selectItems
+							value="#{enumManager.getValues('VoieAdministration')}" />
+						<f:ajax render="resume" listener="#{conditionnementManager.handleVoieAdministration}"/>
+					</h:selectOneMenu>
+					<h:panelGrid/>
+					<h:panelGrid/>
+				</h:panelGrid>	
+				
+				<p:outputPanel id="resume">		
+					<h:outputText value="#{conditionnementManager.resume}"/>
+				</p:outputPanel>
+				
+				
+				
+			</p:panel>
+			
+			<br />
+			
+			<!--  Panneau prescription -->
+			<p:panel id="prescriptionPanel" header="#{resourceBundle['editProduit.onglet.prescription.conditionnement.prescription']}">
+			
+				<h:panelGrid columns="4" width="100%" id="prescriptionGridPan"
+						border="0" cellpadding="5" cellspacing="0"
+						columnClasses="panelCol_25,panelCol_25,panelCol_25,panelCol_25">
+				
+					<!-- Mode de prescription -->			
+					<h:outputLabel id="labelCondMode" for="cond_mod" styleClass="mandatory"
+						value="#{resourceBundle['editProduit.onglet.prescription.conditionnement.mode']}" />
+					<h:selectOneMenu id="cond_mod" required="true" requiredMessage="#{resourceBundle['conditionnement.mode.notEmpty']}"
+						value="#{conditionnementManager.bean.modePrescription}">
+						<f:selectItem noSelectionOption="true" />
+						<f:selectItems value="#{enumManager.getValues('ModePrescription')}" />
+						<f:ajax render="prescriptionGridPan" listener="#{conditionnementManager.buildUnitePrescription()}"/>
+					</h:selectOneMenu>
+					<h:panelGroup/>
+					<h:panelGroup/>
+					
+					<!-- Unite de prescription -->
+					<h:outputLabel id="labelUnitePrescription" for="cond_unitePrescription" styleClass="mandatory"
+						value="#{resourceBundle['editProduit.onglet.prescription.conditionnement.unite.prescription']}" />
+					<h:outputText id="cond_unitePrescription"
+						value="#{conditionnementManager.bean.unitePrescription}" />
+					<h:panelGrid/>
+					<h:panelGrid/>
+					
+				</h:panelGrid>
+			</p:panel>
+
+
+			<div class="popupButton"><p:commandButton id="submitButton" 
+				value="#{resourceBundle['btn.valider']}" update="conditionnements errors" ajax="true" process="@form" actionListener="#{conditionnementsManager.add(dispositifMedicalManager.bean, conditionnementManager.bean)}"
+				oncomplete="closePopup(xhr, status, args, popupEdition);"/></div>
+			
+		</h:form>
+	</p:dialog> 
+	
+
+</ui:composition>

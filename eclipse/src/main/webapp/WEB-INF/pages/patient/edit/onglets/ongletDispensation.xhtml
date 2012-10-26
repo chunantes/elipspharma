@@ -1,0 +1,67 @@
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:p="http://primefaces.prime.com.tr/ui"
+	xmlns:c="http://java.sun.com/jsp/jstl/core">
+	
+	<p:dataTable id="dispensations" style="width:100%"
+		value="#{beanManagerHelper.returnAsDataModel(patientManager.dispensations)}"
+		var="dispensation" selection="#{dispensationsManager.beanSelected}" selectionMode="single"
+		update="dispensations" onselectComplete="javascript:document.forms['hiddenForm'].editDispensationButton.click();"	
+		emptyMessage="#{resourceBundle['results.none']}">
+
+		<!-- Essai -->
+		<p:column id="EssaiDispensation" >
+			<f:facet name="header">
+				<h:outputText value="#{resourceBundle['gestionPatient.prescription.essai']}" />
+			</f:facet>
+			<h:outputText value="#{dispensation.prescription.inclusion.essai.nom} - #{dispensation.prescription.inclusion.essai.codePromoteur}"/>
+		</p:column>
+		
+		<!-- Date -->
+		<p:column id="dateDispensation">
+			<f:facet name="header">
+				<h:outputText value="#{resourceBundle['gestionPatient.dispensation.date']}" />
+			</f:facet>
+			<h:outputText value="#{dispensation.dateDispensation.time}">
+				<f:convertDateTime
+					pattern="#{resourceBundle['date.pattern.default']}" />
+			</h:outputText>
+		</p:column>
+		
+		<!-- Bras -->
+		<p:column id="brasSequenceDispensation" >
+			<f:facet name="header">
+				<h:outputText value="#{resourceBundle['gestionPatient.prescription.bras.sequence']}" />
+			</f:facet>
+			<h:outputText value="#{dispensation.prescription.sequence.parent.nomComplet} - #{dispensation.prescription.sequence.nom}" />
+		</p:column>
+		
+		<!-- Numero -->
+		<p:column id="numeroPrescriptionDispensation" >
+			<f:facet name="header">
+				<h:outputText value="#{resourceBundle['gestionPatient.prescription.numero']}" />
+			</f:facet>
+			<h:outputText value="#{dispensation.prescription.numPrescription}" />
+		</p:column>
+		
+		<!-- Libelle patient -->
+		<p:column id="libelleProduitsPrescritsDispensation" >
+			<f:facet name="header">
+				<h:outputText value="#{resourceBundle['gestionPatient.prescription.produits.libelle']}" />
+			</f:facet>
+			<h:outputText value="#{dispensation.prescription.libelleProduitsPrescrits}" />
+		</p:column>
+		
+		<!-- Numero -->
+		<p:column id="dispense" >
+			<f:facet name="header">
+				<h:outputText value="#{resourceBundle['gestionPatient.dispensation.dispense']}" />
+			</f:facet>
+			<h:selectBooleanCheckbox value="#{dispensation.dispense}" disabled="true"/>
+		</p:column>
+		
+	</p:dataTable>
+
+</ui:composition>

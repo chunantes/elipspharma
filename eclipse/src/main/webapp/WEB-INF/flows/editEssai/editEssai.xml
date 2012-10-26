@@ -1,0 +1,499 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<flow xmlns="http://www.springframework.org/schema/webflow"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://www.springframework.org/schema/webflow
+    http://www.springframework.org/schema/webflow/spring-webflow-2.0.xsd"
+	parent="main">
+
+	<!-- Variables d'entrée -->
+	<input name="idEssai" />
+	<!--
+		cas de l'édition d'un essai existant
+	-->
+	<input name="idEssaiSigrec" />
+	<!--
+		cas d'un essai créé à partir de SIGREC
+	-->
+
+	<input name="idOnglet" />
+
+
+	<on-start>
+		<!-- Initialisation complétion automatique des promoteurs -->
+		<evaluate expression="'raisonSociale'"
+			result="autoCompletePromoteurManager.searchCriteria.activeOrder" />
+		<evaluate expression="'raisonSociale'"
+			result="autoCompletePromoteurManager.searchCriteriaProperty" />
+		<!-- Initialisation pharmacies -->
+		<evaluate expression="pharmacieSearchCriteria.clear()" />
+		<evaluate expression="pharmacieService.getAll(pharmacieSearchCriteria)"
+			result="pharmaciePrincipaleManager.beans" />
+		<set name="essaiManager.idOngletVisites"  value="'ONG_RECHERCHE,'"/>
+		<!-- nettoyage du search criteria sur la recherche de services -->
+		<evaluate expression="servicesEssaiGlobalManager.searchCriteria.clear()"/>			
+	</on-start>
+
+	<decision-state id="createOrEditOnglet">
+		<if test="idOnglet==null" then="createOngletCourant" else="copyOngletCourant" />
+	</decision-state>
+	<action-state id="createOngletCourant">
+		<set name="flowScope.idOngletCourant" value="'ONG_RECHERCHE'" />
+		<transition to="createOrEdit" />
+	</action-state>
+	<action-state id="copyOngletCourant">
+		<set name="flowScope.idOngletCourant" value="idOnglet" />
+		<transition to="createOrEdit" />
+	</action-state>
+
+	<decision-state id="createOrEdit">
+		<if test="idEssai==null" then="create" else="edit" />
+	</decision-state>
+	<decision-state id="create">
+		<if test="idEssaiSigrec==null" then="createFromScratch" else="createFromSigrec" />
+	</decision-state>
+
+	<!-- Création de zéro -->
+	<action-state id="createFromScratch">
+		<evaluate expression="essaiManager.setBean(essaiFactory.getInitializedObject())" />
+		<transition to="initNumSigrec" />
+	</action-state>
+	<action-state id="initNumSigrec">
+		<evaluate expression="essaiService.initNumEnregistrement(essaiManager.bean)" />
+		<transition to="resetChangementEtat" />
+	</action-state>
+
+	<!-- Création depuis Sigrec -->
+	<action-state id="createFromSigrec">
+		<evaluate expression="essaiManager.setBean(essaiBeanConverter.convert(essaiSigrecService.get(idEssaiSigrec)))" />
+		<transition to="resetChangementEtat" />
+	</action-state>
+
+	<!-- Modification -->
+	<action-state id="edit">
+		<evaluate expression="essaiManager.setBean(essaiService.get(idEssai))" />
+		<transition to="resetChangementEtat" />
+	</action-state>
+
+	<!-- Reset commentaire changement etat -->
+	<action-state id="resetChangementEtat">
+		<evaluate expression="essaiManager.resetChangementEtat()"/>
+		<transition to="calculAlerteEssai" />
+	</action-state>
+	
+	<!-- Lancement du calcul des alertes essai -->
+	<action-state id="calculAlerteEssai">
+		<evaluate expression="alerteService.getAlertes(essaiManager.bean)" result="essaiManager.alertes" />
+		<transition to="initOngletCourant" />
+	</action-state>
+
+	<!-- Initialisation de l'onglet courant -->
+	<action-state id="initOngletCourant">
+		<evaluate
+			expression="essaiManager.selectOngletCourant(flowScope.idOngletCourant)" />
+		<transition to="resetContactsManager" />
+	</action-state>
+	
+	<!-- Reset contacts manager -->
+	<action-state id="resetContactsManager">
+		<evaluate expression="essaiManager.resetContactsManager()" />
+		<transition to="initLastCommentaires" />
+	</action-state>
+
+	<!-- Initialisation des derniers commentaires -->
+	<action-state id="initLastCommentaires">
+		<evaluate expression="essaiManager.initLastCommentaires()" />
+		<transition to="initLastDocuments" />
+	</action-state>
+	<!-- Initialisation des derniers documents -->
+	<action-state id="initLastDocuments">
+		<evaluate expression="essaiManager.initLastDocuments()" />
+		<transition to="initLastModifs" />
+	</action-state>
+	<!-- Initialisation des dernières modifications -->
+	<action-state id="initLastModifs">
+		<evaluate expression="essaiManager.initLastModifs()" />
+		<transition to="initServices1" />
+	</action-state>
+	<!-- Initialisation des listes de services -->
+	<action-state id="initServices1">
+		<evaluate expression="'nom'"
+			result="servicesEssaiGlobalManager.searchCriteria.activeOrder" />
+		<transition to="initServices2" />
+	</action-state>
+	<action-state id="initServices2">
+		<evaluate
+			expression="servicesEssaiFaisabManager.searchCriteria.setActiveOrder(servicesEssaiGlobalManager.searchCriteria.activeOrder)" />
+		<transition to="applyGetAll1" />
+	</action-state>
+	<action-state id="applyGetAll1">
+		<evaluate
+			expression="selectableBeanFactory.getInitializedObjects(serviceService.getAll(servicesEssaiGlobalManager.searchCriteria))"
+			result="servicesEssaiGlobalManager.beans" result-type="java.util.List" />
+		<transition to="applyGetAll2" />
+	</action-state>
+	<action-state id="applyGetAll2">
+		<evaluate
+			expression="selectableBeanFactory.getInitializedObjects(serviceService.getAll(servicesEssaiFaisabManager.searchCriteria))"
+			result="servicesEssaiFaisabManager.beans" result-type="java.util.List" />
+		<transition to="prepareSelected1" />
+	</action-state>
+	<action-state id="prepareSelected1">
+		<evaluate
+			expression="beanManagerHelper.updateSelectableWrapped(essaiManager.bean.services, servicesEssaiGlobalManager.beans)" />
+		<transition to="prepareSelected2" />
+	</action-state>
+	<action-state id="prepareSelected2">
+		<evaluate
+			expression="beanManagerHelper.updateSelectableWrapped(essaiManager.bean.detailFaisabilite.infosEtude.servicesImputation, servicesEssaiFaisabManager.beans)" />
+		<transition to="initPharmacies" />
+	</action-state>
+	
+		<!-- Initialisation des listes de pharmacies -->
+	<action-state id="initPharmacies">
+		<evaluate expression="'nom'"
+			result="pharmaciesEssaiPharmaManager.searchCriteria.activeOrder" />
+		<transition to="applyGetAllPharmacies" />
+	</action-state>
+	<action-state id="applyGetAllPharmacies">
+		<evaluate
+			expression="selectableBeanFactory.getInitializedObjects(pharmacieService.getAll(pharmaciesEssaiPharmaManager.searchCriteria, false))"
+			result="pharmaciesEssaiPharmaManager.beans" result-type="java.util.List" />
+		<transition to="prepareSelectedPharmacies" />
+	</action-state>
+	<action-state id="prepareSelectedPharmacies">
+		<evaluate
+			expression="beanManagerHelper.updateSelectableWrapped(essaiManager.bean.detailDonneesPharma.pharmacies, pharmaciesEssaiPharmaManager.beans)" />
+		<transition to="initEtablissements" />
+	</action-state>
+	
+		<!-- Initialisation des listes de etablissements -->
+	<action-state id="initEtablissements">
+		<evaluate expression="'nom'"
+			result="etablissementsEssaiPharmaManager.searchCriteria.activeOrder" />
+		<transition to="applyGetAllEtablissements" />
+	</action-state>
+	<action-state id="applyGetAllEtablissements">
+		<evaluate
+			expression="selectableBeanFactory.getInitializedObjects(etablissementService.getAll(etablissementsEssaiPharmaManager.searchCriteria))"
+			result="etablissementsEssaiPharmaManager.beans" result-type="java.util.List" />
+		<transition to="prepareSelectedEtablissements" />
+	</action-state>
+	<action-state id="prepareSelectedEtablissements">
+		<evaluate
+			expression="beanManagerHelper.updateSelectableWrapped(essaiManager.bean.detailDonneesPharma.etablissements, etablissementsEssaiPharmaManager.beans)" />
+		<transition to="prepareDesign" />
+	</action-state>
+	
+	
+	<action-state id="prepareDesign">
+			<evaluate expression="designsManager.init()"/>
+			<transition to="initGrille"/>
+	</action-state>
+	<action-state id="initGrille">
+		<evaluate expression="grilleManager.init()"	/>
+		<transition to="viewEditEssai"/>
+	</action-state>
+
+	<!-- Page principale -->
+	<view-state id="viewEditEssai" view="../../pages/editEssai/editEssai.xhtml">
+		<on-entry>
+			<evaluate expression="essaiManager.ongletVisites.clear()"/>
+		</on-entry>
+		<on-render>
+			<evaluate expression="essaiService.reattach(essaiManager.bean)"
+				result="essaiManager.bean" />
+		</on-render>
+		<transition on="save" to="resetContactsManager">
+			<set name="flowScope.currentView" value="requestParameters.currentView" type="java.lang.String"/>
+			<evaluate
+				expression="essaiService.save(essaiManager.bean, flowScope.currentView)"
+				result="essaiManager.bean" />
+		</transition>
+		<transition on="submit" to="viewEditEssai" />
+		<transition on="error" to="viewEditEssai" />
+		<transition on="cancel" to="createOrEdit">
+			<evaluate expression="essaiService.dettach(essaiManager.bean)" />
+		</transition>
+		<transition on="comeback" to="comeback" />
+
+		<!--  Ajout d'un médicament -->
+		<transition on="addMedicament" to="editMedicament" >
+			<evaluate expression="essaiService.save(essaiManager.bean)" result="essaiManager.bean"/>
+		</transition>
+		<!--  Ajout d'un dispositif médical -->
+		<transition on="addDm" to="editDispositifMedical" >
+			<evaluate expression="essaiService.save(essaiManager.bean)" result="essaiManager.bean"/>
+		</transition>
+		<!--  Ajout d'un produit thérapeutique -->
+		<transition on="addProduitThera" to="editProduitTherapeutique" >
+			<evaluate expression="essaiService.save(essaiManager.bean)" result="essaiManager.bean"/>
+		</transition>
+		<!--  Ajout d'un preparation -->
+		<transition on="addPreparation" to="editPreparation" >
+			<evaluate expression="essaiService.save(essaiManager.bean)" result="essaiManager.bean"/>
+		</transition>
+
+		<!--  Edition d'un médicament -->
+		<transition on="editMedicament" to="editMedicament" >
+			<set name="flashScope.idMedicament" value="produitsManager.medicamentSelected.id" type="java.lang.Long" />
+			<evaluate expression="essaiService.save(essaiManager.bean)" result="essaiManager.bean"/>
+			<evaluate expression="null" result="produitsManager.medicamentSelected"/>	
+		</transition>
+		<!--  Edition d'un dispositif médical -->
+		<transition on="editDispositifMedical" to="editDispositifMedical">
+			<set name="flashScope.idDm" value="produitsManager.dmSelected.id" type="java.lang.Long" />
+			<evaluate expression="essaiService.save(essaiManager.bean)" result="essaiManager.bean"/>
+			<evaluate expression="null" result="produitsManager.dmSelected"/>	
+		</transition>
+		
+		<!--  Edition d'un produit thérapeutique -->
+		<transition on="editProduitTherapeutique" to="editProduitTherapeutique">
+			<set name="flashScope.idProduitThera" value="produitsManager.produitTheraSelected.id" type="java.lang.Long" />
+			<evaluate expression="essaiService.save(essaiManager.bean)" result="essaiManager.bean"/>
+			<evaluate expression="null" result="produitsManager.produitTheraSelected"/>	
+		</transition>
+		
+		<!--  Edition d'un preparation -->
+		<transition on="editPreparation" to="editPreparation">
+			<set name="flashScope.idPreparation" value="produitsManager.preparationSelected.id" type="java.lang.Long" />
+			<evaluate expression="essaiService.save(essaiManager.bean)" result="essaiManager.bean"/>
+			<evaluate expression="null" result="produitsManager.preparationSelected"/>	
+		</transition>
+
+		<!--  Suppression d'un produit -->
+		<transition on="delete" to="deleteProduit" />
+
+		<!--  Suppression d'un médicament -->
+		<transition on="deleteMedicament" to="deleteProduit">
+			<set name="flashScope.type" value="TYPE_PRODUIT_MEDICAMENT" />
+		</transition>
+		<!--  Suppression d'un Dispositif médical -->
+		<transition on="deleteDm" to="deleteProduit">
+			<set name="flashScope.type" value="TYPE_DISPOSITIF_MEDICAL" />
+		</transition>
+		<!--  Suppression d'un produit thérapeutique -->
+		<transition on="deleteProduitThera" to="deleteProduit">
+			<set name="flashScope.type" value="TYPE_PRODUIT_THERAPEUTIQUE" />
+		</transition>
+
+		<!--  Duplique un Produit -->
+		<transition on="dupliquer" to="dupliquerProduit" />
+
+		<!-- Ajouter une sequence -->
+		<transition on="addSequence" to="editSequence">
+			<evaluate
+				expression="essaiService.save(essaiManager.bean, requestParameters.currentView)"
+				result="essaiManager.bean" />
+		</transition>
+		
+		<!-- editer une sequence -->
+		<transition on="editSequence" to="editSequence" >
+			<evaluate
+				expression="essaiService.save(essaiManager.bean, requestParameters.currentView)"
+				result="essaiManager.bean" />
+			<set name="flashScope.id" value="requestParameters.id"/>
+		</transition>
+		
+		<!-- Supprimer une sequence -->
+		<transition on="removeSequence" to="viewEditEssai">
+			<evaluate expression="designsManager.removeSequence()"/>
+		</transition>
+		
+		<!-- Supprimer un bras -->
+		<transition on="removeBras" to="viewEditEssai">
+			<evaluate expression="designsManager.removeBras()"/>
+		</transition>
+		
+		<transition on="initDesignChrono" >
+			<evaluate expression="designsManager.initDesignChrono()"/>
+		</transition>
+		
+		<!-- Supprimer un événement -->
+		<transition on="delEvenement">
+			<evaluate expression="essaiService.removeEvenement(essaiManager.bean,essaiManager.evenementSelected)" />
+			<evaluate expression="essaiManager.setEvenementSelected(null)" />
+			<evaluate expression="essaiService.save(essaiManager.bean)" result="essaiManager.bean"/>
+		</transition>
+		 
+		<!-- Ajouter un événement -->
+		<transition on="addEvenement" to="editEvenement">
+			<set name="flashScope.idEssai" value="essaiManager.bean.id" type="java.lang.Long" />
+			<evaluate expression="essaiService.save(essaiManager.bean, requestParameters.currentView)" result="essaiManager.bean"/>
+			<evaluate expression="essaiManager.setEvenementSelected(null)" />
+		</transition>
+		
+		<!-- Edition d'un événement -->
+		<transition on="editEvenement" to="editEvenement">
+			<set name="flashScope.idEvenement" value="essaiManager.evenementSelected.id" type="java.lang.Long" />
+			<evaluate expression="essaiService.save(essaiManager.bean, requestParameters.currentView)" result="essaiManager.bean"/>
+			<evaluate expression="essaiManager.setEvenementSelected(null)" />
+		</transition>
+		
+		<!-- Calcul réels -->
+		<transition on="processCalculReel" to="viewEditEssai">
+			<evaluate expression="grilleService.processReel(grilleManager.bean, grilleManager.dateDebut, grilleManager.dateFin)" result="grilleManager.resultReel"/>
+			<evaluate result="essaiManager.getDocumentManager(REEL, true).fileType" expression="fileCreator.createFile(essaiManager.bean, grilleManager.resultReel, COUT_REEL)"/>
+			<set name="essaiManager.getDocumentManager(REEL, true).commentaire" value="'Fichier généré'"/>
+			<evaluate expression="essaiManager.ajouterDocument(REEL, true)"/>
+			<evaluate expression="essaiService.save(essaiManager.bean)" result="essaiManager.bean"/>
+		</transition>
+		
+		<!-- Calcul réels -->
+		<transition on="processCalculPrevision" to="viewEditEssai">
+			<evaluate expression="grilleService.processPrevision(grilleManager.bean, essaiManager.bean.detailSurcout.donneesPrevision)" result="grilleManager.resultPrevisionnel"/>
+			<evaluate result="essaiManager.getDocumentManager(PREVISIONNEL, true).fileType" expression="fileCreator.createFile(essaiManager.bean, grilleManager.resultPrevisionnel, COUT_PREVISIONNEL)"/>
+			<set name="essaiManager.getDocumentManager(PREVISIONNEL, true).commentaire" value="'Fichier généré'"/>
+			<evaluate expression="essaiManager.ajouterDocument(PREVISIONNEL, true)"/>
+			<evaluate expression="essaiService.save(essaiManager.bean)" result="essaiManager.bean"/>
+		</transition>
+		
+		<!-- Transition sur les ecrans de stock -->
+		<transition on="goStockConsultationFluxForEssai" to="consulterFluxForEssai" />
+		<transition on="goStockConsultationForEssai" to="consulterStockForEssai" />
+		<transition on="goStockExtensionPeremptionForEssai" to="extensionPeremptionForEssai" />
+		<transition on="goStockReceptionForEssai" to="receptionForEssai" /> 
+		<transition on="goStockSortieForEssai" to="sortieForEssai" /> 
+		
+		
+		<transition on="addPromoteur" to="editPromoteur"/>
+		<transition on="addArcInvestigateur" to="editArcInvestigateur"/>
+		<transition on="addArcPromoteur" to="editArcPromoteur"/>
+		<transition on="addCro" to="editCro"/>
+		
+	</view-state>
+
+	<!-- ####################### -->
+	<!--  Sous-flow Evenement    -->
+	<!-- ####################### -->
+	<subflow-state id="editEvenement" subflow="evenement/edit">
+		<input name="idEvenement" value="flashScope.idEvenement" type="java.lang.Long" />
+		<input name="idEssai" value="flashScope.idEssai" type="java.lang.Long" />
+		<transition on="comeback" to="viewEditEssai">
+			<evaluate expression="essaiService.get(essaiManager.bean.id)" result="essaiManager.bean" />
+		</transition>
+	</subflow-state>
+
+	<!-- ################### -->
+	<!--  Sous flows Produit -->
+	<!-- ################### -->
+	
+	<!-- Edition d'un medicament-->
+	<subflow-state id="editMedicament" subflow="editMedicament">
+		<attribute name="idMedicament" value="flashScope.idMedicament"/>
+		<transition to="viewEditEssai">
+			<evaluate expression="designsManager.initProduits()"/>
+		</transition>
+	</subflow-state>	
+	
+	<!-- Edition d'un dm-->
+	<subflow-state id="editDispositifMedical" subflow="editDispositifMedical">
+		<attribute name="idDm" value="flashScope.idDm"/>
+		<transition to="viewEditEssai">
+			<evaluate expression="designsManager.initProduits()"/>
+		</transition>
+	</subflow-state>	
+	
+	<!-- Edition d'un produit therapeutique-->
+	<subflow-state id="editProduitTherapeutique" subflow="editProduitTherapeutique">
+		<attribute name="idProduitThera" value="flashScope.idProduitThera"/>
+		<transition to="viewEditEssai">
+			<evaluate expression="designsManager.initProduits()"/>
+		</transition>
+	</subflow-state>	
+	
+	<!-- Edition d'une preparation -->
+	<subflow-state id="editPreparation" subflow="editPreparation">
+		<attribute name="idPreparation" value="flashScope.idPreparation"/>
+		<transition to="viewEditEssai">
+			<evaluate expression="designsManager.initProduits()"/>
+		</transition>
+	</subflow-state>	
+	
+	<!-- Sous flow ajouter une sequence -->
+	<subflow-state id="editSequence" subflow="editSequence">
+		<input name="id" value="flashScope.id"/>
+		<transition to="viewEditEssai" />
+	</subflow-state>
+
+	<!-- Sous flow consulter les flux  -->
+	<subflow-state id="consulterFlux" subflow="stock/consultationFlux">
+		<input name="idEssai" value="essaiManager.bean.id"/>
+		<transition to="viewEditEssai" />
+	</subflow-state>
+
+	<!-- Sous flow consulter les stocks  -->
+	<subflow-state id="consulterStock" subflow="stock/consultation">
+		<input name="idEssai" value="essaiManager.bean.id"/>
+		<transition to="viewEditEssai" />
+	</subflow-state>
+
+	<!-- Sous flow extension peremption  -->
+	<subflow-state id="extensionPeremption" subflow="stock/extensionPeremption">
+		<input name="idEssai" value="essaiManager.bean.id"/>
+		<transition to="viewEditEssai" />
+	</subflow-state>
+
+	<!-- Sous flow reception de stock  -->
+	<subflow-state id="reception" subflow="stock/reception">
+		<input name="idEssai" value="essaiManager.bean.id"/>
+		<transition to="viewEditEssai" />
+	</subflow-state>
+
+	<!-- Sous flow sortie de stock  -->
+	<subflow-state id="sortie" subflow="stock/sortie">
+		<input name="idEssai" value="essaiManager.bean.id"/>
+		<transition to="viewEditEssai" />
+	</subflow-state>
+
+
+	<!-- Suppression d'un médicament -->
+	<action-state id="deleteProduit">
+		<evaluate expression="produitsManager.remove(essaiManager.bean)" />
+		<transition on="error" to="viewEditEssai" />
+		<transition to="viewEditEssai" />
+	</action-state>
+
+	<!-- Dupliquer un produit -->
+	<action-state id="dupliquerProduit">
+		<evaluate expression="produitsManager.dupliquer(essaiManager.bean)" />
+		<transition on="error" to="viewEditEssai" />
+		<transition to="save" />
+	</action-state>
+
+	<action-state id="save">
+		<evaluate
+			expression="essaiService.save(essaiManager.bean, requestParameters.currentView)"
+			result="essaiManager.bean" />
+		<transition on="error" to="viewEditEssai" />
+		<transition to="viewEditEssai" />
+	</action-state>
+	
+	<!-- Edition Promoteur -->
+	<subflow-state id="editPromoteur" subflow="promoteur/edit">
+			<input name="idPromoteur" value="flashScope.idPromoteur"/>	
+		<transition to="viewEditEssai">
+			<set name="essaiManager.bean.promoteur" value="promoteurManager.bean"/>
+		</transition>
+	</subflow-state>
+	
+	<!-- Edition Arc Investigateur -->
+	<subflow-state id="editArcInvestigateur" subflow="personne/arcInvestigateur">
+		<input name="idArcInvestigateur" value="flashScope.idArcInvestigateur"/>
+		<transition to="viewEditEssai"/>
+	</subflow-state>
+	
+	<!-- Edition Arc Promoteur -->
+	<subflow-state id="editArcPromoteur" subflow="personne/arcPromoteur">
+		<input name="idArcPromoteur" value="flashScope.idArcPromoteur"/>
+		<transition to="viewEditEssai"/>
+	</subflow-state>
+	
+	<!-- Edition Cro -->
+	<subflow-state id="editCro" subflow="personne/cro">
+		<input name="idCro" value="flashScope.idCro"/>
+		<transition to="viewEditEssai"/>
+	</subflow-state>
+	
+	<end-state id="comeback" />
+
+</flow>

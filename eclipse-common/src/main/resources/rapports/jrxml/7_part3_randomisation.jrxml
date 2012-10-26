@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="7_part3_randomisation" pageWidth="555" pageHeight="842" whenNoDataType="AllSectionsNoDetail" columnWidth="555" leftMargin="0" rightMargin="0" topMargin="0" bottomMargin="0" whenResourceMissingType="Empty">
+	<property name="ireport.zoom" value="1.8150000000000073"/>
+	<property name="ireport.x" value="0"/>
+	<property name="ireport.y" value="0"/>
+	<subDataset name="Table Dataset 1"/>
+	<subDataset name="Table Dataset 2"/>
+	<subDataset name="dataset1"/>
+	<parameter name="SUBREPORT_DIR" class="java.lang.String"/>
+	<field name="respRandomisation" class="java.lang.String"/>
+	<field name="hasMoAssocie" class="java.lang.Boolean"/>
+	<field name="moAssocie" class="java.lang.String"/>
+	<detail>
+		<band height="45">
+			<staticText>
+				<reportElement x="13" y="1" width="190" height="20"/>
+				<box topPadding="3" leftPadding="3" bottomPadding="3" rightPadding="3"/>
+				<textElement>
+					<font isBold="true"/>
+				</textElement>
+				<text><![CDATA[Responsabilité de la randomisation :]]></text>
+			</staticText>
+			<textField>
+				<reportElement x="203" y="1" width="344" height="20"/>
+				<box topPadding="3" leftPadding="3" bottomPadding="3" rightPadding="3"/>
+				<textElement/>
+				<textFieldExpression class="java.lang.String"><![CDATA[$F{respRandomisation}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement positionType="Float" x="13" y="22" width="534" height="20">
+					<printWhenExpression><![CDATA[Boolean.TRUE.equals($F{hasMoAssocie})]]></printWhenExpression>
+				</reportElement>
+				<textElement textAlignment="Center">
+					<font fontName="Arial" isItalic="true"/>
+				</textElement>
+				<textFieldExpression class="java.lang.String"><![CDATA["(cf. MO associé '"+$F{moAssocie}+"')"]]></textFieldExpression>
+			</textField>
+		</band>
+	</detail>
+</jasperReport>

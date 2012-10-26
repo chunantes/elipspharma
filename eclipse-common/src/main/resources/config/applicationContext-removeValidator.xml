@@ -1,0 +1,74 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans 
+    xmlns="http://www.springframework.org/schema/beans" 
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd">
+
+	<!-- ============================= -->
+	<!-- POLE : REMOVE VALIDATOR       -->
+	<!-- ============================= -->					
+	<bean id="poleRemoveValidator" class="fr.pharma.eclipse.validator.remove.impl.PoleRemoveValidator"/>
+	
+	<!-- ================================ -->
+	<!-- ETABLISSEMENT : REMOVE VALIDATOR -->
+	<!-- ================================ -->					
+	<bean id="etablissementRemoveValidator" class="fr.pharma.eclipse.validator.remove.impl.EtablissementRemoveValidator"/>
+	
+	<!-- ================================ -->
+	<!-- PHARMACIE : REMOVE VALIDATOR     -->
+	<!-- ================================ -->					
+	<bean id="pharmacieRemoveValidator" class="fr.pharma.eclipse.validator.remove.impl.PharmacieRemoveValidator"/>
+	
+	<!-- ================================ -->
+	<!-- SITE : REMOVE VALIDATOR          -->
+	<!-- ================================ -->					
+	<bean id="siteRemoveValidator" class="fr.pharma.eclipse.validator.remove.impl.SiteRemoveValidator"/>
+	
+	<!-- ================================ -->
+	<!-- SERVICE : REMOVE VALIDATOR       -->
+	<!-- ================================ -->					
+	<bean id="serviceRemoveValidator" class="fr.pharma.eclipse.validator.remove.impl.ServiceRemoveValidator"/>
+	
+	<!-- ================================ -->
+	<!-- PROMOTEUR : REMOVE VALIDATOR     -->
+	<!-- ================================ -->					
+	<bean id="promoteurRemoveValidator" class="fr.pharma.eclipse.validator.remove.impl.PromoteurRemoveValidator"/>
+	
+	<!-- ================================ -->
+	<!-- PERSONNE : REMOVE VALIDATOR     -->
+	<!-- ================================ -->					
+	<bean id="personneRemoveValidator" class="fr.pharma.eclipse.validator.remove.impl.PersonneRemoveValidator"/>
+
+	<!-- ================================ -->
+	<!-- PRODUIT : REMOVE VALIDATOR       -->
+	<!-- ================================ -->					
+	<bean id="produitRemoveValidator" class="fr.pharma.eclipse.validator.remove.impl.ProduitRemoveValidator"/>
+
+
+	<!-- ================================== -->
+	<!-- SEQUENCE : REMOVE VALIDATOR  -->
+	<!-- ================================== -->					
+	<bean id="sequenceRemoveValidator" class="fr.pharma.eclipse.validator.remove.impl.SequenceRemoveValidator"/>
+
+	<!-- ================================== -->
+	<!-- DETAILSTOCKAGE : REMOVE VALIDATOR  -->
+	<!-- ================================== -->					
+	<bean id="brasRemoveValidator" class="fr.pharma.eclipse.validator.remove.impl.BrasRemoveValidator"/>
+	
+	<!-- ================================== -->
+	<!-- PATIENT : REMOVE VALIDATOR  		-->
+	<!-- ================================== -->					
+	<bean id="patientRemoveValidator" class="fr.pharma.eclipse.validator.remove.impl.PatientRemoveValidator"/>
+	
+	<!-- ================================= -->
+	<!-- STOCKAGE : REMOVE VALIDATOR  		-->
+	<!-- ================================== -->					
+	<bean id="stockageRemoveValidator" class="fr.pharma.eclipse.validator.remove.impl.StockageRemoveValidator"/>
+	
+	<!-- ================================= -->
+	<!-- PRESCIRPTION : REMOVE VALIDATOR  		-->
+	<!-- ================================== -->					
+	<bean id="prescriptionRemoveValidator" class="fr.pharma.eclipse.validator.remove.impl.PrescriptionRemoveValidator"/>
+	
+
+</beans>

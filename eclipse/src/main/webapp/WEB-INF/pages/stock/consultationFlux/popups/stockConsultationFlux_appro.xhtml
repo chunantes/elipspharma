@@ -1,0 +1,140 @@
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:p="http://primefaces.prime.com.tr/ui"
+	xmlns:c="http://java.sun.com/jsp/jstl/core">
+    
+   	<!-- APPROVISIONNEMENT -->
+	<p:dialog header="#{resourceBundle['stockConsultation.detailApprovisionnement']}" widgetVar="popupDetailMouvementStock" resizable="true" modal="true" width="700" 
+		rendered="#{fluxStockManager.beanSelected.type == 'APPROVISIONNEMENT'}" closeListener="#{fluxStockManager.setBeanSelected(null)}" onCloseUpdate="mouvementsStock @this" >
+ 	
+ 		<p:panel>
+ 	
+			<h:panelGrid columns="4" columnClasses="panelCol_25,panelCol_25,panelCol_25,panelCol_25" cellspacing="5" border="0" width="100%">
+
+				<!-- Essai -->
+				<h:outputLabel value="#{resourceBundle['stockReception.essai']}" />
+				<h:outputText value="#{fluxStockManager.beanSelected.essai.numInterne} #{fluxStockManager.beanSelected.essai.nom}"/>
+				
+				<!-- Pharmacie -->
+				<h:outputLabel value="#{resourceBundle['stockReception.pharmacie']}" />
+				<h:outputText value="#{fluxStockManager.beanSelected.pharmacie.nom}"/>
+				
+				<!-- Promoteur -->
+				<h:outputLabel value="#{resourceBundle['stockReception.promoteur']}" />
+				<h:outputText value="#{fluxStockManager.beanSelected.essai.promoteur.raisonSociale}"/>
+								
+				<!-- Date -->
+				<h:outputLabel value="#{resourceBundle['stockReception.date']}"/>
+				<h:outputText value="#{fluxStockManager.beanSelected.first.dateCreation.time}">
+					<f:convertDateTime pattern="#{resourceBundle['date.pattern.withHeures']}"/>
+				</h:outputText>
+
+				<!-- Code Promoteur -->
+				<h:outputLabel value="#{resourceBundle['stockReception.codePromoteur']}" />
+				<h:outputText value="#{fluxStockManager.beanSelected.essai.codePromoteur}"/>
+				
+				<!-- Receptionne par -->
+				<h:outputLabel value="#{resourceBundle['stockReception.receptionnePar']}" />
+				<h:outputText value="#{fluxStockManager.beanSelected.personne.prenom} #{fluxStockManager.beanSelected.personne.nom}"/>
+
+				<!-- Date de reception -->
+				<h:outputLabel value="#{resourceBundle['stockReception.dateReception']}" />
+				<h:outputText value="#{fluxStockManager.beanSelected.first.dateReception.time}">
+					<f:convertDateTime pattern="#{resourceBundle['date.pattern.withHeures']}"/>
+				</h:outputText>					
+				
+				<!-- Date arrivee colis -->
+				<h:outputLabel value="#{resourceBundle['stockReception.dateArriveeColis']}" />
+				<h:outputText value="#{fluxStockManager.beanSelected.first.dateArriveeColis}" converter="#{calendarConverter}" />
+				
+			</h:panelGrid>
+		
+		</p:panel>
+		
+		<br />
+		
+		<p:panel>
+		
+			<h:panelGrid columns="2" columnClasses="panelCol_25,panelCol_75" width="100%" cellspacing="5" border="0">			
+		
+				<!-- Approuve / Rejete -->
+				<h:outputLabel value="#{resourceBundle['stockReception.etat.mandatory']}"/>
+				<h:outputText value="#{resourceBundle['stockReception.etat.approuve']}" rendered="#{fluxStockManager.beanSelected.first.approApprouve == true}" />
+				<h:outputText value="#{resourceBundle['stockReception.etat.rejete']}" rendered="#{fluxStockManager.beanSelected.first.approApprouve == false}" />
+			
+			</h:panelGrid>
+			
+			<h:panelGrid columns="2" columnClasses="panelCol_25,panelCol_75" width="100%" cellspacing="5" border="0" rendered="#{fluxStockManager.beanSelected.first.approApprouve == false}">
+				<!-- Motif du refus -->
+				<h:outputLabel value="#{resourceBundle['stockReception.etat.motifRefus']}" rendered="#{not empty fluxStockManager.beanSelected.first.motifRefus}"/>
+				<h:outputText value="#{fluxStockManager.beanSelected.first.motifRefus.libelle}" rendered="#{not empty fluxStockManager.beanSelected.first.motifRefus}" />
+				
+           		<!-- Commentaire du refus -->
+				<h:outputLabel value="#{resourceBundle['stockReception.etat.commentaireRefus']}"/>
+				<h:inputTextarea style="100%;" value="#{fluxStockManager.beanSelected.first.commentaireRefus}" 
+					rows="#{resourceBundle['textarea.rows.default']}" disabled="true" />
+			</h:panelGrid>								
+		
+		</p:panel>
+		
+		<br />
+		<p:panel>
+		
+			<h:panelGrid columns="2" columnClasses="panelCol_25,panelCol_75" cellspacing="5" border="0" width="100%">
+			
+				<!-- Produit -->
+				<h:outputLabel value="#{resourceBundle['stockReception.produit']}" />
+				<h:outputText value="#{fluxStockManager.beanSelected.produit.denomination}"/>
+				
+				<!-- Conditionnement -->
+				<h:outputLabel value="#{resourceBundle['stockReception.conditionnement']}" />
+				<h:outputText value="#{fluxStockManager.beanSelected.conditionnement.libelle}"/>
+				
+				<!-- Date de peremption -->
+				<h:outputLabel value="#{resourceBundle['stockReception.datePeremption']}" />
+				<h:outputText value="#{fluxStockManager.beanSelected.first.datePeremption}" converter="#{calendarConverter}"/>
+				
+				<!-- NumLot -->
+				<h:outputLabel value="#{resourceBundle['stockReception.numLot']}"
+					rendered="#{not empty fluxStockManager.beanSelected.numLot}" />
+				<h:outputText value="#{fluxStockManager.beanSelected.numLot}"
+					rendered="#{not empty fluxStockManager.beanSelected.numLot}" />					
+					
+				<!-- Lieu de stockage -->
+				<h:outputLabel value="#{resourceBundle['stockReception.stockage']}" rendered="#{fluxStockManager.beanSelected.first.approApprouve == true}" />
+				<h:outputText value="#{fluxStockManager.beanSelected.stockage.nomComplet}" rendered="#{fluxStockManager.beanSelected.first.approApprouve == true}" />
+					
+				<!-- Quantite -->			
+				<h:outputLabel value="#{resourceBundle['stockReception.quantite']}" rendered="#{!fluxStockManager.beanSelected.isNumeroTraitement()}"/>
+				<h:outputText value="#{fluxStockManager.beanSelected.quantite}" rendered="#{!fluxStockManager.beanSelected.isNumeroTraitement()}"/>
+			
+			</h:panelGrid>
+		
+			<p:dataTable paginator="true" rows="10" update="@this" value="#{fluxStockManager.beanSelected.mvts}" var="mvt" rendered="#{fluxStockManager.beanSelected.isNumeroTraitement()}" emptyMessage="#{resourceBundle['results.none']}">
+							<p:column >
+					    		<f:facet name="header">
+					    			<h:outputText value="#{resourceBundle['stockReception.numerosTraitement']}"/>
+					    		</f:facet>
+					    		<h:outputText value="#{mvt.numTraitement}" />
+				    		</p:column>
+				    		
+				    		<p:column >
+					    		<f:facet name="header">
+					    			<h:outputText value="#{resourceBundle['stockConsultation.quantite']}"/>
+					    		</f:facet>
+					    		<h:outputText value="#{mvt.quantite}"/>
+				    		</p:column>	
+			</p:dataTable>
+		
+		</p:panel>
+		
+		<div class="popupButton">
+   			<p:commandButton value="#{resourceBundle['btn.fermer']}"
+   				onclick="popupDetailMouvementStock.hide();"/>
+   		</div> 
+ 	
+ 	</p:dialog>
+
+</ui:composition>

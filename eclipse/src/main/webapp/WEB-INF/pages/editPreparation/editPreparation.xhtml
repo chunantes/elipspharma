@@ -1,0 +1,335 @@
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:p="http://primefaces.prime.com.tr/ui"
+	xmlns:c="http://java.sun.com/jsp/jstl/core"
+	xmlns:security="http://www.springframework.org/security/tags"
+	template="/WEB-INF/pages/template/template.xhtml">
+
+	<ui:define name="title">
+		<h:outputFormat value="#{resourceBundle['editPreparation.title']}" />
+	</ui:define>
+
+	<ui:define name="body">
+		<h:form id="editPreparation" prependId="false">
+			<!-- Erreurs de validation -->
+			<p:outputPanel id="common_outp_msgs"
+				style="display:block;margin-top:10px;">
+				<p:messages id="err"/>
+			</p:outputPanel>
+
+			<!-- Focus sur le premier element de la page -->
+			<p:focus />
+			
+			<!-- Desactivation du scroll si les popups sont ouvertes apres submit -->
+<!--			<h:inputHidden id="disableScroll" value="#{conditionnementsManager.editFlag == true or detailsStockagesManager.editFlag == true or detailsStockagesManager.editRetourFlag == true}" />-->
+
+			<!-- Informations generales sur l'essai en disabled -->
+			<h2><h:outputFormat
+				value="#{resourceBundle['editPreparation.subTitle1']}" /></h2>
+			<fieldset>
+			<table class="big" cellpadding="0" cellspacing="0" border="0">
+				<tbody>
+					<tr>
+						<td class="box" width="50%">
+							<h:panelGrid id="common_pannel_gauche" width="100%"
+								columns="2" cellpadding="0" cellspacing="0" border="0"
+								columnClasses="panelCol_45,panelCol_55">
+
+							<h:outputLabel styleClass="mandatory" id="labelNumInterne"
+								for="common_numInterne"
+								value="#{resourceBundle['editEssai.common.numIterne']}" />
+							<h:inputText id="common_numInterne" disabled="true"
+								value="#{essaiManager.bean.numInterne}" required="true"
+								requiredMessage="#{resourceBundle['essai.numInterne.notEmpty']}" />
+
+							<h:outputLabel styleClass="mandatory" id="labelCodePromoteur"
+								for="common_codePromoteur"
+								value="#{resourceBundle['editEssai.common.codePromoteur']}" />
+							<h:inputText id="common_codePromoteur" disabled="true"
+								value="#{essaiManager.bean.codePromoteur}" required="true"
+								requiredMessage="#{resourceBundle['essai.codePromoteur.notEmpty']}" />
+
+							<h:outputLabel styleClass="mandatory" id="labelNom"
+								for="common_nom"
+								value="#{resourceBundle['editEssai.common.nomUsuel']}" />
+							<h:inputText id="common_nom" disabled="true"
+								value="#{essaiManager.bean.nom}" required="true"
+								requiredMessage="#{resourceBundle['essai.nom.notEmpty']}" />
+
+							<h:outputLabel id="labelPduitEval" for="common_pduitEval"
+								value="#{resourceBundle['editEssai.common.pduitEvalue']}" />
+							<h:outputText id="common_pduitEval"
+								value="#{essaiManager.bean.libelleProduitEvalue}" />
+
+							<h:outputLabel id="labelDCI" for="common_dci"
+								value="#{resourceBundle['editEssai.common.DCI']}" />
+							<h:outputText id="common_dci" value="#{essaiManager.bean.dci}" />
+
+							<h:outputLabel id="labelEmptPhysDoss" for="common_emptPhysDoss"
+								value="#{resourceBundle['editEssai.common.emplacmtPhysq']}" />
+							<h:inputText id="common_emptPhysDoss" disabled="true"
+								value="#{essaiManager.bean.emplacementPhysiqueDossier}" />
+
+						</h:panelGrid></td>
+						<td class="box" width="50%">
+							<h:panelGrid id="common_pannel_droit" width="100%"
+								columns="2" cellpadding="0" cellspacing="0" border="0"
+								columnClasses="panelCol_40,panelCol_60">
+							<h:outputLabel styleClass="mandatory" id="labelPromoteur"
+								for="common_promoteur"
+								value="#{resourceBundle['editEssai.common.promoteur']}" />
+							<p:autoComplete id="common_promoteur" disabled="true"
+								value="#{essaiManager.bean.promoteur}" required="true"
+								requiredMessage="#{resourceBundle['essai.promoteur.notEmpty']}"
+								selectListener="#{essaiManager.handleSelectPromoteur}"
+								completeMethod="#{autoCompletePromoteurManager.complete}"
+								forceSelection="true" var="promoteur"
+								itemLabel="#{promoteur.raisonSociale}" itemValue="#{promoteur}"
+								converter="#{promoteurConverter}"
+								onSelectUpdate="common_panelTypePromoteur" />
+
+							<h:outputLabel styleClass="mandatory" id="labelTypePromoteur"
+								for="common_typePromoteur"
+								value="#{resourceBundle['editEssai.common.typePromoteur']}" />
+							<p:outputPanel id="common_panelTypePromoteur"
+								style="display:block;margin-top:10px;">
+								<h:selectOneMenu id="common_typePromoteur" disabled="true"
+									value="#{essaiManager.bean.typePromoteur}" required="true"
+									requiredMessage="#{resourceBundle['essai.typePromoteur.notEmpty']}">
+									<f:selectItem noSelectionOption="true" />
+									<f:selectItems
+										value="#{enumManager.getValues('TypePromoteur')}" />
+								</h:selectOneMenu>
+							</p:outputPanel>
+
+							<h:outputLabel styleClass="mandatory" id="labelService"
+								for="common_service"
+								value="#{resourceBundle['editEssai.common.service']}" />
+							<p:outputPanel id="resultsServices"
+								style="display:block;margin-top:10px;">
+								<p:dataTable id="common_service"
+									value="#{essaiManager.getList('services', false)}"
+									var="service" emptyMessage="#{resourceBundle['results.none']}">
+									<p:column id="nom">
+										<f:facet name="header">
+													#{resourceBundle['editEssai.common.selectionServices']}
+												</f:facet>
+										<h:outputText value="#{service.nom}" />
+									</p:column>
+								</p:dataTable>
+							</p:outputPanel>
+
+						</h:panelGrid></td>
+					</tr>
+
+					<tr>
+						<td class="box" width="50%">
+							<h:panelGrid id="panelAlerte" columns="2" width="100%"
+								columnClasses="panelCol_45,panelCol_55"
+								cellpadding="0" cellspacing="0" border="0">
+								<h:outputLabel id="labelAlerteActive"
+									value="#{resourceBundle['editEssai.common.alerteActive']}" />
+								<h:selectBooleanCheckbox
+									value="#{essaiManager.bean.alerteActive}" disabled="true" />
+								<h:panelGroup />
+							</h:panelGrid>
+						</td>
+						<td class="buttDisabled" width="50%" align="center">
+		 					<h:panelGrid id="panelEtatEssai" columns="1" width="55%">
+								<a>#{essaiManager.bean.etat.libelle}</a>
+							</h:panelGrid>
+			 			</td>
+					</tr>
+
+				</tbody>
+			</table>
+			</fieldset>
+
+			<!-- Preparation -->
+			<h2><h:outputFormat id="ancreScroll"
+				value="#{resourceBundle['editPreparation.subTitle2']}" /></h2>
+			<fieldset>
+
+			<table class="big" width="100%">
+				<tbody>
+					<tr>
+						<td class="box" width="50%">
+							<h:panelGrid id="panelProduit_gauche" columns="2" width="100%"
+								columnClasses="panelCol_45,panelCol_55"
+								cellpadding="0" cellspacing="0" border="0">
+								<h:outputLabel id="labelDenominationMed" for="med_denomination"
+									styleClass="mandatory"
+									value="#{resourceBundle['editProduit.onglet.generales.denomination']}" />
+								<h:inputText id="med_denomination" required="true"
+									requiredMessage="#{resourceBundle['produit.denomination.notEmpty']}"
+									value="#{preparationManager.bean.denomination}" />
+	
+								<h:outputLabel id="labelMedCode" for="med_code"
+									value="#{resourceBundle['editProduit.onglet.generales.code']}" />
+								<h:inputText id="med_code" value="#{preparationManager.bean.code}" />
+							</h:panelGrid>
+						</td>
+						<td class="box" width="50%">
+							<h:panelGrid id="panelProduit_droit" columns="2" width="100%"
+							columnClasses="panelCol_40,panelCol_60"
+							cellpadding="0" cellspacing="0" border="0">
+								<h:outputLabel value="#{resourceBundle['editEssai.onglet.produit.alerteActive']}" />
+								<h:selectBooleanCheckbox value="#{preparationManager.bean.alerteActive}" />
+							</h:panelGrid>
+						</td>
+					</tr>
+				</tbody>
+			</table>
+			</fieldset>
+			<fieldset><p:tabView effect="opacity"
+				effectDuration="normal" dynamic="false" 
+				styleClass="essaiTabView"  onTabChange="jQuery('#common_outp_msgs').hide();"
+				tabChangeListener="#{preparationManager.onOngletChangeSave}"
+				activeIndex="#{preparationManager.indexOngletCourant}">
+				<p:tab id="ONG_GENERALES"
+					title="#{resourceBundle['editProduit.onglet.generales.title']}">
+					<ui:include
+						src="/WEB-INF/pages/editPreparation/onglets/ongletInfosGenerales.xhtml" />
+				</p:tab>
+				
+				<p:tab id="ONG_PRESCRIPTION" 
+					title="#{resourceBundle['editProduit.onglet.prescription.conditionnement']}">
+					<ui:include
+						src="/WEB-INF/pages/editPreparation/onglets/ongletPrescription.xhtml" />
+				</p:tab>
+				<p:tab id="ONG_LOGISTIQUE"
+					title="#{resourceBundle['editProduit.onglet.logistique.title']}">
+					<ui:include
+						src="/WEB-INF/pages/editPreparation/onglets/ongletLogistique.xhtml" />
+				</p:tab>
+			</p:tabView></fieldset>
+
+			<!-- Suivi des modifications -->
+			<p:panel id="def_suivi_prod" styleClass="panelSuivi"
+				rendered="#{beanManagerHelper.getFirstOfCollection(preparationManager.getListReattach('modifs'))!=null}">
+				<c:set var="lastModif"
+					value="#{beanManagerHelper.getFirstOfCollection(preparationManager.getListReattach('modifs'))}" />
+				<h:outputText value="#{resourceBundle['suivi.part1']} " />
+				<h:outputText value="#{lastModif.dateMaj.time}">
+					<f:convertDateTime
+						pattern="#{resourceBundle['date.pattern.withHeures']}" />
+				</h:outputText>
+				<h:outputText value="#{resourceBundle['suivi.part2']} " />
+				<h:outputText value="#{lastModif.majPar}" />
+				<h:outputText value="#{resourceBundle['ponctuation.bracket.open']} " />
+				<h:outputLink id="labelDefModifs" value="javascript:void(0)"
+					styleClass="clickable" onclick="popupHistoMedi.show()"
+					title="#{resourceBundle['suivi.popupLink.title']}">#{resourceBundle['suivi.historique']}
+							</h:outputLink>
+				<h:outputText
+					value="#{resourceBundle['ponctuation.bracket.close']} " />
+			</p:panel>
+
+			<div class="actionButton">
+			
+				<p:commandButton id="saveButton" onclick="showWait();"
+					action="save" ajax="false" disabled="#{droitAccesHelper.isEssaiLectureSeule()}"
+					value="#{resourceBundle['btn.enregistrer']}"
+					title="#{resourceBundle['btn.enregistrer']}" />
+					
+				<p:commandButton id="saveAndReturnButton" onclick="showWait();"
+					action="saveAndReturn" ajax="false" disabled="#{droitAccesHelper.isEssaiLectureSeule()}"
+					value="#{resourceBundle['btn.enregistrerEtRetour']}"
+					title="#{resourceBundle['btn.enregistrerEtRetour']}" />	
+					
+			 <p:commandButton
+				id="cancelButton" immediate="true" action="comeback" ajax="false"
+				value="#{resourceBundle['btn.annuler']}" onclick="showWait();"
+				title="#{resourceBundle['btn.annuler']}" /></div>
+
+		</h:form>
+
+		<!--		 Popup de l'historique produit -->
+		<p:dialog header="#{resourceBundle['suivi.historique']}"
+			widgetVar="popupHistoMedi" styleClass="essaiTabPopup"
+			resizable="true" modal="true" width="500">
+			<h:form id="medi_popupHisto_form">
+				<h:panelGrid columns="2" style="margin-bottom:10px" width="100%">
+					<p:dataTable id="suivis"
+						value="#{preparationManager.getList('modifs', false)}" var="modif"
+						emptyMessage="#{resourceBundle['results.none']}" paginator="true"
+						rows="#{resourceBundle['pagination.rowsPerPage']}"
+						paginatorTemplate="#{paginatorTemplate}">
+						<p:column id="date">
+							<f:facet name="header">
+								<h:outputText value="#{resourceBundle['suivi.date']}" />
+							</f:facet>
+							<h:outputText value="#{modif.dateMaj.time}">
+								<f:convertDateTime
+									pattern="#{resourceBundle['date.pattern.withHeures']}" />
+							</h:outputText>
+						</p:column>
+						<p:column id="auteur">
+							<f:facet name="header">
+								<h:outputText value="#{resourceBundle['suivi.auteur']}" />
+							</f:facet>
+							<h:outputText value="#{modif.majPar}" />
+						</p:column>
+					</p:dataTable>
+				</h:panelGrid>
+				<div class="popupButton"><p:commandButton
+					value="#{resourceBundle['btn.fermer']}"
+					oncomplete="popupHistoMedi.hide();" /></div>
+			</h:form>
+		</p:dialog>
+		
+		<!-- Boite de dialogue pour le choix des services -->
+		<p:dialog
+			header="#{resourceBundle['editEssai.common.selectionServices']}"
+			widgetVar="popupService" styleClass="essaiTabPopup" resizable="true"
+			modal="true" width="500">
+			<h:form id="common_popupServices_form">
+				<p:panel styleClass="popupScrollable" style="margin-bottom:10px">
+					<div align="center"><h:panelGrid columns="2"
+						styleClass="panelGridScrollable" style="margin-bottom:10px"
+						width="100%">
+						<p:dataTable id="services"
+							value="#{servicesProduitGlobalManager.beans}" var="service"
+							emptyMessage="#{resourceBundle['results.none']}">
+							<p:column id="nom">
+								<f:facet name="header">
+									<h:outputText value="#{resourceBundle['gestionService.nom']}" />
+								</f:facet>
+								<h:outputText value="#{service.bean.nom}" />
+							</p:column>
+							<p:column>
+								<h:selectBooleanCheckbox value="#{service.selected}" />
+							</p:column>
+						</p:dataTable>
+					</h:panelGrid></div>
+				</p:panel>
+				<div class="popupButton"><p:commandButton
+					value="#{resourceBundle['btn.valider']}"
+					update="resultsServices_med"
+					actionListener="#{beanManagerHelper.updateSelectedWrapped(preparationManager.bean.services , servicesProduitGlobalManager.beans)}"
+					oncomplete="popupService.hide();" /></div>
+			</h:form>
+		</p:dialog>
+
+		<!-- Popups de l'onglet actes pharma -->
+		<ui:include
+			src="/WEB-INF/pages/editPreparation/onglets/popups/ongletActesPharma_popups.xhtml" />
+		
+		<!-- Popup de saisie de stockage -->
+		<ui:include
+			src="/WEB-INF/pages/editPreparation/onglets/popups/ongletLogistique_popups.xhtml" />
+
+		<!--  Popup de saisie des conditionnements -->
+		<ui:include
+			src="/WEB-INF/pages/editPreparation/onglets/popups/ongletPrescription_popups.xhtml" />
+		<!-- Gestion du scroll -->
+		<script type="text/javascript">
+			configureTabClickHandler("ONG_GENERALES", function() {
+				launchScrollEditProduit();
+			});
+		</script>
+	</ui:define>
+
+</ui:composition>

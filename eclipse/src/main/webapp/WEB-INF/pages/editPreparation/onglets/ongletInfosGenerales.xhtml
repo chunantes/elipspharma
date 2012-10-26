@@ -1,0 +1,68 @@
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:p="http://primefaces.prime.com.tr/ui"
+	xmlns:sf="http://www.springframework.org/tags/faces">
+	
+	 <!-- Gestion scroll et focus -->
+	<p:focus context="ig_pane_first" />
+
+	<h:panelGrid id="ig_pane_first" columns="4"
+		columnClasses="panelCol_20,panelCol_30,panelCol_20,panelCol_30">
+		
+		<h:outputLabel id="labelMedClasse" for="med_classe"
+			value="#{resourceBundle['editProduit.onglet.generales.classe']}" />
+		<h:inputText id="med_classe"
+			value="#{preparationManager.bean.classeTherapeutique}" />
+
+		<h:outputLabel id="labelMedImputationUf" for="med_imput"
+			value="#{resourceBundle['editProduit.onglet.generales.imputationuf']}" />
+		<h:selectOneRadio id="med_imput"
+			value="#{preparationManager.bean.imputationUf}"
+			styleClass="selectRadio">
+			<f:selectItem itemLabel="#{resourceBundle['boolean.oui']}"
+				itemValue="true" itemDescription="#{resourceBundle['boolean.oui']}" />
+			<f:selectItem itemLabel="#{resourceBundle['boolean.non']}"
+				itemValue="false" itemDescription="#{resourceBundle['boolean.non']}" />
+			<f:ajax render="panel_uf_label" />
+			<f:ajax render="panel_uf_input" />
+		</h:selectOneRadio>
+		
+			<h:panelGroup/>
+			<h:panelGroup/>
+
+		<p:outputPanel id="panel_uf_label">
+			<h:outputLabel id="labelMedUf"
+				value="#{resourceBundle['editProduit.onglet.generales.uf']}"
+				rendered="#{preparationManager.bean.imputationUf == true}" />
+ 
+			<h:panelGroup
+				rendered="#{preparationManager.bean.imputationUf != true }" />
+		</p:outputPanel>
+		<p:outputPanel id="panel_uf_input">
+
+				<p:outputPanel id="resultsServices_med"
+					style="display:block;margin-top:10px;"
+					rendered="#{preparationManager.bean.imputationUf == true}">
+					<p:dataTable id="common_service_med"
+						value="#{preparationManager.getList('services', false)}"
+						var="service" emptyMessage="#{resourceBundle['results.none']}">
+						<p:column id="nom_service_med">
+							<f:facet name="header">
+								<h:outputLink value="javascript:void(0)"
+									onclick="popupService.show()">#{resourceBundle['editEssai.common.selectionServices']}</h:outputLink>
+							</f:facet>
+							<h:outputText value="#{service.nom}" />
+						</p:column>
+					</p:dataTable>
+				</p:outputPanel>
+
+				<h:panelGroup
+					rendered="#{preparationManager.bean.imputationUf != true }" />
+			</p:outputPanel>
+	</h:panelGrid>
+
+
+
+</ui:composition>

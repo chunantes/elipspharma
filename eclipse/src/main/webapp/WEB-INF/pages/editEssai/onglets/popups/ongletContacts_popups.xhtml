@@ -1,0 +1,256 @@
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+     xmlns:ui="http://java.sun.com/jsf/facelets"
+     xmlns:h="http://java.sun.com/jsf/html"
+     xmlns:f="http://java.sun.com/jsf/core"
+     xmlns:p="http://primefaces.prime.com.tr/ui"
+     xmlns:t="http://myfaces.apache.org/tomahawk"
+	 xmlns:c="http://java.sun.com/jsp/jstl/core"
+	 xmlns:fn="http://java.sun.com/jsp/jstl/functions">
+    
+    
+    <!-- ******************************************* -->
+    <!-- Popup d'informations d'un contact		 	 -->
+    <!-- ******************************************* -->
+	<p:dialog widgetVar="popupInfosContact" header="#{resourceBundle['editEssai.onglet.contacts.infos.title']}"
+		resizable="true" modal="true" closeListener="#{contactsEssaiManager.setSelectedHabilitation(null)}"
+		styleClass="essaiTabPopup" width="400">
+		<h:form id="dc_popupInfosContact_form" prependId="false">
+			<p:panel id="dc_popupInfosContact_infos">
+				<h:panelGrid id="dc_popupInfosContact_panelGrid_main" columns="2" cellspacing="5"
+					columnClasses="panelCol_25,panelCol_75">
+					<h:outputLabel id="nomLabel" for="nom" value="#{resourceBundle['gestionContactPromoteur.nom']}"/>
+					<h:outputText id="nom" value="#{essaiManager.selectedHabilitation.personne.nom}" />
+		             
+		            <h:outputLabel id="prenomLabel" for="prenom" value="#{resourceBundle['gestionContactPromoteur.prenom']}"/>
+					<h:outputText id="prenom" value="#{essaiManager.selectedHabilitation.personne.prenom}" />
+		             
+		            <h:outputLabel id="telephoneLabel" for="telephone" value="#{resourceBundle['gestionContactPromoteur.telephone']}"/>
+					<h:outputText id="telephone" value="#{essaiManager.selectedHabilitation.personne.telephone}" />
+		             
+		            <h:outputLabel id="mailLabel" for="mail" value="#{resourceBundle['gestionContactPromoteur.mail']}"/>
+		            <h:outputLink value="mailto:#{fn:trim(essaiManager.selectedHabilitation.personne.mail)}" title="#{resourceBundle['editEssai.onglet.contacts.infos.mail.title']}">
+	            		<h:outputText id="mail" value="#{essaiManager.selectedHabilitation.personne.mail}" />
+	            	</h:outputLink>
+					  
+		            <h:outputLabel id="faxLabel" for="fax" value="#{resourceBundle['gestionContactPromoteur.fax']}"/>
+					<h:outputText id="fax" value="#{essaiManager.selectedHabilitation.personne.fax}" />
+		             
+		            <h:outputLabel id="adresseLabel" for="adresse" value="#{resourceBundle['gestionContactPromoteur.adresse']}"/>
+					<h:outputText id="adresse" value="#{essaiManager.selectedHabilitation.personne.adresse}" />
+		             
+		            <h:outputLabel id="codePostalLabel" for="codePostal" value="#{resourceBundle['gestionContactPromoteur.codePostal']}"/>
+					<h:outputText id="codePostal" value="#{essaiManager.selectedHabilitation.personne.codePostal}" />
+		             
+		            <h:outputLabel id="villeLabel" for="ville" value="#{resourceBundle['gestionContactPromoteur.ville']}"/>
+					<h:outputText id="ville" value="#{essaiManager.selectedHabilitation.personne.ville}" />
+				</h:panelGrid>
+				<!-- Specifique personne de type 'INVESTIGATEUR' -->
+				<p:outputPanel id="dc_popupInfosContact_infos_investigateur" style="margin-bottom:10px"
+					rendered="#{essaiManager.selectedHabilitation.personne.type == enumManager.getEnumValue('TypePersonne','INVESTIGATEUR')}">
+					<h:panelGrid id="dc_popupInfosContact_panelGrid_investigateur" styleClass="panelGridScrollable" style="margin-bottom:10px" width="100%" 
+						columnClasses="panelCol_25,panelCol_75" 
+						columns="2" cellspacing="5">
+			             <h:outputLabel id="dc_popupInfosContact_panelGrid_investigateur_titreLabel" for="dc_popupInfosContact_panelGrid_investigateur_titre" value="#{resourceBundle['gestionInvestigateur.titre']}"/>
+			             <h:outputText id="dc_popupInfosContact_panelGrid_investigateur_titre" value="#{essaiManager.selectedHabilitation.personne.titre}" />
+			             
+						<h:outputLabel id="dc_popupInfosContact_panelGrid_investigateur_servicesLabel" for="dc_popupInfosContact_panelGrid_arcInvestigateur_services" value="#{resourceBundle['gestionInvestigateur.services']}"/>
+						<p:dataTable id="dc_popupInfosContact_panelGrid_investigateur_services" value="#{beanManagerHelper.returnAsDataModel(essaiManager.selectedHabilitation.personne.services)}"
+							var="service" emptyMessage="#{resourceBundle['results.none']}">
+							<p:column id="nom">
+								#{service.nom}
+							</p:column>
+						</p:dataTable>
+					</h:panelGrid>
+					
+					<p:commandButton title="#{resourceBundle['gestionInvestigateur.principalOut']}" value="#{resourceBundle['gestionInvestigateur.principalOut']}" 
+							update="popupInfosContact dc_panel_invest dc_popupInfosContact_infos_investigateur" rendered="#{essaiManager.selectedHabilitation.droit == 'INVESTIGATEUR_PRINCIPAL'}" 
+							actionListener="#{contactsEssaiManager.updateDroit(essaiManager.bean, 'INVESTIGATEUR_CO')}" oncomplete="disableHabilitationSelectionStyle();"/>
+					<p:commandButton title="#{resourceBundle['gestionInvestigateur.principalIn']}" value="#{resourceBundle['gestionInvestigateur.principalIn']}" 
+							update="popupInfosContact dc_panel_invest dc_popupInfosContact_infos_investigateur" rendered="#{not contactsEssaiManager.hasInvestigateurPrincipalInList(essaiManager)}"  
+							actionListener="#{contactsEssaiManager.updateDroit(essaiManager.bean, 'INVESTIGATEUR_PRINCIPAL')}" oncomplete="disableHabilitationSelectionStyle();"/>
+				</p:outputPanel>
+				<!-- Specifique personne de type 'ARC_INVESTIGATEUR' -->
+				<p:outputPanel id="dc_popupInfosContact_infos_arcInvestigateur" style="margin-bottom:10px"
+					rendered="#{essaiManager.selectedHabilitation.personne.type == enumManager.getEnumValue('TypePersonne','ARC_INVESTIGATEUR')}">
+					<h:panelGrid id="dc_popupInfosContact_panelGrid_arcInvestigateur" styleClass="panelGridScrollable" style="margin-bottom:10px" width="100%" 
+						columnClasses="panelCol_25,panelCol_75" 
+						columns="2" cellspacing="5">
+						<h:outputLabel id="dc_popupInfosContact_panelGrid_arcInvestigateur_servicesLabel" for="dc_popupInfosContact_panelGrid_arcInvestigateur_services" value="#{resourceBundle['gestionInvestigateur.services']}"/>
+						<p:dataTable id="dc_popupInfosContact_panelGrid_arcInvestigateur_services" value="#{beanManagerHelper.returnAsDataModel(essaiManager.selectedHabilitation.personne.services)}"
+							var="service" emptyMessage="#{resourceBundle['results.none']}">
+							<p:column id="nom">
+								#{service.nom}
+							</p:column>
+						</p:dataTable>
+					</h:panelGrid>
+				</p:outputPanel>
+				<!-- Specifique personne de type 'ARC_PROMOTEUR', 'PROMOTEUR' -->
+				<p:outputPanel id="dc_popupInfosContact_infos_arcPromo" style="margin-bottom:10px"
+					rendered="#{essaiManager.selectedHabilitation.personne.type == enumManager.getEnumValue('TypePersonne','ARC_PROMOTEUR') || essaiManager.selectedHabilitation.personne.type == enumManager.getEnumValue('TypePersonne','PROMOTEUR')}">
+					<h:panelGrid id="dc_popupInfosContact_panelGrid_arcPromo" styleClass="panelGridScrollable" style="margin-bottom:10px" width="100%" 
+						columnClasses="panelCol_25,panelCol_75" 
+						columns="2" cellspacing="5">
+						<h:outputLabel id="dc_popupInfosContact_panelGrid_arcPromo_labelPromo" for="dc_popupInfosContact_panelGrid_arcPromo_promoteur" value="#{resourceBundle['gestionArcPromoteur.promoteur']}"/>
+						<h:outputText id="dc_popupInfosContact_panelGrid_arcPromo_promoteur" value="#{essaiManager.selectedHabilitation.personne.promoteur.raisonSociale}" />
+					</h:panelGrid>
+				</p:outputPanel>
+				<!-- Specifique personne de type 'CRO' -->
+				<p:outputPanel id="dc_popupInfosContact_infos_cro" style="margin-bottom:10px"
+					rendered="#{essaiManager.selectedHabilitation.personne.type == enumManager.getEnumValue('TypePersonne','CRO')}">
+					<h:panelGrid id="dc_popupInfosContact_panelGrid_cro" styleClass="panelGridScrollable" style="margin-bottom:10px" width="100%" 
+						columnClasses="panelCol_25,panelCol_75" 
+						columns="2" cellspacing="5">
+						<h:outputLabel id="dc_popupInfosContact_panelGrid_cro_labelSociete" for="dc_popupInfosContact_panelGrid_cro_societe" value="#{resourceBundle['gestionCro.nomSociete']}"/>
+						<h:outputText id="dc_popupInfosContact_panelGrid_cro_societe" value="#{essaiManager.selectedHabilitation.personne.nomSociete}" />
+					</h:panelGrid>
+				</p:outputPanel>
+				<!-- Specifique personne de type 'PHARMACIEN' -->
+				<p:outputPanel id="dc_popupInfosContact_infos_pharmacien" style="margin-bottom:10px"
+					rendered="#{essaiManager.selectedHabilitation.personne.type == enumManager.getEnumValue('TypePersonne','PHARMACIEN')}">
+					<h:panelGrid id="dc_popupInfosContact_panelGrid_pharmacien" style="margin-bottom:10px" width="100%" 
+						columnClasses="panelCol_25,panelCol_75" 
+						columns="2" cellspacing="5">
+						<h:outputLabel id="dc_popupInfosContact_panelGrid_pharmacien_labelType" for="dc_popupInfosContact_panelGrid_pharmacien_type" value="#{resourceBundle['gestionPharmacien.categorieSimple']}"/>
+						<h:outputText id="dc_popupInfosContact_panelGrid_pharmacien_type" value="#{essaiManager.selectedHabilitation.personne.typePharmacien.libelle}" />
+						
+						<h:outputLabel id="dc_popupInfosContact_panelGrid_pharmacien_labelPharmacies" for="dc_popupInfosContact_panelGrid_pharmacien_pharmacies" value="#{resourceBundle['gestionPharmacien.pharmaciesSimple']}"/>
+						<p:dataTable id="dc_popupInfosContact_panelGrid_pharmacien_pharmacies" value="#{beanManagerHelper.returnAsDataModel(essaiManager.selectedHabilitation.personne.pharmacies)}"
+							var="pharmacie" emptyMessage="#{resourceBundle['results.none']}">
+							<p:column id="nom">
+								#{pharmacie.nom}
+							</p:column>
+						</p:dataTable>
+					</h:panelGrid>
+				</p:outputPanel>
+			</p:panel>
+			<p:panel id="dc_popupInfosContact_suivi" styleClass="panelSuiviPopup">
+				<p:outputPanel id="dc_popupInfosContact_suivi_creation">
+					<h:outputText value="#{resourceBundle['habilitation.creeeLe']} " />
+					<h:outputText value="#{essaiManager.selectedHabilitation.dateCreation.time}">
+						<f:convertDateTime pattern="#{resourceBundle['date.pattern.withHeures']}"/>
+					</h:outputText>
+					<h:outputText value="#{resourceBundle['habilitation.auteur']} " />
+					<h:outputText value="#{essaiManager.selectedHabilitation.auteurCreation}" />
+					<h:outputText value="#{resourceBundle['ponctuation.dot']} " />
+				</p:outputPanel>
+				<p:outputPanel id="dc_popupInfosContact_suivi_desactication" rendered="#{essaiManager.selectedHabilitation.dateDesactivation!=null}">
+					<br />
+					<h:outputText value="#{resourceBundle['ponctuation.bracket.open']} " />
+					<h:outputText value="#{resourceBundle['habilitation.desactiveeLe']} " />
+					<h:outputText value="#{essaiManager.selectedHabilitation.dateDesactivation.time}">
+						<f:convertDateTime pattern="#{resourceBundle['date.pattern.withHeures']}"/>
+					</h:outputText>
+					<h:outputText value="#{resourceBundle['habilitation.auteur']} " />
+					<h:outputText value="#{essaiManager.selectedHabilitation.auteurDesactivation}" />
+					<h:outputText value="#{resourceBundle['ponctuation.dot']} " />
+					<h:outputText value="#{resourceBundle['ponctuation.bracket.close']} " />
+				</p:outputPanel>
+			</p:panel>
+			<div class="popupButton">
+				<p:commandButton id="dc_popupInfosContact_button_fermer" value="#{resourceBundle['btn.fermer']}" 
+					oncomplete="popupInfosContact.hide();" />
+			</div>
+		</h:form>
+	</p:dialog>
+	
+	  
+    <!-- ******************************************* -->
+    <!-- Popup de selection des contacts a ajouter 	 -->
+    <!-- ******************************************* -->
+	<p:dialog widgetVar="popupSelectionContact" header="#{resourceBundle['editEssai.onglet.contacts.ajout.title']}"
+		resizable="true" modal="true" 
+		styleClass="essaiTabPopup popupAddContacts" 
+		width="#{resourceBundle['popup.contacts.add.width']}" height="#{resourceBundle['popup.contacts.add.height']}">  
+		<h:form id="dc_popupSelectionContact_form" prependId="false">
+			<h3>
+				<h:outputFormat value="#{resourceBundle['editEssai.onglet.contacts.ajout.type']}#{resourceBundle['ponctuation.colon']} " /><h:outputText value="#{essaiManager.typeContactToAdd.getLibelle()}" />
+			</h3>
+			<fieldset>
+				<p:panel styleClass="popupScrollable" style="margin-bottom:10px">
+		 			<div align="center">
+				         <h:panelGrid columns="1" style="margin-bottom:10px" width="100%">  
+							<p:dataTable id="contacts" value="#{essaiManager.contactsBeansManager.beans}" var="wrapperPersonne" emptyMessage="#{resourceBundle['editEssai.onglet.contacts.ajout.result.none']}">
+								<p:column id="personne_nom" sortBy="#{wrapperPersonne.bean.nom}">
+									<f:facet name="header">
+										<h:outputText value="#{resourceBundle['gestionContactPromoteur.nom']}"/>
+									</f:facet>
+									<h:outputText value="#{wrapperPersonne.bean.nom}"/>
+								</p:column>
+								<p:column id="personne_prenom" sortBy="#{wrapperPersonne.bean.prenom}">
+									<f:facet name="header">
+										<h:outputText value="#{resourceBundle['gestionContactPromoteur.prenom']}"/>
+									</f:facet>
+									<h:outputText value="#{wrapperPersonne.bean.prenom}"/>
+								</p:column>
+								<p:column>
+						    		<div align="center">
+					    				<h:selectBooleanCheckbox value="#{wrapperPersonne.selected}">
+					    					<f:ajax render="dc_popupSelectionContact_panelCheckPrincipal" />
+					    				</h:selectBooleanCheckbox>
+						    		</div>
+						    	</p:column>
+								<p:column rendered="#{(essaiManager.typeContactToAdd.name() == 'INVESTIGATEUR') and (essaiManager.hasInvestigateurPrincipal()==false)}">
+						    		<f:facet name="header">
+										<h:outputText value="#{resourceBundle['editEssai.onglet.contacts.ajout.choix.principal']}"/>
+						    		</f:facet>
+						    		<div align="center">
+						    			<p:outputPanel id="dc_popupSelectionContact_panelCheckPrincipal">
+						    				<h:selectBooleanCheckbox rendered="#{wrapperPersonne.selected}"
+						    					value="#{wrapperPersonne.bean.selected}" styleClass="checkPersonne" onclick="javascript:checkUniqueness('checkPersonne',this)">
+						    				</h:selectBooleanCheckbox>
+					    				</p:outputPanel>
+						    		</div>
+						    	</p:column>
+							</p:dataTable>
+				         </h:panelGrid>
+			       	</div>
+		      	</p:panel>
+		      </fieldset>
+			<div class="popupButton">
+				<p:commandButton id="dc_popupSelectionContact_button" value="#{resourceBundle['btn.ajouter']}" title="#{resourceBundle['btn.ajouter']}"
+					rendered="#{not empty essaiManager.contactsBeansManager.beans }"
+					actionListener="#{essaiManager.validerAjoutContacts()}"
+					oncomplete="popupSelectionContact.hide();"
+					update="dc_panel_promo,dc_panel_invest,dc_panel_drc,dc_panel_pharma,popupTypeContact,dc_popupTypeContact_form" />
+				<p:commandButton value="#{resourceBundle['btn.fermer']}" 
+					rendered="#{empty essaiManager.contactsBeansManager.beans }"
+					oncomplete="popupSelectionContact.hide();"/>
+			</div>  
+		</h:form>  
+	</p:dialog>
+
+    <!-- **************************************** -->
+    <!-- Popup d'historique de l'onglet contacts  -->
+    <!-- **************************************** -->
+	<p:dialog header="#{resourceBundle['suivi.historique']}" widgetVar="popupHistoOngContacts" styleClass="essaiTabPopup" resizable="true" modal="true" width="500">  
+	   <h:form id="dc_popupHisto_form">  
+	   	   <h3>
+	   	   		<h:outputFormat value="#{resourceBundle['editEssai.common.onglet']} #{resourceBundle['editEssai.onglet.contacts.title']}" />
+	   	   </h3>
+		   <fieldset>
+		       <h:panelGrid columns="2" style="margin-bottom:10px" width="100%">  
+		  		<p:dataTable id="suivis" value="#{essaiManager.getList('detailContacts.modifs', false)}" var="modif" emptyMessage="#{resourceBundle['results.none']}"
+		  			paginator="true" rows="#{resourceBundle['pagination.rowsPerPage']}"
+		  			paginatorTemplate="#{paginatorTemplate}">
+		  			<p:column id="date">
+		  				<f:facet name="header">
+		  					<h:outputText value="#{resourceBundle['suivi.date']}" />
+		  				</f:facet>
+		  				<h:outputText value="#{modif.dateMaj.time}">
+						<f:convertDateTime pattern="#{resourceBundle['date.pattern.withHeures']}"/>
+					</h:outputText>
+		  			</p:column>
+		  			<p:column id="auteur">
+		  				<f:facet name="header"><h:outputText value="#{resourceBundle['suivi.auteur']}" /></f:facet>
+	  					<h:outputText value="#{modif.majPar}" />
+		  			</p:column>
+		  		</p:dataTable>		            
+		       </h:panelGrid>
+	       </fieldset>
+	       <div class="popupButton">
+	       		<p:commandButton value="#{resourceBundle['btn.fermer']}" oncomplete="popupHistoOngContacts.hide();"/>
+	       </div>  
+	    </h:form>  
+	</p:dialog>
+    
+</ui:composition>

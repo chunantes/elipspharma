@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<flow xmlns="http://www.springframework.org/schema/webflow"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://www.springframework.org/schema/webflow
+    http://www.springframework.org/schema/webflow/spring-webflow-2.0.xsd"
+	parent="main">
+
+	<!-- Démarrage -->
+	<on-start>
+		<evaluate expression="essaiSigrecSearchCriteria.clear()" />
+
+		<!-- Initialisation complétion automatique des promoteurs -->
+		<evaluate expression="'raisonSociale'"
+			result="autoCompletePromoteurSigrecManager.searchCriteriaProperty"
+			result-type="java.lang.String" />
+
+		<!-- Initialisation complétion automatique des investigateurs -->
+		<!--
+			<evaluate expression="'nom'"
+			result="autoCompleteInvestigateurManager.searchCriteria.activeOrder"
+			/>
+		-->
+		<!--
+			<evaluate expression="'nom'"
+			result="autoCompleteInvestigateurManager.searchCriteriaProperty" />
+		-->
+	</on-start>
+
+	<!-- Page principale -->
+	<view-state id="repertoireEssaisSigrec"
+		view="../../pages/repertoireEssaisSigrec/search.xhtml">
+		<transition on="search" to="search" />
+		<transition on="create" to="editEssai" />
+		<transition on="edit" to="editEssai">
+			<set name="flashScope.idEssaiSigrec" value="requestParameters.idEssaiSigrec"
+				type="java.lang.Long" />
+			<evaluate expression="essaisSigrecManager.resetBeanSelected()" />
+		</transition>
+	</view-state>
+
+	<!-- Recherche -->
+	<action-state id="search">
+		<evaluate expression="essaiSigrecService.getAll(essaiSigrecSearchCriteria)"
+			result="essaisSigrecManager.beans" />
+		<transition to="repertoireEssaisSigrec" />
+	</action-state>
+
+	<!-- Détail Essai -->
+	<subflow-state id="editEssai" subflow="editEssai">
+		<input name="idEssaiSigrec" value="flashScope.idEssaiSigrec"
+			type="java.lang.Long" />
+		<transition to="repertoireEssaisSigrec" />
+	</subflow-state>
+
+</flow>

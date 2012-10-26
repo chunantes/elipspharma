@@ -1,0 +1,106 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans 
+    xmlns="http://www.springframework.org/schema/beans" 
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd">
+
+	
+	<!-- ======================================== -->
+	<!-- COMMENTAIRE : RECHERCHE				  -->
+	<!-- ======================================== -->
+	<bean id="CommentaireEssaiRecherche"
+		class="fr.pharma.eclipse.domain.model.essai.detail.recherche.CommentaireEssaiRecherche"
+		scope="prototype" />
+	<bean id="commentaireEssaiRechercheFactory" class="fr.pharma.eclipse.factory.suivi.SuiviFactory">
+		<constructor-arg
+			value="fr.pharma.eclipse.domain.model.essai.detail.recherche.CommentaireEssaiRecherche" />
+	</bean>
+	<bean id="commentaireEssaiRechercheWithParentFactory"
+		class="fr.pharma.eclipse.factory.common.BeanObjectWithParentFactory">
+		<property name="simpleFactory" ref="commentaireEssaiRechercheFactory" />
+		<property name="propertyToStoreParent" value="detailRecherche" />
+	</bean>
+
+	<!-- ======================================== -->
+	<!-- COMMENTAIRE : FAISABILITE_CONCL		  -->
+	<!-- ======================================== -->
+	<bean id="CommentaireConclusionFaisabilite"
+		class="fr.pharma.eclipse.domain.model.essai.detail.faisabilite.CommentaireConclusionFaisabilite"
+		scope="prototype" />
+	<bean id="commentaireConclusionFaisabiliteFactory" class="fr.pharma.eclipse.factory.suivi.SuiviFactory">
+		<constructor-arg
+			value="fr.pharma.eclipse.domain.model.essai.detail.faisabilite.CommentaireConclusionFaisabilite" />
+	</bean>
+	<bean id="commentaireConclusionFaisabiliteWithParentFactory"
+		class="fr.pharma.eclipse.factory.common.BeanObjectWithParentFactory">
+		<property name="simpleFactory" ref="commentaireConclusionFaisabiliteFactory" />
+		<property name="propertyToStoreParent" value="detailFaisabilite" />
+	</bean>
+
+	<!-- ======================================== -->
+	<!-- COMMENTAIRE : FAISABILITE_ACHAT_PROD 	  -->
+	<!-- ======================================== -->
+	<bean id="CommentaireFaisabiliteAchatProduits"
+		class="fr.pharma.eclipse.domain.model.essai.detail.faisabilite.CommentaireFaisabiliteAchatProduits"
+		scope="prototype" />
+	<bean id="commentaireFaisabiliteAchatProduitsFactory" class="fr.pharma.eclipse.factory.suivi.SuiviFactory">
+		<constructor-arg
+			value="fr.pharma.eclipse.domain.model.essai.detail.faisabilite.CommentaireFaisabiliteAchatProduits" />
+	</bean>
+	<bean id="commentaireFaisabiliteAchatProduitsWithParentFactory"
+		class="fr.pharma.eclipse.factory.common.BeanObjectWithParentFactory">
+		<property name="simpleFactory" ref="commentaireFaisabiliteAchatProduitsFactory" />
+		<property name="propertyToStoreParent" value="detailFaisabilite" />
+	</bean>
+
+	<!-- ======================================== -->
+	<!-- COMMENTAIRE : FAISABILITE_DISTRIB_PHARMA -->
+	<!-- ======================================== -->
+	<bean id="CommentaireFaisabiliteDistributionPharmacies"
+		class="fr.pharma.eclipse.domain.model.essai.detail.faisabilite.CommentaireFaisabiliteDistributionPharmacies"
+		scope="prototype" />
+	<bean id="commentaireFaisabiliteDistributionPharmaciesFactory"
+		class="fr.pharma.eclipse.factory.suivi.SuiviFactory">
+		<constructor-arg
+			value="fr.pharma.eclipse.domain.model.essai.detail.faisabilite.CommentaireFaisabiliteDistributionPharmacies" />
+	</bean>
+	<bean id="commentaireFaisabiliteDistributionPharmaciesWithParentFactory"
+		class="fr.pharma.eclipse.factory.common.BeanObjectWithParentFactory">
+		<property name="simpleFactory"
+			ref="commentaireFaisabiliteDistributionPharmaciesFactory" />
+		<property name="propertyToStoreParent" value="detailFaisabilite" />
+	</bean>
+
+	<!-- ======================================== -->
+	<!-- COMMENTAIRE : FAISABILITE_ETUDE		  -->
+	<!-- ======================================== -->
+	<bean id="CommentaireFaisabiliteGlobal"
+		class="fr.pharma.eclipse.domain.model.essai.detail.faisabilite.CommentaireFaisabiliteGlobal"
+		scope="prototype" />
+	<bean id="commentaireFaisabiliteGlobalFactory" class="fr.pharma.eclipse.factory.suivi.SuiviFactory">
+		<constructor-arg
+			value="fr.pharma.eclipse.domain.model.essai.detail.faisabilite.CommentaireFaisabiliteGlobal" />
+	</bean>
+	<bean id="commentaireFaisabiliteGlobalWithParentFactory"
+		class="fr.pharma.eclipse.factory.common.BeanObjectWithParentFactory">
+		<property name="simpleFactory" ref="commentaireFaisabiliteGlobalFactory" />
+		<property name="propertyToStoreParent" value="detailFaisabilite" />
+	</bean>
+
+	<!-- ======================================== -->
+	<!-- COMMENTAIRE : ADMINREG_ARCHIVAGE		  -->
+	<!-- ======================================== -->
+	<bean id="CommentaireEssaiArchivage"
+		class="fr.pharma.eclipse.domain.model.essai.detail.administratif.CommentaireEssaiArchivage"
+		scope="prototype" />
+	<bean id="commentaireEssaiArchivageFactory" class="fr.pharma.eclipse.factory.suivi.SuiviFactory">
+		<constructor-arg
+			value="fr.pharma.eclipse.domain.model.essai.detail.administratif.CommentaireEssaiArchivage" />
+	</bean>
+	<bean id="commentaireEssaiArchivageWithParentFactory"
+		class="fr.pharma.eclipse.factory.common.BeanObjectWithParentFactory">
+		<property name="simpleFactory" ref="commentaireEssaiArchivageFactory" />
+		<property name="propertyToStoreParent" value="detailAdministratif" />
+	</bean>
+
+</beans>

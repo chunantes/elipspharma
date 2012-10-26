@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<flow xmlns="http://www.springframework.org/schema/webflow"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://www.springframework.org/schema/webflow
+    http://www.springframework.org/schema/webflow/spring-webflow-2.0.xsd" parent="main">
+
+	<!-- Démarrage -->
+	<on-start>
+		<evaluate expression="essaiSearchCriteria.clear()"/>
+		<evaluate expression="pharmacieSearchCriteria.clear()"/>
+		<evaluate expression="siteSearchCriteria.clear()"/>
+		<evaluate expression="serviceSearchCriteria.clear()"/>
+		<evaluate expression="pharmacieService.getAll(pharmacieSearchCriteria)" result="pharmaciesManager.beans"/>
+		<evaluate expression="siteService.getAll(siteSearchCriteria)" result="sitesManager.beans"/>
+		<!-- Initialisation complétion automatique des promoteurs -->
+		<evaluate expression="'raisonSociale'" result="autoCompletePromoteurManager.searchCriteria.activeOrder" />
+		<evaluate expression="'raisonSociale'" result="autoCompletePromoteurManager.searchCriteriaProperty" />
+		<!-- Initialisation complétion automatique des services -->
+		<evaluate expression="'nom'" result="autoCompleteServiceManager.searchCriteria.activeOrder" />
+		<evaluate expression="'nom'" result="autoCompleteServiceManager.searchCriteriaProperty" />
+		<!-- Initialisation complétion automatique des investigateurs -->
+		<evaluate expression="'nom'" result="autoCompleteInvestigateurManager.searchCriteria.activeOrder" />
+		<evaluate expression="'nom'" result="autoCompleteInvestigateurManager.searchCriteriaProperty" />
+	</on-start>
+
+	<!-- Page principale -->
+	<view-state id="repertoireEssais" view="../../pages/repertoireEssais/search.xhtml">
+		<transition on="search" to="search"/>
+		<transition on="edit" to="editEssai">
+			<set name="flashScope.idEssai" value="requestParameters.idEssai" type="java.lang.Long" />
+			<evaluate expression="essaisManager.resetBeanSelected()" />
+		</transition>
+	</view-state>
+	
+	<!-- Recherche -->
+	<action-state id="search">
+		<evaluate expression="essaiService.getAll(essaiSearchCriteria)" result="essaisManager.beans"/>
+		<transition to="repertoireEssais"/>
+	</action-state>
+	
+	 <!-- Détail Essai -->
+    <subflow-state id="editEssai" subflow="editEssai">
+    	<input name="idEssai" value="flashScope.idEssai" type="java.lang.Long" />
+    	<transition to="repertoireEssais" />
+    </subflow-state>
+	
+</flow>

@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans 
+    xmlns="http://www.springframework.org/schema/beans" 
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd">
+	
+	<!-- ======================================== -->
+	<!-- STOCKAGE VALIDATOR					      -->
+	<!-- ======================================== -->
+	<bean id="stockageValidator" class="fr.pharma.eclipse.component.stockage.validator.StockageValidator" />
+
+	<!-- ======================================== -->
+	<!-- DETAIL STOCKAGE VALIDATOR			      -->
+	<!-- ======================================== -->
+	<bean id="detailStockageValidator" class="fr.pharma.eclipse.component.produit.validator.DetailStockageValidator" />
+	
+	<!-- ======================================== -->
+	<!-- SEQUENCE VALIDATOR					      -->
+	<!-- ======================================== -->
+	<bean id="sequenceValidator" class="fr.pharma.eclipse.component.design.validator.SequenceValidator" />
+
+	<!-- ======================================== -->
+	<!-- PRODUITPRESCRIT VALIDATOR			      -->
+	<!-- ======================================== -->
+	<bean id="produitPrescritValidator" class="fr.pharma.eclipse.validator.prescription.impl.ProduitPrescritValidatorImpl"/>
+
+	<!-- ======================================== -->
+	<!-- COUT VARIABLE VALIDATOR			      -->
+	<!-- ======================================== -->
+	<bean id="coutVariableValidator" class="fr.pharma.eclipse.component.surcout.validator.CoutVariableValidator"/>
+
+	<!-- ======================================== -->
+	<!-- REGLE VALIDATOR					      -->
+	<!-- ======================================== -->
+	<bean id="regleValidator" class="fr.pharma.eclipse.component.surcout.validator.RegleValidator"/>
+	
+	<!-- ================================== -->
+	<!-- CONDITIONNEMENT : REMOVE VALIDATOR -->
+	<!-- ================================== -->					
+	<bean id="conditionnementRemoveValidator" class="fr.pharma.eclipse.component.produit.validator.ConditionnementRemoveValidator"/>
+	
+	<!-- ================================== -->
+	<!-- Detail Stockage : REMOVE VALIDATOR -->
+	<!-- ================================== -->					
+	<bean id="detailStockageRemoveValidator" class="fr.pharma.eclipse.component.produit.validator.DetailStockageRemoveValidator"/>
+	
+</beans>

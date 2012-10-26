@@ -1,0 +1,42 @@
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+     xmlns:ui="http://java.sun.com/jsf/facelets"
+     xmlns:h="http://java.sun.com/jsf/html"
+     xmlns:f="http://java.sun.com/jsf/core"
+     xmlns:p="http://primefaces.prime.com.tr/ui">
+     
+     <div id="alertes" class="accueil" >
+     	
+		<h2><h:outputText value="#{resourceBundle['accueil.alertes']}"/></h2>		
+	    <p:dataTable id="alertes" value="#{accueilManager.alertes}" styleClass="dataTableScrollable" scrollable="true" var="alerte" emptyMessage="#{resourceBundle['results.none']}" >
+			
+   			<p:column id="essai" styleClass="panelCol_20">
+   				<f:facet name="header">
+   					<h:outputText value="#{resourceBundle['alerte.essai']}"/>
+   				</f:facet>
+   				<h:outputText value="#{alerte.essai.numInterne} #{alerte.essai.nom}"/>
+	   		</p:column>
+   			 
+   			<p:column id="pharmacie" styleClass="panelCol_20">
+   				<f:facet name="header">
+   					<h:outputText value="#{resourceBundle['alerte.pharmacie']}"/>
+   				</f:facet>
+   				<h:outputText value="#{alerte.pharmacie.nom}"/>
+   			</p:column>
+   			
+   			<p:column id="typeAlerte" styleClass="panelCol_20">
+   				<f:facet name="header">
+   					<h:outputText value="#{resourceBundle['alerte.typeAlerte']}"/>
+   				</f:facet>
+   				<h:outputText value="#{alerte.typeAlerte.libelle}"/>
+   			</p:column>
+   			
+   			<p:column id="libelle" styleClass="panelCol_40">
+   				<f:facet name="header">
+   					<h:outputText value="#{resourceBundle['alerte.libelle']}"/>
+   				</f:facet>
+   				<h:outputText value="#{alerte.libelle}"/>
+   			</p:column>
+   			
+		</p:dataTable>	    		
+     </div>
+</ui:composition>

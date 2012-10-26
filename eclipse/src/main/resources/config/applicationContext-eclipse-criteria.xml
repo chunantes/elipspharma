@@ -1,0 +1,274 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans 
+    xmlns="http://www.springframework.org/schema/beans" 
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd">
+
+
+	<!-- ======================================== -->
+	<!-- CRITERE DE RECHERCHE : PROMOTEUR         -->
+	<!-- ======================================== -->
+	<bean id="promoteurSearchCriteria"
+		class="fr.pharma.eclipse.domain.criteria.acteur.PromoteurSearchCriteria"
+		scope="session">
+		<property name="activeOrder" value="raisonSociale" />
+	</bean>
+
+	<!-- ======================================== -->
+	<!-- CRITERE DE RECHERCHE : ETABLISSEMENT     -->
+	<!-- ======================================== -->
+	<bean id="etablissementSearchCriteria"
+		class="fr.pharma.eclipse.domain.criteria.localisation.EtablissementSearchCriteria"
+		scope="session">
+		<property name="activeOrder" value="nom" />
+	</bean>
+
+	<!-- ======================================== -->
+	<!-- CRITERE DE RECHERCHE : SITE              -->
+	<!-- ======================================== -->
+	<bean id="siteSearchCriteria"
+		class="fr.pharma.eclipse.domain.criteria.localisation.SiteSearchCriteria"
+		scope="session">
+		<property name="activeOrder" value="nom" />
+	</bean>
+
+	<!-- ======================================== -->
+	<!-- CRITERE DE RECHERCHE : SERVICE           -->
+	<!-- ======================================== -->
+	<bean id="serviceSearchCriteria"
+		class="fr.pharma.eclipse.domain.criteria.localisation.ServiceSearchCriteria"
+		scope="session">
+		<property name="activeOrder" value="nom" />
+	</bean>
+
+	<!-- ======================================== -->
+	<!-- CRITERE DE RECHERCHE : PHARMACIE         -->
+	<!-- ======================================== -->
+	<bean id="pharmacieSearchCriteria"
+		class="fr.pharma.eclipse.domain.criteria.stockage.PharmacieSearchCriteria"
+		scope="session">
+		<property name="activeOrder" value="nom" />
+	</bean>
+
+	<!-- ======================================== -->
+	<!-- CRITERE DE RECHERCHE : POLE              -->
+	<!-- ======================================== -->
+	<bean id="poleSearchCriteria"
+		class="fr.pharma.eclipse.domain.criteria.localisation.PoleSearchCriteria"
+		scope="session">
+		<property name="activeOrder" value="nom" />
+	</bean>
+
+	<!-- ======================================== -->
+	<!-- CRITERE DE RECHERCHE : PERSONNE          -->
+	<!-- ======================================== -->
+	<bean id="personneSearchCriteria"
+		class="fr.pharma.eclipse.domain.criteria.acteur.PersonneSearchCriteria"
+		scope="session">
+		<property name="activeOrder" value="nom" />
+	</bean>
+	
+	<!-- ======================================== -->
+	<!-- CRITERE DE RECHERCHE : MOUVEMENT STOCK   -->
+	<!-- ======================================== -->
+	<bean id="mouvementStockSearchCriteria"
+		class="fr.pharma.eclipse.domain.criteria.stock.MvtStockSearchCriteria"
+		scope="session">
+		<property name="activeOrder" value="dateCreation" />
+		<property name="ascending" value="false"/>
+	</bean>
+
+	<!-- =========================================== -->
+	<!-- CRITERE DE RECHERCHE : DISPENSATION PRODUIT -->
+	<!-- =========================================== -->
+	<bean id="dispensationProduitSearchCriteria"
+		class="fr.pharma.eclipse.domain.criteria.stock.DispensationProduitSearchCriteria"
+		scope="session">
+	</bean>
+
+	<!-- =========================================== -->
+	<!-- CRITERE DE RECHERCHE : DISPENSATION PRODUIT -->
+	<!-- =========================================== -->
+	<bean id="preparationEntreeSearchCriteria"
+		class="fr.pharma.eclipse.domain.criteria.stock.PreparationEntreeSearchCriteria"
+		scope="session">
+	</bean>
+	
+	<!-- ======================================== -->
+	<!-- CRITERE DE RECHERCHE : STOCK             -->
+	<!-- ======================================== -->
+	<bean id="stockSearchCriteria"
+		class="fr.pharma.eclipse.domain.criteria.stock.StockSearchCriteria"
+		scope="session">
+	</bean>
+
+	<!-- ============================================ -->
+	<!-- CRITERE DE RECHERCHE : EXTENSION PEREMPTION  -->
+	<!-- ============================================ -->
+	<bean id="extensionPeremptionSearchCriteria"
+		class="fr.pharma.eclipse.domain.criteria.stock.ExtensionPeremptionSearchCriteria"
+		scope="session">
+		<property name="activeOrder" value="datePeremption" />
+		<property name="ascending" value="false"/>
+	</bean>
+	
+	<!-- ============================================ -->
+	<!-- CRITERE DE RECHERCHE : DOTATION              -->
+	<!-- ============================================ -->
+	<bean id="dotationSearchCriteria"
+		class="fr.pharma.eclipse.domain.criteria.dotation.DotationSearchCriteria"
+		scope="session">
+		<property name="activeOrder" value="dateDemande" />
+	</bean>
+
+	<!-- ======================================== -->
+	<!-- CRITERE DE RECHERCHE : PRODUIT           -->
+	<!-- ======================================== -->
+	<bean id="produitSearchCriteria"
+		class="fr.pharma.eclipse.domain.criteria.produit.ProduitSearchCriteria"
+		scope="session">
+		<property name="activeOrder" value="denomination" />
+	</bean>
+	
+	<!-- ======================================== -->
+	<!-- CRITERE DE RECHERCHE : CONDITIONNEMENT	  -->
+	<!-- ======================================== -->
+	<bean id="conditionnementSearchCriteria"
+		class="fr.pharma.eclipse.domain.criteria.produit.ConditionnementSearchCriteria"
+		scope="session">
+		<property name="activeOrder" value="libelle" />
+	</bean>
+
+	<!-- ======================================== -->
+	<!-- CRITERE DE RECHERCHE : DETAILSTOCKAGE	  -->
+	<!-- ======================================== -->
+	<bean id="detailStockageSearchCriteria"
+		class="fr.pharma.eclipse.domain.criteria.produit.DetailStockageSearchCriteria"
+		scope="session">
+		<property name="activeOrder" value="id" />
+	</bean>
+
+
+	<!-- ======================================== -->
+	<!-- CRITERE DE RECHERCHE : ESSAI             -->
+	<!-- ======================================== -->
+	<bean id="essaiSearchCriteria"
+		class="fr.pharma.eclipse.domain.criteria.essai.EssaiSearchCriteria"
+		scope="session">
+		<property name="activeOrder" value="numInterne" />
+	</bean>
+
+	<!-- ======================================== -->
+	<!-- CRITERE DE RECHERCHE : ESSAI    SIGREC   -->
+	<!-- ======================================== -->
+	<bean id="essaiSigrecSearchCriteria"
+		class="fr.pharma.eclipse.domain.criteria.sigrec.essai.EssaiSigrecSearchCriteria"
+		scope="session">
+		<property name="activeOrder" value="nom" />
+	</bean>
+
+	<!-- ======================================== -->
+	<!-- CRITERE DE RECHERCHE : ESSAI    SIGREC   -->
+	<!-- ======================================== -->
+	<bean id="promoteurSigrecSearchCriteria"
+		class="fr.pharma.eclipse.domain.criteria.sigrec.acteur.PromoteurSigrecSearchCriteria"
+		scope="session">
+		<property name="activeOrder" value="identifiant" />
+	</bean>
+
+
+	<!-- ======================================== -->
+	<!-- CRITERE DE RECHERCHE : Prescription      -->
+	<!-- ======================================== -->
+	<bean id="prescriptionTypeSearchCriteria"
+		class="fr.pharma.eclipse.domain.criteria.design.PrescriptionTypeSearchCriteria"
+		scope="session">
+		<property name="activeOrder" value="id" />
+	</bean>
+	
+	<!-- ======================================== -->
+	<!-- CRITERE DE RECHERCHE : PATIENT           -->
+	<!-- ======================================== -->
+	<bean id="patientSearchCriteria"
+		class="fr.pharma.eclipse.domain.criteria.patient.PatientSearchCriteria"
+		scope="session">
+		<property name="activeOrder" value="nom" />
+	</bean>
+	
+	<!-- ======================================== -->
+	<!-- CRITERE DE RECHERCHE : PRODUITPRESCRIT   -->
+	<!-- ======================================== -->
+	<bean id="produitPrescritSearchCriteria"
+		class="fr.pharma.eclipse.domain.criteria.prescription.ProduitPrescritSearchCriteria"
+		scope="session">
+		<property name="activeOrder" value="nom" />
+	</bean>
+	
+	<!-- ======================================== -->
+	<!-- CRITERE DE RECHERCHE : PRESCRIPTION      -->
+	<!-- ======================================== -->
+	<bean id="prescriptionSearchCriteria"
+		class="fr.pharma.eclipse.domain.criteria.prescription.PrescriptionSearchCriteria"
+		scope="session">
+		<property name="activeOrder" value="id" />
+	</bean>
+	
+	<!-- ======================================== -->
+	<!-- CRITERE DE RECHERCHE : DISPENSATION      -->
+	<!-- ======================================== -->
+	<bean id="dispensationSearchCriteria"
+		class="fr.pharma.eclipse.domain.criteria.dispensation.DispensationSearchCriteria"
+		scope="session">
+		<property name="activeOrder" value="id" />
+	</bean>
+	
+	<!-- ======================================== -->
+	<!-- CRITERE DE RECHERCHE : EVENEMENT         -->
+	<!-- ======================================== -->
+	<bean id="evenementSearchCriteria"
+		class="fr.pharma.eclipse.domain.criteria.evenement.EvenementSearchCriteria"
+		scope="session">
+		<property name="activeOrder" value="dateDebut" />
+		<property name="ascending" value="false"/>
+	</bean>
+	
+	<!-- ======================================== -->
+	<!-- CRITERE DE RECHERCHE : INCIDENT	      -->
+	<!-- ======================================== -->
+	<bean id="incidentSearchCriteria"
+		class="fr.pharma.eclipse.domain.criteria.incident.IncidentSearchCriteria"
+		scope="session">
+		<property name="activeOrder" value="date" />
+		<property name="ascending" value="false"/>
+	</bean>
+	
+	
+	<!-- ======================================== -->
+	<!-- CRITERE DE RECHERCHE : GRILLEMODELE      -->
+	<!-- ======================================== -->
+	<bean id="grilleModeleSearchCriteria"
+		class="fr.pharma.eclipse.domain.criteria.surcout.GrilleModeleSearchCriteria"
+		scope="session">
+		<property name="activeOrder" value="dateCreation" />
+		<property name="ascending" value="false"/>
+	</bean>
+	
+	<!-- ======================================== -->
+	<!-- CRITERE DE RECHERCHE : ORDONNANCIER      -->
+	<!-- ======================================== -->
+	<bean id="ordonnancierSearchCriteria"
+		class="fr.pharma.eclipse.domain.criteria.ordonnancier.OrdonnancierSearchCriteria"
+		scope="session">
+		<property name="activeOrder" value="dateDebut" />
+	</bean>
+	
+	<!-- ======================================== -->
+	<!-- CRITERE DE RECHERCHE : RETOUR PATIENT    -->
+	<!-- ======================================== -->
+	<bean id="retourPatientSearchCriteria"
+		class="fr.pharma.eclipse.domain.criteria.stock.RetourPatientSearchCriteria"
+		scope="session">
+		<property name="activeOrder" value="date" />
+	</bean>
+	
+</beans>

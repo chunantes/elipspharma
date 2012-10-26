@@ -1,0 +1,1396 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans 
+    xmlns="http://www.springframework.org/schema/beans" 
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xmlns:util="http://www.springframework.org/schema/util"
+    xsi:schemaLocation="
+    	http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd
+    	http://www.springframework.org/schema/util http://www.springframework.org/schema/util/spring-util.xsd">
+
+	<!-- ======================= -->
+	<!-- FACTORY : UTILS	     -->
+	<!-- ======================= -->
+	<bean id="ioStreamsFactory" class="fr.pharma.eclipse.factory.utils.IOStreamsFactory" />
+
+	<!-- ======================= -->
+	<!-- POLE SUIVI : FACTORY    -->
+	<!-- ======================= -->
+	<bean id="PoleSuivi"
+		class="fr.pharma.eclipse.domain.model.suivi.localisation.PoleSuivi"
+		scope="prototype" />
+	<bean id="poleSuiviFactory" class="fr.pharma.eclipse.factory.suivi.SuiviFactory">
+		<constructor-arg
+			value="fr.pharma.eclipse.domain.model.suivi.localisation.PoleSuivi" />
+	</bean>
+
+	<!-- ======================= -->
+	<!-- POLE : FACTORY          -->
+	<!-- ======================= -->
+	<bean id="Pole" class="fr.pharma.eclipse.domain.model.localisation.Pole"
+		scope="prototype" />
+	<bean id="poleFactory" class="fr.pharma.eclipse.factory.common.BeanObjectFactory">
+		<constructor-arg value="fr.pharma.eclipse.domain.model.localisation.Pole" />
+	</bean>
+
+	<!-- ============================== -->
+	<!-- ETABLISSEMENT SUIVI : FACTORY  -->
+	<!-- ============================== -->
+	<bean id="EtablissementSuivi"
+		class="fr.pharma.eclipse.domain.model.suivi.localisation.EtablissementSuivi"
+		scope="prototype" />
+	<bean id="etablissementSuiviFactory" class="fr.pharma.eclipse.factory.suivi.SuiviFactory">
+		<constructor-arg
+			value="fr.pharma.eclipse.domain.model.suivi.localisation.EtablissementSuivi" />
+	</bean>
+
+	<!-- ============================= -->
+	<!-- ETABLISSEMENT : FACTORY       -->
+	<!-- ============================= -->
+	<bean id="Etablissement"
+		class="fr.pharma.eclipse.domain.model.localisation.Etablissement"
+		scope="prototype" />
+	<bean id="etablissementFactory" class="fr.pharma.eclipse.factory.common.BeanObjectFactory">
+		<constructor-arg
+			value="fr.pharma.eclipse.domain.model.localisation.Etablissement" />
+	</bean>
+
+	<!-- ============================== -->
+	<!-- SITE SUIVI : FACTORY           -->
+	<!-- ============================== -->
+	<bean id="SiteSuivi"
+		class="fr.pharma.eclipse.domain.model.suivi.localisation.SiteSuivi"
+		scope="prototype" />
+	<bean id="siteSuiviFactory" class="fr.pharma.eclipse.factory.suivi.SuiviFactory">
+		<constructor-arg
+			value="fr.pharma.eclipse.domain.model.suivi.localisation.SiteSuivi" />
+	</bean>
+
+	<!-- ============================= -->
+	<!-- SITE : FACTORY                -->
+	<!-- ============================= -->
+	<bean id="Site" class="fr.pharma.eclipse.domain.model.localisation.Site"
+		scope="prototype" />
+	<bean id="siteFactory" class="fr.pharma.eclipse.factory.common.BeanObjectFactory">
+		<constructor-arg value="fr.pharma.eclipse.domain.model.localisation.Site" />
+	</bean>
+
+	<!-- ============================= -->
+	<!-- HABILITATION : FACTORY        -->
+	<!-- ============================= -->
+	<bean id="Habilitation"
+		class="fr.pharma.eclipse.domain.model.habilitation.Habilitation"
+		scope="prototype" />
+	<bean id="habilitationFactory"
+		class="fr.pharma.eclipse.factory.habilitation.HabilitationFactory">
+		<constructor-arg
+			value="fr.pharma.eclipse.domain.model.habilitation.Habilitation" />
+		<property name="userService" ref="userService" />
+	</bean>
+
+	<!-- ======================= -->
+	<!-- SERVICE SUIVI : FACTORY -->
+	<!-- ======================= -->
+	<bean id="ServiceSuivi"
+		class="fr.pharma.eclipse.domain.model.suivi.localisation.ServiceSuivi"
+		scope="prototype" />
+	<bean id="serviceSuiviFactory" class="fr.pharma.eclipse.factory.suivi.SuiviFactory">
+		<constructor-arg
+			value="fr.pharma.eclipse.domain.model.suivi.localisation.ServiceSuivi" />
+	</bean>
+
+	<!-- ======================= -->
+	<!-- SERVICE : FACTORY       -->
+	<!-- ======================= -->
+	<bean id="Service" class="fr.pharma.eclipse.domain.model.localisation.Service"
+		scope="prototype" />
+	<bean id="serviceFactory" class="fr.pharma.eclipse.factory.common.BeanObjectFactory">
+		<constructor-arg value="fr.pharma.eclipse.domain.model.localisation.Service" />
+	</bean>
+
+	<!-- ========================== -->
+	<!-- PHARMACIE SUIVI : FACTORY  -->
+	<!-- ========================== -->
+	<bean id="PharmacieSuivi"
+		class="fr.pharma.eclipse.domain.model.suivi.stockage.PharmacieSuivi"
+		scope="prototype" />
+	<bean id="pharmacieSuiviFactory" class="fr.pharma.eclipse.factory.suivi.SuiviFactory">
+		<constructor-arg
+			value="fr.pharma.eclipse.domain.model.suivi.stockage.PharmacieSuivi" />
+	</bean>
+
+	<!-- ========================== -->
+	<!-- PHARMACIE : FACTORY        -->
+	<!-- ========================== -->
+	<bean id="Pharmacie" class="fr.pharma.eclipse.domain.model.stockage.Pharmacie"
+		scope="prototype" />
+	<bean id="pharmacieFactory" class="fr.pharma.eclipse.factory.stock.PharmacieFactory">
+		<constructor-arg value="fr.pharma.eclipse.domain.model.stockage.Pharmacie" />
+	</bean>
+
+	<!-- ========================== -->
+	<!-- STOCKAGE : FACTORY         -->
+	<!-- ========================== -->
+	<bean id="Stockage" class="fr.pharma.eclipse.domain.model.stockage.Stockage"
+		scope="prototype" />
+	<bean id="stockageFactory" class="fr.pharma.eclipse.factory.common.BeanObjectFactory">
+		<constructor-arg value="fr.pharma.eclipse.domain.model.stockage.Stockage" />
+	</bean>
+
+	<!-- ============================== -->
+	<!-- PERSONNE SUIVI : FACTORY       -->
+	<!-- ============================== -->
+	<bean id="PersonneSuivi"
+		class="fr.pharma.eclipse.domain.model.suivi.acteur.PersonneSuivi"
+		scope="prototype" />
+	<bean id="personneSuiviFactory" class="fr.pharma.eclipse.factory.suivi.SuiviFactory">
+		<constructor-arg
+			value="fr.pharma.eclipse.domain.model.suivi.acteur.PersonneSuivi" />
+	</bean>
+
+	<!-- ============================== -->
+	<!-- INVESTIGATEUR : FACTORY        -->
+	<!-- ============================== -->
+	<bean id="Investigateur" class="fr.pharma.eclipse.domain.model.acteur.Investigateur"
+		scope="prototype" />
+	<bean id="investigateurFactory" class="fr.pharma.eclipse.factory.acteur.PersonneFactory">
+		<constructor-arg index="0"
+			value="fr.pharma.eclipse.domain.model.acteur.Investigateur" />
+		<constructor-arg index="1" ref="TYPE_PERSONNE_INVESTIGATEUR" />
+	</bean>
+
+	<!-- ============================== -->
+	<!-- ARC PROMOTEUR : FACTORY        -->
+	<!-- ============================== -->
+	<bean id="ArcPromoteur" class="fr.pharma.eclipse.domain.model.acteur.ArcPromoteur"
+		scope="prototype" />
+	<bean id="arcPromoteurFactory" class="fr.pharma.eclipse.factory.acteur.PersonneFactory">
+		<constructor-arg index="0"
+			value="fr.pharma.eclipse.domain.model.acteur.ArcPromoteur" />
+		<constructor-arg index="1" ref="TYPE_PERSONNE_ARC_PROMOTEUR" />
+	</bean>
+
+	<!-- ============================== -->
+	<!-- ARC INVESTIGATEUR : FACTORY    -->
+	<!-- ============================== -->
+	<bean id="ArcInvestigateur" class="fr.pharma.eclipse.domain.model.acteur.ArcInvestigateur"
+		scope="prototype" />
+	<bean id="arcInvestigateurFactory" class="fr.pharma.eclipse.factory.acteur.PersonneFactory">
+		<constructor-arg index="0"
+			value="fr.pharma.eclipse.domain.model.acteur.ArcInvestigateur" />
+		<constructor-arg index="1"
+			ref="TYPE_PERSONNE_ARC_INVESTIGATEUR" />
+	</bean>
+
+	<!-- ============================== -->
+	<!-- PHARMACIEN : FACTORY           -->
+	<!-- ============================== -->
+	<bean id="Pharmacien" class="fr.pharma.eclipse.domain.model.acteur.Pharmacien"
+		scope="prototype" />
+	<bean id="pharmacienFactory" class="fr.pharma.eclipse.factory.acteur.PersonneFactory">
+		<constructor-arg index="0"
+			value="fr.pharma.eclipse.domain.model.acteur.Pharmacien" />
+		<constructor-arg index="1" ref="TYPE_PERSONNE_PHARMACIEN" />
+	</bean>
+
+	<!-- ============================== -->
+	<!-- CRO : FACTORY                  -->
+	<!-- ============================== -->
+	<bean id="Cro" class="fr.pharma.eclipse.domain.model.acteur.Cro"
+		scope="prototype" />
+	<bean id="croFactory" class="fr.pharma.eclipse.factory.acteur.PersonneFactory">
+		<constructor-arg index="0"
+			value="fr.pharma.eclipse.domain.model.acteur.Cro" />
+		<constructor-arg index="1" ref="TYPE_PERSONNE_CRO" />
+	</bean>
+
+	<!-- ============================== -->
+	<!-- DIRECTION RECHERCHE : FACTORY  -->
+	<!-- ============================== -->
+	<bean id="DirectionRecherche"
+		class="fr.pharma.eclipse.domain.model.acteur.DirectionRecherche"
+		scope="prototype" />
+	<bean id="directionRechercheFactory" class="fr.pharma.eclipse.factory.acteur.PersonneFactory">
+		<constructor-arg index="0"
+			value="fr.pharma.eclipse.domain.model.acteur.DirectionRecherche" />
+		<constructor-arg index="1"
+			ref="TYPE_PERSONNE_DIRECTION_RECHERCHE" />
+	</bean>
+
+	<!-- ============================== -->
+	<!-- CONTACT PROMOTEUR : FACTORY    -->
+	<!-- ============================== -->
+	<bean id="ContactPromoteur" class="fr.pharma.eclipse.domain.model.acteur.ContactPromoteur"
+		scope="prototype" />
+	<bean id="contactPromoteurFactory" class="fr.pharma.eclipse.factory.acteur.PersonneFactory">
+		<constructor-arg index="0"
+			value="fr.pharma.eclipse.domain.model.acteur.ContactPromoteur" />
+		<constructor-arg index="1" ref="TYPE_PERSONNE_PROMOTEUR" />
+	</bean>
+
+	<!-- =========================== -->
+	<!-- PROMOTEUR SUIVI : FACTORY   -->
+	<!-- =========================== -->
+	<bean id="PromoteurSuivi"
+		class="fr.pharma.eclipse.domain.model.suivi.acteur.PromoteurSuivi"
+		scope="prototype" />
+	<bean id="promoteurSuiviFactory" class="fr.pharma.eclipse.factory.suivi.SuiviFactory">
+		<constructor-arg
+			value="fr.pharma.eclipse.domain.model.suivi.acteur.PromoteurSuivi" />
+	</bean>
+
+	<!-- =========================== -->
+	<!-- PROMOTEUR : FACTORY         -->
+	<!-- =========================== -->
+	<bean id="Promoteur" class="fr.pharma.eclipse.domain.model.acteur.Promoteur"
+		scope="prototype" />
+	<bean id="promoteurFactory" class="fr.pharma.eclipse.factory.common.BeanObjectFactory">
+		<constructor-arg value="fr.pharma.eclipse.domain.model.acteur.Promoteur" />
+	</bean>
+
+	<!-- ============================== -->
+	<!-- DETAIL RECHERCHE : FACTORY     -->
+	<!-- ============================== -->
+	<bean id="DetailRecherche"
+		class="fr.pharma.eclipse.domain.model.essai.detail.recherche.DetailRecherche"
+		scope="prototype" />
+	<bean id="detailRechercheFactory" class="fr.pharma.eclipse.factory.common.BeanObjectFactory">
+		<constructor-arg
+			value="fr.pharma.eclipse.domain.model.essai.detail.recherche.DetailRecherche" />
+	</bean>
+	<bean id="detailRechercheWithParentFactory"
+		class="fr.pharma.eclipse.factory.common.BeanObjectWithParentFactory">
+		<property name="simpleFactory" ref="detailRechercheFactory" />
+		<property name="propertyToStoreParent" value="essai" />
+	</bean>
+
+	<!-- ==================================== -->
+	<!-- SUIVI DETAIL RECHERCHE : FACTORY     -->
+	<!-- ==================================== -->
+	<bean id="DetailRechercheSuivi"
+		class="fr.pharma.eclipse.domain.model.suivi.essai.detail.DetailRechercheSuivi"
+		scope="prototype" />
+	<bean id="detailRechercheSuiviFactory" class="fr.pharma.eclipse.factory.suivi.SuiviFactory">
+		<constructor-arg
+			value="fr.pharma.eclipse.domain.model.suivi.essai.detail.DetailRechercheSuivi" />
+	</bean>
+	<bean id="detailRechercheSuiviWithParentFactory"
+		class="fr.pharma.eclipse.factory.common.BeanObjectWithParentFactory">
+		<property name="simpleFactory" ref="detailRechercheSuiviFactory" />
+		<property name="propertyToStoreParent" value="detailRecherche" />
+	</bean>
+
+	<!-- ============================== -->
+	<!-- DETAIL CONTACTS : FACTORY 	    -->
+	<!-- ============================== -->
+	<bean id="DetailContacts"
+		class="fr.pharma.eclipse.domain.model.essai.detail.contact.DetailContacts"
+		scope="prototype" />
+	<bean id="detailContactsFactory" class="fr.pharma.eclipse.factory.common.BeanObjectFactory">
+		<constructor-arg
+			value="fr.pharma.eclipse.domain.model.essai.detail.contact.DetailContacts" />
+	</bean>
+	<bean id="detailContactsWithParentFactory"
+		class="fr.pharma.eclipse.factory.common.BeanObjectWithParentFactory">
+		<property name="simpleFactory" ref="detailContactsFactory" />
+		<property name="propertyToStoreParent" value="essai" />
+	</bean>
+
+	<!-- ==================================== -->
+	<!-- SUIVI DETAIL CONTACTS : FACTORY 	  -->
+	<!-- ==================================== -->
+	<bean id="DetailContactsSuivi"
+		class="fr.pharma.eclipse.domain.model.suivi.essai.detail.DetailContactsSuivi"
+		scope="prototype" />
+	<bean id="detailContactsSuiviFactory" class="fr.pharma.eclipse.factory.suivi.SuiviFactory">
+		<constructor-arg
+			value="fr.pharma.eclipse.domain.model.suivi.essai.detail.DetailContactsSuivi" />
+	</bean>
+	<bean id="detailContactsSuiviWithParentFactory"
+		class="fr.pharma.eclipse.factory.common.BeanObjectWithParentFactory">
+		<property name="simpleFactory" ref="detailContactsSuiviFactory" />
+		<property name="propertyToStoreParent" value="detailContacts" />
+	</bean>
+
+	<!-- ============================== -->
+	<!-- DETAIL FAISABILITE : FACTORY   -->
+	<!-- ============================== -->
+	<bean id="DetailFaisabilite"
+		class="fr.pharma.eclipse.domain.model.essai.detail.faisabilite.DetailFaisabilite"
+		scope="prototype" />
+	<bean id="detailFaisabiliteFactory" class="fr.pharma.eclipse.factory.common.BeanObjectFactory">
+		<constructor-arg
+			value="fr.pharma.eclipse.domain.model.essai.detail.faisabilite.DetailFaisabilite" />
+	</bean>
+	<bean id="detailFaisabiliteWithParentFactory"
+		class="fr.pharma.eclipse.factory.common.BeanObjectWithParentFactory">
+		<property name="simpleFactory" ref="detailFaisabiliteFactory" />
+		<property name="propertyToStoreParent" value="essai" />
+	</bean>
+
+	<!-- ================================== -->
+	<!-- SUIVI DETAIL FAISABILITE : FACTORY -->
+	<!-- ================================== -->
+	<bean id="DetailFaisabiliteSuivi"
+		class="fr.pharma.eclipse.domain.model.suivi.essai.detail.DetailFaisabiliteSuivi"
+		scope="prototype" />
+	<bean id="detailFaisabiliteSuiviFactory" class="fr.pharma.eclipse.factory.suivi.SuiviFactory">
+		<constructor-arg
+			value="fr.pharma.eclipse.domain.model.suivi.essai.detail.DetailFaisabiliteSuivi" />
+	</bean>
+	<bean id="detailFaisabiliteSuiviWithParentFactory"
+		class="fr.pharma.eclipse.factory.common.BeanObjectWithParentFactory">
+		<property name="simpleFactory" ref="detailFaisabiliteSuiviFactory" />
+		<property name="propertyToStoreParent" value="detailFaisabilite" />
+	</bean>
+
+	<!-- ============================== -->
+	<!-- DETAIL DATES : FACTORY     	-->
+	<!-- ============================== -->
+	<bean id="DetailDates"
+		class="fr.pharma.eclipse.domain.model.essai.detail.dates.DetailDates"
+		scope="prototype" />
+	<bean id="detailDatesFactory" class="fr.pharma.eclipse.factory.common.BeanObjectFactory">
+		<constructor-arg
+			value="fr.pharma.eclipse.domain.model.essai.detail.dates.DetailDates" />
+	</bean>
+	<bean id="detailDatesWithParentFactory"
+		class="fr.pharma.eclipse.factory.common.BeanObjectWithParentFactory">
+		<property name="simpleFactory" ref="detailDatesFactory" />
+		<property name="propertyToStoreParent" value="essai" />
+	</bean>
+
+	<!-- ================================ -->
+	<!-- SUIVI DETAIL DATES : FACTORY     -->
+	<!-- ================================ -->
+	<bean id="DetailDatesSuivi"
+		class="fr.pharma.eclipse.domain.model.suivi.essai.detail.DetailDatesSuivi"
+		scope="prototype" />
+	<bean id="detailDatesSuiviFactory" class="fr.pharma.eclipse.factory.suivi.SuiviFactory">
+		<constructor-arg
+			value="fr.pharma.eclipse.domain.model.suivi.essai.detail.DetailDatesSuivi" />
+	</bean>
+	<bean id="detailDatesSuiviWithParentFactory"
+		class="fr.pharma.eclipse.factory.common.BeanObjectWithParentFactory">
+		<property name="simpleFactory" ref="detailDatesSuiviFactory" />
+		<property name="propertyToStoreParent" value="detailDates" />
+	</bean>
+
+	<!-- ============================== -->
+	<!-- DETAIL ADMINISTRATIF : FACTORY -->
+	<!-- ============================== -->
+	<bean id="DetailAdministratif"
+		class="fr.pharma.eclipse.domain.model.essai.detail.administratif.DetailAdministratif"
+		scope="prototype" />
+	<bean id="detailAdministratifFactory" class="fr.pharma.eclipse.factory.common.BeanObjectFactory">
+		<constructor-arg
+			value="fr.pharma.eclipse.domain.model.essai.detail.administratif.DetailAdministratif" />
+	</bean>
+	<bean id="detailAdministratifWithParentFactory"
+		class="fr.pharma.eclipse.factory.common.BeanObjectWithParentFactory">
+		<property name="simpleFactory" ref="detailAdministratifFactory" />
+		<property name="propertyToStoreParent" value="essai" />
+	</bean>
+
+	<!-- ======================================== -->
+	<!-- SUIVI DETAIL ADMINISTRATIF : FACTORY     -->
+	<!-- ======================================== -->
+	<bean id="DetailAdministratifSuivi"
+		class="fr.pharma.eclipse.domain.model.suivi.essai.detail.DetailAdministratifSuivi"
+		scope="prototype" />
+	<bean id="detailAdministratifSuiviFactory" class="fr.pharma.eclipse.factory.suivi.SuiviFactory">
+		<constructor-arg
+			value="fr.pharma.eclipse.domain.model.suivi.essai.detail.DetailAdministratifSuivi" />
+	</bean>
+	<bean id="detailAdministratifSuiviWithParentFactory"
+		class="fr.pharma.eclipse.factory.common.BeanObjectWithParentFactory">
+		<property name="simpleFactory" ref="detailAdministratifSuiviFactory" />
+		<property name="propertyToStoreParent" value="detailAdministratif" />
+	</bean>
+
+	<!-- ============================== -->
+	<!-- DETAIL PRODUIT : FACTORY 		-->
+	<!-- ============================== -->
+	<bean id="DetailProduit"
+		class="fr.pharma.eclipse.domain.model.essai.detail.produit.DetailProduit"
+		scope="prototype" />
+	<bean id="detailProduitFactory" class="fr.pharma.eclipse.factory.common.BeanObjectFactory">
+		<constructor-arg
+			value="fr.pharma.eclipse.domain.model.essai.detail.produit.DetailProduit" />
+	</bean>
+	<bean id="detailProduitWithParentFactory"
+		class="fr.pharma.eclipse.factory.common.BeanObjectWithParentFactory">
+		<property name="simpleFactory" ref="detailProduitFactory" />
+		<property name="propertyToStoreParent" value="essai" />
+	</bean>
+
+	<!-- ======================================== -->
+	<!-- SUIVI DETAIL PRODUIT : FACTORY     -->
+	<!-- ======================================== -->
+	<bean id="DetailProduitSuivi"
+		class="fr.pharma.eclipse.domain.model.suivi.essai.detail.DetailProduitSuivi"
+		scope="prototype" />
+	<bean id="detailProduitSuiviFactory" class="fr.pharma.eclipse.factory.suivi.SuiviFactory">
+		<constructor-arg
+			value="fr.pharma.eclipse.domain.model.suivi.essai.detail.DetailProduitSuivi" />
+	</bean>
+	<bean id="detailProduitSuiviWithParentFactory"
+		class="fr.pharma.eclipse.factory.common.BeanObjectWithParentFactory">
+		<property name="simpleFactory" ref="detailProduitSuiviFactory" />
+		<property name="propertyToStoreParent" value="detailProduit" />
+	</bean>
+
+	<!-- ============================== -->
+	<!-- DETAIL DONNEES PHARMA :FACTORY -->
+	<!-- ============================== -->
+	<bean id="DetailDonneesPharma"
+		class="fr.pharma.eclipse.domain.model.essai.detail.pharma.DetailDonneesPharma"
+		scope="prototype" />
+	<bean id="detailDonneesPharmaFactory" class="fr.pharma.eclipse.factory.common.BeanObjectFactory">
+		<constructor-arg
+			value="fr.pharma.eclipse.domain.model.essai.detail.pharma.DetailDonneesPharma" />
+	</bean>
+	<bean id="detailDonneesPharmaWithParentFactory"
+		class="fr.pharma.eclipse.factory.common.BeanObjectWithParentFactory">
+		<property name="simpleFactory" ref="detailDonneesPharmaFactory" />
+		<property name="propertyToStoreParent" value="essai" />
+	</bean>
+
+	<!-- ======================================== -->
+	<!-- SUIVI DETAIL DONNEES PHARMA : FACTORY     -->
+	<!-- ======================================== -->
+	<bean id="DetailDonneesPharmaSuivi"
+		class="fr.pharma.eclipse.domain.model.suivi.essai.detail.DetailDonneesPharmaSuivi"
+		scope="prototype" />
+	<bean id="detailDonneesPharmaSuiviFactory" class="fr.pharma.eclipse.factory.suivi.SuiviFactory">
+		<constructor-arg
+			value="fr.pharma.eclipse.domain.model.suivi.essai.detail.DetailDonneesPharmaSuivi" />
+	</bean>
+	<bean id="detailDonneesPharmaSuiviWithParentFactory"
+		class="fr.pharma.eclipse.factory.common.BeanObjectWithParentFactory">
+		<property name="simpleFactory" ref="detailDonneesPharmaSuiviFactory" />
+		<property name="propertyToStoreParent" value="detailDonneesPharma" />
+	</bean>
+
+	<!-- ============================== -->
+	<!-- DETAIL DESIGN : FACTORY 		-->
+	<!-- ============================== -->
+	<bean id="DetailDesign"
+		class="fr.pharma.eclipse.domain.model.essai.detail.design.DetailDesign"
+		scope="prototype" />
+	<bean id="detailDesignFactory" class="fr.pharma.eclipse.factory.common.BeanObjectFactory">
+		<constructor-arg
+			value="fr.pharma.eclipse.domain.model.essai.detail.design.DetailDesign" />
+	</bean>
+	<bean id="detailDesignWithParentFactory"
+		class="fr.pharma.eclipse.factory.common.BeanObjectWithParentFactory">
+		<property name="simpleFactory" ref="detailDesignFactory" />
+		<property name="propertyToStoreParent" value="essai" />
+	</bean>
+
+	<!-- ======================================== -->
+	<!-- SUIVI DETAIL DESIGN : FACTORY     		  -->
+	<!-- ======================================== -->
+	<bean id="DetailDesignSuivi"
+		class="fr.pharma.eclipse.domain.model.suivi.essai.detail.DetailDesignSuivi"
+		scope="prototype" />
+	<bean id="detailDesignSuiviFactory" class="fr.pharma.eclipse.factory.suivi.SuiviFactory">
+		<constructor-arg
+			value="fr.pharma.eclipse.domain.model.suivi.essai.detail.DetailDesignSuivi" />
+	</bean>
+	<bean id="detailDesignSuiviWithParentFactory"
+		class="fr.pharma.eclipse.factory.common.BeanObjectWithParentFactory">
+		<property name="simpleFactory" ref="detailDesignSuiviFactory" />
+		<property name="propertyToStoreParent" value="detailDesign" />
+	</bean>
+
+
+	<!-- ============================== -->
+	<!-- DETAIL AUTRES DOCS : FACTORY 	-->
+	<!-- ============================== -->
+	<bean id="DetailAutresDocuments"
+		class="fr.pharma.eclipse.domain.model.essai.detail.autresdocs.DetailAutresDocuments"
+		scope="prototype" />
+	<bean id="detailAutresDocFactory" class="fr.pharma.eclipse.factory.common.BeanObjectFactory">
+		<constructor-arg
+			value="fr.pharma.eclipse.domain.model.essai.detail.autresdocs.DetailAutresDocuments" />
+	</bean>
+	<bean id="detailAutresDocWithParentFactory"
+		class="fr.pharma.eclipse.factory.common.BeanObjectWithParentFactory">
+		<property name="simpleFactory" ref="detailAutresDocFactory" />
+		<property name="propertyToStoreParent" value="essai" />
+	</bean>
+
+	<!-- ======================================== -->
+	<!-- SUIVI DETAIL AUTRES DOCS : FACTORY       -->
+	<!-- ======================================== -->
+	<bean id="DetailAutresDocumentsSuivi"
+		class="fr.pharma.eclipse.domain.model.suivi.essai.detail.DetailAutresDocumentsSuivi"
+		scope="prototype" />
+	<bean id="detailAutresDocsSuiviFactory" class="fr.pharma.eclipse.factory.suivi.SuiviFactory">
+		<constructor-arg
+			value="fr.pharma.eclipse.domain.model.suivi.essai.detail.DetailAutresDocumentsSuivi" />
+	</bean>
+	<bean id="detailAutresDocsSuiviWithParentFactory"
+		class="fr.pharma.eclipse.factory.common.BeanObjectWithParentFactory">
+		<property name="simpleFactory" ref="detailAutresDocsSuiviFactory" />
+		<property name="propertyToStoreParent" value="detailAutresDocuments" />
+	</bean>
+	
+	<!-- ============================== -->
+	<!-- DETAIL SURCOUT : FACTORY 		-->
+	<!-- ============================== -->
+	<bean id="DetailSurcout"
+		class="fr.pharma.eclipse.domain.model.essai.detail.surcout.DetailSurcout"
+		scope="prototype" />
+	<bean id="detailSurcoutFactory" class="fr.pharma.eclipse.factory.common.BeanObjectFactory">
+		<constructor-arg
+			value="fr.pharma.eclipse.domain.model.essai.detail.surcout.DetailSurcout" />
+	</bean>
+	<bean id="detailSurcoutWithParentFactory"
+		class="fr.pharma.eclipse.factory.essai.DetailSurcoutFactory">
+		<property name="simpleFactory" ref="detailSurcoutFactory" />
+		<property name="propertyToStoreParent" value="essai" />
+	</bean>
+	
+	
+	<!-- ============================== -->
+	<!-- DONNEES PREVISION: FACTORY 	-->
+	<!-- ============================== -->
+	<bean id="DonneesPrevision"
+		class="fr.pharma.eclipse.domain.model.surcout.DonneesPrevision"
+		scope="prototype" />
+	<bean id="donneesPrevisionFactory" class="fr.pharma.eclipse.factory.common.BeanObjectFactory">
+		<constructor-arg
+			value="fr.pharma.eclipse.domain.model.surcout.DonneesPrevision" />
+	</bean>
+	
+
+	<!-- ======================================== -->
+	<!-- SUIVI DETAIL SURCOUT : FACTORY       	  -->
+	<!-- ======================================== -->
+	<bean id="DetailSurcoutSuivi"
+		class="fr.pharma.eclipse.domain.model.suivi.essai.detail.DetailSurcoutSuivi"
+		scope="prototype" />
+	<bean id="detailSurcoutSuiviFactory" class="fr.pharma.eclipse.factory.suivi.SuiviFactory">
+		<constructor-arg
+			value="fr.pharma.eclipse.domain.model.suivi.essai.detail.DetailSurcoutSuivi" />
+	</bean>
+	<bean id="detailSurcoutSuiviWithParentFactory"
+		class="fr.pharma.eclipse.factory.common.BeanObjectWithParentFactory">
+		<property name="simpleFactory" ref="detailSurcoutSuiviFactory" />
+		<property name="propertyToStoreParent" value="detailSurcout" />
+	</bean>
+
+	<!-- ============================== -->
+	<!-- ESSAI : FACTORY       			-->
+	<!-- ============================== -->
+	<bean id="Essai" class="fr.pharma.eclipse.domain.model.essai.Essai"
+		scope="prototype" />
+	<bean id="essaiFactory" class="fr.pharma.eclipse.factory.essai.EssaiFactory">
+		<constructor-arg value="fr.pharma.eclipse.domain.model.essai.Essai" />
+		<property name="mapFactories">
+			<map>
+				<entry key="detailRecherche" value-ref="detailRechercheWithParentFactory" />
+				<entry key="detailContacts" value-ref="detailContactsWithParentFactory" />
+				<entry key="detailDates" value-ref="detailDatesWithParentFactory" />
+				<entry key="detailAdministratif" value-ref="detailAdministratifWithParentFactory" />
+				<entry key="detailFaisabilite" value-ref="detailFaisabiliteWithParentFactory" />
+				<entry key="detailProduit" value-ref="detailProduitWithParentFactory" />
+				<entry key="detailDonneesPharma" value-ref="detailDonneesPharmaWithParentFactory" />
+				<entry key="detailDesign" value-ref="detailDesignWithParentFactory" />
+				<entry key="detailAutresDocuments" value-ref="detailAutresDocWithParentFactory" />
+				<entry key="detailSurcout" value-ref="detailSurcoutWithParentFactory" />
+			</map>
+		</property>
+		<property name="mapFactoriesWithoutParent">
+			<map>
+			</map>
+		</property>
+	</bean>
+
+	<!-- =========================== -->
+	<!-- ESSAI SUIVI : FACTORY       -->
+	<!-- =========================== -->
+	<bean id="EssaiSuivi" class="fr.pharma.eclipse.domain.model.suivi.essai.EssaiSuivi"
+		scope="prototype" />
+	<bean id="essaiSuiviFactory" class="fr.pharma.eclipse.factory.suivi.SuiviFactory">
+		<constructor-arg
+			value="fr.pharma.eclipse.domain.model.suivi.essai.EssaiSuivi" />
+	</bean>
+	<bean id="essaiSuiviWithParentFactory"
+		class="fr.pharma.eclipse.factory.common.BeanObjectWithParentFactory">
+		<property name="simpleFactory" ref="essaiSuiviFactory" />
+		<property name="propertyToStoreParent" value="essai" />
+	</bean>
+
+	<!-- ============================== -->
+	<!-- PRODUIT SUIVI : FACTORY        -->
+	<!-- ============================== -->
+	<bean id="ProduitSuivi"
+		class="fr.pharma.eclipse.domain.model.suivi.produit.ProduitSuivi"
+		scope="prototype" />
+	<bean id="produitSuiviFactory" class="fr.pharma.eclipse.factory.suivi.SuiviFactory">
+		<constructor-arg
+			value="fr.pharma.eclipse.domain.model.suivi.produit.ProduitSuivi" />
+	</bean>
+
+	<!-- ============================== -->
+	<!-- PRODUIT    : FACTORY        	-->
+	<!-- ============================== -->
+	<bean id="commonProduitFactory" abstract="true"
+		class="fr.pharma.eclipse.factory.produit.ProduitFactory">
+		<property name="mapFactoriesWithoutParent">
+			<map>
+			</map>
+		</property>
+		<property name="typeDictionary">
+			<map>
+				<entry key-ref="TYPE_PRODUIT_MEDICAMENT" value="medicaments" />
+				<entry key-ref="TYPE_DISPOSITIF_MEDICAL" value="dispositifsMedicaux" />
+				<entry key-ref="TYPE_PRODUIT_THERAPEUTIQUE" value="produitsTherapeutiques" />
+				<entry key-ref="TYPE_PREPARATION" value="preparations" />
+			</map>
+		</property>
+	</bean>
+
+	<!-- ============================== -->
+	<!-- DETAIL LOGISTIQUE : FACTORY  -->
+	<!-- ============================== -->
+	<bean id="DetailLogistique"
+		class="fr.pharma.eclipse.domain.model.produit.detail.DetailLogistique"
+		scope="prototype" />
+	<bean id="detailLogistiqueFactory" class="fr.pharma.eclipse.factory.common.BeanObjectFactory">
+		<constructor-arg
+			value="fr.pharma.eclipse.domain.model.produit.detail.DetailLogistique" />
+	</bean>
+	<bean id="detailLogistiqueWithParentFactory"
+		class="fr.pharma.eclipse.factory.common.BeanObjectWithParentFactory">
+		<property name="simpleFactory" ref="detailLogistiqueFactory" />
+		<property name="propertyToStoreParent" value="produit" />
+	</bean>
+
+	<!-- ============================== -->
+	<!-- MEDICAMENT    : FACTORY        -->
+	<!-- ============================== -->
+	<bean id="Medicament" class="fr.pharma.eclipse.domain.model.produit.Medicament"
+		scope="prototype" />
+	<bean id="medicamentFactory" parent="commonProduitFactory">
+		<constructor-arg index="0"
+			value="fr.pharma.eclipse.domain.model.produit.Medicament" />
+		<constructor-arg index="1" ref="TYPE_PRODUIT_MEDICAMENT" />
+		<property name="mapFactories">
+			<map>
+				<entry key="detailLogistique" value-ref="detailLogistiqueWithParentFactory" />
+			</map>
+		</property>
+	</bean>
+
+	<!-- ============================== -->
+	<!-- PRODUIT THERAPEUTIQUE :FACTORY -->
+	<!-- ============================== -->
+	<bean id="ProduitTherapeutique"
+		class="fr.pharma.eclipse.domain.model.produit.ProduitTherapeutique"
+		scope="prototype" />
+	<bean id="produitTherapeutiqueFactory" parent="commonProduitFactory">
+		<constructor-arg index="0"
+			value="fr.pharma.eclipse.domain.model.produit.ProduitTherapeutique" />
+		<constructor-arg index="1" ref="TYPE_PRODUIT_THERAPEUTIQUE" />
+		<property name="mapFactories">
+			<map>
+				<entry key="detailLogistique" value-ref="detailLogistiqueWithParentFactory" />
+			</map>
+		</property>
+	</bean>
+
+	<!-- ============================== -->
+	<!-- PREPARATION :FACTORY -->
+	<!-- ============================== -->
+	<bean id="Preparation"
+		class="fr.pharma.eclipse.domain.model.produit.Preparation"
+		scope="prototype" />
+	<bean id="preparationFactory" parent="commonProduitFactory">
+		<constructor-arg index="0"
+			value="fr.pharma.eclipse.domain.model.produit.Preparation" />
+		<constructor-arg index="1" ref="TYPE_PREPARATION" />
+		<property name="mapFactories">
+			<map>
+				<entry key="detailLogistique" value-ref="detailLogistiqueWithParentFactory" />
+			</map>
+		</property>
+	</bean>
+
+	<!-- ============================== -->
+	<!-- DISPOSITIF MEDICAL : FACTORY   -->
+	<!-- ============================== -->
+	<bean id="DispositifMedical"
+		class="fr.pharma.eclipse.domain.model.produit.DispositifMedical"
+		scope="prototype" />
+	<bean id="dispositifMedicalFactory" parent="commonProduitFactory">
+		<constructor-arg index="0"
+			value="fr.pharma.eclipse.domain.model.produit.DispositifMedical" />
+		<constructor-arg index="1" ref="TYPE_DISPOSITIF_MEDICAL" />
+		<property name="mapFactories">
+			<map>
+				<entry key="detailLogistique" value-ref="detailLogistiqueWithParentFactory" />
+			</map>
+		</property>
+	</bean>
+
+	<!-- ============================== -->
+	<!-- CONDITIONNEMENT : FACTORY   -->
+	<!-- ============================== -->
+	<bean id="Conditionnement" class="fr.pharma.eclipse.domain.model.produit.Conditionnement"
+		scope="prototype" />
+	<bean id="conditionnementFactory"
+		class="fr.pharma.eclipse.factory.produit.ConditionnementFactory">
+		<constructor-arg
+			value="fr.pharma.eclipse.domain.model.produit.Conditionnement" />
+	</bean>
+
+	<!-- ============================== -->
+	<!-- DetailStockage : FACTORY   -->
+	<!-- ============================== -->
+	<bean id="DetailStockage"
+		class="fr.pharma.eclipse.domain.model.produit.detail.DetailStockage"
+		scope="prototype" />
+	<bean id="detailStockageFactory" class="fr.pharma.eclipse.factory.produit.DetailStockageFactory">
+		<constructor-arg
+			value="fr.pharma.eclipse.domain.model.produit.detail.DetailStockage" />
+	</bean>
+
+	<!-- ============================== -->
+	<!-- APPROVISIONNEMENT : FACTORY    -->
+	<!-- ============================== -->
+	<bean id="Approvisionnement" class="fr.pharma.eclipse.domain.model.stock.Approvisionnement"
+		scope="prototype" />
+	<bean id="approvisionnementFactory" class="fr.pharma.eclipse.factory.stock.ApprovisionnementFactory">
+		<constructor-arg index="0"
+			value="fr.pharma.eclipse.domain.model.stock.Approvisionnement" />
+	</bean>
+
+	<!-- ============================== -->
+	<!-- ENTREE CORRECTIVE : FACTORY    -->
+	<!-- ============================== -->
+	<bean id="entreeCorrectiveFactory" class="fr.pharma.eclipse.factory.stock.EntreeCorrectiveFactory">
+		<constructor-arg index="0"
+			value="fr.pharma.eclipse.domain.model.stock.Approvisionnement" />
+	</bean>
+	
+	<!-- ============================== -->
+	<!-- PREPARATION ENTRE : FACTORY    -->
+	<!-- ============================== -->
+	<bean id="PreparationEntree" class="fr.pharma.eclipse.domain.model.stock.PreparationEntree"
+		scope="prototype" />
+	<bean id="preparationEntreeFactory" class="fr.pharma.eclipse.factory.stock.PreparationEntreeFactory">
+		<constructor-arg index="0"
+			value="fr.pharma.eclipse.domain.model.stock.PreparationEntree" />
+	</bean>
+
+	<!-- ============================== -->
+	<!-- RETOUR PROMOTEUR : FACTORY     -->
+	<!-- ============================== -->
+	<bean id="RetourPromoteur" class="fr.pharma.eclipse.domain.model.stock.RetourPromoteur"
+		scope="prototype" />
+	<bean id="retourPromoteurFactory" class="fr.pharma.eclipse.factory.stock.MvtStockFactory">
+		<constructor-arg index="0"
+			value="fr.pharma.eclipse.domain.model.stock.RetourPromoteur" />
+		<constructor-arg index="1"
+			ref="TYPE_MOUVEMENT_RETOUR_PROMOTEUR" />
+	</bean>
+
+	<!-- ============================== -->
+	<!-- CESSION PUI : FACTORY          -->
+	<!-- ============================== -->
+	<bean id="CessionPui" class="fr.pharma.eclipse.domain.model.stock.CessionPui"
+		scope="prototype" />
+	<bean id="cessionPuiFactory" class="fr.pharma.eclipse.factory.stock.MvtStockFactory">
+		<constructor-arg index="0"
+			value="fr.pharma.eclipse.domain.model.stock.CessionPui" />
+		<constructor-arg index="1" ref="TYPE_MOUVEMENT_CESSION_PUI" />
+	</bean>
+
+	<!-- ============================== -->
+	<!-- DESTRUCTION : FACTORY          -->
+	<!-- ============================== -->
+	<bean id="Destruction" class="fr.pharma.eclipse.domain.model.stock.Destruction"
+		scope="prototype" />
+	<bean id="destructionFactory" class="fr.pharma.eclipse.factory.stock.MvtStockFactory">
+		<constructor-arg index="0"
+			value="fr.pharma.eclipse.domain.model.stock.Destruction" />
+		<constructor-arg index="1" ref="TYPE_MOUVEMENT_DESTRUCTION" />
+	</bean>
+
+	<!-- ============================== -->
+	<!-- AUTRE SORTIE : FACTORY         -->
+	<!-- ============================== -->
+	<bean id="AutreSortie" class="fr.pharma.eclipse.domain.model.stock.AutreSortie"
+		scope="prototype" />
+	<bean id="autreSortieFactory" class="fr.pharma.eclipse.factory.stock.MvtStockFactory">
+		<constructor-arg index="0"
+			value="fr.pharma.eclipse.domain.model.stock.AutreSortie" />
+		<constructor-arg index="1" ref="TYPE_MOUVEMENT_AUTRE_SORTIE" />
+	</bean>
+	
+	<!-- ================================ -->
+	<!-- DISPENSATION GLOBALE : FACTORY   -->
+	<!-- ================================ -->
+	<bean id="DispensationGlobale" class="fr.pharma.eclipse.domain.model.stock.DispensationGlobale"
+		scope="prototype" />
+	<bean id="dispensationGlobaleFactory" class="fr.pharma.eclipse.factory.stock.DispensationGlobaleFactory">
+		<constructor-arg index="0"
+			value="fr.pharma.eclipse.domain.model.stock.DispensationGlobale" />
+	</bean>
+
+	<!-- ============================== -->
+	<!-- PREPARATION SORTIE : FACTORY   -->
+	<!-- ============================== -->
+	<bean id="PreparationSortie" class="fr.pharma.eclipse.domain.model.stock.PreparationSortie"
+		scope="prototype" />
+	<bean id="preparationSortieFactory" class="fr.pharma.eclipse.factory.stock.MvtStockFactory">
+		<constructor-arg index="0"
+			value="fr.pharma.eclipse.domain.model.stock.PreparationSortie" />
+		<constructor-arg index="1" ref="TYPE_MOUVEMENT_PREPARATION_SORTIE" />
+	</bean>
+	
+
+	<!-- ============================== -->
+	<!-- BRAS : FACTORY			 		-->
+	<!-- ============================== -->
+	<bean id="Bras" class="fr.pharma.eclipse.domain.model.design.Bras"
+		scope="prototype" />
+	<bean id="brasFactory" class="fr.pharma.eclipse.factory.common.BeanObjectFactory">
+		<constructor-arg value="fr.pharma.eclipse.domain.model.design.Bras" />
+	</bean>
+
+	<!-- ============================== -->
+	<!-- SEQUENCE : FACTORY			 	-->
+	<!-- ============================== -->
+	<bean id="Sequence" class="fr.pharma.eclipse.domain.model.design.Sequence"
+		scope="prototype" />
+	<bean id="sequenceFactory" class="fr.pharma.eclipse.factory.design.SequenceFactory">
+		<constructor-arg value="fr.pharma.eclipse.domain.model.design.Sequence" />
+	</bean>
+
+	<!-- ============================== -->
+	<!-- PRESCRIPTIONTYPE : FACTORY		 	-->
+	<!-- ============================== -->
+	<bean id="PrescriptionType" class="fr.pharma.eclipse.domain.model.design.PrescriptionType"
+		scope="prototype" />
+	<bean id="prescriptionTypeFactory" class="fr.pharma.eclipse.factory.common.BeanObjectFactory">
+		<constructor-arg
+			value="fr.pharma.eclipse.domain.model.design.PrescriptionType" />
+	</bean>
+
+	<!-- ======================= -->
+	<!-- PATIENTSUIVI : FACTORY  -->
+	<!-- ======================= -->
+	<bean id="PatientSuivi"
+		class="fr.pharma.eclipse.domain.model.suivi.patient.PatientSuivi"
+		scope="prototype" />
+	<bean id="patientSuiviFactory" class="fr.pharma.eclipse.factory.suivi.SuiviFactory">
+		<constructor-arg
+			value="fr.pharma.eclipse.domain.model.suivi.patient.PatientSuivi" />
+	</bean>
+	
+	<!-- ======================= -->
+	<!-- PATIENT : FACTORY       -->
+	<!-- ======================= -->
+	<bean id="Patient" class="fr.pharma.eclipse.domain.model.patient.Patient"
+		scope="prototype" />
+	<bean id="patientFactory" class="fr.pharma.eclipse.factory.common.BeanObjectFactory">
+		<constructor-arg value="fr.pharma.eclipse.domain.model.patient.Patient" />
+	</bean>
+	
+	<!-- ======================= -->
+	<!-- DOTATION : FACTORY      -->
+	<!-- ======================= -->
+	<bean id="Dotation" class="fr.pharma.eclipse.domain.model.dotation.Dotation"
+		scope="prototype" />
+	<bean id="dotationFactory" class="fr.pharma.eclipse.factory.dotation.DotationFactory">
+		<constructor-arg value="fr.pharma.eclipse.domain.model.dotation.Dotation" />
+	</bean>
+
+
+	<!-- ============================ -->
+	<!-- HISTORIQUEPATIENT : FACTORY  -->
+	<!-- ============================ -->
+	<bean id="HistoriquePatient"
+		class="fr.pharma.eclipse.domain.model.patient.HistoriquePatient"
+		scope="prototype" />
+	<bean id="historiquePatientFactory"
+		class="fr.pharma.eclipse.factory.patient.HistoriquePatientFactory">
+		<constructor-arg
+			value="fr.pharma.eclipse.domain.model.patient.HistoriquePatient" />
+	</bean>
+
+	<!-- ============================ -->
+	<!-- PRESCRIPTION : FACTORY  	  -->
+	<!-- ============================ -->
+	<bean id="Prescription"
+		class="fr.pharma.eclipse.domain.model.prescription.Prescription"
+		scope="prototype" />
+	<bean id="prescriptionFactory"
+		class="fr.pharma.eclipse.factory.prescription.PrescriptionFactory">
+		<constructor-arg
+			value="fr.pharma.eclipse.domain.model.prescription.Prescription" />
+	</bean>
+	
+	<!-- ============================ -->
+	<!-- INCLUSION : FACTORY  	  	  -->
+	<!-- ============================ -->
+	<bean id="Inclusion"
+		class="fr.pharma.eclipse.domain.model.patient.Inclusion"
+		scope="prototype" />
+	<bean id="inclusionFactory"
+		class="fr.pharma.eclipse.factory.inclusion.InclusionFactory">
+		<constructor-arg
+			value="fr.pharma.eclipse.domain.model.patient.Inclusion" />
+	</bean>
+
+	<!-- ============================ -->
+	<!-- PRODUITPRESCRIT : FACTORY    -->
+	<!-- ============================ -->
+	<bean id="ProduitPrescrit"
+		class="fr.pharma.eclipse.domain.model.prescription.ProduitPrescrit"
+		scope="prototype" />
+	<bean id="produitPrescritFactory"
+		class="fr.pharma.eclipse.factory.prescription.ProduitPrescritFactory">
+		<constructor-arg
+			value="fr.pharma.eclipse.domain.model.prescription.ProduitPrescrit" />
+	</bean>
+
+	<!-- ============================ -->
+	<!-- DISPENSATION : FACTORY  	  -->
+	<!-- ============================ -->
+	<bean id="Dispensation"
+		class="fr.pharma.eclipse.domain.model.dispensation.Dispensation"
+		scope="prototype" />
+	<bean id="dispensationFactory"
+		class="fr.pharma.eclipse.factory.dispensation.DispensationFactory">
+		<constructor-arg
+			value="fr.pharma.eclipse.domain.model.dispensation.Dispensation" />
+		<property name="mapForCheck">
+			<map>
+				<entry key-ref="TYPE_PRODUIT_MEDICAMENT" value-ref="listeToCheckMedicament"/>
+				<entry key-ref="TYPE_DISPOSITIF_MEDICAL" value-ref="listeToCheckDm"/>
+				<entry key-ref="TYPE_PRODUIT_THERAPEUTIQUE" value-ref="listeToCheckProduitTherapeutique"/>
+				<entry key-ref="TYPE_PREPARATION" value-ref="listeToCheckPreparation"/>
+			</map>
+		</property>
+	</bean>
+	
+	<util:list id="listeToCheckMedicament">
+		<value>RECONSTITUTION_SIMPLE</value>
+		<value>RECONSTITUTION_PSM</value>
+		<value>FABRICATION</value>
+		<value>CONDITIONNEMENT</value>
+		<value>ETIQUETAGE</value>
+	</util:list>
+	
+	<util:list id="listeToCheckDm">
+		<value>RANDOMISATION</value>
+	</util:list>
+	<util:list id="listeToCheckPreparation">
+	</util:list>
+	
+	<util:list id="listeToCheckProduitTherapeutique">
+		<value>RECONSTITUTION_SIMPLE</value>
+		<value>RECONSTITUTION_PSM</value>
+		<value>FABRICATION</value>
+		<value>CONDITIONNEMENT</value>
+		<value>ETIQUETAGE</value>
+	</util:list>
+	
+
+	<!-- ============================ -->
+	<!-- DISPENSATIONPRODUIT : FACTORY-->
+	<!-- ============================ -->
+	<bean id="DispensationProduit"
+		class="fr.pharma.eclipse.domain.model.stock.DispensationProduit"
+		scope="prototype" />
+	<bean id="dispensationProduitFactory"
+		class="fr.pharma.eclipse.factory.stock.DispensationProduitFactory">
+		<constructor-arg
+			value="fr.pharma.eclipse.domain.model.stock.DispensationProduit" />
+	</bean>
+
+	<!-- ============================ -->
+	<!-- ELEMENTTOCHECK : FACTORY	  -->
+	<!-- ============================ -->
+	<bean id="ElementToCheck"
+		class="fr.pharma.eclipse.domain.model.dispensation.ElementToCheck"
+		scope="prototype" />
+	<bean id="elementToCheckFactory"
+		class="fr.pharma.eclipse.factory.common.BeanObjectFactory">
+		<constructor-arg
+			value="fr.pharma.eclipse.domain.model.dispensation.ElementToCheck" />
+	</bean>
+	
+	<!-- ============================== -->
+	<!-- EVENEMENT SUIVI : FACTORY  -->
+	<!-- ============================== -->
+	<bean id="EvenementSuivi"
+		class="fr.pharma.eclipse.domain.model.suivi.evenement.EvenementSuivi"
+		scope="prototype" />
+	<bean id="evenementSuiviFactory" class="fr.pharma.eclipse.factory.suivi.SuiviFactory">
+		<constructor-arg
+			value="fr.pharma.eclipse.domain.model.suivi.evenement.EvenementSuivi" />
+	</bean>	
+	
+	<!-- ============================== -->
+	<!-- INCIDENT SUIVI : FACTORY  -->
+	<!-- ============================== -->
+	<bean id="IncidentSuivi"
+		class="fr.pharma.eclipse.domain.model.suivi.incident.IncidentSuivi"
+		scope="prototype" />
+	<bean id="incidentSuiviFactory" class="fr.pharma.eclipse.factory.suivi.SuiviFactory">
+		<constructor-arg
+			value="fr.pharma.eclipse.domain.model.suivi.incident.IncidentSuivi" />
+	</bean>	
+	
+
+	<!--
+		============================= SIGREC =================================
+	-->
+
+	<!-- ============================ -->
+	<!-- PROMOTEUR SIGREC: FACTORY    -->
+	<!-- ============================ -->
+	<bean id="PromoteurSigrec"
+		class="fr.pharma.eclipse.domain.model.sigrec.acteur.PromoteurSigrec"
+		scope="prototype" />
+	<bean id="promoteurSigrecFactory"
+		class="fr.pharma.eclipse.factory.common.BeanObjectComplexFactory">
+		<constructor-arg
+			value="fr.pharma.eclipse.domain.model.sigrec.acteur.PromoteurSigrec" />
+		<property name="mapFactories">
+			<map>
+			</map>
+		</property>
+		<property name="mapFactoriesWithoutParent">
+			<map>
+				<entry key="contact" value-ref="contactSigrecFactory" />
+			</map>
+		</property>
+	</bean>
+
+	<!-- ============================== -->
+	<!-- ARC PROMOTEUR SIGREC: FACTORY  -->
+	<!-- ============================== -->
+	<bean id="ARCPromoteurSigrec"
+		class="fr.pharma.eclipse.domain.model.sigrec.acteur.ARCPromoteurSigrec"
+		scope="prototype" />
+	<bean id="arcPromoteurSigrecFactory"
+		class="fr.pharma.eclipse.factory.common.BeanObjectComplexFactory">
+		<constructor-arg
+			value="fr.pharma.eclipse.domain.model.sigrec.acteur.ARCPromoteurSigrec" />
+		<property name="mapFactories">
+			<map>
+			</map>
+		</property>
+		<property name="mapFactoriesWithoutParent">
+			<map>
+				<entry key="contact" value-ref="contactSigrecFactory" />
+			</map>
+		</property>
+	</bean>
+
+	<!-- ================================== -->
+	<!-- DETAIL RECHERCHE SIGREC: FACTORY   -->
+	<!-- ================================== -->
+	<bean id="DetailRechercheSigrec"
+		class="fr.pharma.eclipse.domain.model.sigrec.essai.detail.DetailRechercheSigrec"
+		scope="prototype" />
+	<bean id="detailRechercheSigrecFactory" class="fr.pharma.eclipse.factory.common.BeanObjectFactory">
+		<constructor-arg
+			value="fr.pharma.eclipse.domain.model.sigrec.essai.detail.DetailRechercheSigrec" />
+	</bean>
+	<bean id="detailRechercheSigrecWithParentFactory"
+		class="fr.pharma.eclipse.factory.common.BeanObjectWithParentFactory">
+		<property name="simpleFactory" ref="detailRechercheSigrecFactory" />
+		<property name="propertyToStoreParent" value="essai" />
+	</bean>
+
+
+	<!-- ================================== -->
+	<!-- PREVISION SIGREC: FACTORY   -->
+	<!-- ================================== -->
+	<bean id="PrevisionSigrec"
+		class="fr.pharma.eclipse.domain.model.sigrec.essai.detail.PrevisionSigrec"
+		scope="prototype" />
+	<bean id="previsionSigrecFactory" class="fr.pharma.eclipse.factory.common.BeanObjectFactory">
+		<constructor-arg
+			value="fr.pharma.eclipse.domain.model.sigrec.essai.detail.PrevisionSigrec" />
+	</bean>
+	<bean id="previsionSigrecWithParentFactory"
+		class="fr.pharma.eclipse.factory.common.BeanObjectWithParentFactory">
+		<property name="simpleFactory" ref="previsionSigrecFactory" />
+		<property name="propertyToStoreParent" value="essai" />
+	</bean>
+
+
+	<!-- ================================== -->
+	<!-- ASSURANCE SIGREC: FACTORY   -->
+	<!-- ================================== -->
+	<bean id="AssuranceSigrec"
+		class="fr.pharma.eclipse.domain.model.sigrec.essai.detail.AssuranceSigrec"
+		scope="prototype" />
+	<bean id="assuranceSigrecFactory"
+		class="fr.pharma.eclipse.factory.common.BeanObjectComplexFactory">
+		<constructor-arg
+			value="fr.pharma.eclipse.domain.model.sigrec.essai.detail.AssuranceSigrec" />
+		<property name="mapFactoriesWithoutParent">
+			<map>
+				<entry key="contact" value-ref="contactSigrecFactory" />
+			</map>
+		</property>
+		<property name="mapFactories">
+			<map>
+			</map>
+		</property>
+	</bean>
+
+	<!-- ================================== -->
+	<!-- CRO SIGREC: FACTORY   				-->
+	<!-- ================================== -->
+	<bean id="CROSigrec" class="fr.pharma.eclipse.domain.model.sigrec.acteur.CROSigrec"
+		scope="prototype" />
+	<bean id="croSigrecFactory"
+		class="fr.pharma.eclipse.factory.common.BeanObjectComplexFactory">
+		<constructor-arg
+			value="fr.pharma.eclipse.domain.model.sigrec.acteur.CROSigrec" />
+		<property name="mapFactoriesWithoutParent">
+			<map>
+				<entry key="contact" value-ref="contactSigrecFactory" />
+			</map>
+		</property>
+		<property name="mapFactories">
+			<map>
+			</map>
+		</property>
+	</bean>
+
+	<!-- ============================== -->
+	<!-- ESSAI SIGREC : FACTORY     	-->
+	<!-- ============================== -->
+	<bean id="EssaiSigrec" class="fr.pharma.eclipse.domain.model.sigrec.essai.EssaiSigrec"
+		scope="prototype" />
+	<bean id="essaiSigrecFactory"
+		class="fr.pharma.eclipse.factory.common.BeanObjectComplexFactory">
+		<constructor-arg
+			value="fr.pharma.eclipse.domain.model.sigrec.essai.EssaiSigrec" />
+		<property name="mapFactoriesWithoutParent">
+			<map></map>
+		</property>
+		<property name="mapFactories">
+			<map>
+				<entry key="detailRecherche" value-ref="detailRechercheSigrecWithParentFactory" />
+				<entry key="prevision" value-ref="previsionSigrecWithParentFactory" />
+			</map>
+		</property>
+	</bean>
+
+	<!-- ============================== -->
+	<!-- CENTRE SIGREC : FACTORY     	-->
+	<!-- ============================== -->
+	<bean id="CentreSigrec"
+		class="fr.pharma.eclipse.domain.model.sigrec.acteur.CentreSigrec"
+		scope="prototype" />
+	<bean id="centreSigrecFactory"
+		class="fr.pharma.eclipse.factory.common.BeanObjectComplexFactory">
+		<constructor-arg
+			value="fr.pharma.eclipse.domain.model.sigrec.acteur.CentreSigrec" />
+		<property name="mapFactoriesWithoutParent">
+			<map>
+				<entry key="contact" value-ref="contactSigrecFactory" />
+			</map>
+		</property>
+		<property name="mapFactories">
+			<map>
+			</map>
+		</property>
+	</bean>
+	<!-- ============================== -->
+	<!-- ARC INVESTIGATEUR : FACTORY     	-->
+	<!-- ============================== -->
+	<bean id="ARCInvestigateurSigrec"
+		class="fr.pharma.eclipse.domain.model.sigrec.acteur.ARCInvestigateurSigrec"
+		scope="prototype" />
+	<bean id="arcInvestigateurSigrecFactory"
+		class="fr.pharma.eclipse.factory.common.BeanObjectComplexFactory">
+		<constructor-arg
+			value="fr.pharma.eclipse.domain.model.sigrec.acteur.ARCInvestigateurSigrec" />
+		<property name="mapFactoriesWithoutParent">
+			<map>
+				<entry key="contact" value-ref="contactSigrecFactory" />
+			</map>
+		</property>
+		<property name="mapFactories">
+			<map>
+			</map>
+		</property>
+	</bean>
+
+	<!-- ============================== -->
+	<!-- CO INVESTIGATEUR : FACTORY     	-->
+	<!-- ============================== -->
+	<bean id="CoInvestigateurSigrec"
+		class="fr.pharma.eclipse.domain.model.sigrec.acteur.CoInvestigateurSigrec"
+		scope="prototype" />
+	<bean id="coInvestigateurSigrecFactory"
+		class="fr.pharma.eclipse.factory.common.BeanObjectComplexFactory">
+		<constructor-arg
+			value="fr.pharma.eclipse.domain.model.sigrec.acteur.CoInvestigateurSigrec" />
+		<property name="mapFactoriesWithoutParent">
+			<map>
+				<entry key="contact" value-ref="contactSigrecFactory" />
+			</map>
+		</property>
+		<property name="mapFactories">
+			<map>
+			</map>
+		</property>
+	</bean>
+
+	<!-- ============================== -->
+	<!-- INVESTIGATEUR : FACTORY     	-->
+	<!-- ============================== -->
+	<bean id="InvestigateurSigrec"
+		class="fr.pharma.eclipse.domain.model.sigrec.acteur.InvestigateurSigrec"
+		scope="prototype" />
+	<bean id="investigateurSigrecFactory"
+		class="fr.pharma.eclipse.factory.common.BeanObjectComplexFactory">
+		<constructor-arg
+			value="fr.pharma.eclipse.domain.model.sigrec.acteur.InvestigateurSigrec" />
+		<property name="mapFactoriesWithoutParent">
+			<map>
+				<entry key="contact" value-ref="contactSigrecFactory" />
+			</map>
+		</property>
+		<property name="mapFactories">
+			<map>
+			</map>
+		</property>
+	</bean>
+	
+	<!-- ======================= -->
+	<!-- CONTACT: FACTORY   	 -->
+	<!-- ======================= -->
+	<bean id="ContactSigrec"
+		class="fr.pharma.eclipse.domain.model.sigrec.acteur.ContactSigrec"
+		scope="prototype" />
+	<bean id="contactSigrecFactory" class="fr.pharma.eclipse.factory.common.BeanObjectFactory">
+		<constructor-arg
+			value="fr.pharma.eclipse.domain.model.sigrec.acteur.ContactSigrec" />
+	</bean>
+	
+	<!-- ======================= -->
+	<!-- EVENEMENT : FACTORY     -->
+	<!-- ======================= -->
+	<bean id="Evenement" class="fr.pharma.eclipse.domain.model.evenement.Evenement"
+		scope="prototype" />
+	<bean id="evenementFactory" class="fr.pharma.eclipse.factory.evenement.EvenementFactory">
+		<constructor-arg value="fr.pharma.eclipse.domain.model.evenement.Evenement" />
+	</bean>
+	
+	<!-- ======================= -->
+	<!-- INCIDENT : FACTORY      -->
+	<!-- ======================= -->
+	<bean id="Incident" class="fr.pharma.eclipse.domain.model.incident.Incident"
+		scope="prototype" />
+	<bean id="incidentFactory" class="fr.pharma.eclipse.factory.incident.IncidentFactory">
+		<constructor-arg value="fr.pharma.eclipse.domain.model.incident.Incident" />
+	</bean>
+	
+	<!-- ============================== -->
+	<!-- DETAIL ETAT ESSAI : FACTORY    -->
+	<!-- ============================== -->
+	<bean id="DetailEtatEssai"
+		class="fr.pharma.eclipse.domain.model.essai.detail.etat.DetailEtatEssai"
+		scope="prototype" />
+	<bean id="detailEtatEssaiFactory" class="fr.pharma.eclipse.factory.suivi.SuiviFactory">
+		<constructor-arg value="fr.pharma.eclipse.domain.model.essai.detail.etat.DetailEtatEssai" />
+	</bean>
+	<!-- ======================= -->
+	<!-- THEME : FACTORY     -->
+	<!-- ======================= -->
+	<bean id="Theme" class="fr.pharma.eclipse.domain.model.surcout.Theme"
+		scope="prototype" />
+	<bean id="themeFactory" class="fr.pharma.eclipse.factory.common.BeanObjectFactory">
+		<constructor-arg value="fr.pharma.eclipse.domain.model.surcout.Theme" />
+	</bean>
+
+	<!-- ======================= -->
+	<!-- CATEGORIE : FACTORY     -->
+	<!-- ======================= -->
+	<bean id="Categorie" class="fr.pharma.eclipse.domain.model.surcout.Categorie"
+		scope="prototype" />
+	<bean id="categorieFactory" class="fr.pharma.eclipse.factory.common.BeanObjectFactory">
+		<constructor-arg value="fr.pharma.eclipse.domain.model.surcout.Categorie" />
+	</bean>
+
+	<!-- ============================== -->
+	<!-- GRILLEMODELE : FACTORY         -->
+	<!-- ============================== -->
+	<bean id="GrilleModele" class="fr.pharma.eclipse.domain.model.surcout.GrilleModele"
+		scope="prototype" />
+	<bean id="grilleModeleFactory" class="fr.pharma.eclipse.factory.common.BeanObjectFactory">
+		<constructor-arg index="0"
+			value="fr.pharma.eclipse.domain.model.surcout.GrilleModele" />
+	</bean>
+
+	<!-- ============================== -->
+	<!-- ITEM : FACTORY         		-->
+	<!-- ============================== -->
+	<bean id="Item" class="fr.pharma.eclipse.domain.model.surcout.Item"
+		scope="prototype" />
+	<bean id="itemFactory" class="fr.pharma.eclipse.factory.common.BeanObjectFactory">
+		<constructor-arg index="0"
+			value="fr.pharma.eclipse.domain.model.surcout.Item" />
+	</bean>
+	
+	<!-- ============================== -->
+	<!-- GRILLE : FACTORY        		-->
+	<!-- ============================== -->
+	<bean id="Grille" class="fr.pharma.eclipse.domain.model.surcout.Grille"
+		scope="prototype" />
+	<bean id="grilleFactory" class="fr.pharma.eclipse.factory.surcout.GrilleFactory">
+		<constructor-arg index="0"
+			value="fr.pharma.eclipse.domain.model.surcout.Grille" />
+	</bean>
+	
+	<!-- =========================== -->
+	<!-- ORDONNANCIER DISP : FACTORY -->
+	<!-- =========================== -->
+	<bean id="OrdonnancierDisp"
+		class="fr.pharma.eclipse.domain.model.ordonnancier.OrdonnancierDisp"
+		scope="prototype" />
+	<bean id="ordonnancierDispFactory" class="fr.pharma.eclipse.factory.suivi.SuiviFactory">
+		<constructor-arg
+			value="fr.pharma.eclipse.domain.model.ordonnancier.OrdonnancierDisp" />
+	</bean>
+		
+	<!-- ================================================= -->
+	<!-- ORDONNANCIER FABRICATION/RECONSTITUTION : FACTORY -->
+	<!-- ================================================= -->
+	<bean id="OrdonnancierFabReconst"
+		class="fr.pharma.eclipse.domain.model.ordonnancier.OrdonnancierFabReconst"
+		scope="prototype" />
+	<bean id="ordonnancierFabReconstFactory" class="fr.pharma.eclipse.factory.suivi.SuiviFactory">
+		<constructor-arg
+			value="fr.pharma.eclipse.domain.model.ordonnancier.OrdonnancierFabReconst" />
+	</bean>	
+	
+		
+	<!-- ================================================= -->
+	<!-- RETOUR PATIENT  : FACTORY 						   -->
+	<!-- ================================================= -->
+	<bean id="RetourPatient"
+		class="fr.pharma.eclipse.domain.model.stock.RetourPatient"
+		scope="prototype" />
+	<bean id="retourPatientFactory" class="fr.pharma.eclipse.factory.retour.RetourPatientFactory">
+		<constructor-arg
+			value="fr.pharma.eclipse.domain.model.stock.RetourPatient" />
+	</bean>	
+	
+</beans>

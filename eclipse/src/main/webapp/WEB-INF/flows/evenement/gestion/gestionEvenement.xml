@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<flow xmlns="http://www.springframework.org/schema/webflow"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://www.springframework.org/schema/webflow
+    http://www.springframework.org/schema/webflow/spring-webflow-2.0.xsd" parent="main">
+
+	<!-- Démarrage -->
+	<on-start>
+		<!-- Initialisation complétion automatique des essais -->
+		<evaluate expression="essaiSearchCriteria.clear()"/>
+		<evaluate expression="'numInterne'" result="autoCompleteEssaiManager.searchCriteria.activeOrder" />
+		<evaluate expression="'numInterneOrNomOrPromoteur'" result="autoCompleteEssaiManager.searchCriteriaProperty" />
+		<!-- Purge du critère de recherche -->
+		<evaluate expression="evenementSearchCriteria.clear()"/>
+		<!-- Purge des résultats -->
+		<evaluate expression="new java.util.ArrayList()" result="evenementsManager.beans"/>		
+	</on-start>
+
+	<!-- Page principale -->
+	<view-state id="gestionEvenement" view="../../../pages/evenement/gestion/gestionEvenement.xhtml">
+		<transition on="search" to="search"/>
+		<transition on="delete" to="delete"/>
+		<transition on="edit" to="edit">
+			<set name="flashScope.idEvenement" value="evenementsManager.beanSelected.id" type="java.lang.Long" />
+			<evaluate expression="null" result="evenementsManager.beanSelected"/>
+		</transition>
+		<transition on="add" to="edit"/>
+		<transition on="error" to="gestionEvenement"/>
+	</view-state>
+	
+	<!-- Recherche -->
+	<action-state id="search">
+		<evaluate expression="evenementService.getAll(evenementSearchCriteria)" result="evenementsManager.beans"/>
+		<transition to="gestionEvenement">
+			<evaluate expression="evenementsManager.initSchedule()"/>
+		</transition>
+	</action-state>
+	
+	<!-- Suppression -->
+	<action-state id="delete">
+		<evaluate expression="evenementService.remove(evenementsManager.beansSelected)"/>
+		<transition on="error" to="search"/>
+		<transition to="search"/>
+	</action-state>
+	
+	<!-- Edition -->
+	<subflow-state id="edit" subflow="evenement/edit">
+		<input name="idEvenement" value="flashScope.idEvenement"/>
+		<transition to="search"/>
+	</subflow-state>
+	
+</flow>

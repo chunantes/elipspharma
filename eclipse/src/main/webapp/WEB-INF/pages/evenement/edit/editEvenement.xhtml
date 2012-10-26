@@ -1,0 +1,274 @@
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+     xmlns:ui="http://java.sun.com/jsf/facelets"
+     xmlns:h="http://java.sun.com/jsf/html"
+     xmlns:f="http://java.sun.com/jsf/core"
+	 xmlns:p="http://primefaces.prime.com.tr/ui"
+	 xmlns:c="http://java.sun.com/jsp/jstl/core"
+     template="/WEB-INF/pages/template/template.xhtml">
+     
+     <ui:define name="title">
+		<h:outputFormat value="#{resourceBundle['gestionEvenement.title']}"/>
+     </ui:define>
+     
+     <ui:define name="body"> 
+		 
+		 <h:form id="editEtablissement">
+		     <p:panel id="panel" header="#{resourceBundle['gestionEvenement.evenement']}" >
+		         <p:messages/>
+		         
+		         <h:panelGrid id="panelGrid4" columnClasses="panelCol_25,panelCol_25,panelCol_25,panelCol_25" columns="4" cellspacing="5" width="100%">
+		         
+		             <h:outputLabel id="essaiLabel" for="essai" value="#{resourceBundle['gestionEvenement.essai']}"/>
+					 <p:autoComplete id="essai" value="#{evenementManager.bean.essai}" 
+						completeMethod="#{autoCompleteEssaiManager.complete}"
+						forceSelection="true" selectListener="#{evenementManager.handleSelectEssai}"
+						var="essai" onSelectUpdate="panelActes" style="width:190px;"
+						itemLabel="#{essai.numInterne} #{essai.nom} - #{essai.promoteur.raisonSociale}"
+						itemValue="#{essai}" 
+						converter="#{essaiConverter}"/>		
+			         <h:panelGroup/>
+			         <h:panelGroup/>             
+		             
+		             <h:outputLabel styleClass="mandatory" id="typeEvenementLabel" for="typeEvenement" value="#{resourceBundle['gestionEvenement.typeEvenement']}"/>
+	           		 <h:selectOneMenu id="typeEvenement" value="#{evenementManager.bean.typeEvenement}" valueChangeListener="#{evenementManager.handleSelectTypeEvenement}"
+	           		 	required="true" requiredMessage="#{resourceBundle['evenement.typeEvenement.notEmpty']}">
+	           			<f:selectItem noSelectionOption="true"/>
+	           			<f:selectItems value="#{enumManager.getValues('TypeEvenement')}"/>
+	           			<f:ajax execute="@this" render="toRefresh"/>
+	           		 </h:selectOneMenu>
+			         <h:panelGroup/>
+			         <h:panelGroup/>
+	           		 
+		         </h:panelGrid>
+				 <h:panelGroup id="toRefresh">
+					<p:outputPanel id="panelEvenement" rendered="#{evenementManager.bean.typeEvenement == 'VISITE' || evenementManager.bean.typeEvenement == 'TACHE'}">
+				
+						 	<h:panelGroup id="detailCriteresVisite" rendered="#{evenementManager.bean.typeEvenement == 'VISITE'}" >
+						 		<h:panelGrid id="panelGridVisite" columnClasses="panelCol_25,panelCol_25,panelCol_25,panelCol_25" columns="4" cellspacing="5" width="100%">
+									<!-- Type visite -->
+									<h:outputLabel id="typeVisiteLabel" for="typeVisite" value="#{resourceBundle['gestionEvenement.typeVisite.mandatory']}" />
+					           		<h:selectOneMenu id="typeVisite" value="#{evenementManager.bean.typeVisite}" valueChangeListener="#{evenementManager.handleSelectTypeVisite}"
+					           			required="true" requiredMessage="#{resourceBundle['evenement.typeVisite.notEmpty']}" >
+					           			<f:selectItem noSelectionOption="true"/>
+					           			<f:selectItems value="#{enumManager.getValues('TypeVisite')}"/>
+		           						<f:ajax execute="@this" render="libelle" />
+					           		</h:selectOneMenu>
+							         <h:panelGroup/>
+							         <h:panelGroup/>
+					           		
+					           		 <!-- ARC -->    
+							         <h:outputLabel id="arcLabel" for="arc" value="#{resourceBundle['gestionEvenement.arc']}" style="width:190px;"/>
+							         <h:inputText id="arc" value="#{evenementManager.bean.arc}" style="width:190px;"/>
+							         <h:panelGroup/>
+							         <h:panelGroup/>
+						           		
+					           		 <!-- Personnel Pharmacie -->    
+							         <h:outputLabel id="labelPers" for="pers" value="#{resourceBundle['gestionEvenement.personnelPharmacie']}" />
+							         <h:inputTextarea id="pers" value="#{evenementManager.bean.personnelPharmacie}" rows="2" />
+							         <h:panelGroup/>
+							         <h:panelGroup/> 
+							    
+					           	</h:panelGrid>
+		     	        </h:panelGroup>	               		            
+				         
+					     <h:panelGrid id="panelGridLib" columnClasses="panelCol_25,panelCol_25,panelCol_25,panelCol_25" columns="4" cellspacing="5" width="100%">
+					         <!-- Libelle -->    
+					         <h:outputLabel styleClass="mandatory" id="libelleLabel" for="libelle" value="#{resourceBundle['gestionEvenement.libelle']}" />
+					         <h:inputText id="libelle" value="#{evenementManager.bean.libelle}"  style="width:190px;"
+					         	required="true" requiredMessage="#{resourceBundle['evenement.libelle.notEmpty']}" />
+					         <h:panelGroup/>
+					         <h:panelGroup/>
+					    
+					         <!-- Date -->    
+					         <h:outputLabel styleClass="mandatory" id="dateDebutLabel" for="dateDebut" value="#{resourceBundle['gestionEvenement.date']}" />
+							 <p:calendar id="dateDebut" value="#{evenementManager.bean.dateDebut}" 
+								effect="#{resourceBundle['effect.calendar']}" locale="#{resourceBundle['date.locale']}" showButtonPanel="true" navigator="true" 
+								converter="#{calendarConverter}"
+								required="true" requiredMessage="#{resourceBundle['evenement.date.notEmpty']}" />		
+					              	
+					          <!-- Toute la journee -->    
+					         <h:outputLabel id="journeeLabel" for="journee" value="#{resourceBundle['gestionEvenement.journee']}"/>
+					         <h:selectBooleanCheckbox id="journee" valueChangeListener="#{evenementManager.handleCheckJournee }" immediate="true" value="#{evenementManager.bean.journee }" >
+					         	<f:ajax render="pasTouteLaJournee"/>
+					         </h:selectBooleanCheckbox>	
+					      </h:panelGrid>   
+					     
+					    
+					         	
+					         <p:outputPanel id="pasTouteLaJournee">
+					           	<h:panelGrid id="panelGridDate" columnClasses="panelCol_25,panelCol_25,panelCol_25,panelCol_25" columns="4" cellspacing="5" width="100%"  rendered="#{not evenementManager.bean.journee}">	
+						         	<!-- Heure de debut -->    
+						         	<h:outputLabel styleClass="mandatory" id="heureLabel" for="heure" value="#{resourceBundle['gestionEvenement.heure.format']}" />
+						         	<h:inputText id="heure" value="#{evenementManager.bean.heureDebut}" style="width:190px;"
+						         		required="true" requiredMessage="#{resourceBundle['evenement.heureDebut.notEmpty']}" />
+						         
+						         
+						         	<!-- Heure de fin -->	
+						         	<h:outputLabel styleClass="mandatory" id="heureFinLabel" for="heureFin" value="#{resourceBundle['gestionEvenement.heureFin.format']}" />
+						        	 <h:inputText id="heureFin" value="#{evenementManager.bean.heureFin}"
+						    	     	required="true" requiredMessage="#{resourceBundle['evenement.heureFin.notEmpty']}" />
+					         
+						  	   </h:panelGrid>
+					         </p:outputPanel>	
+					         <h:panelGrid id="panelGridLast" columnClasses="panelCol_25,panelCol_75" columns="2" cellspacing="3" width="100%">
+						         <!-- Commentaire -->
+						         <h:outputLabel id="commentaireLabel" for="commentaire" value="#{resourceBundle['gestionEvenement.commentaire']}" />
+						         <h:inputTextarea id="commentaire" 
+						         	rows="#{resourceBundle['textarea.rows.default']}" value="#{evenementManager.bean.commentaire}"  />
+							     
+					      	 </h:panelGrid>    	
+					      	 
+						<!-- Resultat visite -->
+						<h:panelGroup id="resultatVisiteGroup">
+							<h:panelGrid id="panelGridResultat" columnClasses="panelCol_25,panelCol_25,panelCol_25,panelCol_25" columns="4" cellspacing="5" width="100%" rendered="#{evenementManager.bean.typeEvenement == 'VISITE'}" >
+								<h:outputLabel id="resultatVisiteLabel" for="resultatVisite" value="#{resourceBundle['gestionEvenement.resultatVisite']}" />
+						   		<h:selectOneMenu id="resultatVisite" value="#{evenementManager.bean.resultatVisite}">
+						       		<f:selectItem noSelectionOption="true"/>
+						       		<f:selectItems value="#{enumManager.getValues('ResultatVisite')}"/>
+						      	</h:selectOneMenu>
+					         <h:panelGroup/>
+					         <h:panelGroup/>
+					      	</h:panelGrid>
+				    	</h:panelGroup>
+			    	 </p:outputPanel> 
+		    	 
+		     	        
+		     	        <h:panelGrid id="panelReetiquetge" columnClasses="panelCol_25,panelCol_25,panelCol_25,panelCol_25" columns="4" cellspacing="5" width="100%" rendered="#{evenementManager.bean.typeEvenement == 'REETIQUETAGE'}" >
+									<!-- Type visite -->
+									<h:outputLabel id="realiseParLabel" for="realisePar" value="#{resourceBundle['gestionEvenement.realisePar']}" styleClass="mandatory"  />
+					           		<h:selectOneMenu id="realisePar" value="#{evenementManager.bean.realisePar}" 
+					           			required="true" requiredMessage="#{resourceBundle['evenement.realisePar.notEmpty']}" >
+					           			<f:selectItem noSelectionOption="true"/>
+					           			<f:selectItems value="#{enumManager.getValues('RealisePar')}"/>
+					           		</h:selectOneMenu>
+							         <h:panelGroup/>
+							         <h:panelGroup/>
+							         
+							         <!-- Validation -->
+									<h:outputLabel id="validationLabel" for="validation" value="#{resourceBundle['gestionEvenement.validation']}" styleClass="mandatory"  />
+							         <h:inputText id="validation" style="width:190px;" value="#{evenementManager.bean.validation}" required="true" requiredMessage="#{resourceBundle['evenement.validation.notEmpty']}" />
+							         <h:panelGroup/>
+							         <h:panelGroup/>
+						</h:panelGrid>	     
+			    	<p:outputPanel id="panelActes" rendered="#{evenementManager.bean.typeEvenement == 'DESTRUCTION' || evenementManager.bean.typeEvenement == 'REETIQUETAGE'}">
+			    	    <h:panelGrid columnClasses="panelCol_25,panelCol_25,panelCol_25,panelCol_25" columns="4" cellspacing="5" width="100%">
+			    			<h:outputLabel id="labelResponsable" for="responsable" value="#{resourceBundle['gestionEvenement.responsable']}" />
+						    <h:outputText id="responsable" value="#{evenementManager.bean.responsable.prenom} #{evenementManager.bean.responsable.nom}" />
+						    <h:panelGroup/>
+						    <h:panelGroup/>
+						    
+			    			<!-- Date -->    
+					        <h:outputLabel styleClass="mandatory" id="dateDebutActeLabel" for="dateDebutActe" value="#{resourceBundle['gestionEvenement.date']}" />
+							<p:calendar id="dateDebutActe" value="#{evenementManager.bean.dateDebut}" 
+								effect="#{resourceBundle['effect.calendar']}" locale="#{resourceBundle['date.locale']}" showButtonPanel="true" navigator="true" 
+								converter="#{calendarConverter}"
+								required="true" requiredMessage="#{resourceBundle['evenement.date.notEmpty']}" />	
+						    <h:panelGroup/>
+						    <h:panelGroup/>
+						    
+			    			<!-- Nb -->    
+					        <h:outputLabel styleClass="mandatory" id="nbElementsLabel" for="nbElements" value="#{resourceBundle['gestionEvenement.nombre']}" />
+							<h:inputText id="nbElements" value="#{evenementManager.bean.nombre}" style="width:190px;"
+								required="true" requiredMessage="#{resourceBundle['evenement.nombre.notEmpty']}" 
+									converterMessage="#{resourceBundle['evenement.nombre.invalid_type']}" />
+						    <h:panelGroup/>
+						    <h:panelGroup/>
+						</h:panelGrid>
+							
+						<h:panelGrid columnClasses="panelCol_25,panelCol_50,panelCol_25" columns="3" cellspacing="5" width="100%">	
+							<h:outputLabel id="labelModaliteDestruction" for="modaliteDestruction" rendered="#{evenementManager.bean.typeEvenement == 'DESTRUCTION'}"
+								value="#{resourceBundle['editEssai.onglet.pharma.modalite.destruction']}" />
+							<h:inputTextarea id="modaliteDestruction"  readonly="true" rendered="#{evenementManager.bean.typeEvenement == 'DESTRUCTION'}"
+								value="#{evenementManager.bean.essai.detailDonneesPharma.infosComplementaires.modaliteDestruction}"
+								rows="#{resourceBundle['textarea.rows.default']}" />
+							
+							<h:panelGroup id="fichier_mod_des" rendered="#{evenementManager.bean.typeEvenement == 'DESTRUCTION'}">
+								<p:outputPanel id="mod_des_d" >
+									<c:set var="doc_mod_des"
+										value="#{evenementManager.bean.essai.detailDonneesPharma.infosComplementaires.documentModaliteDestruction}" />
+									<h:panelGrid id="mod_des_doc_grid" columns="3"
+										columnClasses="panelCol_25, panelCol_25, panelCol_50">
+									
+										<c:if test="#{doc_mod_des != null}">
+											<h:outputText value="#{doc_mod_des.nomUtilisateur}"
+												title="#{documentsIhmHelper.buildDocTitle(doc_mod_des, resourceBundle['document.part1'], resourceBundle['document.part2'], resourceBundle['date.pattern.withHeures'])}" />
+											<p:commandButton value="#{resourceBundle['file.dwd']}" immediate="true"
+												title="#{resourceBundle['file.dwd']}" ajax="false">
+												<p:fileDownload
+													value="#{fileDwdController.downloadDocument(evenementManager.bean.essai, doc_mod_des)}" />
+											</p:commandButton>
+										</c:if>
+									</h:panelGrid>
+								</p:outputPanel>
+							</h:panelGroup>	
+							
+							<h:outputLabel id="labelContreEtiquette" for="contre_etiquette" rendered="#{evenementManager.bean.typeEvenement == 'REETIQUETAGE'}"
+								value="#{resourceBundle['editEssai.onglet.pharma.contreEtiquette']}" />
+							<h:inputTextarea id="contre_etiquette" readonly="true" rendered="#{evenementManager.bean.typeEvenement == 'REETIQUETAGE'}"
+								value="#{evenementManager.bean.essai.detailDonneesPharma.infosDispensations.contreEtiquette}"
+								rows="#{resourceBundle['textarea.rows.default']}" />
+							<h:panelGroup id="fichier_contre_et" rendered="#{evenementManager.bean.typeEvenement == 'REETIQUETAGE'}">
+								<p:outputPanel id="contre_et_doc" >
+									<c:set var="doc_contre_et"
+										value="#{evenementManager.bean.essai.detailDonneesPharma.infosDispensations.documentContreEtiquette}" />
+									<h:panelGrid id="contre_et_doc_grid" columns="3"
+										columnClasses="panelCol_25, panelCol_25, panelCol_50">
+										<c:if test="#{doc_contre_et != null}">
+											<h:outputText value="#{doc_contre_et.nomUtilisateur}"
+												title="#{documentsIhmHelper.buildDocTitle(doc_contre_et, resourceBundle['document.part1'], resourceBundle['document.part2'], resourceBundle['date.pattern.withHeures'])}" />
+											<p:commandButton value="#{resourceBundle['file.dwd']}" immediate="true"
+												title="#{resourceBundle['file.dwd']}" ajax="false">
+												<p:fileDownload
+													value="#{fileDwdController.downloadDocument(evenementManager.bean.essai, doc_contre_et)}" />
+											</p:commandButton>
+										</c:if>
+									</h:panelGrid>
+								</p:outputPanel>
+							</h:panelGroup>
+									
+			    	    </h:panelGrid>
+				 	</p:outputPanel>      
+				 	
+				 	<p:outputPanel id="panelCession" rendered="#{evenementManager.bean.typeEvenement == 'CESSION_PUI'}">
+			    	    <h:panelGrid columnClasses="panelCol_25,panelCol_25,panelCol_25,panelCol_25" columns="4" cellspacing="5" width="100%">
+			    			<h:outputLabel id="labelDestinataire" style="width:190px;" for="destinataire" value="#{resourceBundle['gestionEvenement.destinataire']}" />
+						    <h:inputText id="destinataire" value="#{evenementManager.bean.destinataire}" />
+						    <h:panelGroup/>
+						    <h:panelGroup/>
+						    
+			    				<!-- Date -->    
+					        <h:outputLabel  id="dateEnvoiLib" for="dateEnvoi" value="#{resourceBundle['gestionEvenement.dateEnvoi']}" />
+							<p:calendar id="dateEnvoi" value="#{evenementManager.bean.dateDebut}"  
+								effect="#{resourceBundle['effect.calendar']}" locale="#{resourceBundle['date.locale']}" showButtonPanel="true" navigator="true" 
+								converter="#{calendarConverter}"
+								required="true" requiredMessage="#{resourceBundle['evenement.date.notEmpty']}" />	
+						    <h:panelGroup/>
+						    <h:panelGroup/>
+						    
+						    	<!-- Date -->    
+					        <h:outputLabel id="dateReceptionLib" for="dateReception" value="#{resourceBundle['gestionEvenement.dateReception']}" />
+							<p:calendar id="dateReception" value="#{evenementManager.bean.dateReception}" 
+								effect="#{resourceBundle['effect.calendar']}" locale="#{resourceBundle['date.locale']}" showButtonPanel="true" navigator="true" 
+								converter="#{calendarConverter}"/>	
+						    <h:panelGroup/>
+						    <h:panelGroup/>
+				 		</h:panelGrid> 
+				 	</p:outputPanel>	
+			 	</h:panelGroup>      
+			 </p:panel> 
+		   	<br />
+		   	<div class="actionButton">
+		   	<p:commandButton id="deleteButton" action="delete" ajax="false" value="#{resourceBundle['btn.supprimer']}" title="#{resourceBundle['btn.supprimer']}" rendered="#{evenementManager.bean.id != null}"/>
+    			<p:commandButton id="saveButton" action="save" ajax="false" value="#{resourceBundle['btn.enregistrer']}" title="#{resourceBundle['btn.enregistrer']}"/>
+	   			<p:commandButton id="cancelButton" immediate="true" action="cancel" ajax="false" value="#{resourceBundle['btn.annuler']}" title="#{resourceBundle['btn.annuler']}"/>
+		   	</div>
+		   	<div class="basicButton">
+		   		<div class="retourButton">
+	   				<p:commandButton id="returnButton" immediate="true" action="comeback" ajax="false" value="#{resourceBundle['btn.retour']}" title="#{resourceBundle['btn.retour']}"/>
+	   			</div>
+	   		</div>
+		</h:form>
+	   	
+     </ui:define>
+     
+</ui:composition>

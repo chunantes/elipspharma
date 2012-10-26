@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<flow xmlns="http://www.springframework.org/schema/webflow"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://www.springframework.org/schema/webflow
+    http://www.springframework.org/schema/webflow/spring-webflow-2.0.xsd" parent="main">
+    
+	<!-- Démarrage -->
+	<on-start>
+		<evaluate expression="ordonnancierSearchCriteria.clear()"/>
+		<evaluate expression="ordonnancierFabReconstManager.init()"/>
+	</on-start>    
+    
+    <!-- Page principale -->
+	<view-state id="impressionFabReconst" view="../../../../pages/ordonnancier/fabReconst/impression/impressionFabReconst.xhtml">
+		<transition on="calculerOrdonnancierFabReconst">
+			<evaluate expression="ordonnancierFabReconstService.calculerOrdonnancier(ordonnancierFabReconstManager.criteria)" result="ordonnancierFabReconstManager.ordonnancier" />
+		</transition>
+		<transition on="imprimerOrdonnancierFabReconst" />	
+		<transition on="error" to="impressionFabReconst"/>
+	</view-state>
+    
+</flow>

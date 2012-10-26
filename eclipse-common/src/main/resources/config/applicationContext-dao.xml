@@ -1,0 +1,415 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans 
+    xmlns="http://www.springframework.org/schema/beans" 
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd">
+
+	<!-- ============================= -->
+	<!-- COMMON                        -->
+	<!-- ============================= -->					
+	<bean id="commonDao" abstract="true" class="fr.pharma.eclipse.dao.hibernate.common.GenericDaoHibernate">
+		<property name="criteriaDictionary" ref="criteriaDictionary" />
+	</bean>
+
+	<!-- ============================= -->
+	<!-- DOCUMENT	                   -->
+	<!-- ============================= -->
+	<bean id="documentDao" parent="commonDao">
+		<constructor-arg index="0" value="fr.pharma.eclipse.domain.model.common.DocumentEclipse"/>
+	</bean>
+
+	<!-- ============================= -->
+	<!-- PHARMACIE	                   -->
+	<!-- ============================= -->
+	<bean id="pharmacieDao" parent="commonDao">
+		<constructor-arg index="0" value="fr.pharma.eclipse.domain.model.stockage.Pharmacie"/>
+		<property name="nameBeanListsForDetach">
+			<list>
+				<value>stockages</value>
+			</list>
+		</property>
+	</bean>
+	
+	<!-- ============================= -->
+	<!-- PROMOTEUR	                   -->
+	<!-- ============================= -->
+	<bean id="promoteurDao" parent="commonDao">
+		<constructor-arg index="0" value="fr.pharma.eclipse.domain.model.acteur.Promoteur"/>
+	</bean>
+	
+	<!-- ============================= -->
+	<!-- ESSAI   	                   -->
+	<!-- ============================= -->
+	<bean id="essaiDao" parent="commonDao">
+		<constructor-arg index="0" value="fr.pharma.eclipse.domain.model.essai.Essai"/>
+		<property name="nameBeanListsForDetach">
+			<list>
+				<value>detailRecherche.commentaires</value>
+				<value>detailContacts.habilitations</value>
+				<value>detailFaisabilite.infosEtude.commentairesAchatsPUI</value>
+				<value>detailFaisabilite.infosEtude.commentairesDistribAutresPharma</value>
+				<value>detailFaisabilite.infosEtude.commentaires</value>
+				<value>detailFaisabilite.infosConclusion.commentaires</value>
+				<value>detailAdministratif.infosAC.documents</value>
+				<value>detailAdministratif.infosCPP.documents</value>
+				<value>detailAdministratif.infosArchivage.commentaires</value>
+				<value>detailDesign.bras</value>
+				<value>detailAutresDocuments.documents</value>
+				<value>detailsEtatEssai</value>
+			</list>
+		</property>
+	</bean>
+	
+	<!-- ============================= -->
+	<!-- ESSAI : DETAIL RECHERCHE      -->
+	<!-- ============================= -->
+	<bean id="detailRechercheDao" parent="commonDao">
+		<constructor-arg index="0" value="fr.pharma.eclipse.domain.model.essai.detail.recherche.DetailRecherche" />
+	</bean>
+	
+	<!-- ============================= -->
+	<!-- PERSONNE                      -->
+	<!-- ============================= -->
+	<bean id="personneDao" parent="commonDao">
+		<constructor-arg index="0" value="fr.pharma.eclipse.domain.model.acteur.Personne"/>
+	</bean>
+
+	<!-- ============================= -->
+	<!-- INVESTIGATEUR                 -->
+	<!-- ============================= -->	
+	<bean id="investigateurDao" parent="commonDao">
+		<constructor-arg index="0" value="fr.pharma.eclipse.domain.model.acteur.Investigateur"/>
+	</bean>	
+	
+	<!-- ============================= -->
+	<!-- ARC PROMOTEUR                 -->
+	<!-- ============================= -->	
+	<bean id="arcPromoteurDao" parent="commonDao">
+		<constructor-arg index="0" value="fr.pharma.eclipse.domain.model.acteur.ArcPromoteur"/>
+	</bean>
+		
+	<!-- ============================= -->
+	<!-- ARC INVESTIGATEUR             -->
+	<!-- ============================= -->	
+	<bean id="arcInvestigateurDao" parent="commonDao">
+		<constructor-arg index="0" value="fr.pharma.eclipse.domain.model.acteur.ArcInvestigateur"/>
+	</bean>	
+	
+	<!-- ============================= -->
+	<!-- PHARMACIEN                    -->
+	<!-- ============================= -->	
+	<bean id="pharmacienDao" parent="commonDao">
+		<constructor-arg index="0" value="fr.pharma.eclipse.domain.model.acteur.Pharmacien"/>
+	</bean>
+		
+	<!-- ============================= -->
+	<!-- CRO                           -->
+	<!-- ============================= -->	
+	<bean id="croDao" parent="commonDao">
+		<constructor-arg index="0" value="fr.pharma.eclipse.domain.model.acteur.Cro"/>
+	</bean>
+	
+	<!-- ============================= -->
+	<!-- DIRECTION RECHERCHE           -->
+	<!-- ============================= -->	
+	<bean id="directionRechercheDao" parent="commonDao">
+		<constructor-arg index="0" value="fr.pharma.eclipse.domain.model.acteur.DirectionRecherche"/>
+	</bean>
+		
+	<!-- ============================= -->
+	<!-- CONTACT PROMOTEUR             -->
+	<!-- ============================= -->	
+	<bean id="contactPromoteurDao" parent="commonDao">
+		<constructor-arg index="0" value="fr.pharma.eclipse.domain.model.acteur.ContactPromoteur"/>
+	</bean>	
+	
+	<!-- ============================= -->
+	<!-- SERVICE                       -->
+	<!-- ============================= -->
+	<bean id="serviceDao" parent="commonDao">
+		<constructor-arg index="0" value="fr.pharma.eclipse.domain.model.localisation.Service"/>
+	</bean>
+	
+	<!-- ============================= -->
+	<!-- POLE                          -->
+	<!-- ============================= -->
+	<bean id="poleDao" parent="commonDao">
+		<constructor-arg index="0" value="fr.pharma.eclipse.domain.model.localisation.Pole"/>
+	</bean>
+	
+	<!-- ============================= -->
+	<!-- ETABLISSEMENT                 -->
+	<!-- ============================= -->
+	<bean id="etablissementDao" parent="commonDao">
+		<constructor-arg index="0" value="fr.pharma.eclipse.domain.model.localisation.Etablissement"/>
+	</bean>
+	
+	<!-- ============================= -->
+	<!-- SITE                          -->
+	<!-- ============================= -->
+	<bean id="siteDao" parent="commonDao">
+		<constructor-arg index="0" value="fr.pharma.eclipse.domain.model.localisation.Site"/>
+	</bean>
+	
+	<!-- ============================= -->
+	<!-- HABILITATION                  -->
+	<!-- ============================= -->
+	<bean id="habilitationDao" parent="commonDao">
+		<constructor-arg index="0" value="fr.pharma.eclipse.domain.model.habilitation.Habilitation"/>
+	</bean>
+	
+	<!-- ============================= -->
+	<!-- STOCKAGE                      -->
+	<!-- ============================= -->
+	<bean id="stockageDao" parent="commonDao">
+		<constructor-arg index="0" value="fr.pharma.eclipse.domain.model.stockage.Stockage"/>
+	</bean>
+	
+	<!-- ============================= -->
+	<!-- PRODUIT                       -->
+	<!-- ============================= -->
+	<bean id="produitDao" parent="commonDao">
+		<constructor-arg index="0" value="fr.pharma.eclipse.domain.model.produit.Produit"/>
+	</bean>
+	
+	<!-- ============================= -->
+	<!-- MEDICAMENT                    -->
+	<!-- ============================= -->
+	<bean id="medicamentDao" parent="commonDao">
+		<constructor-arg index="0" value="fr.pharma.eclipse.domain.model.produit.Medicament"/>
+	</bean>
+	
+	<!-- ============================= -->
+	<!-- DISPOSITIF MEDICAL            -->
+	<!-- ============================= -->
+	<bean id="dispositifMedicalDao" parent="commonDao">
+		<constructor-arg index="0" value="fr.pharma.eclipse.domain.model.produit.DispositifMedical"/>
+	</bean>
+	
+	<!-- ============================= -->
+	<!-- PRODUIT THERAPEUTIQUE         -->
+	<!-- ============================= -->
+	<bean id="produitTherapeutiqueDao" parent="commonDao">
+		<constructor-arg index="0" value="fr.pharma.eclipse.domain.model.produit.ProduitTherapeutique"/>
+	</bean>
+	
+	<!-- ============================= -->
+	<!-- PREPARATION			       -->
+	<!-- ============================= -->
+	<bean id="preparationDao" parent="commonDao">
+		<constructor-arg index="0" value="fr.pharma.eclipse.domain.model.produit.Preparation"/>
+	</bean>
+	
+	<!-- ============================= -->
+	<!-- MOUVEMENT STOCK               -->
+	<!-- ============================= -->
+	<bean id="mouvementStockDao" parent="commonDao">
+		<constructor-arg index="0" value="fr.pharma.eclipse.domain.model.stock.MvtStock"/>
+	</bean>
+	
+	<!-- ============================= -->
+	<!-- APPROVISIONNEMENT             -->
+	<!-- ============================= -->
+	<bean id="approvisionnementDao" parent="commonDao">
+		<constructor-arg index="0" value="fr.pharma.eclipse.domain.model.stock.Approvisionnement"/>
+	</bean>
+	
+	<!-- ============================= -->
+	<!-- DISPENSATION GLOBALE          -->
+	<!-- ============================= -->
+	<bean id="dispensationGlobaleDao" parent="commonDao">
+		<constructor-arg index="0" value="fr.pharma.eclipse.domain.model.stock.DispensationGlobale"/>
+	</bean>
+	
+	<!-- ============================= -->
+	<!-- RETOUR PROMOTEUR              -->
+	<!-- ============================= -->
+	<bean id="retourPromoteurDao" parent="commonDao">
+		<constructor-arg index="0" value="fr.pharma.eclipse.domain.model.stock.RetourPromoteur"/>
+	</bean>
+	
+	<!-- ============================= -->
+	<!-- CESSION PUI                   -->
+	<!-- ============================= -->
+	<bean id="cessionPuiDao" parent="commonDao">
+		<constructor-arg index="0" value="fr.pharma.eclipse.domain.model.stock.CessionPui"/>
+	</bean>
+	
+	<!-- ============================= -->
+	<!-- DESTRUCTION                   -->
+	<!-- ============================= -->
+	<bean id="destructionDao" parent="commonDao">
+		<constructor-arg index="0" value="fr.pharma.eclipse.domain.model.stock.Destruction"/>
+	</bean>
+	
+	<!-- ============================= -->
+	<!-- PREPARATION SORTIE            -->
+	<!-- ============================= -->
+	<bean id="preparationSortieDao" parent="commonDao">
+		<constructor-arg index="0" value="fr.pharma.eclipse.domain.model.stock.PreparationSortie"/>
+	</bean>
+	
+	<!-- ============================= -->
+	<!-- AUTRE SORTIE                  -->
+	<!-- ============================= -->
+	<bean id="autreSortieDao" parent="commonDao">
+		<constructor-arg index="0" value="fr.pharma.eclipse.domain.model.stock.AutreSortie"/>
+	</bean>
+	
+	<!-- ============================= -->
+	<!-- CONDITIONNEMENT               -->
+	<!-- ============================= -->
+	<bean id="conditionnementDao" parent="commonDao">
+		<constructor-arg index="0" value="fr.pharma.eclipse.domain.model.produit.Conditionnement"/>
+	</bean>	
+	
+	<!-- ============================= -->
+	<!-- DETAILSTOCKAGE                -->
+	<!-- ============================= -->
+	<bean id="detailStockageDao" parent="commonDao">
+		<constructor-arg index="0" value="fr.pharma.eclipse.domain.model.produit.detail.DetailStockage"/>
+	</bean>	
+	
+	<!-- ============================= -->
+	<!-- SEQUENCE		               -->
+	<!-- ============================= -->
+	<bean id="sequenceDao" parent="commonDao">
+		<constructor-arg index="0" value="fr.pharma.eclipse.domain.model.design.Sequence"/>
+	</bean>	
+	
+	<!-- ============================= -->
+	<!-- PRESCRIPTIONTYPE              -->
+	<!-- ============================= -->
+	<bean id="prescriptionTypeDao" parent="commonDao">
+		<constructor-arg index="0" value="fr.pharma.eclipse.domain.model.design.PrescriptionType"/>
+	</bean>	
+	
+	<!-- ============================= -->
+	<!-- PATIENT		               -->
+	<!-- ============================= -->
+	<bean id="patientDao" parent="commonDao">
+		<constructor-arg index="0" value="fr.pharma.eclipse.domain.model.patient.Patient"/>
+	</bean>	
+	
+	<!-- ============================= -->
+	<!-- PRESCRIPTION				   -->
+	<!-- ============================= -->
+	<bean id="prescriptionDao" parent="commonDao">
+		<constructor-arg index="0" value="fr.pharma.eclipse.domain.model.prescription.Prescription"/>
+	</bean>	
+	
+	<!-- ============================= -->
+	<!-- PRODUITPRESCRIT               -->
+	<!-- ============================= -->
+	<bean id="produitPrescritDao" parent="commonDao">
+		<constructor-arg index="0" value="fr.pharma.eclipse.domain.model.prescription.ProduitPrescrit"/>
+	</bean>	
+	
+	<!-- ============================= -->
+	<!-- INCLUSION					   -->
+	<!-- ============================= -->
+	<bean id="inclusionDao" parent="commonDao">
+		<constructor-arg index="0" value="fr.pharma.eclipse.domain.model.patient.Inclusion"/>
+	</bean>	
+	
+	<!-- ============================= -->
+	<!-- DISPENSATION				   -->
+	<!-- ============================= -->
+	<bean id="dispensationDao" parent="commonDao">
+		<constructor-arg index="0" value="fr.pharma.eclipse.domain.model.dispensation.Dispensation"/>
+	</bean>	
+	
+	<!-- ============================= -->
+	<!-- DISPENSATIONPRODUIT		   -->
+	<!-- ============================= -->
+	<bean id="dispensationProduitDao" parent="mouvementStockDao">
+		<constructor-arg index="0" value="fr.pharma.eclipse.domain.model.stock.DispensationProduit"/>
+	</bean>
+		
+	<!-- ============================= -->
+	<!-- DOTATION           		   -->
+	<!-- ============================= -->
+	<bean id="dotationDao" parent="commonDao">
+		<constructor-arg index="0" value="fr.pharma.eclipse.domain.model.dotation.Dotation"/>
+	</bean>	
+	
+	<!-- ============================= -->
+	<!-- EVENEMENT           		   -->
+	<!-- ============================= -->
+	<bean id="evenementDao" parent="commonDao">
+		<constructor-arg index="0" value="fr.pharma.eclipse.domain.model.evenement.Evenement"/>
+	</bean>
+	
+	<!-- ============================= -->
+	<!-- INCIDENT	           		   -->
+	<!-- ============================= -->
+	<bean id="incidentDao" parent="commonDao">
+		<constructor-arg index="0" value="fr.pharma.eclipse.domain.model.incident.Incident"/>
+	</bean>
+	
+	<!-- ============================= -->
+	<!-- ELEMENTTOCHECK      		   -->
+	<!-- ============================= -->
+	<bean id="elementToCheckDao" parent="commonDao">
+		<constructor-arg index="0" value="fr.pharma.eclipse.domain.model.dispensation.ElementToCheck"/>
+	</bean>
+		
+	<!-- ============================= -->
+	<!-- GRILLEMODELE		   		   -->
+	<!-- ============================= -->
+	<bean id="grilleModeleDao" parent="commonDao">
+		<constructor-arg index="0" value="fr.pharma.eclipse.domain.model.surcout.GrilleModele"/>
+	</bean>
+		
+	<!-- ============================= -->
+	<!-- GRILLE				   		   -->
+	<!-- ============================= -->
+	<bean id="grilleDao" parent="commonDao">
+		<constructor-arg index="0" value="fr.pharma.eclipse.domain.model.surcout.Grille"/>
+	</bean>
+	
+	<!-- ============================= -->
+	<!-- ORDONNANCIER DISPENSATION	   -->
+	<!-- ============================= -->
+	<bean id="ordonnancierDispDao" parent="commonDao">
+		<constructor-arg index="0" value="fr.pharma.eclipse.domain.model.ordonnancier.OrdonnancierDisp"/>
+	</bean>
+	
+	<!-- ========================================= -->
+	<!-- ORDONNANCIER FABRICATION/RECONSTITUTION   -->
+	<!-- ========================================= -->
+	<bean id="ordonnancierFabReconstDao" parent="commonDao">
+		<constructor-arg index="0" value="fr.pharma.eclipse.domain.model.ordonnancier.OrdonnancierFabReconst"/>
+	</bean>
+	
+	<!-- ============================= -->
+	<!-- RETOUR PATIENT                -->
+	<!-- ============================= -->
+	<bean id="retourPatientDao" parent="commonDao">
+		<constructor-arg index="0" value="fr.pharma.eclipse.domain.model.stock.RetourPatient"/>
+	</bean>
+		
+	<!-- ================================= SIGREC =============================== -->
+	
+	<!-- ============================= -->
+	<!-- PROMOTEUR SIGREC              -->
+	<!-- ============================= -->
+	<bean id="promoteurSigrecDao" parent="commonDao">
+		<constructor-arg index="0" value="fr.pharma.eclipse.domain.model.sigrec.acteur.PromoteurSigrec"/>
+	</bean>
+
+	<!-- ============================= -->
+	<!-- ESSAI SIGREC	               -->
+	<!-- ============================= -->
+	<bean id="essaiSigrecDao" parent="commonDao">
+		<constructor-arg index="0" value="fr.pharma.eclipse.domain.model.sigrec.essai.EssaiSigrec"/>
+	</bean>
+
+	<!-- ============================= -->
+	<!-- CENTRE SIGREC	               -->
+	<!-- ============================= -->
+	<bean id="centreSigrecDao" parent="commonDao">
+		<constructor-arg index="0" value="fr.pharma.eclipse.domain.model.sigrec.acteur.CentreSigrec"/>
+	</bean>
+
+</beans>

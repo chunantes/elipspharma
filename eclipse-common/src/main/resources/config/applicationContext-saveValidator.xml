@@ -1,0 +1,89 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans 
+    xmlns="http://www.springframework.org/schema/beans" 
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd">
+
+	<!-- ================================ -->
+	<!-- ESSAI : SAVE VALIDATORS       	  -->
+	<!-- ================================ -->					
+	<bean id="essaiGlobalInfosSaveValidator" class="fr.pharma.eclipse.validator.save.impl.essai.EssaiGlobalInfosSaveValidator"/>
+	<bean id="essaiOngDatesSaveValidator" class="fr.pharma.eclipse.validator.save.impl.essai.EssaiDetailDatesSaveValidator"/>
+	<bean id="essaiNumInterneSaveValidator" class="fr.pharma.eclipse.validator.save.impl.essai.UniciteNumeroInterneSaveValidator"/>
+
+	<!-- ================================ -->
+	<!-- PHARMACIE : SAVE VALIDATOR       -->
+	<!-- ================================ -->					
+	<bean id="pharmacieSaveValidator" class="fr.pharma.eclipse.validator.save.impl.PharmacieSaveValidator"/>
+	
+	<!-- ================================ -->
+	<!-- PERSONNE : SAVE VALIDATOR        -->
+	<!-- ================================ -->					
+	<bean id="personneSaveValidator" class="fr.pharma.eclipse.validator.save.impl.PersonneSaveValidator"/>
+	
+	<!-- ================================ -->
+	<!-- PRODUIT  : SAVE VALIDATOR        -->
+	<!-- ================================ -->					
+	<bean id="produitSaveValidator" class="fr.pharma.eclipse.validator.save.impl.ProduitSaveValidator"/>
+	
+	<!-- ================================ -->
+	<!-- INVESTIGATEUR : SAVE VALIDATOR   -->
+	<!-- ================================ -->					
+	<bean id="investigateurSaveValidator" class="fr.pharma.eclipse.validator.save.impl.InvestigateurSaveValidator"/>
+	
+	<!-- ==================================== -->
+	<!-- ARC INVESTIGATEUR : SAVE VALIDATOR   -->
+	<!-- ==================================== -->					
+	<bean id="arcInvestigateurSaveValidator" class="fr.pharma.eclipse.validator.save.impl.ArcInvestigateurSaveValidator"/>
+	
+	<!-- ==================================== -->
+	<!-- PHARMACIEN : SAVE VALIDATOR          -->
+	<!-- ==================================== -->					
+	<bean id="pharmacienSaveValidator" class="fr.pharma.eclipse.validator.save.impl.PharmacienSaveValidator"/>
+	
+	<!-- ==================================== -->
+	<!-- PRESCRIPTION : SAVE VALIDATOR          -->
+	<!-- ==================================== -->					
+	<bean id="prescriptionSaveValidator" class="fr.pharma.eclipse.validator.save.impl.PrescriptionSaveValidator"/>
+	
+	<!-- ==================================== -->
+	<!-- DISPENSATION : SAVE VALIDATOR          -->
+	<!-- ==================================== -->					
+	<bean id="dispensationSaveValidator" class="fr.pharma.eclipse.validator.save.impl.DispensationSaveValidator"/>
+	
+	<!-- ==================================== -->
+	<!-- PATIENT : DESINCLUSION VALIDATOR          -->
+	<!-- ==================================== -->					
+	<bean id="desinclusionPatientValidator" class="fr.pharma.eclipse.validator.save.impl.DesinclusionPatientValidator"/>
+	
+	<!-- ==================================== -->
+	<!-- GRILLE : SAVE VALIDATOR          -->
+	<!-- ==================================== -->					
+	<bean id="grilleSaveValidator" class="fr.pharma.eclipse.validator.save.impl.GrilleSaveValidator"/>
+	
+	<!-- ==================================== -->
+	<!-- PREVISION : VALIDATOR          		  -->
+	<!-- ==================================== -->					
+	<bean id="previsionValidator" class="fr.pharma.eclipse.validator.save.impl.PrevisionValidator"/>
+	
+	<!-- ==================================== -->
+	<!-- PATIENT : VALIDATOR          		  -->
+	<!-- ==================================== -->					
+	<bean id="patientSaveValidator" class="fr.pharma.eclipse.validator.save.impl.PatientSaveValidator"/>
+	
+	<!-- ==================================== -->
+	<!-- Pole : VALIDATOR          		  	-->
+	<!-- ==================================== -->					
+	<bean id="poleSaveValidator" class="fr.pharma.eclipse.validator.save.impl.PoleSaveValidator"/>
+	
+	<!-- ==================================== -->
+	<!-- Service : VALIDATOR          		  -->
+	<!-- ==================================== -->					
+	<bean id="serviceSaveValidator" class="fr.pharma.eclipse.validator.save.impl.ServiceSaveValidator"/>
+	
+	<!-- ==================================== -->
+	<!-- Etablissemenet : VALIDATOR           -->
+	<!-- ==================================== -->					
+	<bean id="etablissementSaveValidator" class="fr.pharma.eclipse.validator.save.impl.EtablissementSaveValidator"/>
+
+</beans>

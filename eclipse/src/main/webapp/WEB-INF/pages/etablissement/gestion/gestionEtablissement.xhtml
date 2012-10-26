@@ -1,0 +1,122 @@
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+     xmlns:ui="http://java.sun.com/jsf/facelets"
+     xmlns:h="http://java.sun.com/jsf/html"
+     xmlns:f="http://java.sun.com/jsf/core"
+	 xmlns:p="http://primefaces.prime.com.tr/ui"
+	 xmlns:c="http://java.sun.com/jsp/jstl/core"
+     template="/WEB-INF/pages/template/template.xhtml">
+     
+     <ui:define name="title">
+		<h:outputFormat value="#{resourceBundle['gestionEtablissement.title']}"/>
+     </ui:define>
+     
+     <ui:define name="body">
+		<h:form id="criteriaForm">
+     		<p:outputPanel id="searchCriteriaFragment">
+     			<div class="rechercheBox">
+	     			<h2 class="titleFloat"><h:outputText value="#{resourceBundle['recherche']}"/></h2>
+     				<p:focus />
+	     			<fieldset>
+	     				<div class="rechercheInside">
+	     					<div><label>#{resourceBundle['gestionEtablissement.nom']}</label></div>
+		     				<div><h:inputText id="etablissementSearchCriteria" value="#{etablissementsManager.searchCriteria.nom}" /></div>
+		     				<p:commandButton id="searchButton" action="search" ajax="false" update="etablissementsForm"
+		     					value="#{resourceBundle['btn.rechercher']}" title="#{resourceBundle['btn.rechercher']}">
+		     				</p:commandButton>
+	     				</div>
+	     			</fieldset>
+     			</div>
+     		</p:outputPanel>
+		</h:form>
+     	
+     	<p:outputPanel id="resultsFragment">
+			<h:form id="etablissementsForm" prependId="false">
+				<div>
+				 	 <div style="float:left;">
+			    	 	<h2 class="titleFloat"><h:outputText value="#{resourceBundle['resultats']}"/></h2>
+			    	 </div>			
+			    	 <div class="export">
+				         <h:commandLink> 
+				         	<h:graphicImage library="images" name="excel.gif"
+		    					alt="#{resourceBundle['export.excel']}" title="#{resourceBundle['export.excel']}" />
+				             <p:dataExporter type="xls" target="etablissements" fileName="#{resourceBundle['export.etablissements.filename']}" 
+				             	excludeColumns="4" encoding="iso-8859-1"/>  
+				         </h:commandLink>  
+				         <h:commandLink>  
+				         	<h:graphicImage library="images" name="pdf.gif" 
+		    					alt="#{resourceBundle['export.pdf']}" title="#{resourceBundle['export.pdf']}" />
+				             <p:dataExporter type="pdf" target="etablissements" fileName="#{resourceBundle['export.etablissements.filename']}" 
+				             	excludeColumns="4" encoding="iso-8859-1"/>  
+				         </h:commandLink>  
+				         <h:commandLink>  
+				         	<h:graphicImage library="images" name="csv.gif" 
+		    					alt="#{resourceBundle['export.csv']}" title="#{resourceBundle['export.csv']}" />
+				             <p:dataExporter type="csv" target="etablissements" fileName="#{resourceBundle['export.etablissements.filename']}" 
+				             	excludeColumns="4" encoding="iso-8859-1"/>  
+				         </h:commandLink>
+			         </div>
+		        </div>
+				<div class="resultBox" style="width:680px;"> 
+					<p:messages/>
+				    	<fieldset>
+				    		<p:dataTable id="etablissements" value="#{etablissementsManager.beans}" var="etablissement" emptyMessage="#{resourceBundle['results.none']}"
+				    			selection="#{etablissementsManager.beanSelected}" selectionMode="single"
+				    			update="etablissements"
+				    			onselectComplete="javascript:document.getElementById('editButton').click();">
+				    			<p:column id="nom" sortBy="#{etablissement.nom}">
+				    				<f:facet name="header">
+				    					<h:outputText value="#{resourceBundle['gestionEtablissement.nom']}"/>
+				    				</f:facet>
+				    				<h:outputText value="#{etablissement.nom}"/>
+				    			</p:column>
+				    			<p:column id="telephone" sortBy="#{etablissement.telephone}">
+				    				<f:facet name="header">
+				    					<h:outputText value="#{resourceBundle['gestionEtablissement.telephone']}"/>
+				    				</f:facet>
+				    				<h:outputText value="#{etablissement.telephone}"/>
+				    			</p:column>
+				    			<p:column id="adresseDirection" sortBy="#{etablissement.adresseDirection}">
+				    				<f:facet name="header">
+				    					<h:outputText value="#{resourceBundle['gestionEtablissement.adresseDirection']}"/>
+				    				</f:facet>
+				    				<h:outputText value="#{etablissement.adresseDirection}"/>
+				    			</p:column>
+				    			<p:column id="ville" sortBy="#{etablissement.ville}">
+				    				<f:facet name="header">
+				    					<h:outputText value="#{resourceBundle['gestionEtablissement.ville']}"/>
+				    				</f:facet>
+				    				<h:outputText value="#{etablissement.ville}"/>
+				    			</p:column>
+				    			<p:column>
+				    				<div align="center">
+					    				<f:facet name="header">
+					    					<input type="checkbox" id="select_all" onclick="javascript:selectAll(this)" />
+					    				</f:facet>
+				    				</div>
+				    				<div align="center">
+				    					<h:selectBooleanCheckbox value="#{etablissement.selected}"/>
+				    				</div>
+				    			</p:column> 
+				    		</p:dataTable>
+				    		<br />
+				    		<div class="actionButton">
+					    		<p:commandButton id="deleteButton" action="delete" ajax="false"
+					    			value="#{resourceBundle['btn.supprimer']}" title="#{resourceBundle['btn.supprimer']}">
+					    		</p:commandButton>
+					    		<p:commandButton id="addButton" action="add" ajax="false"
+					    			value="#{resourceBundle['btn.ajouter']}" title="#{resourceBundle['btn.ajouter']}">
+					    		</p:commandButton>
+					    		
+					    		<div style="display:none;">
+					    			<p:commandButton id="editButton" action="edit" ajax="false"/>
+					    		</div>
+					    		
+					    	</div>
+		    			</fieldset>
+		   			</div>
+    			</h:form>
+   		</p:outputPanel>
+     	
+     </ui:define>
+     
+</ui:composition>

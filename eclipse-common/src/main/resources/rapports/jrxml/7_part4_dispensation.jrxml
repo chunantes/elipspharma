@@ -1,0 +1,170 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="7_part4_dispensation" pageWidth="555" pageHeight="842" whenNoDataType="AllSectionsNoDetail" columnWidth="555" leftMargin="0" rightMargin="0" topMargin="0" bottomMargin="0" whenResourceMissingType="Empty">
+	<property name="ireport.zoom" value="1.8150000000000073"/>
+	<property name="ireport.x" value="0"/>
+	<property name="ireport.y" value="0"/>
+	<subDataset name="Table Dataset 1"/>
+	<subDataset name="Table Dataset 2"/>
+	<subDataset name="dataset1"/>
+	<parameter name="SUBREPORT_DIR" class="java.lang.String"/>
+	<field name="investigateurPrincipal" class="java.lang.String"/>
+	<field name="coInvestigateurs" class="java.lang.String"/>
+	<field name="typeDispensation" class="java.lang.String"/>
+	<field name="hasTracabilite" class="java.lang.Boolean"/>
+	<field name="tracabiliteObligatoire" class="java.lang.Boolean"/>
+	<field name="destinatairesDispensation" class="java.lang.String"/>
+	<field name="hasNumeroTraitement" class="java.lang.Boolean"/>
+	<field name="infosPatient" class="java.lang.Object"/>
+	<field name="hasGestionRetoursPharma" class="java.lang.Boolean"/>
+	<field name="aideDispensation" class="java.lang.Object"/>
+	<detail>
+		<band height="62">
+			<staticText>
+				<reportElement x="13" y="0" width="213" height="20"/>
+				<box topPadding="3" leftPadding="3" bottomPadding="3" rightPadding="3"/>
+				<textElement>
+					<font isBold="true"/>
+				</textElement>
+				<text><![CDATA[PRESCRIPTEURS AUTORISES :]]></text>
+			</staticText>
+			<staticText>
+				<reportElement positionType="Float" x="23" y="20" width="122" height="18"/>
+				<box padding="3" topPadding="3" leftPadding="3" bottomPadding="3" rightPadding="3"/>
+				<textElement verticalAlignment="Top">
+					<font fontName="Arial" size="10" isBold="false"/>
+				</textElement>
+				<text><![CDATA[- Investigateur principal :]]></text>
+			</staticText>
+			<staticText>
+				<reportElement positionType="Float" x="23" y="38" width="122" height="18"/>
+				<box padding="3" topPadding="3" leftPadding="3" bottomPadding="3" rightPadding="3"/>
+				<textElement verticalAlignment="Top">
+					<font fontName="Arial" size="10" isBold="false"/>
+				</textElement>
+				<text><![CDATA[- Co-investigateurs :]]></text>
+			</staticText>
+			<textField isStretchWithOverflow="true" isBlankWhenNull="true">
+				<reportElement x="148" y="20" width="395" height="18"/>
+				<box topPadding="3" leftPadding="3" bottomPadding="3" rightPadding="3"/>
+				<textElement/>
+				<textFieldExpression class="java.lang.String"><![CDATA[$F{investigateurPrincipal}]]></textFieldExpression>
+			</textField>
+			<textField isStretchWithOverflow="true" isBlankWhenNull="true">
+				<reportElement x="148" y="38" width="395" height="18"/>
+				<box topPadding="3" leftPadding="3" bottomPadding="3" rightPadding="3"/>
+				<textElement/>
+				<textFieldExpression class="java.lang.String"><![CDATA[$F{coInvestigateurs}]]></textFieldExpression>
+			</textField>
+		</band>
+		<band height="40">
+			<staticText>
+				<reportElement x="13" y="0" width="149" height="20"/>
+				<box topPadding="3" leftPadding="3" bottomPadding="3" rightPadding="3"/>
+				<textElement>
+					<font isBold="true"/>
+				</textElement>
+				<text><![CDATA[TYPE DE DISPENSATION :]]></text>
+			</staticText>
+			<textField isStretchWithOverflow="true" isBlankWhenNull="true">
+				<reportElement x="162" y="0" width="381" height="20"/>
+				<box topPadding="3" leftPadding="3" bottomPadding="3" rightPadding="3"/>
+				<textElement/>
+				<textFieldExpression class="java.lang.String"><![CDATA[$F{typeDispensation}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement positionType="Float" x="23" y="21" width="122" height="18" isRemoveLineWhenBlank="true">
+					<printWhenExpression><![CDATA[Boolean.TRUE.equals($F{hasTracabilite})]]></printWhenExpression>
+				</reportElement>
+				<box padding="3" topPadding="3" leftPadding="3" bottomPadding="3" rightPadding="3"/>
+				<textElement verticalAlignment="Top">
+					<font fontName="Arial" size="10" isBold="false"/>
+				</textElement>
+				<text><![CDATA[Traçabilité obligatoire :]]></text>
+			</staticText>
+			<textField isStretchWithOverflow="true" isBlankWhenNull="true">
+				<reportElement x="148" y="21" width="395" height="18" isRemoveLineWhenBlank="true">
+					<printWhenExpression><![CDATA[Boolean.TRUE.equals($F{hasTracabilite})]]></printWhenExpression>
+				</reportElement>
+				<box topPadding="3" leftPadding="3" bottomPadding="3" rightPadding="3"/>
+				<textElement/>
+				<textFieldExpression class="java.lang.String"><![CDATA[$F{tracabiliteObligatoire}==null?"":(Boolean.TRUE.equals($F{tracabiliteObligatoire})?"Oui":"Non")]]></textFieldExpression>
+			</textField>
+		</band>
+		<band height="43">
+			<staticText>
+				<reportElement x="13" y="0" width="213" height="20"/>
+				<box topPadding="3" leftPadding="3" bottomPadding="3" rightPadding="3"/>
+				<textElement>
+					<font isBold="true"/>
+				</textElement>
+				<text><![CDATA[DESTINATAIRES DE LA DISPENSATION :]]></text>
+			</staticText>
+			<textField isStretchWithOverflow="true" isBlankWhenNull="true">
+				<reportElement x="23" y="21" width="520" height="18"/>
+				<box topPadding="3" leftPadding="3" bottomPadding="3" rightPadding="3"/>
+				<textElement/>
+				<textFieldExpression class="java.lang.String"><![CDATA[$F{destinatairesDispensation}]]></textFieldExpression>
+			</textField>
+		</band>
+		<band height="43">
+			<staticText>
+				<reportElement x="13" y="0" width="213" height="20"/>
+				<box topPadding="3" leftPadding="3" bottomPadding="3" rightPadding="3"/>
+				<textElement>
+					<font isBold="true"/>
+				</textElement>
+				<text><![CDATA[Numérotation des conditionnements :]]></text>
+			</staticText>
+			<staticText>
+				<reportElement positionType="Float" x="23" y="20" width="520" height="18">
+					<printWhenExpression><![CDATA[Boolean.TRUE.equals($F{hasNumeroTraitement})]]></printWhenExpression>
+				</reportElement>
+				<box padding="3" topPadding="3" leftPadding="3" bottomPadding="3" rightPadding="3"/>
+				<textElement verticalAlignment="Top">
+					<font fontName="Arial" size="10" isBold="false"/>
+				</textElement>
+				<text><![CDATA[Il existe une numérotation : délivrer le numéro correspondant à la prescription.]]></text>
+			</staticText>
+			<staticText>
+				<reportElement positionType="Float" x="23" y="20" width="520" height="18">
+					<printWhenExpression><![CDATA[Boolean.FALSE.equals($F{hasNumeroTraitement})]]></printWhenExpression>
+				</reportElement>
+				<box padding="3" topPadding="3" leftPadding="3" bottomPadding="3" rightPadding="3"/>
+				<textElement verticalAlignment="Top">
+					<font fontName="Arial" size="10" isBold="false"/>
+				</textElement>
+				<text><![CDATA[Il n'existe pas de numérotation, il peut être donné n'importe quel conditionnement.]]></text>
+			</staticText>
+		</band>
+		<band height="32">
+			<subreport isUsingCache="false">
+				<reportElement positionType="Float" x="0" y="0" width="555" height="10"/>
+				<subreportParameter name="SUBREPORT_DIR">
+					<subreportParameterExpression><![CDATA[$P{SUBREPORT_DIR}]]></subreportParameterExpression>
+				</subreportParameter>
+				<dataSourceExpression><![CDATA[$F{infosPatient}]]></dataSourceExpression>
+				<subreportExpression class="java.lang.String"><![CDATA[$P{SUBREPORT_DIR}+"/common_blocWithMoAssocie_main.jasper"]]></subreportExpression>
+			</subreport>
+			<staticText>
+				<reportElement positionType="Float" x="23" y="11" width="520" height="18" isRemoveLineWhenBlank="true">
+					<printWhenExpression><![CDATA[Boolean.TRUE.equals($F{hasGestionRetoursPharma})]]></printWhenExpression>
+				</reportElement>
+				<box padding="3" topPadding="3" leftPadding="3" bottomPadding="3" rightPadding="3"/>
+				<textElement verticalAlignment="Top">
+					<font fontName="Arial" size="10" isBold="false"/>
+				</textElement>
+				<text><![CDATA[Rapporter les conditionnements pleins, vides, entamés à la pharmacie.]]></text>
+			</staticText>
+		</band>
+		<band height="15">
+			<subreport isUsingCache="false">
+				<reportElement positionType="Float" x="0" y="0" width="555" height="10"/>
+				<subreportParameter name="SUBREPORT_DIR">
+					<subreportParameterExpression><![CDATA[$P{SUBREPORT_DIR}]]></subreportParameterExpression>
+				</subreportParameter>
+				<dataSourceExpression><![CDATA[$F{aideDispensation}]]></dataSourceExpression>
+				<subreportExpression class="java.lang.String"><![CDATA[$P{SUBREPORT_DIR}+"/common_blocWithMoAssocie_main.jasper"]]></subreportExpression>
+			</subreport>
+		</band>
+	</detail>
+</jasperReport>

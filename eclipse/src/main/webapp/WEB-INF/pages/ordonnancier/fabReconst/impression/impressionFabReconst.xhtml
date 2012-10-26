@@ -1,0 +1,153 @@
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+     xmlns:ui="http://java.sun.com/jsf/facelets"
+     xmlns:h="http://java.sun.com/jsf/html"
+     xmlns:f="http://java.sun.com/jsf/core"
+	 xmlns:p="http://primefaces.prime.com.tr/ui"
+	 xmlns:c="http://java.sun.com/jsp/jstl/core"
+     template="/WEB-INF/pages/template/template.xhtml">
+     
+     <ui:define name="title">
+		<h:outputFormat value="#{resourceBundle['ordonnancierFabReconst.title']}"/>
+     </ui:define>
+     
+     <ui:define name="body"> 
+
+		<!-- Bouton imprimer ordonnancier -->
+	   	<div class="actionButton" style="margin-bottom:6px;margin-top:1px;">
+	   		<h:outputLink id="print" value="#" rendered="#{not empty ordonnancierFabReconstManager.ordonnancier}">  
+				<p:printer target="formImpressionFabReconst" />  
+		    	<h:graphicImage library="images" name="imprimer.gif" title="#{resourceBundle['btn.imprimer']}"/>
+		 	</h:outputLink>
+	 	</div>
+
+		<h:form id="formImpressionFabReconst" prependId="false">
+     		
+     		<fieldset style="width:960px;">
+     			<p:messages />
+     		</fieldset>
+     		
+   			<h:panelGroup id="tableSaisieCriteres" rendered="#{empty ordonnancierFabReconstManager.ordonnancier}">
+     		<fieldset>
+				<table class="stock large" cellpadding="0" cellspacing="0" border="0" width="100%">
+			 		<tr>
+			 			<td>					
+							<h:panelGrid id="panelCriteres" columns="2" columnClasses="panelCol_50,panelCol_50" cellpadding="0" cellspacing="0" border="0" width="100%">
+								
+								<h:panelGrid id="panelPharmacie" columns="3" columnClasses="panelCol_20,panelCol_50,panelCol_30" cellpadding="0" cellspacing="0" border="0" width="100%">
+									<h:outputLabel id="labelPharmacie" value="#{resourceBundle['ordonnancierFabReconst.pharmacie']}"/>
+									<h:selectOneMenu converter="#{pharmacieConverter}" id="pharmacie" 
+										value="#{ordonnancierFabReconstManager.criteria.pharmacie}" styleClass="selectRadio" immediate="true">
+										<f:selectItems value="#{ordonnancierFabReconstManager.pharmacies}" var="pharmacie" itemLabel="#{pharmacie.nom}" itemValue="#{pharmacie}"/>
+										<f:ajax listener="#{ordonnancierFabReconstManager.handleSelectPharmacie}" render="panelDates" />
+									</h:selectOneMenu>
+									<h:panelGroup />
+								</h:panelGrid>
+								
+								<h:panelGrid id="panelDates" columns="5" columnClasses="panelCol_5,panelCol_20,panelCol_5,panelCol_20,panelCol_50" cellpadding="0" cellspacing="0" border="0" width="100%">
+									<h:outputLabel id="labelDateDebut" for="dateDebut" value="#{resourceBundle['ordonnancierFabReconst.du']}"/>
+									<h:outputText id="dateDebut" value="#{ordonnancierFabReconstManager.criteria.dateDebut.time}">
+										<f:convertDateTime pattern="#{resourceBundle['date.pattern.default']}" />
+									</h:outputText>
+									<h:outputLabel id="labelDateFin" for="dateFin" value="#{resourceBundle['ordonnancierFabReconst.au']}"/>
+									<h:outputText id="dateFin" value="#{ordonnancierFabReconstManager.criteria.dateFin.time}">
+										<f:convertDateTime pattern="#{resourceBundle['date.pattern.default']}" />
+									</h:outputText>	
+									<h:panelGroup />								
+								</h:panelGrid>
+								
+							</h:panelGrid>
+							
+						</td>
+					</tr>				
+				</table>
+				
+		   		<div style="width:960px;">
+					<!-- Bouton generation ordonnancier -->
+				   	<div class="actionButton" style="margin-bottom:6px;margin-top:1px;">
+						<p:commandButton id="calculerOrdonnancierFabReconstButton" action="calculerOrdonnancierFabReconst" ajax="false" 
+							value="#{resourceBundle['btn.genererOrdonnancier']}" title="#{resourceBundle['btn.genererOrdonnancier']}" />
+				 	</div>
+			 	</div>				
+				
+			</fieldset>
+			</h:panelGroup>
+			
+			<h:panelGroup id="titreImpression" rendered="#{not empty ordonnancierFabReconstManager.ordonnancier}">				
+				<div class="editionOrdonnancier">
+					<h:outputFormat value="#{resourceBundle['ordonnancierFabReconst.edition.title1']}">
+						<f:param value="#{ordonnancierFabReconstManager.criteria.pharmacie.nom}" />
+					</h:outputFormat>
+					<br />
+				    <h:outputFormat value="#{resourceBundle['ordonnancierFabReconst.edition.title2']}">
+				    	<f:param value="#{facesUtils.formatDate(ordonnancierFabReconstManager.criteria.dateDebut)}" />
+				    	<f:param value="#{facesUtils.formatDate(ordonnancierFabReconstManager.criteria.dateFin)}" />
+				    </h:outputFormat>
+				</div>	
+			</h:panelGroup>			
+				
+			<h:panelGroup id="resultsFabricationReconstitution" >
+			
+				<p:panel style="width:955px;" rendered="#{not empty ordonnancierFabReconstManager.ordonnancier}">
+				<p:dataTable id="elementsToCheck" value="#{ordonnancierFabReconstManager.listElementsToCheck}" var="elementToCheck" emptyMessage="#{resourceBundle['results.none']}">
+	    			
+	    			<!-- Numero ordonnancier -->
+	    			<p:column id="numOrdonnancier" styleClass="panelCol_5" >
+	    				<f:facet name="header">
+	    					<h:outputText value="#{resourceBundle['ordonnancierFabReconst.numero']}"/>
+	    					<br />
+	    					<h:outputText value="#{resourceBundle['ordonnancierFabReconst.ordonnancier']}"/>
+	    				</f:facet>
+	    				<div align="center">
+	    					<h:outputText value="#{elementToCheck.numOrdonnancier}"/>
+	    				</div>
+	    			</p:column>
+
+					<!-- Date -->		    			
+	    			<p:column id="dateChecked" styleClass="panelCol_10">
+	    				<f:facet name="header">
+	    					<h:outputText value="#{resourceBundle['ordonnancierFabReconst.date']}"/>
+	    				</f:facet>
+	    				<div align="center">
+		    				<h:outputText value="#{elementToCheck.dateCreation.time}">
+		    					<f:convertDateTime pattern="#{resourceBundle['date.pattern.withHeures']}" />
+		    				</h:outputText>
+	    				</div>
+	    			</p:column>
+	    			
+	    			<!-- Essai -->
+	    			<p:column id="essai" styleClass="panelCol_20">
+	    				<f:facet name="header">
+	    					<h:outputText value="#{resourceBundle['ordonnancierFabReconst.essai']}"/>
+	    					<br />
+	    					<h:outputText value="#{resourceBundle['ordonnancierFabReconst.promoteur']}"/>
+	    				</f:facet>
+	    				<h:outputText value="#{elementToCheck.essai.numInterne} #{elementToCheck.essai.nom}"/>
+	    				<br />
+	    				<h:outputText value="#{elementToCheck.essai.promoteur.raisonSociale}"/>
+	    			</p:column>
+	    			
+	    			<!-- Informations produit -->
+	    			<p:column id="infosProduit" styleClass="panelCol_20">
+	    				<f:facet name="header">
+	    					<h:outputText value="#{resourceBundle['ordonnancierFabReconst.infosProduit']}"/>
+	    				</f:facet>
+	    				<h:outputText value="#{elementToCheck.produit.nom} - #{elementToCheck.conditionnement.libelle}"/>
+	    			</p:column>
+	    			
+	    			<!-- Renseigne par -->    			
+	    			<p:column id="renseignePar" styleClass="panelCol_10">
+	    				<f:facet name="header">
+	    					<h:outputText value="#{resourceBundle['ordonnancierFabReconst.renseignePar']}"/>
+	    				</f:facet>
+	    				<h:outputText value="#{elementToCheck.personne.prenom} #{elementToCheck.personne.nom}"/>
+	    			</p:column>		    			
+	    			
+	    		</p:dataTable>		
+	    		</p:panel>			
+			</h:panelGroup>			
+			
+		</h:form>
+
+     </ui:define>
+     
+</ui:composition>

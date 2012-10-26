@@ -1,0 +1,129 @@
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+     xmlns:ui="http://java.sun.com/jsf/facelets"
+     xmlns:h="http://java.sun.com/jsf/html"
+     xmlns:f="http://java.sun.com/jsf/core"
+	 xmlns:p="http://primefaces.prime.com.tr/ui"
+	 xmlns:c="http://java.sun.com/jsp/jstl/core"
+     template="/WEB-INF/pages/template/template.xhtml">
+     
+     <ui:define name="title">
+		<h:outputFormat value="#{resourceBundle['gestionPersonnesSir.title']}"/>
+     </ui:define>
+     
+     <ui:define name="body">
+     	<p:outputPanel id="searchCriteriaFragment">
+    		<h:form id="criteriaForm">
+     			<div class="rechercheBox">
+     				<h2 class="titleFloat"><h:outputText value="#{resourceBundle['recherche']}"/></h2>
+     				<p:focus />
+	     			<fieldset>
+	     				<div class="rechercheInside">
+	     				
+	     					<div><label>#{resourceBundle['gestionPersonnesSir.login']}</label></div>
+		     				<div><h:inputText id="login" value="#{personnesSirManager.searchCriteria.login}"/></div>
+
+	     					<div><label>#{resourceBundle['gestionPersonnesSir.nom']}</label></div>
+		     				<div><h:inputText id="nom" value="#{personnesSirManager.searchCriteria.nom}"/></div>
+
+	     					<div><label>#{resourceBundle['gestionPersonnesSir.prenom']}</label></div>
+		     				<div><h:inputText id="prenom" value="#{personnesSirManager.searchCriteria.prenom}"/></div>
+		     				
+		     				<br />
+		     				<p:commandButton id="searchButton" action="search" ajax="false"
+		     					value="#{resourceBundle['btn.rechercher']}" title="#{resourceBundle['btn.rechercher']}">
+		     				</p:commandButton>
+	     				</div>
+	     			</fieldset>
+	     		</div>
+    		</h:form>
+     	</p:outputPanel>
+     	
+     	<p:outputPanel id="resultsFragment">
+			<h:form id="personnesSirForm" prependId="false">
+				<div>
+				 	 <div style="float:left;">
+			    	 	<h2 class="titleFloat"><h:outputText value="#{resourceBundle['resultats']}"/></h2>
+			    	 </div>			
+			    	 <div class="export">
+				         <h:commandLink> 
+				         	<h:graphicImage library="images" name="excel.gif"
+		    					alt="#{resourceBundle['export.excel']}" title="#{resourceBundle['export.excel']}" />
+				             <p:dataExporter type="xls" target="personnesSir" fileName="#{resourceBundle['export.personnesSir.filename']}" 
+				             	encoding="iso-8859-1"/>
+				         </h:commandLink>  
+				         <h:commandLink>  
+				         	<h:graphicImage library="images" name="pdf.gif" 
+		    					alt="#{resourceBundle['export.pdf']}" title="#{resourceBundle['export.pdf']}" />
+				             <p:dataExporter type="pdf" target="personnesSir" fileName="#{resourceBundle['export.personnesSir.filename']}" 
+				             	encoding="iso-8859-1"/>  
+				         </h:commandLink>  
+				         <h:commandLink>  
+				         	<h:graphicImage library="images" name="csv.gif" 
+		    					alt="#{resourceBundle['export.csv']}" title="#{resourceBundle['export.csv']}" />
+				             <p:dataExporter type="csv" target="personnesSir" fileName="#{resourceBundle['export.personnesSir.filename']}" 
+				             	encoding="iso-8859-1"/>  
+				         </h:commandLink>
+			         </div>
+		        </div>			
+				<div class="resultBox" style="width:680px;"> 
+					<p:messages/>
+			    	<fieldset>
+			    		<p:dataTable id="personnesSir" value="#{personnesSirManager.beans}" var="personneSir" emptyMessage="#{resourceBundle['results.none']}"
+			    			selection="#{personnesSirManager.beanSelected}" selectionMode="single"
+			    			update="personnesSir"
+			    			onselectComplete="javascript:document.getElementById('selectButton').click();"							
+							scrollable="true" height="300">	    		
+			    			
+			    			<p:column id="login" sortBy="#{personneSir.login}">
+			    				<f:facet name="header">
+			    					<h:outputText value="#{resourceBundle['gestionPersonnesSir.login']}"/>
+			    				</f:facet>
+			    				<h:outputText value="#{personneSir.login}"/>
+			    			</p:column>
+			    			
+			    			<p:column id="nom" sortBy="#{personneSir.nom}">
+			    				<f:facet name="header">
+			    					<h:outputText value="#{resourceBundle['gestionPersonnesSir.nom']}"/>
+			    				</f:facet>
+			    				<h:outputText value="#{personneSir.nom}"/>
+			    			</p:column>
+			    			
+			    			<p:column id="prenom" sortBy="#{personneSir.prenom}">
+			    				<f:facet name="header">
+			    					<h:outputText value="#{resourceBundle['gestionPersonnesSir.prenom']}"/>
+			    				</f:facet>
+			    				<h:outputText value="#{personneSir.prenom}"/>
+			    			</p:column>
+			    			
+			    			<p:column id="mail" sortBy="#{personneSir.mail}">
+			    				<f:facet name="header">
+			    					<h:outputText value="#{resourceBundle['gestionPersonnesSir.mail']}"/>
+			    				</f:facet>
+			    				<h:outputText value="#{personneSir.mail}"/>
+			    			</p:column>
+			    			
+			    		</p:dataTable>
+			    		<br />
+			    		<div class="actionButton">
+				    		<p:commandButton id="addButton" value="#{resourceBundle['btn.ajouterSansSir']}" title="#{resourceBundle['btn.ajouterSansSir']}"
+				    			action="addSansSir" ajax="false">
+				    		</p:commandButton>
+				    	</div>
+					   	<div class="basicButton">
+					   		<div class="retourButton">
+				   				<p:commandButton id="returnButton" immediate="true" action="comeback" ajax="false" value="#{resourceBundle['btn.retour']}" title="#{resourceBundle['btn.retour']}"/>
+				   			</div>
+				   		</div>	
+				   		
+						<div style="display:none;">
+				    		<p:commandButton id="selectButton" action="select" ajax="false"/>
+				    	</div>				   		
+				   					    	
+	    			</fieldset>
+	   			</div>
+   			</h:form>
+   		</p:outputPanel>
+     	
+     </ui:define>
+     
+</ui:composition>

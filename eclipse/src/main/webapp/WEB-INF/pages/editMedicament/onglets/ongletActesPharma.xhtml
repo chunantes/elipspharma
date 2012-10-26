@@ -1,0 +1,232 @@
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:p="http://primefaces.prime.com.tr/ui"
+	xmlns:sf="http://www.springframework.org/tags/faces"
+	xmlns:c="http://java.sun.com/jsp/jstl/core">
+
+  <!-- Gestion scroll et focus -->
+	<script type="text/javascript">
+		launchScrollEditProduit();
+	</script>
+	<p:focus context="oap_panel_first" />
+
+	<c:set var="medicament" value="#{medicamentManager.bean}" />
+	<h:panelGrid id="oap_panel_first" columns="3"
+		columnClasses="panelCol_25, panelCol_25, panelCol_50">
+
+		<h:outputLabel id="labelProdRs" for="prod_rs"
+			value="#{resourceBundle['editProduit.onglet.actes.reconstitutionsimple']}" />
+		<h:selectOneRadio id="prod_rs"
+			value="#{medicament.reconstitutionSimple}" styleClass="selectRadio">
+			<f:selectItem itemLabel="#{resourceBundle['boolean.oui']}"
+				itemValue="true" itemDescription="#{resourceBundle['boolean.oui']}" />
+			<f:selectItem itemLabel="#{resourceBundle['boolean.non']}"
+				itemValue="false" itemDescription="#{resourceBundle['boolean.non']}" />
+			<f:ajax render="fichier_rs" />
+		</h:selectOneRadio>
+		<h:panelGroup id="fichier_rs">
+			<p:outputPanel id="rs_doc"
+				rendered="#{medicament.reconstitutionSimple and medicament.id !=null}">
+				<c:set var="doc_rs"
+					value="#{medicament.documentReconstitutionSimple}" />
+				<h:panelGrid id="rs_doc_grid" columns="3"
+					columnClasses="panelCol_25,panelCol_25,panelCol_50">
+					<c:if test="#{doc_rs == null }">
+						<p:commandLink id="label_rs_doc" value="#{resourceBundle['document.popupLink.ajouter']}"
+							onclick="popupDocReconstitutionSimple.show()"
+							styleClass="clickable"
+							title="#{resourceBundle['document.popupLink.ajouter']}"/>
+					</c:if>
+					<c:if test="#{doc_rs != null}">
+						<h:outputText value="#{doc_rs.nomUtilisateur}"
+							title="#{documentsIhmHelper.buildDocTitle(doc_rs, resourceBundle['document.part1'], resourceBundle['document.part2'], resourceBundle['date.pattern.withHeures'])}" />
+						<p:commandButton value="#{resourceBundle['file.dwd']}"
+							title="#{resourceBundle['file.dwd']}" ajax="false">
+							<p:fileDownload
+								value="#{fileDwdController.downloadDocument(medicamentManager.bean, doc_rs)}" />
+						</p:commandButton>
+						<p:commandLink ajax="false"
+							title="#{resourceBundle['document.del']}"
+							actionListener="#{medicamentManager.supprimerDocument(enumManager.getEnumValue('TypeDocumentProduit','RECONSTITUTION_SIMPLE'))}">
+							<h:graphicImage library="images" name="del.gif" />
+						</p:commandLink>
+					</c:if>
+				</h:panelGrid>
+			</p:outputPanel>
+		</h:panelGroup>
+
+
+		<h:outputLabel id="labelProdRp" for="prod_rp"
+			value="#{resourceBundle['editProduit.onglet.actes.reconstitutionpsm']}" />
+		<h:selectOneRadio id="prod_rp" value="#{medicament.reconstitutionPSM}"
+			styleClass="selectRadio">
+			<f:selectItem itemLabel="#{resourceBundle['boolean.oui']}"
+				itemValue="true" itemDescription="#{resourceBundle['boolean.oui']}" />
+			<f:selectItem itemLabel="#{resourceBundle['boolean.non']}"
+				itemValue="false" itemDescription="#{resourceBundle['boolean.non']}" />
+			<f:ajax render="fichier_rp" />
+		</h:selectOneRadio>
+		<h:panelGroup id="fichier_rp">
+			<p:outputPanel id="rp_doc"
+				rendered="#{medicament.reconstitutionPSM and medicament.id !=null}">
+				<c:set var="doc_rp" value="#{medicament.documentReconstitutionPSM}" />
+				<h:panelGrid id="rp_doc_grid" columns="3"
+					columnClasses="panelCol_25,panelCol_25,panelCol_50">
+					<c:if test="#{doc_rp == null }">
+						<p:commandLink id="label_rp_doc" value="#{resourceBundle['document.popupLink.ajouter']}"
+							onclick="popupDocReconstitutionPSM.show()" styleClass="clickable"
+							title="#{resourceBundle['document.popupLink.ajouter']}"/>
+					</c:if>
+					<c:if test="#{doc_rp != null}">
+						<h:outputText value="#{doc_rp.nomUtilisateur}"
+							title="#{documentsIhmHelper.buildDocTitle(doc_rp, resourceBundle['document.part1'], resourceBundle['document.part2'], resourceBundle['date.pattern.withHeures'])}" />
+						<p:commandButton value="#{resourceBundle['file.dwd']}"
+							title="#{resourceBundle['file.dwd']}" ajax="false">
+							<p:fileDownload
+								value="#{fileDwdController.downloadDocument(medicamentManager.bean, doc_rp)}" />
+						</p:commandButton>
+						<p:commandLink ajax="false"
+							title="#{resourceBundle['document.del']}"
+							actionListener="#{medicamentManager.supprimerDocument(enumManager.getEnumValue('TypeDocumentProduit','RECONSTITUTION_PSM'))}">
+							<h:graphicImage library="images" name="del.gif" />
+						</p:commandLink>
+					</c:if>
+				</h:panelGrid>
+			</p:outputPanel>
+		</h:panelGroup>
+
+		<h:outputLabel id="labelProdFabri" for="prod_fabri"
+			value="#{resourceBundle['editProduit.onglet.actes.fabrication']}" />
+		<h:selectOneRadio id="prod_fabri" value="#{medicament.fabrication}"
+			styleClass="selectRadio">
+			<f:selectItem itemLabel="#{resourceBundle['boolean.oui']}"
+				itemValue="true" itemDescription="#{resourceBundle['boolean.oui']}" />
+			<f:selectItem itemLabel="#{resourceBundle['boolean.non']}"
+				itemValue="false" itemDescription="#{resourceBundle['boolean.non']}" />
+			<f:ajax render="fichier_fab" />
+		</h:selectOneRadio>
+		<h:panelGroup id="fichier_fab">
+			<p:outputPanel id="fab_doc"
+				rendered="#{medicament.fabrication and medicament.id !=null}">
+				<c:set var="doc_fab" value="#{medicament.documentFabrication}" />
+				<h:panelGrid id="fab_doc_grid" columns="3"
+					columnClasses="panelCol_25,panelCol_25,panelCol_50">
+					<c:if test="#{doc_fab == null }">
+						<p:commandLink id="label_fab_doc" value="#{resourceBundle['document.popupLink.ajouter']}"
+							onclick="popupDocFabrication.show()" styleClass="clickable"
+							title="#{resourceBundle['document.popupLink.ajouter']}"/>
+					</c:if>
+					<c:if test="#{doc_fab != null}">
+						<h:outputText value="#{doc_fab.nomUtilisateur}"
+							title="#{documentsIhmHelper.buildDocTitle(doc_fab, resourceBundle['document.part1'], resourceBundle['document.part2'], resourceBundle['date.pattern.withHeures'])}" />
+						<p:commandButton value="#{resourceBundle['file.dwd']}"
+							title="#{resourceBundle['file.dwd']}" ajax="false">
+							<p:fileDownload
+								value="#{fileDwdController.downloadDocument(medicamentManager.bean, doc_fab)}" />
+						</p:commandButton>
+						<p:commandLink ajax="false"
+							title="#{resourceBundle['document.del']}"
+							actionListener="#{medicamentManager.supprimerDocument(enumManager.getEnumValue('TypeDocumentProduit','FABRICATION'))}">
+							<h:graphicImage library="images" name="del.gif" />
+						</p:commandLink>
+					</c:if>
+				</h:panelGrid>
+			</p:outputPanel>
+		</h:panelGroup>
+
+		<h:outputLabel id="labelProdCondi" for="prod_condi"
+			value="#{resourceBundle['editProduit.onglet.actes.conditionnement']}" />
+		<h:selectOneRadio id="prod_condi"
+			value="#{medicament.conditionnement}" styleClass="selectRadio">
+			<f:selectItem itemLabel="#{resourceBundle['boolean.oui']}"
+				itemValue="true" itemDescription="#{resourceBundle['boolean.oui']}" />
+			<f:selectItem itemLabel="#{resourceBundle['boolean.non']}"
+				itemValue="false" itemDescription="#{resourceBundle['boolean.non']}" />
+			<f:ajax render="fichier_cond" />
+		</h:selectOneRadio>
+		<h:panelGroup id="fichier_cond">
+			<p:outputPanel id="cond_doc"
+				rendered="#{medicament.conditionnement and medicament.id !=null}">
+				<c:set var="doc_cond" value="#{medicament.documentConditionnement}" />
+				<h:panelGrid id="cond_doc_grid" columns="3"
+					columnClasses="panelCol_25,panelCol_25,panelCol_50">
+					<c:if test="#{doc_cond == null }">
+						<p:commandLink id="label_cond_doc" value="#{resourceBundle['document.popupLink.ajouter']}"
+							onclick="popupDocConditionnement.show()" styleClass="clickable"
+							title="#{resourceBundle['document.popupLink.ajouter']}"/>
+					</c:if>
+					<c:if test="#{doc_cond != null}">
+						<h:outputText value="#{doc_cond.nomUtilisateur}"
+							title="#{documentsIhmHelper.buildDocTitle(doc_cond, resourceBundle['document.part1'], resourceBundle['document.part2'], resourceBundle['date.pattern.withHeures'])}" />
+						<p:commandButton value="#{resourceBundle['file.dwd']}"
+							title="#{resourceBundle['file.dwd']}" ajax="false">
+							<p:fileDownload
+								value="#{fileDwdController.downloadDocument(medicamentManager.bean, doc_cond)}" />
+						</p:commandButton>
+						<p:commandLink ajax="false"
+							title="#{resourceBundle['document.del']}"
+							actionListener="#{medicamentManager.supprimerDocument(enumManager.getEnumValue('TypeDocumentProduit','CONDITIONNEMENT'))}">
+							<h:graphicImage library="images" name="del.gif" />
+						</p:commandLink>
+					</c:if>
+				</h:panelGrid>
+			</p:outputPanel>
+		</h:panelGroup>
+
+		<h:outputLabel id="labelProdEtiqu" for="prod_etiqu"
+			value="#{resourceBundle['editProduit.onglet.actes.etiquetage']}" />
+		<h:selectOneRadio id="prod_etiqu" value="#{medicament.etiquetage}"
+			styleClass="selectRadio">
+			<f:selectItem itemLabel="#{resourceBundle['boolean.oui']}"
+				itemValue="true" itemDescription="#{resourceBundle['boolean.oui']}" />
+			<f:selectItem itemLabel="#{resourceBundle['boolean.non']}"
+				itemValue="false" itemDescription="#{resourceBundle['boolean.non']}" />
+			<f:ajax render="fichier_eti" />
+		</h:selectOneRadio>
+		<h:panelGroup id="fichier_eti">
+			<p:outputPanel id="et_doc"
+				rendered="#{medicament.etiquetage and medicament.id !=null}">
+				<c:set var="doc_et" value="#{medicament.documentEtiquetage}" />
+				<h:panelGrid id="et_doc_grid" columns="3"
+					columnClasses="panelCol_25, panelCol_25, panelCol_50">
+					<c:if test="#{doc_et == null }">
+						<p:commandLink id="label_et_doc" value="#{resourceBundle['document.popupLink.ajouter']}"
+							onclick="popupDocEtiquetage.show()" styleClass="clickable"
+							title="#{resourceBundle['document.popupLink.ajouter']}"/>
+					</c:if>
+					<c:if test="#{doc_et != null}">
+						<h:outputText value="#{doc_et.nomUtilisateur}"
+							title="#{documentsIhmHelper.buildDocTitle(doc_et, resourceBundle['document.part1'], resourceBundle['document.part2'], resourceBundle['date.pattern.withHeures'])}" />
+						<p:commandButton value="#{resourceBundle['file.dwd']}"
+							title="#{resourceBundle['file.dwd']}" ajax="false">
+							<p:fileDownload
+								value="#{fileDwdController.downloadDocument(medicamentManager.bean, doc_et)}" />
+						</p:commandButton>
+						<p:commandLink ajax="false"
+							title="#{resourceBundle['document.del']}"
+							actionListener="#{medicamentManager.supprimerDocument(enumManager.getEnumValue('TypeDocumentProduit','ETIQUETAGE'))}">
+							<h:graphicImage library="images" name="del.gif" />
+						</p:commandLink>
+					</c:if>
+					<h:panelGroup />
+				</h:panelGrid>
+			</p:outputPanel>
+		</h:panelGroup>
+
+	</h:panelGrid>
+	
+	<h:panelGrid columns="2" columnClasses="panelCol_25,panelCol_75">
+
+		<h:outputLabel id="labelMedConseils" for="med_conseils"
+			value="#{resourceBundle['editProduit.onglet.generales.conseils']}" />
+		<h:inputTextarea id="med_conseils"
+			rows="#{resourceBundle['textarea.rows.big']}"
+			value="#{medicamentManager.bean.conseils}" />
+		<h:panelGroup />
+
+	</h:panelGrid>		
+	
+
+</ui:composition>

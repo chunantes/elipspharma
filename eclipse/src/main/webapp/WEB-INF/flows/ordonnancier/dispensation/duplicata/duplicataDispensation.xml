@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<flow xmlns="http://www.springframework.org/schema/webflow"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://www.springframework.org/schema/webflow
+    http://www.springframework.org/schema/webflow/spring-webflow-2.0.xsd" parent="main">
+    
+	<!-- Démarrage -->
+	<on-start>
+		<evaluate expression="ordonnancierSearchCriteria.clear()"/>
+		<evaluate expression="duplicataOrdonnancierDispManager.init()"/>
+	</on-start>        
+    
+    <!-- Page principale -->
+	<view-state id="duplicataDispensation" view="../../../../pages/ordonnancier/dispensation/duplicata/duplicataDispensation.xhtml">
+		<transition on="getDuplicataOrdonnancierDisp" to="printDuplicataDispensation"/>
+		<transition on="error" to="duplicataDispensation" />
+	</view-state>
+    
+    <view-state id="printDuplicataDispensation" view="../../../../pages/ordonnancier/dispensation/duplicata/printDuplicataDispensation.xhtml">
+    	
+    </view-state>
+    
+</flow>

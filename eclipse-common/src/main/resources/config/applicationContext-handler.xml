@@ -1,0 +1,80 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans 
+    xmlns="http://www.springframework.org/schema/beans" 
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd">
+
+	<!-- ============================= -->
+	<!-- COMMON				           -->
+	<!-- ============================= -->
+	<bean id="genericHabilitationHandler" abstract="true"
+		class="fr.pharma.eclipse.handler.habilitation.impl.HabilitationHandlerImpl">
+		<property name="userService" ref="userService" />
+	</bean>
+	
+	<!-- ============================= -->
+	<!-- ESSAI : STRATEGIES	           -->
+	<!-- ============================= -->
+	<bean id="userHabilitationsStrategy" class="fr.pharma.eclipse.handler.habilitation.strategy.impl.essai.EssaiHabilitationHandlerStrategy" />
+	<bean id="essaiPharamacienStrategy" class="fr.pharma.eclipse.handler.habilitation.strategy.impl.essai.EssaiPharmacienHandlerStrategy" />
+	<bean id="essaiElementHabilitationsStrategy" class="fr.pharma.eclipse.handler.habilitation.strategy.impl.common.EssaiElementHabilitationHandlerStrategy" />
+	<bean id="essaiElementPharmacienStrategy" class="fr.pharma.eclipse.handler.habilitation.strategy.impl.common.EssaiElementPharmacienHandlerStrategy" />
+	
+	<!-- ============================= -->
+	<!-- ESSAI : HANDLER	           -->
+	<!-- ============================= -->
+	<bean id="essaiHabilitationHandler" parent="genericHabilitationHandler">
+		<property name="strategies">
+			<list>
+				<ref bean="essaiPharamacienStrategy" />
+				<ref bean="userHabilitationsStrategy" />
+			</list>
+		</property>
+	</bean>
+	
+	<!-- ============================= -->
+	<!-- PHARMACIE : STRATEGIES        -->
+	<!-- ============================= -->
+	<bean id="pharmacienHabilitationsPharmacieStrategy" class="fr.pharma.eclipse.handler.habilitation.strategy.impl.pharmacie.PharmacieHabilitationPharmacienStrategy" />
+	
+	<!-- ============================= -->
+	<!-- PHARMACIE : HANDLER	       -->
+	<!-- ============================= -->
+	<bean id="pharmacieHabilitationHandler" parent="genericHabilitationHandler">
+		<property name="strategies">
+			<list>
+				<ref bean="pharmacienHabilitationsPharmacieStrategy" />
+			</list>
+		</property>
+	</bean>
+	
+	<!-- ============================= -->
+	<!-- MOUVEMENT : STRATEGIES        -->
+	<!-- ============================= -->
+	<bean id="mouvementHabilitationPharmacieStrategy" class="fr.pharma.eclipse.handler.habilitation.strategy.impl.mouvement.MouvementHabilitationPharmacieStrategy"/>
+	
+	<!-- ============================= -->
+	<!-- MOUVEMENT : HANDLER	       -->
+	<!-- ============================= -->	
+	<bean id="mvtHabilitationHandler" parent="genericHabilitationHandler">
+		<property name="strategies">
+			<list>
+				<ref bean="mouvementHabilitationPharmacieStrategy" />
+				<ref bean="essaiElementHabilitationsStrategy"/>
+			</list>		
+		</property>
+	</bean>
+	
+	<!-- ============================= -->
+	<!-- PRESCRIPTION : HANDLER	       -->
+	<!-- ============================= -->
+	<bean id="essaiElementHabilitationHandler" parent="genericHabilitationHandler">
+		<property name="strategies">
+			<list>
+				<ref bean="essaiElementPharmacienStrategy" />
+				<ref bean="essaiElementHabilitationsStrategy" />
+			</list>
+		</property>
+	</bean>
+	
+</beans>

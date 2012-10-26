@@ -1,0 +1,284 @@
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+     xmlns:ui="http://java.sun.com/jsf/facelets"
+     xmlns:h="http://java.sun.com/jsf/html"
+     xmlns:f="http://java.sun.com/jsf/core"
+     xmlns:p="http://primefaces.prime.com.tr/ui"
+     xmlns:sf="http://www.springframework.org/tags/faces">
+    
+	<!-- Popup d'historique de l'onglet faisabilite -->
+	<p:dialog header="#{resourceBundle['suivi.historique']}" widgetVar="popupHistoOngFaisab" styleClass="essaiTabPopup" resizable="true" modal="true" width="500">  
+	   <h:form id="dd_popupHisto_form">  
+	   	   <h3><h:outputLabel value="#{resourceBundle['editEssai.common.onglet']} #{resourceBundle['editEssai.onglet.faisab.title']}" /></h3>
+		   <fieldset>
+		       <h:panelGrid columns="2" style="margin-bottom:10px" width="100%">  
+		  		<p:dataTable id="suivis" value="#{essaiManager.getList('detailFaisabilite.modifs', false)}" var="modif" emptyMessage="#{resourceBundle['results.none']}"
+		  			paginator="true" rows="#{resourceBundle['pagination.rowsPerPage']}"
+		  			paginatorTemplate="#{paginatorTemplate}">
+		  			<p:column id="date">
+		  				<f:facet name="header"><h:outputText value="#{resourceBundle['suivi.date']}" /></f:facet>
+		  				<h:outputText value="#{modif.dateMaj.time}">
+							<f:convertDateTime pattern="#{resourceBundle['date.pattern.withHeures']}"/>
+						</h:outputText>
+		  			</p:column>
+		  			<p:column id="auteur">
+		  				<f:facet name="header"><h:outputText value="#{resourceBundle['suivi.auteur']}" /></f:facet>
+		  				<h:outputText value="#{modif.majPar}" />
+		  			</p:column>
+		  		</p:dataTable>		            
+		       </h:panelGrid>
+	       </fieldset>
+	       <div class="popupButton">
+	       	<p:commandButton value="#{resourceBundle['btn.fermer']}" oncomplete="popupHistoOngFaisab.hide();"/>
+	       </div>  
+	    </h:form>  
+	</p:dialog>
+	
+	<!-- Boite de dialogue pour l'historique des commentaires de conclusion -->
+	<p:dialog header="#{resourceBundle['editEssai.onglet.faisab.conclusion.commentaires']}" widgetVar="popupCommentairesFaisabConcl" 
+		styleClass="essaiTabPopup popupCommWithHisto"
+		resizable="true" modal="true" 
+		width="#{resourceBundle['popup.comments.withHisto.width']}">  
+
+		<h:form id="def_concl_popupCommentaires_form" prependId="false">
+			<!-- historique -->
+			<h3><h:outputFormat value="#{resourceBundle['editEssai.onglet.recherche.commentaires.historique']}" /></h3>
+			<fieldset>
+				<p:outputPanel id="def_concl_popupCommentaires_outp_listeCommentaires" style="display:block;margin-top:10px;">
+					<p:panel styleClass="popupScrollable" style="margin-bottom:10px">
+			 			<div align="center">
+							<h:panelGrid columns="2" style="margin-bottom:10px" width="100%">  
+								<p:dataTable id="def_concl_popupCommentaires_dataTable_commentaires" value="#{essaiManager.getList('detailFaisabilite.infosConclusion.commentaires', false)}" var="commentaire" emptyMessage="#{resourceBundle['results.none']}">
+									<p:column id="libelle">
+										<f:facet name="header"><h:outputText value="#{resourceBundle['editEssai.onglet.recherche.commentaires.historique.libelle']}" /></f:facet>
+										<h:outputText value="#{commentaire.libelle}" />
+									</p:column>
+									<p:column id="date">
+										<f:facet name="header"><h:outputText value="#{resourceBundle['editEssai.onglet.recherche.commentaires.historique.date']}" /></f:facet>
+										<h:outputText value="#{commentaire.dateMaj.time}">
+											<f:convertDateTime pattern="#{resourceBundle['date.pattern.withHeures']}"/>
+										</h:outputText>
+									</p:column>
+									<p:column id="auteur">
+										<f:facet name="header"><h:outputText value="#{resourceBundle['editEssai.onglet.recherche.commentaires.historique.auteur']}" /></f:facet>
+										<h:outputText value="#{commentaire.majPar}" />
+									</p:column>
+								</p:dataTable>		            
+							</h:panelGrid>
+						</div>
+					</p:panel>
+				</p:outputPanel>
+			</fieldset>
+			<!-- nouveau commentaire -->
+			<h3><h:outputFormat value="#{resourceBundle['editEssai.onglet.recherche.commentaires.nouveau']}" /></h3>
+			<fieldset>
+				<p:outputPanel id="def_concl_popupCommentaires_outp_libCommentaire" style="display:block;margin-top:10px;">
+					<h:panelGrid columns="1" style="margin-bottom:10px" width="100%">  
+						<h:inputTextarea id="def_concl_popupCom_nouveauComm" 
+							value="#{essaiManager.getCommentaireManager('FAISABILITE_CONCL').libelle}" 
+							rows="#{resourceBundle['textarea.rows.default']}" />
+					</h:panelGrid>
+				</p:outputPanel>
+			</fieldset>
+			<div class="popupButton">
+				<p:commandButton value="#{resourceBundle['btn.ajouter']}" 
+					actionListener="#{essaiManager.ajouterCommentaire(enumManager.getEnumValue('TypeCommentaireEssai','FAISABILITE_CONCL'))}"
+					update="def_concl_pannelCommentaires, def_concl_popupCommentaires_outp_libCommentaire, def_concl_popupCommentaires_outp_listeCommentaires"
+					oncomplete="popupCommentairesFaisabConcl.hide();" />
+       			<p:commandButton value="#{resourceBundle['btn.fermer']}" oncomplete="popupCommentairesFaisabConcl.hide();"/>
+       		</div>   
+		</h:form>
+	</p:dialog>
+	
+	<!-- Boite de dialogue pour l'historique des commentaires d'achats de produits -->
+	<p:dialog header="#{resourceBundle['editEssai.onglet.faisab.etude.commentairesAchatsPUI']}" widgetVar="popupCommentairesFaisabAchatsPduits" 
+		styleClass="essaiTabPopup popupCommWithHisto"
+		resizable="true" modal="true" 
+		width="#{resourceBundle['popup.comments.withHisto.width']}">    
+
+		<h:form id="def_achatsPduits_popupCommentaires_form" prependId="false">
+			<!-- historique -->
+			<h3><h:outputFormat value="#{resourceBundle['editEssai.onglet.recherche.commentaires.historique']}" /></h3>
+			<fieldset>
+				<p:outputPanel id="def_achatsPduits_popupCommentaires_outp_listeCommentaires" style="display:block;margin-top:10px;">
+					<p:panel styleClass="popupScrollable" style="margin-bottom:10px">
+			 			<div align="center">
+							<h:panelGrid columns="2" style="margin-bottom:10px" width="100%">  
+								<p:dataTable id="def_achatsPduits_popupCommentaires_dataTable_commentaires" value="#{essaiManager.getList('detailFaisabilite.infosEtude.commentairesAchatsPUI', false)}" var="commentaire" emptyMessage="#{resourceBundle['results.none']}">
+									<p:column id="libelle">
+										<f:facet name="header"><h:outputText value="#{resourceBundle['editEssai.onglet.recherche.commentaires.historique.libelle']}" /></f:facet>
+										<h:outputText value="#{commentaire.libelle}" />
+									</p:column>
+									<p:column id="date">
+										<f:facet name="header">#{resourceBundle['editEssai.onglet.recherche.commentaires.historique.date']}</f:facet>
+										<h:outputText value="#{commentaire.dateMaj.time}">
+											<f:convertDateTime pattern="#{resourceBundle['date.pattern.withHeures']}"/>
+										</h:outputText>
+									</p:column>
+									<p:column id="auteur">
+										<f:facet name="header"><h:outputText value="#{resourceBundle['editEssai.onglet.recherche.commentaires.historique.auteur']}" /></f:facet>
+										<h:outputText value="#{commentaire.majPar}" />
+									</p:column>
+								</p:dataTable>		            
+							</h:panelGrid>
+						</div>
+					</p:panel>
+				</p:outputPanel>
+			</fieldset>
+			<!-- nouveau commentaire -->
+			<h3><h:outputFormat value="#{resourceBundle['editEssai.onglet.recherche.commentaires.nouveau']}" /></h3>
+			<fieldset>
+				<p:outputPanel id="def_achatsPduits_popupCommentaires_outp_libCommentaire" style="display:block;margin-top:10px;">
+					<h:panelGrid columns="1" style="margin-bottom:10px" width="100%">  
+						<h:inputTextarea id="def_achatsPduits_popupCom_nouveauComm" 
+							value="#{essaiManager.getCommentaireManager('FAISABILITE_ACHAT_PROD').libelle}" 
+							rows="#{resourceBundle['textarea.rows.default']}" />
+					</h:panelGrid>
+				</p:outputPanel>
+			</fieldset>
+			<div class="popupButton">
+				<p:commandButton value="#{resourceBundle['btn.ajouter']}" 
+					actionListener="#{essaiManager.ajouterCommentaire(enumManager.getEnumValue('TypeCommentaireEssai','FAISABILITE_ACHAT_PROD'))}"
+					update="def_panel_detail_bloc2_pannelCommentaires, def_achatsPduits_popupCommentaires_outp_libCommentaire, def_achatsPduits_popupCommentaires_outp_listeCommentaires"
+					oncomplete="popupCommentairesFaisabAchatsPduits.hide();" />
+       			<p:commandButton value="#{resourceBundle['btn.fermer']}" oncomplete="popupCommentairesFaisabAchatsPduits.hide();"/>
+       		</div>   
+		</h:form>
+	</p:dialog>
+	
+	<!-- Boite de dialogue pour l'historique des commentaires de distribution des produits -->
+	<p:dialog header="#{resourceBundle['editEssai.onglet.faisab.etude.commentairesDistrib']}" widgetVar="popupCommentairesFaisabDistrib" 
+		styleClass="essaiTabPopup popupCommWithHisto"
+		resizable="true" modal="true" 
+		width="#{resourceBundle['popup.comments.withHisto.width']}">  
+
+		<h:form id="def_distrib_popupCommentaires_form" prependId="false">
+			<!-- historique -->
+			<h3><h:outputFormat value="#{resourceBundle['editEssai.onglet.recherche.commentaires.historique']}" /></h3>
+			<fieldset>
+				<p:outputPanel id="def_distrib_popupCommentaires_outp_listeCommentaires" style="display:block;margin-top:10px;">
+					<p:panel styleClass="popupScrollable" style="margin-bottom:10px">
+			 			<div align="center">
+							<h:panelGrid columns="2" style="margin-bottom:10px" width="100%">  
+								<p:dataTable id="def_distrib_popupCommentaires_dataTable_commentaires" value="#{essaiManager.getList('detailFaisabilite.infosEtude.commentairesDistribAutresPharma', false)}" var="commentaire" emptyMessage="#{resourceBundle['results.none']}">
+									<p:column id="libelle">
+										<f:facet name="header"><h:outputText value="#{resourceBundle['editEssai.onglet.recherche.commentaires.historique.libelle']}" /></f:facet>
+										<h:outputText value="#{commentaire.libelle}" />
+									</p:column>
+									<p:column id="date">
+										<f:facet name="header"><h:outputText value="#{resourceBundle['editEssai.onglet.recherche.commentaires.historique.date']}" /></f:facet>
+										<h:outputText value="#{commentaire.dateMaj.time}">
+											<f:convertDateTime pattern="#{resourceBundle['date.pattern.withHeures']}"/>
+										</h:outputText>
+									</p:column>
+									<p:column id="auteur">
+										<f:facet name="header"><h:outputText value="#{resourceBundle['editEssai.onglet.recherche.commentaires.historique.auteur']}" /></f:facet>
+										<h:outputText value="#{commentaire.majPar}" />
+									</p:column>
+								</p:dataTable>		            
+							</h:panelGrid>
+						</div>
+					</p:panel>
+				</p:outputPanel>
+			</fieldset>
+			<!-- nouveau commentaire -->
+			<h3><h:outputFormat value="#{resourceBundle['editEssai.onglet.recherche.commentaires.nouveau']}" /></h3>
+			<fieldset>
+				<p:outputPanel id="def_distrib_popupCommentaires_outp_libCommentaire" style="display:block;margin-top:10px;">
+					<h:panelGrid columns="1" style="margin-bottom:10px" width="100%">
+						<h:inputTextarea id="def_distrib_popupCom_nouveauComm" 
+							value="#{essaiManager.getCommentaireManager('FAISABILITE_DISTRIB_PHARMA').libelle}" 
+							rows="#{resourceBundle['textarea.rows.default']}" />
+					</h:panelGrid>
+				</p:outputPanel>
+			</fieldset>
+			<div class="popupButton">
+				<p:commandButton value="#{resourceBundle['btn.ajouter']}" 
+					actionListener="#{essaiManager.ajouterCommentaire(enumManager.getEnumValue('TypeCommentaireEssai','FAISABILITE_DISTRIB_PHARMA'))}"
+					update="def_panel_detail_bloc6_pannelCommentaires, def_distrib_popupCommentaires_outp_libCommentaire, def_distrib_popupCommentaires_outp_listeCommentaires"
+					oncomplete="popupCommentairesFaisabDistrib.hide();" />
+       			<p:commandButton value="#{resourceBundle['btn.fermer']}" oncomplete="popupCommentairesFaisabDistrib.hide();"/>
+       		</div>   
+		</h:form>
+	</p:dialog>
+	
+	<!-- Boite de dialogue pour l'historique des commentaires globaux de l'etude -->
+	<p:dialog header="#{resourceBundle['editEssai.onglet.faisab.etude.commentaires']}" widgetVar="popupCommentairesFaisabGlobal" 
+		styleClass="essaiTabPopup popupCommWithHisto"
+		resizable="true" modal="true" 
+		width="#{resourceBundle['popup.comments.withHisto.width']}">  
+
+		<h:form id="def_global_popupCommentaires_form" prependId="false">
+			<!-- historique -->
+			<h3><h:outputFormat value="#{resourceBundle['editEssai.onglet.recherche.commentaires.historique']}" /></h3>
+			<fieldset>
+				<p:outputPanel id="def_global_popupCommentaires_outp_listeCommentaires" style="display:block;margin-top:10px;">
+					<p:panel styleClass="popupScrollable" style="margin-bottom:10px">
+			 			<div align="center">
+							<h:panelGrid columns="2" style="margin-bottom:10px" width="100%">  
+								<p:dataTable id="def_global_popupCommentaires_dataTable_commentaires" value="#{essaiManager.getList('detailFaisabilite.infosEtude.commentaires', false)}" var="commentaire" emptyMessage="#{resourceBundle['results.none']}">
+									<p:column id="libelle">
+										<f:facet name="header"><h:outputText value="#{resourceBundle['editEssai.onglet.recherche.commentaires.historique.libelle']}" /></f:facet>
+										<h:outputText value="#{commentaire.libelle}" />
+									</p:column>
+									<p:column id="date">
+										<f:facet name="header"><h:outputText value="#{resourceBundle['editEssai.onglet.recherche.commentaires.historique.date']}" /></f:facet>
+										<h:outputText value="#{commentaire.dateMaj.time}">
+											<f:convertDateTime pattern="#{resourceBundle['date.pattern.withHeures']}"/>
+										</h:outputText>
+									</p:column>
+									<p:column id="auteur">
+										<f:facet name="header">#{resourceBundle['editEssai.onglet.recherche.commentaires.historique.auteur']}</f:facet>
+										<h:outputText value="#{commentaire.majPar}" />
+									</p:column>
+								</p:dataTable>		            
+							</h:panelGrid>
+						</div>
+					</p:panel>
+				</p:outputPanel>
+			</fieldset>
+			<!-- nouveau commentaire -->
+			<h3><h:outputFormat value="#{resourceBundle['editEssai.onglet.recherche.commentaires.nouveau']}" /></h3>
+			<fieldset>
+				<p:outputPanel id="def_global_popupCommentaires_outp_libCommentaire" style="display:block;margin-top:10px;">
+					<h:panelGrid columns="1" style="margin-bottom:10px" width="100%">
+						<h:inputTextarea id="def_global_popupCom_nouveauComm" 
+							value="#{essaiManager.getCommentaireManager('FAISABILITE_ETUDE').libelle}" 
+							rows="#{resourceBundle['textarea.rows.default']}" />
+					</h:panelGrid>
+				</p:outputPanel>
+			</fieldset>
+			<div class="popupButton">
+				<p:commandButton value="#{resourceBundle['btn.ajouter']}" 
+					actionListener="#{essaiManager.ajouterCommentaire(enumManager.getEnumValue('TypeCommentaireEssai','FAISABILITE_ETUDE'))}"
+					update="def_panel_detail_bloc7_pannelCommentaires, def_global_popupCommentaires_outp_libCommentaire, def_global_popupCommentaires_outp_listeCommentaires"
+					oncomplete="popupCommentairesFaisabGlobal.hide();" />
+       			<p:commandButton value="#{resourceBundle['btn.fermer']}" oncomplete="popupCommentairesFaisabGlobal.hide();"/>
+       		</div>   
+		</h:form>
+	</p:dialog>
+
+	
+	<!-- Popup de selection des services -->
+	 <p:dialog header="#{resourceBundle['editEssai.common.selectionServices']}" widgetVar="popupDefService" styleClass="essaiTabPopup" resizable="true" modal="true" width="500">  
+	     <h:form id="def_popupServices_form">
+	     	<p:panel styleClass="popupScrollable" style="margin-bottom:10px">
+	 			<div align="center">
+		         <h:panelGrid columns="2" styleClass="panelGridScrollable" style="margin-bottom:10px" width="100%">  
+		    		<p:dataTable id="def_services" value="#{servicesEssaiFaisabManager.beans}" var="service" emptyMessage="#{resourceBundle['results.none']}">
+		    			<p:column id="nom" style="width:90%">
+		    				<f:facet name="header"><h:outputText value="#{resourceBundle['gestionService.nom']}" /></f:facet>
+		    				<h:outputText value="#{service.bean.nom}" />
+		    			</p:column>
+		    			<p:column style="width:10%">
+		    				<h:selectBooleanCheckbox value="#{service.selected}"/>
+		    			</p:column> 
+		    		</p:dataTable>		            
+		         </h:panelGrid>
+		       	</div>
+	      	</p:panel>
+	      	<div class="popupButton">
+	         	<p:commandButton value="#{resourceBundle['btn.valider']}" update="def_det_resultsServices" actionListener="#{beanManagerHelper.updateSelectedWrapped(essaiManager.bean.detailFaisabilite.infosEtude.servicesImputation , servicesEssaiFaisabManager.beans)}" oncomplete="popupDefService.hide();"/>
+	        </div>  
+	     </h:form>  
+	 </p:dialog>
+</ui:composition>

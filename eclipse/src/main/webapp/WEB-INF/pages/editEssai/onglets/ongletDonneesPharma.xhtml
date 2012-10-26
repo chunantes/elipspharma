@@ -1,0 +1,768 @@
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:p="http://primefaces.prime.com.tr/ui"
+	xmlns:c="http://java.sun.com/jsp/jstl/core"
+	xmlns:sf="http://www.springframework.org/tags/faces">
+
+	<c:set var="idOnglet_pharma">ONG_DATA_PHARMA</c:set>
+	<c:set var="detailDonneesPharma"
+		value="#{essaiManager.bean.detailDonneesPharma}" />
+	<input type="hidden" id="currentView" name="currentView"
+		value="#{idOnglet_pharma}" />
+
+	<p:focus context="panel_identite" />
+
+	<p:panel  id="panel_identite"
+		header="#{resourceBundle['editEssai.onglet.pharma.generale.title']}"
+		collapsed="false" closable="false">
+		<!--  Informations generales -->
+		<h:panelGrid columns="4"
+			columnClasses="panelCol_25, panelCol_25, panelCol_25, panelCol_25">
+	
+			<!-- Type de produit evalue -->
+			<h:outputLabel id="labelTypeProduitEvalue" for="type_produit_evalue"
+				value="#{resourceBundle['editEssai.onglet.pharma.type']}" />
+			<h:selectOneMenu id="type_produit_evalue"
+				value="#{detailDonneesPharma.infosGenerales.typeProduitEvalue}">
+				<f:selectItem noSelectionOption="true" />
+				<f:selectItems value="#{enumManager.getValues('TypeProduit')}" />
+			</h:selectOneMenu>
+	
+			<!-- Nombre de centres prevus -->
+			<h:outputLabel id="labelNbCentres" for="nb_centres_prevus"
+				value="#{resourceBundle['editEssai.onglet.pharma.nbCentres']}" />
+			<h:inputText id="nb_centres_prevus"
+				value="#{detailDonneesPharma.infosGenerales.nbCentresPrevus}"
+				converterMessage="#{resourceBundle['essai.detailPharma.nbCentres.invalid_type']}" />
+				
+			
+			<!-- Nombre de patients prevus Local -->
+			<h:outputLabel id="labelNbPatients" for="nb_patients_prevus"
+				value="#{resourceBundle['editEssai.onglet.pharma.nbPatients']}" />
+			<h:inputText id="nb_patients_prevus"
+				value="#{detailDonneesPharma.infosGenerales.nbPatientsPrevus}"
+				converterMessage="#{resourceBundle['essai.detailPharma.nbPatients.invalid_type']}" />	
+	
+			<!-- Nombre de patients prevus Total -->
+			<h:outputLabel id="labelNbPatientsTotal" for="nb_patients_prevus_total"
+				value="#{resourceBundle['editEssai.onglet.pharma.nbPatientsTotal']}" />
+			<h:inputText id="nb_patients_prevus_total"
+				value="#{detailDonneesPharma.infosGenerales.nbPatientsPrevusTotal}"
+				converterMessage="#{resourceBundle['essai.detailPharma.nbPatients.invalid_type']}" />	
+	
+	
+			<!-- Qualite de l'insu -->
+			<h:outputLabel id="labelQualiteInsu" for="qualite_insu"
+				value="#{resourceBundle['editEssai.onglet.pharma.qualiteInsu']}" />
+			<h:selectOneMenu id="qualite_insu"
+				value="#{detailDonneesPharma.infosGenerales.qualiteInsu}">
+				<f:selectItem noSelectionOption="true" />
+				<f:selectItems value="#{enumManager.getValues('QualiteInsu')}" />
+			</h:selectOneMenu>
+			
+			<!-- Numero du centre -->
+			<h:outputLabel id="labelNumCentre" for="numCentre"
+				value="#{resourceBundle['editEssai.onglet.pharma.numeroCentre']}" />
+			<h:inputText id="numCentre"
+				value="#{detailDonneesPharma.infosGenerales.numeroCentre}" />	
+	
+			<!-- Responsabilite de la levee d'insu -->
+			<h:outputLabel id="labelResponsabiliteLeveInsu"
+				for="responsabilite_insu"
+				value="#{resourceBundle['editEssai.onglet.pharma.responsabiliteInsu']}" />
+			<h:selectOneMenu id="responsabilite_insu"
+				value="#{detailDonneesPharma.infosComplementaires.responsabiliteInsu}">
+				<f:selectItem noSelectionOption="true" />
+				<f:selectItem
+					value="#{enumManager.getEnumValueAsSelectItem('Responsabilite', 'INVESTIGATEUR')}" />
+				<f:selectItem
+					value="#{enumManager.getEnumValueAsSelectItem('Responsabilite', 'PHARMACIE')}" />
+				<f:ajax render="fichier_resp_insu" />
+			</h:selectOneMenu>
+
+			<h:panelGroup />
+			<h:panelGroup id="fichier_resp_insu">
+				<p:outputPanel id="resp_insu_doc"
+					rendered="#{detailDonneesPharma.infosComplementaires.responsabiliteInsu eq 'PHARMACIE' and detailDonneesPharma.essai.id != null}">
+					<c:set var="doc_resp_insu"
+						value="#{detailDonneesPharma.infosComplementaires.documentResponsabiliteInsu}" />
+					<h:panelGrid id="resp_insu_doc_grid" columns="3"
+						columnClasses="panelCol_25, panelCol_25, panelCol_50">
+						<c:if test="#{doc_resp_insu == null }">
+							<p:commandLink id="label_resp_insu_doc" value="#{resourceBundle['document.popupLink.ajouter']}"
+								onclick="popupDocRespInsu.show()" styleClass="clickable"
+								title="#{resourceBundle['document.popupLink.ajouter']}"/>
+						</c:if>
+						<c:if test="#{doc_resp_insu != null}">
+							<h:outputText value="#{doc_resp_insu.nomUtilisateur}"
+								title="#{documentsIhmHelper.buildDocTitle(doc_resp_insu, resourceBundle['document.part1'], resourceBundle['document.part2'], resourceBundle['date.pattern.withHeures'])}" />
+							<p:commandButton value="#{resourceBundle['file.dwd']}"
+								title="#{resourceBundle['file.dwd']}" ajax="false">
+								<p:fileDownload
+									value="#{fileDwdController.downloadDocument(essaiManager.bean, doc_resp_insu)}" />
+							</p:commandButton>
+							<p:commandLink ajax="false"
+								title="#{resourceBundle['document.del']}"
+								actionListener="#{essaiManager.supprimerDocument(enumManager.getEnumValue('TypeDocumentEssai','RESPONSABILITE_INSU'))}">
+								<h:graphicImage library="images" name="del.gif" />
+							</p:commandLink>
+						</c:if>
+					</h:panelGrid>
+				</p:outputPanel>
+			</h:panelGroup>
+			
+	
+			<!-- Duree initiale prevue -->
+			<h:outputLabel id="labelDureePrevue" for="duree_prevue"
+				value="#{resourceBundle['editEssai.onglet.pharma.duree']}" />
+				
+			<h:panelGrid columns="2" columnClasses="panelCol_50, panelCol_50">	
+				<h:inputText id="duree_prevue"
+					value="#{detailDonneesPharma.infosGenerales.dureeTotalePrevue}"
+					converterMessage="#{resourceBundle['essai.detailPharma.duree.invalid_type']}" />
+				<h:selectOneMenu id="uniteTempsTotal" style="width:82%;"
+					value="#{detailDonneesPharma.infosGenerales.uniteDureeTotalePrevue}">
+					<f:selectItem noSelectionOption="true" />
+					<f:selectItems
+						value="#{enumManager.getValues('UniteTempsPrevision')}" />
+				</h:selectOneMenu>	
+			</h:panelGrid>
+			<!-- Duree totale par patient -->
+			<h:outputLabel id="labelDureePatient" for="duree_patient_prevue"
+				value="#{resourceBundle['editEssai.onglet.pharma.duree.patient']}" />
+				
+				
+			<h:panelGrid columns="2" columnClasses="panelCol_50, panelCol_50">	
+				<h:inputText id="duree_patient_prevue"
+					value="#{detailDonneesPharma.infosGenerales.dureeTotalePatientPrevue}"
+					converterMessage="#{resourceBundle['essai.detailPharma.duree.patient.invalid_type']}" />
+				<h:selectOneMenu id="uniteTempsPatientTotal" style="width:82%;"
+					value="#{detailDonneesPharma.infosGenerales.uniteDureeTotalePatientPrevue}">
+					<f:selectItem noSelectionOption="true" />
+					<f:selectItems
+						value="#{enumManager.getValues('UniteTempsPrevision')}" />
+				</h:selectOneMenu>	
+			</h:panelGrid> 
+		
+				
+			<!-- Responsabilite de la randomisation -->
+			<h:outputLabel id="labelResponsabiliteRandomisation"
+				for="responsabilite_randomisation"
+				value="#{resourceBundle['editEssai.onglet.pharma.responsabiliteRandomisation']}" />
+			<h:selectOneMenu id="responsabilite_randomisation"
+				value="#{detailDonneesPharma.infosComplementaires.responsabiliteRandomisation}">
+				<f:selectItem noSelectionOption="true" />
+				<f:selectItem
+					value="#{enumManager.getEnumValueAsSelectItem('Responsabilite', 'INVESTIGATEUR')}" />
+				<f:selectItem
+					value="#{enumManager.getEnumValueAsSelectItem('Responsabilite', 'PHARMACIE')}" />
+				<f:selectItem
+					value="#{enumManager.getEnumValueAsSelectItem('Responsabilite', 'PROMOTEUR')}" />
+				<f:ajax render="fichier_resp_rando" />
+			</h:selectOneMenu>
+
+			<h:panelGroup />
+			<h:panelGroup id="fichier_resp_rando">
+				<p:outputPanel id="resp_rando_doc"
+					rendered="#{detailDonneesPharma.infosComplementaires.responsabiliteRandomisation eq 'PHARMACIE' and detailDonneesPharma.essai.id != null}">
+					<c:set var="doc_resp_rando"
+						value="#{detailDonneesPharma.infosComplementaires.documentResponsabiliteRandomisation}" />
+					<h:panelGrid id="resp_rando_doc_grid" columns="3"
+						columnClasses="panelCol_25, panelCol_25, panelCol_50">
+						<c:if test="#{doc_resp_rando == null }">
+							<p:commandLink id="label_resp_rando_doc"
+								value="#{resourceBundle['document.popupLink.ajouter']}" onclick="popupDocRespRando.show()"
+								styleClass="clickable"
+								title="#{resourceBundle['document.popupLink.ajouter']}"/>
+						</c:if>
+						<c:if test="#{doc_resp_rando != null}">
+							<h:outputText value="#{doc_resp_rando.nomUtilisateur}"
+								title="#{documentsIhmHelper.buildDocTitle(doc_resp_rando, resourceBundle['document.part1'], resourceBundle['document.part2'], resourceBundle['date.pattern.withHeures'])}" />
+							<p:commandButton value="#{resourceBundle['file.dwd']}"
+								title="#{resourceBundle['file.dwd']}" ajax="false">
+								<p:fileDownload
+									value="#{fileDwdController.downloadDocument(essaiManager.bean, doc_resp_rando)}" />
+							</p:commandButton>
+							<p:commandLink ajax="false"
+								title="#{resourceBundle['document.del']}"
+								actionListener="#{essaiManager.supprimerDocument(enumManager.getEnumValue('TypeDocumentEssai','RESPONSABILITE_RANDOMISATION'))}">
+								<h:graphicImage library="images" name="del.gif" />
+							</p:commandLink>
+						</c:if>
+					</h:panelGrid>
+				</p:outputPanel>
+			</h:panelGroup>	
+	
+		</h:panelGrid>
+	</p:panel>
+	<!-- Panneau PUI -->
+	<p:panel id="panel_pharma_pui"
+		header="#{resourceBundle['editEssai.onglet.pharma.pui.title']}"
+		collapsed="false" closable="false">
+
+		<h:panelGrid columns="4"
+			columnClasses="panelCol_25, panelCol_25, panelCol_25, panelCol_25">
+
+		
+
+
+			<!-- Liste des pharmacies associees -->
+			<h:outputLabel id="labelPharmacies" for="pharamcies"
+				value="#{resourceBundle['editEssai.onglet.pharma.pharmacies']}" />
+			<p:outputPanel id="resultsPharmacies"
+				style="display:block;margin-top:10px;">
+				<p:dataTable id="pharamcies"
+					value="#{essaiManager.getList('detailDonneesPharma.pharmacies', false)}"
+					var="pharmacie" emptyMessage="#{resourceBundle['results.none']}">
+					<p:column id="nom">
+						<f:facet name="header">
+							<h:outputLink value="javascript:void(0)"
+								onclick="popupPharmacies.show()">#{resourceBundle['editEssai.onglet.pharma.selectionPharmacies']}</h:outputLink>
+						</f:facet>
+						<h:outputText value="#{pharmacie.nom}" />
+					</p:column>
+				</p:dataTable>
+			</p:outputPanel>
+			<h:panelGroup />
+			<h:panelGroup />
+			
+			
+				<!-- Formation specifique a l'essai -->
+			<h:outputLabel id="LabelFormationSpecifique"
+				for="formation_specifique"
+				value="#{resourceBundle['editEssai.onglet.pharma.formation']}" />
+			<h:selectOneRadio id="formation_specifique"
+				value="#{detailDonneesPharma.formationSpecifique}"
+				styleClass="selectRadio">
+				<f:selectItem itemLabel="#{resourceBundle['boolean.oui']}"
+					itemValue="true" itemDescription="#{resourceBundle['boolean.oui']}" />
+				<f:selectItem itemLabel="#{resourceBundle['boolean.non']}"
+					itemValue="false"
+					itemDescription="#{resourceBundle['boolean.non']}" />
+			</h:selectOneRadio>
+			<h:panelGroup />
+			<h:panelGroup />
+			
+		</h:panelGrid>
+	</p:panel>
+
+	<!-- Panneau Informations complementaire -->
+	<p:panel id="panel_pharma_info_comp"
+		header="#{resourceBundle['editEssai.onglet.pharma.infosComplementaires.title']}"
+		collapsed="false" closable="false">
+		
+		<h:panelGrid columns="4"
+			columnClasses="panelCol_25, panelCol_25, panelCol_25, panelCol_25">
+		
+			<!-- Responsabilite de commande -->
+			<h:outputLabel id="labelResponsabiliteCommande"
+				for="responsabilite_commande"
+				value="#{resourceBundle['editEssai.onglet.pharma.responsabiliteCommande']}" />
+			<h:selectOneMenu id="responsabilite_commande"
+				value="#{detailDonneesPharma.infosComplementaires.responsabiliteCommande}">
+				<f:selectItem noSelectionOption="true" />
+				<f:selectItem
+					value="#{enumManager.getEnumValueAsSelectItem('Responsabilite', 'INVESTIGATEUR')}" />
+				<f:selectItem
+					value="#{enumManager.getEnumValueAsSelectItem('Responsabilite', 'PHARMACIE')}" />
+				<f:selectItem
+					value="#{enumManager.getEnumValueAsSelectItem('Responsabilite', 'PROMOTEUR')}" />
+				<f:ajax render="fichier_resp_cmd" />
+			</h:selectOneMenu>
+			<h:panelGroup />
+			<h:panelGroup id="fichier_resp_cmd">
+				<p:outputPanel id="resp_cmd_doc"
+					rendered="#{detailDonneesPharma.infosComplementaires.responsabiliteCommande eq 'PHARMACIE' and detailDonneesPharma.essai.id != null}">
+					<c:set var="doc_resp_cmd"
+						value="#{detailDonneesPharma.infosComplementaires.documentResponsabiliteCommande}" />
+					<h:panelGrid id="resp_cmd_doc_grid" columns="3"
+						columnClasses="panelCol_25, panelCol_25, panelCol_50">
+						<c:if test="#{doc_resp_cmd == null }">
+							<p:commandLink id="label_resp_cmd_doc" value="#{resourceBundle['document.popupLink.ajouter']}"
+								onclick="popupDocRespCmd.show()" styleClass="clickable"
+								title="#{resourceBundle['document.popupLink.ajouter']}"/>
+						</c:if>
+						<c:if test="#{doc_resp_cmd != null}">
+							<h:outputText value="#{doc_resp_cmd.nomUtilisateur}"
+								title="#{documentsIhmHelper.buildDocTitle(doc_resp_cmd, resourceBundle['document.part1'], resourceBundle['document.part2'], resourceBundle['date.pattern.withHeures'])}" />
+							<p:commandButton value="#{resourceBundle['file.dwd']}"
+								title="#{resourceBundle['file.dwd']}" ajax="false">
+								<p:fileDownload
+									value="#{fileDwdController.downloadDocument(essaiManager.bean, doc_resp_cmd)}" />
+							</p:commandButton>
+							<p:commandLink ajax="false"
+								title="#{resourceBundle['document.del']}"
+								actionListener="#{essaiManager.supprimerDocument(enumManager.getEnumValue('TypeDocumentEssai','RESPONSABILITE_COMMANDE'))}">
+								<h:graphicImage library="images" name="del.gif" />
+							</p:commandLink>
+						</c:if>
+					</h:panelGrid>
+				</p:outputPanel>
+			</h:panelGroup>
+		
+		</h:panelGrid>
+		
+		<!-- Modalite de reception -->
+		<h:panelGrid columns="3"
+			columnClasses="panelCol_25, panelCol_50, panelCol_25">
+			<h:outputLabel id="labelModalite" for="modalite"
+				value="#{resourceBundle['editEssai.onglet.pharma.modalite']}" />
+			<h:inputTextarea id="modalite"
+				value="#{detailDonneesPharma.infosComplementaires.modaliteReception}"
+				rows="#{resourceBundle['textarea.rows.default']}" />
+
+			<h:panelGroup id="fichier_mod_rec">
+				<p:outputPanel id="mod_rec_doc"
+					rendered="#{detailDonneesPharma.essai.id != null}">
+					<c:set var="doc_mod_rec"
+						value="#{detailDonneesPharma.infosComplementaires.documentModaliteReception}" />
+					<h:panelGrid id="mod_rec_doc_grid" columns="3"
+						columnClasses="panelCol_25, panelCol_25, panelCol_50">
+						<c:if test="#{doc_mod_rec == null }">
+							<p:commandLink id="label_mod_rec_doc" value="#{resourceBundle['document.popupLink.ajouter']}"
+								onclick="popupDocModRec.show()" styleClass="clickable"
+								title="#{resourceBundle['document.popupLink.ajouter']}"/>
+						</c:if>
+						<c:if test="#{doc_mod_rec != null}">
+							<h:outputText value="#{doc_mod_rec.nomUtilisateur}"
+								title="#{documentsIhmHelper.buildDocTitle(doc_mod_rec, resourceBundle['document.part1'], resourceBundle['document.part2'], resourceBundle['date.pattern.withHeures'])}" />
+							<p:commandButton value="#{resourceBundle['file.dwd']}"
+								title="#{resourceBundle['file.dwd']}" ajax="false">
+								<p:fileDownload
+									value="#{fileDwdController.downloadDocument(essaiManager.bean, doc_mod_rec)}" />
+							</p:commandButton>
+							<p:commandLink ajax="false"
+								title="#{resourceBundle['document.del']}"
+								actionListener="#{essaiManager.supprimerDocument(enumManager.getEnumValue('TypeDocumentEssai','MODALITE_RECEPTION'))}">
+								<h:graphicImage library="images" name="del.gif" />
+							</p:commandLink>
+						</c:if>
+					</h:panelGrid>
+				</p:outputPanel>
+			</h:panelGroup>
+		</h:panelGrid>
+
+		<h:panelGrid columns="4"
+			columnClasses="panelCol_25, panelCol_25, panelCol_25, panelCol_25">
+
+
+			<!-- Envoi de traitement a d'autres PUI -->
+			<h:outputLabel id="labelEnvoiTraitement" for="envoi_traitement"
+				value="#{resourceBundle['editEssai.onglet.pharma.envoiTraitement']}" />
+			<h:selectOneRadio id="envoi_traitement"
+				value="#{detailDonneesPharma.infosComplementaires.envoisTraitement}"
+				styleClass="selectRadio">
+				<f:selectItem itemLabel="#{resourceBundle['boolean.oui']}"
+					itemValue="true" itemDescription="#{resourceBundle['boolean.oui']}" />
+				<f:selectItem itemLabel="#{resourceBundle['boolean.non']}"
+					itemValue="false"
+					itemDescription="#{resourceBundle['boolean.non']}" />
+				<f:ajax render="panelEtab" listener="#{detailDonneesPharma.etablissements.clear()}" />
+			</h:selectOneRadio>
+			<h:panelGroup />
+			<h:panelGroup />
+		</h:panelGrid>
+	
+		<p:outputPanel id="panelEtab">
+			<h:panelGrid columns="4"
+			columnClasses="panelCol_25, panelCol_25, panelCol_25, panelCol_25">
+				<!-- Liste des etab pour cessions -->
+				<h:outputLabel id="labelEtab" for="etabs" 
+					rendered="#{detailDonneesPharma.infosComplementaires.envoisTraitement}"
+					value="#{resourceBundle['editEssai.onglet.pharma.etablissements']}" />
+				<p:outputPanel id="resultsEtablissements"
+					rendered="#{detailDonneesPharma.infosComplementaires.envoisTraitement}"
+					style="display:block;margin-top:10px;">
+					<p:dataTable id="etabs"
+						value="#{essaiManager.getList('detailDonneesPharma.etablissements', false)}"
+						var="etablissement" emptyMessage="#{resourceBundle['results.none']}">
+						<p:column id="nom">
+							<f:facet name="header">
+								<h:outputLink value="javascript:void(0)"
+									onclick="popupEtablissements.show()">#{resourceBundle['editEssai.onglet.pharma.selectionEtablissement']}</h:outputLink>
+							</f:facet>
+							<h:outputText value="#{etablissement.nom}" />
+						</p:column>
+					</p:dataTable>
+				</p:outputPanel>
+				
+				<h:panelGroup />
+				<h:panelGroup />
+			</h:panelGrid>
+		</p:outputPanel>
+	
+		<h:panelGrid columns="4"
+			columnClasses="panelCol_25, panelCol_25, panelCol_25, panelCol_25">
+			<!-- Gestion des retours -->
+			<h:outputLabel id="labelGestionRetours" for="gestion_retours"
+				value="#{resourceBundle['editEssai.onglet.pharma.gestionRetour']}" />
+			<h:selectOneMenu id="gestion_retours"
+				value="#{detailDonneesPharma.infosComplementaires.gestionRetour}">
+				<f:selectItem noSelectionOption="true" />
+				<f:selectItem
+					value="#{enumManager.getEnumValueAsSelectItem('Responsabilite', 'PHARMACIE')}" />
+				<f:selectItem
+					value="#{enumManager.getEnumValueAsSelectItem('Responsabilite', 'SERVICE')}" />
+				<f:ajax render="panelGestionRetour" />
+			</h:selectOneMenu>
+
+			<p:outputPanel id="panelGestionRetour">
+				<h:selectOneMenu id="destruction_retours"
+					rendered="#{detailDonneesPharma.infosComplementaires.gestionRetour eq 'PHARMACIE'}"
+					value="#{detailDonneesPharma.infosComplementaires.typeRetour}">
+					<f:selectItem noSelectionOption="true" />
+					<f:selectItem
+						value="#{enumManager.getEnumValueAsSelectItem('TypeMvtStock', 'RETOUR_PROMOTEUR')}" />
+					<f:selectItem
+						value="#{enumManager.getEnumValueAsSelectItem('TypeMvtStock', 'DESTRUCTION')}" />
+				</h:selectOneMenu>
+				<h:panelGroup
+					rendered="#{not(detailDonneesPharma.infosComplementaires.gestionRetour eq 'PHARMACIE') }" />
+
+			</p:outputPanel>
+			<h:panelGroup />
+
+
+			
+		</h:panelGrid>
+		
+		<!-- Modalite de destruction -->
+		<h:panelGrid columns="3"
+			columnClasses="panelCol_25, panelCol_50, panelCol_25">
+			<h:outputLabel id="labelModaliteDestruction" for="modaliteDestruction"
+				value="#{resourceBundle['editEssai.onglet.pharma.modalite.destruction']}" />
+			<h:inputTextarea id="modaliteDestruction"
+				value="#{detailDonneesPharma.infosComplementaires.modaliteDestruction}"
+				rows="#{resourceBundle['textarea.rows.default']}" />
+
+			<h:panelGroup id="fichier_mod_des">
+				<p:outputPanel id="mod_des_d"
+					rendered="#{detailDonneesPharma.essai.id != null}">
+					<c:set var="doc_mod_des"
+						value="#{detailDonneesPharma.infosComplementaires.documentModaliteDestruction}" />
+					<h:panelGrid id="mod_des_doc_grid" columns="3"
+						columnClasses="panelCol_25, panelCol_25, panelCol_50">
+						<c:if test="#{doc_mod_des == null }">
+							<p:commandLink id="label_mod_des_doc" value="#{resourceBundle['document.popupLink.ajouter']}"
+								onclick="popupDocModDes.show()" styleClass="clickable"
+								title="#{resourceBundle['document.popupLink.ajouter']}"/>
+						</c:if>
+						<c:if test="#{doc_mod_des != null}">
+							<h:outputText value="#{doc_mod_des.nomUtilisateur}"
+								title="#{documentsIhmHelper.buildDocTitle(doc_mod_des, resourceBundle['document.part1'], resourceBundle['document.part2'], resourceBundle['date.pattern.withHeures'])}" />
+							<p:commandButton value="#{resourceBundle['file.dwd']}"
+								title="#{resourceBundle['file.dwd']}" ajax="false">
+								<p:fileDownload
+									value="#{fileDwdController.downloadDocument(essaiManager.bean, doc_mod_des)}" />
+							</p:commandButton>
+							<p:commandLink ajax="false"
+								title="#{resourceBundle['document.del']}"
+								actionListener="#{essaiManager.supprimerDocument(enumManager.getEnumValue('TypeDocumentEssai','MODALITE_DESTRUCTION'))}">
+								<h:graphicImage library="images" name="del.gif" />
+							</p:commandLink>
+						</c:if>
+					</h:panelGrid>
+				</p:outputPanel>
+			</h:panelGroup>
+		</h:panelGrid>
+		
+	</p:panel>
+
+	<!-- Panneau Dispensations -->
+	<p:panel id="panel_pharma_info_dispensations"
+		header="#{resourceBundle['editEssai.onglet.pharma.infosDispensation.title']}"
+		collapsed="false" closable="false">
+
+		<h:panelGrid columns="4"
+			columnClasses="panelCol_25, panelCol_25 selectRadio, panelCol_25, panelCol_25">
+
+			<!-- Type de dispensation -->
+			<h:outputLabel id="labelTypeDispensation" for="type_dispensation"
+				value="#{resourceBundle['editEssai.onglet.pharma.typeDispensation']}" />
+			<h:selectOneMenu id="type_dispensation"
+				value="#{detailDonneesPharma.infosDispensations.typeDispensation}">
+				<f:selectItem noSelectionOption="true" />
+				<f:selectItems value="#{enumManager.getValues('TypeDispensation')}" />
+				<f:ajax render="tracabilite_label" />
+				<f:ajax render="tracabilite_select" />
+			</h:selectOneMenu>
+
+			<p:outputPanel id="tracabilite_label">
+				<h:outputLabel id="labelTracabilite" for="tracabilite_obligatoire"
+					value="#{resourceBundle['editEssai.onglet.pharma.tracabiliteObligatoire']}"
+					rendered="#{detailDonneesPharma.infosDispensations.typeDispensation eq 'GLOBALE'}" />
+				<h:panelGroup
+					rendered="#{not(detailDonneesPharma.infosDispensations.typeDispensation eq 'GLOBALE') }" />
+			</p:outputPanel>
+
+			<p:outputPanel id="tracabilite_select">
+				<h:selectOneRadio id="tracabilite_obligatoire"
+					rendered="#{detailDonneesPharma.infosDispensations.typeDispensation eq 'GLOBALE'}"
+					value="#{detailDonneesPharma.infosDispensations.tracabilitePatient}"
+					styleClass="selectRadio">
+					<f:selectItem itemLabel="#{resourceBundle['boolean.oui']}"
+						itemValue="true"
+						itemDescription="#{resourceBundle['boolean.oui']}" />
+					<f:selectItem itemLabel="#{resourceBundle['boolean.non']}"
+						itemValue="false"
+						itemDescription="#{resourceBundle['boolean.non']}" />
+				</h:selectOneRadio>
+				<h:panelGroup
+					rendered="#{not(detailDonneesPharma.infosDispensations.typeDispensation eq 'GLOBALE') }" />
+			</p:outputPanel>
+		</h:panelGrid>	
+			
+		<h:panelGrid columns="2"
+			columnClasses="panelCol_25, panelCol_75 selectRadio">	
+			<!--  Destinataires de la dispensation -->
+			<h:outputLabel id="labelDestinatairesDispensation"
+				value="#{resourceBundle['editEssai.onglet.pharma.destinataireDispensation']}" />
+			<h:panelGroup>
+				<h:selectBooleanCheckbox id="destinataires_dispensation_service"
+					title="#{resourceBundle['editEssai.onglet.pharma.destinataireDispensation.service']}"
+					label="#{resourceBundle['editEssai.onglet.pharma.destinataireDispensation.service']}"
+					value="#{detailDonneesPharma.infosDispensations.destinataireService}" />
+				<h:outputLabel for="destinataires_dispensation_service"
+					style="text-align:left;"
+					value="#{resourceBundle['editEssai.onglet.pharma.destinataireDispensation.service']}" />
+			</h:panelGroup>
+
+			<h:panelGroup />
+			<h:panelGroup>
+				<h:selectBooleanCheckbox id="destinataires_dispensation_patient"
+					title="#{resourceBundle['editEssai.onglet.pharma.destinataireDispensation.patient']}"
+					label="#{resourceBundle['editEssai.onglet.pharma.destinataireDispensation.patient']}"
+					value="#{detailDonneesPharma.infosDispensations.destinatairePatient}" />
+				<h:outputLabel for="destinataires_dispensation_patient"
+					value="#{resourceBundle['editEssai.onglet.pharma.destinataireDispensation.patient']}" />
+			</h:panelGroup>
+			
+			<h:panelGroup />
+			<h:panelGroup>
+				<h:selectBooleanCheckbox
+					title="#{resourceBundle['editEssai.onglet.pharma.destinataireDispensation.investigateur']}"
+					label="#{resourceBundle['editEssai.onglet.pharma.destinataireDispensation.investigateur']}"
+					id="destinataires_dispensation_investigateur"
+					value="#{detailDonneesPharma.infosDispensations.destinataireInvestigateur}" />
+				<h:outputLabel for="destinataires_dispensation_investigateur"
+					value="#{resourceBundle['editEssai.onglet.pharma.destinataireDispensation.investigateur']}" />
+			</h:panelGroup>
+		</h:panelGrid>
+
+		<h:panelGrid columns="3"
+			columnClasses="panelCol_25, panelCol_50, panelCol_25">
+
+			<!-- Numerotation des conditionnements -->
+			<h:outputLabel id="labelNumerotationConditionnement"
+				for="numerotation_conditionnement"
+				value="#{resourceBundle['editEssai.onglet.pharma.numerotationConditionnement']}" />
+			<h:inputTextarea id="numerotation_conditionnement"
+				value="#{detailDonneesPharma.infosDispensations.numerotationConditionnement}"
+				rows="#{resourceBundle['textarea.rows.default']}" />
+			<h:panelGroup id="fichier_num_cond">
+				<p:outputPanel id="num_cond_doc"
+					rendered="#{detailDonneesPharma.essai.id != null}">
+					<c:set var="doc_num_cond"
+						value="#{detailDonneesPharma.infosDispensations.documentNumerotationConditionnement}" />
+					<h:panelGrid id="num_cond_doc_grid" columns="3"
+						columnClasses="panelCol_25, panelCol_25, panelCol_50">
+						<c:if test="#{doc_num_cond == null }">
+							<p:commandLink id="label_num_cond_doc" value="#{resourceBundle['document.popupLink.ajouter']}"
+								onclick="popupDocNumCond.show()" styleClass="clickable"
+								title="#{resourceBundle['document.popupLink.ajouter']}"/>
+						</c:if>
+						<c:if test="#{doc_num_cond != null}">
+							<h:outputText value="#{doc_num_cond.nomUtilisateur}"
+								title="#{documentsIhmHelper.buildDocTitle(doc_num_cond, resourceBundle['document.part1'], resourceBundle['document.part2'], resourceBundle['date.pattern.withHeures'])}" />
+							<p:commandButton value="#{resourceBundle['file.dwd']}"
+								title="#{resourceBundle['file.dwd']}" ajax="false">
+								<p:fileDownload
+									value="#{fileDwdController.downloadDocument(essaiManager.bean, doc_num_cond)}" />
+							</p:commandButton>
+							<p:commandLink ajax="false"
+								title="#{resourceBundle['document.del']}"
+								actionListener="#{essaiManager.supprimerDocument(enumManager.getEnumValue('TypeDocumentEssai','NUMEROTATION_CONDITIONNEMENT'))}">
+								<h:graphicImage library="images" name="del.gif" />
+							</p:commandLink>
+						</c:if>
+					</h:panelGrid>
+				</p:outputPanel>
+			</h:panelGroup>
+
+
+			<!-- Informations sur les conditionnements -->
+			<h:outputLabel id="labelInformationConditionnement"
+				for="information_conditionnement"
+				value="#{resourceBundle['editEssai.onglet.pharma.informationConditionnement']}" />
+			<h:inputTextarea id="information_conditionnement"
+				value="#{detailDonneesPharma.infosDispensations.informationConditionnement}"
+				rows="#{resourceBundle['textarea.rows.default']}" />
+			<h:panelGroup id="fichier_info_cond">
+				<p:outputPanel id="info_cond_doc"
+					rendered="#{detailDonneesPharma.essai.id != null}">
+					<c:set var="doc_info_cond"
+						value="#{detailDonneesPharma.infosDispensations.documentInformationConditionnement}" />
+					<h:panelGrid id="info_cond_doc_grid" columns="3"
+						columnClasses="panelCol_25, panelCol_25, panelCol_50">
+						<c:if test="#{doc_info_cond == null }">
+							<p:commandLink id="label_info_cond_doc" value="#{resourceBundle['document.popupLink.ajouter']}"
+								onclick="popupDocInfoCond.show()" styleClass="clickable"
+								title="#{resourceBundle['document.popupLink.ajouter']}"/>
+						</c:if>
+						<c:if test="#{doc_info_cond != null}">
+							<h:outputText value="#{doc_info_cond.nomUtilisateur}"
+								title="#{documentsIhmHelper.buildDocTitle(doc_info_cond, resourceBundle['document.part1'], resourceBundle['document.part2'], resourceBundle['date.pattern.withHeures'])}" />
+							<p:commandButton value="#{resourceBundle['file.dwd']}"
+								title="#{resourceBundle['file.dwd']}" ajax="false">
+								<p:fileDownload
+									value="#{fileDwdController.downloadDocument(essaiManager.bean, doc_info_cond)}" />
+							</p:commandButton>
+							<p:commandLink ajax="false"
+								title="#{resourceBundle['document.del']}"
+								actionListener="#{essaiManager.supprimerDocument(enumManager.getEnumValue('TypeDocumentEssai','INFORMATION_CONDITIONNEMENT'))}">
+								<h:graphicImage library="images" name="del.gif" />
+							</p:commandLink>
+						</c:if>
+					</h:panelGrid>
+				</p:outputPanel>
+			</h:panelGroup>
+
+
+			<!-- Contre etiquette -->
+			<h:outputLabel id="labelContreEtiquette" for="contre_etiquette"
+				value="#{resourceBundle['editEssai.onglet.pharma.contreEtiquette']}" />
+			<h:inputTextarea id="contre_etiquette"
+				value="#{detailDonneesPharma.infosDispensations.contreEtiquette}"
+				rows="#{resourceBundle['textarea.rows.default']}" />
+			<h:panelGroup id="fichier_contre_et">
+				<p:outputPanel id="contre_et_doc"
+					rendered="#{detailDonneesPharma.essai.id != null}">
+					<c:set var="doc_contre_et"
+						value="#{detailDonneesPharma.infosDispensations.documentContreEtiquette}" />
+					<h:panelGrid id="contre_et_doc_grid" columns="3"
+						columnClasses="panelCol_25, panelCol_25, panelCol_50">
+						<c:if test="#{doc_contre_et == null }">
+							<p:commandLink id="label_contre_et_doc" value="#{resourceBundle['document.popupLink.ajouter']}"
+								onclick="popupDocContreEt.show()" styleClass="clickable"
+								title="#{resourceBundle['document.popupLink.ajouter']}"/>
+						</c:if>
+						<c:if test="#{doc_contre_et != null}">
+							<h:outputText value="#{doc_contre_et.nomUtilisateur}"
+								title="#{documentsIhmHelper.buildDocTitle(doc_contre_et, resourceBundle['document.part1'], resourceBundle['document.part2'], resourceBundle['date.pattern.withHeures'])}" />
+							<p:commandButton value="#{resourceBundle['file.dwd']}"
+								title="#{resourceBundle['file.dwd']}" ajax="false">
+								<p:fileDownload
+									value="#{fileDwdController.downloadDocument(essaiManager.bean, doc_contre_et)}" />
+							</p:commandButton>
+							<p:commandLink ajax="false"
+								title="#{resourceBundle['document.del']}"
+								actionListener="#{essaiManager.supprimerDocument(enumManager.getEnumValue('TypeDocumentEssai','CONTRE_ETIQUETTE'))}">
+								<h:graphicImage library="images" name="del.gif" />
+							</p:commandLink>
+						</c:if>
+					</h:panelGrid>
+				</p:outputPanel>
+			</h:panelGroup>
+
+
+			<!-- Conseil patient -->
+			<h:outputLabel id="labelConseilPatient" for="conseil_patient"
+				value="#{resourceBundle['editEssai.onglet.pharma.conseilPatient']}" />
+			<h:inputTextarea id="conseil_patient"
+				value="#{detailDonneesPharma.infosDispensations.conseilPatient}"
+				rows="#{resourceBundle['textarea.rows.default']}" />
+			<h:panelGroup id="fichier_con_pat">
+				<p:outputPanel id="con_pat_doc"
+					rendered="#{detailDonneesPharma.essai.id != null}">
+					<c:set var="doc_con_pat"
+						value="#{detailDonneesPharma.infosDispensations.documentConseilPatient}" />
+					<h:panelGrid id="con_pat_doc_grid" columns="3"
+						columnClasses="panelCol_25, panelCol_25, panelCol_50">
+						<c:if test="#{doc_con_pat == null }">
+							<p:commandLink id="label_con_pat_doc" value="#{resourceBundle['document.popupLink.ajouter']}"
+								onclick="popupDocConPat.show()" styleClass="clickable"
+								title="#{resourceBundle['document.popupLink.ajouter']}"/>
+						</c:if>
+						<c:if test="#{doc_con_pat != null}">
+							<h:outputText value="#{doc_con_pat.nomUtilisateur}"
+								title="#{documentsIhmHelper.buildDocTitle(doc_con_pat, resourceBundle['document.part1'], resourceBundle['document.part2'], resourceBundle['date.pattern.withHeures'])}" />
+							<p:commandButton value="#{resourceBundle['file.dwd']}"
+								title="#{resourceBundle['file.dwd']}" ajax="false">
+								<p:fileDownload
+									value="#{fileDwdController.downloadDocument(essaiManager.bean, doc_con_pat)}" />
+							</p:commandButton>
+							<p:commandLink ajax="false"
+								title="#{resourceBundle['document.del']}"
+								actionListener="#{essaiManager.supprimerDocument(enumManager.getEnumValue('TypeDocumentEssai','CONSEIL_PATIENT'))}">
+								<h:graphicImage library="images" name="del.gif" />
+							</p:commandLink>
+						</c:if>
+					</h:panelGrid>
+				</p:outputPanel>
+			</h:panelGroup>
+
+
+			<!-- Aide a la dispensation -->
+			<h:outputLabel id="labelAideDispensation" for="aide_dispensation"
+				value="#{resourceBundle['editEssai.onglet.pharma.aideDispensation']}" />
+			<h:inputTextarea id="aide_dispensation"
+				value="#{detailDonneesPharma.infosDispensations.aideDispensation}"
+				rows="#{resourceBundle['textarea.rows.double']}" />
+			<h:panelGroup id="fichier_aide_dis">
+				<p:outputPanel id="aide_dis_doc"
+					rendered="#{detailDonneesPharma.essai.id != null}">
+					<c:set var="doc_aide_dis"
+						value="#{detailDonneesPharma.infosDispensations.documentAideDispensation}" />
+					<h:panelGrid id="aide_dis_doc_grid" columns="3"
+						columnClasses="panelCol_25, panelCol_25, panelCol_50">
+						<c:if test="#{doc_aide_dis == null }">
+							<p:commandLink id="label_aide_dis_doc" value="#{resourceBundle['document.popupLink.ajouter']}"
+								onclick="popupDocAideDis.show()" styleClass="clickable"
+								title="#{resourceBundle['document.popupLink.ajouter']}"/>
+						</c:if>
+						<c:if test="#{doc_aide_dis != null}">
+							<h:outputText value="#{doc_aide_dis.nomUtilisateur}"
+								title="#{documentsIhmHelper.buildDocTitle(doc_aide_dis, resourceBundle['document.part1'], resourceBundle['document.part2'], resourceBundle['date.pattern.withHeures'])}" />
+							<p:commandButton value="#{resourceBundle['file.dwd']}"
+								title="#{resourceBundle['file.dwd']}" ajax="false">
+								<p:fileDownload
+									value="#{fileDwdController.downloadDocument(essaiManager.bean, doc_aide_dis)}" />
+							</p:commandButton>
+							<p:commandLink ajax="false"
+								title="#{resourceBundle['document.del']}"
+								actionListener="#{essaiManager.supprimerDocument(enumManager.getEnumValue('TypeDocumentEssai','AIDE_DISPENSATION'))}">
+								<h:graphicImage library="images" name="del.gif" />
+							</p:commandLink>
+						</c:if>
+					</h:panelGrid>
+				</p:outputPanel>
+			</h:panelGroup>
+
+		</h:panelGrid>
+	</p:panel>
+
+
+
+	<!-- Suivi des modifications -->
+	<p:panel id="def_suivi" styleClass="panelSuivi"
+		rendered="#{essaiManager.hasLastModif(idOnglet_pharma)}">
+		<c:set var="lastModifOngPharma"
+			value="#{essaiManager.getLastModif(idOnglet_pharma)}" />
+		<h:outputText value="#{resourceBundle['suivi.part1']} " />
+		<h:outputText value="#{lastModifOngPharma.dateMaj.time}">
+			<f:convertDateTime
+				pattern="#{resourceBundle['date.pattern.withHeures']}" />
+		</h:outputText>
+		<h:outputText value="#{resourceBundle['suivi.part2']} " />
+		<h:outputText value="#{lastModifOngPharma.majPar}" />
+		<h:outputText value="#{resourceBundle['ponctuation.bracket.open']} " />
+		<h:outputLink id="labelDefModifs" value="javascript:void(0)"
+			styleClass="clickable" onclick="popupHistoOngPharma.show()"
+			title="#{resourceBundle['suivi.popupLink.title']}">#{resourceBundle['suivi.historique']}
+		</h:outputLink>
+		<h:outputText value="#{resourceBundle['ponctuation.bracket.close']} " />
+	</p:panel>
+
+</ui:composition>

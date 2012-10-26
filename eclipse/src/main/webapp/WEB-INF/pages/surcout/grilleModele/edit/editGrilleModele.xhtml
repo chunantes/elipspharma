@@ -1,0 +1,277 @@
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:p="http://primefaces.prime.com.tr/ui"
+	xmlns:c="http://java.sun.com/jsp/jstl/core"
+	template="/WEB-INF/pages/template/template.xhtml">
+
+	<ui:define name="title">
+		<h:outputFormat value="#{resourceBundle['gestionGrilleModele.title']}" />
+	</ui:define>
+
+	<ui:define name="body">
+
+		<h:form id="editGrilleModele" prependId="false">
+			<p:panel id="panel"
+				header="#{resourceBundle['gestionGrilleModele.grille']}">
+				<p:focus />
+				<p:messages id="errors"/>
+				
+		         <h:panelGrid width="50%" columns="2" cellpadding="4" cellspacing="0"
+						border="0" columnClasses="panelCol_45,panelCol_55">
+
+					<h:outputLabel styleClass="mandatory" id="nomLabel" for="nom"
+						value="#{resourceBundle['gestionGrilleModele.nom']}" />
+					<h:inputText size="70" id="nom"
+						value="#{grilleModeleManager.bean.nom}" required="true"
+						requiredMessage="#{resourceBundle['grilleModele.nom.notEmpty']}"
+						disabled="#{!grilleModeleManager.isEditable()}"/>
+
+					<!-- Date de creation -->
+					<h:outputLabel id="labelDateCreation" for="dateCreation"
+						value="#{resourceBundle['gestionGrilleModele.dateCreation']}" />
+					<p:calendar id="dateCreation"
+						value="#{grilleModeleManager.bean.dateCreation}"
+						effect="#{resourceBundle['effect.calendar']}"
+						locale="#{resourceBundle['date.locale']}" showButtonPanel="true"
+						navigator="true" disabled="#{!grilleModeleManager.isEditable()}"
+						converter="#{calendarConverter}" />
+
+					<!-- Date de debut de validite -->
+					<h:outputLabel id="labelDateDebutValidite" for="dateDebutValidite"
+						value="#{resourceBundle['gestionGrilleModele.dateDebutValidite']}" />
+					<p:calendar id="dateDebutValidite"
+						value="#{grilleModeleManager.bean.dateDebutValidite}"
+						effect="#{resourceBundle['effect.calendar']}"
+						locale="#{resourceBundle['date.locale']}" showButtonPanel="true"
+						navigator="true" disabled="#{!grilleModeleManager.isEditable()}"
+						converter="#{calendarConverter}" />
+
+					<!-- Date de fin de validite -->
+					<h:outputLabel id="labelDateFinValidite" for="dateFinValidite"
+						value="#{resourceBundle['gestionGrilleModele.dateFinValidite']}" />
+					<p:calendar id="dateFinValidite"
+						value="#{grilleModeleManager.bean.dateFinValidite}"
+						effect="#{resourceBundle['effect.calendar']}"
+						locale="#{resourceBundle['date.locale']}" showButtonPanel="true"
+						navigator="true" disabled="#{!grilleModeleManager.isEditable()}" 
+						converter="#{calendarConverter}" />
+				</h:panelGrid>
+			</p:panel>
+
+			<br />
+
+			<!--  PARTIE CATEGORIE ET THEME -->
+			<p:panel id="tableGrille"
+				header="#{resourceBundle['gestionGrilleModele.grille.struture']}">
+				
+				<p:dataTable id="themes" value="#{grilleModeleManager.getList('themes')}" var="theme" emptyMessage="#{resourceBundle['results.none']}" style="width:100%;" >
+		
+					<!-- nom du theme -->
+					<p:column id="theme" styleClass="panelCol_10" >
+						<f:facet name="header">
+							<h:outputText value="#{resourceBundle['gestionGrille.theme']}"/>
+							<div>
+								<p:commandLink update="formTheme"
+									title="#{resourceBundle['gestionGrilleModele.addTheme']}"
+									actionListener="#{grilleModeleManager.initTheme}" immediate="true"
+									rendered="#{grilleModeleManager.isEditable()}"
+									oncomplete="popupEditTheme.show();">
+									<h:graphicImage library="images" name="add.gif" />
+								</p:commandLink>
+							</div>
+						</f:facet>
+						<h:outputText value="#{theme.libelle}"/>
+					</p:column>
+					<p:column id="themeAction" styleClass="panelCol_10">	
+						<div align="center">  
+						
+							<!--  Ajout d'une categorie --> 
+							<p:commandLink 
+								update="formCategorie"
+								title="#{resourceBundle['gestionGrilleModele.addCategorie']}"
+								actionListener="#{grilleModeleManager.initCategorie}"
+									rendered="#{grilleModeleManager.isEditable()}" immediate="true"
+								oncomplete="popupEditCategorie.show();">
+								<h:graphicImage library="images" name="add.gif" />
+								<f:attribute name="theme" value="#{theme}" />
+							
+								
+								
+							</p:commandLink> <!--  Editer d'un theme --> <p:commandLink update="formTheme"
+								title="#{resourceBundle['gestionGrilleModele.editTheme']}"
+								actionListener="#{grilleModeleManager.initTheme}" immediate="true"
+									rendered="#{grilleModeleManager.isEditable()}"
+								oncomplete="popupEditTheme.show();">
+								<f:attribute name="theme" value="#{theme}" />
+								<h:graphicImage library="images" name="modify.gif" />
+							</p:commandLink>
+							
+							
+							<p:commandLink ajax="false"
+								title="#{resourceBundle['gestionGrilleModele.theme.del']}"
+									rendered="#{grilleModeleManager.isEditable()}" immediate="true"
+								actionListener="#{grilleModeleManager.removeTheme}">
+								<h:graphicImage library="images" name="del.gif" />
+								<f:attribute name="theme" value="#{theme}" />
+							</p:commandLink>
+						</div>
+						
+					</p:column>
+					
+					<p:column id="categories" styleClass="panelCol_90" >
+					
+						<f:facet name="header">
+							<h:outputText value="#{resourceBundle['gestionGrille.categorie']}"/>
+						</f:facet>
+						<!-- Categories -->
+						<p:dataTable update="categoriesDataTable" id="categoriesDataTable" 
+						value="#{beanManagerHelper.returnAsDataModel(theme.categories)}" rendered="#{theme.categories != null}"
+							var="categorie" emptyMessage="#{resourceBundle['results.none']}">
+							
+							<p:column id="categorie" styleClass="panelCol_30">
+								
+								<f:facet name="header">
+									<h:outputText value="#{resourceBundle['gestionGrille.nature']}"/>
+								</f:facet>
+									
+								<h:outputText value="#{categorie.libelle}"/>
+								
+							</p:column>
+							<p:column id="categorieAction" styleClass="panelCol_10">
+								<!-- Commandes categorie -->
+								<div align="center">
+									<!--  Editer d'une categorie --> 
+									<p:commandLink
+										update="formCategorie"  immediate="true"
+										title="#{resourceBundle['gestionGrilleModele.editCategorie']}"
+										actionListener="#{grilleModeleManager.initCategorie}"
+										rendered="#{grilleModeleManager.isEditable()}"
+										oncomplete="popupEditCategorie.show();">
+										<f:attribute name="categorie" value="#{categorie}" />
+										<f:attribute name="theme" value="#{theme}" />
+										<h:graphicImage library="images" name="modify.gif" />
+									</p:commandLink>
+									
+									<p:commandLink ajax="false"  immediate="true"
+										title="#{resourceBundle['gestionGrilleModele.categorie.del']}"
+										actionListener="#{grilleModeleManager.removeCategorie}" 
+										rendered="#{grilleModeleManager.isEditable()}">
+										<h:graphicImage library="images" name="del.gif" />
+										<f:attribute name="categorie" value="#{categorie}" />
+									</p:commandLink>
+								</div>
+								
+								
+							</p:column>
+							
+							<!-- Liste des regles (couts) a appliquer -->
+							<p:column id="regles" styleClass="panelCol_45">
+									
+								
+								<f:facet name="header">
+									<h:outputText value="#{resourceBundle['gestionGrille.frais']}"/>
+								</f:facet>
+									
+								<ui:repeat var="regle" value="#{beanManagerHelper.returnAsDataModel(categorie.regles)}" >
+									
+									<div class="ligne_regle" style="width:100%;">
+									
+										<div style="width:70%; float:left; ">
+											<h:outputText value="#{regle.toString()}"/>
+										</div> 
+									
+										<div id="commandRegle" style="float:right; width:20%;">
+											<p:commandLink  update="regle_form" rendered="#{grilleModeleManager.isEditable()}"
+												title="#{resourceBundle['gestionGrille.addRegle']}" style="display: none;float:right;" immediate="true"
+												actionListener="#{grilleModeleManager.setRegle(regle)}" oncomplete="popupEditRegle.show();" >
+												<f:attribute name="regle" value="#{regle }"/>
+												<h:graphicImage library="images" name="modify.gif" />
+											</p:commandLink  >  
+											
+											<p:commandLink   ajax="false" update="grilleSurcout" rendered="#{grilleModeleManager.isEditable()}"
+												title="#{resourceBundle['gestionGrille.removeRegle']}" style="display:none; float:right;" immediate="true"
+												actionListener="#{grilleModeleManager.removeRegle(regle)}">
+												<h:graphicImage library="images" name="del.gif" />
+											</p:commandLink>
+										</div>
+										<div style="clear:both;"/>
+									</div>
+								</ui:repeat> 
+							</p:column>
+							
+							<!-- Actions -->
+							<p:column id="actions" styleClass="panelCol_5" disabled="#{!essaiManager.bean.etat.name().equals('EN_EVALUATION')}">
+								<f:facet name="header">
+								</f:facet>
+							
+							
+								<!-- Ajout --> 
+								<p:commandLink update="regle_form" process="@this" immediate="true"
+									title="#{resourceBundle['gestionGrille.addRegle']}"  rendered="#{grilleModeleManager.isEditable()}"
+									actionListener="#{grilleModeleManager.initRegle(categorie)}"
+									oncomplete="popupEditRegle.show();">
+									<h:graphicImage library="images" name="add.gif" />
+								</p:commandLink>
+									
+									
+							</p:column>
+						</p:dataTable>
+					</p:column>
+				</p:dataTable>
+				
+			</p:panel>
+
+			<br />
+		
+			<div class="actionButton"><p:commandButton id="saveButton"
+				action="save" ajax="false"
+				disabled="#{!grilleModeleManager.isEditable()}"
+				value="#{resourceBundle['btn.enregistrer']}"
+				title="#{resourceBundle['btn.enregistrer']}"
+				/>
+				<p:commandButton id="dupliquerButton"
+				action="dupliquer" ajax="false"
+				value="#{resourceBundle['btn.dupliquer']}"
+				title="#{resourceBundle['btn.dupliquer']}"/>
+				
+				</div>
+			<div class="basicButton">
+			<div class="retourButton"><p:commandButton id="returnButton"
+				immediate="true" action="comeback" ajax="false"
+				value="#{resourceBundle['btn.retour']}"
+				title="#{resourceBundle['btn.retour']}" /></div>
+			</div>
+		</h:form>
+
+		<ui:include
+			src="/WEB-INF/pages/surcout/grilleModele/edit/popups/editGrilleModele_popups.xhtml" />
+
+			<script  type="text/javascript">
+		jQuery(document).ready(function() {
+			showIcons();
+		});
+
+		function showIcons (){
+			jQuery(".ligne_regle").mouseenter(function(){
+				jQuery(this).find('a').each(function(){
+					jQuery(this).show();
+				});
+			});
+			jQuery(".ligne_regle").mouseleave(function(){
+				jQuery(this).find('a').each(function(){
+					jQuery(this).hide();
+				});
+			});
+		}
+	
+	</script>
+
+	</ui:define>
+	
+		
+
+	
+
+</ui:composition>

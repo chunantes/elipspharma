@@ -1,0 +1,226 @@
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:p="http://primefaces.prime.com.tr/ui"
+	xmlns:sf="http://www.springframework.org/tags/faces">
+
+
+	<!-- Popup de creation / edition d'une prescription -->
+	<p:dialog header="#{resourceBundle['editPrescription.ajout']}"
+		id="popupEditionPrescription"
+		closeListener="#{prescriptionTypeManager.reinit()}"
+		rendered="true"
+		widgetVar="popupEditPrescription" styleClass="essaiTabPopup"
+		resizable="true" modal="true" width="700">
+		
+		<h:form id="sequence_form">
+		
+			<!-- Erreurs -->
+			<p:messages id="errors" />
+			
+			<!-- Panneau produit -->
+			<p:panel header="#{resourceBundle['editPrescription.produit']}">
+			
+				<h:panelGrid columns="2"
+					columnClasses="panelCol_25, panelCol_75">
+					
+					<!-- Produit -->
+					<h:outputLabel id="labelProduit" for="produit" styleClass="mandatory" 
+						value="#{resourceBundle['editPrescription.produit']}" />
+					<h:selectOneMenu id="produit" converter="#{produitConverter}" required="true" requiredMessage="#{resourceBundle['prescription.produit.notEmpty']}"
+						value="#{prescriptionTypeManager.bean.produit}">
+						<f:selectItem noSelectionOption="true" itemLabel="" itemValue="" />
+						<f:selectItems
+							value="#{designsManager.produits}"  var="produit" itemLabel="#{produit.nom }" itemValue="#{produit }"/>
+						<f:ajax render="conditionn" />
+					</h:selectOneMenu>
+					
+					<!-- Conditionnement -->
+					<h:outputLabel id="labelMethoPrescription" for="conditionn" styleClass="mandatory" 
+						value="#{resourceBundle['editPrescription.conditionnement']}" />
+					<h:selectOneMenu id="conditionn" required="true" converter="#{conditionnementConverter}" requiredMessage="#{resourceBundle['prescription.conditionnement.notEmpty']}"
+						value="#{prescriptionTypeManager.bean.conditionnement}"  style="width:100%;" immediate="true">	
+						<f:selectItem noSelectionOption="true" itemLabel="" itemValue="" />
+						<f:selectItems itemLabel="#{conditionnement.libelle}" var="conditionnement" 
+							value="#{prescriptionManagerHelper.getConditionnements(prescriptionTypeManager.bean.produit)}"  />
+						<f:ajax render="resumeConditionnement posologieGrid"  listener="#{prescriptionTypeManager.handleConditionnement}"/>
+					</h:selectOneMenu>
+					
+					
+					
+						
+				</h:panelGrid>
+				
+					<p:outputPanel id="resumeConditionnement">
+						<h:outputText value="#{prescriptionTypeManager.resumeConditionnement}"/>
+					</p:outputPanel>
+			</p:panel>
+			
+			<br />
+			
+			<p:panel header="#{editPrescription.prescription}">
+				<h:panelGrid columns="2" columnClasses="panelCol_25, panelCol_75">
+				
+					<!--  Description -->
+					<h:outputLabel id="labelPresDescription" for="description_pres"
+						value="#{resourceBundle['editPrescription.description']}" />
+					<h:inputTextarea id="description_pres"
+						value="#{prescriptionTypeManager.bean.description}"
+						rows="#{resourceBundle['textarea.rows.default']}" />
+				</h:panelGrid>
+				
+				<!-- Posologie  -->
+				<h:panelGrid id="posologieGrid" columns="6" columnClasses="panelCol_25, panelCol_15, panelCol_15, panelCol_15, panelCol_15, panelCol_15">
+				
+					<!-- 1. EN CAS DE DOSAGE -->
+					<!--  Nombre de doses  -->
+					<h:outputLabel id="labelNbDose" for="nb_dose_nb" rendered="#{prescriptionTypeManager.isModePrescription(MODE_DOSE) or prescriptionTypeManager.isModePrescription(MODE_DOSE_SURFACE) or prescriptionTypeManager.isModePrescription(MODE_DOSE_KG)}"
+							value="#{resourceBundle['editPrescription.nbDose']}" />
+					<h:inputText id="nb_dose_nb" maxlength="10" size="10" rendered="#{prescriptionTypeManager.isModePrescription(MODE_DOSE) or prescriptionTypeManager.isModePrescription(MODE_DOSE_SURFACE) or prescriptionTypeManager.isModePrescription(MODE_DOSE_KG)}"
+							value="#{prescriptionTypeManager.bean.nbUniteDosage}"   required="true" requiredMessage="#{resourceBundle['editPrescription.dosage.notEmpty']}">
+						<f:ajax render="resume" listener="#{prescriptionTypeManager.buildResume()}"/>
+					</h:inputText>
+							
+					<!-- Dosage -->
+					<h:outputText id="dosageLabe" rendered="#{prescriptionTypeManager.isModePrescription(MODE_DOSE) or prescriptionTypeManager.isModePrescription(MODE_DOSE_SURFACE) or prescriptionTypeManager.isModePrescription(MODE_DOSE_KG)}"
+							value="#{resourceBundle['editPrescription.fois']}" />
+					<h:inputText id="dosage" maxlength="10" size="10" rendered="#{prescriptionTypeManager.isModePrescription(MODE_DOSE) or prescriptionTypeManager.isModePrescription(MODE_DOSE_SURFACE) or prescriptionTypeManager.isModePrescription(MODE_DOSE_KG)}"  required="true" requiredMessage="#{resourceBundle['editPrescription.dosage.notEmpty']}"
+							value="#{prescriptionTypeManager.bean.dosage}" >
+						<f:ajax render="resume" listener="#{prescriptionTypeManager.buildResume()}"/>
+					</h:inputText>
+					<h:outputText value="#{prescriptionTypeManager.bean.conditionnement.unitePrescription}" rendered="#{prescriptionTypeManager.isModePrescription(MODE_DOSE) or prescriptionTypeManager.isModePrescription(MODE_DOSE_SURFACE) or prescriptionTypeManager.isModePrescription(MODE_DOSE_KG)}"/>
+					<h:panelGroup  rendered="#{prescriptionTypeManager.isModePrescription(MODE_DOSE) or prescriptionTypeManager.isModePrescription(MODE_DOSE_SURFACE) or prescriptionTypeManager.isModePrescription(MODE_DOSE_KG)}"/>
+					
+					<!-- 2. EN CAS DE NUM TRAITEMENT -->
+					<!--  Rien => on aura un champ en plus dans la prescription reelle => Voir ProduitPrescrit -->
+					
+					<!-- 3. EN CAS DE GALENIQUE -->
+					<h:outputLabel id="labelNbGalenique" for="nb_galenique" rendered="#{prescriptionTypeManager.isModePrescription(MODE_FORME_GALENIQUE)}"
+							value="#{resourceBundle['editPrescription.nbGalenique']}" />
+					<h:inputText id="nb_galenique" maxlength="10" size="10" rendered="#{prescriptionTypeManager.isModePrescription(MODE_FORME_GALENIQUE)}"  required="true" requiredMessage="#{resourceBundle['editPrescription.nb.notEmpty']}"
+							value="#{prescriptionTypeManager.bean.nbUniteDosage}">
+						<f:ajax render="resume" listener="#{prescriptionTypeManager.buildResume()}"/> 
+					</h:inputText>
+					<h:panelGroup rendered="#{prescriptionTypeManager.isModePrescription(MODE_FORME_GALENIQUE)}"/>
+					<h:panelGroup rendered="#{prescriptionTypeManager.isModePrescription(MODE_FORME_GALENIQUE)}"/>
+					<h:panelGroup rendered="#{prescriptionTypeManager.isModePrescription(MODE_FORME_GALENIQUE)}"/>
+					<h:panelGroup rendered="#{prescriptionTypeManager.isModePrescription(MODE_FORME_GALENIQUE)}"/>
+					
+					<!-- 4. EN CAS DE CONDI PRIMAIRE -->
+					<h:outputLabel id="labelNCondi" for="nb_condi" rendered="#{prescriptionTypeManager.isModePrescription(MODE_CONDITIONNEMENT_PRIMAIRE)}"
+							value="#{resourceBundle['editPrescription.nbCondiPrimaire']} #{prescriptionTypeManager.bean.conditionnement.unitePrescription}" />
+					<h:inputText id="nb_condi" maxlength="10" size="10" rendered="#{prescriptionTypeManager.isModePrescription(MODE_CONDITIONNEMENT_PRIMAIRE)}" required="true" requiredMessage="#{resourceBundle['editPrescription.nb.notEmpty']}"
+							value="#{prescriptionTypeManager.bean.nbUniteDosage}" >
+						<f:ajax render="resume" listener="#{prescriptionTypeManager.buildResume()}"/>
+					</h:inputText>
+					<h:panelGroup rendered="#{prescriptionTypeManager.isModePrescription(MODE_CONDITIONNEMENT_PRIMAIRE)}"/>
+					<h:panelGroup rendered="#{prescriptionTypeManager.isModePrescription(MODE_CONDITIONNEMENT_PRIMAIRE)}"/>
+					<h:panelGroup rendered="#{prescriptionTypeManager.isModePrescription(MODE_CONDITIONNEMENT_PRIMAIRE)}"/>
+					<h:panelGroup rendered="#{prescriptionTypeManager.isModePrescription(MODE_CONDITIONNEMENT_PRIMAIRE)}"/>
+				</h:panelGrid>	
+				<p:outputPanel id="frequencePanel">	
+				<h:panelGrid id="frequenceGrid" columns="6" columnClasses="panelCol_25, panelCol_15, panelCol_15, panelCol_15, panelCol_15, panelCol_15">
+					<!-- Frequence -->
+					<h:outputLabel id="labelFrequence" for="frenquence_nb" 
+						value="#{resourceBundle['editPrescription.frequence']}" />
+					<h:inputText id="frenquence_nb" maxlength="5" size="5"  required="true" requiredMessage="#{resourceBundle['editPrescription.frequence.notEmpty']}"
+						value="#{prescriptionTypeManager.bean.frequence.nbFrequence}" >
+						<f:ajax render="resume" listener="#{prescriptionTypeManager.buildResume()}"/>
+					</h:inputText>
+					<h:selectOneMenu id="frequence_reg"   required="true" requiredMessage="#{resourceBundle['editPrescription.frequence.notEmpty']}"
+						value="#{prescriptionTypeManager.bean.frequence.typeRegularite}">
+						<f:selectItem noSelectionOption="true" />
+						<f:selectItems value="#{enumManager.getValues('TypeRegularite')}" />
+						<f:ajax render="frequencePanel resume" listener="#{prescriptionTypeManager.buildResume()}"/>
+					</h:selectOneMenu>
+					
+					<h:inputText id="frenquence_nb_unite"  required="true" requiredMessage="#{resourceBundle['editPrescription.frequence.notEmpty']}"
+						rendered="#{prescriptionTypeManager.bean.frequence.typeRegularite eq 'TOUS_LES'}"
+						value="#{prescriptionTypeManager.bean.frequence.nbUniteTempsFrequence}">
+						<f:ajax render="resume" listener="#{prescriptionTypeManager.buildResume()}"/>
+					</h:inputText>
+					<h:selectOneMenu id="frequence_pres_unite"   required="true" requiredMessage="#{resourceBundle['editPrescription.frequence.notEmpty']}"
+						value="#{prescriptionTypeManager.bean.frequence.uniteFrequence}" rendered="#{prescriptionTypeManager.bean.frequence.typeRegularite eq 'TOUS_LES' or prescriptionTypeManager.bean.frequence.typeRegularite eq 'PAR' }">
+						<f:selectItem noSelectionOption="true" />
+						<f:selectItems value="#{enumManager.getValues('UniteTemps')}" />
+						<f:ajax render="resume" listener="#{prescriptionTypeManager.buildResume()}"/>
+					</h:selectOneMenu>
+					<h:panelGroup id="freq_frp" rendered="#{prescriptionTypeManager.bean.frequence.typeRegularite != 'TOUS_LES' and prescriptionTypeManager.bean.frequence.typeRegularite != 'PAR'  }"/>
+					<h:panelGroup id="freq_frp2" rendered="#{prescriptionTypeManager.bean.frequence.typeRegularite != 'TOUS_LES'}"/>
+						
+					<h:panelGroup />
+					</h:panelGrid>
+				</p:outputPanel>
+				<h:panelGrid id="tempsGrid" columns="6" columnClasses="panelCol_25, panelCol_15, panelCol_15, panelCol_15, panelCol_15, panelCol_15">	
+					<!-- Debut -->
+					<h:outputLabel id="labelDebutNb" for="debut_pres_nb"
+						value="#{resourceBundle['editPrescription.debut']}" />
+					<h:inputText id="debut_pres_nb" required="true" requiredMessage="#{resourceBundle['editPrescription.debut.notEmpty']}"
+						value="#{prescriptionTypeManager.bean.debut.nb }" >
+						<f:ajax render="resume" listener="#{prescriptionTypeManager.buildResume()}"/>
+					</h:inputText>
+					<h:selectOneMenu id="debut_pres_unite" required="true" requiredMessage="#{resourceBundle['editPrescription.debut.notEmpty']}" 
+						value="#{prescriptionTypeManager.bean.debut.unite}">
+						<f:selectItem noSelectionOption="true" />
+						<f:selectItem value="#{enumManager.getEnumValueAsSelectItem('UniteTemps', 'JOUR')}" />
+						<f:selectItem value="#{enumManager.getEnumValueAsSelectItem('UniteTemps', 'SEMAINE')}" />
+						<f:selectItem value="#{enumManager.getEnumValueAsSelectItem('UniteTemps', 'MOIS')}" />
+						<f:ajax render="resume" listener="#{prescriptionTypeManager.buildResume()}"/>
+					</h:selectOneMenu>
+					<h:panelGroup />
+					<h:panelGroup />
+					<h:panelGroup />
+	
+					<!-- Duree -->
+					<h:outputLabel id="labelDureeNb" for="duree_pres_nb"
+						value="#{resourceBundle['editPrescription.duree']}" />
+					<h:inputText id="duree_pres_nb" required="true" requiredMessage="#{resourceBundle['editPrescription.duree.notEmpty']}"
+						value="#{prescriptionTypeManager.bean.duree.nb }" >
+						<f:ajax render="resume" listener="#{prescriptionTypeManager.buildResume()}"/>
+					</h:inputText>
+					<h:selectOneMenu id="duree_pres_unite" required="true" requiredMessage="#{resourceBundle['editPrescription.duree.notEmpty']}"
+						value="#{prescriptionTypeManager.bean.duree.unite}"> 
+						<f:selectItem noSelectionOption="true" />
+						<f:selectItem value="#{enumManager.getEnumValueAsSelectItem('UniteTemps', 'JOUR')}" />
+						<f:selectItem value="#{enumManager.getEnumValueAsSelectItem('UniteTemps', 'SEMAINE')}" />
+						<f:selectItem value="#{enumManager.getEnumValueAsSelectItem('UniteTemps', 'MOIS')}" />
+						<f:selectItem value="#{enumManager.getEnumValueAsSelectItem('UniteTemps', 'HEURE')}" />
+						<f:selectItem value="#{enumManager.getEnumValueAsSelectItem('UniteTemps', 'MINUTE')}" />
+						<f:ajax render="resume" listener="#{prescriptionTypeManager.buildResume()}"/>
+					</h:selectOneMenu>
+					<h:panelGroup />
+					<h:panelGroup />
+					<h:panelGroup />
+					
+				</h:panelGrid>	
+				
+				<br />
+				<p:outputPanel id="resume">
+					<h:outputText value="#{prescriptionTypeManager.resume}"/>
+				</p:outputPanel>
+			
+			</p:panel>
+			
+
+				<div class="popupButton"><p:commandButton
+					ajax="true" process="@form" update="prescriptions errors"
+					actionListener="#{prescriptionTypeManager.addPrescription}"
+					value="#{resourceBundle['btn.valider']}"
+					oncomplete="actionPopup(xhr, status, args);">
+					<f:attribute name="sequence" value="#{sequenceManager.bean}" />
+				</p:commandButton></div>
+		</h:form>
+	</p:dialog>
+	
+			
+	<script type="text/javascript">
+		function actionPopup(xhr, status, args)
+		{
+			var isValid = !args.validationFailed;
+			if (isValid){
+				popupEditPrescription.hide();
+			}
+	   	}
+	</script>
+</ui:composition>

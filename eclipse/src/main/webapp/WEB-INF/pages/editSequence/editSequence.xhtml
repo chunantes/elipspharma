@@ -1,0 +1,288 @@
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:p="http://primefaces.prime.com.tr/ui"
+	xmlns:c="http://java.sun.com/jsp/jstl/core"
+	template="/WEB-INF/pages/template/template.xhtml">
+
+	<ui:define name="title">
+		<h:outputFormat value="#{resourceBundle['editSequence.title']}" />
+	</ui:define>
+
+	<ui:define name="body">
+		<h:form id="editSequence" prependId="false">
+			<!-- Erreurs de validation -->
+			<p:outputPanel id="common_outp_msgs"
+				style="display:block;margin-top:10px;">
+				<p:messages id="err" />
+			</p:outputPanel>
+
+			<!-- Focus sur le premier element de la page -->
+			<p:focus />
+
+			<!-- Informations generales sur l'essai en disabled -->
+			<h2><h:outputFormat
+				value="#{resourceBundle['editSequence.subTitle1']}" /></h2>
+			<fieldset>
+			<table class="big" cellpadding="0" cellspacing="0" border="0">
+				<tbody>
+					<tr>
+						<td class="box" width="50%"><h:panelGrid
+							id="common_pannel_gauche" width="100%" columns="2"
+							cellpadding="0" cellspacing="0" border="0"
+							columnClasses="panelCol_45,panelCol_55">
+
+							<h:outputLabel styleClass="mandatory" id="labelNumInterne"
+								for="common_numInterne"
+								value="#{resourceBundle['editEssai.common.numIterne']}" />
+							<h:inputText id="common_numInterne" disabled="true"
+								value="#{essaiManager.bean.numInterne}" required="true"
+								requiredMessage="#{resourceBundle['essai.numInterne.notEmpty']}" />
+
+							<h:outputLabel styleClass="mandatory" id="labelCodePromoteur"
+								for="common_codePromoteur"
+								value="#{resourceBundle['editEssai.common.codePromoteur']}" />
+							<h:inputText id="common_codePromoteur" disabled="true"
+								value="#{essaiManager.bean.codePromoteur}" required="true"
+								requiredMessage="#{resourceBundle['essai.codePromoteur.notEmpty']}" />
+
+							<h:outputLabel styleClass="mandatory" id="labelNom"
+								for="common_nom"
+								value="#{resourceBundle['editEssai.common.nomUsuel']}" />
+							<h:inputText id="common_nom" disabled="true"
+								value="#{essaiManager.bean.nom}" required="true"
+								requiredMessage="#{resourceBundle['essai.nom.notEmpty']}" />
+
+							<h:outputLabel id="labelPduitEval" for="common_pduitEval"
+								value="#{resourceBundle['editEssai.common.pduitEvalue']}" />
+							<h:outputText id="common_pduitEval"
+								value="#{essaiManager.bean.libelleProduitEvalue}" />
+
+							<h:outputLabel id="labelDCI" for="common_dci"
+								value="#{resourceBundle['editEssai.common.DCI']}" />
+							<h:outputText id="common_dci" value="#{essaiManager.bean.dci}" />
+
+							<h:outputLabel id="labelEmptPhysDoss" for="common_emptPhysDoss"
+								value="#{resourceBundle['editEssai.common.emplacmtPhysq']}" />
+							<h:inputText id="common_emptPhysDoss" disabled="true"
+								value="#{essaiManager.bean.emplacementPhysiqueDossier}" />
+
+						</h:panelGrid></td>
+						<td class="box" width="50%"><h:panelGrid
+							id="common_pannel_droit" width="100%" columns="2" cellpadding="0"
+							cellspacing="0" border="0"
+							columnClasses="panelCol_40,panelCol_60">
+							<h:outputLabel styleClass="mandatory" id="labelPromoteur"
+								for="common_promoteur"
+								value="#{resourceBundle['editEssai.common.promoteur']}" />
+							<p:autoComplete id="common_promoteur" disabled="true"
+								value="#{essaiManager.bean.promoteur}" required="true"
+								requiredMessage="#{resourceBundle['essai.promoteur.notEmpty']}"
+								selectListener="#{essaiManager.handleSelectPromoteur}"
+								completeMethod="#{autoCompletePromoteurManager.complete}"
+								forceSelection="true" var="promoteur"
+								itemLabel="#{promoteur.raisonSociale}" itemValue="#{promoteur}"
+								converter="#{promoteurConverter}"
+								onSelectUpdate="common_panelTypePromoteur" />
+
+							<h:outputLabel styleClass="mandatory" id="labelTypePromoteur"
+								for="common_typePromoteur"
+								value="#{resourceBundle['editEssai.common.typePromoteur']}" />
+							<p:outputPanel id="common_panelTypePromoteur"
+								style="display:block;margin-top:10px;">
+								<h:selectOneMenu id="common_typePromoteur" disabled="true"
+									value="#{essaiManager.bean.typePromoteur}" required="true"
+									requiredMessage="#{resourceBundle['essai.typePromoteur.notEmpty']}">
+									<f:selectItem noSelectionOption="true" />
+									<f:selectItems
+										value="#{enumManager.getValues('TypePromoteur')}" />
+								</h:selectOneMenu>
+							</p:outputPanel>
+
+							<h:outputLabel styleClass="mandatory" id="labelService"
+								for="common_service"
+								value="#{resourceBundle['editEssai.common.service']}" />
+							<p:outputPanel id="resultsServices"
+								style="display:block;margin-top:10px;">
+								<p:dataTable id="common_service"
+									value="#{essaiManager.getList('services', false)}"
+									var="service" emptyMessage="#{resourceBundle['results.none']}">
+									<p:column id="nom">
+										<f:facet name="header">
+													#{resourceBundle['editEssai.common.selectionServices']}
+												</f:facet>
+										<h:outputText value="#{service.nom}" />
+									</p:column>
+								</p:dataTable>
+							</p:outputPanel>
+
+						</h:panelGrid></td>
+					</tr>
+
+					<tr>
+						<td class="box" width="50%"><h:panelGrid id="panelAlerte"
+							columns="2" width="100%" columnClasses="panelCol_45,panelCol_55"
+							cellpadding="0" cellspacing="0" border="0">
+							<h:outputLabel id="labelAlerteActive"
+								value="#{resourceBundle['editEssai.common.alerteActive']}" />
+							<h:selectBooleanCheckbox
+								value="#{essaiManager.bean.alerteActive}" disabled="true" />
+							<h:panelGroup />
+						</h:panelGrid></td>
+						<td class="buttDisabled" width="50%" align="center"><h:panelGrid
+							id="panelEtatEssai" columns="1" width="55%">
+							<a>#{essaiManager.bean.etat.libelle}</a>
+						</h:panelGrid></td>
+					</tr>
+
+				</tbody>
+			</table>
+			</fieldset>
+
+			<!-- Sequence -->
+			<h2><h:outputFormat
+				value="#{resourceBundle['editSequence.subTitle2']}" /></h2>
+			<fieldset>
+			<table class="big" width="100%" cellpadding="0" cellspacing="0"
+				border="0">
+				<tbody>
+					<tr>
+						<td><h:panelGrid
+							id="infos_gene_panel" columnClasses="panelCol_45,panelCol_55"
+							columns="2" width="100%" cellpadding="0" cellspacing="0"
+							border="0">
+
+							<!--  Nom de la sequence -->
+							<h:outputLabel id="labelNomSequence" for="nom_sequence"
+								styleClass="mandatory"
+								value="#{resourceBundle['editSequence.nom']}" />
+							<h:inputText id="nom_sequence" required="true"
+								requiredMessage="#{resourceBundle['editSequence.nom.obligatoire']}"
+								value="#{sequenceManager.bean.nom}" />
+
+							<!--  Description -->
+							<h:outputLabel id="labelDescSequence" for="description_sequence"
+								value="#{resourceBundle['editSequence.description']}" />
+							<h:inputTextarea id="description_sequence"
+								value="#{sequenceManager.bean.description}"
+								rows="#{resourceBundle['textarea.rows.default']}" />
+							<!--  Description -->
+							<h:outputLabel id="labelDureeSequence" for="duree_sequence" styleClass="mandatory"
+								value="#{resourceBundle['editSequence.duree']}" />
+								 
+							<h:panelGrid columnClasses="panelCol_45,panelCol_45" width="95%"
+							columns="2"  cellpadding="0" cellspacing="0"
+							border="0">
+								<h:inputText id="duree_sequence" required="true" requiredMessage="#{resourceBundle['editSequence.duree.notEmpty']}"
+									value="#{sequenceManager.bean.nbDuree }" >
+								</h:inputText>
+								<h:selectOneMenu id="duree_pres_unite" required="true" requiredMessage="#{resourceBundle['editSequence.duree.unite.notEmpty']}" 
+									value="#{sequenceManager.bean.uniteDuree}">
+									<f:selectItem noSelectionOption="true" />
+									<f:selectItem value="#{enumManager.getEnumValueAsSelectItem('UniteTemps', 'MINUTE')}" />
+									<f:selectItem value="#{enumManager.getEnumValueAsSelectItem('UniteTemps', 'HEURE')}" />
+									<f:selectItem value="#{enumManager.getEnumValueAsSelectItem('UniteTemps', 'JOUR')}" />
+									<f:selectItem value="#{enumManager.getEnumValueAsSelectItem('UniteTemps', 'SEMAINE')}" />
+									<f:selectItem value="#{enumManager.getEnumValueAsSelectItem('UniteTemps', 'MOIS')}" />
+								</h:selectOneMenu>	
+							</h:panelGrid>
+						</h:panelGrid></td>
+					</tr>
+					<tr>
+						<td><p:dataTable
+							id="prescriptions" style="width:100%;" 
+							value="#{sequenceManager.getList('prescriptions', false)}"
+							var="prescription"
+							emptyMessage="#{resourceBundle['results.none']}">
+
+							<!-- Produit -->
+							<p:column id="produit" sortBy="#{prescription.produit}">
+								<f:facet name="header">
+									<h:outputText
+										value="#{resourceBundle['editPrescription.produit']}" />
+								</f:facet>
+								<h:outputText value="#{prescription.produit.denomination}" />
+							</p:column>
+
+							<!-- Posologie -->
+							<p:column id="posologie" sortBy="#{prescription.posologie}">
+								<f:facet name="header">
+									<h:outputText
+										value="#{resourceBundle['editPrescription.posologie']}" />
+								</f:facet>
+								<h:outputText
+									value="#{prescription.dosageAsString} #{prescription.frequence}" />
+							</p:column>
+
+							<!-- Debut -->
+							<p:column id="debut" sortBy="#{prescription.debut}">
+								<f:facet name="header">
+									<h:outputText
+										value="#{resourceBundle['editPrescription.debut']}" />
+								</f:facet>
+								<h:outputText value="#{prescription.debut}" />
+							</p:column>
+
+							<!-- Fin -->
+							<p:column id="fin" sortBy="#{prescription.duree}">
+								<f:facet name="header">
+									<h:outputText
+										value="#{resourceBundle['editPrescription.duree']}" />
+								</f:facet>
+								<h:outputText value="#{prescription.duree}" />
+							</p:column>
+
+
+							<p:column>
+								<f:facet name="header">
+									<h:outputText
+										value="#{resourceBundle['editPrescription.choix']}" />
+								</f:facet>
+								<div align="center"><!--  Edition d'une prescription --> <p:commandLink
+									ajax="true" title="#{resourceBundle['editSequence.prescriptionType.edit']}"
+									update="sequence_form" immediate="true"
+									oncomplete="popupEditPrescription.show();"
+									actionListener="#{prescriptionTypeManager.editPrescription}">
+									<h:graphicImage library="images" name="modify.gif" />
+									<f:attribute name="prescriptionToEdit" value="#{prescription}" />
+								</p:commandLink> <!--  Suppression d'une prescription  --> <p:commandLink
+									ajax="false" title="#{resourceBundle['editSequence.prescriptionType.del']}" immediate="true"
+									actionListener="#{prescriptionTypeManager.removePrescription}">
+									<h:graphicImage library="images" name="del.gif" />
+									<f:attribute name="prescriptionToDelete" 
+										value="#{prescription}" />
+								</p:commandLink></div> 
+							</p:column>
+						</p:dataTable>
+						<div class="actionButton"><p:commandButton 
+							id="addPrescriptionButton" immediate="true" process="@this"
+							actionListener="#{prescriptionTypeManager.setBean(prescriptionTypeFactory.getInitializedObject())}"
+							ajax="true" update="sequence_form" 
+							oncomplete="popupEditPrescription.show();"
+							value="#{resourceBundle['btn.ajouter']}"
+							title="#{resourceBundle['btn.ajouter']}" /></div>
+ 
+						</td>
+					</tr>
+
+				</tbody>
+			</table>
+			</fieldset>
+			<div class="actionButton"><p:commandButton
+				id="saveButtonAndComeback" action="saveAndComeback" ajax="false" 
+				process="@this" value="#{resourceBundle['btn.enregistrerEtRetour']}"
+				title="#{resourceBundle['btn.enregistrerEtRetour']}" /> <p:commandButton
+				id="cancelButton" immediate="true" action="comeback" ajax="false"
+				value="#{resourceBundle['btn.annuler']}"
+				title="#{resourceBundle['btn.annuler']}" /></div>
+			<div class="basicButton"></div>
+		</h:form>
+
+		<!-- Popups -->
+		<ui:include
+			src="/WEB-INF/pages/editSequence/popups/editSequence_popups.xhtml" />
+
+	</ui:define>
+
+</ui:composition>

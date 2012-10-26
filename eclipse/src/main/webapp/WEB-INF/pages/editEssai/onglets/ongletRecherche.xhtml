@@ -1,0 +1,104 @@
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+     xmlns:ui="http://java.sun.com/jsf/facelets"
+     xmlns:h="http://java.sun.com/jsf/html"
+     xmlns:f="http://java.sun.com/jsf/core"
+     xmlns:p="http://primefaces.prime.com.tr/ui"
+     xmlns:sf="http://www.springframework.org/tags/faces"
+     xmlns:c="http://java.sun.com/jsp/jstl/core">
+    
+    <c:set var="idOnglet_rech">ONG_RECHERCHE</c:set>
+    <input type="hidden" id="currentView" name="currentView" value="#{idOnglet_rech}" />
+    
+    <!-- Gestion scroll et focus -->
+	<p:focus />
+	
+	<h:panelGrid id="dr_panel_haut" columns="2" columnClasses="panelCol_68,panelCol_32">
+    	<h:panelGrid id="dr_panel_haut_gauche" columns="2" columnClasses="panelCol_26,panelCol_74">
+    		<h:outputLabel id="labelDRRecherche" for="dr_titreProtocole" value="#{resourceBundle['editEssai.onglet.recherche.titreProtocole']}" />
+		    <h:inputTextarea id="dr_titreProtocole" value="#{essaiManager.bean.detailRecherche.titreProtocole}" immediate="true"  
+		    	rows="#{resourceBundle['textarea.rows.big']}" />
+		    
+		    <h:outputLabel id="labelDRNumSigrec" for="dr_numSigrec" value="#{resourceBundle['editEssai.onglet.recherche.numSigrec']}" />
+		    <h:inputText id="dr_numSigrec" value="#{essaiManager.bean.detailRecherche.numEnregistrement}" />
+		    
+		    <c:set var="lastCommentaire" value="#{essaiManager.getLastCommentaire(enumManager.getEnumValue('TypeCommentaireEssai','RECHERCHE'))}" />
+	    	<h:outputLink id="labelDRCommentaires" value="javascript:void(0)" onclick="popupCommentairesRecherche.show()" 
+	    		styleClass="clickable" title="#{resourceBundle['commentaire.popupLink.title']}">#{resourceBundle['editEssai.onglet.recherche.commentaires']}</h:outputLink>
+			<p:outputPanel id="dr_pannelCommentaires" style="display:block;margin-top:10px;">		
+		    	<c:choose>
+		    		<c:when test="${lastCommentaire != null}">
+					    <h:inputTextarea id="dr_commentaires" value="#{lastCommentaire.libelle}" 
+					    	rows="#{resourceBundle['textarea.rows.default']}" disabled="true" />
+		    		</c:when>
+		    		<c:otherwise>
+					    <h:inputTextarea id="dr_commentaires" value="" 
+					    	rows="#{resourceBundle['textarea.rows.default']}" disabled="true" />
+					</c:otherwise>
+		    	</c:choose>
+		    </p:outputPanel>
+    	</h:panelGrid>
+    	
+    	<h:panelGrid id="dr_panel_haut_droit" columns="1" style="text-align: center;" columnClasses="dr_panel_haut_droit_col">
+			
+    		<p:commandButton image="ui-icon ui-icon-disk" value="#{resourceBundle['export.jasper.modelePrescNominative']}" title="#{resourceBundle['export.jasper.modelePrescNominative']}" ajax="false">
+				<p:fileDownload value="#{jasperReportDwdController.downloadRapport(essaiManager.getBeanAfterReattach(), enumManager.getEnumValue('TypeRapportJasper','MODELE_PRESCRIPTION_NOMINATIVE'))}" />
+			</p:commandButton>
+			<p:commandButton
+				image="ui-icon ui-icon-disk" value="#{resourceBundle['export.jasper.ficheEssai']}"
+				title="#{resourceBundle['export.jasper.ficheEssai']}" ajax="false">
+				<p:fileDownload
+					value="#{jasperReportDwdController.downloadRapport(essaiManager.getBeanAfterReattach(), enumManager.getEnumValue('TypeRapportJasper','FICHE_INFO_ESSAI'))}" />
+			</p:commandButton>
+    		<p:commandButton image="ui-icon ui-icon-disk" value="#{resourceBundle['export.jasper.aideDispensation']}" title="#{resourceBundle['export.jasper.aideDispensation']}" ajax="false">
+				<p:fileDownload value="#{jasperReportDwdController.downloadRapport(essaiManager.getBeanAfterReattach(), enumManager.getEnumValue('TypeRapportJasper','FICHE_AIDE_DISPENSATION'))}" />
+			</p:commandButton>
+    	</h:panelGrid>
+    </h:panelGrid>
+    
+    <h:panelGrid id="dr_panel_bas" columns="4" columnClasses="dr_panelCol_bas1,dr_panelCol_bas2,dr_panelCol_bas1,dr_panelCol_bas2">
+    	<h:outputLabel id="labelDRTypeRecherche" for="dr_typeRecherche" value="#{resourceBundle['editEssai.onglet.recherche.typeRecherche']}" />
+		<h:selectOneMenu id="dr_typeRecherche" value="#{essaiManager.bean.detailRecherche.typeRecherche}">
+			<f:selectItem noSelectionOption="true"/>
+         	<f:selectItems value="#{enumManager.getValues('TypeRecherche')}" />
+        </h:selectOneMenu>
+    	<h:outputLabel id="labelDRPhaseRecherche" for="dr_phaseRecherche" value="#{resourceBundle['editEssai.onglet.recherche.phaseReherche']}" />
+		<h:selectOneMenu id="dr_phaseRecherche" value="#{essaiManager.bean.detailRecherche.phaseRecherche}">
+			<f:selectItem noSelectionOption="true"/>
+         	<f:selectItems value="#{enumManager.getValues('PhaseRecherche')}" />
+        </h:selectOneMenu>
+    	<h:outputLabel id="labelDRObjetecherche" for="dr_objetRecherche" value="#{resourceBundle['editEssai.onglet.recherche.objetRecherche']}" />
+		<h:selectOneMenu id="dr_objetRecherche" value="#{essaiManager.bean.detailRecherche.objetRecherche}">
+			<f:selectItem noSelectionOption="true"/>
+         	<f:selectItems value="#{enumManager.getValues('ObjetRecherche')}" />
+        </h:selectOneMenu>
+
+    	<h:outputLabel id="labelDRNatureecherche" for="dr_natureRecherche" value="#{resourceBundle['editEssai.onglet.recherche.natureRecherche']}" />
+		<h:selectOneMenu id="dr_natureRecherche" value="#{essaiManager.bean.detailRecherche.natureRecherche}">
+			<f:selectItem noSelectionOption="true"/>
+         	<f:selectItems value="#{enumManager.getValues('NatureRecherche')}" />
+        </h:selectOneMenu>
+    	<h:outputLabel id="labelDRMotsCles" for="dr_motsCles" value="#{resourceBundle['editEssai.onglet.recherche.motsCles']}" />
+	    <h:inputText id="dr_motsCles" value="#{essaiManager.bean.detailRecherche.motsCles}" />
+    	<h:outputLabel id="labelDRThematique" for="dr_thematique" value="#{resourceBundle['editEssai.onglet.recherche.thematique']}" />
+		<h:selectOneMenu id="dr_thematique" value="#{essaiManager.bean.detailRecherche.thematique}">
+			<f:selectItem noSelectionOption="true"/>
+         	<f:selectItems value="#{enumManager.getValues('Thematique')}" />
+        </h:selectOneMenu>
+    </h:panelGrid>
+    
+    <p:panel id="dr_suivi" styleClass="panelSuivi" rendered="#{essaiManager.hasLastModif(idOnglet_rech)}"> 
+		<c:set var="lastModifOngRecherche" value="#{essaiManager.getLastModif(idOnglet_rech)}" />
+		<h:outputText value="#{resourceBundle['suivi.part1']} " />
+		<h:outputText value="#{lastModifOngRecherche.dateMaj.time}">
+			<f:convertDateTime pattern="#{resourceBundle['date.pattern.withHeures']}"/>
+		</h:outputText>
+		<h:outputText value="#{resourceBundle['suivi.part2']} " />
+		<h:outputText value="#{lastModifOngRecherche.majPar}" />
+		<h:outputText value="#{resourceBundle['ponctuation.bracket.open']} " />
+		<h:outputLink id="labelDRModifs" value="javascript:void(0)" styleClass="clickable"
+			onclick="popupHistoOngRecherche.show()" title="#{resourceBundle['suivi.popupLink.title']}">#{resourceBundle['suivi.historique']}
+		</h:outputLink>
+		<h:outputText value="#{resourceBundle['ponctuation.bracket.close']} " />
+	</p:panel>
+	
+</ui:composition>

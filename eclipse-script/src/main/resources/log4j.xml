@@ -1,0 +1,169 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE log4j:configuration SYSTEM "log4j.dtd">
+	<!-- CONFIGURATION PAR DEFAUT DE LOG4J -->
+<log4j:configuration xmlns:log4j='http://jakarta.apache.org/log4j/' debug="false">
+	
+	<!-- Sortie console -->
+	<appender name="CONSOLE" class="org.apache.log4j.ConsoleAppender">
+		<layout class="org.apache.log4j.PatternLayout">
+			<param name="ConversionPattern" value="[%d{dd/MM/yyyy HH:mm:ss,SSS} %-5p (%10F:%L) %m%n %x] %X{session} %X{utilisateur} (%c)  " />
+		</layout>
+	</appender>
+	
+	<!-- Sortie console test -->
+	<appender name="CONSOLE_TEST" class="org.apache.log4j.ConsoleAppender">
+		<layout class="org.apache.log4j.PatternLayout">
+			<param name="ConversionPattern" value="%m %n"/>
+		</layout>
+	</appender>	
+	
+	<!-- Sortie fichier -->
+	<appender name="FILE" class="org.apache.log4j.RollingFileAppender">
+		<param name="File" value="${log4j_file}" />
+		<param name="MaxFileSize" value="1000KB" />
+		<param name="MaxBackupIndex" value="2" />
+		<layout class="org.apache.log4j.PatternLayout">
+			<param name="ConversionPattern" value="[%d{dd/MM/yyyy HH:mm:ss,SSS} %-5p (%10F:%L) %m%n %x]" />
+		</layout>
+	</appender>
+	
+	<!-- Sortie fichier -->
+	<appender name="FILE_SIGREC" class="org.apache.log4j.RollingFileAppender">
+		<param name="File" value="${log4j_file_sigrec}" />
+		<param name="MaxFileSize" value="1000KB" />
+		<param name="MaxBackupIndex" value="2" />
+		<layout class="org.apache.log4j.PatternLayout">
+			<param name="ConversionPattern" value="[%d{dd/MM/yyyy HH:mm:ss,SSS} %-5p (%10F:%L) %m%n %x]" />
+		</layout>
+	</appender>
+	
+	
+	<!-- Sortie fichier test -->
+	<appender name="FILE_TEST" class="org.apache.log4j.RollingFileAppender">
+		<param name="File" value="${log4j_file_test}" />
+		<param name="MaxFileSize" value="1000KB" />
+		<param name="MaxBackupIndex" value="2" />
+		<layout class="org.apache.log4j.PatternLayout">
+			<param name="ConversionPattern" value="[%d{dd/MM/yyyy HH:mm:ss,SSS} %-5p (%10F:%L) %m%n %x]" />
+		</layout>
+	</appender>	
+
+	<logger name="org.hibernate.pretty.Printer">
+		<level value="ERROR" />
+		<appender-ref ref="CONSOLE" />
+		<appender-ref ref="FILE" />
+	</logger>
+	<logger name="org.hibernate.engine.TwoPhaseLoad">
+		<level value="ERROR" />
+		<appender-ref ref="CONSOLE" />
+		<appender-ref ref="FILE" />
+	</logger>
+	<logger name="org.hibernate.loader.Loader">
+		<level value="ERROR" />
+		<appender-ref ref="CONSOLE" />
+		<appender-ref ref="FILE" />
+	</logger>
+	<logger name="org.dbunit.database">
+		<level value="ERROR" />
+		<appender-ref ref="CONSOLE" />
+		<appender-ref ref="FILE" />
+	</logger>
+	<logger name="org.hibernate.persister.entity">
+		<level value="ERROR" />
+		<appender-ref ref="CONSOLE" />
+		<appender-ref ref="FILE" />
+	</logger>
+	<logger name="org.springframework.orm.hibernate3">
+		<level value="ERROR" />
+		<appender-ref ref="CONSOLE" />
+		<appender-ref ref="FILE" />
+	</logger>
+	<logger name="org.apache.commons.digester.Digester">
+		<level value="ERROR" />
+		<appender-ref ref="CONSOLE" />
+		<appender-ref ref="FILE" />
+	</logger>
+	<logger name="org.apache.commons.beanutils">
+		<level value="ERROR" />
+		<appender-ref ref="CONSOLE" />
+		<appender-ref ref="FILE" />
+	</logger>
+	<logger name="org.hibernate.cfg">
+		<level value="ERROR" />
+		<appender-ref ref="CONSOLE" />
+		<appender-ref ref="FILE" />
+	</logger>
+	<logger name="org.hibernate.loader.entity">
+		<level value="ERROR" />
+		<appender-ref ref="CONSOLE" />
+		<appender-ref ref="FILE" />
+	</logger>
+	<logger name="org.hibernate.util">
+		<level value="ERROR" />
+		<appender-ref ref="CONSOLE" />
+		<appender-ref ref="FILE" />
+	</logger>
+	<logger name="org.hibernate.connection">
+		<level value="ERROR" />
+		<appender-ref ref="CONSOLE" />
+		<appender-ref ref="FILE" />
+	</logger>
+	<logger name="org.hibernate.impl">
+		<level value="ERROR" />
+		<appender-ref ref="CONSOLE" />
+		<appender-ref ref="FILE" />
+	</logger>
+	<logger name="org.springframework.beans.factory">
+		<level value="ERROR" />
+		<appender-ref ref="CONSOLE" />
+		<appender-ref ref="FILE" />
+	</logger>
+	<logger name="org.springframework.context.support">
+		<level value="ERROR" />
+		<appender-ref ref="CONSOLE" />
+		<appender-ref ref="FILE" />
+	</logger>
+	<logger name="org.apache.catalina.startup.TldConfig">
+		<level value="ERROR" />
+		<appender-ref ref="CONSOLE" />
+		<appender-ref ref="FILE" />
+	</logger>
+	<logger name="org.acegisecurity.intercept">
+		<level value="ERROR" />
+		<appender-ref ref="CONSOLE" />
+		<appender-ref ref="FILE" />
+	</logger>
+	<logger name="org.apache.jasper.compiler">
+		<level value="ERROR" />
+		<appender-ref ref="CONSOLE" />
+		<appender-ref ref="FILE" />
+	</logger>
+	<logger name="org.apache.catalina.session.ManagerBase">
+		<level value="ERROR" />
+		<appender-ref ref="CONSOLE" />
+		<appender-ref ref="FILE" />
+	</logger>
+	<logger name="net.sf.ehcache">
+		<level value="ERROR" />
+		<appender-ref ref="CONSOLE" />
+		<appender-ref ref="FILE" />
+	</logger>
+	<logger name="org.hibernate.tool.hbm2ddl.SchemaExport">
+		<level value="INFO" />
+		<appender-ref ref="CONSOLE" />
+		<appender-ref ref="FILE" />
+	</logger>
+
+	<logger name="fr.pharma.eclipse">
+		<level value="INFO" />
+		<appender-ref ref="CONSOLE" />
+		<appender-ref ref="FILE_SIGREC" />
+	</logger>
+
+	<!-- applique les sorties au root -->
+	<root>
+		<level value="${log4j_rootlevel}" />
+		<appender-ref ref="${log4j_appender-ref}" />
+	</root>
+
+</log4j:configuration>

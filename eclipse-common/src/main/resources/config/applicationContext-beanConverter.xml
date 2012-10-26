@@ -1,0 +1,121 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans 
+    xmlns="http://www.springframework.org/schema/beans" 
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd">
+
+	<!-- ####################### -->
+	<!-- 		CONVERTERS		 -->
+	<!-- ####################### -->
+	<!-- Essai -->
+	<bean id="essaiBeanConverter"
+		class="fr.pharma.eclipse.utils.converter.impl.EssaiBeanConverter">
+		<constructor-arg index="0" ref="essaiFetcher" />
+		<constructor-arg index="1" ref="essaiFactory" />
+		<property name="fillers">
+			<list>
+				<ref bean="promoteurFiller" />
+				<ref bean="croFiller" />
+				<ref bean="investigateurFiller" />
+				<ref bean="arcInvestigateurFiller" />
+				<ref bean="assuranceFiller" />
+			</list>
+		</property>
+	</bean>
+	<!-- Cro -->
+	<bean id="croConverter"
+		class="fr.pharma.eclipse.utils.converter.impl.GenericBeanConverter">
+		<constructor-arg index="0" ref="croFetcher" />
+		<constructor-arg index="1" ref="croFactory" />
+	</bean>
+	<!-- Investigateur -->
+	<bean id="investigateurBeanConverter"
+		class="fr.pharma.eclipse.utils.converter.impl.GenericBeanConverter">
+		<constructor-arg index="0" ref="investigateurFetcher" />
+		<constructor-arg index="1" ref="investigateurFactory" />
+	</bean>
+	<!-- ARC investigateur -->
+	<bean id="arcInvestigateurBeanConverter"
+		class="fr.pharma.eclipse.utils.converter.impl.GenericBeanConverter">
+		<constructor-arg index="0" ref="investigateurFetcher" />
+		<constructor-arg index="1" ref="arcInvestigateurFactory" />
+	</bean>
+
+	<!-- ####################### -->
+	<!-- 		FETCHERS		 -->
+	<!-- ####################### -->
+	<!-- Essai -->
+	<bean id="essaiFetcher" class="fr.pharma.eclipse.utils.introspection.GenericFetcher">
+		<property name="mapping">
+			<map>
+				<!--  Essai -->
+				<entry value="nom" key="nom" />
+				<entry value="numIdentificationAC" key="detailAdministratif.infosAC.numIdentAC" />
+				<entry value="codePromoteur" key="codePromoteur" />
+				<entry value="typePromoteur" key="typePromoteur" />
+				<!-- Detail recherche -->
+				<entry value="detailRecherche.titreProtocole" key="detailRecherche.titreProtocole" />
+				<entry value="detailRecherche.numEnregistrement" key="detailRecherche.numEnregistrement" />
+				<entry value="detailRecherche.typeRecherche" key="detailRecherche.typeRecherche" />
+				<entry value="detailRecherche.objetRecherche" key="detailRecherche.objetRecherche" />
+				<entry value="detailRecherche.phaseRecherche" key="detailRecherche.phaseRecherche" />
+				<entry value="detailRecherche.natureRecherche" key="detailRecherche.natureRecherche" />
+				<!--
+					<entry value="detailRecherche.qualiteInsu"
+					key="detailRecherche.qualiteInsu" />
+				-->
+				<!-- Prévision -->
+				<entry value="prevision.dateDebut" key="detailDates.debutEtudePrev" />
+				<entry value="prevision.dateFin" key="detailDates.finEtudePrev" />
+			</map>
+		</property>
+	</bean>
+	<!--  CRO -->
+	<bean id="croFetcher" class="fr.pharma.eclipse.utils.introspection.GenericFetcher">
+		<property name="mapping">
+			<map>
+				<entry value="contact.raisonSociale" key="nom" />
+				<entry value="contact.raisonSociale" key="nomSociete" />
+				<entry value="contact.adresse" key="adresse" />
+				<entry value="contact.ville" key="ville" />
+				<entry value="contact.codePostal" key="codePostal" />
+			</map>
+		</property>
+	</bean>
+	<!-- Investigateur -->
+	<bean id="investigateurFetcher" class="fr.pharma.eclipse.utils.introspection.GenericFetcher">
+		<property name="mapping">
+			<map>
+				<entry value="contact.prenom" key="prenom" />
+				<entry value="contact.nom" key="nom" />
+			</map>
+		</property>
+	</bean>
+	<!-- Assurance -->
+	<bean id="assuranceFetcher" class="fr.pharma.eclipse.utils.introspection.GenericFetcher">
+		<property name="mapping">
+			<map>
+				<entry key="numeroContrat" value="numeroContrat" />
+				<entry key="nomCompagnie" value="contact.nom" />
+				<entry key="ville" value="contact.ville" />
+				<entry key="codePostal" value="contact.codePostal" />
+				<entry key="dateDebutValidite" value="dateDebutValidite" />
+				<entry key="dateFinValidite" value="dateFinValidite" />
+			</map>
+		</property>
+	</bean>
+
+	<!-- ####################### -->
+	<!-- 		FILLERS		 	 -->
+	<!-- ####################### -->
+	<bean id="promoteurFiller"
+		class="fr.pharma.eclipse.utils.converter.filler.impl.essai.PromoteurFiller" />
+	<bean id="croFiller"
+		class="fr.pharma.eclipse.utils.converter.filler.impl.essai.CroFiller" />
+	<bean id="investigateurFiller"
+		class="fr.pharma.eclipse.utils.converter.filler.impl.essai.InvestigateurFiller" />
+	<bean id="arcInvestigateurFiller"
+		class="fr.pharma.eclipse.utils.converter.filler.impl.essai.ArcInvestigateurFiller" />
+	<bean id="assuranceFiller"
+		class="fr.pharma.eclipse.utils.converter.filler.impl.essai.AssuranceFiller" />
+</beans>

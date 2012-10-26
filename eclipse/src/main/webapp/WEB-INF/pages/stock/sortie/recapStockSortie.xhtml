@@ -1,0 +1,289 @@
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+     xmlns:ui="http://java.sun.com/jsf/facelets"
+     xmlns:h="http://java.sun.com/jsf/html"
+     xmlns:f="http://java.sun.com/jsf/core"
+     xmlns:p="http://primefaces.prime.com.tr/ui"
+     xmlns:c="http://java.sun.com/jsp/jstl/core"
+     template="/WEB-INF/pages/template/template.xhtml">
+     
+     <ui:define name="title">
+		<h:outputFormat value="#{resourceBundle['stockSortie.recapitulatif']}"/>
+		<h:form prependId="false">
+			<p:commandLink id="incidentButton" styleClass="incident" actionListener="#{incidentManager.init(sortieManager.result.essai)}" ajax="true" update="incident_form"  oncomplete="popupIncident.show();"  >
+				<h:graphicImage library="images" name="incident.png" />
+				<p:tooltip for="incidentButton" value="#{resourceBundle['incident.ajouter']}"/>
+			</p:commandLink>
+		</h:form>
+     </ui:define>
+
+ 	<ui:define name="body">
+     	<h:form id="formRecapStockSortie" prependId="false">
+
+			<c:set var="result" value="#{sortieManager.result}"/>
+
+   			<fieldset>
+   			
+	   			<div align="right" style="margin-right:45px;margin-bottom:3px;">
+			   		<h:outputLink id="print" value="#">  
+						<p:printer target="formRecapStockSortie" />  
+				    	<h:graphicImage library="images" name="imprimer.gif" title="#{resourceBundle['btn.imprimer']}"/>
+				 	</h:outputLink>
+				</div>
+				
+				<table class="stock large" cellpadding="0" cellspacing="0" border="0" width="100%">
+					<tr>
+		 				<td>
+							<h:panelGrid id="panelGeneral" columns="4" columnClasses="panelCol_25,panelCol_25,panelCol_25,panelCol_25" cellpadding="0" cellspacing="0" border="0" width="100%">
+	
+								<!-- Essai -->
+		 						<h:outputLabel id="labelEssai" for="essai" value="#{resourceBundle['stockSortie.essai']}" />
+								<h:outputText id="essai" value="#{result.essai.numInterne} #{result.essai.nom}"/>
+								
+								<!-- Pharmacie -->
+		 						<h:outputLabel id="labelPharmacie" for="pharmacie" value="#{resourceBundle['stockSortie.pharmacie']}" />
+								<h:outputText id="pharmacie" value="#{result.pharmacie.nom}"/>
+								
+								<!-- Promoteur -->
+		 						<h:outputLabel id="labelPromoteur" for="promoteur" value="#{resourceBundle['stockSortie.promoteur']}" />
+								<h:outputText id="promoteur" value="#{result.promoteur.raisonSociale}"/>
+												
+								<!-- Date -->
+								<h:outputLabel id="labelDate" for="date" value="#{resourceBundle['stockSortie.date']}"/>
+								<h:outputText id="date" value="#{result.dateSortie}" converter="#{calendarConverter}"/>
+	
+								<!-- Code Promoteur -->
+		 						<h:outputLabel id="labelCodePromoteur" for="codePromoteur" value="#{resourceBundle['stockSortie.codePromoteur']}" />
+								<h:outputText id="codePromoteur" value="#{result.essai.codePromoteur}"/>
+								
+								<!-- Type de sortie -->
+								<h:outputLabel id="labelTypeSortie" for="typeSortie" value="#{resourceBundle['stockSortie.typeSortie']}" />
+								<h:outputText id="typeSortie" value="#{sortieManager.typeSortie.libelle}" />
+								
+								<!-- Sortie par -->
+		 						<h:outputLabel id="labelSortiePar" for="sortiePar" value="#{resourceBundle['stockSortie.sortiePar']}" />
+								<h:outputText id="sortiePar" value="#{result.personne.prenom} #{result.personne.nom}"/>
+								
+								<!-- Type de sortie -->
+								<h:outputLabel id="labelRaisonSortie" for="raisonSortie" value="#{resourceBundle['stockSortie.raisonSortie']}" />
+								<h:outputText id="raisonSortie" value="#{sortieManager.raisonSortie.libelle}" rendered="#{sortieManager.raisonSortie ne null}"/>
+								<h:panelGroup rendered="#{sortieManager.raisonSortie eq null}" />
+								
+							</h:panelGrid>
+							<h:panelGrid id="panecommentaireRaison" columns="2" columnClasses="panelCol_25,panelCol_75" cellpadding="0" cellspacing="0" border="0" width="100%">
+								<h:outputLabel id="labelCommentaireRaison" for="commentaireRaison" value="#{resourceBundle['stockSortie.commentaireRaison.mandatory']}" rendered="#{sortieManager.raisonSortie == 'AUTRE'}" />
+								<h:inputTextarea id="commentaireRaison" disabled="true" 
+									value="#{sortieManager.commentaireRaison}" rendered="#{sortieManager.raisonSortie == 'AUTRE'}"
+									rows="#{resourceBundle['textarea.rows.default']}" />
+							</h:panelGrid>
+							
+							<h:panelGrid id="panelTransport" columns="4" columnClasses="panelCol_25,panelCol_25,panelCol_25,panelCol_25" cellpadding="0" cellspacing="0" border="0" width="100%"
+								rendered="#{sortieManager.typeSortie == 'RETOUR_PROMOTEUR'}">
+								<!-- Nom de la societe de transport -->
+								<h:outputLabel id="labelNomSocieteTransport" for="nomSocieteTransport" value="#{resourceBundle['stockSortie.nomSocieteTransport']}"/>
+								<h:outputText id="nomSocieteTransport" value="#{sortieManager.nomSocieteTransport}" />
+								
+								<!-- Nom de la reference envoi -->
+								<h:outputLabel id="labelReferenceEnvoi" for="referenceEnvoi" value="#{resourceBundle['stockSortie.referenceEnvoi']}" />
+								<h:outputText id="referenceEnvoi" value="#{sortieManager.referenceEnvoi}" />
+								
+								<!-- Certificat de retour promoteur -->
+								<h:outputLabel value="#{resourceBundle['stockSortie.certificatRetourPromoteur']}" rendered="#{not empty sortieManager.result.document}"/>
+								<h:panelGroup id="panelCertificatRetourPromoteur" rendered="#{not empty sortieManager.result.document}">
+									<h:panelGrid columns="2" columnClasses="panelCol_50,panelCol_50" cellspacing="5" border="0" width="100%">					
+										<h:outputText value="#{sortieManager.result.document.nomUtilisateur}"
+											title="#{documentsIhmHelper.buildDocTitle(sortieManager.result.document, resourceBundle['document.part1'], resourceBundle['document.part2'], resourceBundle['date.pattern.withHeures'])}" />
+										<p:commandButton value="#{resourceBundle['file.dwd']}" title="#{resourceBundle['file.dwd']}" immediate="true" ajax="false" >
+											<p:fileDownload value="#{fileDwdController.downloadDocument(sortieManager.result.mvts[0], sortieManager.result.document)}" />
+										</p:commandButton>
+									</h:panelGrid> 
+								</h:panelGroup>	
+				           	</h:panelGrid>
+				           	
+							<!-- Modalites de destruction -->
+							<h:panelGrid columns="2" columnClasses="panelCol_25, panelCol_75" cellpadding="0" cellspacing="0" border="0" width="100%" 
+								rendered="#{result.essai != null and not empty sortieManager.typeSortie and sortieManager.typeSortie == 'DESTRUCTION'}">
+								
+								<h:outputLabel id="labelModalite" for="modalite" value="#{resourceBundle['stockSortie.modaliteDestruction']}" />
+								<h:inputTextarea id="modalite" disabled="true" 
+									value="#{result.essai.detailDonneesPharma.infosComplementaires.modaliteDestruction}"
+									rows="#{resourceBundle['textarea.rows.default']}" />
+								
+								<c:set var="doc_mod_des" value="#{result.essai.detailDonneesPharma.infosComplementaires.documentModaliteDestruction}" />
+								
+								<h:outputLabel value="#{resourceBundle['stockSortie.fichierModaliteDestruction']}" rendered="#{not empty doc_mod_des}" />
+								<h:panelGrid id="mod_des_doc_grid" columns="2" columnClasses="panelCol_50, panelCol_50" rendered="#{not empty doc_mod_des}">
+									<h:outputText value="#{doc_mod_des.nomUtilisateur}" title="#{documentsIhmHelper.buildDocTitle(doc_mod_des, resourceBundle['document.part1'], resourceBundle['document.part2'], resourceBundle['date.pattern.withHeures'])}" />
+									<p:commandButton immediate="true" value="#{resourceBundle['file.dwd']}" title="#{resourceBundle['file.dwd']}" ajax="false">
+										<p:fileDownload value="#{fileDwdController.downloadDocument(result.essai, doc_mod_des)}" />
+									</p:commandButton>
+								</h:panelGrid>  
+									
+								<!-- Certificat de destruction --> 
+								<h:outputLabel value="#{resourceBundle['stockSortie.certificatDestruction']}" rendered="#{not empty sortieManager.result.document}"/>
+								<h:panelGroup id="panelCertificatDestruction" rendered="#{not empty sortieManager.result.document}">
+									<h:panelGrid columns="2" columnClasses="panelCol_50,panelCol_50" cellspacing="5" border="0" width="100%">					
+										<h:outputText value="#{sortieManager.result.document.nomUtilisateur}"
+											title="#{documentsIhmHelper.buildDocTitle(sortieManager.result.document, resourceBundle['document.part1'], resourceBundle['document.part2'], resourceBundle['date.pattern.withHeures'])}" />
+										<p:commandButton value="#{resourceBundle['file.dwd']}" title="#{resourceBundle['file.dwd']}" immediate="true" ajax="false" >
+											<p:fileDownload value="#{fileDwdController.downloadDocument(sortieManager.result.mvts[0], sortieManager.result.document)}" />
+										</p:commandButton>
+									</h:panelGrid> 
+								</h:panelGroup>		
+							</h:panelGrid>								
+				           		
+							<h:panelGrid id="panelCommentaire" columns="2" columnClasses="panelCol_25,panelCol_75" cellpadding="0" cellspacing="0" border="0" width="100%">
+								<!-- Commentaire -->
+								<h:outputLabel id="commentaireSortie" for="commentaire" value="#{resourceBundle['stockSortie.commentaire']}"/>
+								<h:inputTextarea  id="commentaire" disabled="true" 
+									value="#{sortieManager.commentaire}"
+									rows="#{resourceBundle['textarea.rows.default']}" />				           										
+							</h:panelGrid>			
+							<br/>
+								
+							<p:panel header="#{resourceBundle['stockSortie.pharmacieDest']}" style="width:100%;"
+									rendered="#{sortieManager.typeSortie == 'CESSION_PUI'}">
+								<h:panelGrid id="panelCession" columns="4" columnClasses="panelCol_25,panelCol_25,panelCol_25,panelCol_25" cellpadding="0" cellspacing="0" border="0" width="100%">
+									<!-- Pharmacie -->
+									<h:outputLabel id="labelNomPharmacieDest" for="nomPharmacieDest" value="#{resourceBundle['stockSortie.nom']}"/>
+									<h:outputText id="nomPharmacieDest" value="#{sortieManager.pharmacieDest.nom}" />
+									<!-- Responsable -->
+									<h:outputLabel id="labelRespPharmacieDest" for="respPharmacieDest" value="#{resourceBundle['stockSortie.responsable']}"/>
+									<h:outputText id="respPharmacieDest" value="#{sortieManager.pharmacieDest.responsablePrincipal}" />
+									<!-- Adresse -->
+									<h:outputLabel id="labelAdresseLivraison" for="adresseLivraison" value="#{resourceBundle['stockSortie.adresseLivraison']}"/>
+									<h:outputText id="adresseLivraison" value="#{sortieManager.pharmacieDest.adresse}" />
+									<!-- Telephone -->
+									<h:outputLabel id="labelTelephoneLvira" for="telephoneLivraison" value="#{resourceBundle['stockSortie.telephoneLivraison']}"/>
+									<h:outputText id="telephoneLivraison" value="#{sortieManager.pharmacieDest.telephone}" />
+									
+					           	</h:panelGrid>
+					           	
+							</p:panel>		
+									
+							<h:panelGrid columns="4" columnClasses="panelCol_25,panelCol_25,panelCol_25,panelCol_25" cellpadding="0" cellspacing="0" border="0" width="100%" rendered="#{sortieManager.typeSortie == 'CESSION_PUI'}">
+								<p:commandButton image="ui-icon ui-icon-disk" value="#{resourceBundle['export.jasper.accuseReception']}" title="#{resourceBundle['export.jasper.accuseReception']}" ajax="false">
+										<p:fileDownload value="#{jasperReportDwdController.downloadRapport(result, enumManager.getEnumValue('TypeRapportJasper','ACCUSE_RECEPTION'))}" />
+								</p:commandButton>
+								<p:commandButton image="ui-icon ui-icon-disk" value="#{resourceBundle['export.jasper.lettre']}" title="#{resourceBundle['export.jasper.lettre']}" ajax="false">
+										<p:fileDownload value="#{fileDwdController.downloadDocument(DOCUMENT_LETTRE_AR)}" />
+								</p:commandButton>
+								<p:commandButton image="ui-icon ui-icon-disk" value="#{resourceBundle['export.jasper.documentCession']}" title="#{resourceBundle['export.jasper.documentCession']}" ajax="false">
+										<p:fileDownload value="#{fileDwdController.downloadDocument(DOCUMENT_CESSION_PUI)}" />
+								</p:commandButton>
+							</h:panelGrid>
+						</td>
+					</tr>
+		 		</table>
+		 	</fieldset>
+		 		
+	 		<p:panel id="panelSorties" style="width:955px;" header="#{resourceBundle['stockSortie.sorties']}" >
+	 		
+				<p:dataTable var="sortie" value="#{result.sorties}">
+				
+					<!-- Produit -->
+				   	<p:column>
+				   		<f:facet name="header">
+							<h:outputLabel value="#{resourceBundle['stockSortie.produit']}"/>
+						</f:facet>
+						<h:outputText value="#{sortie.mvtSortie.produit.denomination}"/>
+					</p:column>
+					
+					<!-- Conditionnement -->
+					<p:column>
+						<f:facet name="header">
+							<h:outputLabel value="#{resourceBundle['stockSortie.conditionnement']}"/>
+						</f:facet>
+						<h:outputText value="#{sortie.mvtSortie.conditionnement.libelle}" />
+					</p:column>
+					
+					<!-- Numero Lot Num traitement Quantite -->
+					<p:column>
+						<f:facet name="header">
+							<h:outputLabel value="#{resourceBundle['stockSortie.qteSortie']}"/>
+							<br />
+							<h:outputLabel value="[#{resourceBundle['stockSortie.numLot']} - #{resourceBundle['stockSortie.numeroTraitement']}]" />
+						</f:facet>
+						
+						
+						<div align="center">
+							<h:outputText value="#{sortie.qteCumulSortie}" />
+							<ui:repeat var="ligneStock" value="#{sortie.lignesStockCompletees}">
+								<br />				
+								<h:outputText value="#{ligneStock.qteASortir} x "/>
+								<h:outputText value="["/>
+								<h:outputText value="#{ligneStock.numLot} - " rendered="#{not empty ligneStock.numLot}" />
+								<h:outputText value="#{ligneStock.numTraitement}" rendered="#{not empty ligneStock.numTraitement}" />
+								<h:outputText value="]"/>
+							</ui:repeat>
+						</div>
+								
+					</p:column>				
+
+					<!-- Date de peremption -->
+					<p:column>
+						<f:facet name="header">
+							<h:outputLabel value="#{resourceBundle['stockSortie.datePeremption']}"/>
+						</f:facet>
+						<div align="center">
+							<ui:repeat var="ligneStock" value="#{sortie.lignesStockCompletees}">
+								<br />
+								<h:outputText value="#{ligneStock.datePeremption}" converter="#{calendarConverter}"/>
+							</ui:repeat>
+						</div>
+					</p:column>
+					
+					<!-- Lieu de stockage -->					
+					<p:column>
+						<f:facet name="header">
+							<h:outputLabel value="#{resourceBundle['stockReception.stockage']}"/>
+						</f:facet>
+						<h:outputText value="#{sortie.lignesStockCompletees.get(0).stockage}"/>
+					</p:column>					
+					
+				</p:dataTable>
+			</p:panel>
+		 		
+		</h:form>
+		
+			 	<!-- Popup d'ajout d'un incident -->
+		 <p:dialog header="#{resourceBundle['incident.ajouter']}" widgetVar="popupIncident" styleClass="essaiTabPopup" resizable="true" modal="true" width="500" closeListener="#{incidentManager.reinit() }">  
+		     <h:form id="incident_form">
+		     
+		         <!-- Libelle  -->
+				<h3><h:outputFormat value="#{resourceBundle['incident.libelle']}" /></h3>
+				<fieldset>
+					<p:outputPanel id="dr_popupIncident_outp_lib" style="display:block;margin-top:10px;">
+						<h:panelGrid columns="1" style="margin-bottom:10px" width="100%">  
+							<h:inputText id="dr_popupIncident_lib"
+								value="#{incidentManager.bean.libelle}" />
+						</h:panelGrid>
+					</p:outputPanel>
+				</fieldset>
+				
+				<!-- Commentaire -->
+				<h3><h:outputFormat value="#{resourceBundle['incident.commentaire']}" /></h3>
+				<fieldset>
+					<p:outputPanel id="dr_popupIncident_outp_comm" style="display:block;margin-top:10px;">
+						<h:panelGrid columns="1" style="margin-bottom:10px" width="100%">  
+							<h:inputTextarea id="dr_popupIncident_comm"
+								value="#{incidentManager.bean.commentaire}" 
+								rows="#{resourceBundle['textarea.rows.default']}" />
+						</h:panelGrid>
+					</p:outputPanel>
+				</fieldset>
+				<div class="popupButton">
+					<p:commandButton value="#{resourceBundle['btn.ajouter']}" 
+						actionListener="#{incidentManager.ajouterIncident()}" 
+						oncomplete="popupIncident.hide();"/>
+	       			<p:commandButton value="#{resourceBundle['btn.fermer']}" oncomplete="popupIncident.hide();"/>
+	       		</div>   
+		     </h:form>  
+		 </p:dialog>	
+		
+		
+	</ui:define>
+	
+	
+     
+     
+</ui:composition>

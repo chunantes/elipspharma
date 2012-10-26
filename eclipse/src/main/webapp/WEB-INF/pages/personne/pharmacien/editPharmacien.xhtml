@@ -1,0 +1,303 @@
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+     xmlns:ui="http://java.sun.com/jsf/facelets"
+     xmlns:h="http://java.sun.com/jsf/html"
+     xmlns:f="http://java.sun.com/jsf/core"
+	 xmlns:p="http://primefaces.prime.com.tr/ui"
+	 xmlns:t="http://myfaces.apache.org/tomahawk"
+	 xmlns:c="http://java.sun.com/jsp/jstl/core"
+     template="/WEB-INF/pages/template/template.xhtml">
+     
+     <ui:define name="title">
+		<h:outputFormat value="#{resourceBundle['gestionPharmacien.title']}"/>
+     </ui:define>
+     
+     <ui:define name="body">
+		 
+		 <h:form id="editPharmacien" prependId="false">
+		     <p:panel id="panel" header="#{resourceBundle['gestionPharmacien.pharmacien']}">
+		     	 <p:focus />
+		         <p:messages/>
+		        
+		         <h:panelGrid width="50%" columns="2" cellpadding="4" cellspacing="0"
+						border="0" columnClasses="panelCol_45,panelCol_55">
+		         
+		             <h:outputLabel id="loginLabel" for="login" value="#{resourceBundle['gestionPharmacien.login']}"/>
+		             <h:inputText id="login" value="#{pharmacienManager.bean.login}"/>			         
+		         
+		             <h:outputLabel id="passwordLabel" for="password" value="#{resourceBundle['gestionCro.password']}"/>
+		             <h:inputSecret redisplay="true" id="password" value="#{pharmacienManager.bean.password}"/>
+		             		         
+		             <h:outputLabel id="confirmPasswordLabel" for="confirmPassword" value="#{resourceBundle['gestionCro.confirmPassword']}"/>
+		             <h:inputSecret redisplay="true" id="confirmPassword" value="#{pharmacienManager.bean.confirmPassword}"/>	
+		         
+		         	 <h:outputLabel id="categorieLabel" for="categorie" value="#{resourceBundle['gestionPharmacien.categorie']}"/>
+		         	 <h:selectOneMenu immediate="true" id="categorie" value="#{pharmacienManager.bean.typePharmacien}" 
+		         	 	styleClass="selectRadio" required="true" requiredMessage="#{resourceBundle['pharmacien.categorie.notEmpty']}">
+			           	<f:selectItem noSelectionOption="true"/>
+			           	<f:selectItems value="#{enumManager.getValues('TypePharmacien')}"/>
+			           	<f:ajax execute="@this" immediate="true" render="@form" listener="#{pharmacienManager.handleSelectCategPharmacien}"/>
+			         </h:selectOneMenu>
+		         
+		        	 <h:outputLabel id="isAdminLabel" for="isAdmin" value="#{resourceBundle['gestionPharmacien.administrateur']}" rendered="#{pharmacienManager.bean.typePharmacien == 'TITULAIRE'}"/>
+		         	 <h:selectBooleanCheckbox id="isAdmin" value="#{pharmacienManager.bean.isAdmin}" rendered="#{pharmacienManager.bean.typePharmacien == 'TITULAIRE'}"/>
+		         
+		             <h:outputLabel id="nomLabel" for="nom" value="#{resourceBundle['gestionPharmacien.nom']}"/>
+		             <h:inputText id="nom" value="#{pharmacienManager.bean.nom}" required="true" requiredMessage="#{resourceBundle['pharmacien.nom.notEmpty']}"/>
+		             
+		             <h:outputLabel id="prenomLabel" for="prenom" value="#{resourceBundle['gestionPharmacien.prenom']}"/>
+		             <h:inputText id="prenom" value="#{pharmacienManager.bean.prenom}"/>
+		             
+		             <h:outputLabel id="telephoneLabel" for="telephone" value="#{resourceBundle['gestionPharmacien.telephone']}"/>
+		             <h:inputText id="telephone" value="#{pharmacienManager.bean.telephone}"/>
+		             
+		             <h:outputLabel id="telephoneportableLabel" for="telephonePortable" value="#{resourceBundle['gestionPharmacien.telephonePortable']}"/>
+		             <h:inputText id="telephonePortable" value="#{pharmacienManager.bean.telephonePortable}"/>
+		             
+		             <h:outputLabel id="mailLabel" for="mail" value="#{resourceBundle['gestionPharmacien.mail']}"/>
+		             <h:inputText id="mail" value="#{pharmacienManager.bean.mail}"/>
+		             
+		             <h:outputLabel id="faxLabel" for="fax" value="#{resourceBundle['gestionPharmacien.fax']}"/>
+		             <h:inputText id="fax" value="#{pharmacienManager.bean.fax}"/>
+		             
+		             <h:outputLabel id="adresseLabel" for="adresse" value="#{resourceBundle['gestionPharmacien.adresse']}"/>
+		             <h:inputTextarea id="adresse" value="#{pharmacienManager.bean.adresse}"
+		             	rows="#{resourceBundle['textarea.rows.default']}" />
+		             
+		             <h:outputLabel id="codePostalLabel" for="codePostal" value="#{resourceBundle['gestionPharmacien.codePostal']}"/>
+		             <h:inputText id="codePostal" value="#{pharmacienManager.bean.codePostal}"/>
+		             
+		             <h:outputLabel id="villeLabel" for="ville" value="#{resourceBundle['gestionPharmacien.ville']}"/>
+		             <h:inputText id="ville" value="#{pharmacienManager.bean.ville}"/>
+
+				
+					<h:outputLabel for="cv"
+						value="#{resourceBundle['gestionPharmacien.cv']}" />
+					<h:panelGroup id="cv">
+						<p:outputPanel id="cv_doc">
+							<c:set var="doc" value="#{pharmacienManager.bean.documentCV}" />
+							<h:panelGrid id="cv_doc_grid" columns="3"
+								columnClasses="panelCol_25,panelCol_25,panelCol_50">
+								<c:if test="#{doc == null }">
+									<p:commandLink id="label_cv_doc" value="#{resourceBundle['gestionPharmacien.cv.doc']}"
+										onclick="popupDocCV.show()" styleClass="clickable"
+											title="#{resourceBundle['document.popupLink.title']}"/>
+								</c:if>
+								<c:if test="#{doc != null}">
+									<h:outputText value="#{doc.nomUtilisateur}"
+										title="#{documentsIhmHelper.buildDocTitle(doc, resourceBundle['document.part1'], resourceBundle['document.part2'], resourceBundle['date.pattern.withHeures'])}" />
+									<p:commandButton value="#{resourceBundle['file.dwd']}"
+										title="#{resourceBundle['file.dwd']}" ajax="false"> 
+										<p:fileDownload
+											value="#{fileDwdController.downloadDocument(pharmacienManager.bean, doc)}" />
+									</p:commandButton>
+										<p:commandLink ajax="false"
+										title="#{resourceBundle['document.del']}"
+										actionListener="#{pharmacienManager.supprimerDocument(enumManager.getEnumValue('TypeDocumentPharmacien','CV'))}">
+										<h:graphicImage library="images" name="del.gif" />
+									</p:commandLink>
+								</c:if>
+							</h:panelGrid>
+						</p:outputPanel>
+					</h:panelGroup>
+					
+					<h:outputLabel for="validationFormation"
+						value="#{resourceBundle['gestionPharmacien.validationFormation']}" />
+					<h:panelGroup id="validationFormation">
+						<p:outputPanel id="validationFormation_doc">
+							<c:set var="doc" value="#{pharmacienManager.bean.documentValidationFormation}" />
+							<h:panelGrid id="validationFormation_doc_grid" columns="3"
+								columnClasses="panelCol_25,panelCol_25,panelCol_50">
+								<c:if test="#{doc == null }">
+									<p:commandLink id="label_validationFormation_doc" value="#{resourceBundle['gestionPharmacien.validationFormation.doc']}"
+										onclick="popupDocValidationFormation.show()" styleClass="clickable"
+											title="#{resourceBundle['document.popupLink.title']}"/>
+								</c:if>
+								<c:if test="#{doc != null}">
+									<h:outputText value="#{doc.nomUtilisateur}"
+										title="#{documentsIhmHelper.buildDocTitle(doc, resourceBundle['document.part1'], resourceBundle['document.part2'], resourceBundle['date.pattern.withHeures'])}" />
+									<p:commandButton value="#{resourceBundle['file.dwd']}"
+										title="#{resourceBundle['file.dwd']}" ajax="false"> 
+										<p:fileDownload
+											value="#{fileDwdController.downloadDocument(pharmacienManager.bean, doc)}" />
+									</p:commandButton>
+										<p:commandLink ajax="false"
+										title="#{resourceBundle['document.del']}"
+										actionListener="#{pharmacienManager.supprimerDocument(enumManager.getEnumValue('TypeDocumentPharmacien','VALIDATION_FORMATION'))}">
+										<h:graphicImage library="images" name="del.gif" />
+									</p:commandLink>
+								</c:if>
+							</h:panelGrid>
+						</p:outputPanel>
+					</h:panelGroup>
+					
+					<!-- Date Validation formation -->
+					<h:outputLabel id="labelDateValidation" for="date_validation" 
+						value="#{resourceBundle['gestionPharmacien.dateValidationFormation']}" />
+					<p:calendar id="date_validation" 
+						value="#{pharmacienManager.bean.dateValidationFormation}"
+						effect="#{resourceBundle['effect.calendar']}"
+						locale="#{resourceBundle['date.locale']}" showButtonPanel="true"
+						navigator="true" converter="#{calendarConverter}" />
+					
+					<!-- Date arrivee dans le service -->
+					<h:outputLabel id="labelDateArriveeService" for="date_arrivee" 
+						value="#{resourceBundle['gestionPharmacien.dateArriveeService']}" />
+					<p:calendar id="date_arrivee" 
+						value="#{pharmacienManager.bean.dateArriveeService}"
+						effect="#{resourceBundle['effect.calendar']}"
+						locale="#{resourceBundle['date.locale']}" showButtonPanel="true"
+						navigator="true" converter="#{calendarConverter}" />
+					
+					<!-- Date Depart dans le service -->
+					<h:outputLabel id="labelDateDepartService" for="date_depart" 
+						value="#{resourceBundle['gestionPharmacien.dateDepartService']}" />
+					<p:calendar id="date_depart" 
+						value="#{pharmacienManager.bean.dateDepartService}"
+						effect="#{resourceBundle['effect.calendar']}"
+						locale="#{resourceBundle['date.locale']}" showButtonPanel="true"
+						navigator="true" converter="#{calendarConverter}" />
+				
+					
+
+		             <h:outputLabel id="pharmaciesLabel" for="pharmacies" value="#{resourceBundle['gestionPharmacien.pharmacies']}"/>
+ 					 <p:outputPanel id="resultsPharmacie" style="display:block;margin-top:10px;">
+						 <p:dataTable id="pharmacies" value="#{pharmacienManager.getList('pharmacies')}" var="pharmacie" emptyMessage="#{resourceBundle['results.none']}">
+				    			<p:column id="nom">
+				    				<f:facet name="header">
+				    					<h:outputLink value="javascript:void(0)" onclick="popupPharmacie.show();formPopupPharmacie.submitButton.focus();" >
+				    						#{resourceBundle['gestionPharmacien.selectionPharmacies']}
+				    					</h:outputLink>
+				    				</f:facet>
+									#{pharmacie.nom}
+				    			</p:column>
+				    	</p:dataTable>
+					 </p:outputPanel>
+		         </h:panelGrid>
+		     </p:panel>  
+		   	<br />
+		   	<div class="actionButton">
+    			<p:commandButton id="saveButton" action="save" ajax="false" value="#{resourceBundle['btn.enregistrer']}" title="#{resourceBundle['btn.enregistrer']}"/>
+	   			<p:commandButton id="cancelButton" type="reset" ajax="false" value="#{resourceBundle['btn.annuler']}" title="#{resourceBundle['btn.annuler']}"/>
+		   	</div>
+		   	<div class="basicButton">
+		   		<div class="retourButton">
+	   				<p:commandButton id="returnButton" immediate="true" onclick="document.forms['formReturn'].hideReturnButton.click();" value="#{resourceBundle['btn.retour']}" title="#{resourceBundle['btn.retour']}"/>
+	   			</div>
+	   		</div>
+		</h:form>
+		
+		<div style="display:none;">
+			<h:form id="formReturn" prependId="false">
+	  			<p:commandButton id="hideReturnButton" action="comeback" ajax="false"/>
+	 		</h:form>
+ 		</div>		
+		
+		<!-- Popup de selection des pharmacies du pharmacien -->
+	     <h:form id="formPopupPharmacie" prependId="false">
+		 	<p:dialog header="#{resourceBundle['gestionPharmacien.selectionPharmacies']}" widgetVar="popupPharmacie" resizable="true" modal="true" width="500">
+				<h:panelGrid columns="2" style="margin-bottom:10px" width="100%">   
+	    			<p:dataTable id="pharmaciesPopup" value="#{pharmaciesManager.beans}" var="pharmacie" emptyMessage="#{resourceBundle['results.none']}">  
+	    				<p:column id="nom">
+	    					<f:facet name="header">#{resourceBundle['gestionPharmacie.nom']}</f:facet>
+	    					<h:outputText value="#{pharmacie.nom}"/>
+	    				</p:column>
+	    				<p:column id="selected">
+	    					<f:facet name="header">
+	    						<div align="center">
+	    							<input type="checkbox" id="select_all" onclick="javascript:selectAll(this)" />
+	    						</div>
+	    					</f:facet>
+		    				<div align="center">
+		    					<h:selectBooleanCheckbox value="#{pharmacie.selected}" />
+		    				</div>
+	    				</p:column> 
+	    			</p:dataTable>
+	    		</h:panelGrid>
+			    <div class="popupButton">
+		        	<p:commandButton id="submitButton" value="#{resourceBundle['btn.valider']}" update="resultsPharmacie" actionListener="#{beanManagerHelper.updateSelected(pharmacienManager.bean.pharmacies , pharmaciesManager.beans)}" oncomplete="popupPharmacie.hide();"/>
+		        </div>  
+		 	</p:dialog>  		
+	     </h:form>
+	     
+	     
+     
+     <!-- **************************************** -->
+	<!-- Popup des documents CV			  		  -->
+	<!-- **************************************** -->
+	<p:dialog widgetVar="popupDocCV"
+		header="#{resourceBundle['gestionPharmacien.cv.doc']}"
+		styleClass="essaiTabPopup popupCommWithHisto"
+		resizable="true" modal="true"
+		width="#{resourceBundle['popup.documents.simple.width']}" height="#{resourceBundle['popup.documents.simple.height']}">
+
+		<h:form id="cv_popDocs_form" prependId="false"
+			enctype="multipart/form-data">
+			<!-- nouveau document -->
+			<h3><h:outputFormat 
+				value="#{resourceBundle['document.nouveau']}" /></h3>
+			<fieldset><c:set var="enumValueCV" 
+				value="#{enumManager.getEnumValue('TypeDocumentPharmacien','CV')}" />
+			<p:outputPanel id="cv_out_pan_file"
+				style="display:block;margin-top:10px;">
+				<h:panelGrid columns="2" style="margin-bottom:10px" width="100%">
+					<h:outputLabel id="labelInputCVFile" for="input_cv_file"
+						value="#{resourceBundle['document.fichier']}" />
+					<t:inputFileUpload id="input_cv_file" size="30"
+						value="#{pharmacienManager.getDocumentManager(enumValueCV).file}" />
+
+				</h:panelGrid>
+			</p:outputPanel></fieldset>
+			<!-- historique -->
+			<div class="popupButton"><p:commandButton
+				value="#{resourceBundle['btn.ajouter']}" ajax="false"
+				action="submit"
+				actionListener="#{pharmacienManager.ajouterDocument(enumValueCV)}"
+				update="fichier"
+				oncomplete="popupDocCV.hide();" /><p:commandButton
+				value="#{resourceBundle['btn.fermer']}"
+				oncomplete="popupDocCV.hide();" /></div>
+		</h:form>
+	</p:dialog>
+	
+	  <!-- **************************************** -->
+	<!-- Popup des documents VALIDATION FORMATION  -->
+	<!-- **************************************** -->
+	<p:dialog widgetVar="popupDocValidationFormation"
+		header="#{resourceBundle['gestionPharmacien.validationFormation.doc']}"
+		styleClass="essaiTabPopup popupCommWithHisto"
+		resizable="true" modal="true"
+		width="#{resourceBundle['popup.documents.simple.width']}" height="#{resourceBundle['popup.documents.simple.height']}">
+
+		<h:form id="validationFormation_popDocs_form" prependId="false"
+			enctype="multipart/form-data">
+			<!-- nouveau document -->
+			<h3><h:outputFormat 
+				value="#{resourceBundle['document.nouveau']}" /></h3>
+			<fieldset><c:set var="enumValueValidationFormation" 
+				value="#{enumManager.getEnumValue('TypeDocumentPharmacien','VALIDATION_FORMATION')}" />
+			<p:outputPanel id="validationFormation_out_pan_file"
+				style="display:block;margin-top:10px;">
+				<h:panelGrid columns="2" style="margin-bottom:10px" width="100%">
+					<h:outputLabel id="labelInputValidationFormationFile" for="input_validationFormation_file"
+						value="#{resourceBundle['document.fichier']}" />
+					<t:inputFileUpload id="input_validationFormation_file" size="30"
+						value="#{pharmacienManager.getDocumentManager(enumValueValidationFormation).file}" />
+
+				</h:panelGrid>
+			</p:outputPanel></fieldset>
+			<!-- historique -->
+			<div class="popupButton"><p:commandButton
+				value="#{resourceBundle['btn.ajouter']}" ajax="false"
+				action="submit"
+				actionListener="#{pharmacienManager.ajouterDocument(enumValueValidationFormation)}"
+				update="fichier"
+				oncomplete="popupDocValidationFormation.hide();" /><p:commandButton
+				value="#{resourceBundle['btn.fermer']}"
+				oncomplete="popupDocValidationFormation.hide();" /></div>
+		</h:form>
+	</p:dialog>
+     
+	   	
+     </ui:define>
+     
+</ui:composition>

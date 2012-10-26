@@ -1,0 +1,207 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans 
+    xmlns="http://www.springframework.org/schema/beans" 
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd">
+
+	<!-- ============================= -->
+	<!-- PHARMACIE	                   -->
+	<!-- ============================= -->		
+	<bean id="pharmacieSearchCriteriaMaker" class="fr.pharma.eclipse.dictionary.maker.stockage.PharmacieSearchCriteriaMaker"/>
+	
+	<!-- ============================= -->
+	<!-- STOCKAGE	                   -->
+	<!-- ============================= -->		
+	<bean id="stockageSearchCriteriaMaker" class="fr.pharma.eclipse.dictionary.maker.stockage.StockageSearchCriteriaMaker"/>
+
+	<!-- ============================= -->
+	<!-- DISPENSATION PRODUIT          -->
+	<!-- ============================= -->		
+	<bean id="dispensationProduitSearchCriteriaMaker" class="fr.pharma.eclipse.dictionary.maker.stock.DispensationProduitSearchCriteriaMaker"/>
+
+	<!-- ============================= -->
+	<!-- PREPARATION ENTREE            -->
+	<!-- ============================= -->		
+	<bean id="preparationEntreeSearchCriteriaMaker" class="fr.pharma.eclipse.dictionary.maker.stock.PreparationEntreeSearchCriteriaMaker"/>
+	
+	<!-- ============================= -->
+	<!-- PROMOTEUR	                   -->
+	<!-- ============================= -->		
+	<bean id="promoteurSearchCriteriaMaker" class="fr.pharma.eclipse.dictionary.maker.acteur.PromoteurSearchCriteriaMaker"/>
+	
+	<!-- ============================= -->
+	<!-- ESSAI   	                   -->
+	<!-- ============================= -->		
+	<bean id="essaiSearchCriteriaMaker" class="fr.pharma.eclipse.dictionary.maker.essai.EssaiSearchCriteriaMaker"/>
+	
+	<!-- ============================= -->
+	<!-- PERSONNE                      -->
+	<!-- ============================= -->		
+	<bean id="personneSearchCriteriaMaker" class="fr.pharma.eclipse.dictionary.maker.acteur.PersonneSearchCriteriaMaker"/>
+	
+	<!-- ============================= -->
+	<!-- PHARMACIEN                    -->
+	<!-- ============================= -->		
+	<bean id="pharmacienSearchCriteriaMaker" class="fr.pharma.eclipse.dictionary.maker.acteur.PharmacienSearchCriteriaMaker">
+		<property name="personneCriteriaMaker" ref="personneSearchCriteriaMaker" />
+	</bean>
+	
+	<!-- ============================= -->
+	<!-- CONTACT PROMOTEUR             -->
+	<!-- ============================= -->		
+	<bean id="contactPromoteurSearchCriteriaMaker" class="fr.pharma.eclipse.dictionary.maker.acteur.ContactPromoteurSearchCriteriaMaker">
+		<property name="personneCriteriaMaker" ref="personneSearchCriteriaMaker" />
+	</bean>
+	
+	<!-- ============================= -->
+	<!-- ARC PROMOTEUR             -->
+	<!-- ============================= -->		
+	<bean id="arcPromoteurSearchCriteriaMaker" class="fr.pharma.eclipse.dictionary.maker.acteur.ArcPromoteurSearchCriteriaMaker">
+		<property name="personneCriteriaMaker" ref="personneSearchCriteriaMaker" />
+	</bean>
+	
+	<!-- ============================= -->
+	<!-- INVESTIGATEUR            	   -->
+	<!-- ============================= -->		
+	<bean id="investigateurSearchCriteriaMaker" class="fr.pharma.eclipse.dictionary.maker.acteur.InvestigateurSearchCriteriaMaker">
+		<property name="personneCriteriaMaker" ref="personneSearchCriteriaMaker" />
+	</bean>
+	
+	<!-- ============================= -->
+	<!-- ARC INVESTIGATEUR             -->
+	<!-- ============================= -->		
+	<bean id="arcInvestigateurSearchCriteriaMaker" class="fr.pharma.eclipse.dictionary.maker.acteur.ArcInvestigateurSearchCriteriaMaker">
+		<property name="personneCriteriaMaker" ref="personneSearchCriteriaMaker" />
+	</bean>
+	
+	<!-- ============================= -->
+	<!-- PRODUIT                       -->
+	<!-- ============================= -->		
+	<bean id="produitSearchCriteriaMaker" class="fr.pharma.eclipse.dictionary.maker.produit.ProduitSearchCriteriaMaker"/>
+	
+	<!-- ============================= -->
+	<!-- SERVICE                       -->
+	<!-- ============================= -->		
+	<bean id="serviceSearchCriteriaMaker" class="fr.pharma.eclipse.dictionary.maker.localisation.ServiceSearchCriteriaMaker"/>
+	
+	<!-- ============================= -->
+	<!-- POLE                          -->
+	<!-- ============================= -->		
+	<bean id="poleSearchCriteriaMaker" class="fr.pharma.eclipse.dictionary.maker.localisation.PoleSearchCriteriaMaker"/>
+	
+	<!-- ============================= -->
+	<!-- ETABLISSEMENT                 -->
+	<!-- ============================= -->		
+	<bean id="etablissementSearchCriteriaMaker" class="fr.pharma.eclipse.dictionary.maker.localisation.EtablissementSearchCriteriaMaker"/>
+	
+	<!-- ============================= -->
+	<!-- SITE                          -->
+	<!-- ============================= -->		
+	<bean id="siteSearchCriteriaMaker" class="fr.pharma.eclipse.dictionary.maker.localisation.SiteSearchCriteriaMaker"/>
+	
+	<!-- ============================= -->
+	<!-- HABILITATION                  -->
+	<!-- ============================= -->		
+	<bean id="habilitationSearchCriteriaMaker" class="fr.pharma.eclipse.dictionary.maker.habilitation.HabilitationSearchCriteriaMaker"/>
+	
+	<!-- ============================= -->
+	<!-- MOUVEMENT STOCK               -->
+	<!-- ============================= -->		
+	<bean id="mouvementStockSearchCriteriaMaker" class="fr.pharma.eclipse.dictionary.maker.stock.MvtStockSearchCriteriaMaker"/>
+	
+	<!-- ============================= -->
+	<!-- STOCK                         -->
+	<!-- ============================= -->		
+	<bean id="stockSearchCriteriaMaker" class="fr.pharma.eclipse.dictionary.maker.stock.StockSearchCriteriaMaker"/>
+	
+	<!-- ============================= -->
+	<!-- EXTENSION PEREMPTION          -->
+	<!-- ============================= -->		
+	<bean id="extensionPeremptionSearchCriteriaMaker" class="fr.pharma.eclipse.dictionary.maker.stock.ExtensionPeremptionSearchCriteriaMaker"/>
+	
+	<!-- ============================= -->
+	<!-- ESSAI SIGREC                  -->
+	<!-- ============================= -->		
+	<bean id="essaiSigrecSearchCriteriaMaker" class="fr.pharma.eclipse.dictionary.maker.sigrec.essai.EssaiSigrecSearchCriteriaMaker"/>
+	
+	<!-- ============================= -->
+	<!-- SITE                          -->
+	<!-- ============================= -->		
+	<bean id="promoteurSigrecSearchCriteriaMaker" class="fr.pharma.eclipse.dictionary.maker.sigrec.acteur.PromoteurSigrecSearchCriteriaMaker"/>
+	
+	<!-- ============================= -->
+	<!-- PATIENT                       -->
+	<!-- ============================= -->		
+	<bean id="patientSearchCriteriaMaker" class="fr.pharma.eclipse.dictionary.maker.patient.PatientSearchCriteriaMaker"/>
+	
+	<!-- ============================= -->
+	<!-- PRESCRIPTION	               -->
+	<!-- ============================= -->		
+	<bean id="prescriptionSearchCriteriaMaker" class="fr.pharma.eclipse.dictionary.maker.prescription.PrescriptionSearchCriteriaMaker"/>
+	
+	<!-- ============================= -->
+	<!-- DISPENSATION	               -->
+	<!-- ============================= -->		
+	<bean id="dispensationSearchCriteriaMaker" class="fr.pharma.eclipse.dictionary.maker.dispensation.DispensationSearchCriteriaMaker"/>
+	
+	<!-- ============================= -->
+	<!-- DOTATION    	               -->
+	<!-- ============================= -->		
+	<bean id="dotationSearchCriteriaMaker" class="fr.pharma.eclipse.dictionary.maker.dotation.DotationSearchCriteriaMaker"/>
+	
+	<!-- ============================= -->
+	<!-- EVENEMENT    	               -->
+	<!-- ============================= -->		
+	<bean id="evenementSearchCriteriaMaker" class="fr.pharma.eclipse.dictionary.maker.evenement.EvenementSearchCriteriaMaker"/>
+	
+	<!-- ============================= -->
+	<!-- INCIDENT    	               -->
+	<!-- ============================= -->		
+	<bean id="incidentSearchCriteriaMaker" class="fr.pharma.eclipse.dictionary.maker.incident.IncidentSearchCriteriaMaker"/>
+	
+	<!-- ============================= -->
+	<!--  ELEMENTOCHECK	               -->
+	<!-- ============================= -->
+	<bean id="elementToCheckSearchCriteriaMaker" class="fr.pharma.eclipse.dictionary.maker.dispensation.ElementToCheckSearchCriteriaMaker"/>
+	
+	<!-- ============================= -->
+	<!-- INCLUSION    	               -->
+	<!-- ============================= 	-->
+	<bean id="inclusionSearchCriteriaMaker" class="fr.pharma.eclipse.dictionary.maker.patient.InclusionSearchCriteriaMaker"/>
+	
+	<!-- ============================= -->
+	<!-- GRILLEMODELE 	               -->
+	<!-- ============================= 	-->
+	<bean id="grilleModeleSearchCriteriaMaker" class="fr.pharma.eclipse.dictionary.maker.surcout.GrilleModeleSearchCriteriaMaker"/>
+	
+	<!-- ============================= -->
+	<!-- ORDONNANCIER 	               -->
+	<!-- ============================= -->
+	<bean id="ordonnancierSearchCriteriaMaker" class="fr.pharma.eclipse.dictionary.maker.ordonnancier.OrdonnancierSearchCriteriaMaker"/>
+	
+	<!-- ================================= -->
+	<!-- DISPENSATION FOR ORDONNANCIER     -->
+	<!-- ================================= -->
+	<bean id="dispensationForOrdoSearchCriteriaMaker" class="fr.pharma.eclipse.dictionary.maker.dispensation.DispensationForOrdoSearchCriteriaMaker"/>
+	
+	<!-- ===================================== -->
+	<!-- ELEMENT TO CKECK FOR ORDONNANCIER     -->
+	<!-- ===================================== -->
+	<bean id="elementToCheckForOrdoSearchCriteriaMaker" class="fr.pharma.eclipse.dictionary.maker.dispensation.ElementToCheckForOrdoSearchCriteriaMaker"/>
+	
+	<!-- ===================================== -->
+	<!-- RETOUR PATIENT						   -->
+	<!-- ===================================== -->
+	<bean id="retourPatientSearchCriteriaMaker" class="fr.pharma.eclipse.dictionary.maker.stock.RetourPatientSearchCriteriaMaker"/>
+
+	<!-- ===================================== -->
+	<!-- PRESCRIPTION TYPE					   -->
+	<!-- ===================================== -->
+	<bean id="prescriptionTypeSearchCriteriaMaker" class="fr.pharma.eclipse.dictionary.maker.design.PrescriptionTypeSearchCriteriaMaker"/>
+
+	<!-- ===================================== -->
+	<!-- PRODUIT PRESCRIT 					   -->
+	<!-- ===================================== -->
+	<bean id="produitPrescritSearchCriteriaMaker" class="fr.pharma.eclipse.dictionary.maker.prescription.ProduitPrescritSearchCriteriaMaker"/>
+
+</beans>

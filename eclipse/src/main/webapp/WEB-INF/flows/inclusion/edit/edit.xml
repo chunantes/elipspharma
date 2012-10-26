@@ -1,0 +1,70 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<flow xmlns="http://www.springframework.org/schema/webflow"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://www.springframework.org/schema/webflow
+    http://www.springframework.org/schema/webflow/spring-webflow-2.0.xsd" parent="main">
+
+
+	<!-- Variable d'entrée -->
+	<input name="idInclusion" />
+	
+	<!-- Démarrage -->
+	<on-start>
+		<evaluate expression="essaiSearchCriteria.clear()"/>
+		<evaluate expression="patientSearchCriteria.clear()"/>
+		<!-- Initialisation complétion automatique des essais -->
+		<evaluate expression="'numInterne'" result="autoCompleteEssaiManager.searchCriteria.activeOrder" />
+		<evaluate expression="'numInterneOrNomOrPromoteur'" result="autoCompleteEssaiManager.searchCriteriaProperty" />		
+		
+		<evaluate expression="'numeroIpp'" result="autoCompletePatientManager.searchCriteria.activeOrder" />
+		<evaluate expression="'numeroIppOrNomOrPrenom'" result="autoCompletePatientManager.searchCriteriaProperty" />		
+		<evaluate expression="inclusionManager.init()"/>
+	</on-start>
+
+	<decision-state id="createOrEdit">
+		<if test="idInclusion==null" then="create" else="edit"/>
+	</decision-state>
+	
+	<!-- Création -->
+	<action-state id="create">
+		<evaluate expression="inclusionManager.setBean(inclusionFactory.getInitializedObject())"/>
+		<transition to="editInclusion"/>
+	</action-state>
+	
+	<!-- Modification -->
+	<action-state id="edit">
+		<evaluate expression="inclusionManager.setBean(inclusionService.get(idInclusion))"/>
+		<transition to="editInclusion"/>
+	</action-state>
+	
+	
+
+	<!-- Page principale -->
+	<view-state id="editInclusion" view="../../../pages/inclusion/edit/editInclusion.xhtml">
+		<transition on="save" to="createOrEdit">
+			<evaluate expression="inclusionService.save(inclusionManager.bean)"/>
+			<evaluate expression="inclusionManager.confirmInclusion()"/>
+		</transition>
+		<transition on="editPatient" to="editPatient"/>
+		<!-- Ajouter un patient -->
+		<transition on="ajouterPatient" to="addPatient" />
+		<transition on="comeback" to="comeback"/>
+		<transition on="error" to="editInclusion"/>
+	</view-state>
+	<!--  Ajout d'un patient  -->
+	<subflow-state id="addPatient" subflow="patient/edit">
+		<transition to="editInclusion" >
+			<set name="inclusionManager.bean.patient" value="patientManager.bean"/>
+			<evaluate expression="inclusionManager.handleSelectNewPatient(inclusionManager.bean.patient)"></evaluate>
+		</transition>
+	</subflow-state>
+	
+	<subflow-state id="editPatient" subflow="patient/edit">
+		<input name="idPatient" value="inclusionManager.bean.patient.id"/>
+		<transition to="editInclusion"/>
+	</subflow-state>	
+
+	<!-- Etat final -->
+	<end-state id="comeback"/>
+	
+</flow>

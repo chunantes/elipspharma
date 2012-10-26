@@ -1,0 +1,191 @@
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+     xmlns:ui="http://java.sun.com/jsf/facelets"
+     xmlns:h="http://java.sun.com/jsf/html"
+     xmlns:f="http://java.sun.com/jsf/core"
+	 xmlns:p="http://primefaces.prime.com.tr/ui"
+	 xmlns:c="http://java.sun.com/jsp/jstl/core"
+     template="/WEB-INF/pages/template/template.xhtml">
+     
+     <ui:define name="title">
+		<h:outputFormat value="#{resourceBundle['gestionPersonne.title']}"/>
+     </ui:define>
+     
+     <ui:define name="body">
+     	<p:outputPanel id="searchCriteriaFragment">
+    		<h:form id="criteriaForm" prependId="false">
+     			<div class="rechercheBox">
+     				<h2 class="titleFloat"><h:outputText value="#{resourceBundle['recherche']}"/></h2>
+     				<p:focus />
+	     			<fieldset>
+	     				<div class="rechercheInside">
+	     					<div><label>#{resourceBundle['gestionPersonne.nom']}</label></div>
+		     				<div><h:inputText id="nom" value="#{personnesManager.searchCriteria.nom}" /></div>
+		     				
+	     					<div><label>#{resourceBundle['gestionPersonne.type']}</label></div>
+				           	<div>
+				           		<h:selectOneMenu id="typePersonne" value="#{personnesManager.searchCriteria.typePersonne}" immediate="true">
+				           			<f:selectItem noSelectionOption="true"/>
+				           			<f:selectItems value="#{enumManager.getValues('TypePersonne')}"/>
+				           			<f:ajax  render="essaiPharmaPers" listener="#{personnesManager.handleSelectTypePersonne}" />
+				           		</h:selectOneMenu>
+				           	</div>	     					
+		     				
+							<p:outputPanel id="essaiPharmaPers" >
+								<p:outputPanel rendered="#{personnesManager.searchCriteria.typePersonne == 'PHARMACIEN'}">
+									<!-- Essai -->
+									<h:outputLabel
+										value="#{resourceBundle['gestionPersonne.essai']}"
+										for="essai_sr" />
+						            <p:autoComplete immediate="true" 
+												id="essai_sr" value="#{personnesManager.searchCriteria.essai}"
+												completeMethod="#{autoCompleteEssaiManager.complete}"
+												onSelectUpdate="@this" style="width : 200px;"
+												forceSelection="true" var="essai"
+												itemLabel="#{essai.numInterne} #{essai.nom} #{essai.promoteur.raisonSociale}"
+												itemValue="#{essai}" converter="#{essaiConverter}" />
+												
+									<!-- A partir du -->
+				           			<h:outputLabel
+										value="#{resourceBundle['gestionPersonne.dateDebut']}"/>
+	   								<p:calendar id="dateDebut" value="#{personnesManager.searchCriteria.dateDebut}" 
+	   									effect="#{resourceBundle['effect.calendar']}" locale="#{resourceBundle['date.locale']}" showButtonPanel="true" navigator="true" 
+	   									converter="#{calendarConverter}" />			           		
+									
+									<!-- Jusqu au -->
+				           			<h:outputLabel
+										value="#{resourceBundle['gestionPersonne.dateFin']}"/>
+	   								<p:calendar id="dateFin" value="#{personnesManager.searchCriteria.dateFin}" 
+	   									effect="#{resourceBundle['effect.calendar']}" locale="#{resourceBundle['date.locale']}" showButtonPanel="true" navigator="true" 
+	   									converter="#{calendarConverter}" />			           		
+								</p:outputPanel>			
+							</p:outputPanel>		     				 
+		     				<br />
+		     				<p:commandButton  ajax="false" action="search" 
+		     					value="#{resourceBundle['btn.rechercher']}" title="#{resourceBundle['btn.rechercher']}">
+		     				</p:commandButton>
+	     				</div>
+				    	<div class="basicButton">
+				    		<p:commandButton id="addButton" ajax="true" onclick="popupProfil.show();"
+				    			value="#{resourceBundle['btn.ajouter']}" title="#{resourceBundle['btn.ajouter']}"> 
+				    		</p:commandButton>				 
+						</div> 
+	     			</fieldset>
+	     		</div>
+    		</h:form>
+     	</p:outputPanel>
+     	
+     	<p:outputPanel id="resultsFragment">
+			<h:form id="personnesForm" prependId="false">
+				<div>
+				 	 <div style="float:left;">
+			    	 	<h2 class="titleFloat"><h:outputText value="#{resourceBundle['resultats']}"/></h2>
+			    	 </div>			
+			    	 <div class="export">
+				         <h:commandLink> 
+				         	<h:graphicImage library="images" name="excel.gif"
+		    					alt="#{resourceBundle['export.excel']}" title="#{resourceBundle['export.excel']}" />
+				             <p:dataExporter type="xls" target="personnes" fileName="#{resourceBundle['export.personnes.filename']}" 
+				             	excludeColumns="3" encoding="iso-8859-1"/>
+				         </h:commandLink>  
+				         <h:commandLink>  
+				         	<h:graphicImage library="images" name="pdf.gif" 
+		    					alt="#{resourceBundle['export.pdf']}" title="#{resourceBundle['export.pdf']}" />
+				             <p:dataExporter type="pdf" target="personnes" fileName="#{resourceBundle['export.personnes.filename']}" 
+				             	excludeColumns="3" encoding="iso-8859-1"/>  
+				         </h:commandLink>  
+				         <h:commandLink>  
+				         	<h:graphicImage library="images" name="csv.gif" 
+		    					alt="#{resourceBundle['export.csv']}" title="#{resourceBundle['export.csv']}" />
+				             <p:dataExporter type="csv" target="personnes" fileName="#{resourceBundle['export.personnes.filename']}" 
+				             	excludeColumns="3" encoding="iso-8859-1"/>  
+				         </h:commandLink>
+			         </div>
+		        </div>			
+				<div class="resultBox" style="width:680px;"> 
+					<p:messages/>
+			    	<fieldset>
+			    		<p:dataTable id="personnes" value="#{personnesManager.beans}" var="personne" emptyMessage="#{resourceBundle['results.none']}"
+			    			selection="#{personnesManager.beanSelected}" selectionMode="single"
+				    			update="personnes"
+				    			onselectComplete="javascript:document.getElementById('editButton').click();">    		
+			    			
+			    			<p:column id="nom" sortBy="#{personne.nom}">
+			    				<f:facet name="header">
+			    					<h:outputText value="#{resourceBundle['gestionPersonne.nom']}"/>
+			    				</f:facet>
+			    				<h:outputText value="#{personne.nom}" style="color:red;" rendered="#{not personnesManager.isComplete(personne)}"/>
+			    				<h:outputText value="#{personne.nom}" rendered="#{personnesManager.isComplete(personne)}"/>
+			    			</p:column>
+			    			
+			    			<p:column id="prenom" sortBy="#{personne.prenom}">
+			    				<f:facet name="header">
+			    					<h:outputText value="#{resourceBundle['gestionPersonne.prenom']}"/>
+			    				</f:facet>
+			    				<h:outputText value="#{personne.prenom}" style="color:red;" rendered="#{not personnesManager.isComplete(personne)}"/>
+			    				<h:outputText value="#{personne.prenom}" rendered="#{personnesManager.isComplete(personne)}"/>
+			    			</p:column>
+			    			
+			    			<p:column id="type" sortBy="#{personne.type.libelle}">
+			    				<f:facet name="header">
+			    					<h:outputText value="#{resourceBundle['gestionPersonne.type']}"/>
+			    				</f:facet>
+			    				<h:outputText value="#{personne.type.libelle}" style="color:red;" rendered="#{not personnesManager.isComplete(personne)}"/>
+			    				<h:outputText value="#{personne.type.libelle}" rendered="#{personnesManager.isComplete(personne)}"/>
+			    			</p:column>
+			    			
+			    			<p:column>
+			    				<f:facet name="header">
+			    					<div align="center">
+			    						<input type="checkbox" id="select_all" onclick="javascript:selectAll(this)" />
+			    					</div>	
+			    				</f:facet>
+			    				<div align="center">			    			
+			    					<h:selectBooleanCheckbox value="#{personne.selected}"/>
+			    				</div>
+			    			</p:column>
+			    			 
+			    		</p:dataTable>
+			    		<br />
+			    		<div class="actionButton">
+	   					
+				    		<p:commandButton id="deleteButtonItf"  ajax="true" onclick="document.forms['personnesForm'].deleteButton.click();" 
+				    			value="#{resourceBundle['btn.supprimer']}" title="#{resourceBundle['btn.supprimer']}">
+				    		</p:commandButton>
+				    		<p:commandButton id="addPersonneButton" type="button" ajax="false" onclick="popupProfil.show();"
+				    			value="#{resourceBundle['btn.ajouter']}" title="#{resourceBundle['btn.ajouter']}">
+				    		</p:commandButton>		
+				    		
+							<div style="display:none;">
+					    		<p:commandButton id="editButton" action="edit" ajax="false"/>
+					    		<p:commandButton id="deleteButton" action="delete" ajax="false"/>
+					    	</div>				    		
+				    		
+				    	</div>
+	    			</fieldset>
+	   			</div>
+   			</h:form>
+   		</p:outputPanel>
+     	
+     	<!-- Popup de selection du profil dans le cas d'un ajout -->
+		 <p:dialog header="#{resourceBundle['gestionPersonne.addProfil']}" widgetVar="popupProfil" resizable="true" modal="true" width="400">  
+		     <h:form id="formProfil" prependId="false">
+		         <h:panelGrid columns="2" columnClasses="panelCol_40,panelCol_60" style="margin-bottom:10px" width="100%">
+		         	<h:outputLabel styleClass="mandatory" for="type" value="#{resourceBundle['gestionPersonne.type']}" />
+		    		<h:selectOneMenu id="type" value="#{personnesManager.profilAjout}">
+				        <f:selectItems value="#{enumManager.getValues('TypePersonne')}"/>
+					</h:selectOneMenu>
+		         </h:panelGrid>
+		         <div class="popupButton">
+		         	<p:commandButton id="submitButton" value="#{resourceBundle['btn.valider']}"
+		         		 oncomplete="document.getElementById('addPopupButton').click();popupProfil.hide();"/>
+		         		 
+					<div style="display:none;">
+			    		<p:commandButton id="addPopupButton" action="add" ajax="false"/>
+			    	</div>			         		 
+		         </div>  
+		     </h:form>  
+		 </p:dialog>      	
+     	
+     </ui:define>
+     
+</ui:composition>

@@ -1,0 +1,60 @@
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+     xmlns:ui="http://java.sun.com/jsf/facelets"
+     xmlns:h="http://java.sun.com/jsf/html"
+     xmlns:f="http://java.sun.com/jsf/core"
+	 xmlns:p="http://primefaces.prime.com.tr/ui"
+	 xmlns:c="http://java.sun.com/jsp/jstl/core"
+     template="/WEB-INF/pages/template/template.xhtml">
+     
+     <ui:define name="title">
+		<h:outputFormat value="#{resourceBundle['gestionPharmacie.title']}"/>
+     </ui:define>
+     
+     <ui:define name="body">
+		 
+		 <h:form id="editPharmacie" prependId="false" >
+		 	 <p:messages />
+		 	 <fieldset>
+			 <p:tabView effect="opacity" effectDuration="normal" dynamic="false"
+			 	tabChangeListener="#{pharmacieManager.onOngletChange}" activeIndex="#{pharmacieManager.indexOngletCourant}"
+			 	styleClass="panelSuivi" >
+				<p:tab id="ONG_DESCRIPTION" title="#{resourceBundle['editPharmacie.onglet.description.title']}">
+					<ui:include src="/WEB-INF/pages/pharmacie/edit/onglets/ongletDescription.xhtml" />
+    			</p:tab>			 	
+				<p:tab id="ONG_STOCKAGE" title="#{resourceBundle['editPharmacie.onglet.stockage.title']}">
+					 <ui:include src="/WEB-INF/pages/pharmacie/edit/onglets/ongletStockage.xhtml" />
+    			</p:tab>			 	
+				<p:tab id="ONG_PHARMACIEN" title="#{resourceBundle['editPharmacie.onglet.pharmacien.title']}">
+					 <ui:include src="/WEB-INF/pages/pharmacie/edit/onglets/ongletPharmacien.xhtml" />
+    			</p:tab>			 	
+			 </p:tabView>
+			 </fieldset>		 
+		       
+		   	<br />
+		   	<div class="actionButton">
+    			<p:commandButton id="saveButton" action="save" ajax="false" value="#{resourceBundle['btn.enregistrer']}" title="#{resourceBundle['btn.enregistrer']}"/>
+	   			<p:commandButton id="cancelButton" immediate="true" action="cancel" ajax="false" value="#{resourceBundle['btn.annuler']}" title="#{resourceBundle['btn.annuler']}"/>
+		   	</div>
+		   	<div class="basicButton">
+		   		<div class="retourButton">
+	   				<p:commandButton id="returnButton" immediate="true" action="comeback" ajax="false" value="#{resourceBundle['btn.retour']}" title="#{resourceBundle['btn.retour']}"/>
+	   			</div>
+	   		</div>
+		</h:form>
+	   	
+	   	
+	   	<div style="display:none;">
+	   		<h:form id="formPharmacien" prependId="false">
+	  			<p:commandButton id="editPharmacien" action="editPharmacien" ajax="false"/>
+	  		</h:form>
+		</div>		
+	   	
+		<!-- Popup de selection des sites de pharmacie -->
+		<ui:include src="/WEB-INF/pages/pharmacie/edit/onglets/popups/ongletDescription_popups.xhtml" />
+		
+		<!-- Popup de saisie de stockage -->
+	   	<ui:include src="/WEB-INF/pages/pharmacie/edit/onglets/popups/ongletStockage_popups.xhtml" />
+	   	
+     </ui:define>
+     
+</ui:composition>

@@ -1,0 +1,252 @@
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:p="http://primefaces.prime.com.tr/ui"
+	xmlns:c="http://java.sun.com/jsp/jstl/core"
+	xmlns:security="http://www.springframework.org/security/tags"
+	template="/WEB-INF/pages/template/template.xhtml">
+
+	<ui:define name="title">
+		<h:outputFormat
+			value="#{resourceBundle['editDispensation.title']}" />
+	</ui:define>
+
+	<ui:define name="body">
+		<h:form id="formForDispensation" prependId="false">
+		
+			<p:outputPanel id="common_outp_msgs" style="display:block;margin-top:10px;width:960px;">
+				<p:messages/>
+			</p:outputPanel>
+			
+				<div class="rechercheBox">
+
+					<h2 class="titleFloat"><h:outputText
+						value="#{resourceBundle['prescription.infoPatient']}" />
+					</h2>
+					
+					<!-- Focus sur le premier element de la page -->
+					<p:focus />
+					
+					
+					<fieldset>
+						<div class="rechercheInside">
+						
+							<h:panelGrid columns="1" columnClasses="panelCol_100" cellpadding="0" cellspacing="0" border="0" width="100%" rendered="#{droitAccesHelper.isPatientVisible()}">
+
+								<!-- Nom -->
+								<h:outputLabel
+									value="#{resourceBundle['prescription.patient.nom']}"
+									for="patient_nom" />
+								<h:outputText id="patient_nom" 
+									value="#{dispensationManager.bean.prescription.inclusion.patient.nom}" />
+								<br />
+								<!-- Prenom -->
+								<h:outputLabel 
+									value="#{resourceBundle['prescription.patient.prenom']}"
+									for="patient_prenom" />
+								<h:outputText id="patient_prenom"
+									value="#{dispensationManager.bean.prescription.inclusion.patient.prenom}" />
+								<br />
+			
+								<!-- Nom de jeune fille -->
+								<h:outputLabel
+									value="#{resourceBundle['prescription.patient.nomJeuneFille']}"
+									for="patient_nomJeuneFille" />
+								<h:outputText id="patient_nomJeuneFille"
+									value="#{dispensationManager.bean.prescription.inclusion.patient.nomJeuneFille}" />
+								<br />
+			
+								<!-- Numero IPP -->
+								<h:outputLabel
+									value="#{resourceBundle['prescription.patient.ipp']}"
+									for="patient_ipp" />
+								<h:outputText id="patient_ipp"
+									value="#{dispensationManager.bean.prescription.inclusion.patient.numeroIpp}" />
+								<br />
+							</h:panelGrid>
+							
+							<!--  si anonymisation  -->
+							<h:panelGrid columns="1" columnClasses="panelCol_100" cellpadding="0" cellspacing="0" border="0" width="100%" rendered="#{!droitAccesHelper.isPatientVisible()}">
+								
+								<!-- Initiales -->
+								<h:outputLabel
+									value="#{resourceBundle['prescription.patient.initiales']}"
+									for="patient_initiales" />
+								<h:outputText id="patient_initiales"
+									value="#{dispensationManager.bean.prescription.inclusion.patient.initiales}" />
+							</h:panelGrid>
+							
+							<h:panelGrid columns="1" columnClasses="panelCol_100" cellpadding="0" cellspacing="0" border="0" width="100%">
+								<!-- Date de naissance -->
+								<h:outputLabel
+									value="#{resourceBundle['prescription.patient.dateNaissance']}"
+									for="patient_dateNaissance" />
+								<h:outputText id="patient_dateNaissance"
+									value="#{dispensationManager.bean.prescription.inclusion.patient.dateNaissance.time}">
+									<f:convertDateTime
+										pattern="#{resourceBundle['date.pattern.default']}" />
+								</h:outputText>
+								<br />
+
+								<!-- Poid -->
+								<h:outputLabel
+									value="#{resourceBundle['prescription.patient.poid']}"
+									for="patient_poid" />
+								<h:outputText id="patient_poid"
+									value="#{dispensationManager.bean.prescription.inclusion.patient.poid}" />
+								<br />
+
+								<!-- Taille -->
+								<h:outputLabel
+									value="#{resourceBundle['prescription.patient.taille']}"
+									for="patient_taille" />
+								<h:outputText id="patient_taille"
+									value="#{dispensationManager.bean.prescription.inclusion.patient.taille}" />
+								<br />
+			
+								<!-- Surface corporelle -->
+								<h:outputLabel
+									value="#{resourceBundle['prescription.patient.surface']}"
+									for="patient_surface" />
+								<h:outputText id="patient_surface"
+									value="#{dispensationManager.bean.prescription.inclusion.patient.surface}">
+									<f:convertNumber maxFractionDigits="3"/>
+									</h:outputText>
+								<br />
+							</h:panelGrid>
+							
+						</div>
+					</fieldset>
+				</div>
+				
+				<div class="resultBox" style="width: 700px;">
+						
+					<!-- Informations generales -->
+					<h2><h:outputFormat class="titleFloat"
+						value="#{resourceBundle['editDispensation.infoEssai']}" />
+					</h2>
+			
+				<fieldset>
+					<table class="big" cellpadding="0" cellspacing="0" border="0"
+						style="width: 690px">
+						<tr>
+							<td>
+								<h:panelGrid columns="1" style="width:100%;" 
+									columnClasses="panelCol_100">
+									<h:panelGrid columns="4" style="width:100%;" 
+										columnClasses="panelCol_20, panelCol_30, panelCol_20, panelCol_30">
+	
+										<!--  Nom Promoteur -->
+										<h:outputLabel id="labelEssaiPromoteur" for="essai_promoteur"
+											value="#{resourceBundle['editPrescription.essai']}" />
+										<h:outputText id="essai_promoteur"
+											value="#{dispensationManager.bean.prescription.inclusion.essai.numInterne} #{dispensationManager.bean.prescription.inclusion.essai.nom} #{dispensationManager.bean.prescription.inclusion.essai.promoteur.raisonSociale}" />
+										<h:outputLabel id="labelDateDebuTraitement" for="date_debut_traitement"
+											value="#{resourceBundle['editPrescription.dateDebutTraitement']}" />
+										<p:calendar id="date_debut_traitement" disabled="true"  
+											value="#{dispensationManager.bean.prescription.dateDebutTraitement}"
+											effect="#{resourceBundle['effect.calendar']}"
+											locale="#{resourceBundle['date.locale']}" showButtonPanel="true"
+											navigator="true" converter="#{calendarConverter}" />
+		
+										<!-- Numero sigrec -->
+										<h:outputLabel id="labelNumSigrec" for="num_sigrec"
+											value="#{resourceBundle['editPrescription.numSigrec']}" />
+										<h:outputText id="num_sigrec" value="#{dispensationManager.bean.prescription.inclusion.essai.detailRecherche.numEnregistrement}" />
+										<!-- Code promoteur -->
+										<h:outputLabel id="labelCodePromoteur" for="code_promoteur"
+											value="#{resourceBundle['editPrescription.codePromoteur']}" />
+										<h:outputText id="code_promoteur" value="#{dispensationManager.bean.prescription.inclusion.essai.codePromoteur}" />
+		
+										<!-- Numero inclusion -->
+										<h:outputLabel id="labelNumInclusion" for="num_inclusion"
+											value="#{resourceBundle['editPrescription.numInclusion']}" />
+										<h:inputText id="num_inclusion" value="#{dispensationManager.bean.prescription.inclusion.numInclusion}" disabled="#{dispensationManager.bean.dispense}"/>
+									
+										<!-- Investigateur -->
+										<h:outputLabel id="labelInvestigateur" for="num_investigateur"
+												value="#{resourceBundle['editPrescription.investigateur']}" />
+										<h:outputText id="num_investigateur" value="#{dispensationManager.bean.prescription.investigateur.prenom} #{dispensationManager.bean.prescription.investigateur.nom}" />
+										
+										
+										<!-- Num randomisation -->
+										<h:outputLabel id="labelNumRandomisation" for="num_randomisation"
+											value="#{resourceBundle['editPrescription.numRandomisation']}" />
+										<h:inputText id="num_randomisation" value="#{dispensationManager.bean.prescription.inclusion.numRandomisation}" disabled="#{dispensationManager.bean.dispense}"/>
+										<!-- Service investigateur -->
+										<h:outputLabel id="labelServiceInvestigateur" for="serviceInvestigateur" styleClass="mandatory"
+											value="#{resourceBundle['editPrescription.service']}" />
+										<h:selectOneMenu id="serviceInvestigateur" disabled="true" value="#{dispensationManager.bean.prescription.service}" converter="#{serviceConverter}"
+											required="true" requiredMessage="#{resourceBundle['prescription.service.notEmpty']}">
+											<f:selectItem noSelectionOption="true" itemLabel="" itemValue=""/>
+											<f:selectItems value="#{dispensationManager.bean.prescription.inclusion.essai.services}" var="item" itemLabel="#{item.nom}" itemValue="#{item}"/>
+										</h:selectOneMenu>
+										
+										<!-- Num randomisation -->
+										<h:outputLabel id="labelNumVisite" for="num_visite"
+											value="#{resourceBundle['editPrescription.numVisite']}" />
+										<h:inputText id="num_visite" disabled="true" value="#{dispensationManager.bean.prescription.numVisite}" />
+										<h:panelGroup/>
+										<h:panelGroup/>
+										
+									</h:panelGrid>
+									<h:panelGrid columns="3" style="width:100%;" 
+										columnClasses="panelCol_20,panelCol_50,panelCol_30">
+										<!-- Bras et sequence -->	
+										<h:outputLabel id="labelSequence" for="sequenceSelected" styleClass="mandatory"
+											value="#{resourceBundle['editPrescription.design']}" />
+										<h:outputText id="sequenceSelected"
+												value="#{dispensationManager.bean.prescription.sequence.parent.nomComplet} #{dispensationManager.bean.prescription.sequence.nom}" />
+										<h:panelGroup/>
+									</h:panelGrid>
+								</h:panelGrid>
+							</td>
+						</tr>
+					</table>
+				</fieldset>
+				
+				
+				<h2><h:outputFormat class="titleFloat"
+					value="#{resourceBundle['editDispensation.dispensation']}" /></h2>
+				
+					<fieldset>	
+						<p:tabView effect="opacity" 
+							effectDuration="normal" dynamic="false"
+							styleClass="dispensationTabView"
+							tabChangeListener="#{dispensationManager.onOngletChange}"
+							activeIndex="#{dispensationManager.indexOngletCourant}">
+							 
+							<p:tab id="ONG_INFORMATION"
+								title="#{resourceBundle['editDispensation.onglet.information.title']}">
+								<ui:include
+									src="/WEB-INF/pages/dispensation/edit/onglets/ongletInformation.xhtml" />
+							</p:tab>
+								<p:tab id="ONG_PRODUITS_PRESCRITS" 
+								title="#{resourceBundle['editDispensation.onglet.produitsPrescrits.title']}">
+								<ui:include
+									src="/WEB-INF/pages/dispensation/edit/onglets/ongletProduitsPrescrits.xhtml" />
+							</p:tab>
+						</p:tabView>
+					</fieldset>		
+					
+			<p:outputPanel id="buttons">		
+			<div class="actionButton simple">
+				<p:commandButton id="dispenseButton"
+				action="dispense" ajax="false" disabled="#{dispensationManager.bean.dispense or droitAccesHelper.isLectureSeule() }" 
+				value="#{resourceBundle['btn.dispenser']}" 
+				title="#{resourceBundle['btn.dispenser']}" />
+			</div>
+		</p:outputPanel>						
+				</div>
+				<br />
+				
+			</h:form>
+					
+		<!-- Popups d'edition -->
+		<ui:include
+			src="/WEB-INF/pages/dispensation/edit/popup/editDispensation_popups.xhtml" />
+			
+
+	</ui:define>
+</ui:composition>

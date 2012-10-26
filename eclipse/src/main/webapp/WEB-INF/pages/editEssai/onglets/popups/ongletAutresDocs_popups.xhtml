@@ -1,0 +1,41 @@
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+     xmlns:ui="http://java.sun.com/jsf/facelets"
+     xmlns:h="http://java.sun.com/jsf/html"
+     xmlns:f="http://java.sun.com/jsf/core"
+     xmlns:p="http://primefaces.prime.com.tr/ui"
+     xmlns:sf="http://www.springframework.org/tags/faces">
+    
+	<!-- ****************************************** -->
+    <!-- Popup d'historique de l'onglet autres docs -->
+	<!-- ****************************************** -->
+	<p:dialog header="#{resourceBundle['suivi.historique']}" widgetVar="popupHistoOngAutresDocs" styleClass="essaiTabPopup" resizable="true" modal="true" width="500">  
+	   <h:form id="ad_popupHisto_form">  
+	   	   <h3>
+	   	   		<h:outputFormat value="#{resourceBundle['editEssai.common.onglet']} #{resourceBundle['editEssai.onglet.autresDocs.title']}" />
+	   	   </h3>
+		   <fieldset>
+		       <h:panelGrid columns="2" style="margin-bottom:10px" width="100%">  
+		  		<p:dataTable id="suivis" value="#{essaiManager.getList('detailAutresDocuments.modifs', false)}" var="modif" emptyMessage="#{resourceBundle['results.none']}"
+		  			paginator="true" rows="#{resourceBundle['pagination.rowsPerPage']}"
+		  			paginatorTemplate="#{paginatorTemplate}">
+		  			<p:column id="date">
+		  				<f:facet name="header">
+		  					<h:outputText value="#{resourceBundle['suivi.date']}" />
+		  				</f:facet>
+		  				<h:outputText value="#{modif.dateMaj.time}">
+						<f:convertDateTime pattern="#{resourceBundle['date.pattern.withHeures']}"/>
+					</h:outputText>
+		  			</p:column>
+		  			<p:column id="auteur">
+		  				<f:facet name="header"><h:outputText value="#{resourceBundle['suivi.auteur']}" /></f:facet>
+	  					<h:outputText value="#{modif.majPar}" />
+		  			</p:column>
+		  		</p:dataTable>		            
+		       </h:panelGrid>
+	       </fieldset>
+	       <div class="popupButton">
+	       		<p:commandButton value="#{resourceBundle['btn.fermer']}" oncomplete="popupHistoOngAutresDocs.hide();"/>
+	       </div>  
+	    </h:form>  
+	</p:dialog>
+</ui:composition>

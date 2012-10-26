@@ -1,0 +1,145 @@
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+     xmlns:ui="http://java.sun.com/jsf/facelets"
+     xmlns:h="http://java.sun.com/jsf/html"
+     xmlns:f="http://java.sun.com/jsf/core"
+	 xmlns:p="http://primefaces.prime.com.tr/ui"
+	 xmlns:c="http://java.sun.com/jsp/jstl/core"
+     template="/WEB-INF/pages/template/template.xhtml">
+     
+     <ui:define name="title">
+		<h:outputFormat value="#{resourceBundle['duplicataOrdonnancierDisp.title']}"/>
+     </ui:define>
+     
+     <ui:define name="body"> 
+
+		<!-- Bouton imprimer duplicata ordonnancier -->
+	   	<div class="actionButton" style="margin-bottom:6px;margin-top:1px;">
+	   		<h:outputLink id="print" value="#">  
+				<p:printer target="formPrintDuplicataDispensation" />  
+		    	<h:graphicImage library="images" name="imprimer.gif" title="#{resourceBundle['btn.imprimer']}"/>
+		 	</h:outputLink>
+	 	</div>
+
+		<h:form id="formPrintDuplicataDispensation">
+
+		<h:panelGroup id="titreImpression">				
+			<div class="editionOrdonnancier">
+				<h:outputFormat value="#{resourceBundle['ordonnancierDisp.edition.title1']}">
+					<f:param value="#{duplicataOrdonnancierDispManager.ordonnancierSelected.pharmacie.nom}" />
+				</h:outputFormat>
+				<br />
+			    <h:outputFormat value="#{resourceBundle['ordonnancierDisp.edition.title2']}">
+			    	<f:param value="#{facesUtils.formatDate(duplicataOrdonnancierDispManager.ordonnancierSelected.dateDebut)}" />
+			    	<f:param value="#{facesUtils.formatDate(duplicataOrdonnancierDispManager.ordonnancierSelected.dateFin)}" />
+			    </h:outputFormat>
+			    <br />
+			    <h:outputText value="#{resourceBundle['ordonnancierDisp.duplicata']}" />
+			</div>	
+		</h:panelGroup>			
+
+		<h:panelGroup id="resultsDispensation" >
+			
+			<p:panel style="width:955px;">
+			<p:dataTable id="dispensations" value="#{duplicataOrdonnancierDispManager.listDispensations}" var="dispensation" emptyMessage="#{resourceBundle['results.none']}">
+	    			
+	    		<!-- Numero ordonnancier -->
+	    		<p:column id="numOrdonnancier" styleClass="panelCol_5" >
+	    			<f:facet name="header">
+	    				<h:outputText value="#{resourceBundle['ordonnancierDisp.numero']}"/>
+	    				<br />
+	    				<h:outputText value="#{resourceBundle['ordonnancierDisp.ordonnancier']}"/>
+	    			</f:facet>
+	    			<div align="center">
+	    				<h:outputText value="#{dispensation.numOrdonnancier}"/>
+	    			</div>
+	    		</p:column>
+
+				<!-- Date dispensation -->		    			
+	    		<p:column id="dateDispensation" styleClass="panelCol_10">
+	    			<f:facet name="header">
+	    				<h:outputText value="#{resourceBundle['ordonnancierDisp.date']}"/>
+	    				<br />
+	    				<h:outputText value="#{resourceBundle['ordonnancierDisp.dispensation']}"/>
+	    			</f:facet>
+	    			<div align="center">
+		    			<h:outputText value="#{dispensation.dateDispensation.time}">
+		    				<f:convertDateTime pattern="#{resourceBundle['date.pattern.withHeures']}" />
+		    			</h:outputText>
+	    			</div>
+	    		</p:column>
+	    			
+	    		<!-- Initiales patient -->
+	    		<p:column id="initialesPatient" styleClass="panelCol_10" rendered="#{duplicataOrdonnancierDispManager.typeAnonymisation == 'ANONYMISE'}">
+	    			<f:facet name="header">
+	    				<h:outputText value="#{resourceBundle['ordonnancierDisp.initiales']}"/>
+	    				<br />
+	    				<h:outputText value="#{resourceBundle['ordonnancierDisp.patient']}"/>
+	    			</f:facet>
+	    			<div align="center">
+	    				<h:outputText value="#{ordonnancierDispManager.getInitialesPatient(dispensation)}"/>
+	    			</div>
+	    		</p:column>
+	    			
+	    		<!-- Initiales patient -->
+	    		<p:column id="patientFull" styleClass="panelCol_10" rendered="#{duplicataOrdonnancierDispManager.typeAnonymisation == 'NON_ANONYMISE'}">
+	    			<f:facet name="header">
+	    				<h:outputText value="#{resourceBundle['ordonnancierDisp.patient']}"/>
+	    			</f:facet>
+	    			<div align="center">
+	    				<h:outputText value="#{ordonnancierDispManager.getFullPatient(dispensation)}"/>
+	    			</div>
+	    		</p:column>
+	    			
+	    		<!-- Essai -->
+	    		<p:column id="essai" styleClass="panelCol_20">
+	    			<f:facet name="header">
+	    				<h:outputText value="#{resourceBundle['ordonnancierDisp.essai']}"/>
+    					<br />
+    					<h:outputText value="#{resourceBundle['ordonnancierDisp.promoteur']}"/>	    				
+	    			</f:facet>
+	    			<h:outputText value="#{dispensation.prescription.inclusion.essai.numInterne} #{dispensation.prescription.inclusion.essai.nom}"/>
+	    			<br />
+	    			<h:outputText value="#{dispensation.prescription.inclusion.essai.promoteur.raisonSociale}"/>
+	    		</p:column>
+	    			
+	    		<!-- Produits -->
+	    		<p:column id="produits" styleClass="panelCol_45">
+	    			<f:facet name="header">
+	    				<h:outputText value="#{resourceBundle['ordonnancierDisp.produits']}"/>
+	    			</f:facet>
+	    			<ui:repeat var="dispensationProduit" value="#{duplicataOrdonnancierDispManager.getListDispensationsProduit(dispensation)}">
+						<h:outputText value="#{dispensationProduit.quantite} X " />							    					
+						<h:outputText value="#{dispensationProduit.produit.denomination} - 
+							#{dispensationProduit.conditionnement.libelle} -
+							#{dispensationProduit.numLot}" />
+						<h:outputText value=" - #{dispensationProduit.numTraitement}" rendered="#{not empty dispensationProduit.numTraitement}" />
+						<br />
+	    			</ui:repeat>
+	    		</p:column>
+	    			
+	    		<!-- Dispense par -->    			
+	    		<p:column id="dispensePar" styleClass="panelCol_10">
+	    			<f:facet name="header">
+	    				<h:outputText value="#{resourceBundle['ordonnancierDisp.dispensePar']}"/>
+	    			</f:facet>
+	    			<c:set var="personne" value="#{duplicataOrdonnancierDispManager.getListDispensationsProduit(dispensation).get(0).personne}"/>
+	    			<h:outputText value="#{personne.prenom} #{personne.nom}"/>
+	    		</p:column>		  
+	    			
+	    		<!-- Investigateur -->    			
+	    		<p:column id="investigateur" styleClass="panelCol_10">
+	    			<f:facet name="header">
+	    				<h:outputText value="#{resourceBundle['ordonnancierDisp.investigateur']}"/>
+	    			</f:facet>
+	    			<h:outputText value="#{dispensation.prescription.investigateur.prenom} #{dispensation.prescription.investigateur.nom}"/>
+	    		</p:column>		     			
+	    			
+	    	</p:dataTable>		
+	    	</p:panel>			
+		</h:panelGroup>
+		
+		</h:form>
+
+     </ui:define>
+     
+</ui:composition>

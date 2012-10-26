@@ -1,0 +1,91 @@
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+     xmlns:ui="http://java.sun.com/jsf/facelets"
+     xmlns:h="http://java.sun.com/jsf/html"
+     xmlns:f="http://java.sun.com/jsf/core"
+     xmlns:p="http://primefaces.prime.com.tr/ui"
+     xmlns:sf="http://www.springframework.org/tags/faces">
+    
+	<!-- Boite de dialogue pour l'historique des commentaires -->
+	<p:dialog widgetVar="popupCommentairesRecherche" header="#{resourceBundle['editEssai.onglet.recherche.commentaires']}"  
+		resizable="true" modal="true" 
+		styleClass="essaiTabPopup popupCommWithHisto"
+		width="#{resourceBundle['popup.comments.withHisto.width']}">  
+
+		<h:form id="dr_popupCommentaires_form" prependId="false">
+			<!-- historique -->
+			<h3><h:outputFormat value="#{resourceBundle['editEssai.onglet.recherche.commentaires.historique']}" /></h3>
+			<fieldset>
+				<p:outputPanel id="dr_popupCommentaires_outp_listeCommentaires" style="display:block;margin-top:10px;">
+					<p:panel styleClass="popupScrollable" style="margin-bottom:10px">
+			 			<div align="center">
+							<h:panelGrid columns="2" style="margin-bottom:10px" width="100%">  
+								<p:dataTable id="dr_popupCommentaires_dataTable_commentaires" value="#{essaiManager.getList('detailRecherche.commentaires', false)}" var="commentaire" emptyMessage="#{resourceBundle['results.none']}">
+									<p:column id="libelle">
+										<f:facet name="header"><h:outputText value="#{resourceBundle['editEssai.onglet.recherche.commentaires.historique.libelle']}" /></f:facet>
+										<h:outputText value="#{commentaire.libelle}" />
+									</p:column>
+									<p:column id="date">
+										<f:facet name="header"><h:outputText value="#{resourceBundle['editEssai.onglet.recherche.commentaires.historique.date']}" /></f:facet>
+										<h:outputText value="#{commentaire.dateMaj.time}">
+											<f:convertDateTime pattern="#{resourceBundle['date.pattern.withHeures']}"/>
+										</h:outputText>
+									</p:column>
+									<p:column id="auteur">
+										<f:facet name="header"><h:outputText value="#{resourceBundle['editEssai.onglet.recherche.commentaires.historique.auteur']}" /></f:facet>
+										<h:outputText value="#{commentaire.majPar}" />
+									</p:column>
+								</p:dataTable>		            
+							</h:panelGrid>
+						</div>
+					</p:panel>
+				</p:outputPanel>
+			</fieldset>
+			<!-- nouveau commentaire -->
+			<h3><h:outputFormat value="#{resourceBundle['editEssai.onglet.recherche.commentaires.nouveau']}" /></h3>
+			<fieldset>
+				<p:outputPanel id="dr_popupCommentaires_outp_libCommentaire" style="display:block;margin-top:10px;">
+					<h:panelGrid columns="1" style="margin-bottom:10px" width="100%">  
+						<h:inputTextarea id="dr_popupCom_nouveauComm"
+							value="#{essaiManager.getCommentaireManager('RECHERCHE').libelle}" 
+							rows="#{resourceBundle['textarea.rows.default']}" />
+					</h:panelGrid>
+				</p:outputPanel>
+			</fieldset>
+			<div class="popupButton">
+				<p:commandButton value="#{resourceBundle['btn.ajouter']}" 
+					actionListener="#{essaiManager.ajouterCommentaire(enumManager.getEnumValue('TypeCommentaireEssai','RECHERCHE'))}"
+					update="dr_pannelCommentaires, dr_popupCommentaires_outp_libCommentaire, dr_popupCommentaires_outp_listeCommentaires"
+					oncomplete="popupCommentairesRecherche.hide();" />
+       			<p:commandButton value="#{resourceBundle['btn.fermer']}" oncomplete="popupCommentairesRecherche.hide();"/>
+       		</div>   
+		</h:form>
+	</p:dialog>
+	
+	<!-- Popup d'historique de l'onglet recherche -->
+	<p:dialog header="#{resourceBundle['suivi.historique']}" widgetVar="popupHistoOngRecherche" styleClass="essaiTabPopup" resizable="true" modal="true" width="500">  
+	   <h:form id="dr_popupHisto_form">  
+	   	   <h3><h:outputFormat value="#{resourceBundle['editEssai.common.onglet']} #{resourceBundle['editEssai.onglet.recherche.title']}" /></h3>
+		   <fieldset>
+		       <h:panelGrid columns="2" style="margin-bottom:10px" width="100%">  
+		  		<p:dataTable id="suivis" value="#{essaiManager.getList('detailRecherche.modifs', false)}" var="modif" emptyMessage="#{resourceBundle['results.none']}"
+		  			paginator="true" rows="#{resourceBundle['pagination.rowsPerPage']}"
+		  			paginatorTemplate="#{paginatorTemplate}">
+		  			<p:column id="date">
+		  				<f:facet name="header"><h:outputText value="#{resourceBundle['suivi.date']}" /></f:facet>
+		  				<h:outputText value="#{modif.dateMaj.time}">
+							<f:convertDateTime pattern="#{resourceBundle['date.pattern.withHeures']}"/>
+						</h:outputText>
+		  			</p:column>
+		  			<p:column id="auteur">
+		  				<f:facet name="header"><h:outputText value="#{resourceBundle['suivi.auteur']}" /></f:facet>
+		  				<h:outputText value="#{modif.majPar}" />
+		  			</p:column>
+		  		</p:dataTable>		            
+		       </h:panelGrid>
+	       </fieldset>
+	       <div class="popupButton">
+	       	<p:commandButton value="#{resourceBundle['btn.fermer']}" oncomplete="popupHistoOngRecherche.hide();"/>
+	       </div>  
+	    </h:form>  
+	</p:dialog>
+</ui:composition>

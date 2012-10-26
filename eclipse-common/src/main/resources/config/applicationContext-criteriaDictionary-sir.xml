@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans 
+    xmlns="http://www.springframework.org/schema/beans" 
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd">
+
+	<!-- ============================= -->
+	<!-- DICTIONNAIRE                  -->
+	<!-- ============================= -->
+	<bean id="sirCriteriaDictionary"
+		class="fr.pharma.eclipse.dictionary.impl.CriteriaDictionaryImpl">
+		<property name="makers">
+			<map>
+				<entry
+					key="fr.pharma.eclipse.domain.criteria.sir.PersonneSirSearchCriteria"
+					value-ref="personneSirSearchCriteriaMaker" />
+			</map>
+		</property>
+	</bean>
+	
+	<!-- ======================================== -->
+	<!-- CRITERE DE RECHERCHE : PERSONNE SIR      -->
+	<!-- ======================================== -->
+	<bean id="personneSirSearchCriteria"
+		class="fr.pharma.eclipse.domain.criteria.sir.PersonneSirSearchCriteria"
+		scope="session">
+		<property name="activeOrder" value="nom" />
+	</bean>	
+
+</beans>

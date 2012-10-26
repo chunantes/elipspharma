@@ -1,0 +1,147 @@
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+     xmlns:ui="http://java.sun.com/jsf/facelets"
+     xmlns:h="http://java.sun.com/jsf/html"
+     xmlns:f="http://java.sun.com/jsf/core"
+     xmlns:p="http://primefaces.prime.com.tr/ui"
+     xmlns:c="http://java.sun.com/jsp/jstl/core"
+     template="/WEB-INF/pages/template/template.xhtml">
+
+     <ui:define name="title">
+		<h:outputFormat value="#{resourceBundle['dispensationGlobale.sortie.title']}"/>
+     </ui:define>
+     
+     <ui:define name="body">
+     	
+     	<h:form id="formSortie" prependId="false">
+     		<p:focus />
+     		<fieldset style="width:960px;">
+     			<p:messages />
+     		</fieldset>
+     		<fieldset>
+				<table class="stock large" cellpadding="0" cellspacing="0" border="0" width="100%">
+			 		<tr>
+			 			<td>					
+							<h:panelGrid id="panelSortie" columns="2" columnClasses="panelCol_25,panelCol_75" cellpadding="0" cellspacing="0" border="0" width="100%">
+
+								<!-- Essai -->
+	 							<h:outputLabel id="labelEssai" for="essai" value="#{resourceBundle['dispensationGlobale.essaiPromoteur']}" />
+	 							<h:outputText id="essai" value="#{dispensationGlobaleManager.beanSelected.essai.numInterne} #{dispensationGlobaleManager.beanSelected.essai.nom} - #{dispensationGlobaleManager.beanSelected.essai.promoteur.raisonSociale}"/>
+	 							
+								<!-- Pharmacie -->
+								<h:outputLabel id="labelPharmacie" for="pharmacie" value="#{resourceBundle['dispensationGlobale.pharmacie']}"/>
+								<h:outputText id="pharmacie" value="#{dispensationGlobaleManager.beanSelected.pharmacie.nom}"/>
+								
+								<!-- Pharmacie -->
+								<h:outputLabel id="labelService" for="service" value="#{resourceBundle['dispensationGlobale.service']}"/>
+								<h:outputText id="service" value="#{dispensationGlobaleManager.beanSelected.service.nom}"/>
+																
+								<!-- Produit -->
+								<h:outputLabel id="labelProduit" for="produit" value="#{resourceBundle['dispensationGlobale.produit']}"/>
+								<h:outputText id="produit" value="#{dispensationGlobaleManager.beanSelected.produit.denomination}"/>
+								
+								<!-- Conditionnement -->
+								<h:outputLabel id="labelConditionnement" for="conditionnement" value="#{resourceBundle['dispensationGlobale.conditionnement']}"/>
+								<h:outputText id="conditionnement" value="#{dispensationGlobaleManager.beanSelected.conditionnement.libelle}"/>								
+								
+								<!-- Date de la demande -->
+								<h:outputLabel id="labelDateDemande" for="dateDemande" value="#{resourceBundle['dispensationGlobale.dateDemande']}"/>
+								<h:outputText id="dateDemande" value="#{dispensationGlobaleManager.beanSelected.dateDemande}" converter="#{calendarConverter}"/>
+								
+								<!-- Demande par  -->
+								<h:outputLabel id="labelDemandePar" for="demandePar" value="#{resourceBundle['dispensationGlobale.demandePar']}"/>
+								<h:outputText id="demandePar" value="#{dispensationGlobaleManager.beanSelected.personne.prenom} #{dispensationGlobaleManager.beanSelected.personne.nom}"/>
+								
+								<!-- Quantite demandee -->
+								<h:outputLabel id="labelQuantiteDemande" for="quantiteDemande" value="#{resourceBundle['dispensationGlobale.quantiteDemande']}"/>
+								<h:outputText id="quantiteDemande" value="#{dispensationGlobaleManager.beanSelected.quantite}"/>
+								
+								<!-- Commentaire de la demande -->
+								<h:outputLabel id="labelCommentaire" for="commentaire" value="#{resourceBundle['dispensationGlobale.commentaire']}"/>
+								<h:inputTextarea id="commentaire" rows="#{resourceBundle['textarea.rows.default']}" disabled="true" value="#{dispensationGlobaleManager.beanSelected.commentaire}" />
+								
+							</h:panelGrid>
+							
+							<!-- Lignes de stock -->
+							<h:panelGroup id="lignesStockForDotation">
+							
+								<p:panel style="margin-top:10px;" header="#{resourceBundle['dispensationGlobale.stock']}" rendered="#{dispensationGlobaleManager.beanSelected.traitee == false}">
+							
+									<p:dataTable value="#{dispensationGlobaleManager.lignesStockForDotation}" var="ligneStock" rendered="#{not empty dispensationGlobaleManager.lignesStockForDotation}">
+										
+										<p:column id="colNumLot">
+						    				<f:facet name="header">
+						    					<h:outputText value="#{resourceBundle['dispensationGlobale.numLot']}"/>
+						    				</f:facet>
+						    				<h:outputText value="#{ligneStock.numLot}"/>
+							    		</p:column>
+							    											
+										<p:column id="colNumTraitement">
+						    				<f:facet name="header">
+						    					<h:outputText value="#{resourceBundle['dispensationGlobale.numTraitement']}"/>
+						    				</f:facet>
+						    				<h:outputText value="#{ligneStock.numTraitement}"/>
+						    				<h:outputText value="#{resourceBundle['nonApplicable']}" rendered="#{empty ligneStock.numTraitement}"/>
+							    		</p:column>
+							    		
+										<p:column id="colStockage">
+						    				<f:facet name="header">
+						    					<h:outputText value="#{resourceBundle['dispensationGlobale.stockage']}"/>
+						    				</f:facet>
+						    				<h:outputText value="#{ligneStock.stockage}"/>
+							    		</p:column>
+							    		
+										<p:column id="colQteEnStock">
+						    				<f:facet name="header">
+						    					<h:outputText value="#{resourceBundle['dispensationGlobale.qteEnStock']}"/>
+						    				</f:facet>
+						    				<div align="center">
+						    					<h:outputText value="#{ligneStock.qteEnStock}"/>
+						    				</div>
+							    		</p:column>
+							    		
+										<p:column id="colQteASortir">
+						    				<f:facet name="header">
+						    					<h:outputText value="#{resourceBundle['dispensationGlobale.qteASortir']}"/>
+						    				</f:facet>
+						    				<div align="center">
+						    					<h:inputText value="#{ligneStock.qteASortir}" converterMessage="#{resourceBundle['sortie.quantite.nb.invalid_type']}"/>
+						    				</div>
+							    		</p:column>
+										
+									</p:dataTable>
+									
+									<h:outputText value="#{resourceBundle['stockSortie.aucunStock']}" rendered="#{empty dispensationGlobaleManager.lignesStockForDotation}" />
+								</p:panel>
+								
+								<p:panel style="margin-top:10px;" header="#{resourceBundle['dispensationGlobale.dotation.alreadyTraitee']}" rendered="#{dispensationGlobaleManager.beanSelected.traitee == true}">
+								</p:panel>
+								
+							</h:panelGroup>													
+							
+						</td>
+					</tr>
+			 	</table>
+			</fieldset>
+			
+		   	<div class="actionButton" style="margin-right:36px;">
+    			<p:commandButton id="saveButton" action="save" ajax="false" value="#{resourceBundle['btn.enregistrer']}" title="#{resourceBundle['btn.enregistrer']}"  disabled="#{droitAccesHelper.isLectureSeule()}"
+    				rendered="#{dispensationGlobaleManager.beanSelected.traitee == false and not empty dispensationGlobaleManager.lignesStockForDotation}"/>
+		   	</div>
+		   	
+		   	<div class="basicButton">
+		   		<div class="retourButton">
+	   				<p:commandButton id="returnButton" immediate="true" onclick="document.forms['formHidden'].hideReturnButton.click();" value="#{resourceBundle['btn.retour']}" title="#{resourceBundle['btn.retour']}"/>
+	   			</div>
+	   		</div>		   	
+		   	
+			</h:form>
+
+			<div style="display:none;">
+				<h:form id="formHidden" prependId="false">
+		  			<p:commandButton id="hideReturnButton" action="comeback" ajax="false"/>
+		 		</h:form>
+	 		</div>
+		
+    </ui:define>
+     
+</ui:composition>

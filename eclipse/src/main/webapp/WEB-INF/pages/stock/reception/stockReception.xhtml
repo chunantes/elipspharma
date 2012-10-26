@@ -1,0 +1,243 @@
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+     xmlns:ui="http://java.sun.com/jsf/facelets"
+     xmlns:h="http://java.sun.com/jsf/html"
+     xmlns:f="http://java.sun.com/jsf/core"
+     xmlns:p="http://primefaces.prime.com.tr/ui"
+     xmlns:c="http://java.sun.com/jsp/jstl/core"
+	xmlns:security="http://www.springframework.org/security/tags"
+     template="/WEB-INF/pages/template/template.xhtml">
+
+     <ui:define name="title">
+			<h:outputFormat value="#{resourceBundle['stockPreparation.title']} - " rendered="#{sortieManager.typeSortie == 'PREPARATION_SORTIE'}"/><h:outputFormat value="#{resourceBundle['stockReception.title']}"/>
+		<h:form prependId="false">
+			<p:commandLink id="incidentButton2" styleClass="incident" actionListener="#{incidentManager.init(approvisionnementManager.essaiSelected)}" ajax="true" update="incident_form"  oncomplete="popupIncident.show();" >
+				<h:graphicImage library="images" name="incident.png" />
+				<p:tooltip for="incidentButton2" value="#{resourceBundle['incident.ajouter']}"/>
+			</p:commandLink>
+		</h:form>
+     </ui:define>
+     
+     <ui:define name="body">
+     	
+     	<h:form id="stockReception" prependId="false">
+     		
+     		<fieldset style="width:960px;">
+     			<p:messages />
+     		</fieldset>
+     		<fieldset>
+				<table class="stock large" cellpadding="0" cellspacing="0" border="0" width="100%">
+			 		<tr>
+			 			<td>					
+							<h:panelGrid id="panelStockReception" columns="4" columnClasses="panelCol_25,panelCol_25,panelCol_25,panelCol_25" cellpadding="0" cellspacing="0" border="0" width="100%">
+
+								<!-- Essai Promoteur -->
+	 							<h:outputLabel id="labelEssai" for="essai_input" value="#{resourceBundle['stockReception.essaiPromoteur.mandatory']}" />
+	 							<p:autoComplete immediate="true" id="essai_input" value="#{approvisionnementManager.essaiSelected}" 
+	 								required="true" requiredMessage="#{resourceBundle['approvisionnement.essai.notEmpty']}"
+	 								selectListener="#{approvisionnementManager.handleSelectEssai}"
+	 								completeMethod="#{autoCompleteEssaiManager.complete}"
+	 								forceSelection="true"
+	 								var="essai" style="width : 200px;"
+	 								itemLabel="#{essai.numInterne} #{essai.nom} - #{essai.promoteur.raisonSociale}"
+	 								itemValue="#{essai}"
+	 								converter="#{essaiConverter}"
+	 								onSelectUpdate="pharmacie panelModalitesReception"
+	 								rendered="#{empty approvisionnementManager.receptionLots}" />
+								<h:outputText value="#{approvisionnementManager.essaiSelected.numInterne} #{approvisionnementManager.essaiSelected.nom} - #{approvisionnementManager.essaiSelected.promoteur.raisonSociale}" rendered="#{not empty approvisionnementManager.receptionLots}"/>
+								<h:panelGroup />	 								
+								<h:panelGroup />	 								
+	 									
+								<!-- Pharmacie -->
+								<h:outputLabel id="labelPharmacie" for="pharmacie" value="#{resourceBundle['stockReception.pharmacie.mandatory']}"/>
+								<h:selectOneMenu converter="#{pharmacieConverter}" required="true" requiredMessage="#{resourceBundle['approvisionnement.pharmacie.notEmpty']}"
+									 id="pharmacie" value="#{approvisionnementManager.pharmacieSelected}" styleClass="selectRadio" immediate="true"
+									 rendered="#{empty approvisionnementManager.receptionLots}">
+									<f:selectItem noSelectionOption="true" itemLabel="" itemValue="" />
+									<f:selectItems value="#{approvisionnementManager.pharmacies}" var="pharmacie" itemLabel="#{pharmacie.nom}" itemValue="#{pharmacie}"/>
+									<f:ajax listener="#{approvisionnementManager.handleSelectPharmacie}" />
+								</h:selectOneMenu>
+								<h:outputText value="#{approvisionnementManager.pharmacieSelected.nom}" rendered="#{not empty approvisionnementManager.receptionLots}"/>
+								<h:panelGroup />	 								
+								<h:panelGroup />
+							</h:panelGrid>	
+							
+							<h:panelGrid columns="4" columnClasses="panelCol_25,panelCol_25,panelCol_25,panelCol_25" cellpadding="0" cellspacing="0" border="0" width="100%" 
+							             rendered="#{approvisionnementManager.typeAppro == 'APPROVISIONNEMENT' or empty approvisionnementManager.receptionLots}">
+								<!-- Dates -->
+								<h:outputLabel id="labelDateReception" for="dateReception" value="#{resourceBundle['stockReception.dateReception']}"/>
+								<h:outputText id="dateReception" value="#{approvisionnementManager.dateReception.time}">
+									<f:convertDateTime pattern="#{resourceBundle['date.pattern.withHeures']}"/>
+								</h:outputText>								
+								
+								<h:outputLabel id="labelDateArriveeColis" for="dateArriveeColis" value="#{resourceBundle['stockReception.dateArriveeColis']}"/>
+    							<p:calendar id="dateArriveeColis" value="#{approvisionnementManager.dateArriveeColis}" 
+    								effect="#{resourceBundle['effect.calendar']}"  locale="#{resourceBundle['date.locale']}" showButtonPanel="true" navigator="true" 
+    								converter="#{calendarConverter}" />								
+							
+							</h:panelGrid>
+							
+							<!-- Reception ou entree corrective -->
+							<h:panelGrid id="panelReceptionLot" columns="3" columnClasses="panelCol_25,panelCol_75" cellpadding="0" cellspacing="0" border="0" width="100%"
+							             rendered="#{(approvisionnementManager.typeAppro == enumManager.getEnumValue('TypeMvtStock', 'APPROVISIONNEMENT')
+							             			 or approvisionnementManager.typeAppro == enumManager.getEnumValue('TypeMvtStock', 'ENTREE_CORRECTIVE')) 
+							                         and empty approvisionnementManager.receptionLots}"
+				             >
+								<h:outputLabel id="labelReceptionOuCorrection" for="receptionOuCorrection" value="#{resourceBundle['stockReception.reception.ou.correction.mandatory']}"/>
+								<h:selectOneRadio id="receptionOuCorrection" value="#{approvisionnementManager.typeAppro}" styleClass="selectRadio" required="true">
+									<f:selectItem itemLabel="#{resourceBundle['stockReception.reception']}" itemValue="#{enumManager.getEnumValue('TypeMvtStock', 'APPROVISIONNEMENT')}"/>
+									<f:selectItem itemLabel="#{resourceBundle['stockReception.correction']}" itemValue="#{enumManager.getEnumValue('TypeMvtStock', 'ENTREE_CORRECTIVE')}" />
+								</h:selectOneRadio>
+							</h:panelGrid>
+							
+							<p:outputPanel rendered="#{approvisionnementManager.typeAppro == 'PREPARATION_ENTREE'}">
+								<h:panelGrid columns="4" columnClasses="panelCol_25,panelCol_25,panelCol_25,panelCol_25" cellpadding="0" cellspacing="0" border="0" width="100%">
+									
+									<h:outputLabel id="labelDateFabrication" for="dateFabrication" value="#{resourceBundle['stockReception.dateFabrication']}"/>
+	    							<p:calendar id="dateFabrication" value="#{approvisionnementManager.dateFabrication}" 
+	    								effect="#{resourceBundle['effect.calendar']}"  locale="#{resourceBundle['date.locale']}" showButtonPanel="true" navigator="true" 
+	    								converter="#{calendarConverter}" />		
+	    							
+	    							<h:panelGroup />		
+	    							<h:panelGroup />
+	    						</h:panelGrid>	
+	    						<h:panelGrid columns="2" columnClasses="panelCol_25,panelCol_75" cellpadding="0" cellspacing="0" border="0" width="100%" >
+	    							<h:outputLabel id="labelCOmpo" for="compo" value="#{resourceBundle['stockReception.composition']}" />
+									<h:inputTextarea id="compo" readonly="true" style="width:100%;"
+										value="#{approvisionnementManager.composition}" 
+										rows="#{resourceBundle['textarea.rows.default']}" />					
+									<h:panelGroup />						
+	    							<h:panelGroup />	 
+								</h:panelGrid>
+							</p:outputPanel>
+
+							<!-- Modalites de reception --> 
+							<p:outputPanel id="panelModalitesReception" >
+								<h:panelGrid columns="2" columnClasses="panelCol_25, panelCol_75" cellpadding="0" cellspacing="0" border="0" width="100%" 
+									rendered="#{approvisionnementManager.essaiSelected != null and approvisionnementManager.typeAppro != 'PREPARATION_ENTREE'} ">
+									
+									<h:outputLabel id="labelModalite" for="modalite" value="#{resourceBundle['stockReception.modaliteReception']}" />
+									<h:inputTextarea id="modalite" disabled="true"
+										value="#{approvisionnementManager.essaiSelected.detailDonneesPharma.infosComplementaires.modaliteReception}"
+										rows="#{resourceBundle['textarea.rows.default']}" />
+									
+									<c:set var="doc_mod_rec" value="#{approvisionnementManager.essaiSelected.detailDonneesPharma.infosComplementaires.documentModaliteReception}" />
+									
+									<h:outputLabel value="#{resourceBundle['stockReception.fichierModaliteReception']}" rendered="#{not empty doc_mod_rec}" />
+									<h:panelGrid id="mod_rec_doc_grid" columns="2" columnClasses="panelCol_50, panelCol_50" rendered="#{not empty doc_mod_rec}">
+										<h:outputText value="#{doc_mod_rec.nomUtilisateur}" title="#{documentsIhmHelper.buildDocTitle(doc_mod_rec, resourceBundle['document.part1'], resourceBundle['document.part2'], resourceBundle['date.pattern.withHeures'])}" />
+										<p:commandButton immediate="true" value="#{resourceBundle['file.dwd']}" title="#{resourceBundle['file.dwd']}" ajax="false">
+											<p:fileDownload value="#{fileDwdController.downloadDocument(approvisionnementManager.essaiSelected, doc_mod_rec)}" />
+										</p:commandButton>
+									</h:panelGrid>
+								</h:panelGrid>								
+							</p:outputPanel>
+
+						</td>
+					</tr>
+			 	</table>
+		   	<div style="width:960px;">
+		   			<c:if test="#{approvisionnementManager.essaiSelected!=null and essaiManager.bean != null and approvisionnementManager.essaiSelected.id == essaiManager.bean.id}">
+				<div style="float:left;">
+			   		<div class="retourButton">
+			   		<security:authorize
+						ifAnyGranted="ROLE_PHARMACIEN_INTERNE,ROLE_PHARMACIEN_INTERNE_GARDE,ROLE_PHARMACIEN_EXTERNE,ROLE_PHARMACIEN_PREPARATEUR,ROLE_PHARMACIEN_TITULAIRE,ROLE_PHARMACIEN_ASSISTANT,ROLE_PHARMACIEN_ATTACHE,ROLE_ADMIN">				
+						<p:menuButton  value="#{resourceBundle['btn.stock']}" >
+							 <p:menuitem value="#{resourceBundle['btn.consultationFlux']}"   
+					           action="goStockConsultationFluxForEssai" ajax="false"/>
+							 <p:menuitem value="#{resourceBundle['btn.consultationStock']}"   
+					           action="goStockConsultationStockForEssai" ajax="false"/>
+					        <p:menuitem value="#{resourceBundle['btn.extensionPeremption']}"   
+					            action="goStockExtensionPeremptionForEssai" ajax="false"/>
+					        <p:menuitem value="#{resourceBundle['btn.sortie']}"   
+					            action="goStockSortieForEssai" ajax="false"/>
+						</p:menuButton>
+					</security:authorize>	
+					</div>	
+				</div>
+			</c:if>
+		   	
+			   	<div class="actionButton" style="margin-bottom:6px;margin-top:1px;">
+					<!-- Bouton ajout d'une reception de lot -->
+					<p:commandButton id="addReceptionLotButton" action="addReceptionLot" ajax="false" 
+						value="#{resourceBundle['btn.addReceptionLot']}" title="#{resourceBundle['btn.addReceptionLot']}"/>
+			 	</div>
+			 </div>
+				 
+			 	</fieldset>
+		 	<!-- Receptions de lots -->
+			<h:panelGroup id="receptionLots">
+				<p:panel id="panelReceptionLots" style="width:955px;" rendered="#{not empty approvisionnementManager.receptionLots}">
+					<p:dataTable var="receptionLot" value="#{approvisionnementManager.receptionLots}">
+			     		<ui:include src="/WEB-INF/pages/stock/reception/detailReceptionLot.xhtml"/>
+					</p:dataTable>
+				</p:panel>
+			</h:panelGroup>		
+		 	<div class="actionButton" style="margin-right:36px;">
+    			<p:commandButton id="saveButton" action="save" ajax="false" rendered="#{not empty approvisionnementManager.receptionLots}"
+    				value="#{resourceBundle['btn.enregistrer']}" title="#{resourceBundle['btn.enregistrer']}"/>
+	   			<p:commandButton update="@form" id="cancelButton" immediate="true" action="cancel" ajax="false" rendered="#{not empty approvisionnementManager.receptionLots}"
+	   				value="#{resourceBundle['btn.annuler']}" title="#{resourceBundle['btn.annuler']}"/>
+		   	</div>
+	
+			
+		</h:form>
+		
+			<!-- Popup d'ajout d'un incident -->
+		 <p:dialog header="#{resourceBundle['incident.ajouter']}" widgetVar="popupIncident" styleClass="essaiTabPopup" resizable="true" modal="true" width="500" closeListener="#{incidentManager.reinit() }">  
+		     <h:form id="incident_form">
+		     
+		     	<p:outputPanel rendered="#{approvisionnementManager.essaiSelected == null}">
+			     	  <!-- Essai  -->
+					<h3><h:outputFormat value="#{resourceBundle['incident.essai']}" /></h3>
+					<fieldset>
+						<p:outputPanel id="dr_popupIncident_outp_essai" style="display:block;margin-top:10px;">
+							<h:panelGrid columns="1" style="margin-bottom:10px" width="100%">  
+								
+								<p:autoComplete id="essai" value="#{incidentManager.bean.essai}" 
+	 								completeMethod="#{autoCompleteEssaiManager.complete}"
+	 								forceSelection="true"
+	 								var="essai"
+	 								itemLabel="#{essai.numInterne} #{essai.nom} - #{essai.promoteur.raisonSociale}"
+	 								itemValue="#{essai}"
+	 								converter="#{essaiConverter}"/>
+	
+							</h:panelGrid>
+						</p:outputPanel>
+					</fieldset>
+				</p:outputPanel>
+		     
+		         <!-- Libelle  -->
+				<h3><h:outputFormat value="#{resourceBundle['incident.libelle']}" /></h3>
+				<fieldset>
+					<p:outputPanel id="dr_popupIncident_outp_lib" style="display:block;margin-top:10px;">
+						<h:panelGrid columns="1" style="margin-bottom:10px" width="100%">  
+							<h:inputText id="dr_popupIncident_lib"
+								value="#{incidentManager.bean.libelle}" />
+						</h:panelGrid>
+					</p:outputPanel>
+				</fieldset>
+				
+				<!-- Commentaire -->
+				<h3><h:outputFormat value="#{resourceBundle['incident.commentaire']}" /></h3>
+				<fieldset>
+					<p:outputPanel id="dr_popupIncident_outp_comm" style="display:block;margin-top:10px;">
+						<h:panelGrid columns="1" style="margin-bottom:10px" width="100%">  
+							<h:inputTextarea id="dr_popupIncident_comm"
+								value="#{incidentManager.bean.commentaire}" 
+								rows="#{resourceBundle['textarea.rows.default']}" />
+						</h:panelGrid>
+					</p:outputPanel>
+				</fieldset>
+				<div class="popupButton">
+					<p:commandButton value="#{resourceBundle['btn.ajouter']}" 
+						actionListener="#{incidentManager.ajouterIncident()}" 
+						oncomplete="popupIncident.hide();"/>
+	       			<p:commandButton value="#{resourceBundle['btn.fermer']}" oncomplete="popupIncident.hide();"/>
+	       		</div>   
+		     </h:form>  
+		 </p:dialog>	
+		
+    </ui:define>
+    
+     
+</ui:composition>

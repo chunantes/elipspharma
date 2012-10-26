@@ -1,0 +1,189 @@
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+     xmlns:ui="http://java.sun.com/jsf/facelets"
+     xmlns:h="http://java.sun.com/jsf/html"
+     xmlns:f="http://java.sun.com/jsf/core"
+     xmlns:p="http://primefaces.prime.com.tr/ui"
+     xmlns:c="http://java.sun.com/jsp/jstl/core"
+     template="/WEB-INF/pages/template/template.xhtml">
+     
+     <ui:define name="title">
+		<h:outputFormat value="#{resourceBundle['dispensationGlobale.title']}"/>
+     </ui:define>
+     
+     <ui:define name="body">
+     	
+		<h:form id="criteriaForm" prependId="false">
+			<p:focus />
+			
+    		<p:outputPanel id="searchCriteriaFragment">
+     			<div class="rechercheBox"> 
+	    			<h2 class="titleFloat"><h:outputText value="#{resourceBundle['recherche']}"/></h2>
+	    			<fieldset>
+			       	<div class="rechercheInside">
+			       	
+			       		<h:panelGrid columns="1" columnClasses="panelCol_100" cellpadding="0" cellspacing="0" border="0" width="100%">
+				       		<!-- Essai Promoteur -->
+			       			<h:outputLabel
+								value="#{resourceBundle['dispensationGlobale.essaiPromoteur']}"
+								for="essai" />
+							<p:autoComplete id="essai" value="#{dispensationGlobaleManager.searchCriteria.essai}" 
+								immediate="true"
+								selectListener="#{dispensationGlobaleManager.handleSelectEssai}"
+								completeMethod="#{autoCompleteEssaiManager.complete}"
+								forceSelection="true"
+								var="essai" style="width : 200px;"
+								itemLabel="#{essai.numInterne} #{essai.nom} - #{essai.promoteur.raisonSociale}"
+								itemValue="#{essai}"
+								converter="#{essaiConverter}"
+								onSelectUpdate="produit" />
+							<br />   
+							<!-- Pharmacie -->
+			       			<h:outputLabel
+								value="#{resourceBundle['dispensationGlobale.pharmacie']}"
+								for="pharmacie" />
+							<h:selectOneMenu style="width:200px;" id="pharmacie" immediate="true" value="#{dispensationGlobaleManager.searchCriteria.pharmacie}" converter="#{pharmacieConverter}">
+				             	<f:selectItem noSelectionOption="true" itemLabel="" itemValue=""/>
+				             	<f:selectItems value="#{pharmaciesManager.beans}" var="item" itemLabel="#{item.nom}" itemValue="#{item}"/>
+				             	<f:ajax listener="#{dispensationGlobaleManager.handleSelectPharmacie}" render="produit"/>
+				             </h:selectOneMenu>
+				             <br />
+				           	<!-- Service -->
+			       			<h:outputLabel
+								value="#{resourceBundle['dispensationGlobale.service']}"
+								for="service" />
+							<p:autoComplete id="service" value="#{dispensationGlobaleManager.searchCriteria.service}"
+								completeMethod="#{autoCompleteServiceManager.complete}"
+								forceSelection="true"
+								var="service"
+								itemLabel="#{service.nom}"
+								itemValue="#{service}"
+								converter="#{serviceConverter}" />
+				             <br />
+				           	<!-- Produit -->
+			       			<h:outputLabel
+								value="#{resourceBundle['dispensationGlobale.produit']}"
+								for="produit" />
+							<h:selectOneMenu style="width:200px;" immediate="true" id="produit" value="#{dispensationGlobaleManager.searchCriteria.produit}" converter="#{produitConverter}">
+				             	<f:selectItem noSelectionOption="true" itemLabel="" itemValue=""/>
+				             	<f:selectItems value="#{dispensationGlobaleManager.produits}" var="item" itemLabel="#{item.denomination}" itemValue="#{item}"/>
+				             </h:selectOneMenu>	
+				             <br />
+				           	<!-- A traiter -->
+			       			<h:outputLabel
+								value="#{resourceBundle['dispensationGlobale.aTraiter']}"
+								for="traitee" />
+							 <h:selectOneMenu style="width:200px;" immediate="true" id="traitee" value="#{dispensationGlobaleManager.searchCriteria.traitee}">
+				             	<f:selectItem noSelectionOption="true" itemLabel="" itemValue=""/>
+				             	<f:selectItem noSelectionOption="true" itemLabel="#{resourceBundle['boolean.oui']}" itemValue="false"/>
+				             	<f:selectItem noSelectionOption="true" itemLabel="#{resourceBundle['boolean.non']}" itemValue="true"/>
+				             </h:selectOneMenu>	
+			       		</h:panelGrid>
+			           	<br />
+			           	<p:commandButton id="searchButton" action="search" ajax="false"
+			     			value="#{resourceBundle['btn.rechercher']}" title="#{resourceBundle['btn.rechercher']}">
+			     		</p:commandButton>
+			   		</div>
+		    		</fieldset>
+		    		<br />
+		    		<br />
+		    	</div>
+			</p:outputPanel>
+		</h:form>     	
+     	
+	<p:outputPanel id="resultsFragment">     	
+		<h:form id="dotationsForm" prependId="false">
+			 <div>
+			 	 <div style="float:left;">
+		    	 	<h2 class="titleFloat"><h:outputText value="#{resourceBundle['resultats']}"/></h2>
+		    	 </div>
+		    	 <div class="export">
+			         <h:commandLink> 
+			         	<h:graphicImage library="images" name="excel.gif"
+	    					alt="#{resourceBundle['export.excel']}" title="#{resourceBundle['export.excel']}" />
+			             <p:dataExporter type="xls" target="dotations" fileName="#{resourceBundle['export.dotations.filename']}" encoding="iso-8859-1"/>  
+			         </h:commandLink>  
+			         <h:commandLink>  
+			         	<h:graphicImage library="images" name="pdf.gif" 
+	    					alt="#{resourceBundle['export.pdf']}" title="#{resourceBundle['export.pdf']}" />
+			             <p:dataExporter type="pdf" target="dotations" fileName="#{resourceBundle['export.dotations.filename']}" encoding="iso-8859-1"/>  
+			         </h:commandLink>  
+			         <h:commandLink>  
+			         	<h:graphicImage library="images" name="csv.gif" 
+	    					alt="#{resourceBundle['export.csv']}" title="#{resourceBundle['export.csv']}" />
+			             <p:dataExporter type="csv" target="dotations" fileName="#{resourceBundle['export.dotations.filename']}" encoding="iso-8859-1"/>  
+			         </h:commandLink>
+		         </div>
+	         </div>  
+	   		<div class="resultBox" style="width:680px;">
+	    		<p:messages/>
+	    			<fieldset>
+						<p:dataTable id="dotations" value="#{dispensationGlobaleManager.beans}" var="dotation" emptyMessage="#{resourceBundle['results.none']}"
+							selection="#{dispensationGlobaleManager.beanSelected}" selectionMode="single"
+							update="dotations"
+							onselectComplete="javascript:document.getElementById('traiterDotationButton').click();"  >						
+						
+		    				<p:column id="essai">
+					    		<f:facet name="header">
+					    			<h:outputText value="#{resourceBundle['dispensationGlobale.essai']}"/>
+					    		</f:facet>
+					    		<h:outputText value="#{dotation.essai.numInterne} #{dotation.essai.nom}"/>
+				    		</p:column>
+				    		
+		    				<p:column id="pharmacie">
+					    		<f:facet name="header">
+					    			<h:outputText value="#{resourceBundle['dispensationGlobale.pharmacie']}"/>
+					    		</f:facet>
+					    		<h:outputText value="#{dotation.pharmacie.nom}"/>
+				    		</p:column>
+				    		
+		    				<p:column id="service">
+					    		<f:facet name="header">
+					    			<h:outputText value="#{resourceBundle['dispensationGlobale.service']}"/>
+					    		</f:facet>
+					    		<h:outputText value="#{dotation.service.nom}"/>
+				    		</p:column>
+				    		
+		    				<p:column id="produit">
+					    		<f:facet name="header">
+					    			<h:outputText value="#{resourceBundle['dispensationGlobale.produit']}"/>
+					    		</f:facet>
+					    		<h:outputText value="#{dotation.produit.denomination}"/>
+				    		</p:column>
+				    		
+		    				<p:column id="conditionnement">
+					    		<f:facet name="header">
+					    			<h:outputText value="#{resourceBundle['dispensationGlobale.conditionnement']}"/>
+					    		</f:facet>
+					    		<h:outputText value="#{dotation.conditionnement.libelle}"/>
+				    		</p:column>
+				    		
+		    				<p:column id="dateDemande" style="text-align:center;">
+					    		<f:facet name="header">
+					    			<h:outputText value="#{resourceBundle['dispensationGlobale.dateDemande']}"/>
+					    		</f:facet>
+						    		<h:outputText value="#{dotation.dateDemande}" converter="#{calendarConverter}"/>
+				    		</p:column>
+				    		
+		    				<p:column id="quantite" style="text-align:center;">
+					    		<f:facet name="header">
+					    			<h:outputText value="#{resourceBundle['dispensationGlobale.quantiteDemande']}"/>
+					    		</f:facet>
+						    		<h:outputText value="#{dotation.quantite}"/>
+				    		</p:column>
+				    		
+			    		</p:dataTable>
+			    		
+						<div style="display:none;">
+					    	<p:commandButton id="traiterDotationButton" action="traiterDotation" ajax="false"/>
+					    </div>			    		
+			    		
+					</fieldset>
+				<br />
+				<br />
+				</div>
+			</h:form>
+		</p:outputPanel>     	
+     	
+     </ui:define>
+     
+</ui:composition>

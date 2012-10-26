@@ -1,0 +1,843 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans 
+    xmlns="http://www.springframework.org/schema/beans" 
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd">
+
+	<!-- ============================== -->
+	<!-- INVESTIGATEUR TYPE PERSONNE    -->
+	<!-- ============================== -->
+	<bean id="TYPE_PERSONNE_INVESTIGATEUR" class="fr.pharma.eclipse.domain.enums.TypePersonne"
+		factory-method="valueOf">
+		<constructor-arg>
+			<value>INVESTIGATEUR</value>
+		</constructor-arg>
+	</bean>
+
+	<!-- ============================== -->
+	<!-- ARC PROMOTEUR TYPE PERSONNE    -->
+	<!-- ============================== -->
+	<bean id="TYPE_PERSONNE_ARC_PROMOTEUR" class="fr.pharma.eclipse.domain.enums.TypePersonne"
+		factory-method="valueOf">
+		<constructor-arg>
+			<value>ARC_PROMOTEUR</value>
+		</constructor-arg>
+	</bean>
+
+	<!-- ================================== -->
+	<!-- ARC INVESTIGATEUR TYPE PERSONNE    -->
+	<!-- ================================== -->
+	<bean id="TYPE_PERSONNE_ARC_INVESTIGATEUR" class="fr.pharma.eclipse.domain.enums.TypePersonne"
+		factory-method="valueOf">
+		<constructor-arg>
+			<value>ARC_INVESTIGATEUR</value>
+		</constructor-arg>
+	</bean>
+
+	<!-- ================================== -->
+	<!-- PHARMACIEN TYPE PERSONNE           -->
+	<!-- ================================== -->
+	<bean id="TYPE_PERSONNE_PHARMACIEN" class="fr.pharma.eclipse.domain.enums.TypePersonne"
+		factory-method="valueOf">
+		<constructor-arg>
+			<value>PHARMACIEN</value>
+		</constructor-arg>
+	</bean>
+
+	<!-- ================================== -->
+	<!-- CRO TYPE PERSONNE                  -->
+	<!-- ================================== -->
+	<bean id="TYPE_PERSONNE_CRO" class="fr.pharma.eclipse.domain.enums.TypePersonne"
+		factory-method="valueOf">
+		<constructor-arg>
+			<value>CRO</value>
+		</constructor-arg>
+	</bean>
+
+	<!-- ================================== -->
+	<!-- PROMOTEUR TYPE PERSONNE            -->
+	<!-- ================================== -->
+	<bean id="TYPE_PERSONNE_PROMOTEUR" class="fr.pharma.eclipse.domain.enums.TypePersonne"
+		factory-method="valueOf">
+		<constructor-arg>
+			<value>PROMOTEUR</value>
+		</constructor-arg>
+	</bean>
+
+	<!-- ================================== -->
+	<!-- DIRECTION RECHERCHE TYPE PERSONNE  -->
+	<!-- ================================== -->
+	<bean id="TYPE_PERSONNE_DIRECTION_RECHERCHE" class="fr.pharma.eclipse.domain.enums.TypePersonne"
+		factory-method="valueOf">
+		<constructor-arg>
+			<value>DIRECTION_RECHERCHE</value>
+		</constructor-arg>
+	</bean>
+
+	<!-- ================================== -->
+	<!-- MEDICAMENT TYPE PRODUIT  			-->
+	<!-- ================================== -->
+	<bean id="TYPE_PRODUIT_MEDICAMENT" class="fr.pharma.eclipse.domain.enums.produit.TypeProduit"
+		factory-method="valueOf">
+		<constructor-arg>
+			<value>MEDICAMENT</value>
+		</constructor-arg>
+	</bean>
+
+	<!-- ================================== -->
+	<!-- PRODUIT THERAPEUTIQUE TYPE PRODUIT -->
+	<!-- ================================== -->
+	<bean id="TYPE_PRODUIT_THERAPEUTIQUE" class="fr.pharma.eclipse.domain.enums.produit.TypeProduit"
+		factory-method="valueOf">
+		<constructor-arg>
+			<value>PRODUIT_THERAPEUTIQUE</value>
+		</constructor-arg>
+	</bean>
+
+	<!-- ================================== -->
+	<!-- PRODUIT PREPARATION				-->
+	<!-- ================================== -->
+	<bean id="TYPE_PREPARATION" class="fr.pharma.eclipse.domain.enums.produit.TypeProduit"
+		factory-method="valueOf">
+		<constructor-arg>
+			<value>PREPARATION</value>
+		</constructor-arg>
+	</bean>
+
+	<!-- ================================== -->
+	<!-- DISPOSITIF MEDICAL TYPE PRODUIT    -->
+	<!-- ================================== -->
+	<bean id="TYPE_DISPOSITIF_MEDICAL" class="fr.pharma.eclipse.domain.enums.produit.TypeProduit"
+		factory-method="valueOf">
+		<constructor-arg>
+			<value>DISPOSITIF_MEDICAL</value>
+		</constructor-arg>
+	</bean>
+
+	<!-- ================================== -->
+	<!-- APPROVISIONNEMENT TYPE MOUVEMENT   -->
+	<!-- ================================== -->
+	<bean id="TYPE_MOUVEMENT_APPROVISIONNEMENT" class="fr.pharma.eclipse.domain.enums.stock.TypeMvtStock"
+		factory-method="valueOf">
+		<constructor-arg>
+			<value>APPROVISIONNEMENT</value>
+		</constructor-arg>
+	</bean>
+
+	<!-- =================================================== -->
+	<!-- APPROVISIONNEMENT TYPE MOUVEMENT ENTREE CORRECTIVE  -->
+	<!-- =================================================== -->
+	<bean id="TYPE_MOUVEMENT_ENTREE_CORRECTIVE" class="fr.pharma.eclipse.domain.enums.stock.TypeMvtStock"
+		factory-method="valueOf">
+		<constructor-arg>
+			<value>ENTREE_CORRECTIVE</value>
+		</constructor-arg>
+	</bean>
+	
+	<!-- ================================== -->
+	<!-- CESSION_PUI TYPE MOUVEMENT         -->
+	<!-- ================================== -->
+	<bean id="TYPE_MOUVEMENT_CESSION_PUI" class="fr.pharma.eclipse.domain.enums.stock.TypeMvtStock"
+		factory-method="valueOf">
+		<constructor-arg>
+			<value>CESSION_PUI</value>
+		</constructor-arg>
+	</bean>
+	
+	<!-- ================================== -->
+	<!-- DESTRUCTION TYPE MOUVEMENT         -->
+	<!-- ================================== -->
+	<bean id="TYPE_MOUVEMENT_DESTRUCTION" class="fr.pharma.eclipse.domain.enums.stock.TypeMvtStock"
+		factory-method="valueOf">
+		<constructor-arg>
+			<value>DESTRUCTION</value>
+		</constructor-arg>
+	</bean>
+	
+	<!-- ================================== -->
+	<!-- RETOUR_PROMOTEUR TYPE MOUVEMENT    -->
+	<!-- ================================== -->
+	<bean id="TYPE_MOUVEMENT_RETOUR_PROMOTEUR" class="fr.pharma.eclipse.domain.enums.stock.TypeMvtStock"
+		factory-method="valueOf">
+		<constructor-arg>
+			<value>RETOUR_PROMOTEUR</value>
+		</constructor-arg>
+	</bean>
+	
+	<!-- ================================== -->
+	<!-- AUTRE_SORTIE TYPE MOUVEMENT        -->
+	<!-- ================================== -->
+	<bean id="TYPE_MOUVEMENT_AUTRE_SORTIE" class="fr.pharma.eclipse.domain.enums.stock.TypeMvtStock"
+		factory-method="valueOf">
+		<constructor-arg>
+			<value>AUTRE_SORTIE</value>
+		</constructor-arg>
+	</bean>
+	
+	<!-- ================================== -->
+	<!-- AUTRE_SORTIE TYPE MOUVEMENT        -->
+	<!-- ================================== -->
+	<bean id="TYPE_MOUVEMENT_DISPENSATION" class="fr.pharma.eclipse.domain.enums.stock.TypeMvtStock"
+		factory-method="valueOf">
+		<constructor-arg>
+			<value>DISPENSATION</value>
+		</constructor-arg>
+	</bean>
+	
+	<!-- ================================== -->
+	<!-- DOTATION TYPE MOUVEMENT            -->
+	<!-- ================================== -->
+	<bean id="TYPE_MOUVEMENT_DOTATION" class="fr.pharma.eclipse.domain.enums.stock.TypeMvtStock"
+		factory-method="valueOf">
+		<constructor-arg>
+			<value>DOTATION</value>
+		</constructor-arg>
+	</bean>
+	
+	<!-- ================================== -->
+	<!-- PREPARATION SORTIE TYPE MOUVEMENT  -->
+	<!-- ================================== -->
+	<bean id="TYPE_MOUVEMENT_PREPARATION_SORTIE" class="fr.pharma.eclipse.domain.enums.stock.TypeMvtStock"
+		factory-method="valueOf">
+		<constructor-arg>
+			<value>PREPARATION_SORTIE</value>
+		</constructor-arg>
+	</bean>
+	
+	<!-- ================================== -->
+	<!-- PREPARATION ENTREE TYPE MOUVEMENT  -->
+	<!-- ================================== -->
+	<bean id="TYPE_MOUVEMENT_PREPARATION_ENTREE" class="fr.pharma.eclipse.domain.enums.stock.TypeMvtStock"
+		factory-method="valueOf">
+		<constructor-arg>
+			<value>PREPARATION_ENTREE</value>
+		</constructor-arg>
+	</bean>
+
+	<!-- ==================================== -->
+	<!-- MODE DE PRESCRIPTION NUM TRAITEMENT  -->
+	<!-- ==================================== -->
+	<bean id="MODE_NUM_TRAITEMENT" class="fr.pharma.eclipse.domain.enums.produit.ModePrescription"
+		factory-method="valueOf">
+		<constructor-arg>
+			<value>NUM_TRAITEMENT</value>
+		</constructor-arg>
+	</bean>
+
+	<!-- ==================================== -->
+	<!-- MODE DE PRESCRIPTION FORME GALENIQUE -->
+	<!-- ==================================== -->
+	<bean id="MODE_FORME_GALENIQUE" class="fr.pharma.eclipse.domain.enums.produit.ModePrescription"
+		factory-method="valueOf">
+		<constructor-arg>
+			<value>FORME_GALENIQUE</value>
+		</constructor-arg>
+	</bean>
+
+	<!-- ==================================== -->
+	<!-- MODE DE PRESCRIPTION CONDI PRIMAIRE  -->
+	<!-- ==================================== -->
+	<bean id="MODE_CONDITIONNEMENT_PRIMAIRE" class="fr.pharma.eclipse.domain.enums.produit.ModePrescription"
+		factory-method="valueOf">
+		<constructor-arg>
+			<value>CONDITIONNEMENT_PRIMAIRE</value>
+		</constructor-arg>
+	</bean>
+
+	<!-- ==================================== -->
+	<!-- MODE DE PRESCRIPTION DOSE			  -->
+	<!-- ==================================== -->
+	<bean id="MODE_DOSE" class="fr.pharma.eclipse.domain.enums.produit.ModePrescription"
+		factory-method="valueOf">
+		<constructor-arg>
+			<value>DOSE</value>
+		</constructor-arg>
+	</bean>
+
+	<!-- ==================================== -->
+	<!-- MODE DE PRESCRIPTION DOSE PAR KG     -->
+	<!-- ==================================== -->
+	<bean id="MODE_DOSE_KG" class="fr.pharma.eclipse.domain.enums.produit.ModePrescription"
+		factory-method="valueOf">
+		<constructor-arg>
+			<value>DOSE_KG</value>
+		</constructor-arg>
+	</bean>
+
+	<!-- ==================================== -->
+	<!-- MODE DE PRESCRIPTION DOSE PAR SURFACE-->
+	<!-- ==================================== -->
+	<bean id="MODE_DOSE_SURFACE" class="fr.pharma.eclipse.domain.enums.produit.ModePrescription"
+		factory-method="valueOf">
+		<constructor-arg>
+			<value>DOSE_SURFACE</value>
+		</constructor-arg>
+	</bean>
+
+	<!-- ==================================== -->
+	<!-- TYPE DE DETAIL STOCKAGE 	STOCK	  -->
+	<!-- ==================================== -->
+	<bean id="STOCK"
+		class="fr.pharma.eclipse.domain.enums.produit.TypeDetailStockage"
+		factory-method="valueOf">
+		<constructor-arg>
+			<value>STOCK</value>
+		</constructor-arg>
+	</bean>
+	<!-- ==================================== -->
+	<!-- TYPE DE DETAIL STOCKAGE RETOUR		  -->
+	<!-- ==================================== -->
+	<bean id="RETOUR"
+		class="fr.pharma.eclipse.domain.enums.produit.TypeDetailStockage"
+		factory-method="valueOf">
+		<constructor-arg>
+			<value>RETOUR</value>
+		</constructor-arg>
+	</bean>
+	
+	<!-- ==================================== -->
+	<!-- FORMULE : MOSTELLER				  -->
+	<!-- ==================================== -->
+	<bean id="MOSTELLER"
+		class="fr.pharma.eclipse.domain.enums.patient.FormuleSurfaceCorporelle"
+		factory-method="valueOf">
+		<constructor-arg>
+			<value>MOSTELLER</value>
+		</constructor-arg>
+	</bean>
+	
+	<!-- ==================================== -->
+	<!-- FORMULE : DUBOIS					  -->
+	<!-- ==================================== -->
+	<bean id="DUBOIS"
+		class="fr.pharma.eclipse.domain.enums.patient.FormuleSurfaceCorporelle"
+		factory-method="valueOf">
+		<constructor-arg>
+			<value>DUBOIS</value>
+		</constructor-arg>
+	</bean>
+	
+	<!-- ==================================== -->
+	<!-- UNITETEMPS : MINUTE				  -->
+	<!-- ==================================== -->
+	<bean id="UNITE_TEMPS_MINUTE"
+		class="fr.pharma.eclipse.domain.enums.design.UniteTemps" factory-method="valueOf">
+		<constructor-arg>
+			<value>MINUTE</value>
+		</constructor-arg>
+	</bean>
+	
+	<!-- ==================================== -->
+	<!-- UNITETEMPS : HEURE				  -->
+	<!-- ==================================== -->
+	<bean id="UNITE_TEMPS_HEURE"
+		class="fr.pharma.eclipse.domain.enums.design.UniteTemps" factory-method="valueOf">
+		<constructor-arg index="0">
+			<value>HEURE</value>
+		</constructor-arg>
+	</bean>
+	
+	<!-- ==================================== -->
+	<!-- UNITETEMPS : JOURS					  -->
+	<!-- ==================================== -->
+	<bean id="UNITE_TEMPS_JOURS"
+		class="fr.pharma.eclipse.domain.enums.design.UniteTemps" factory-method="valueOf">
+		<constructor-arg>
+			<value>JOUR</value>
+		</constructor-arg>
+	</bean>
+	
+	<!-- ==================================== -->
+	<!-- UNITETEMPS : SEMAINE				  -->
+	<!-- ==================================== -->
+	<bean id="UNITE_TEMPS_SEMAINE"
+		class="fr.pharma.eclipse.domain.enums.design.UniteTemps" factory-method="valueOf">
+		<constructor-arg>
+			<value>SEMAINE</value>
+		</constructor-arg>
+	</bean>
+	
+	<!-- ==================================== -->
+	<!-- UNITETEMPS : MOIS					  -->
+	<!-- ==================================== -->
+	<bean id="UNITE_TEMPS_MOIS"
+		class="fr.pharma.eclipse.domain.enums.design.UniteTemps" factory-method="valueOf">
+		<constructor-arg >
+			<value>MOIS</value>
+		</constructor-arg>
+	</bean>
+	
+	<!-- ====================================== -->
+	<!-- TYPEALERTE : DDES_DOTATIONS_A_TRAITER	-->
+	<!-- ====================================== -->
+	<bean id="TYPE_ALERTE_DDES_DOTATIONS"
+		class="fr.pharma.eclipse.domain.enums.alerte.TypeAlerte" factory-method="valueOf">
+		<constructor-arg >
+			<value>DDES_DOTATIONS_A_TRAITER</value>
+		</constructor-arg>
+	</bean>
+	
+	<!-- ====================================== -->
+	<!-- TYPEALERTE : DATE_FIN_ESSAI_ATTEINT	-->
+	<!-- ====================================== -->
+	<bean id="TYPE_ALERTE_DATE_FIN_ESSAI"
+		class="fr.pharma.eclipse.domain.enums.alerte.TypeAlerte" factory-method="valueOf">
+		<constructor-arg >
+			<value>DATE_FIN_ESSAI_ATTEINT</value>
+		</constructor-arg>
+	</bean>
+	
+	<!-- ====================================== -->
+	<!-- TYPEALERTE : RESULT_VISITE         	-->
+	<!-- ====================================== -->
+	<bean id="TYPE_ALERTE_RESULT_VISITE"
+		class="fr.pharma.eclipse.domain.enums.alerte.TypeAlerte" factory-method="valueOf">
+		<constructor-arg >
+			<value>RESULT_VISITE</value>
+		</constructor-arg>
+	</bean>
+	
+	<!-- ====================================== -->
+	<!-- TYPEALERTE : DESTRUCTION_ESSAI        	-->
+	<!-- ====================================== -->
+	<bean id="TYPE_ALERTE_DESTRUCTION_ESSAI"
+		class="fr.pharma.eclipse.domain.enums.alerte.TypeAlerte" factory-method="valueOf">
+		<constructor-arg >
+			<value>DESTRUCTION_ESSAI</value>
+		</constructor-arg>
+	</bean>
+	
+	<!-- ====================================== -->
+	<!-- TYPEALERTE : PRODUIT_PEREMPTION      	-->
+	<!-- ====================================== -->
+	<bean id="TYPE_ALERTE_PRODUIT_PEREMPTION"
+		class="fr.pharma.eclipse.domain.enums.alerte.TypeAlerte" factory-method="valueOf">
+		<constructor-arg >
+			<value>PRODUIT_PEREMPTION</value>
+		</constructor-arg>
+	</bean>
+	
+	<!-- ====================================== -->
+	<!-- TYPEALERTE : STOCK_SEUIL           	-->
+	<!-- ====================================== -->
+	<bean id="TYPE_ALERTE_STOCK_SEUIL"
+		class="fr.pharma.eclipse.domain.enums.alerte.TypeAlerte" factory-method="valueOf">
+		<constructor-arg >
+			<value>STOCK_SEUIL</value>
+		</constructor-arg>
+	</bean>
+	
+	<!-- ====================================== -->
+	<!-- TYPEALERTE : CESSION PUI           	-->
+	<!-- ====================================== -->
+	<bean id="TYPE_ALERTE_CESSION_PUI"
+		class="fr.pharma.eclipse.domain.enums.alerte.TypeAlerte" factory-method="valueOf">
+		<constructor-arg >
+			<value>DATE_CESSION_PUI</value>
+		</constructor-arg>
+	</bean>
+	
+	<!-- ====================================== -->
+	<!-- TypeCout : FIXE				      	-->
+	<!-- ====================================== -->
+	<bean id="COUT_FIXE"
+		class="fr.pharma.eclipse.domain.enums.surcout.TypeCout" factory-method="valueOf">
+		<constructor-arg >
+			<value>FIXE</value>
+		</constructor-arg>
+	</bean>
+	
+	<!-- ====================================== -->
+	<!-- TypeCout : VARIABLE				      	-->
+	<!-- ====================================== -->
+	<bean id="COUT_VARIABLE"
+		class="fr.pharma.eclipse.domain.enums.surcout.TypeCout" factory-method="valueOf">
+		<constructor-arg >
+			<value>VARIABLE</value>
+		</constructor-arg>
+	</bean>
+	
+	<!-- ====================================== -->
+	<!-- MODECALCUL : FORFAIT			      	-->
+	<!-- ====================================== -->
+	<bean id="LOT_FORFAITAIRE"
+		class="fr.pharma.eclipse.domain.enums.surcout.ModeCalcul" factory-method="valueOf">
+		<constructor-arg >
+			<value>LOT_FORFAITAIRE</value>
+		</constructor-arg>
+	</bean>
+	
+	<!-- ====================================== -->
+	<!-- TypeCout : VARIABLE				      	-->
+	<!-- ====================================== -->
+	<bean id="UNITE"
+		class="fr.pharma.eclipse.domain.enums.surcout.ModeCalcul" factory-method="valueOf">
+		<constructor-arg >
+			<value>UNITE</value>
+		</constructor-arg>
+	</bean>
+	
+	<!-- ====================================== -->
+	<!-- ACTE : DESTRUCTION				      	-->
+	<!-- ====================================== -->
+	<bean id="ACTE_DESTRUCTION"
+		class="fr.pharma.eclipse.domain.enums.surcout.Acte" factory-method="valueOf">
+		<constructor-arg >
+			<value>DESTRUCTION</value>
+		</constructor-arg>
+	</bean>
+	
+	<!-- ====================================== -->
+	<!-- ACTE : PRESCRIPTION			      	-->
+	<!-- ====================================== -->
+	<bean id="ACTE_DISPENSATION"
+		class="fr.pharma.eclipse.domain.enums.surcout.Acte" factory-method="valueOf">
+		<constructor-arg >
+			<value>DISPENSATION</value>
+		</constructor-arg>
+	</bean>
+	
+	<!-- ====================================== -->
+	<!-- ACTE : PRESCRIPTION			      	-->
+	<!-- ====================================== -->
+	<bean id="ACTE_DISPENSATION_RENOUVELLEMENT"
+		class="fr.pharma.eclipse.domain.enums.surcout.Acte" factory-method="valueOf">
+		<constructor-arg >
+			<value>DISPENSATION_RENOUVELLEMENT</value>
+		</constructor-arg>
+	</bean>
+	
+	<!-- ====================================== -->
+	<!-- ACTE : PRESCRIPTION			      	-->
+	<!-- ====================================== -->
+	<bean id="ACTE_PRESCRIPTION"
+		class="fr.pharma.eclipse.domain.enums.surcout.Acte" factory-method="valueOf">
+		<constructor-arg >
+			<value>PRESCRIPTION</value>
+		</constructor-arg>
+	</bean>
+	
+	<!-- ====================================== -->
+	<!-- ACTE : REETIQUETAGE			      	-->
+	<!-- ====================================== -->
+	<bean id="ACTE_REETIQUETAGE"
+		class="fr.pharma.eclipse.domain.enums.surcout.Acte" factory-method="valueOf">
+		<constructor-arg >
+			<value>REETIQUETAGE</value>
+		</constructor-arg>
+	</bean>
+		
+	<!-- ====================================== -->
+	<!-- ACTE : Condition conservation      	-->
+	<!-- ====================================== -->
+	<bean id="ACTE_CONSERVATION"
+		class="fr.pharma.eclipse.domain.enums.surcout.Acte" factory-method="valueOf">
+		<constructor-arg >
+			<value>CONDITION_CONSERVATION</value>
+		</constructor-arg>
+	</bean>
+	
+	
+	<!-- ====================================== -->
+	<!-- ACTE : Condition conservation      	-->
+	<!-- ====================================== -->
+	<bean id="ACTE_TRACABILITE"
+		class="fr.pharma.eclipse.domain.enums.surcout.Acte" factory-method="valueOf">
+		<constructor-arg >
+			<value>TRACABILITE</value>
+		</constructor-arg>
+	</bean>
+	
+	<!-- ====================================== -->
+	<!-- ACTE : Condition conservation      	-->
+	<!-- ====================================== -->
+	<bean id="ACTE_VISITE_MONITORING"
+		class="fr.pharma.eclipse.domain.enums.surcout.Acte" factory-method="valueOf">
+		<constructor-arg >
+			<value>VISITE_MONITORING</value>
+		</constructor-arg>
+	</bean>
+	
+	<!-- ====================================== -->
+	<!-- ACTE : APPROVISIONNEMENT		      	-->
+	<!-- ====================================== -->
+	<bean id="ACTE_APPROVISIONNEMENT"
+		class="fr.pharma.eclipse.domain.enums.surcout.Acte" factory-method="valueOf">
+		<constructor-arg >
+			<value>APPROVISIONNEMENT</value>
+		</constructor-arg>
+	</bean>
+	
+	<!-- ====================================== -->
+	<!-- ACTE : AUDITS					      	-->
+	<!-- ====================================== -->
+	<bean id="ACTE_AUDIT"
+		class="fr.pharma.eclipse.domain.enums.surcout.Acte" factory-method="valueOf">
+		<constructor-arg >
+			<value>AUDIT</value>
+		</constructor-arg>
+	</bean>
+	
+	<!-- ====================================== -->
+	<!-- ACTE : PREPARATIONS STERILES	      	-->
+	<!-- ====================================== -->
+	<bean id="ACTE_PREPARATIONS_STERILES"
+		class="fr.pharma.eclipse.domain.enums.surcout.Acte" factory-method="valueOf">
+		<constructor-arg >
+			<value>PREPARATIONS_STERILES</value>
+		</constructor-arg>
+	</bean>
+	
+	<!-- ====================================== -->
+	<!-- ACTE : PREPARATIONS NON STERILES	      	-->
+	<!-- ====================================== -->
+	<bean id="ACTE_PREPARATIONS_NON_STERILES"
+		class="fr.pharma.eclipse.domain.enums.surcout.Acte" factory-method="valueOf">
+		<constructor-arg >
+			<value>PREPARATIONS_NON_STERILES</value>
+		</constructor-arg>
+	</bean>
+	
+	<!-- ====================================== -->
+	<!-- MODE DE CALCUL : FORFAIT		      	-->
+	<!-- ====================================== -->
+	<bean id="MODE_FORFAIT"
+		class="fr.pharma.eclipse.domain.enums.surcout.ModeCalcul" factory-method="valueOf">
+		<constructor-arg >
+			<value>LOT_FORFAITAIRE</value>
+		</constructor-arg>
+	</bean>
+	
+	<!-- ====================================== -->
+	<!-- MODE DE CALCUL : FORFAIT AN	      	-->
+	<!-- ====================================== -->
+	<bean id="MODE_FORFAIT_AN"
+		class="fr.pharma.eclipse.domain.enums.surcout.ModeCalcul" factory-method="valueOf">
+		<constructor-arg >
+			<value>LOT_FORFAITAIRE_AN</value>
+		</constructor-arg>
+	</bean>
+	
+	<!-- ====================================== -->
+	<!-- MODE DE CALCUL : UNITE		      	-->
+	<!-- ====================================== -->
+	<bean id="MODE_UNITE"
+		class="fr.pharma.eclipse.domain.enums.surcout.ModeCalcul" factory-method="valueOf">
+		<constructor-arg >
+			<value>UNITE</value>
+		</constructor-arg>
+	</bean>
+	
+	<!-- ====================================== -->
+	<!-- MODE DE CALCUL : UNITE		      	-->
+	<!-- ====================================== -->
+	<bean id="MODE_UNITE_AN"
+		class="fr.pharma.eclipse.domain.enums.surcout.ModeCalcul" factory-method="valueOf">
+		<constructor-arg >
+			<value>UNITE_AN</value>
+		</constructor-arg>
+	</bean>
+	
+	<!-- ====================================== -->
+	<!-- TYPE DE CALCUL: PREVISIONNEL	      	-->
+	<!-- ====================================== -->
+	<bean id="COUT_PREVISIONNEL"
+		class="fr.pharma.eclipse.domain.enums.surcout.TypeCalcul" factory-method="valueOf">
+		<constructor-arg >
+			<value>PREVISIONNEL</value>
+		</constructor-arg>
+	</bean>
+	
+	<!-- ====================================== -->
+	<!-- TYPE DE CALCUL: REEL		   		   	-->
+	<!-- ====================================== -->
+	<bean id="COUT_REEL"
+		class="fr.pharma.eclipse.domain.enums.surcout.TypeCalcul" factory-method="valueOf">
+		<constructor-arg >
+			<value>REEL</value>
+		</constructor-arg>
+	</bean>
+	
+	
+	<!-- ====================================== -->
+	<!-- TYPE DE DOCUMENT ESSAI: REEL  		   	-->
+	<!-- ====================================== -->
+	<bean id="REEL"
+		class="fr.pharma.eclipse.domain.enums.document.TypeDocumentEssai" factory-method="valueOf">
+		<constructor-arg >
+			<value>REEL</value>
+		</constructor-arg>
+	</bean>
+	
+	
+	<!-- ====================================== -->
+	<!-- TYPE DE CALCUL: PREVISIONNEL  		   	-->
+	<!-- ====================================== -->
+	<bean id="PREVISIONNEL"
+		class="fr.pharma.eclipse.domain.enums.document.TypeDocumentEssai" factory-method="valueOf">
+		<constructor-arg >
+			<value>PREVISIONNEL</value>
+		</constructor-arg>
+	</bean>
+	
+	<!-- ====================================== -->
+	<!-- TYPE EVENEMENT: VISITE				   	-->
+	<!-- ====================================== -->
+	<bean id="VISITE"
+		class="fr.pharma.eclipse.domain.enums.evenement.TypeEvenement" factory-method="valueOf">
+		<constructor-arg >
+			<value>VISITE</value>
+		</constructor-arg>
+	</bean>
+	
+	<!-- ====================================== -->
+	<!-- TYPE EVENEMENT: TACHE				   	-->
+	<!-- ====================================== -->
+	<bean id="TACHE"
+		class="fr.pharma.eclipse.domain.enums.evenement.TypeEvenement" factory-method="valueOf">
+		<constructor-arg >
+			<value>TACHE</value>
+		</constructor-arg>
+	</bean>
+	
+	<!-- ====================================== -->
+	<!-- TYPE VISITE: AUDIT EXTERNE			   	-->
+	<!-- ====================================== -->
+	<bean id="AUDIT_EXTERNE"
+		class="fr.pharma.eclipse.domain.enums.evenement.TypeVisite" factory-method="valueOf">
+		<constructor-arg >
+			<value>AUDIT_EXTERNE</value>
+		</constructor-arg>
+	</bean>
+	
+	<!-- ====================================== -->
+	<!-- TYPE VISITE: AUDIT INTERNE			   	-->
+	<!-- ====================================== -->
+	<bean id="AUDIT_INTERNE"
+		class="fr.pharma.eclipse.domain.enums.evenement.TypeVisite" factory-method="valueOf">
+		<constructor-arg >
+			<value>AUDIT_INTERNE</value>
+		</constructor-arg>
+	</bean>
+	
+	<!-- ====================================== -->
+	<!-- TYPE VISITE: CLOTURE				   	-->
+	<!-- ====================================== -->
+	<bean id="CLOTURE"
+		class="fr.pharma.eclipse.domain.enums.evenement.TypeVisite" factory-method="valueOf">
+		<constructor-arg >
+			<value>CLOTURE</value>
+		</constructor-arg>
+	</bean>
+	
+	<!-- ====================================== -->
+	<!-- TYPE VISITE: MONITORING				   	-->
+	<!-- ====================================== -->
+	<bean id="SUIVI_PHAMACIE"
+		class="fr.pharma.eclipse.domain.enums.evenement.TypeVisite" factory-method="valueOf">
+		<constructor-arg >
+			<value>SUIVI_PHAMACIE</value>
+		</constructor-arg>
+	</bean>
+	
+	<!-- ====================================== -->
+	<!-- TYPE VISITE: MISE_EN_PLACE				   	-->
+	<!-- ====================================== -->
+	<bean id="MISE_EN_PLACE"
+		class="fr.pharma.eclipse.domain.enums.evenement.TypeVisite" factory-method="valueOf">
+		<constructor-arg >
+			<value>MISE_EN_PLACE</value>
+		</constructor-arg>
+	</bean>
+	
+	<!-- ========================================== -->
+	<!-- TYPEELEMENTTOCHECK : RECONSTITUTION PSPM 	-->
+	<!-- ========================================== -->
+	<bean id="RECONSTITUTION_PSM"
+		class="fr.pharma.eclipse.domain.enums.TypeElementToCheck" factory-method="valueOf">
+		<constructor-arg >
+			<value>RECONSTITUTION_PSM</value>
+		</constructor-arg>
+	</bean>
+	
+	<!-- ========================================== -->
+	<!-- TYPEELEMENTTOCHECK : RECONSTITUTION SPL	-->
+	<!-- ========================================== -->
+	<bean id="RECONSTITUTION_SIMPLE"
+		class="fr.pharma.eclipse.domain.enums.TypeElementToCheck" factory-method="valueOf">
+		<constructor-arg >
+			<value>RECONSTITUTION_SIMPLE</value>
+		</constructor-arg>
+	</bean>
+	
+	
+	<!-- ========================================== -->
+	<!-- ETATRETOUR : PRESENT						-->
+	<!-- ========================================== -->
+	<bean id="ETAT_RETOUR_PRESENT"
+		class="fr.pharma.eclipse.domain.enums.EtatRetour" factory-method="valueOf">
+		<constructor-arg >
+			<value>PRESENT</value>
+		</constructor-arg>
+	</bean>
+	
+	<!-- ========================================== -->
+	<!-- TypeDipensation : NOMINATIVE				-->
+	<!-- ========================================== -->
+	<bean id="TYPE_NOMINATIVE"
+		class="fr.pharma.eclipse.domain.enums.TypeDispensation" factory-method="valueOf">
+		<constructor-arg >
+			<value>NOMINATIVE</value>
+		</constructor-arg>
+	</bean>
+	
+	<!-- ========================================== -->
+	<!-- TypeDipensation : GLOBALE					-->
+	<!-- ========================================== -->
+	<bean id="TYPE_GLOBALE"
+		class="fr.pharma.eclipse.domain.enums.TypeDispensation" factory-method="valueOf">
+		<constructor-arg >
+			<value>GLOBALE</value>
+		</constructor-arg>
+	</bean>
+	
+	<!-- ========================================== -->
+	<!-- TYPEDOCUMENTJASPER : CERTIFICATDESTRUCTION -->
+	<!-- ========================================== -->
+	<bean id="CERTIFICAT_DESTRUCTION"
+		class="fr.pharma.eclipse.domain.enums.jasper.TypeRapportJasper" factory-method="valueOf">
+		<constructor-arg >
+			<value>CERTIFICAT_DESTRUCTION</value>
+		</constructor-arg>
+	</bean>
+	
+	<!-- ========================================== -->
+	<!-- TYPEDOCUMENTJASPER : CERTIFICATRETOUR      -->
+	<!-- ========================================== -->
+	<bean id="CERTIFICAT_RETOUR"
+		class="fr.pharma.eclipse.domain.enums.jasper.TypeRapportJasper" factory-method="valueOf">
+		<constructor-arg >
+			<value>CERTIFICAT_RETOUR</value>
+		</constructor-arg>
+	</bean>
+	
+	<!-- ========================================== -->
+	<!-- TYPEDOCUMENTSTATIQUE : LETTRE_AR_CESSION   -->
+	<!-- ========================================== -->
+	<bean id="DOCUMENT_LETTRE_AR"
+		class="fr.pharma.eclipse.domain.enums.document.TypeDocumentStatique" factory-method="valueOf">
+		<constructor-arg >
+			<value>LETTRE_AR_CESSION</value>
+		</constructor-arg>
+	</bean>
+	
+	<!-- ========================================== -->
+	<!-- TYPEDOCUMENTSTATIQUE : CESSION_PUI			-->
+	<!-- ========================================== -->
+	<bean id="DOCUMENT_CESSION_PUI"
+		class="fr.pharma.eclipse.domain.enums.document.TypeDocumentStatique" factory-method="valueOf">
+		<constructor-arg >
+			<value>CESSION_PUI</value>
+		</constructor-arg>
+	</bean>
+</beans>

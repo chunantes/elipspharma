@@ -1,0 +1,213 @@
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+     xmlns:ui="http://java.sun.com/jsf/facelets"
+     xmlns:h="http://java.sun.com/jsf/html"
+     xmlns:f="http://java.sun.com/jsf/core"
+     xmlns:p="http://primefaces.prime.com.tr/ui"
+     xmlns:c="http://java.sun.com/jsp/jstl/core"
+     template="/WEB-INF/pages/template/template.xhtml">
+     
+     <ui:define name="title">
+		<h:outputFormat value="#{resourceBundle['stockReception.recapitulatif.reception']}" rendered="#{approvisionnementManager.typeAppro != enumManager.getEnumValue('TypeMvtStock', 'ENTREE_CORRECTIVE')}" />
+		<h:outputFormat value="#{resourceBundle['stockReception.recapitulatif']}" rendered="#{approvisionnementManager.typeAppro == enumManager.getEnumValue('TypeMvtStock', 'ENTREE_CORRECTIVE')}" />
+		<h:form prependId="false">
+			<p:commandLink id="incidentButton" styleClass="incident" actionListener="#{incidentManager.init(approvisionnementManager.result.essai)}" ajax="true" update="incident_form"  oncomplete="popupIncident.show();">
+				<h:graphicImage library="images" name="incident.png" />
+				<p:tooltip for="incidentButton" value="#{resourceBundle['incident.ajouter']}"/>
+			</p:commandLink>
+		</h:form>
+     </ui:define>
+     
+     <ui:define name="body">
+     	<h:form id="formRecapStockReception" prependId="false">
+
+			<c:set var="result" value="#{approvisionnementManager.result}"/>
+
+   			<fieldset>
+   			
+	   			<div align="right" style="margin-right:45px;margin-bottom:3px;">
+			   		<h:outputLink id="print" value="#">  
+						<p:printer target="formRecapStockReception" />  
+				    	<h:graphicImage library="images" name="imprimer.gif" title="#{resourceBundle['btn.imprimer']}"/>
+				 	</h:outputLink>
+				</div>
+				
+				<table class="stock large" cellpadding="0" cellspacing="0" border="0" width="100%">
+					<tr>
+		 				<td>
+							<h:panelGrid id="panelGeneral" columns="4" columnClasses="panelCol_25,panelCol_25,panelCol_25,panelCol_25" cellpadding="0" cellspacing="0" border="0" width="100%">
+	
+								<!-- Essai -->
+		 						<h:outputLabel id="labelEssai" for="essai" value="#{resourceBundle['stockReception.essai']}" />
+								<h:outputText id="essai" value="#{result.essai.numInterne} #{result.essai.nom}"/>
+								
+								<!-- Pharmacie -->
+		 						<h:outputLabel id="labelPharmacie" for="pharmacie" value="#{resourceBundle['stockReception.pharmacie']}" />
+								<h:outputText id="pharmacie" value="#{result.pharmacie.nom}"/>
+								
+								<!-- Promoteur -->
+		 						<h:outputLabel id="labelPromoteur" for="promoteur" value="#{resourceBundle['stockReception.promoteur']}" />
+								<h:outputText id="promoteur" value="#{result.promoteur.raisonSociale}"/>
+												
+								<!-- Date -->
+								<h:outputLabel id="labelDate" for="date" value="#{resourceBundle['stockReception.date']}"/>
+								<h:outputText id="date" value="#{result.dateAppro}" converter="#{calendarConverter}"/>
+	
+								<!-- Code Promoteur -->
+		 						<h:outputLabel id="labelCodePromoteur" for="codePromoteur" value="#{resourceBundle['stockReception.codePromoteur']}" />
+								<h:outputText id="codePromoteur" value="#{result.essai.codePromoteur}"/>
+								
+								<!-- Receptionne par -->
+		 						<h:outputLabel id="labelReceptionnePar" for="receptionnePar" value="#{resourceBundle['stockReception.receptionnePar']}" />
+								<h:outputText id="receptionnePar" value="#{result.personne.prenom} #{result.personne.nom}"/>
+								
+							</h:panelGrid>
+							
+							<!-- Dates -->
+							<h:panelGrid columns="4" columnClasses="panelCol_25,panelCol_25,panelCol_25,panelCol_25" cellpadding="0" cellspacing="0" border="0" width="100%"
+							             rendered="#{approvisionnementManager.typeAppro != enumManager.getEnumValue('TypeMvtStock', 'ENTREE_CORRECTIVE')}">
+								<h:outputLabel id="labelDateReception" for="dateReception" value="#{resourceBundle['stockReception.dateReception']}"/>
+								<h:outputText id="dateReception" value="#{approvisionnementManager.dateReception.time}">
+									<f:convertDateTime pattern="#{resourceBundle['date.pattern.withHeures']}"/>
+								</h:outputText>								
+								
+								<h:outputLabel id="labelDateArriveeColis" for="dateArriveeColis" value="#{resourceBundle['stockReception.dateArriveeColis']}"/>
+								<h:outputText id="dateArriveeColis" value="#{approvisionnementManager.dateArriveeColis.time}">
+									<f:convertDateTime pattern="#{resourceBundle['date.pattern.default']}"/>
+								</h:outputText>								
+								
+							</h:panelGrid>							
+							
+							<!-- Modalites de reception -->
+							<h:panelGrid columns="2" columnClasses="panelCol_25, panelCol_75" cellpadding="0" cellspacing="0" border="0" width="100%" 
+								rendered="#{result.essai != null}">
+								
+								<h:outputLabel id="labelModalite" for="modalite" value="#{resourceBundle['stockReception.modaliteReception']}" />
+								<h:inputTextarea id="modalite" disabled="true" 
+									value="#{result.essai.detailDonneesPharma.infosComplementaires.modaliteReception}"
+									rows="#{resourceBundle['textarea.rows.default']}" />
+								
+								<c:set var="doc_mod_rec" value="#{result.essai.detailDonneesPharma.infosComplementaires.documentModaliteReception}" />
+								
+								<h:outputLabel value="#{resourceBundle['stockReception.fichierModaliteReception']}" rendered="#{not empty doc_mod_rec}" />
+								<h:panelGrid id="mod_rec_doc_grid" columns="2" columnClasses="panelCol_50, panelCol_50" rendered="#{not empty doc_mod_rec}">
+									<h:outputText value="#{doc_mod_rec.nomUtilisateur}" title="#{documentsIhmHelper.buildDocTitle(doc_mod_rec, resourceBundle['document.part1'], resourceBundle['document.part2'], resourceBundle['date.pattern.withHeures'])}" />
+									<p:commandButton immediate="true" value="#{resourceBundle['file.dwd']}" title="#{resourceBundle['file.dwd']}" ajax="false">
+										<p:fileDownload value="#{fileDwdController.downloadDocument(result.essai, doc_mod_rec)}" />
+									</p:commandButton>
+								</h:panelGrid>
+							</h:panelGrid>							
+						</td>
+					</tr>
+		 		</table>
+		 	</fieldset>
+		 		
+	 		<p:panel id="panelProduits" style="width:955px;" header="#{resourceBundle['stockReception.produits']}" >
+				<p:dataTable var="receptionLot" value="#{result.receptionLots}">
+					<!-- Produit -->
+				   	<p:column sortBy="#{receptionLot.appro.produit.denomination}">
+				   		<f:facet name="header">
+							<h:outputLabel value="#{resourceBundle['stockReception.produit']}"/>
+						</f:facet>
+						<h:outputText value="#{receptionLot.appro.produit.denomination}"/>
+					</p:column>
+					
+					<!-- Conditionnement -->
+					<p:column sortBy="#{receptionLot.appro.conditionnement.libelle}">
+						<f:facet name="header">
+							<h:outputLabel value="#{resourceBundle['stockReception.conditionnement']}"/>
+						</f:facet>
+						<h:outputText value="#{receptionLot.appro.conditionnement.libelle}" />
+					</p:column>
+					
+					<!-- Numero de lot -->
+					<p:column sortBy="#{receptionLot.appro.numLot}">
+						<f:facet name="header">
+							<h:outputLabel value="#{resourceBundle['stockReception.numLot']}"/>
+						</f:facet>
+						<h:outputText value="#{receptionLot.appro.numLot}" />
+					</p:column>
+					
+					<!-- Quantite NumTraitement -->
+					<p:column>
+						<f:facet name="header">
+							<h:outputLabel value="#{resourceBundle['stockReception.quantiteNumTraitement']}"/>
+						</f:facet>
+
+						<div align="center">
+							<h:outputText value="#{receptionLot.appro.quantite}" 
+								rendered="#{receptionLot.appro.conditionnement != null and receptionLot.appro.conditionnement.modePrescription != 'NUM_TRAITEMENT'}"/>
+							
+							<h:outputText value="#{receptionLot.qteCumulNumsTraitements}" 
+								rendered="#{receptionLot.appro.conditionnement != null and receptionLot.appro.conditionnement.modePrescription == 'NUM_TRAITEMENT'}"/>
+					
+							<ui:repeat var="numTraitement" value="#{receptionLot.numsTraitements}">
+								<br />
+								<h:outputText value="#{numTraitement.quantite} x #{numTraitement.numTraitement}" rendered="#{not empty numTraitement.numTraitement and not empty numTraitement.quantite}"/>
+							</ui:repeat>
+						</div>
+					</p:column>						
+
+					<!-- Date de peremption -->
+					<p:column sortBy="#{receptionLot.appro.datePeremption}">
+						<f:facet name="header">
+							<h:outputLabel value="#{resourceBundle['stockReception.datePeremption']}"/>
+						</f:facet>
+						<div align="center">
+							<h:outputText value="#{receptionLot.appro.datePeremption}" converter="#{calendarConverter}"/>
+						</div>
+					</p:column>
+					
+					<!-- Lieu de stockage -->					
+					<p:column>
+						<f:facet name="header">
+							<h:outputLabel value="#{resourceBundle['stockReception.stockage']}"/>
+						</f:facet>
+						<h:outputText value="#{receptionLot.stockage.nomComplet}" rendered="#{receptionLot.appro.approApprouve == true}" />
+						<h:outputText value="#{resourceBundle['stockReception.stockage.quarantaine']}" rendered="#{receptionLot.appro.approApprouve == false}" />
+					</p:column>					
+					
+					
+				</p:dataTable>
+			</p:panel>
+		 		
+		</h:form>
+		
+			 	<!-- Popup d'ajout d'un incident -->
+		 <p:dialog header="#{resourceBundle['incident.ajouter']}" widgetVar="popupIncident" styleClass="essaiTabPopup" resizable="true" modal="true" width="500" closeListener="#{incidentManager.reinit() }">  
+		     <h:form id="incident_form">
+				
+				<!-- Libelle  -->
+				<h3><h:outputFormat value="#{resourceBundle['incident.libelle']}" /></h3>
+				<fieldset>
+					<p:outputPanel id="dr_popupIncident_outp_lib" style="display:block;margin-top:10px;">
+						<h:panelGrid columns="1" style="margin-bottom:10px" width="100%">  
+							<h:inputText id="dr_popupIncident_lib"
+								value="#{incidentManager.bean.libelle}" />
+						</h:panelGrid>
+					</p:outputPanel>
+				</fieldset>
+				
+				<!-- Commentaire -->
+				<h3><h:outputFormat value="#{resourceBundle['incident.commentaire']}" /></h3>
+				<fieldset>
+					<p:outputPanel id="dr_popupIncident_outp_comm" style="display:block;margin-top:10px;">
+						<h:panelGrid columns="1" style="margin-bottom:10px" width="100%">  
+							<h:inputTextarea id="dr_popupIncident_comm"
+								value="#{incidentManager.bean.commentaire}" 
+								rows="#{resourceBundle['textarea.rows.default']}" />
+						</h:panelGrid>
+					</p:outputPanel>
+				</fieldset>
+				<div class="popupButton">
+					<p:commandButton value="#{resourceBundle['btn.ajouter']}" 
+						actionListener="#{incidentManager.ajouterIncident()}" 
+						oncomplete="popupIncident.hide();"/>
+	       			<p:commandButton value="#{resourceBundle['btn.fermer']}" oncomplete="popupIncident.hide();"/>
+	       		</div>   
+		     </h:form>  
+		 </p:dialog>	
+		
+	</ui:define>
+	
+	
+</ui:composition>

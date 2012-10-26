@@ -1,0 +1,200 @@
+
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:p="http://primefaces.prime.com.tr/ui"
+	xmlns:t="http://myfaces.apache.org/tomahawk"
+	xmlns:c="http://java.sun.com/jsp/jstl/core">
+
+
+	<!-- **************************************** -->
+	<!-- Popup des documents CONDITIONNEMENT 		  -->
+	<!-- **************************************** -->
+	<p:dialog widgetVar="popupDocConditionnement"
+		header="#{resourceBundle['editProduit.onglet.actes.conditionnement.doc']}"
+		styleClass="essaiTabPopup popupCommWithHisto"
+		resizable="true" modal="true"
+		width="#{resourceBundle['popup.documents.simple.width']}" height="#{resourceBundle['popup.documents.simple.height']}">
+
+		<h:form id="condi_popDocs_form" prependId="false"
+			enctype="multipart/form-data">
+			<!-- nouveau document -->
+			<h3><h:outputFormat
+				value="#{resourceBundle['document.nouveau']}" /></h3>
+			<fieldset><c:set var="enumValueCondi"
+				value="#{enumManager.getEnumValue('TypeDocumentProduit','CONDITIONNEMENT')}" />
+			<p:outputPanel id="condi_out_pan_file"
+				style="display:block;margin-top:10px;">
+				<h:panelGrid columns="2" style="margin-bottom:10px" width="100%">
+					<h:outputLabel id="labelInputCondiFile" for="input_condi_file"
+						value="#{resourceBundle['document.fichier']}" />
+					<t:inputFileUpload id="input_condi_file" size="30"
+						value="#{produitTherapeutiqueManager.getDocumentManager(enumValueCondi).file}" />
+
+				</h:panelGrid>
+			</p:outputPanel></fieldset>
+			<!-- historique -->
+			<div class="popupButton"><p:commandButton
+				value="#{resourceBundle['btn.ajouter']}" ajax="false"
+				action="submit"
+				actionListener="#{produitTherapeutiqueManager.ajouterDocument(enumValueCondi)}"
+				update="fichier_cond"
+				oncomplete="popupDocConditionnement.hide();" /><p:commandButton
+				value="#{resourceBundle['btn.fermer']}"
+				oncomplete="popupDocConditionnement.hide();" /></div>
+		</h:form>
+	</p:dialog>
+	
+	<!-- **************************************** -->
+	<!-- Popup des documents FABRICATION 		  -->
+	<!-- **************************************** -->
+	<p:dialog
+		header="#{resourceBundle['editProduit.onglet.actes.fabrication.doc']}"
+		styleClass="essaiTabPopup" widgetVar="popupDocFabrication"
+		resizable="true" modal="true" width="800">
+		<h:form id="fabri_popDocs_form" prependId="false"
+			enctype="multipart/form-data">
+
+			<!-- nouveau document -->
+			<h3><h:outputFormat
+				value="#{resourceBundle['document.nouveau']}" /></h3>
+			<fieldset><c:set var="enumValueFabri"
+				value="#{enumManager.getEnumValue('TypeDocumentProduit','FABRICATION')}" />
+			<p:outputPanel id="fabri_out_pan_file"
+				style="display:block;margin-top:10px;">
+				<h:panelGrid columns="2" style="margin-bottom:10px" width="100%">
+					<h:outputLabel id="labelInputFabriFile" for="input_fabri_file"
+						value="#{resourceBundle['document.fichier']}" />
+					<t:inputFileUpload id="input_fabri_file" size="30"
+						value="#{produitTherapeutiqueManager.getDocumentManager(enumValueFabri).file}" />
+
+				</h:panelGrid>
+			</p:outputPanel></fieldset>
+			<div class="actionButton" style="margin-top: 0px;"><p:commandButton
+				value="#{resourceBundle['btn.ajouter']}" ajax="false"
+				action="submit"
+				actionListener="#{produitTherapeutiqueManager.ajouterDocument(enumValueFabri)}"
+				update="fichier_fab"
+				oncomplete="popupDocFabrication.hide();" /></div>
+			<!-- historique -->
+			<div class="popupButton"><p:commandButton
+				value="#{resourceBundle['btn.fermer']}"
+				oncomplete="popupDocFabrication.hide();" /></div>
+		</h:form>
+	</p:dialog>
+	
+	<!-- **************************************** -->
+	<!-- Popup des documents ETIQUETAGE 		  -->
+	<!-- **************************************** -->
+	<p:dialog
+		header="#{resourceBundle['editProduit.onglet.actes.etiquetage.doc']}"
+		styleClass="essaiTabPopup" widgetVar="popupDocEtiquetage"
+		resizable="true" modal="true" width="800">
+		<h:form id="eti_popDocs_form" prependId="false"
+			enctype="multipart/form-data">
+
+			<!-- nouveau document -->
+			<h3><h:outputFormat
+				value="#{resourceBundle['document.nouveau']}" /></h3>
+			<fieldset><c:set var="enumValueEti"
+				value="#{enumManager.getEnumValue('TypeDocumentProduit','ETIQUETAGE')}" />
+			<p:outputPanel id="eti_out_pan_file"
+				style="display:block;margin-top:10px;">
+				<h:panelGrid columns="2" style="margin-bottom:10px" width="100%">
+					<h:outputLabel id="labelInputEtiFile" for="input_eti_file"
+						value="#{resourceBundle['document.fichier']}" />
+					<t:inputFileUpload id="input_eti_file" size="30"
+						value="#{produitTherapeutiqueManager.getDocumentManager(enumValueEti).file}" />
+
+				</h:panelGrid>
+			</p:outputPanel></fieldset>
+			<div class="actionButton" style="margin-top: 0px;"><p:commandButton
+				value="#{resourceBundle['btn.ajouter']}" ajax="false"
+				action="submit"
+				actionListener="#{produitTherapeutiqueManager.ajouterDocument(enumValueEti)}"
+				update="fichier_eti"
+				oncomplete="popupDocEtiquetage.hide();" /></div>
+			<!-- historique -->
+			<div class="popupButton"><p:commandButton
+				value="#{resourceBundle['btn.fermer']}"
+				oncomplete="popupDocEtiquetage.hide();" /></div>
+		</h:form>
+	</p:dialog>
+	
+	<!-- **************************************** -->
+	<!-- Popup des documents RECONSTITUTION SIMPLE-->
+	<!-- **************************************** -->
+	<p:dialog
+		header="#{resourceBundle['editProduit.onglet.actes.reconstitution.doc']}"
+		styleClass="essaiTabPopup" widgetVar="popupDocReconstitutionSimple"
+		resizable="true" modal="true" width="800">
+		<h:form id="rs_popDocs_form" prependId="false"
+			enctype="multipart/form-data">
+
+			<!-- nouveau document -->
+			<h3><h:outputFormat
+				value="#{resourceBundle['document.nouveau']}" /></h3>
+			<fieldset><c:set var="enumValueRs"
+				value="#{enumManager.getEnumValue('TypeDocumentProduit','RECONSTITUTION_SIMPLE')}" />
+			<p:outputPanel id="rs_out_pan_file"
+				style="display:block;margin-top:10px;">
+				<h:panelGrid columns="2" style="margin-bottom:10px" width="100%">
+					<h:outputLabel id="labelInputRsFile" for="input_rs_file"
+						value="#{resourceBundle['document.fichier']}" />
+					<t:inputFileUpload id="input_rs_file" size="30"
+						value="#{produitTherapeutiqueManager.getDocumentManager(enumValueRs).file}" />
+
+				</h:panelGrid>
+			</p:outputPanel></fieldset>
+			<div class="actionButton" style="margin-top: 0px;"><p:commandButton
+				value="#{resourceBundle['btn.ajouter']}" ajax="false"
+				action="submit"
+				actionListener="#{produitTherapeutiqueManager.ajouterDocument(enumValueRs)}"
+				update="fichier_rs"
+				oncomplete="popupDocReconstitutionSimple.hide();" /></div>
+			<!-- historique -->
+			<div class="popupButton"><p:commandButton
+				value="#{resourceBundle['btn.fermer']}"
+				oncomplete="popupDocReconstitutionSimple.hide();" /></div>
+		</h:form>
+	</p:dialog>
+	
+	<!-- **************************************** -->
+	<!-- Popup des documents RECONSTITUTION PSM   -->
+	<!-- **************************************** -->
+	<p:dialog
+		header="#{resourceBundle['editProduit.onglet.actes.reconstitutionpsm.doc']}"
+		styleClass="essaiTabPopup" widgetVar="popupDocReconstitutionPSM"
+		resizable="true" modal="true" width="800">
+		<h:form id="rp_popDocs_form" prependId="false"
+			enctype="multipart/form-data">
+
+			<!-- nouveau document -->
+			<h3><h:outputFormat
+				value="#{resourceBundle['document.nouveau']}" /></h3>
+			<fieldset><c:set var="enumValueRp"
+				value="#{enumManager.getEnumValue('TypeDocumentProduit','RECONSTITUTION_PSM')}" />
+			<p:outputPanel id="rp_out_pan_file"
+				style="display:block;margin-top:10px;">
+				<h:panelGrid columns="2" style="margin-bottom:10px" width="100%">
+					<h:outputLabel id="labelInputRpFile" for="input_rp_file"
+						value="#{resourceBundle['document.fichier']}" />
+					<t:inputFileUpload id="input_rp_file" size="30"
+						value="#{produitTherapeutiqueManager.getDocumentManager(enumValueRp).file}" />
+
+				</h:panelGrid>
+			</p:outputPanel></fieldset>
+			<div class="actionButton" style="margin-top: 0px;"><p:commandButton
+				value="#{resourceBundle['btn.ajouter']}" ajax="false"
+				action="submit"
+				actionListener="#{produitTherapeutiqueManager.ajouterDocument(enumValueRp)}"
+				update="fichier_rp"
+				oncomplete="popupDocReconstitutionPSM.hide();" /></div>
+			<!-- historique -->
+			<div class="popupButton"><p:commandButton
+				value="#{resourceBundle['btn.fermer']}"
+				oncomplete="popupDocReconstitutionPSM.hide();" /></div>
+		</h:form>
+	</p:dialog>
+</ui:composition>

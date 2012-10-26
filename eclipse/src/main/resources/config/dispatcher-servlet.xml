@@ -1,0 +1,86 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<beans	xmlns="http://www.springframework.org/schema/beans"
+		xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+		xmlns:webflow="http://www.springframework.org/schema/webflow-config"
+		xmlns:faces="http://www.springframework.org/schema/faces"		
+		xmlns:tx="http://www.springframework.org/schema/tx"
+		xmlns:util="http://www.springframework.org/schema/util"
+		xmlns:context="http://www.springframework.org/schema/context"
+		xmlns:mvc="http://www.springframework.org/schema/mvc"
+		xsi:schemaLocation="
+			http://www.springframework.org/schema/beans
+			http://www.springframework.org/schema/beans/spring-beans.xsd
+			http://www.springframework.org/schema/webflow-config
+			http://www.springframework.org/schema/webflow-config/spring-webflow-config-2.0.xsd
+        	http://www.springframework.org/schema/faces
+        	http://www.springframework.org/schema/faces/spring-faces-2.0.xsd			
+			http://www.springframework.org/schema/tx 
+			http://www.springframework.org/schema/tx/spring-tx.xsd
+			http://www.springframework.org/schema/util 
+			http://www.springframework.org/schema/util/spring-util.xsd
+			http://www.springframework.org/schema/context 
+			http://www.springframework.org/schema/context/spring-context.xsd
+			http://www.springframework.org/schema/mvc
+			http://www.springframework.org/schema/mvc/spring-mvc.xsd">
+
+	<!-- Import de la configuration WebFlow -->
+	<import resource="classpath:/config/applicationContext-webflow.xml" />	 
+
+	<context:annotation-config />
+	
+	<!-- Dispatches requests mapped to org.springframework.web.servlet.mvc.Controller implementations -->
+   	<bean class="org.springframework.web.servlet.mvc.SimpleControllerHandlerAdapter" />
+	<context:component-scan base-package="fr.pharma.eclipse" />
+
+   <!-- Maps JSF 2 resource requests to an instance of org.springframework.faces.webflow.FacesJsfResourceRequestHandler  -->
+    <bean class="org.springframework.web.servlet.handler.SimpleUrlHandlerMapping">
+      	<property name="order" value="0"/>
+      	<property name="mappings" value="/javax.faces.resource/**=jsfResourceHandler"/>
+    </bean>
+
+	<!-- Enables the Spring MVC @Controller programming model -->
+	<mvc:annotation-driven />
+
+	<!-- Enable processing of JSF 2 resource requests -->
+	<faces:resources />
+
+    <bean id="jsfResourceHandler" class="org.springframework.faces.webflow.JsfResourceRequestHandler"/>
+    
+   <!-- Enables FlowHandler URL mapping -->
+    <bean class="org.springframework.webflow.mvc.servlet.FlowHandlerAdapter">
+        <property name="flowExecutor" ref="flowExecutor" />
+      <property name="ajaxHandler">
+         <bean class="org.springframework.faces.webflow.JsfAjaxHandler"/>
+      </property>
+    </bean>    
+    
+    <bean class="org.springframework.webflow.mvc.servlet.FlowHandlerMapping">
+      <property name="flowRegistry" ref="flowRegistry"/>
+      <property name="order" value="1"/>
+     	<property name="defaultHandler">
+		<!-- If no flow match, map path to a view to render; e.g. the "/intro" path would map to the view named "intro"    -->
+         <bean class="org.springframework.web.servlet.mvc.UrlFilenameViewController" />
+     </property>
+    </bean>
+    
+   <!-- Maps logical view names to Facelet templates in /WEB-INF (e.g. 'search' to '/WEB-INF/search.xhtml' -->
+   <bean id="faceletsViewResolver" class="org.springframework.web.servlet.view.UrlBasedViewResolver">
+      <property name="viewClass" value="org.springframework.faces.mvc.JsfView"/>
+      <property name="prefix" value="/WEB-INF/" />
+      <property name="suffix" value=".xhtml" />
+   </bean>
+
+	<!-- Dispatches requests mapped to flows to FlowHandler implementations -->
+	<bean class="org.springframework.faces.webflow.JsfFlowHandlerAdapter">
+		<property name="flowExecutor" ref="flowExecutor" />
+	</bean>
+	
+	<bean class="org.springframework.web.servlet.mvc.HttpRequestHandlerAdapter" />
+		
+	<!-- Gestionnaire d'import de fichier -->
+    <bean id="multipartResolver" class="org.springframework.web.multipart.commons.CommonsMultipartResolver">
+        <property name="maxUploadSize" value="5000000"/>
+    </bean>
+   
+</beans>

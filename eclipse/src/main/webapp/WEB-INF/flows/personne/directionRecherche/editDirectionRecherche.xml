@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<flow xmlns="http://www.springframework.org/schema/webflow"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://www.springframework.org/schema/webflow
+    http://www.springframework.org/schema/webflow/spring-webflow-2.0.xsd" parent="main">
+
+	<!-- Variable d'entrée -->
+	<input name="idDirectionRecherche" />
+	<input name="idPersonneSir" />
+
+	<decision-state id="createOrEdit">
+		<if test="idDirectionRecherche==null" then="createFromScratchOrFromSir" else="edit"/>
+	</decision-state>
+	
+	<decision-state id="createFromScratchOrFromSir">
+		<if test="idPersonneSir==null" then="createFromScratch" else="createFromSir"/>
+	</decision-state>
+	
+	<!-- Création From Scratch -->
+	<action-state id="createFromScratch">
+		<evaluate expression="directionRechercheManager.setBean(directionRechercheFactory.getInitializedObject())"/>
+		<transition to="editDirectionRecherche"/>
+	</action-state>
+	
+	<!-- Création From Sir -->
+	<action-state id="createFromSir">
+		<evaluate expression="directionRechercheManager.setBean(directionRechercheFactory.getInitializedObject(idPersonneSir))"/>
+		<transition to="editDirectionRecherche"/>
+	</action-state>
+	
+	<!-- Modification -->
+	<action-state id="edit">
+		<evaluate expression="directionRechercheManager.setBean(directionRechercheService.get(idDirectionRecherche))"/>
+		<transition to="editDirectionRecherche"/>
+	</action-state>
+
+	<!-- Page principale -->
+	<view-state id="editDirectionRecherche" view="../../../pages/personne/directionRecherche/editDirectionRecherche.xhtml">
+		<transition on="cancel" to="createOrEdit"/>
+		<transition on="save" to="comeback">
+			<evaluate expression="directionRechercheService.save(directionRechercheManager.bean)"/>
+		</transition>
+		<transition on="comeback" to="comeback"/>
+		<transition on="error" to="editDirectionRecherche"/>
+	</view-state>
+	
+	<!-- Etat final -->
+	<end-state id="comeback"/>
+	
+</flow>
