@@ -1,0 +1,29 @@
+@import url(../css/bootstrap.min.css);
+
+.bloc{
+	min-height:650px;
+	padding-top:50px;
+}
+#home, #technique{
+	background-image: url(../img/topZigouigoui-gris.png);
+	background-position: bottom;
+	background-repeat: repeat-x;
+}
+#fonction, #essai{
+	background-color: #EFEFEF;
+	background-image: url(../img/topZigouigoui-blanc.png);
+	background-position: bottom;
+	background-repeat: repeat-x;
+}
+
+#fonction .well, #essai .well{
+	background-color: white;
+}
+
+h2{
+	color:#5db677;
+}
+
+.carousel-inner {
+	min-height: 410px;
+}
