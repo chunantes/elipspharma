@@ -6,12 +6,10 @@ import fr.pharma.eclipse.jasper.constants.JasperConstants;
 /**
  * Classe représentant la source de données<br>
  * relative à un contact de l'essai.
- 
+ * @author Netapsys
  * @version $Revision$ $Date$
  */
-public class JRBeanContact
-    implements JasperReportBean
-{
+public class JRBeanContact implements JasperReportBean {
 
     /**
      * Serial ID.
@@ -52,8 +50,7 @@ public class JRBeanContact
      * Getter sur profil.
      * @return Retourne le profil.
      */
-    public String getProfil()
-    {
+    public String getProfil() {
         return this.profil;
     }
 
@@ -61,8 +58,7 @@ public class JRBeanContact
      * Setter pour profil.
      * @param profil le profil à écrire.
      */
-    public void setProfil(final String profil)
-    {
+    public void setProfil(final String profil) {
         this.profil = profil;
     }
 
@@ -70,8 +66,7 @@ public class JRBeanContact
      * Getter sur habilitation.
      * @return Retourne le habilitation.
      */
-    public String getHabilitation()
-    {
+    public String getHabilitation() {
         return this.habilitation;
     }
 
@@ -79,8 +74,7 @@ public class JRBeanContact
      * Setter pour habilitation.
      * @param habilitation le habilitation à écrire.
      */
-    public void setHabilitation(final String habilitation)
-    {
+    public void setHabilitation(final String habilitation) {
         this.habilitation = habilitation;
     }
 
@@ -88,8 +82,7 @@ public class JRBeanContact
      * Getter sur nom.
      * @return Retourne le nom.
      */
-    public String getNom()
-    {
+    public String getNom() {
         return this.nom;
     }
 
@@ -97,8 +90,7 @@ public class JRBeanContact
      * Setter pour nom.
      * @param nom le nom à écrire.
      */
-    public void setNom(final String nom)
-    {
+    public void setNom(final String nom) {
         this.nom = nom;
     }
 
@@ -106,8 +98,7 @@ public class JRBeanContact
      * Getter sur prenom.
      * @return Retourne le prenom.
      */
-    public String getPrenom()
-    {
+    public String getPrenom() {
         return this.prenom;
     }
 
@@ -115,8 +106,7 @@ public class JRBeanContact
      * Setter pour prenom.
      * @param prenom le prenom à écrire.
      */
-    public void setPrenom(final String prenom)
-    {
+    public void setPrenom(final String prenom) {
         this.prenom = prenom;
     }
 
@@ -124,8 +114,7 @@ public class JRBeanContact
      * Getter sur tel.
      * @return Retourne le tel.
      */
-    public String getTel()
-    {
+    public String getTel() {
         return this.tel;
     }
 
@@ -133,8 +122,7 @@ public class JRBeanContact
      * Setter pour tel.
      * @param tel le tel à écrire.
      */
-    public void setTel(final String tel)
-    {
+    public void setTel(final String tel) {
         this.tel = tel;
     }
 
@@ -142,8 +130,7 @@ public class JRBeanContact
      * Getter sur mail.
      * @return Retourne le mail.
      */
-    public String getMail()
-    {
+    public String getMail() {
         return this.mail;
     }
 
@@ -151,8 +138,7 @@ public class JRBeanContact
      * Setter pour mail.
      * @param mail le mail à écrire.
      */
-    public void setMail(final String mail)
-    {
+    public void setMail(final String mail) {
         this.mail = mail;
     }
 

@@ -8,12 +8,10 @@ import fr.pharma.eclipse.validator.remove.RemoveValidator;
 
 /**
  * Classe de validation de suppression d'un objet Pharmacie.
- 
+ * @author Netapsys
  * @version $Revision$ $Date$
  */
-public class PharmacieRemoveValidator
-    implements RemoveValidator<Pharmacie>, Serializable
-{
+public class PharmacieRemoveValidator implements RemoveValidator<Pharmacie>, Serializable {
     /**
      * Serial ID.
      */
@@ -23,24 +21,15 @@ public class PharmacieRemoveValidator
      * {@inheritDoc}
      */
     @Override
-    public void validate(final Pharmacie pharmacie)
-    {
+    public void validate(final Pharmacie pharmacie) {
         // Vérification Relation Pharmacie-Essai
-        if (!pharmacie.getDetailsDonneesPharma().isEmpty())
-        {
-            throw new ValidationException("remove",
-                                          new String[]
-                                          {"impossible" },
-                                          pharmacie);
+        if (!pharmacie.getDetailsDonneesPharma().isEmpty()) {
+            throw new ValidationException("remove", new String[]{"impossible" }, pharmacie);
         }
 
         // Vérification Relation Pharmacie-Pharmacien
-        if (!pharmacie.getPharmaciens().isEmpty())
-        {
-            throw new ValidationException("remove",
-                                          new String[]
-                                          {"impossible" },
-                                          pharmacie);
+        if (!pharmacie.getPharmaciens().isEmpty()) {
+            throw new ValidationException("remove", new String[]{"impossible" }, pharmacie);
         }
     }
 

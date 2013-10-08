@@ -3,18 +3,17 @@ package fr.pharma.eclipse.domain.criteria.dispensation;
 import java.util.Calendar;
 
 import fr.pharma.eclipse.domain.criteria.common.AbstractSearchCriteria;
+import fr.pharma.eclipse.domain.dto.EssaiDTO;
 import fr.pharma.eclipse.domain.model.essai.Essai;
 import fr.pharma.eclipse.domain.model.patient.Patient;
 import fr.pharma.eclipse.domain.model.stockage.Pharmacie;
 
 /**
  * Critère de recherche pour le bean Dispensation.
- 
+ * @author Netapsys
  * @version $Revision$ $Date$
  */
-public class DispensationSearchCriteria
-    extends AbstractSearchCriteria
-{
+public class DispensationSearchCriteria extends AbstractSearchCriteria {
 
     /**
      * SerialVersionUID.
@@ -37,6 +36,11 @@ public class DispensationSearchCriteria
     private Essai essai;
 
     /**
+     * Essai DTO.
+     */
+    private EssaiDTO essaiDTO;
+
+    /**
      * Dispensée.
      */
     private Boolean dispense;
@@ -55,8 +59,7 @@ public class DispensationSearchCriteria
      * {@inheritDoc}
      */
     @Override
-    public void clear()
-    {
+    public void clear() {
         this.patient = null;
         this.essai = null;
         this.dispense = null;
@@ -69,8 +72,7 @@ public class DispensationSearchCriteria
      * Getter sur patient.
      * @return Retourne le patient.
      */
-    public Patient getPatient()
-    {
+    public Patient getPatient() {
         return this.patient;
     }
 
@@ -78,8 +80,7 @@ public class DispensationSearchCriteria
      * Setter pour patient.
      * @param patient le patient à écrire.
      */
-    public void setPatient(final Patient patient)
-    {
+    public void setPatient(final Patient patient) {
         this.patient = patient;
     }
 
@@ -87,8 +88,7 @@ public class DispensationSearchCriteria
      * Getter sur essai.
      * @return Retourne le essai.
      */
-    public Essai getEssai()
-    {
+    public Essai getEssai() {
         return this.essai;
     }
 
@@ -96,8 +96,7 @@ public class DispensationSearchCriteria
      * Setter pour essai.
      * @param essai le essai à écrire.
      */
-    public void setEssai(final Essai essai)
-    {
+    public void setEssai(final Essai essai) {
         this.essai = essai;
     }
 
@@ -105,8 +104,7 @@ public class DispensationSearchCriteria
      * Getter sur dispense.
      * @return Retourne le dispense.
      */
-    public Boolean getDispense()
-    {
+    public Boolean getDispense() {
         return this.dispense;
     }
 
@@ -114,8 +112,7 @@ public class DispensationSearchCriteria
      * Setter pour dispense.
      * @param dispense le dispense à écrire.
      */
-    public void setDispense(final Boolean dispense)
-    {
+    public void setDispense(final Boolean dispense) {
         this.dispense = dispense;
     }
 
@@ -123,8 +120,7 @@ public class DispensationSearchCriteria
      * Getter sur dateDebut.
      * @return Retourne le dateDebut.
      */
-    public Calendar getDateDebut()
-    {
+    public Calendar getDateDebut() {
         return this.dateDebut;
     }
 
@@ -132,8 +128,7 @@ public class DispensationSearchCriteria
      * Setter pour dateDebut.
      * @param dateDebut le dateDebut à écrire.
      */
-    public void setDateDebut(final Calendar dateDebut)
-    {
+    public void setDateDebut(final Calendar dateDebut) {
         this.dateDebut = dateDebut;
     }
 
@@ -141,8 +136,7 @@ public class DispensationSearchCriteria
      * Getter sur dateFin.
      * @return Retourne le dateFin.
      */
-    public Calendar getDateFin()
-    {
+    public Calendar getDateFin() {
         return this.dateFin;
     }
 
@@ -150,8 +144,7 @@ public class DispensationSearchCriteria
      * Setter pour dateFin.
      * @param dateFin le dateFin à écrire.
      */
-    public void setDateFin(final Calendar dateFin)
-    {
+    public void setDateFin(final Calendar dateFin) {
         this.dateFin = dateFin;
     }
 
@@ -159,8 +152,7 @@ public class DispensationSearchCriteria
      * Getter pour pharmacie.
      * @return Le pharmacie
      */
-    public Pharmacie getPharmacie()
-    {
+    public Pharmacie getPharmacie() {
         return this.pharmacie;
     }
 
@@ -168,9 +160,24 @@ public class DispensationSearchCriteria
      * Setter pour pharmacie.
      * @param pharmacie Le pharmacie à écrire.
      */
-    public void setPharmacie(final Pharmacie pharmacie)
-    {
+    public void setPharmacie(final Pharmacie pharmacie) {
         this.pharmacie = pharmacie;
+    }
+
+    /**
+     * Getter pour essaiDTO.
+     * @return Le essaiDTO
+     */
+    public EssaiDTO getEssaiDTO() {
+        return this.essaiDTO;
+    }
+
+    /**
+     * Setter pour essaiDTO.
+     * @param essaiDTO Le essaiDTO à écrire.
+     */
+    public void setEssaiDTO(final EssaiDTO essaiDTO) {
+        this.essaiDTO = essaiDTO;
     }
 
 }

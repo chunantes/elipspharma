@@ -2,11 +2,10 @@ package fr.pharma.eclipse.domain.enums;
 
 /**
  * Enumération des différentes thématiques d'un essai.
- 
+ * @author Netapsys
  * @version $Revision$ $Date$
  */
-public enum Thematique
-{
+public enum Thematique {
     /**
      * Anatomie.
      */
@@ -50,8 +49,7 @@ public enum Thematique
     /**
      * Biostatistiques, informatique médicale et technologies de communication.
      */
-    BIOSTATISTIQUE("46-04",
-            "Biostatistiques, informatique médicale et technologies de communication"),
+    BIOSTATISTIQUE("46-04", "Biostatistiques, informatique médicale et technologies de communication"),
 
     /**
      * Cancérologie – radiothérapie.
@@ -64,10 +62,10 @@ public enum Thematique
     CARDIOLOGIE("51-02", "Cardiologie"),
 
     /**
-     * Chirurgie buccale, pathologie et thérapeutique, anesthésiologie et réanimation.
+     * Chirurgie buccale, pathologie et thérapeutique, anesthésiologie et
+     * réanimation.
      */
-    CHIRURGIE_BUCCALE("57-02",
-            "Chirurgie buccale, pathologie et thérapeutique, anesthésiologie et réanimation"),
+    CHIRURGIE_BUCCALE("57-02", "Chirurgie buccale, pathologie et thérapeutique, anesthésiologie et réanimation"),
 
     /**
      * Chirurgie digestive.
@@ -96,8 +94,7 @@ public enum Thematique
     /**
      * Chirurgie plastique, reconstructrice et esthétique – brûlologie.
      */
-    CHIRURGIE_PLASTIQUE("50-04",
-            "Chirurgie plastique, reconstructrice et esthétique – brûlologie"),
+    CHIRURGIE_PLASTIQUE("50-04", "Chirurgie plastique, reconstructrice et esthétique – brûlologie"),
 
     /**
      * Chirurgie thoracique et cardiovasculaire.
@@ -290,18 +287,15 @@ public enum Thematique
     RHUMATOLOGIE("50-01", "Rhumatologie"),
 
     /**
-     * Sciences anatomiques et physiologiques, occlusodontiques, biomatériaux, biophysique,
-     * radiologie.
+     * Sciences anatomiques et physiologiques, occlusodontiques, biomatériaux,
+     * biophysique, radiologie.
      */
-    SCIENCES_ANATOMIQUES("58-03",
-            "Sciences anatomiques et physiologiques, occlusodontiques, biomatériaux, biophysique, radiologie"),
+    SCIENCES_ANATOMIQUES("58-03", "Sciences anatomiques et physiologiques, occlusodontiques, biomatériaux, biophysique, radiologie"),
     /**
-     * Sciences biologiques (biochimie, immunologie, histologie, embryologie, génétique, anatomie
-     * pathologique, bactériologie, pharmacologie).
+     * Sciences biologiques (biochimie, immunologie, histologie, embryologie,
+     * génétique, anatomie pathologique, bactériologie, pharmacologie).
      */
-    SCIENCES_BIOLOGIQUES(
-            "57-03",
-            "Sciences biologiques (biochimie, immunologie, histologie, embryologie, génétique, anatomie pathologique, bactériologie, pharmacologie)"),
+    SCIENCES_BIOLOGIQUES("57-03", "Sciences biologiques (biochimie, immunologie, histologie, embryologie, génétique, anatomie pathologique, bactériologie, pharmacologie)"),
 
     /**
      * Sciences biologiques pharmaceutiques.
@@ -342,8 +336,7 @@ public enum Thematique
      * Constructeur privé.
      * @param libelle Libellé de la valeur de l'énumération.
      */
-    private Thematique(final String code, final String libelle)
-    {
+    private Thematique(final String code, final String libelle) {
         this.code = code;
         this.libelle = libelle;
     }
@@ -352,8 +345,7 @@ public enum Thematique
      * Getter sur libelle.
      * @return Retourne le libelle.
      */
-    public String getLibelle()
-    {
+    public String getLibelle() {
         return this.libelle;
     }
 
@@ -361,8 +353,7 @@ public enum Thematique
      * {@inheritDoc}
      */
     @Override
-    public String toString()
-    {
+    public String toString() {
         return this.getLibelle();
     }
 
@@ -370,8 +361,7 @@ public enum Thematique
      * Getter pour code.
      * @return Le code
      */
-    public String getCode()
-    {
+    public String getCode() {
         return this.code;
     }
 

@@ -8,13 +8,11 @@ import fr.pharma.eclipse.domain.model.common.DocumentEclipse;
 
 /**
  * Classe abstraite représentant un document attaché à un produit.
- 
+ * @author Netapsys
  * @version $Revision$ $Date$
  */
 @MappedSuperclass
-public abstract class DocumentProduit
-    extends DocumentEclipse
-{
+public abstract class DocumentProduit extends DocumentEclipse {
 
     /**
      * Serial ID.
@@ -25,8 +23,7 @@ public abstract class DocumentProduit
      * {@inheritDoc}
      */
     @Override
-    public EnumTypeDocument getTypeDocument()
-    {
+    public EnumTypeDocument getTypeDocument() {
         return this.getType();
     }
 

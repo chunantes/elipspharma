@@ -3,13 +3,12 @@ package fr.pharma.eclipse.service.patient.dictionary.processor;
 import fr.pharma.eclipse.service.patient.dictionary.SurfaceCorporelleProcessor;
 
 /**
- * Processor en charge de calculer la surface corporelle avec la formule de Mosteller.
- 
+ * Processor en charge de calculer la surface corporelle avec la formule de
+ * Mosteller.
+ * @author Netapsys
  * @version $Revision$ $Date$
  */
-public class MostellerProcessor
-    implements SurfaceCorporelleProcessor
-{
+public class MostellerProcessor implements SurfaceCorporelleProcessor {
 
     /**
      * Serial ID.
@@ -24,11 +23,9 @@ public class MostellerProcessor
     /**
      * {@inheritDoc}
      */
+    @Override
     public double process(final double taille,
-                          final double poids)
-    {
-        return Math.sqrt(taille
-                         * poids
-                         / MostellerProcessor.DIVISEUR_FORMULE);
+                          final double poids) {
+        return Math.sqrt((taille * poids) / MostellerProcessor.DIVISEUR_FORMULE);
     }
 }

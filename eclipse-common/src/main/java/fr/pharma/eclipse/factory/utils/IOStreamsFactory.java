@@ -8,20 +8,18 @@ import java.io.InputStream;
 
 /**
  * Fabrique de flux I/O.
- 
+ * @author Netapsys
  * @version $Revision$ $Date$
  */
-public class IOStreamsFactory
-{
+public class IOStreamsFactory {
     /**
      * Fabrique de {@link FileInputStream} à partir d'un fichier.
      * @param file Fichier.
      * @return InputStream.
-     * @throws FileNotFoundException Exception levée si le fichier n'est pas accessible.
+     * @throws FileNotFoundException Exception levée si le fichier n'est pas
+     * accessible.
      */
-    public InputStream getInitializedInputStream(final File file)
-        throws FileNotFoundException
-    {
+    public InputStream getInitializedInputStream(final File file) throws FileNotFoundException {
         return new FileInputStream(file);
     }
 
@@ -29,8 +27,7 @@ public class IOStreamsFactory
      * Fabrique de {@link ByteArrayOutputStream}.
      * @return Un nouvel objet ByteArrayOutputStream.
      */
-    public ByteArrayOutputStream getInitializedByteArrayOutStream()
-    {
+    public ByteArrayOutputStream getInitializedByteArrayOutStream() {
         return new ByteArrayOutputStream();
     }
 

@@ -24,13 +24,11 @@ import fr.pharma.eclipse.domain.model.suivi.essai.detail.DetailAutresDocumentsSu
 
 /**
  * Classe métier représentant les autres documents d'un essai clinique.
- 
+ * @author Netapsys
  * @version $Revision$ $Date$
  */
 @Entity(name = "essai_detail_autres_documents")
-public class DetailAutresDocuments
-    extends BeanObjectSuivi
-{
+public class DetailAutresDocuments extends BeanObjectSuivi {
     /**
      * Serial ID.
      */
@@ -50,8 +48,7 @@ public class DetailAutresDocuments
     @Where(clause = "type='AUTRE'")
     @LazyCollection(LazyCollectionOption.TRUE)
     @Sort(type = SortType.COMPARATOR, comparator = SuiviComparator.class)
-    private final SortedSet<DocumentAutre> documents =
-        new TreeSet<DocumentAutre>(new SuiviComparator());
+    private final SortedSet<DocumentAutre> documents = new TreeSet<DocumentAutre>(new SuiviComparator());
 
     /**
      * Liste des modifications du détail.
@@ -59,16 +56,14 @@ public class DetailAutresDocuments
     @OneToMany(mappedBy = "detailAutresDocuments", cascade = CascadeType.ALL)
     @LazyCollection(LazyCollectionOption.TRUE)
     @Sort(type = SortType.COMPARATOR, comparator = SuiviComparator.class)
-    private final SortedSet<DetailAutresDocumentsSuivi> modifs =
-        new TreeSet<DetailAutresDocumentsSuivi>(new SuiviComparator());
+    private final SortedSet<DetailAutresDocumentsSuivi> modifs = new TreeSet<DetailAutresDocumentsSuivi>(new SuiviComparator());
 
     /**
      * Getter sur modifs.
      * @return Retourne le modifs.
      */
     @Override
-    public SortedSet<DetailAutresDocumentsSuivi> getModifs()
-    {
+    public SortedSet<DetailAutresDocumentsSuivi> getModifs() {
         return this.modifs;
     }
 
@@ -76,8 +71,7 @@ public class DetailAutresDocuments
      * Getter sur documents.
      * @return Retourne le documents.
      */
-    public SortedSet<DocumentAutre> getDocuments()
-    {
+    public SortedSet<DocumentAutre> getDocuments() {
         return this.documents;
     }
 
@@ -85,8 +79,7 @@ public class DetailAutresDocuments
      * Getter sur essai.
      * @return Retourne le essai.
      */
-    public Essai getEssai()
-    {
+    public Essai getEssai() {
         return this.essai;
     }
 
@@ -94,8 +87,7 @@ public class DetailAutresDocuments
      * Setter pour essai.
      * @param essai le essai à écrire.
      */
-    public void setEssai(final Essai essai)
-    {
+    public void setEssai(final Essai essai) {
         this.essai = essai;
     }
 }

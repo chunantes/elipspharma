@@ -9,12 +9,10 @@ import fr.pharma.eclipse.utils.constants.EclipseConstants;
 
 /**
  * Fabrique des objets Essai.
- 
+ * @author Netapsys
  * @version $Revision$ $Date$
  */
-public class EssaiFactory
-    extends BeanObjectComplexFactory<Essai>
-{
+public class EssaiFactory extends BeanObjectComplexFactory<Essai> {
     /**
      * Serial ID.
      */
@@ -24,8 +22,7 @@ public class EssaiFactory
      * Constructeur.
      * @param bean Classe à instancier.
      */
-    public EssaiFactory(final Class<Essai> bean)
-    {
+    public EssaiFactory(final Class<Essai> bean) {
         super(bean);
     }
 
@@ -33,8 +30,7 @@ public class EssaiFactory
      * {@inheritDoc}
      */
     @Override
-    public Essai getInitializedObject()
-    {
+    public Essai getInitializedObject() {
         final Essai essai = super.getInitializedObject();
 
         // Initialisation de l'état.

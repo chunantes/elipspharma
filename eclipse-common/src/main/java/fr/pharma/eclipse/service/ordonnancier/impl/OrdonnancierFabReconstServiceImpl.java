@@ -18,14 +18,12 @@ import fr.pharma.eclipse.factory.suivi.SuiviFactory;
 import fr.pharma.eclipse.service.stock.ApprovisionnementService;
 
 /**
- * Classe d'implémentation du service de gestion des ordonnanciers de fabrication /
- * reconstitution.
- 
+ * Classe d'implémentation du service de gestion des ordonnanciers de
+ * fabrication / reconstitution.
+ * @author Netapsys
  * @version $Revision$ $Date$
  */
-public class OrdonnancierFabReconstServiceImpl
-    extends OrdonnancierServiceImpl<OrdonnancierFabReconst>
-{
+public class OrdonnancierFabReconstServiceImpl extends OrdonnancierServiceImpl<OrdonnancierFabReconst> {
     /**
      * Serial ID.
      */
@@ -45,10 +43,10 @@ public class OrdonnancierFabReconstServiceImpl
 
     /**
      * Constructeur.
-     * @param ordoDao Dao de gestion des ordonnanciers de fabrication/reconstitution.
+     * @param ordoDao Dao de gestion des ordonnanciers de
+     * fabrication/reconstitution.
      */
-    public OrdonnancierFabReconstServiceImpl(final GenericDao<OrdonnancierFabReconst> ordoDao)
-    {
+    public OrdonnancierFabReconstServiceImpl(final GenericDao<OrdonnancierFabReconst> ordoDao) {
         super(ordoDao);
     }
 
@@ -57,8 +55,7 @@ public class OrdonnancierFabReconstServiceImpl
      */
     @Override
     @Transactional
-    public OrdonnancierFabReconst calculerOrdonnancier(final OrdonnancierSearchCriteria criteria)
-    {
+    public OrdonnancierFabReconst calculerOrdonnancier(final OrdonnancierSearchCriteria criteria) {
         final Pharmacie pharmacie = criteria.getPharmacie();
 
         // Récupération des elementsToCheck éligibles pour l'ordonnancier
@@ -73,14 +70,9 @@ public class OrdonnancierFabReconstServiceImpl
 
         final List<PreparationEntree> preparations = this.approvisionnementService.getAll(crit);
 
-        if (preparations.isEmpty())
-        {
-            throw new ValidationException("ordonnancier.eltsToCheck",
-                                          new String[]
-                                          {"empty" });
-        }
-        else
-        {
+        if (preparations.isEmpty()) {
+            throw new ValidationException("ordonnancier.eltsToCheck", new String[]{"empty" });
+        } else {
             // Création de l'ordonnancier
             final OrdonnancierFabReconst ordonnancier = this.ordoFactory.getInitializedObject();
             ordonnancier.setDateDebut(criteria.getDateDebut());
@@ -88,8 +80,7 @@ public class OrdonnancierFabReconstServiceImpl
             ordonnancier.setPharmacie(pharmacie);
 
             // Ajout des elementsToCheck avec les informations de l'ordonnancier
-            for (final PreparationEntree p : preparations)
-            {
+            for (final PreparationEntree p : preparations) {
                 p.setOrdonnancier(ordonnancier);
                 ordonnancier.getElementsToCheck().add(p);
             }
@@ -103,8 +94,7 @@ public class OrdonnancierFabReconstServiceImpl
      * Setter pour ordoFactory.
      * @param ordoFactory Le ordoFactory à écrire.
      */
-    public void setOrdoFactory(final SuiviFactory<OrdonnancierFabReconst> ordoFactory)
-    {
+    public void setOrdoFactory(final SuiviFactory<OrdonnancierFabReconst> ordoFactory) {
         this.ordoFactory = ordoFactory;
     }
 
@@ -112,8 +102,7 @@ public class OrdonnancierFabReconstServiceImpl
      * Getter pour approvisionnementService.
      * @return Le approvisionnementService
      */
-    public ApprovisionnementService<PreparationEntree> getApprovisionnementService()
-    {
+    public ApprovisionnementService<PreparationEntree> getApprovisionnementService() {
         return this.approvisionnementService;
     }
 
@@ -121,8 +110,7 @@ public class OrdonnancierFabReconstServiceImpl
      * Setter pour approvisionnementService.
      * @param approvisionnementService Le approvisionnementService à écrire.
      */
-    public void setApprovisionnementService(final ApprovisionnementService<PreparationEntree> approvisionnementService)
-    {
+    public void setApprovisionnementService(final ApprovisionnementService<PreparationEntree> approvisionnementService) {
         this.approvisionnementService = approvisionnementService;
     }
 
@@ -130,8 +118,7 @@ public class OrdonnancierFabReconstServiceImpl
      * Getter pour ordoFactory.
      * @return Le ordoFactory
      */
-    public SuiviFactory<OrdonnancierFabReconst> getOrdoFactory()
-    {
+    public SuiviFactory<OrdonnancierFabReconst> getOrdoFactory() {
         return this.ordoFactory;
     }
 

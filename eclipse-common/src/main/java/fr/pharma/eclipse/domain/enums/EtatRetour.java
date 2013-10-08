@@ -2,11 +2,10 @@ package fr.pharma.eclipse.domain.enums;
 
 /**
  * Enumération représentant l'état d'un retour.
- 
+ * @author Netapsys
  * @version $Revision$ $Date$
  */
-public enum EtatRetour
-{
+public enum EtatRetour {
     /**
      * Présent en stock.
      */
@@ -41,8 +40,7 @@ public enum EtatRetour
      * Constructeur.
      * @param libelle Le libellé.
      */
-    EtatRetour(final String libelle)
-    {
+    EtatRetour(final String libelle) {
         this.libelle = libelle;
     }
 
@@ -50,8 +48,7 @@ public enum EtatRetour
      * Getter pour libelle.
      * @return Retourne le libelle.
      */
-    public String getLibelle()
-    {
+    public String getLibelle() {
         return this.libelle;
     }
 
@@ -59,8 +56,7 @@ public enum EtatRetour
      * {@inheritDoc}
      */
     @Override
-    public String toString()
-    {
+    public String toString() {
         return this.getLibelle();
     }
 

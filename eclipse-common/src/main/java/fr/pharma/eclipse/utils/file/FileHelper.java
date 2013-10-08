@@ -23,12 +23,10 @@ import fr.pharma.eclipse.utils.constants.EclipseConstants;
 
 /**
  * Classe de Helper pour le traitement des fichiers.
- 
+ * @author Netapsys
  * @version $Revision$ $Date$
  */
-public class FileHelper
-    implements Serializable
-{
+public class FileHelper implements Serializable {
     /**
      * Serial ID.
      */
@@ -41,30 +39,26 @@ public class FileHelper
 
     /**
      * Méthode en charge de récupérer le séparateur de fichier du système.
-     * @see http://download.oracle.com/javase/tutorial/essential/environment/sysprop.html
+     * @see http
+     * ://download.oracle.com/javase/tutorial/essential/environment/sysprop.html
      * @return "Character that separates components of a file path. <br />
      * This is "/" on UNIX and "\ " on Windows."
      */
-    public String getSystemFileSeparator()
-    {
+    public String getSystemFileSeparator() {
         return System.getProperty("file.separator");
     }
 
     /**
-     * Méthode en charge de renvoyer le nom simple (nom.extension) à partir d'un nom complet
-     * (C:\...\nom.extension).
+     * Méthode en charge de renvoyer le nom simple (nom.extension) à partir d'un
+     * nom complet (C:\...\nom.extension).
      * @param completeFileName Nom avec chemin.
      * @return Nom simple avec extension.
      */
-    public String extractFileName(final String completeFileName)
-    {
-        if (!StringUtils.hasText(completeFileName)
-            || !completeFileName.contains(this.getSystemFileSeparator()))
-        {
+    public String extractFileName(final String completeFileName) {
+        if (!StringUtils.hasText(completeFileName) || !completeFileName.contains(this.getSystemFileSeparator())) {
             return completeFileName;
         }
-        return completeFileName.substring(completeFileName.lastIndexOf(this
-                .getSystemFileSeparator()) + 1);
+        return completeFileName.substring(completeFileName.lastIndexOf(this.getSystemFileSeparator()) + 1);
     }
 
     /**
@@ -72,23 +66,22 @@ public class FileHelper
      * @param filePath Chemins d'accès au fichier.
      * @return Le fichier correcpondant au path.
      */
-    public File getFile(final String filePath)
-    {
+    public File getFile(final String filePath) {
         return new File(filePath);
     }
 
     /**
      * Méthode permettant d'enregistrer un fichier sur disque.
      * @param fichier Fichier à enregistrer.
-     * @param nameFichier Nom à utiliser pour l'enregistrement du fichier (avec extension).
-     * @param directoryPath Chemin du répertoire pour l'enregistrement du fichier.
+     * @param nameFichier Nom à utiliser pour l'enregistrement du fichier (avec
+     * extension).
+     * @param directoryPath Chemin du répertoire pour l'enregistrement du
+     * fichier.
      */
     public void save(final Fichier fichier,
                      final String nameFichier,
-                     final String directoryPath)
-    {
-        if (fichier.getContenu().length == 0)
-        {
+                     final String directoryPath) {
+        if (fichier.getContenu().length == 0) {
             return;
         }
 
@@ -98,60 +91,41 @@ public class FileHelper
         this.createDirectory(directory);
 
         // Création du fichier dans le répertoire
-        final File file = new File(directory,
-                                   nameFichier);
+        final File file = new File(directory, nameFichier);
 
         FileChannel out = null;
 
-        try
-        {
+        try {
             final byte[] contenu = fichier.getContenu();
             out = new FileOutputStream(file.getPath()).getChannel();
             ByteBuffer byteBuffer = ByteBuffer.allocate(contenu.length);
             byteBuffer = ByteBuffer.wrap(contenu);
             out.write(byteBuffer);
-        }
-        catch (final FileNotFoundException e)
-        {
-            this.log.error("Erreur sur la récupération de fichier",
-                           e);
-        }
-        catch (final IOException e)
-        {
-            this.log.error("Erreur IOException",
-                           e);
-        }
-        finally
-        {
-            if (out != null)
-            {
-                try
-                {
+        } catch (final FileNotFoundException e) {
+            this.log.error("Erreur sur la récupération de fichier", e);
+        } catch (final IOException e) {
+            this.log.error("Erreur IOException", e);
+        } finally {
+            if (out != null) {
+                try {
                     out.close();
-                }
-                catch (final IOException e)
-                {
-                    this.log.error("Erreur lors de la fermeture du FileChannel",
-                                   e);
+                } catch (final IOException e) {
+                    this.log.error("Erreur lors de la fermeture du FileChannel", e);
                 }
             }
         }
     }
 
     /**
-     * Méthode en charge de créer l'arborescence d'un répertoire si elle n'existe pas.
+     * Méthode en charge de créer l'arborescence d'un répertoire si elle
+     * n'existe pas.
      * @param directory Répertoire.
      */
-    void createDirectory(final File directory)
-    {
-        if (!directory.exists())
-        {
+    void createDirectory(final File directory) {
+        if (!directory.exists()) {
             final boolean result = directory.mkdirs();
-            if (!result)
-            {
-                this.log.error("Erreur lors de la création du répertoire "
-                               + "de stockage des fichiers : "
-                               + directory.getName());
+            if (!result) {
+                this.log.error("Erreur lors de la création du répertoire " + "de stockage des fichiers : " + directory.getName());
             }
         }
     }
@@ -161,8 +135,7 @@ public class FileHelper
      * @param nameFile Nom du fichier.
      * @return Extension.
      */
-    public String getExtension(final String nameFile)
-    {
+    public String getExtension(final String nameFile) {
         final String[] tmp = nameFile.split("\\.");
         return tmp[tmp.length - 1];
     }
@@ -171,31 +144,24 @@ public class FileHelper
      * Méthode en charge de retourner la date système au format AAAAMMJJHHMMSS.
      * @return Date système.
      */
-    String getCurrentDate()
-    {
-        return Utils.formatDate(Calendar.getInstance(EclipseConstants.LOCALE).getTime(),
-                                "yyyyMMddHHmmss");
+    String getCurrentDate() {
+        return Utils.formatDate(Calendar.getInstance(EclipseConstants.LOCALE).getTime(), "yyyyMMddHHmmss");
     }
 
     /**
-     * Méthode en charge de supprimer le contenu d'un répertoire. Si le répertoire n'est pas vide,
-     * suppression de tous les éléments de façon récursive.
+     * Méthode en charge de supprimer le contenu d'un répertoire. Si le
+     * répertoire n'est pas vide, suppression de tous les éléments de façon
+     * récursive.
      * @param file Chemin du répertoire à supprimer.
      * @return Résultat de la suppression.
      */
-    public boolean deleteDirectory(final File file)
-    {
-        if (file.exists())
-        {
+    public boolean deleteDirectory(final File file) {
+        if (file.exists()) {
             final File[] files = file.listFiles();
-            for (int i = 0; i < files.length; i++)
-            {
-                if (files[i].isDirectory())
-                {
+            for (int i = 0; i < files.length; i++) {
+                if (files[i].isDirectory()) {
                     this.deleteDirectory(files[i]);
-                }
-                else
-                {
+                } else {
                     files[i].delete();
                 }
             }
@@ -204,23 +170,20 @@ public class FileHelper
     }
 
     /**
-     * Méthode en charge de sérialiser un objet et de retourner le tableau de bytes correspondant.
-     * @param <BEAN> Type de l'objet à sérialiser. L'objet doit être sérialisable.
+     * Méthode en charge de sérialiser un objet et de retourner le tableau de
+     * bytes correspondant.
+     * @param <BEAN> Type de l'objet à sérialiser. L'objet doit être
+     * sérialisable.
      * @param object Objet sérialisable à sérialiser.
      * @return Le tableau de bytes de l'objet.
      */
-    public <BEAN extends Serializable> byte[] serialize(final BEAN object)
-    {
+    public <BEAN extends Serializable> byte[] serialize(final BEAN object) {
         final ByteArrayOutputStream byteArrayOS = new ByteArrayOutputStream();
-        try
-        {
+        try {
             final ObjectOutputStream objectOS = new ObjectOutputStream(byteArrayOS);
             objectOS.writeObject(object);
-        }
-        catch (final IOException e)
-        {
-            this.log.error("Erreur IOException",
-                           e);
+        } catch (final IOException e) {
+            this.log.error("Erreur IOException", e);
         }
         return byteArrayOS.toByteArray();
     }
@@ -230,30 +193,19 @@ public class FileHelper
      * @param bytes Tableau de bytes représentant une sérialisation d'objet.
      * @return Un objet désérialisé (null si erreur).
      */
-    public Object deserialize(final byte[] bytes)
-    {
+    public Object deserialize(final byte[] bytes) {
         final ByteArrayInputStream byteArrayIS = new ByteArrayInputStream(bytes);
         ObjectInputStream objectIS;
         Object res = null;
-        try
-        {
+        try {
             objectIS = new ObjectInputStream(byteArrayIS);
             res = objectIS.readObject();
-        }
-        catch (final IOException e)
-        {
-            this.log.error("Erreur IOException",
-                           e);
-        }
-        catch (final ClassNotFoundException e)
-        {
-            this.log.error("Erreur ClassNotFoundException",
-                           e);
-        }
-        catch (final ClassCastException e)
-        {
-            this.log.error("Erreur ClassCastException",
-                           e);
+        } catch (final IOException e) {
+            this.log.error("Erreur IOException", e);
+        } catch (final ClassNotFoundException e) {
+            this.log.error("Erreur ClassNotFoundException", e);
+        } catch (final ClassCastException e) {
+            this.log.error("Erreur ClassCastException", e);
         }
         return res;
     }

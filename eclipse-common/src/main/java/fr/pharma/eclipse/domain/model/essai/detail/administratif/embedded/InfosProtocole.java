@@ -19,13 +19,12 @@ import fr.pharma.eclipse.comparator.document.DocumentProtocoleComparator;
 import fr.pharma.eclipse.domain.model.essai.detail.administratif.document.DocumentAdministratif;
 
 /**
- * Informations, de la partie détail de l'administratif de l'essai, relatives au protocole.
- 
+ * Informations, de la partie détail de l'administratif de l'essai, relatives au
+ * protocole.
+ * @author Netapsys
  * @version $Revision$ $Date$
  */
-public class InfosProtocole
-    implements Serializable
-{
+public class InfosProtocole implements Serializable {
 
     /**
      * Serial ID.
@@ -39,8 +38,7 @@ public class InfosProtocole
     @Where(clause = "type='PROTOCOLE'")
     @LazyCollection(LazyCollectionOption.FALSE)
     @Sort(type = SortType.COMPARATOR, comparator = DocumentProtocoleComparator.class)
-    private SortedSet<DocumentAdministratif> documents =
-        new TreeSet<DocumentAdministratif>(new DocumentProtocoleComparator());
+    private SortedSet<DocumentAdministratif> documents = new TreeSet<DocumentAdministratif>(new DocumentProtocoleComparator());
 
     /**
      * Booléen indiquant qu'il faut se référer au dossier papier<br>
@@ -54,8 +52,7 @@ public class InfosProtocole
      * Getter sur documents.
      * @return Retourne le documents.
      */
-    public SortedSet<DocumentAdministratif> getDocuments()
-    {
+    public SortedSet<DocumentAdministratif> getDocuments() {
         return this.documents;
     }
 
@@ -63,8 +60,7 @@ public class InfosProtocole
      * Setter pour documents.
      * @param documents le documents à écrire.
      */
-    public void setDocuments(final SortedSet<DocumentAdministratif> documents)
-    {
+    public void setDocuments(final SortedSet<DocumentAdministratif> documents) {
         this.documents = documents;
     }
 
@@ -72,8 +68,7 @@ public class InfosProtocole
      * Getter sur docsDossierPapier.
      * @return Retourne le docsDossierPapier.
      */
-    public boolean isDocsDossierPapier()
-    {
+    public boolean isDocsDossierPapier() {
         return this.docsDossierPapier;
     }
 
@@ -81,8 +76,7 @@ public class InfosProtocole
      * Setter pour docsDossierPapier.
      * @param docsDossierPapier le docsDossierPapier à écrire.
      */
-    public void setDocsDossierPapier(final boolean docsDossierPapier)
-    {
+    public void setDocsDossierPapier(final boolean docsDossierPapier) {
         this.docsDossierPapier = docsDossierPapier;
     }
 

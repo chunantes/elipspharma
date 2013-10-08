@@ -10,13 +10,11 @@ import fr.pharma.eclipse.domain.model.essai.detail.surcout.DetailSurcout;
 
 /**
  * Classe du modèle contenant les données prévisionnelles des surcouts.
- 
+ * @author Netapsys
  * @version $Revision$ $Date$
  */
 @Entity(name = "donnees_prevision")
-public class DonneesPrevision
-    extends BeanObject
-{
+public class DonneesPrevision extends BeanObject {
 
     /**
      * SerialVersionUID.
@@ -106,8 +104,7 @@ public class DonneesPrevision
      * Getter sur nbInclusions.
      * @return Retourne le nbInclusions.
      */
-    public Integer getNbInclusions()
-    {
+    public Integer getNbInclusions() {
         return this.nbInclusions;
     }
 
@@ -115,8 +112,7 @@ public class DonneesPrevision
      * Getter sur nbPrescriptions.
      * @return Retourne le nbPrescriptions.
      */
-    public Integer getNbPrescriptions()
-    {
+    public Integer getNbPrescriptions() {
         return this.nbPrescriptions;
     }
 
@@ -124,8 +120,7 @@ public class DonneesPrevision
      * Getter sur nbDestructions.
      * @return Retourne le nbDestructions.
      */
-    public Integer getNbDestructions()
-    {
+    public Integer getNbDestructions() {
         return this.nbDestructions;
     }
 
@@ -133,8 +128,7 @@ public class DonneesPrevision
      * Getter sur nbDispensations.
      * @return Retourne le nbDispensations.
      */
-    public Integer getNbDispensations()
-    {
+    public Integer getNbDispensations() {
         return this.nbDispensations;
     }
 
@@ -142,8 +136,7 @@ public class DonneesPrevision
      * Getter sur nbReetiquetages.
      * @return Retourne le nbReetiquetages.
      */
-    public Integer getNbReetiquetages()
-    {
+    public Integer getNbReetiquetages() {
         return this.nbReetiquetages;
     }
 
@@ -151,8 +144,7 @@ public class DonneesPrevision
      * Setter pour nbInclusions.
      * @param nbInclusions le nbInclusions à écrire.
      */
-    public void setNbInclusions(final Integer nbInclusions)
-    {
+    public void setNbInclusions(final Integer nbInclusions) {
         this.nbInclusions = nbInclusions;
     }
 
@@ -160,8 +152,7 @@ public class DonneesPrevision
      * Setter pour nbPrescriptions.
      * @param nbPrescriptions le nbPrescriptions à écrire.
      */
-    public void setNbPrescriptions(final Integer nbPrescriptions)
-    {
+    public void setNbPrescriptions(final Integer nbPrescriptions) {
         this.nbPrescriptions = nbPrescriptions;
     }
 
@@ -169,8 +160,7 @@ public class DonneesPrevision
      * Setter pour nbDestructions.
      * @param nbDestructions le nbDestructions à écrire.
      */
-    public void setNbDestructions(final Integer nbDestructions)
-    {
+    public void setNbDestructions(final Integer nbDestructions) {
         this.nbDestructions = nbDestructions;
     }
 
@@ -178,8 +168,7 @@ public class DonneesPrevision
      * Setter pour nbDispensations.
      * @param nbDispensations le nbDispensations à écrire.
      */
-    public void setNbDispensations(final Integer nbDispensations)
-    {
+    public void setNbDispensations(final Integer nbDispensations) {
         this.nbDispensations = nbDispensations;
     }
 
@@ -187,8 +176,7 @@ public class DonneesPrevision
      * Setter pour nbReetiquetages.
      * @param nbReetiquetages le nbReetiquetages à écrire.
      */
-    public void setNbReetiquetages(final Integer nbReetiquetages)
-    {
+    public void setNbReetiquetages(final Integer nbReetiquetages) {
         this.nbReetiquetages = nbReetiquetages;
     }
 
@@ -196,8 +184,7 @@ public class DonneesPrevision
      * Getter sur detailSurcout.
      * @return Retourne le detailSurcout.
      */
-    public DetailSurcout getDetailSurcout()
-    {
+    public DetailSurcout getDetailSurcout() {
         return this.detailSurcout;
     }
 
@@ -205,8 +192,7 @@ public class DonneesPrevision
      * Setter pour detailSurcout.
      * @param detailSurcout le detailSurcout à écrire.
      */
-    public void setDetailSurcout(final DetailSurcout detailSurcout)
-    {
+    public void setDetailSurcout(final DetailSurcout detailSurcout) {
         this.detailSurcout = detailSurcout;
     }
 
@@ -214,8 +200,7 @@ public class DonneesPrevision
      * Getter sur nbAnnees.
      * @return Retourne le nbAnnees.
      */
-    public Integer getNbAnnees()
-    {
+    public Integer getNbAnnees() {
         return this.nbAnnees;
     }
 
@@ -223,8 +208,7 @@ public class DonneesPrevision
      * Setter pour nbAnnees.
      * @param nbAnnees le nbAnnees à écrire.
      */
-    public void setNbAnnees(final Integer nbAnnees)
-    {
+    public void setNbAnnees(final Integer nbAnnees) {
         this.nbAnnees = nbAnnees;
     }
 
@@ -232,8 +216,7 @@ public class DonneesPrevision
      * Getter pour nbVisiteMonitoring.
      * @return Le nbVisiteMonitoring
      */
-    public Integer getNbVisiteMonitoring()
-    {
+    public Integer getNbVisiteMonitoring() {
         return this.nbVisiteMonitoring;
     }
 
@@ -241,8 +224,7 @@ public class DonneesPrevision
      * Setter pour nbVisiteMonitoring.
      * @param nbVisiteMonitoring Le nbVisiteMonitoring à écrire.
      */
-    public void setNbVisiteMonitoring(final Integer nbVisiteMonitoring)
-    {
+    public void setNbVisiteMonitoring(final Integer nbVisiteMonitoring) {
         this.nbVisiteMonitoring = nbVisiteMonitoring;
     }
 
@@ -250,17 +232,16 @@ public class DonneesPrevision
      * Getter pour nbDispensationsRenouvellement.
      * @return Le nbDispensationsRenouvellement
      */
-    public Integer getNbDispensationsRenouvellement()
-    {
+    public Integer getNbDispensationsRenouvellement() {
         return this.nbDispensationsRenouvellement;
     }
 
     /**
      * Setter pour nbDispensationsRenouvellement.
-     * @param nbDispensationsRenouvellement Le nbDispensationsRenouvellement à écrire.
+     * @param nbDispensationsRenouvellement Le nbDispensationsRenouvellement à
+     * écrire.
      */
-    public void setNbDispensationsRenouvellement(final Integer nbDispensationsRenouvellement)
-    {
+    public void setNbDispensationsRenouvellement(final Integer nbDispensationsRenouvellement) {
         this.nbDispensationsRenouvellement = nbDispensationsRenouvellement;
     }
 
@@ -268,8 +249,7 @@ public class DonneesPrevision
      * Getter pour nbApprovisionnements.
      * @return Le nbApprovisionnements
      */
-    public Integer getNbApprovisionnements()
-    {
+    public Integer getNbApprovisionnements() {
         return this.nbApprovisionnements;
     }
 
@@ -277,8 +257,7 @@ public class DonneesPrevision
      * Setter pour nbApprovisionnements.
      * @param nbApprovisionnements Le nbApprovisionnements à écrire.
      */
-    public void setNbApprovisionnements(final Integer nbApprovisionnements)
-    {
+    public void setNbApprovisionnements(final Integer nbApprovisionnements) {
         this.nbApprovisionnements = nbApprovisionnements;
     }
 
@@ -286,8 +265,7 @@ public class DonneesPrevision
      * Getter pour nbPreparationsSteriles.
      * @return Le nbPreparationsSteriles
      */
-    public Integer getNbPreparationsSteriles()
-    {
+    public Integer getNbPreparationsSteriles() {
         return this.nbPreparationsSteriles;
     }
 
@@ -295,8 +273,7 @@ public class DonneesPrevision
      * Setter pour nbPreparationsSteriles.
      * @param nbPreparationsSteriles Le nbPreparationsSteriles à écrire.
      */
-    public void setNbPreparationsSteriles(final Integer nbPreparationsSteriles)
-    {
+    public void setNbPreparationsSteriles(final Integer nbPreparationsSteriles) {
         this.nbPreparationsSteriles = nbPreparationsSteriles;
     }
 
@@ -304,8 +281,7 @@ public class DonneesPrevision
      * Getter pour nbPreparationsNonSteriles.
      * @return Le nbPreparationsNonSteriles
      */
-    public Integer getNbPreparationsNonSteriles()
-    {
+    public Integer getNbPreparationsNonSteriles() {
         return this.nbPreparationsNonSteriles;
     }
 
@@ -313,8 +289,7 @@ public class DonneesPrevision
      * Setter pour nbPreparationsNonSteriles.
      * @param nbPreparationsNonSteriles Le nbPreparationsNonSteriles à écrire.
      */
-    public void setNbPreparationsNonSteriles(final Integer nbPreparationsNonSteriles)
-    {
+    public void setNbPreparationsNonSteriles(final Integer nbPreparationsNonSteriles) {
         this.nbPreparationsNonSteriles = nbPreparationsNonSteriles;
     }
 
@@ -322,8 +297,7 @@ public class DonneesPrevision
      * Getter pour nbAudits.
      * @return Le nbAudits
      */
-    public Integer getNbAudits()
-    {
+    public Integer getNbAudits() {
         return this.nbAudits;
     }
 
@@ -331,8 +305,7 @@ public class DonneesPrevision
      * Setter pour nbAudits.
      * @param nbAudits Le nbAudits à écrire.
      */
-    public void setNbAudits(final Integer nbAudits)
-    {
+    public void setNbAudits(final Integer nbAudits) {
         this.nbAudits = nbAudits;
     }
 

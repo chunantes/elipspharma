@@ -1,12 +1,12 @@
 package fr.pharma.eclipse.domain.enums;
 
 /**
- * Enumération pour les rôles des utilisateurs (rôle monté sur le jeton de sécurité).
- 
+ * Enumération pour les rôles des utilisateurs (rôle monté sur le jeton de
+ * sécurité).
+ * @author Netapsys
  * @version $Revision$ $Date$
  */
-public enum RolePersonne
-{
+public enum RolePersonne {
     /**
      * Rôle ARC Investigateur.
      */
@@ -81,8 +81,7 @@ public enum RolePersonne
      * Constructeur privé.
      * @param libelle Libellé de la valeur de l'énumération.
      */
-    private RolePersonne(final String libelle)
-    {
+    private RolePersonne(final String libelle) {
         this.libelle = libelle;
     }
 
@@ -90,8 +89,7 @@ public enum RolePersonne
      * Getter sur libelle.
      * @return Retourne le libelle.
      */
-    public String getLibelle()
-    {
+    public String getLibelle() {
         return this.libelle;
     }
 
@@ -99,8 +97,7 @@ public enum RolePersonne
      * {@inheritDoc}
      */
     @Override
-    public String toString()
-    {
+    public String toString() {
         return this.getLibelle();
     }
 }

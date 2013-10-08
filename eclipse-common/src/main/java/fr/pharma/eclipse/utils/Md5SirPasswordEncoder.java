@@ -10,43 +10,32 @@ import org.springframework.security.authentication.encoding.Md5PasswordEncoder;
 /**
  * Classe pour encoder le mot de passe avec le salt.<br>
  * Classe personnalisée pour prendre en compte le système de salt "maison" SIR.
- 
+ * @author Netapsys
  * @version $Revision$ $Date$
  */
-public class Md5SirPasswordEncoder
-    extends Md5PasswordEncoder
-{
+public class Md5SirPasswordEncoder extends Md5PasswordEncoder {
 
     /**
      * {@inheritDoc}
      */
     @Override
     public String encodePassword(final String rawPass,
-                                 final Object salt)
-    {
-        final String saltedPass = rawPass
-                                  + "__"
-                                  + salt;
+                                 final Object salt) {
+        final String saltedPass = rawPass + "__" + salt;
 
         final MessageDigest messageDigest = this.getMessageDigest();
 
         byte[] digest;
 
-        try
-        {
+        try {
             digest = messageDigest.digest(saltedPass.getBytes("UTF-8"));
-        }
-        catch (final UnsupportedEncodingException e)
-        {
+        } catch (final UnsupportedEncodingException e) {
             throw new IllegalStateException("UTF-8 not supported!");
         }
 
-        if (this.getEncodeHashAsBase64())
-        {
+        if (this.getEncodeHashAsBase64()) {
             return new String(Base64.encodeBase64(digest));
-        }
-        else
-        {
+        } else {
             return new String(Hex.encodeHex(digest));
         }
     }

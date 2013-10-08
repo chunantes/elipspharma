@@ -7,14 +7,12 @@ import fr.pharma.eclipse.domain.enums.document.TypeDocumentEssai;
 
 /**
  * Bean métier représentant un document relatif à aux surcouts reels.
- 
+ * @author Netapsys
  * @version $Revision$ $Date$
  */
 @Entity
 @DiscriminatorValue("REEL")
-public class DocumentReel
-    extends DocumentSurcouts
-{
+public class DocumentReel extends DocumentSurcouts {
 
     /**
      * Serial ID.
@@ -24,8 +22,7 @@ public class DocumentReel
     /**
      * Constructeur par défaut.
      */
-    public DocumentReel()
-    {
+    public DocumentReel() {
         this.setType(TypeDocumentEssai.REEL);
     }
 

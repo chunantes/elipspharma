@@ -13,13 +13,11 @@ import fr.pharma.eclipse.domain.model.suivi.common.Suivi;
 
 /**
  * Bean métier représentant les suivis de modifications sur le bean Personne.
- 
+ * @author Netapsys
  * @version $Revision$ $Date$
  */
 @Entity(name = "personne_suivi")
-public class PersonneSuivi
-    extends Suivi
-{
+public class PersonneSuivi extends Suivi {
     /**
      * Serial ID.
      */
@@ -37,8 +35,7 @@ public class PersonneSuivi
      * Getter sur personne.
      * @return Retourne le personne.
      */
-    public Personne getPersonne()
-    {
+    public Personne getPersonne() {
         return this.personne;
     }
 
@@ -46,8 +43,7 @@ public class PersonneSuivi
      * Setter pour personne.
      * @param personne le personne à écrire.
      */
-    public void setPersonne(final Personne personne)
-    {
+    public void setPersonne(final Personne personne) {
         this.personne = personne;
     }
 

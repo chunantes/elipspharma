@@ -2,11 +2,10 @@ package fr.pharma.eclipse.domain.enums;
 
 /**
  * Enumération représentant l'état de l'essai.
- 
+ * @author Netapsys
  * @version $Revision$ $Date$
  */
-public enum EtatEssai
-{
+public enum EtatEssai {
     /**
      * En évaluation.
      */
@@ -56,8 +55,7 @@ public enum EtatEssai
      * Constructeur.
      * @param libelle Le libellé du type de promoteur.
      */
-    EtatEssai(final String libelle)
-    {
+    EtatEssai(final String libelle) {
         this.libelle = libelle;
     }
 
@@ -65,8 +63,7 @@ public enum EtatEssai
      * Getter pour libelle.
      * @return Retourne le libelle.
      */
-    public String getLibelle()
-    {
+    public String getLibelle() {
         return this.libelle;
     }
 
@@ -74,8 +71,7 @@ public enum EtatEssai
      * {@inheritDoc}
      */
     @Override
-    public String toString()
-    {
+    public String toString() {
         return this.getLibelle();
     }
 

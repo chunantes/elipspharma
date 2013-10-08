@@ -6,12 +6,10 @@ import fr.pharma.eclipse.domain.model.localisation.Service;
 
 /**
  * Critère de recherche des investigateurs.
- 
+ * @author Netapsys
  * @version $Revision$ $Date$
  */
-public class InvestigateurSearchCriteria
-    extends PersonneSearchCriteria
-{
+public class InvestigateurSearchCriteria extends PersonneSearchCriteria {
 
     /**
      * Serial ID.
@@ -32,8 +30,7 @@ public class InvestigateurSearchCriteria
      * Getter sur services.
      * @return Retourne le services.
      */
-    public List<Service> getServices()
-    {
+    public List<Service> getServices() {
         return this.services;
     }
 
@@ -41,8 +38,7 @@ public class InvestigateurSearchCriteria
      * Setter pour services.
      * @param services le services à écrire.
      */
-    public void setServices(final List<Service> services)
-    {
+    public void setServices(final List<Service> services) {
         this.services = services;
     }
 
@@ -50,8 +46,7 @@ public class InvestigateurSearchCriteria
      * Getter sur titre.
      * @return Retourne le titre.
      */
-    public String getTitre()
-    {
+    public String getTitre() {
         return this.titre;
     }
 
@@ -59,8 +54,7 @@ public class InvestigateurSearchCriteria
      * Setter pour titre.
      * @param titre le titre à écrire.
      */
-    public void setTitre(final String titre)
-    {
+    public void setTitre(final String titre) {
         this.titre = titre;
     }
 }

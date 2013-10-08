@@ -12,12 +12,10 @@ import fr.pharma.eclipse.validator.save.SaveValidator;
 
 /**
  * Classe en charge de valider la sauvegarde d'un bean Prescription.
- 
+ * @author Netapsys
  * @version $Revision$ $Date$
  */
-public class PrescriptionSaveValidator
-    implements SaveValidator<Prescription>, Serializable
-{
+public class PrescriptionSaveValidator implements SaveValidator<Prescription>, Serializable {
 
     /**
      * Serial ID.
@@ -29,24 +27,16 @@ public class PrescriptionSaveValidator
      */
     @Override
     public void validate(final Prescription prescription,
-                         final GenericService<Prescription> prescriptionService)
-    {
+                         final GenericService<Prescription> prescriptionService) {
         final SortedSet<ProduitPrescrit> produits = prescription.getProduitsPrescrits();
 
-        final QualiteInsu insu =
-            prescription.getEssai().getDetailDonneesPharma().getInfosGenerales().getQualiteInsu();
+        final QualiteInsu insu = prescription.getEssai().getDetailDonneesPharma().getInfosGenerales().getQualiteInsu();
 
         // Vérification de la saisie d'au moins un produit prescrit
 
-        if (insu == null
-            || !insu.equals(QualiteInsu.ESSAI_DOUBLE_AVEUGLE))
-        {
-            if (produits.isEmpty())
-            {
-                throw new ValidationException("prescription.produitsPrescrits",
-                                              new String[]
-                                              {"notEmpty" },
-                                              prescription);
+        if ((insu == null) || !insu.equals(QualiteInsu.ESSAI_DOUBLE_AVEUGLE)) {
+            if (produits.isEmpty()) {
+                throw new ValidationException("prescription.produitsPrescrits", new String[]{"notEmpty" }, prescription);
             }
         }
     }

@@ -7,12 +7,10 @@ import fr.pharma.eclipse.factory.common.BeanObjectFactory;
 
 /**
  * Factory de Bean Dotation.
- 
+ * @author Netapsys
  * @version $Revision$ $Date$
  */
-public class DotationFactory
-    extends BeanObjectFactory<Dotation>
-{
+public class DotationFactory extends BeanObjectFactory<Dotation> {
     /**
      * Serial ID.
      */
@@ -22,8 +20,7 @@ public class DotationFactory
      * Constructeur.
      * @param bean Classe.
      */
-    public DotationFactory(final Class<Dotation> bean)
-    {
+    public DotationFactory(final Class<Dotation> bean) {
         super(bean);
     }
 
@@ -34,8 +31,7 @@ public class DotationFactory
      * @return Dotation.
      */
     public Dotation getInitializedObject(final Essai essai,
-                                         final Service service)
-    {
+                                         final Service service) {
         final Dotation dotation = this.getInitializedObject();
         dotation.setEssai(essai);
         dotation.setPharmacie(essai.getPharmaciePrincipale());

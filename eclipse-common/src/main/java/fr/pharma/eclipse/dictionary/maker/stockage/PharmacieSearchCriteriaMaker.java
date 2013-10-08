@@ -1,5 +1,7 @@
 package fr.pharma.eclipse.dictionary.maker.stockage;
 
+import java.util.List;
+
 import org.apache.commons.lang.StringUtils;
 import org.hibernate.Criteria;
 
@@ -10,12 +12,10 @@ import fr.pharma.eclipse.domain.criteria.stockage.PharmacieSearchCriteria;
 
 /**
  * Artisan de recherche pour les pharmacies.
- 
+ * @author Netapsys
  * @version $Revision$ $Date$
  */
-public class PharmacieSearchCriteriaMaker
-    extends AbstractCriteriaMaker
-{
+public class PharmacieSearchCriteriaMaker extends AbstractCriteriaMaker {
     /**
      * Serial ID.
      */
@@ -24,8 +24,7 @@ public class PharmacieSearchCriteriaMaker
     /**
      * Constructeur par défaut.
      */
-    public PharmacieSearchCriteriaMaker()
-    {
+    public PharmacieSearchCriteriaMaker() {
         super(PharmacieSearchCriteria.class);
     }
 
@@ -34,36 +33,31 @@ public class PharmacieSearchCriteriaMaker
      */
     @Override
     public void transform(final Criteria criteria,
-                          final SearchCriteria searchCrit)
-    {
+                          final SearchCriteria searchCrit) {
         final PharmacieSearchCriteria crit = (PharmacieSearchCriteria) searchCrit;
 
         // Nom
-        if (StringUtils.isNotEmpty(crit.getNom()))
-        {
-            CriteriaMakerUtils.addSqlCritere(criteria,
-                                             "this_.nom",
-                                             crit.getNom());
+        if (StringUtils.isNotEmpty(crit.getNom())) {
+            CriteriaMakerUtils.addSqlCritere(criteria, "this_.nom", crit.getNom());
         }
 
         // Essai.
-        if (crit.getEssai() != null)
-        {
-            final Criteria critDetails = criteria.createCriteria("detailsDonneesPharma",
-                                                                 "detailsDonneesPharma");
+        if (crit.getEssai() != null) {
+            final Criteria critDetails = criteria.createCriteria("detailsDonneesPharma", "detailsDonneesPharma");
 
-            CriteriaMakerUtils.addInCritere(critDetails,
-                                            "essai.id",
-                                            new Long[]
-                                            {crit.getEssai().getId() });
+            CriteriaMakerUtils.addInCritere(critDetails, "essai.id", new Long[]{crit.getEssai().getId() });
         }
 
         // Etablissement
-        if (crit.getEtablissement() != null)
-        {
-            CriteriaMakerUtils.addCritere(criteria,
-                                          "etablissement",
-                                          crit.getEtablissement());
+        if (crit.getEtablissement() != null) {
+            CriteriaMakerUtils.addCritere(criteria, "etablissement", crit.getEtablissement());
         }
+
+        if (crit.getWithAcl()) {
+            // Restriction par rapport aux acls des pharmacies
+            final List<Long> idsPharmacies = this.getAclSearchDao().findIdsPharmacies();
+            CriteriaMakerUtils.addInCritere(criteria, "this.id", idsPharmacies.toArray(new Object[idsPharmacies.size()]));
+        }
+
     }
 }

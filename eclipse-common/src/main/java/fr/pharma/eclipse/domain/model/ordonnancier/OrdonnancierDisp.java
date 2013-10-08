@@ -17,13 +17,11 @@ import fr.pharma.eclipse.domain.model.dispensation.Dispensation;
 
 /**
  * Bean métier représentant des ordonnanciers de type Dispensation.
- 
+ * @author Netapsys
  * @version $Revision$ $Date$
  */
 @Entity(name = "ordonnancier_dispensation")
-public class OrdonnancierDisp
-    extends Ordonnancier
-{
+public class OrdonnancierDisp extends Ordonnancier {
     /**
      * Serial ID.
      */
@@ -35,15 +33,13 @@ public class OrdonnancierDisp
     @OneToMany(mappedBy = "ordonnancier", cascade = CascadeType.ALL, orphanRemoval = true)
     @LazyCollection(LazyCollectionOption.FALSE)
     @Sort(type = SortType.COMPARATOR, comparator = OrdonnancierDispComparator.class)
-    private final SortedSet<Dispensation> dispensations =
-        new TreeSet<Dispensation>(new OrdonnancierDispComparator());
+    private final SortedSet<Dispensation> dispensations = new TreeSet<Dispensation>(new OrdonnancierDispComparator());
 
     /**
      * Getter pour dispensations.
      * @return Le dispensations
      */
-    public SortedSet<Dispensation> getDispensations()
-    {
+    public SortedSet<Dispensation> getDispensations() {
         return this.dispensations;
     }
 

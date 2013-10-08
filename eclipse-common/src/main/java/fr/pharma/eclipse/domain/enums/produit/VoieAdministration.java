@@ -2,11 +2,10 @@ package fr.pharma.eclipse.domain.enums.produit;
 
 /**
  * Enumération représentant la voie d'administration du produit.
- 
+ * @author Netapsys
  * @version $Revision$ $Date$
  */
-public enum VoieAdministration
-{
+public enum VoieAdministration {
 
     /**
      * Autre.
@@ -121,8 +120,7 @@ public enum VoieAdministration
      * Constructeur.
      * @param libelle Le libellé.
      */
-    VoieAdministration(final String libelle)
-    {
+    VoieAdministration(final String libelle) {
         this.libelle = libelle;
     }
 
@@ -130,8 +128,7 @@ public enum VoieAdministration
      * Getter pour libelle.
      * @return Retourne le libelle.
      */
-    public String getLibelle()
-    {
+    public String getLibelle() {
         return this.libelle;
     }
 
@@ -139,8 +136,7 @@ public enum VoieAdministration
      * {@inheritDoc}
      */
     @Override
-    public String toString()
-    {
+    public String toString() {
         return this.getLibelle();
     }
 

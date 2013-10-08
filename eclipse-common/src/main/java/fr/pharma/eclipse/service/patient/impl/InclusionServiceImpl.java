@@ -11,13 +11,10 @@ import fr.pharma.eclipse.service.patient.updator.InclusionBeforeSaveUpdator;
 
 /**
  * Implémentation du service des inclusions.
- 
+ * @author Netapsys
  * @version $Revision$ $Date$
  */
-public class InclusionServiceImpl
-    extends GenericServiceImpl<Inclusion>
-    implements InclusionService
-{
+public class InclusionServiceImpl extends GenericServiceImpl<Inclusion> implements InclusionService {
 
     /**
      * SerialVersionUID.
@@ -32,8 +29,7 @@ public class InclusionServiceImpl
     /**
      * @param genericDao
      */
-    public InclusionServiceImpl(final GenericDao<Inclusion> genericDao)
-    {
+    public InclusionServiceImpl(final GenericDao<Inclusion> genericDao) {
         super(genericDao);
     }
 
@@ -41,32 +37,18 @@ public class InclusionServiceImpl
      * {@inheritDoc}
      */
     @Override
-    public Inclusion save(final Inclusion inclusion)
-    {
-        if (inclusion.getEssai() == null)
-        {
-            throw new ValidationException("inclusion.essai",
-                                          new String[]
-                                          {"notEmpty" },
-                                          inclusion);
+    public Inclusion save(final Inclusion inclusion) {
+        if (inclusion.getEssai() == null) {
+            throw new ValidationException("inclusion.essai", new String[]{"notEmpty" }, inclusion);
         }
-        if (inclusion.getPatient() == null)
-        {
-            throw new ValidationException("inclusion.patient",
-                                          new String[]
-                                          {"notEmpty" },
-                                          inclusion);
+        if (inclusion.getPatient() == null) {
+            throw new ValidationException("inclusion.patient", new String[]{"notEmpty" }, inclusion);
         }
-        if (StringUtils.isBlank(inclusion.getNumInclusion()))
-        {
-            throw new ValidationException("inclusion.num",
-                                          new String[]
-                                          {"notEmpty" },
-                                          inclusion);
+        if (StringUtils.isBlank(inclusion.getNumInclusion())) {
+            throw new ValidationException("inclusion.num", new String[]{"notEmpty" }, inclusion);
         }
 
-        this.updator.update(inclusion,
-                            this);
+        this.updator.update(inclusion, this);
         return super.save(inclusion);
     }
 
@@ -74,8 +56,7 @@ public class InclusionServiceImpl
      * Setter pour updator.
      * @param updator Le updator à écrire.
      */
-    public void setUpdator(final InclusionBeforeSaveUpdator updator)
-    {
+    public void setUpdator(final InclusionBeforeSaveUpdator updator) {
         this.updator = updator;
     }
 

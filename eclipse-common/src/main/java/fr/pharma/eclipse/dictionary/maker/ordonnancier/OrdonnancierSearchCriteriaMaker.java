@@ -9,12 +9,10 @@ import fr.pharma.eclipse.domain.criteria.ordonnancier.OrdonnancierSearchCriteria
 
 /**
  * Artisan de recherche pour les ordonnanciers.
- 
+ * @author Netapsys
  * @version $Revision$ $Date$
  */
-public class OrdonnancierSearchCriteriaMaker
-    extends AbstractCriteriaMaker
-{
+public class OrdonnancierSearchCriteriaMaker extends AbstractCriteriaMaker {
     /**
      * Serial ID.
      */
@@ -23,8 +21,7 @@ public class OrdonnancierSearchCriteriaMaker
     /**
      * Constructeur par défaut.
      */
-    public OrdonnancierSearchCriteriaMaker()
-    {
+    public OrdonnancierSearchCriteriaMaker() {
         super(OrdonnancierSearchCriteria.class);
     }
 
@@ -33,16 +30,12 @@ public class OrdonnancierSearchCriteriaMaker
      */
     @Override
     public void transform(final Criteria criteria,
-                          final SearchCriteria searchCrit)
-    {
+                          final SearchCriteria searchCrit) {
         final OrdonnancierSearchCriteria crit = (OrdonnancierSearchCriteria) searchCrit;
 
         // Pharmacie
-        if (crit.getPharmacie() != null)
-        {
-            CriteriaMakerUtils.addCritere(criteria,
-                                          "pharmacie",
-                                          crit.getPharmacie());
+        if (crit.getPharmacie() != null) {
+            CriteriaMakerUtils.addCritere(criteria, "pharmacie", crit.getPharmacie());
         }
     }
 }

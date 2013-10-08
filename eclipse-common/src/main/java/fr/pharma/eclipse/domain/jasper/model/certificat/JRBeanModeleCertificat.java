@@ -11,13 +11,10 @@ import fr.pharma.eclipse.jasper.constants.JasperConstants;
  * Classe représentant la source de données principale<br>
  * du rapport Jasper intitulé<br>
  * "Certificat de retour ou destruction".
- 
+ * @author Netapsys
  * @version $Revision$ $Date$
  */
-public class JRBeanModeleCertificat
-    extends AbstractJRBeanWithHeader
-    implements Serializable
-{
+public class JRBeanModeleCertificat extends AbstractJRBeanWithHeader implements Serializable {
 
     /**
      * SerialVersionUID.
@@ -59,8 +56,7 @@ public class JRBeanModeleCertificat
      * @return Retourne le header.
      */
     @Override
-    public JRBeanHeader getHeader()
-    {
+    public JRBeanHeader getHeader() {
         return this.header;
     }
 
@@ -68,8 +64,7 @@ public class JRBeanModeleCertificat
      * Setter pour header.
      * @param header le header à écrire.
      */
-    public void setHeader(final JRBeanHeader header)
-    {
+    public void setHeader(final JRBeanHeader header) {
         this.header = header;
     }
 
@@ -77,8 +72,7 @@ public class JRBeanModeleCertificat
      * Getter sur promoteur.
      * @return Retourne le promoteur.
      */
-    public String getPromoteur()
-    {
+    public String getPromoteur() {
         return this.promoteur;
     }
 
@@ -86,8 +80,7 @@ public class JRBeanModeleCertificat
      * Setter pour promoteur.
      * @param promoteur le promoteur à écrire.
      */
-    public void setPromoteur(final String promoteur)
-    {
+    public void setPromoteur(final String promoteur) {
         this.promoteur = promoteur;
     }
 
@@ -95,8 +88,7 @@ public class JRBeanModeleCertificat
      * Getter sur codeProtocole.
      * @return Retourne le codeProtocole.
      */
-    public String getCodeProtocole()
-    {
+    public String getCodeProtocole() {
         return this.codeProtocole;
     }
 
@@ -104,8 +96,7 @@ public class JRBeanModeleCertificat
      * Setter pour codeProtocole.
      * @param codeProtocole le codeProtocole à écrire.
      */
-    public void setCodeProtocole(final String codeProtocole)
-    {
+    public void setCodeProtocole(final String codeProtocole) {
         this.codeProtocole = codeProtocole;
     }
 
@@ -113,8 +104,7 @@ public class JRBeanModeleCertificat
      * Getter pour produits.
      * @return Le produits
      */
-    public JRDataSource getProduits()
-    {
+    public JRDataSource getProduits() {
         return this.produits;
     }
 
@@ -122,8 +112,7 @@ public class JRBeanModeleCertificat
      * Setter pour produits.
      * @param produits Le produits à écrire.
      */
-    public void setProduits(final JRDataSource produits)
-    {
+    public void setProduits(final JRDataSource produits) {
         this.produits = produits;
     }
 
@@ -131,8 +120,7 @@ public class JRBeanModeleCertificat
      * Getter pour investigateur.
      * @return Le investigateur
      */
-    public String getInvestigateur()
-    {
+    public String getInvestigateur() {
         return this.investigateur;
     }
 
@@ -140,8 +128,7 @@ public class JRBeanModeleCertificat
      * Getter pour motif.
      * @return Le motif
      */
-    public String getMotif()
-    {
+    public String getMotif() {
         return this.motif;
     }
 
@@ -149,8 +136,7 @@ public class JRBeanModeleCertificat
      * Setter pour motif.
      * @param motif Le motif à écrire.
      */
-    public void setMotif(final String motif)
-    {
+    public void setMotif(final String motif) {
         this.motif = motif;
     }
 
@@ -158,8 +144,7 @@ public class JRBeanModeleCertificat
      * Setter pour investigateur.
      * @param investigateur Le investigateur à écrire.
      */
-    public void setInvestigateur(final String investigateur)
-    {
+    public void setInvestigateur(final String investigateur) {
         this.investigateur = investigateur;
     }
 

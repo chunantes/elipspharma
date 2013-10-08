@@ -20,12 +20,10 @@ import fr.pharma.eclipse.service.habilitation.helper.HabilitationsHelper;
 /**
  * Filler en charge de valoriser les attributs de prescripteurs du bean
  * {@link JRBeanFicheAideDispensationPart4}.
- 
+ * @author Netapsys
  * @version $Revision$ $Date$
  */
-public class AideDispensationPart4PrescripteursFiller
-    implements JasperReportBeanFiller
-{
+public class AideDispensationPart4PrescripteursFiller implements JasperReportBeanFiller {
 
     /**
      * Serial ID.
@@ -43,46 +41,36 @@ public class AideDispensationPart4PrescripteursFiller
     @SuppressWarnings("unchecked")
     @Override
     public void fill(final Essai essai,
-                     final JasperReportBean bean)
-    {
+                     final JasperReportBean bean) {
         final JRBeanFicheAideDispensationPart4 partie4 = (JRBeanFicheAideDispensationPart4) bean;
 
         // Investigateur principal
-        final Investigateur invPrincipal =
-            this.habilitationsHelper.getInvestigateurPrincipal(essai);
+        final Investigateur invPrincipal = this.habilitationsHelper.getInvestigateurPrincipal(essai);
         partie4.setInvestigateurPrincipal(JasperUtils.makeLibelleInvestigateur(invPrincipal));
 
         // Co-investigateurs
         final List<Droit> droits = new ArrayList<Droit>();
         droits.add(Droit.INVESTIGATEUR_CO);
-        final Collection<? extends Object> coInv =
-            new ArrayList<Object>(this.habilitationsHelper.getHabilitations(essai,
-                                                                            droits));
+        final Collection<? extends Object> coInv = new ArrayList<Object>(this.habilitationsHelper.getHabilitations(essai, droits));
         // ... récupération des noms des co-investigateurs
-        CollectionUtils.transform(coInv,
-                                  new Transformer() {
+        CollectionUtils.transform(coInv, new Transformer() {
 
-                                      @Override
-                                      public Object transform(final Object input)
-                                      {
-                                          final Habilitation current = (Habilitation) input;
-                                          return JasperUtils
-                                                  .makeLibelleInvestigateur((Investigateur) current
-                                                          .getPersonne());
-                                      }
-                                  });
-        // ... formation de la liste des noms et stockage dans la propriété du bean.
-        partie4
-                .setCoInvestigateurs(JasperUtils
-                        .formatterListeStrings((Collection<String>) coInv));
+            @Override
+            public Object transform(final Object input) {
+                final Habilitation current = (Habilitation) input;
+                return JasperUtils.makeLibelleInvestigateur((Investigateur) current.getPersonne());
+            }
+        });
+        // ... formation de la liste des noms et stockage dans la propriété du
+        // bean.
+        partie4.setCoInvestigateurs(JasperUtils.formatterListeStrings((Collection<String>) coInv));
     }
 
     /**
      * Getter sur habilitationsHelper.
      * @return Retourne le habilitationsHelper.
      */
-    HabilitationsHelper getHabilitationsHelper()
-    {
+    HabilitationsHelper getHabilitationsHelper() {
         return this.habilitationsHelper;
     }
 
@@ -90,8 +78,7 @@ public class AideDispensationPart4PrescripteursFiller
      * Setter pour habilitationsHelper.
      * @param habilitationsHelper le habilitationsHelper à écrire.
      */
-    public void setHabilitationsHelper(final HabilitationsHelper habilitationsHelper)
-    {
+    public void setHabilitationsHelper(final HabilitationsHelper habilitationsHelper) {
         this.habilitationsHelper = habilitationsHelper;
     }
 

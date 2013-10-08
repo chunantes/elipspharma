@@ -10,13 +10,11 @@ import fr.pharma.eclipse.domain.model.common.BeanObject;
 
 /**
  * Classe de Factory de BeanObject.
- 
+ * @author Netapsys
  * @version $Revision$ $Date$
  * @param <BEAN> Bean Objet Métier.
  */
-public class BeanObjectFactory<BEAN extends BeanObject>
-    implements BeanFactoryAware, Serializable
-{
+public class BeanObjectFactory<BEAN extends BeanObject> implements BeanFactoryAware, Serializable {
     /**
      * Serial ID.
      */
@@ -36,8 +34,7 @@ public class BeanObjectFactory<BEAN extends BeanObject>
      * Constructeur.
      * @param bean Classe.
      */
-    public BeanObjectFactory(final Class<BEAN> bean)
-    {
+    public BeanObjectFactory(final Class<BEAN> bean) {
         this.bean = bean;
     }
 
@@ -46,8 +43,7 @@ public class BeanObjectFactory<BEAN extends BeanObject>
      * @return Retourne un BeanObject initialisé.
      */
     @SuppressWarnings("unchecked")
-    public BEAN getInitializedObject()
-    {
+    public BEAN getInitializedObject() {
         return (BEAN) this.beanFactory.getBean(this.bean.getSimpleName());
     }
 
@@ -55,9 +51,7 @@ public class BeanObjectFactory<BEAN extends BeanObject>
      * {@inheritDoc}
      */
     @Override
-    public void setBeanFactory(final BeanFactory beanFactory)
-        throws BeansException
-    {
+    public void setBeanFactory(final BeanFactory beanFactory) throws BeansException {
         this.beanFactory = beanFactory;
     }
 

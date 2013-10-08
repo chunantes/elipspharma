@@ -5,11 +5,10 @@ import fr.pharma.eclipse.jasper.exception.JasperReportBuildException;
 
 /**
  * Maker en charge de générer les document en fonction du type de rapport.
- 
+ * @author Netapsys
  * @version $Revision$ $Date$
  */
-public interface DocumentMaker
-{
+public interface DocumentMaker {
 
     /**
      * Méthode en charge de générer un document en fonction du type de rapport.
@@ -18,6 +17,5 @@ public interface DocumentMaker
      * @throws JasperReportBuildException en cas d'erreur.
      */
     void make(TypeRapportJasper type,
-              Object source)
-        throws JasperReportBuildException;
+              Object source) throws JasperReportBuildException;
 }

@@ -6,12 +6,10 @@ import fr.pharma.eclipse.jasper.constants.JasperConstants;
 /**
  * Classe représentant la source de données<br>
  * relative à un produit de l'essai.
- 
+ * @author Netapsys
  * @version $Revision$ $Date$
  */
-public class JRBeanProduit
-    implements JasperReportBean
-{
+public class JRBeanProduit implements JasperReportBean {
 
     /**
      * Serial ID.
@@ -72,8 +70,7 @@ public class JRBeanProduit
      * Getter sur dci.
      * @return Retourne le dci.
      */
-    public String getDci()
-    {
+    public String getDci() {
         return this.dci;
     }
 
@@ -81,8 +78,7 @@ public class JRBeanProduit
      * Setter pour dci.
      * @param dci le dci à écrire.
      */
-    public void setDci(final String dci)
-    {
+    public void setDci(final String dci) {
         this.dci = dci;
     }
 
@@ -90,8 +86,7 @@ public class JRBeanProduit
      * Getter sur code.
      * @return Retourne le code.
      */
-    public String getCode()
-    {
+    public String getCode() {
         return this.code;
     }
 
@@ -99,8 +94,7 @@ public class JRBeanProduit
      * Setter pour code.
      * @param code le code à écrire.
      */
-    public void setCode(final String code)
-    {
+    public void setCode(final String code) {
         this.code = code;
     }
 
@@ -108,8 +102,7 @@ public class JRBeanProduit
      * Getter sur classeTherapeuthique.
      * @return Retourne le classeTherapeuthique.
      */
-    public String getClasseTherapeuthique()
-    {
+    public String getClasseTherapeuthique() {
         return this.classeTherapeuthique;
     }
 
@@ -117,8 +110,7 @@ public class JRBeanProduit
      * Setter pour classeTherapeuthique.
      * @param classeTherapeuthique le classeTherapeuthique à écrire.
      */
-    public void setClasseTherapeuthique(final String classeTherapeuthique)
-    {
+    public void setClasseTherapeuthique(final String classeTherapeuthique) {
         this.classeTherapeuthique = classeTherapeuthique;
     }
 
@@ -126,8 +118,7 @@ public class JRBeanProduit
      * Getter sur conditionnement.
      * @return Retourne le conditionnement.
      */
-    public String getConditionnement()
-    {
+    public String getConditionnement() {
         return this.conditionnement;
     }
 
@@ -135,8 +126,7 @@ public class JRBeanProduit
      * Setter pour conditionnement.
      * @param conditionnement le conditionnement à écrire.
      */
-    public void setConditionnement(final String conditionnement)
-    {
+    public void setConditionnement(final String conditionnement) {
         this.conditionnement = conditionnement;
     }
 
@@ -144,8 +134,7 @@ public class JRBeanProduit
      * Getter sur posologie.
      * @return Retourne le posologie.
      */
-    public String getPosologie()
-    {
+    public String getPosologie() {
         return this.posologie;
     }
 
@@ -153,8 +142,7 @@ public class JRBeanProduit
      * Setter pour posologie.
      * @param posologie le posologie à écrire.
      */
-    public void setPosologie(final String posologie)
-    {
+    public void setPosologie(final String posologie) {
         this.posologie = posologie;
     }
 
@@ -162,8 +150,7 @@ public class JRBeanProduit
      * Getter sur influAlimentation.
      * @return Retourne le influAlimentation.
      */
-    public String getInfluAlimentation()
-    {
+    public String getInfluAlimentation() {
         return this.influAlimentation;
     }
 
@@ -171,8 +158,7 @@ public class JRBeanProduit
      * Setter pour influAlimentation.
      * @param influAlimentation le influAlimentation à écrire.
      */
-    public void setInfluAlimentation(final String influAlimentation)
-    {
+    public void setInfluAlimentation(final String influAlimentation) {
         this.influAlimentation = influAlimentation;
     }
 
@@ -180,8 +166,7 @@ public class JRBeanProduit
      * Getter sur dureeTraitement.
      * @return Retourne le dureeTraitement.
      */
-    public String getDureeTraitement()
-    {
+    public String getDureeTraitement() {
         return this.dureeTraitement;
     }
 
@@ -189,8 +174,7 @@ public class JRBeanProduit
      * Setter pour dureeTraitement.
      * @param dureeTraitement le dureeTraitement à écrire.
      */
-    public void setDureeTraitement(final String dureeTraitement)
-    {
+    public void setDureeTraitement(final String dureeTraitement) {
         this.dureeTraitement = dureeTraitement;
     }
 
@@ -198,8 +182,7 @@ public class JRBeanProduit
      * Getter sur lieuStockage.
      * @return Retourne le lieuStockage.
      */
-    public String getLieuStockage()
-    {
+    public String getLieuStockage() {
         return this.lieuStockage;
     }
 
@@ -207,8 +190,7 @@ public class JRBeanProduit
      * Setter pour lieuStockage.
      * @param lieuStockage le lieuStockage à écrire.
      */
-    public void setLieuStockage(final String lieuStockage)
-    {
+    public void setLieuStockage(final String lieuStockage) {
         this.lieuStockage = lieuStockage;
     }
 
@@ -216,8 +198,7 @@ public class JRBeanProduit
      * Getter sur denomination.
      * @return Retourne le denomination.
      */
-    public String getDenomination()
-    {
+    public String getDenomination() {
         return this.denomination;
     }
 
@@ -225,8 +206,7 @@ public class JRBeanProduit
      * Setter pour denomination.
      * @param denomination le denomination à écrire.
      */
-    public void setDenomination(final String denomination)
-    {
+    public void setDenomination(final String denomination) {
         this.denomination = denomination;
     }
 
@@ -234,8 +214,7 @@ public class JRBeanProduit
      * Getter sur conservation.
      * @return Retourne le conservation.
      */
-    public String getConservation()
-    {
+    public String getConservation() {
         return this.conservation;
     }
 
@@ -243,8 +222,7 @@ public class JRBeanProduit
      * Setter pour conservation.
      * @param conservation le conservation à écrire.
      */
-    public void setConservation(final String conservation)
-    {
+    public void setConservation(final String conservation) {
         this.conservation = conservation;
     }
 

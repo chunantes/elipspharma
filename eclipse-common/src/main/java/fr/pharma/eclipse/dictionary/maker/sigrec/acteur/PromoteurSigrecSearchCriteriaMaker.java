@@ -10,12 +10,10 @@ import fr.pharma.eclipse.domain.criteria.sigrec.acteur.PromoteurSigrecSearchCrit
 
 /**
  * Artisan de recherche pour les promoteurs Sigrec.
- 
+ * @author Netapsys
  * @version $Revision$ $Date$
  */
-public class PromoteurSigrecSearchCriteriaMaker
-    extends AbstractCriteriaMaker
-{
+public class PromoteurSigrecSearchCriteriaMaker extends AbstractCriteriaMaker {
     /**
      * Serial ID.
      */
@@ -24,8 +22,7 @@ public class PromoteurSigrecSearchCriteriaMaker
     /**
      * Constructeur par défaut.
      */
-    public PromoteurSigrecSearchCriteriaMaker()
-    {
+    public PromoteurSigrecSearchCriteriaMaker() {
         super(PromoteurSigrecSearchCriteria.class);
     }
 
@@ -34,35 +31,25 @@ public class PromoteurSigrecSearchCriteriaMaker
      */
     @Override
     public void transform(final Criteria criteria,
-                          final SearchCriteria searchCrit)
-    {
+                          final SearchCriteria searchCrit) {
         final PromoteurSigrecSearchCriteria crit = (PromoteurSigrecSearchCriteria) searchCrit;
 
         // Raison sociale
-        if (StringUtils.isNotEmpty(crit.getRaisonSociale()))
-        {
-            final Criteria critContact = criteria.createCriteria("contact",
-                                                                 "contact");
-            CriteriaMakerUtils.addSqlCritere(critContact,
-                                             "raisonsociale",
+        if (StringUtils.isNotEmpty(crit.getRaisonSociale())) {
+            final Criteria critContact = criteria.createCriteria("contact", "contact");
+            CriteriaMakerUtils.addSqlCritere(critContact, "raisonsociale",
 
-                                             crit.getRaisonSociale());
+            crit.getRaisonSociale());
         }
 
         // identifiant
-        if (StringUtils.isNotEmpty(crit.getIdentifiant()))
-        {
-            CriteriaMakerUtils.addSqlCritere(criteria,
-                                             "identifiant",
-                                             crit.getIdentifiant());
+        if (StringUtils.isNotEmpty(crit.getIdentifiant())) {
+            CriteriaMakerUtils.addSqlCritere(criteria, "identifiant", crit.getIdentifiant());
         }
 
         // Type de promoteur
-        if (crit.getType() != null)
-        {
-            CriteriaMakerUtils.addCritere(criteria,
-                                          "type",
-                                          crit.getType());
+        if (crit.getType() != null) {
+            CriteriaMakerUtils.addCritere(criteria, "type", crit.getType());
         }
     }
 }

@@ -2,11 +2,10 @@ package fr.pharma.eclipse.domain.enums;
 
 /**
  * Enumération pour les types de responsable de rélisation (ex: re etiquetage).
- 
+ * @author Netapsys
  * @version $Revision$ $Date$
  */
-public enum RealisePar
-{
+public enum RealisePar {
     /**
      * Pharmacie).
      */
@@ -26,8 +25,7 @@ public enum RealisePar
      * Constructeur privé.
      * @param libelle Libellé de la valeur de l'énumération.
      */
-    private RealisePar(final String libelle)
-    {
+    private RealisePar(final String libelle) {
         this.libelle = libelle;
     }
 
@@ -35,8 +33,7 @@ public enum RealisePar
      * Getter sur libelle.
      * @return Retourne le libelle.
      */
-    public String getLibelle()
-    {
+    public String getLibelle() {
         return this.libelle;
     }
 
@@ -44,8 +41,7 @@ public enum RealisePar
      * {@inheritDoc}
      */
     @Override
-    public String toString()
-    {
+    public String toString() {
         return this.getLibelle();
     }
 }

@@ -17,12 +17,10 @@ import fr.pharma.eclipse.utils.introspection.BeanTool;
 /**
  * Filler en charge de construire un attribut de contacts du bean
  * {@link JRBeanFicheAideDispensationPart1}.
- 
+ * @author Netapsys
  * @version $Revision$ $Date$
  */
-public class AideDispensationPart1ContactsFiller
-    implements JasperReportBeanFiller
-{
+public class AideDispensationPart1ContactsFiller implements JasperReportBeanFiller {
 
     /**
      * Serial ID.
@@ -56,27 +54,22 @@ public class AideDispensationPart1ContactsFiller
 
     /**
      * Constructeur.
-     * @param jrPropertyToSet Propriété du JasperReportBean valorisée par ce filler.
-     * @param groupeContactsName Nom du groupe de contacts pour lequel travaille ce filler (cf.
-     * GroupeContacts.name()).
+     * @param jrPropertyToSet Propriété du JasperReportBean valorisée par ce
+     * filler.
+     * @param groupeContactsName Nom du groupe de contacts pour lequel travaille
+     * ce filler (cf. GroupeContacts.name()).
      */
-    public AideDispensationPart1ContactsFiller(
-                                          final String jrPropertyToSet,
-                                          final String groupeContactsName)
-    {
-        this(jrPropertyToSet,
-             GroupeContacts.valueOf(groupeContactsName));
+    public AideDispensationPart1ContactsFiller(final String jrPropertyToSet, final String groupeContactsName) {
+        this(jrPropertyToSet, GroupeContacts.valueOf(groupeContactsName));
     }
 
     /**
      * Constructeur.
-     * @param jrPropertyToSet Propriété du JasperReportBean valorisée par ce filler.
+     * @param jrPropertyToSet Propriété du JasperReportBean valorisée par ce
+     * filler.
      * @param groupeContacts Groupe de contacts pour lequel travaille ce filler.
      */
-    public AideDispensationPart1ContactsFiller(
-                                          final String jrPropertyToSet,
-                                          final GroupeContacts groupeContacts)
-    {
+    public AideDispensationPart1ContactsFiller(final String jrPropertyToSet, final GroupeContacts groupeContacts) {
         this.groupeContacts = groupeContacts;
         this.jrPropertyToSet = jrPropertyToSet;
     }
@@ -86,31 +79,22 @@ public class AideDispensationPart1ContactsFiller
      */
     @Override
     public void fill(final Essai essai,
-                     final JasperReportBean bean)
-    {
-        final JRBeanFicheAideDispensationPart1 beanSource =
-            (JRBeanFicheAideDispensationPart1) bean;
+                     final JasperReportBean bean) {
+        final JRBeanFicheAideDispensationPart1 beanSource = (JRBeanFicheAideDispensationPart1) bean;
 
         // Beans contacts.
-        final Collection<JRBeanContact> beans =
-            this.helper.transform(this.habilitationsHelper.getHabilitations(essai,
-                                                                            this.groupeContacts
-                                                                                    .getDroits(),
-                                                                            true));
+        final Collection<JRBeanContact> beans = this.helper.transform(this.habilitationsHelper.getHabilitations(essai, this.groupeContacts.getDroits(), true));
 
         // Création de la source de données.
         final JRDataSource dataSource = this.jrDataSourceFactory.getInitializedObject(beans);
-        BeanTool.setPropriete(beanSource,
-                              this.jrPropertyToSet,
-                              dataSource);
+        BeanTool.setPropriete(beanSource, this.jrPropertyToSet, dataSource);
     }
 
     /**
      * Getter sur habilitationsHelper.
      * @return Retourne le habilitationsHelper.
      */
-    HabilitationsHelper getHabilitationsHelper()
-    {
+    HabilitationsHelper getHabilitationsHelper() {
         return this.habilitationsHelper;
     }
 
@@ -118,8 +102,7 @@ public class AideDispensationPart1ContactsFiller
      * Setter pour habilitationsHelper.
      * @param habilitationsHelper le habilitationsHelper à écrire.
      */
-    public void setHabilitationsHelper(final HabilitationsHelper habilitationsHelper)
-    {
+    public void setHabilitationsHelper(final HabilitationsHelper habilitationsHelper) {
         this.habilitationsHelper = habilitationsHelper;
     }
 
@@ -127,8 +110,7 @@ public class AideDispensationPart1ContactsFiller
      * Getter sur jrDataSourceFactory.
      * @return Retourne le jrDataSourceFactory.
      */
-    JRDataSourceFactory getJrDataSourceFactory()
-    {
+    JRDataSourceFactory getJrDataSourceFactory() {
         return this.jrDataSourceFactory;
     }
 
@@ -136,8 +118,7 @@ public class AideDispensationPart1ContactsFiller
      * Setter pour jrDataSourceFactory.
      * @param jrDataSourceFactory le jrDataSourceFactory à écrire.
      */
-    public void setJrDataSourceFactory(final JRDataSourceFactory jrDataSourceFactory)
-    {
+    public void setJrDataSourceFactory(final JRDataSourceFactory jrDataSourceFactory) {
         this.jrDataSourceFactory = jrDataSourceFactory;
     }
 
@@ -145,8 +126,7 @@ public class AideDispensationPart1ContactsFiller
      * Getter sur helper.
      * @return Retourne le helper.
      */
-    ContactsFillerHelper getHelper()
-    {
+    ContactsFillerHelper getHelper() {
         return this.helper;
     }
 
@@ -154,8 +134,7 @@ public class AideDispensationPart1ContactsFiller
      * Setter pour helper.
      * @param helper le helper à écrire.
      */
-    public void setHelper(final ContactsFillerHelper helper)
-    {
+    public void setHelper(final ContactsFillerHelper helper) {
         this.helper = helper;
     }
 
@@ -163,8 +142,7 @@ public class AideDispensationPart1ContactsFiller
      * Getter sur groupeContacts.
      * @return Retourne le groupeContacts.
      */
-    GroupeContacts getGroupeContacts()
-    {
+    GroupeContacts getGroupeContacts() {
         return this.groupeContacts;
     }
 
@@ -172,8 +150,7 @@ public class AideDispensationPart1ContactsFiller
      * Getter sur jrPropertyToSet.
      * @return Retourne le jrPropertyToSet.
      */
-    String getJrPropertyToSet()
-    {
+    String getJrPropertyToSet() {
         return this.jrPropertyToSet;
     }
 

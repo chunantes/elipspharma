@@ -2,11 +2,10 @@ package fr.pharma.eclipse.domain.enums;
 
 /**
  * Enumération représentant le type d'un retour patient.
- 
+ * @author Netapsys
  * @version $Revision$ $Date$
  */
-public enum TypeRetour
-{
+public enum TypeRetour {
     /**
      * Plein.
      */
@@ -31,8 +30,7 @@ public enum TypeRetour
      * Constructeur.
      * @param libelle Le libellé.
      */
-    TypeRetour(final String libelle)
-    {
+    TypeRetour(final String libelle) {
         this.libelle = libelle;
     }
 
@@ -40,8 +38,7 @@ public enum TypeRetour
      * Getter pour libelle.
      * @return Retourne le libelle.
      */
-    public String getLibelle()
-    {
+    public String getLibelle() {
         return this.libelle;
     }
 
@@ -49,8 +46,7 @@ public enum TypeRetour
      * {@inheritDoc}
      */
     @Override
-    public String toString()
-    {
+    public String toString() {
         return this.getLibelle();
     }
 

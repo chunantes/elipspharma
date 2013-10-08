@@ -8,13 +8,12 @@ import fr.pharma.eclipse.domain.model.surcout.Item;
 import fr.pharma.eclipse.domain.model.surcout.Resultat;
 
 /**
- * Interface définissant le comportement des processors en charge d'appliquer les règles de
- * calculs des surcouts.
- 
+ * Interface définissant le comportement des processors en charge d'appliquer
+ * les règles de calculs des surcouts.
+ * @author Netapsys
  * @version $Revision$ $Date$
  */
-public interface SurcoutProcessor
-{
+public interface SurcoutProcessor {
     /**
      * Méthode en charge d'appliquer la règle de calcul sur l'essai réel.
      * @param essai L'essai.

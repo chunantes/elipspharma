@@ -20,12 +20,10 @@ import fr.pharma.eclipse.utils.introspection.BeanTool;
 
 /**
  * Factory pour Dispensation.
- 
+ * @author Netapsys
  * @version $Revision$ $Date$
  */
-public class DispensationFactory
-    extends BeanObjectFactory<Dispensation>
-{
+public class DispensationFactory extends BeanObjectFactory<Dispensation> {
 
     /**
      * SerialVersionUID.
@@ -39,7 +37,8 @@ public class DispensationFactory
     private BeanObjectFactory<ElementToCheck> elementToCheckFactory;
 
     /**
-     * Map contenant les champs à checker avant de dispenser en fonction du type de produit.
+     * Map contenant les champs à checker avant de dispenser en fonction du type
+     * de produit.
      */
     private Map<TypeProduit, List<String>> mapForCheck = new HashMap<TypeProduit, List<String>>();
 
@@ -47,18 +46,17 @@ public class DispensationFactory
      * Construteur.
      * @param bean Bean.
      */
-    public DispensationFactory(final Class<Dispensation> bean)
-    {
+    public DispensationFactory(final Class<Dispensation> bean) {
         super(bean);
     }
 
     /**
-     * Méthode en charge d'initialiser un dispensation à partir d'une prescription.
+     * Méthode en charge d'initialiser un dispensation à partir d'une
+     * prescription.
      * @param prescription La prescription
      * @return La dispensation initialisée.
      */
-    public Dispensation getInitializedObject(final Prescription prescription)
-    {
+    public Dispensation getInitializedObject(final Prescription prescription) {
         final Dispensation dispensation = super.getInitializedObject();
         dispensation.setPrescription(prescription);
         dispensation.setDispense(false);
@@ -67,24 +65,19 @@ public class DispensationFactory
     }
 
     /**
-     * Méthode en charge d'initialiser les elements à vérifier lors de la phase de dispensation.
+     * Méthode en charge d'initialiser les elements à vérifier lors de la phase
+     * de dispensation.
      * @param dispensation L'objet Dispensation.
      */
-    private void initElementsToCheck(final Dispensation dispensation)
-    {
+    private void initElementsToCheck(final Dispensation dispensation) {
 
         ElementToCheck toCheck = null;
         // Pour chaque produit prescrit, on regarde le produit.
-        for (final ProduitPrescrit p : dispensation.getPrescription().getProduitsPrescrits())
-        {
+        for (final ProduitPrescrit p : dispensation.getPrescription().getProduitsPrescrits()) {
             final Produit produit = p.getProduit();
-            for (final String s : this.mapForCheck.get(produit.getType()))
-            {
-                final Boolean value =
-                    (Boolean) BeanTool.getPropriete(produit,
-                                                    TypeElementToCheck.valueOf(s).getLibelle());
-                if (BooleanUtils.isTrue(value))
-                {
+            for (final String s : this.mapForCheck.get(produit.getType())) {
+                final Boolean value = (Boolean) BeanTool.getPropriete(produit, TypeElementToCheck.valueOf(s).getLibelle());
+                if (BooleanUtils.isTrue(value)) {
                     toCheck = this.elementToCheckFactory.getInitializedObject();
                     toCheck.setChecked(false);
                     toCheck.setProduitPrescrit(p);
@@ -101,8 +94,7 @@ public class DispensationFactory
      * Setter pour elementToCheckFactory.
      * @param elementToCheckFactory le elementToCheckFactory à écrire.
      */
-    public void setElementToCheckFactory(final BeanObjectFactory<ElementToCheck> elementToCheckFactory)
-    {
+    public void setElementToCheckFactory(final BeanObjectFactory<ElementToCheck> elementToCheckFactory) {
         this.elementToCheckFactory = elementToCheckFactory;
     }
 
@@ -110,8 +102,7 @@ public class DispensationFactory
      * Setter pour mapForCheck.
      * @param mapForCheck le mapForCheck à écrire.
      */
-    public void setMapForCheck(final Map<TypeProduit, List<String>> mapForCheck)
-    {
+    public void setMapForCheck(final Map<TypeProduit, List<String>> mapForCheck) {
         this.mapForCheck = mapForCheck;
     }
 }

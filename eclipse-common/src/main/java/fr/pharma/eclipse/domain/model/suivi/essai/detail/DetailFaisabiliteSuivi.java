@@ -11,14 +11,13 @@ import fr.pharma.eclipse.domain.model.essai.detail.faisabilite.DetailFaisabilite
 import fr.pharma.eclipse.domain.model.suivi.common.Suivi;
 
 /**
- * Bean métier représentant les suivis de modifications sur le bean {@link DetailFaisabilite}.
- 
+ * Bean métier représentant les suivis de modifications sur le bean
+ * {@link DetailFaisabilite}.
+ * @author Netapsys
  * @version $Revision$ $Date$
  */
 @Entity(name = "essai_detail_faisabilite_suivi")
-public class DetailFaisabiliteSuivi
-    extends Suivi
-{
+public class DetailFaisabiliteSuivi extends Suivi {
 
     /**
      * Serial ID.
@@ -37,8 +36,7 @@ public class DetailFaisabiliteSuivi
      * Getter sur detailFaisabilite.
      * @return Retourne le detailFaisabilite.
      */
-    public DetailFaisabilite getDetailFaisabilite()
-    {
+    public DetailFaisabilite getDetailFaisabilite() {
         return this.detailFaisabilite;
     }
 
@@ -46,8 +44,7 @@ public class DetailFaisabiliteSuivi
      * Setter pour detailFaisabilite.
      * @param detailFaisabilite le detailFaisabilite à écrire.
      */
-    public void setDetailFaisabilite(final DetailFaisabilite detailFaisabilite)
-    {
+    public void setDetailFaisabilite(final DetailFaisabilite detailFaisabilite) {
         this.detailFaisabilite = detailFaisabilite;
     }
 

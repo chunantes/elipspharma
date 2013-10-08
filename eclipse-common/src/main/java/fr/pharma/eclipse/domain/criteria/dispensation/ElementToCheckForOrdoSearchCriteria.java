@@ -6,13 +6,12 @@ import fr.pharma.eclipse.domain.criteria.common.AbstractSearchCriteria;
 import fr.pharma.eclipse.domain.model.stockage.Pharmacie;
 
 /**
- * Critère de recherche des elementsToCheck pour l'ordonnancier de fabrication / reconstitution.
- 
+ * Critère de recherche des elementsToCheck pour l'ordonnancier de fabrication /
+ * reconstitution.
+ * @author Netapsys
  * @version $Revision$ $Date$
  */
-public class ElementToCheckForOrdoSearchCriteria
-    extends AbstractSearchCriteria
-{
+public class ElementToCheckForOrdoSearchCriteria extends AbstractSearchCriteria {
     /**
      * Serial ID.
      */
@@ -37,8 +36,7 @@ public class ElementToCheckForOrdoSearchCriteria
      * {@inheritDoc}
      */
     @Override
-    public void clear()
-    {
+    public void clear() {
         this.setPharmacie(null);
         this.setDateDebut(null);
         this.setDateFin(null);
@@ -48,8 +46,7 @@ public class ElementToCheckForOrdoSearchCriteria
      * Getter pour pharmacie.
      * @return Le pharmacie
      */
-    public Pharmacie getPharmacie()
-    {
+    public Pharmacie getPharmacie() {
         return this.pharmacie;
     }
 
@@ -57,8 +54,7 @@ public class ElementToCheckForOrdoSearchCriteria
      * Setter pour pharmacie.
      * @param pharmacie Le pharmacie à écrire.
      */
-    public void setPharmacie(final Pharmacie pharmacie)
-    {
+    public void setPharmacie(final Pharmacie pharmacie) {
         this.pharmacie = pharmacie;
     }
 
@@ -66,8 +62,7 @@ public class ElementToCheckForOrdoSearchCriteria
      * Getter pour dateDebut.
      * @return Le dateDebut
      */
-    public Calendar getDateDebut()
-    {
+    public Calendar getDateDebut() {
         return this.dateDebut;
     }
 
@@ -75,8 +70,7 @@ public class ElementToCheckForOrdoSearchCriteria
      * Setter pour dateDebut.
      * @param dateDebut Le dateDebut à écrire.
      */
-    public void setDateDebut(final Calendar dateDebut)
-    {
+    public void setDateDebut(final Calendar dateDebut) {
         this.dateDebut = dateDebut;
     }
 
@@ -84,8 +78,7 @@ public class ElementToCheckForOrdoSearchCriteria
      * Getter pour dateFin.
      * @return Le dateFin
      */
-    public Calendar getDateFin()
-    {
+    public Calendar getDateFin() {
         return this.dateFin;
     }
 
@@ -93,8 +86,7 @@ public class ElementToCheckForOrdoSearchCriteria
      * Setter pour dateFin.
      * @param dateFin Le dateFin à écrire.
      */
-    public void setDateFin(final Calendar dateFin)
-    {
+    public void setDateFin(final Calendar dateFin) {
         this.dateFin = dateFin;
     }
 

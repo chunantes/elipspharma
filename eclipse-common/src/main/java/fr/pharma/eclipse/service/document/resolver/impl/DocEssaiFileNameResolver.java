@@ -6,12 +6,10 @@ import fr.pharma.eclipse.domain.model.essai.DocumentEssai;
 
 /**
  * Classe de résolveur de filename de document Essai.
- 
+ * @author Netapsys
  * @version $Revision$ $Date$
  */
-public class DocEssaiFileNameResolver
-    extends AbstractDocEclipseFileNameResolver
-{
+public class DocEssaiFileNameResolver extends AbstractDocEclipseFileNameResolver {
 
     /**
      * Serial ID.
@@ -22,8 +20,7 @@ public class DocEssaiFileNameResolver
      * Constructeur.
      * @param documentsDirectory Chemin de stockage des documents sur le disque.
      */
-    public DocEssaiFileNameResolver(final String documentsDirectory)
-    {
+    public DocEssaiFileNameResolver(final String documentsDirectory) {
         super(documentsDirectory);
     }
 
@@ -31,10 +28,8 @@ public class DocEssaiFileNameResolver
      * {@inheritDoc}
      */
     @Override
-    public boolean supports(final DocumentEclipse doc)
-    {
-        return super.supports(doc)
-               && TypeDocumentEclipse.ESSAI.equals(doc.getTypeDocument().getTypeEclipse());
+    public boolean supports(final DocumentEclipse doc) {
+        return super.supports(doc) && TypeDocumentEclipse.ESSAI.equals(doc.getTypeDocument().getTypeEclipse());
     }
 
     /**
@@ -42,10 +37,8 @@ public class DocEssaiFileNameResolver
      */
     @Override
     protected void fillDynamicDocPart(final StringBuilder builder,
-                                      final DocumentEclipse doc)
-    {
-        super.fillDynamicDocPart(builder,
-                                 doc);
+                                      final DocumentEclipse doc) {
+        super.fillDynamicDocPart(builder, doc);
         super.appendSeparator(builder);
         final DocumentEssai docEssai = (DocumentEssai) doc; // car supports
         builder.append(docEssai.getType().getRepertoire());

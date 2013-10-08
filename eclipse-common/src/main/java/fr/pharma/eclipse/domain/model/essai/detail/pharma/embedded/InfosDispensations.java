@@ -20,12 +20,10 @@ import fr.pharma.eclipse.domain.model.essai.detail.pharma.document.DocumentNumer
 
 /**
  * Informations dispensations relatives aux donnees pharma d'un essai clinique.
- 
+ * @author Netapsys
  * @version $Revision$ $Date$
  */
-public class InfosDispensations
-    implements Serializable
-{
+public class InfosDispensations implements Serializable {
 
     /**
      * SerialVersionUID.
@@ -132,8 +130,7 @@ public class InfosDispensations
      * Getter sur typeDispensation.
      * @return Retourne le typeDispensation.
      */
-    public TypeDispensation getTypeDispensation()
-    {
+    public TypeDispensation getTypeDispensation() {
         return this.typeDispensation;
     }
 
@@ -141,8 +138,7 @@ public class InfosDispensations
      * Setter pour typeDispensation.
      * @param typeDispensation le typeDispensation à écrire.
      */
-    public void setTypeDispensation(final TypeDispensation typeDispensation)
-    {
+    public void setTypeDispensation(final TypeDispensation typeDispensation) {
         this.typeDispensation = typeDispensation;
     }
 
@@ -150,17 +146,16 @@ public class InfosDispensations
      * Getter sur documentNumerotationConditionnement.
      * @return Retourne le documentNumerotationConditionnement.
      */
-    public DocumentNumerotationConditionnement getDocumentNumerotationConditionnement()
-    {
+    public DocumentNumerotationConditionnement getDocumentNumerotationConditionnement() {
         return this.documentNumerotationConditionnement;
     }
 
     /**
      * Setter pour documentNumerotationConditionnement.
-     * @param documentNumerotationConditionnement le documentNumerotationConditionnement à écrire.
+     * @param documentNumerotationConditionnement le
+     * documentNumerotationConditionnement à écrire.
      */
-    public void setDocumentNumerotationConditionnement(final DocumentNumerotationConditionnement documentNumerotationConditionnement)
-    {
+    public void setDocumentNumerotationConditionnement(final DocumentNumerotationConditionnement documentNumerotationConditionnement) {
         this.documentNumerotationConditionnement = documentNumerotationConditionnement;
     }
 
@@ -168,17 +163,16 @@ public class InfosDispensations
      * Getter sur documentInformationConditionnement.
      * @return Retourne le documentInformationConditionnement.
      */
-    public DocumentInformationConditionnement getDocumentInformationConditionnement()
-    {
+    public DocumentInformationConditionnement getDocumentInformationConditionnement() {
         return this.documentInformationConditionnement;
     }
 
     /**
      * Setter pour documentInformationConditionnement.
-     * @param documentInformationConditionnement le documentInformationConditionnement à écrire.
+     * @param documentInformationConditionnement le
+     * documentInformationConditionnement à écrire.
      */
-    public void setDocumentInformationConditionnement(final DocumentInformationConditionnement documentInformationConditionnement)
-    {
+    public void setDocumentInformationConditionnement(final DocumentInformationConditionnement documentInformationConditionnement) {
         this.documentInformationConditionnement = documentInformationConditionnement;
     }
 
@@ -186,8 +180,7 @@ public class InfosDispensations
      * Getter sur documentContreEtiquette.
      * @return Retourne le documentContreEtiquette.
      */
-    public DocumentContreEtiquette getDocumentContreEtiquette()
-    {
+    public DocumentContreEtiquette getDocumentContreEtiquette() {
         return this.documentContreEtiquette;
     }
 
@@ -195,8 +188,7 @@ public class InfosDispensations
      * Setter pour documentContreEtiquette.
      * @param documentContreEtiquette le documentContreEtiquette à écrire.
      */
-    public void setDocumentContreEtiquette(final DocumentContreEtiquette documentContreEtiquette)
-    {
+    public void setDocumentContreEtiquette(final DocumentContreEtiquette documentContreEtiquette) {
         this.documentContreEtiquette = documentContreEtiquette;
     }
 
@@ -204,8 +196,7 @@ public class InfosDispensations
      * Getter sur documentConseilPatient.
      * @return Retourne le documentConseilPatient.
      */
-    public DocumentConseilPatient getDocumentConseilPatient()
-    {
+    public DocumentConseilPatient getDocumentConseilPatient() {
         return this.documentConseilPatient;
     }
 
@@ -213,8 +204,7 @@ public class InfosDispensations
      * Setter pour documentConseilPatient.
      * @param documentConseilPatient le documentConseilPatient à écrire.
      */
-    public void setDocumentConseilPatient(final DocumentConseilPatient documentConseilPatient)
-    {
+    public void setDocumentConseilPatient(final DocumentConseilPatient documentConseilPatient) {
         this.documentConseilPatient = documentConseilPatient;
     }
 
@@ -222,8 +212,7 @@ public class InfosDispensations
      * Getter sur documentAideDispensation.
      * @return Retourne le documentAideDispensation.
      */
-    public DocumentAideDispensation getDocumentAideDispensation()
-    {
+    public DocumentAideDispensation getDocumentAideDispensation() {
         return this.documentAideDispensation;
     }
 
@@ -231,8 +220,7 @@ public class InfosDispensations
      * Setter pour documentAideDispensation.
      * @param documentAideDispensation le documentAideDispensation à écrire.
      */
-    public void setDocumentAideDispensation(final DocumentAideDispensation documentAideDispensation)
-    {
+    public void setDocumentAideDispensation(final DocumentAideDispensation documentAideDispensation) {
         this.documentAideDispensation = documentAideDispensation;
     }
 
@@ -240,8 +228,7 @@ public class InfosDispensations
      * Getter sur tracabilitePatient.
      * @return Retourne le tracabilitePatient.
      */
-    public Boolean getTracabilitePatient()
-    {
+    public Boolean getTracabilitePatient() {
         return this.tracabilitePatient;
     }
 
@@ -249,8 +236,7 @@ public class InfosDispensations
      * Getter sur destinatairePatient.
      * @return Retourne le destinatairePatient.
      */
-    public Boolean getDestinatairePatient()
-    {
+    public Boolean getDestinatairePatient() {
         return this.destinatairePatient;
     }
 
@@ -258,8 +244,7 @@ public class InfosDispensations
      * Getter sur destinataireService.
      * @return Retourne le destinataireService.
      */
-    public Boolean getDestinataireService()
-    {
+    public Boolean getDestinataireService() {
         return this.destinataireService;
     }
 
@@ -267,8 +252,7 @@ public class InfosDispensations
      * Getter sur destinataireInvestigateur.
      * @return Retourne le destinataireInvestigateur.
      */
-    public Boolean getDestinataireInvestigateur()
-    {
+    public Boolean getDestinataireInvestigateur() {
         return this.destinataireInvestigateur;
     }
 
@@ -276,8 +260,7 @@ public class InfosDispensations
      * Getter sur numerotationConditionnement.
      * @return Retourne le numerotationConditionnement.
      */
-    public String getNumerotationConditionnement()
-    {
+    public String getNumerotationConditionnement() {
         return this.numerotationConditionnement;
     }
 
@@ -285,8 +268,7 @@ public class InfosDispensations
      * Getter sur informationConditionnement.
      * @return Retourne le informationConditionnement.
      */
-    public String getInformationConditionnement()
-    {
+    public String getInformationConditionnement() {
         return this.informationConditionnement;
     }
 
@@ -294,8 +276,7 @@ public class InfosDispensations
      * Getter sur contreEtiquette.
      * @return Retourne le contreEtiquette.
      */
-    public String getContreEtiquette()
-    {
+    public String getContreEtiquette() {
         return this.contreEtiquette;
     }
 
@@ -303,8 +284,7 @@ public class InfosDispensations
      * Getter sur conseilPatient.
      * @return Retourne le conseilPatient.
      */
-    public String getConseilPatient()
-    {
+    public String getConseilPatient() {
         return this.conseilPatient;
     }
 
@@ -312,8 +292,7 @@ public class InfosDispensations
      * Getter sur aideDispensation.
      * @return Retourne le aideDispensation.
      */
-    public String getAideDispensation()
-    {
+    public String getAideDispensation() {
         return this.aideDispensation;
     }
 
@@ -321,8 +300,7 @@ public class InfosDispensations
      * Setter pour tracabilitePatient.
      * @param tracabilitePatient le tracabilitePatient à écrire.
      */
-    public void setTracabilitePatient(final Boolean tracabilitePatient)
-    {
+    public void setTracabilitePatient(final Boolean tracabilitePatient) {
         this.tracabilitePatient = tracabilitePatient;
     }
 
@@ -330,8 +308,7 @@ public class InfosDispensations
      * Setter pour destinatairePatient.
      * @param destinatairePatient le destinatairePatient à écrire.
      */
-    public void setDestinatairePatient(final Boolean destinatairePatient)
-    {
+    public void setDestinatairePatient(final Boolean destinatairePatient) {
         this.destinatairePatient = destinatairePatient;
     }
 
@@ -339,8 +316,7 @@ public class InfosDispensations
      * Setter pour destinataireService.
      * @param destinataireService le destinataireService à écrire.
      */
-    public void setDestinataireService(final Boolean destinataireService)
-    {
+    public void setDestinataireService(final Boolean destinataireService) {
         this.destinataireService = destinataireService;
     }
 
@@ -348,17 +324,16 @@ public class InfosDispensations
      * Setter pour destinataireInvestigateur.
      * @param destinataireInvestigateur le destinataireInvestigateur à écrire.
      */
-    public void setDestinataireInvestigateur(final Boolean destinataireInvestigateur)
-    {
+    public void setDestinataireInvestigateur(final Boolean destinataireInvestigateur) {
         this.destinataireInvestigateur = destinataireInvestigateur;
     }
 
     /**
      * Setter pour numerotationConditionnement.
-     * @param numerotationConditionnement le numerotationConditionnement à écrire.
+     * @param numerotationConditionnement le numerotationConditionnement à
+     * écrire.
      */
-    public void setNumerotationConditionnement(final String numerotationConditionnement)
-    {
+    public void setNumerotationConditionnement(final String numerotationConditionnement) {
         this.numerotationConditionnement = numerotationConditionnement;
     }
 
@@ -366,8 +341,7 @@ public class InfosDispensations
      * Setter pour informationConditionnement.
      * @param informationConditionnement le informationConditionnement à écrire.
      */
-    public void setInformationConditionnement(final String informationConditionnement)
-    {
+    public void setInformationConditionnement(final String informationConditionnement) {
         this.informationConditionnement = informationConditionnement;
     }
 
@@ -375,8 +349,7 @@ public class InfosDispensations
      * Setter pour contreEtiquette.
      * @param contreEtiquette le contreEtiquette à écrire.
      */
-    public void setContreEtiquette(final String contreEtiquette)
-    {
+    public void setContreEtiquette(final String contreEtiquette) {
         this.contreEtiquette = contreEtiquette;
     }
 
@@ -384,8 +357,7 @@ public class InfosDispensations
      * Setter pour conseilPatient.
      * @param conseilPatient le conseilPatient à écrire.
      */
-    public void setConseilPatient(final String conseilPatient)
-    {
+    public void setConseilPatient(final String conseilPatient) {
         this.conseilPatient = conseilPatient;
     }
 
@@ -393,8 +365,7 @@ public class InfosDispensations
      * Setter pour aideDispensation.
      * @param aideDispensation le aideDispensation à écrire.
      */
-    public void setAideDispensation(final String aideDispensation)
-    {
+    public void setAideDispensation(final String aideDispensation) {
         this.aideDispensation = aideDispensation;
     }
 

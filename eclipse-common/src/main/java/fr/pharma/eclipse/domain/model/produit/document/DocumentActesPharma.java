@@ -19,15 +19,13 @@ import fr.pharma.eclipse.domain.model.produit.Produit;
 
 /**
  * Bean métier représentant un document lié aux actes pharma d'un produit.
- 
+ * @author Netapsys
  * @version $Revision$ $Date$
  */
 @Entity(name = "produit_document_actes_pharma")
 @Inheritance(strategy = InheritanceType.SINGLE_TABLE)
 @DiscriminatorColumn(name = "type", discriminatorType = DiscriminatorType.STRING)
-public abstract class DocumentActesPharma
-    extends DocumentProduit
-{
+public abstract class DocumentActesPharma extends DocumentProduit {
 
     /**
      * Serial ID.
@@ -53,8 +51,7 @@ public abstract class DocumentActesPharma
      * Getter sur produit.
      * @return Retourne le produit.
      */
-    public Produit getProduit()
-    {
+    public Produit getProduit() {
         return this.produit;
     }
 
@@ -62,8 +59,7 @@ public abstract class DocumentActesPharma
      * Setter pour produit.
      * @param produit le produit à écrire.
      */
-    public void setProduit(final Produit produit)
-    {
+    public void setProduit(final Produit produit) {
         this.produit = produit;
     }
 
@@ -72,8 +68,7 @@ public abstract class DocumentActesPharma
      * @return Retourne le type.
      */
     @Override
-    public TypeDocumentProduit getType()
-    {
+    public TypeDocumentProduit getType() {
         return this.type;
     }
 
@@ -82,8 +77,7 @@ public abstract class DocumentActesPharma
      * @param type le type à écrire.
      */
     @Override
-    public void setType(final TypeDocumentProduit type)
-    {
+    public void setType(final TypeDocumentProduit type) {
         this.type = type;
     }
 

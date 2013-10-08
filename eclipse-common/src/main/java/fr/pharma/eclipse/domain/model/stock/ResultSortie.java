@@ -14,12 +14,10 @@ import fr.pharma.eclipse.domain.model.stockage.Pharmacie;
 
 /**
  * Bean métier représentant le résultat d'une sortie de stock.
- 
+ * @author Netapsys
  * @version $Revision$ $Date$
  */
-public class ResultSortie
-    implements Serializable
-{
+public class ResultSortie implements Serializable {
     /**
      * Serial ID.
      */
@@ -74,8 +72,7 @@ public class ResultSortie
      * Getter pour essai.
      * @return Le essai
      */
-    public Essai getEssai()
-    {
+    public Essai getEssai() {
         return this.essai;
     }
 
@@ -83,8 +80,7 @@ public class ResultSortie
      * Setter pour essai.
      * @param essai Le essai à écrire.
      */
-    public void setEssai(final Essai essai)
-    {
+    public void setEssai(final Essai essai) {
         this.essai = essai;
     }
 
@@ -92,8 +88,7 @@ public class ResultSortie
      * Getter pour promoteur.
      * @return Le promoteur
      */
-    public Promoteur getPromoteur()
-    {
+    public Promoteur getPromoteur() {
         return this.promoteur;
     }
 
@@ -101,8 +96,7 @@ public class ResultSortie
      * Setter pour promoteur.
      * @param promoteur Le promoteur à écrire.
      */
-    public void setPromoteur(final Promoteur promoteur)
-    {
+    public void setPromoteur(final Promoteur promoteur) {
         this.promoteur = promoteur;
     }
 
@@ -110,8 +104,7 @@ public class ResultSortie
      * Getter pour pharmacie.
      * @return Le pharmacie
      */
-    public Pharmacie getPharmacie()
-    {
+    public Pharmacie getPharmacie() {
         return this.pharmacie;
     }
 
@@ -119,8 +112,7 @@ public class ResultSortie
      * Setter pour pharmacie.
      * @param pharmacie Le pharmacie à écrire.
      */
-    public void setPharmacie(final Pharmacie pharmacie)
-    {
+    public void setPharmacie(final Pharmacie pharmacie) {
         this.pharmacie = pharmacie;
     }
 
@@ -128,8 +120,7 @@ public class ResultSortie
      * Getter pour dateSortie.
      * @return Le dateSortie
      */
-    public Calendar getDateSortie()
-    {
+    public Calendar getDateSortie() {
         return this.dateSortie;
     }
 
@@ -137,8 +128,7 @@ public class ResultSortie
      * Setter pour dateSortie.
      * @param dateSortie Le dateSortie à écrire.
      */
-    public void setDateSortie(final Calendar dateSortie)
-    {
+    public void setDateSortie(final Calendar dateSortie) {
         this.dateSortie = dateSortie;
     }
 
@@ -146,8 +136,7 @@ public class ResultSortie
      * Getter pour personne.
      * @return Le personne
      */
-    public Personne getPersonne()
-    {
+    public Personne getPersonne() {
         return this.personne;
     }
 
@@ -155,8 +144,7 @@ public class ResultSortie
      * Setter pour personne.
      * @param personne Le personne à écrire.
      */
-    public void setPersonne(final Personne personne)
-    {
+    public void setPersonne(final Personne personne) {
         this.personne = personne;
     }
 
@@ -164,8 +152,7 @@ public class ResultSortie
      * Getter pour sorties.
      * @return Le sorties
      */
-    public List<Sortie> getSorties()
-    {
+    public List<Sortie> getSorties() {
         return this.sorties;
     }
 
@@ -173,8 +160,7 @@ public class ResultSortie
      * Setter pour sorties.
      * @param sorties Le sorties à écrire.
      */
-    public void setSorties(final List<Sortie> sorties)
-    {
+    public void setSorties(final List<Sortie> sorties) {
         this.sorties = sorties;
     }
 
@@ -182,8 +168,7 @@ public class ResultSortie
      * Getter pour mvts.
      * @return Le mvts
      */
-    public List<? extends MvtStock> getMvts()
-    {
+    public List<? extends MvtStock> getMvts() {
         return this.mvts;
     }
 
@@ -191,8 +176,7 @@ public class ResultSortie
      * Setter pour mvts.
      * @param mvts Le mvts à écrire.
      */
-    public void setMvts(final List<? extends MvtStock> mvts)
-    {
+    public void setMvts(final List<? extends MvtStock> mvts) {
         this.mvts = mvts;
     }
 
@@ -200,8 +184,7 @@ public class ResultSortie
      * Getter pour document.
      * @return Le document
      */
-    public DocumentEclipse getDocument()
-    {
+    public DocumentEclipse getDocument() {
         return this.document;
     }
 
@@ -209,8 +192,7 @@ public class ResultSortie
      * Setter pour document.
      * @param document Le document à écrire.
      */
-    public void setDocument(final DocumentEclipse document)
-    {
+    public void setDocument(final DocumentEclipse document) {
         this.document = document;
     }
 
@@ -218,8 +200,7 @@ public class ResultSortie
      * Getter pour raisonSortie.
      * @return Le raisonSortie
      */
-    public RaisonSortie getRaisonSortie()
-    {
+    public RaisonSortie getRaisonSortie() {
         return this.raisonSortie;
     }
 
@@ -227,8 +208,7 @@ public class ResultSortie
      * Setter pour raisonSortie.
      * @param raisonSortie Le raisonSortie à écrire.
      */
-    public void setRaisonSortie(final RaisonSortie raisonSortie)
-    {
+    public void setRaisonSortie(final RaisonSortie raisonSortie) {
         this.raisonSortie = raisonSortie;
     }
 

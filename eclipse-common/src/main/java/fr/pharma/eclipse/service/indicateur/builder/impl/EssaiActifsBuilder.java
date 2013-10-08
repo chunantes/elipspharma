@@ -13,12 +13,10 @@ import fr.pharma.eclipse.service.indicateur.builder.IndicateurBuilder;
 
 /**
  * Builder en charge de construire l'indicateur relatif aux essais Actifs.
- 
+ * @author Netapsys
  * @version $Revision$ $Date$
  */
-public class EssaiActifsBuilder
-    implements Serializable, IndicateurBuilder
-{
+public class EssaiActifsBuilder implements Serializable, IndicateurBuilder {
 
     /**
      * SerialVersionUID.
@@ -42,19 +40,15 @@ public class EssaiActifsBuilder
     @Override
     public Indicateur build(final Pharmacie pharmacie,
                             final Calendar dateDebut,
-                            final Calendar dateFin)
-    {
+                            final Calendar dateFin) {
 
-        return new Indicateur(this.libelle,
-                              new BigDecimal(this.essaiService.getEssaisActifs(dateFin,
-                                                                               pharmacie).size()));
+        return new Indicateur(this.libelle, new BigDecimal(this.essaiService.getEssaisActifs(dateFin, pharmacie).size()));
     }
     /**
      * Getter pour libelle.
      * @return Le libelle
      */
-    public String getLibelle()
-    {
+    public String getLibelle() {
         return this.libelle;
     }
 
@@ -62,8 +56,7 @@ public class EssaiActifsBuilder
      * Setter pour libelle.
      * @param libelle Le libelle à écrire.
      */
-    public void setLibelle(final String libelle)
-    {
+    public void setLibelle(final String libelle) {
         this.libelle = libelle;
     }
 
@@ -71,8 +64,7 @@ public class EssaiActifsBuilder
      * Setter pour essaiService.
      * @param essaiService Le essaiService à écrire.
      */
-    public void setEssaiService(final EssaiService essaiService)
-    {
+    public void setEssaiService(final EssaiService essaiService) {
         this.essaiService = essaiService;
     }
 

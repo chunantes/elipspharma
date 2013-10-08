@@ -7,12 +7,10 @@ import fr.pharma.eclipse.domain.model.common.BeanWithNom;
 
 /**
  * Bean indicateur.
- 
+ * @author Netapsys
  * @version $Revision$ $Date$
  */
-public class Indicateur
-    implements Serializable, BeanWithNom
-{
+public class Indicateur implements Serializable, BeanWithNom {
 
     /**
      * SerialVersionUID.
@@ -34,8 +32,7 @@ public class Indicateur
      * @param libelle Le libellé.
      * @param valeur La valeur.
      */
-    public Indicateur(final String libelle, final BigDecimal valeur)
-    {
+    public Indicateur(final String libelle, final BigDecimal valeur) {
         this.libelle = libelle;
         this.valeur = valeur;
     }
@@ -44,8 +41,7 @@ public class Indicateur
      * Getter pour libelle.
      * @return Le libelle
      */
-    public String getLibelle()
-    {
+    public String getLibelle() {
         return this.libelle;
     }
 
@@ -53,8 +49,7 @@ public class Indicateur
      * Setter pour libelle.
      * @param libelle Le libelle à écrire.
      */
-    public void setLibelle(final String libelle)
-    {
+    public void setLibelle(final String libelle) {
         this.libelle = libelle;
     }
 
@@ -62,8 +57,7 @@ public class Indicateur
      * Getter pour valeur.
      * @return Le valeur
      */
-    public BigDecimal getValeur()
-    {
+    public BigDecimal getValeur() {
         return this.valeur;
     }
 
@@ -71,8 +65,7 @@ public class Indicateur
      * Setter pour valeur.
      * @param valeur Le valeur à écrire.
      */
-    public void setValeur(final BigDecimal valeur)
-    {
+    public void setValeur(final BigDecimal valeur) {
         this.valeur = valeur;
     }
 
@@ -80,8 +73,7 @@ public class Indicateur
      * {@inheritDoc}
      */
     @Override
-    public String getNom()
-    {
+    public String getNom() {
         return this.libelle;
     }
 

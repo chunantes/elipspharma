@@ -7,15 +7,12 @@ import fr.pharma.eclipse.domain.model.surcout.regle.Regle;
 import fr.pharma.eclipse.service.surcout.processor.VariableSubProcessor;
 
 /**
- * Classe implémentant la méthode contenant l'algorithme de calcul d'un montant au forfait pour un
- * surcout.
- 
+ * Classe implémentant la méthode contenant l'algorithme de calcul d'un montant
+ * au forfait pour un surcout.
+ * @author Netapsys
  * @version $Revision$ $Date$
  */
-public class ForfaitSubProcessor
-    extends AbstractVariableSubProcessor
-    implements VariableSubProcessor
-{
+public class ForfaitSubProcessor extends AbstractVariableSubProcessor implements VariableSubProcessor {
 
     /**
      * SerialVersionUID.
@@ -27,21 +24,14 @@ public class ForfaitSubProcessor
      */
     @Override
     protected Resultat processSubProcessor(final Regle regle,
-                                           final int nb)
-    {
+                                           final int nb) {
         final Resultat value = new Resultat();
-        if (nb == 0)
-        {
+        if (nb == 0) {
             value.setMontant(new BigDecimal(0));
-        }
-        else if (regle.getMin() == null)
-        {
+        } else if (regle.getMin() == null) {
             value.setMontant(value.getMontant().add(regle.getMontant()));
-        }
-        else
-        {
-            if (nb >= regle.getMin())
-            {
+        } else {
+            if (nb >= regle.getMin()) {
                 value.setMontant(value.getMontant().add(regle.getMontant()));
             }
         }

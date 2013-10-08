@@ -1,21 +1,20 @@
 package fr.pharma.eclipse.predicate.stock;
 
 import java.io.Serializable;
+import java.util.Arrays;
 
 import org.apache.commons.collections.Predicate;
 
-import fr.pharma.eclipse.domain.enums.stock.CategorieMouvement;
+import fr.pharma.eclipse.domain.enums.stock.TypeMvtStock;
 import fr.pharma.eclipse.domain.model.stock.MvtStock;
 
 /**
- * Predicat sur les mouvements de stock (Récupération des mouvements de type SORTIE / DISPENSATION
- * / DOTATION).
- 
+ * Predicat sur les mouvements de stock (Récupération des mouvements de type
+ * SORTIE / DISPENSATION / DOTATION).
+ * @author Netapsys
  * @version $Revision$ $Date$
  */
-public class MvtStockSortiePredicate
-    implements Predicate, Serializable
-{
+public class MvtStockSortiePredicate implements Predicate, Serializable {
     /**
      * Serial ID.
      */
@@ -25,12 +24,8 @@ public class MvtStockSortiePredicate
      * {@inheritDoc}
      */
     @Override
-    public boolean evaluate(final Object object)
-    {
+    public boolean evaluate(final Object object) {
         final MvtStock mvt = (MvtStock) object;
-        final CategorieMouvement categ = mvt.getType().getCategorie();
-        return CategorieMouvement.SORTIE.equals(categ)
-               || CategorieMouvement.DISPENSATION.equals(categ)
-               || CategorieMouvement.DOTATION.equals(categ);
+        return Arrays.asList(TypeMvtStock.ALL_SORTIES).contains(mvt.getType());
     }
 }

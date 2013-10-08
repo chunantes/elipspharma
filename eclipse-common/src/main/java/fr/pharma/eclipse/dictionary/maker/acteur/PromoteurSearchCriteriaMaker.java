@@ -10,12 +10,10 @@ import fr.pharma.eclipse.domain.criteria.common.SearchCriteria;
 
 /**
  * Artisan de recherche pour les promoteurs.
- 
+ * @author Netapsys
  * @version $Revision$ $Date$
  */
-public class PromoteurSearchCriteriaMaker
-    extends AbstractCriteriaMaker
-{
+public class PromoteurSearchCriteriaMaker extends AbstractCriteriaMaker {
     /**
      * Serial ID.
      */
@@ -24,8 +22,7 @@ public class PromoteurSearchCriteriaMaker
     /**
      * Constructeur par défaut.
      */
-    public PromoteurSearchCriteriaMaker()
-    {
+    public PromoteurSearchCriteriaMaker() {
         super(PromoteurSearchCriteria.class);
     }
 
@@ -34,31 +31,21 @@ public class PromoteurSearchCriteriaMaker
      */
     @Override
     public void transform(final Criteria criteria,
-                          final SearchCriteria searchCrit)
-    {
+                          final SearchCriteria searchCrit) {
         final PromoteurSearchCriteria crit = (PromoteurSearchCriteria) searchCrit;
 
         // Raison sociale
-        if (StringUtils.isNotEmpty(crit.getRaisonSociale()))
-        {
-            CriteriaMakerUtils.addSqlCritere(criteria,
-                                             "raisonsociale",
-                                             crit.getRaisonSociale());
+        if (StringUtils.isNotEmpty(crit.getRaisonSociale())) {
+            CriteriaMakerUtils.addSqlCritere(criteria, "raisonsociale", crit.getRaisonSociale());
         }
         // Identifiant
-        if (StringUtils.isNotEmpty(crit.getIdentifiant()))
-        {
-            CriteriaMakerUtils.addSqlCritere(criteria,
-                                             "identifiant",
-                                             crit.getIdentifiant());
+        if (StringUtils.isNotEmpty(crit.getIdentifiant())) {
+            CriteriaMakerUtils.addSqlCritere(criteria, "identifiant", crit.getIdentifiant());
         }
 
         // Type de promoteur
-        if (crit.getType() != null)
-        {
-            CriteriaMakerUtils.addCritere(criteria,
-                                          "type",
-                                          crit.getType());
+        if (crit.getType() != null) {
+            CriteriaMakerUtils.addCritere(criteria, "type", crit.getType());
         }
     }
 }

@@ -9,12 +9,10 @@ import fr.pharma.eclipse.utils.constants.EclipseConstants;
 
 /**
  * Fabrique des objets Incident.
- 
+ * @author Netapsys
  * @version $Revision$ $Date$
  */
-public class IncidentFactory
-    extends BeanObjectFactory<Incident>
-{
+public class IncidentFactory extends BeanObjectFactory<Incident> {
     /**
      * Serial ID.
      */
@@ -24,8 +22,7 @@ public class IncidentFactory
      * Constructeur.
      * @param bean Classe à instancier.
      */
-    public IncidentFactory(final Class<Incident> bean)
-    {
+    public IncidentFactory(final Class<Incident> bean) {
         super(bean);
     }
 
@@ -33,8 +30,7 @@ public class IncidentFactory
      * {@inheritDoc}
      */
     @Override
-    public Incident getInitializedObject()
-    {
+    public Incident getInitializedObject() {
         final Incident incident = super.getInitializedObject();
 
         incident.setDate(Calendar.getInstance(EclipseConstants.LOCALE));
@@ -47,8 +43,7 @@ public class IncidentFactory
      * @param essai Essai.
      * @return L'incident.
      */
-    public Incident getInitializedObject(final Essai essai)
-    {
+    public Incident getInitializedObject(final Essai essai) {
         final Incident incident = this.getInitializedObject();
         incident.setEssai(essai);
         return incident;

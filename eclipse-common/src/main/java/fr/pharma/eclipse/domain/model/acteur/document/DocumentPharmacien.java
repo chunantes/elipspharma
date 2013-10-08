@@ -22,15 +22,13 @@ import fr.pharma.eclipse.domain.model.common.DocumentEclipse;
 
 /**
  * Classe abstraite représentant un document de pharmacien.
- 
+ * @author Netapsys
  * @version $Revision$ $Date$
  */
 @Entity(name = "pharmacien_document_pharmacien")
 @Inheritance(strategy = InheritanceType.SINGLE_TABLE)
 @DiscriminatorColumn(name = "type", discriminatorType = DiscriminatorType.STRING)
-public abstract class DocumentPharmacien
-    extends DocumentEclipse
-{
+public abstract class DocumentPharmacien extends DocumentEclipse {
     /**
      * Serial ID.
      */
@@ -56,8 +54,7 @@ public abstract class DocumentPharmacien
      * {@inheritDoc}
      */
     @Override
-    public EnumTypeDocument getTypeDocument()
-    {
+    public EnumTypeDocument getTypeDocument() {
         return this.getType();
     }
 
@@ -65,8 +62,7 @@ public abstract class DocumentPharmacien
      * Getter pour pharmacien.
      * @return Le pharmacien
      */
-    public Pharmacien getPharmacien()
-    {
+    public Pharmacien getPharmacien() {
         return this.pharmacien;
     }
 
@@ -74,8 +70,7 @@ public abstract class DocumentPharmacien
      * Setter pour pharmacien.
      * @param pharmacien Le pharmacien à écrire.
      */
-    public void setPharmacien(final Pharmacien pharmacien)
-    {
+    public void setPharmacien(final Pharmacien pharmacien) {
         this.pharmacien = pharmacien;
     }
 
@@ -83,8 +78,7 @@ public abstract class DocumentPharmacien
      * Getter pour type.
      * @return Le type
      */
-    public TypeDocumentPharmacien getType()
-    {
+    public TypeDocumentPharmacien getType() {
         return this.type;
     }
 
@@ -92,8 +86,7 @@ public abstract class DocumentPharmacien
      * Setter pour type.
      * @param type Le type à écrire.
      */
-    public void setType(final TypeDocumentPharmacien type)
-    {
+    public void setType(final TypeDocumentPharmacien type) {
         this.type = type;
     }
 

@@ -11,12 +11,10 @@ import fr.pharma.eclipse.validator.save.SaveValidator;
 
 /**
  * Classe en charge de valider la sauvegarde d'un bean Pharmacien.
- 
+ * @author Netapsys
  * @version $Revision$ $Date$
  */
-public class PharmacienSaveValidator
-    implements SaveValidator<Pharmacien>, Serializable
-{
+public class PharmacienSaveValidator implements SaveValidator<Pharmacien>, Serializable {
 
     /**
      * Serial ID.
@@ -28,17 +26,12 @@ public class PharmacienSaveValidator
      */
     @Override
     public void validate(final Pharmacien pharmacien,
-                         final GenericService<Pharmacien> pharmacienService)
-    {
+                         final GenericService<Pharmacien> pharmacienService) {
         final SortedSet<Pharmacie> pharmacies = pharmacien.getPharmacies();
 
         // Vérification de la saisie d'au moins une pharmacie
-        if (pharmacies.isEmpty())
-        {
-            throw new ValidationException("pharmacien.pharmacies",
-                                          new String[]
-                                          {"notEmpty" },
-                                          pharmacien);
+        if (pharmacies.isEmpty()) {
+            throw new ValidationException("pharmacien.pharmacies", new String[]{"notEmpty" }, pharmacien);
         }
     }
 

@@ -10,12 +10,10 @@ import fr.pharma.eclipse.jasper.engine.filler.JasperReportBeanFiller;
 /**
  * Filler en charge de valoriser les attributs de type de dispensation
  * {@link JRBeanFicheAideDispensationPart4}.
- 
+ * @author Netapsys
  * @version $Revision$ $Date$
  */
-public class AideDispensationPart4TypeDispFiller
-    implements JasperReportBeanFiller
-{
+public class AideDispensationPart4TypeDispFiller implements JasperReportBeanFiller {
     /**
      * Serial ID.
      */
@@ -26,25 +24,21 @@ public class AideDispensationPart4TypeDispFiller
      */
     @Override
     public void fill(final Essai essai,
-                     final JasperReportBean bean)
-    {
+                     final JasperReportBean bean) {
         final JRBeanFicheAideDispensationPart4 partie4 = (JRBeanFicheAideDispensationPart4) bean;
-        final InfosDispensations infosDispensation =
-            essai.getDetailDonneesPharma().getInfosDispensations();
+        final InfosDispensations infosDispensation = essai.getDetailDonneesPharma().getInfosDispensations();
 
         // Type de dispensation
         final TypeDispensation typeDispensation = infosDispensation.getTypeDispensation();
         boolean hasTracabilite = false;
-        if (typeDispensation != null)
-        {
+        if (typeDispensation != null) {
             partie4.setTypeDispensation(typeDispensation.getLibelle());
             hasTracabilite = TypeDispensation.GLOBALE.equals(typeDispensation);
         }
 
         // Traçabilité
         partie4.setHasTracabilite(hasTracabilite);
-        if (hasTracabilite)
-        {
+        if (hasTracabilite) {
             partie4.setTracabiliteObligatoire(infosDispensation.getTracabilitePatient());
         }
     }

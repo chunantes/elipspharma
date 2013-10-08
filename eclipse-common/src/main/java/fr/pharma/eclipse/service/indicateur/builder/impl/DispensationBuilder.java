@@ -11,14 +11,12 @@ import fr.pharma.eclipse.domain.model.stockage.Pharmacie;
 import fr.pharma.eclipse.service.indicateur.builder.IndicateurBuilder;
 
 /**
- * Builder en charge de construire l'indicateur relatif aux dispensations nominatives.
- 
+ * Builder en charge de construire l'indicateur relatif aux dispensations
+ * nominatives.
+ * @author Netapsys
  * @version $Revision$ $Date$
  */
-public class DispensationBuilder
-    extends AbstractDispensationBuilder
-    implements Serializable, IndicateurBuilder
-{
+public class DispensationBuilder extends AbstractDispensationBuilder implements Serializable, IndicateurBuilder {
 
     /**
      * SerialVersionUID.
@@ -36,24 +34,18 @@ public class DispensationBuilder
     @Override
     public Indicateur build(final Pharmacie pharmacie,
                             final Calendar dateDebut,
-                            final Calendar dateFin)
-    {
+                            final Calendar dateFin) {
 
-        final List<Dispensation> results = this.loadDispensations(pharmacie,
-                                                                  dateDebut,
-                                                                  dateFin,
-                                                                  true);
+        final List<Dispensation> results = this.loadDispensations(pharmacie, dateDebut, dateFin, true);
 
-        return new Indicateur(this.libelle,
-                              new BigDecimal(results.size()));
+        return new Indicateur(this.libelle, new BigDecimal(results.size()));
     }
 
     /**
      * Getter pour libelle.
      * @return Le libelle
      */
-    public String getLibelle()
-    {
+    public String getLibelle() {
         return this.libelle;
     }
 
@@ -61,8 +53,7 @@ public class DispensationBuilder
      * Setter pour libelle.
      * @param libelle Le libelle à écrire.
      */
-    public void setLibelle(final String libelle)
-    {
+    public void setLibelle(final String libelle) {
         this.libelle = libelle;
     }
 

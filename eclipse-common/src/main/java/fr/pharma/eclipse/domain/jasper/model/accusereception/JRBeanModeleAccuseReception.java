@@ -11,13 +11,10 @@ import fr.pharma.eclipse.jasper.constants.JasperConstants;
  * Classe représentant la source de données principale<br>
  * du rapport Jasper intitulé<br>
  * "Accusé de réception (CESSION PUI)".
- 
+ * @author Netapsys
  * @version $Revision$ $Date$
  */
-public class JRBeanModeleAccuseReception
-    extends AbstractJRBeanWithHeader
-    implements Serializable
-{
+public class JRBeanModeleAccuseReception extends AbstractJRBeanWithHeader implements Serializable {
 
     /**
      * SerialVersionUID.
@@ -64,8 +61,7 @@ public class JRBeanModeleAccuseReception
      * @return Retourne le header.
      */
     @Override
-    public JRBeanHeader getHeader()
-    {
+    public JRBeanHeader getHeader() {
         return this.header;
     }
 
@@ -73,8 +69,7 @@ public class JRBeanModeleAccuseReception
      * Setter pour header.
      * @param header le header à écrire.
      */
-    public void setHeader(final JRBeanHeader header)
-    {
+    public void setHeader(final JRBeanHeader header) {
         this.header = header;
     }
 
@@ -82,8 +77,7 @@ public class JRBeanModeleAccuseReception
      * Getter sur promoteur.
      * @return Retourne le promoteur.
      */
-    public String getPromoteur()
-    {
+    public String getPromoteur() {
         return this.promoteur;
     }
 
@@ -91,8 +85,7 @@ public class JRBeanModeleAccuseReception
      * Setter pour promoteur.
      * @param promoteur le promoteur à écrire.
      */
-    public void setPromoteur(final String promoteur)
-    {
+    public void setPromoteur(final String promoteur) {
         this.promoteur = promoteur;
     }
 
@@ -100,8 +93,7 @@ public class JRBeanModeleAccuseReception
      * Getter sur codeProtocole.
      * @return Retourne le codeProtocole.
      */
-    public String getCodeProtocole()
-    {
+    public String getCodeProtocole() {
         return this.codeProtocole;
     }
 
@@ -109,8 +101,7 @@ public class JRBeanModeleAccuseReception
      * Setter pour codeProtocole.
      * @param codeProtocole le codeProtocole à écrire.
      */
-    public void setCodeProtocole(final String codeProtocole)
-    {
+    public void setCodeProtocole(final String codeProtocole) {
         this.codeProtocole = codeProtocole;
     }
 
@@ -118,8 +109,7 @@ public class JRBeanModeleAccuseReception
      * Getter pour motif.
      * @return Le motif
      */
-    public String getMotif()
-    {
+    public String getMotif() {
         return this.motif;
     }
 
@@ -127,8 +117,7 @@ public class JRBeanModeleAccuseReception
      * Setter pour motif.
      * @param motif Le motif à écrire.
      */
-    public void setMotif(final String motif)
-    {
+    public void setMotif(final String motif) {
         this.motif = motif;
     }
 
@@ -136,8 +125,7 @@ public class JRBeanModeleAccuseReception
      * Getter pour centre.
      * @return Le centre
      */
-    public String getCentre()
-    {
+    public String getCentre() {
         return this.centre;
     }
 
@@ -145,8 +133,7 @@ public class JRBeanModeleAccuseReception
      * Setter pour centre.
      * @param centre Le centre à écrire.
      */
-    public void setCentre(final String centre)
-    {
+    public void setCentre(final String centre) {
         this.centre = centre;
     }
 
@@ -154,8 +141,7 @@ public class JRBeanModeleAccuseReception
      * Getter pour traitements.
      * @return Le traitements
      */
-    public JRDataSource getTraitements()
-    {
+    public JRDataSource getTraitements() {
         return this.traitements;
     }
 
@@ -163,8 +149,7 @@ public class JRBeanModeleAccuseReception
      * Setter pour traitements.
      * @param traitements Le traitements à écrire.
      */
-    public void setTraitements(final JRDataSource traitements)
-    {
+    public void setTraitements(final JRDataSource traitements) {
         this.traitements = traitements;
     }
 
@@ -172,8 +157,7 @@ public class JRBeanModeleAccuseReception
      * Getter pour pharmacie.
      * @return Le pharmacie
      */
-    public String getPharmacie()
-    {
+    public String getPharmacie() {
         return this.pharmacie;
     }
 
@@ -181,8 +165,7 @@ public class JRBeanModeleAccuseReception
      * Setter pour pharmacie.
      * @param pharmacie Le pharmacie à écrire.
      */
-    public void setPharmacie(final String pharmacie)
-    {
+    public void setPharmacie(final String pharmacie) {
         this.pharmacie = pharmacie;
     }
 

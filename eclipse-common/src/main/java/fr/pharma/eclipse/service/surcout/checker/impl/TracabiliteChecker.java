@@ -9,13 +9,12 @@ import fr.pharma.eclipse.domain.model.produit.ProduitTherapeutique;
 import fr.pharma.eclipse.service.surcout.checker.SurcoutChecker;
 
 /**
- * Classe en charge de déterminer si la tracabilite doit être chiffrés ou non. essai.
- 
+ * Classe en charge de déterminer si la tracabilite doit être chiffrés ou non.
+ * essai.
+ * @author Netapsys
  * @version $Revision$ $Date$
  */
-public class TracabiliteChecker
-    implements SurcoutChecker, Serializable
-{
+public class TracabiliteChecker implements SurcoutChecker, Serializable {
     /**
      * Serial UID.
      */
@@ -24,24 +23,17 @@ public class TracabiliteChecker
     /**
      * {@inheritDoc}
      */
-    public boolean check(final Essai essai)
-    {
+    @Override
+    public boolean check(final Essai essai) {
 
-        for (final Produit m : essai.getDetailProduit().getProduits())
-        {
-            if (m instanceof Medicament)
-            {
-                if (((Medicament) m).getMds()
-                    || ((Medicament) m).getStupefiant())
-                {
+        for (final Produit m : essai.getDetailProduit().getProduits()) {
+            if (m instanceof Medicament) {
+                if (((Medicament) m).getMds() || ((Medicament) m).getStupefiant()) {
                     return true;
                 }
             }
-            if (m instanceof ProduitTherapeutique)
-            {
-                if (((ProduitTherapeutique) m).getMds()
-                    || ((ProduitTherapeutique) m).getStupefiant())
-                {
+            if (m instanceof ProduitTherapeutique) {
+                if (((ProduitTherapeutique) m).getMds() || ((ProduitTherapeutique) m).getStupefiant()) {
                     return true;
                 }
             }

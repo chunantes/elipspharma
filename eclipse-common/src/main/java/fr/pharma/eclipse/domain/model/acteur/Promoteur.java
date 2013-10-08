@@ -26,13 +26,11 @@ import fr.pharma.eclipse.domain.model.suivi.acteur.PromoteurSuivi;
 
 /**
  * Classe métier représentant un Promoteur.
- 
+ * @author Netapsys
  * @version $Revision$ $Date$
  */
 @Entity(name = "promoteur")
-public class Promoteur
-    extends BeanObjectSuivi
-{
+public class Promoteur extends BeanObjectSuivi {
     /**
      * Serial ID.
      */
@@ -67,8 +65,7 @@ public class Promoteur
     @Where(clause = "type='ARC_PROMOTEUR'")
     @LazyCollection(LazyCollectionOption.TRUE)
     @Sort(type = SortType.COMPARATOR, comparator = BeanWithNomComparator.class)
-    private SortedSet<ArcPromoteur> arcPromoteurs =
-        new TreeSet<ArcPromoteur>(new BeanWithNomComparator());
+    private SortedSet<ArcPromoteur> arcPromoteurs = new TreeSet<ArcPromoteur>(new BeanWithNomComparator());
 
     /**
      * Liste des contacts promoteurs.
@@ -77,8 +74,7 @@ public class Promoteur
     @Where(clause = "type='PROMOTEUR'")
     @LazyCollection(LazyCollectionOption.TRUE)
     @Sort(type = SortType.COMPARATOR, comparator = BeanWithNomComparator.class)
-    private SortedSet<ContactPromoteur> contactPromoteurs =
-        new TreeSet<ContactPromoteur>(new BeanWithNomComparator());
+    private SortedSet<ContactPromoteur> contactPromoteurs = new TreeSet<ContactPromoteur>(new BeanWithNomComparator());
 
     /**
      * Liste des modifications du promoteur.
@@ -86,15 +82,13 @@ public class Promoteur
     @OneToMany(mappedBy = "promoteur", cascade = CascadeType.ALL)
     @LazyCollection(LazyCollectionOption.TRUE)
     @Sort(type = SortType.COMPARATOR, comparator = SuiviComparator.class)
-    private final SortedSet<PromoteurSuivi> modifs =
-        new TreeSet<PromoteurSuivi>(new SuiviComparator());
+    private final SortedSet<PromoteurSuivi> modifs = new TreeSet<PromoteurSuivi>(new SuiviComparator());
 
     /**
      * Getter sur raisonSociale.
      * @return Retourne le raisonSociale.
      */
-    public String getRaisonSociale()
-    {
+    public String getRaisonSociale() {
         return this.raisonSociale;
     }
 
@@ -102,8 +96,7 @@ public class Promoteur
      * Setter pour raisonSociale.
      * @param raisonSociale le raisonSociale à écrire.
      */
-    public void setRaisonSociale(final String raisonSociale)
-    {
+    public void setRaisonSociale(final String raisonSociale) {
         this.raisonSociale = raisonSociale;
     }
 
@@ -111,8 +104,7 @@ public class Promoteur
      * Getter sur type.
      * @return Retourne le type.
      */
-    public TypePromoteur getType()
-    {
+    public TypePromoteur getType() {
         return this.type;
     }
 
@@ -120,8 +112,7 @@ public class Promoteur
      * Setter pour type.
      * @param type le type à écrire.
      */
-    public void setType(final TypePromoteur type)
-    {
+    public void setType(final TypePromoteur type) {
         this.type = type;
     }
 
@@ -129,8 +120,7 @@ public class Promoteur
      * Getter sur identifiant.
      * @return Retourne le identifiant.
      */
-    public String getIdentifiant()
-    {
+    public String getIdentifiant() {
         return this.identifiant;
     }
 
@@ -138,8 +128,7 @@ public class Promoteur
      * Setter pour identifiant.
      * @param identifiant le identifiant à écrire.
      */
-    public void setIdentifiant(final String identifiant)
-    {
+    public void setIdentifiant(final String identifiant) {
         this.identifiant = identifiant;
     }
 
@@ -148,8 +137,7 @@ public class Promoteur
      * @return Retourne le modifs.
      */
     @Override
-    public SortedSet<PromoteurSuivi> getModifs()
-    {
+    public SortedSet<PromoteurSuivi> getModifs() {
         return this.modifs;
     }
 
@@ -157,8 +145,7 @@ public class Promoteur
      * Getter pour arcPromoteurs.
      * @return Le arcPromoteurs
      */
-    public SortedSet<ArcPromoteur> getArcPromoteurs()
-    {
+    public SortedSet<ArcPromoteur> getArcPromoteurs() {
         return this.arcPromoteurs;
     }
 
@@ -166,8 +153,7 @@ public class Promoteur
      * Setter pour arcPromoteurs.
      * @param arcPromoteurs Le arcPromoteurs à écrire.
      */
-    public void setArcPromoteurs(final SortedSet<ArcPromoteur> arcPromoteurs)
-    {
+    public void setArcPromoteurs(final SortedSet<ArcPromoteur> arcPromoteurs) {
         this.arcPromoteurs = arcPromoteurs;
     }
 
@@ -175,8 +161,7 @@ public class Promoteur
      * Getter pour contactPromoteurs.
      * @return Le contactPromoteurs
      */
-    public SortedSet<ContactPromoteur> getContactPromoteurs()
-    {
+    public SortedSet<ContactPromoteur> getContactPromoteurs() {
         return this.contactPromoteurs;
     }
 
@@ -184,8 +169,7 @@ public class Promoteur
      * Setter pour contactPromoteurs.
      * @param contactPromoteurs Le contactPromoteurs à écrire.
      */
-    public void setContactPromoteurs(final SortedSet<ContactPromoteur> contactPromoteurs)
-    {
+    public void setContactPromoteurs(final SortedSet<ContactPromoteur> contactPromoteurs) {
         this.contactPromoteurs = contactPromoteurs;
     }
 

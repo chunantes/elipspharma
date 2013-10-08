@@ -5,12 +5,10 @@ import fr.pharma.eclipse.domain.model.stock.DispensationGlobale;
 
 /**
  * Factory de dispensation globale.
- 
+ * @author Netapsys
  * @version $Revision$ $Date$
  */
-public class DispensationGlobaleFactory<MVT extends DispensationGlobale>
-    extends MvtStockFactory<MVT>
-{
+public class DispensationGlobaleFactory<MVT extends DispensationGlobale> extends MvtStockFactory<MVT> {
 
     /**
      * SerialVersionUID.
@@ -21,18 +19,15 @@ public class DispensationGlobaleFactory<MVT extends DispensationGlobale>
      * Constructeur.
      * @param bean La classe du mouvement.
      */
-    public DispensationGlobaleFactory(final Class<MVT> bean)
-    {
-        super(bean,
-              TypeMvtStock.DOTATION);
+    public DispensationGlobaleFactory(final Class<MVT> bean) {
+        super(bean, TypeMvtStock.DOTATION);
     }
 
     /**
      * {@inheritDoc}
      */
     @Override
-    public MVT getInitializedObject()
-    {
+    public MVT getInitializedObject() {
         final MVT mvt = super.getInitializedObject();
         mvt.setQuantiteDispensee(0);
         return mvt;

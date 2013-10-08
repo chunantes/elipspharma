@@ -6,12 +6,10 @@ import fr.pharma.eclipse.domain.model.common.DocumentEclipse;
 
 /**
  * Classe abstraite représentant un document de stock.
- 
+ * @author Netapsys
  * @version $Revision$ $Date$
  */
-public abstract class DocumentStock
-    extends DocumentEclipse
-{
+public abstract class DocumentStock extends DocumentEclipse {
     /**
      * Serial ID.
      */
@@ -21,8 +19,7 @@ public abstract class DocumentStock
      * {@inheritDoc}
      */
     @Override
-    public EnumTypeDocument getTypeDocument()
-    {
+    public EnumTypeDocument getTypeDocument() {
         return this.getType();
     }
 

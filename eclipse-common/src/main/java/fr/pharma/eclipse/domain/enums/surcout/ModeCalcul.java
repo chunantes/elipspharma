@@ -2,11 +2,10 @@ package fr.pharma.eclipse.domain.enums.surcout;
 
 /**
  * Enumération des modes de calcul.
- 
+ * @author Netapsys
  * @version $Revision$ $Date$
  */
-public enum ModeCalcul
-{
+public enum ModeCalcul {
     /**
      * Lot forfaitaire.
      */
@@ -36,8 +35,7 @@ public enum ModeCalcul
      * Constructeur privé.
      * @param libelle Libellé de la valeur de l'énumération.
      */
-    private ModeCalcul(final String libelle)
-    {
+    private ModeCalcul(final String libelle) {
         this.libelle = libelle;
     }
 
@@ -45,8 +43,7 @@ public enum ModeCalcul
      * Getter sur libelle.
      * @return Retourne le libelle.
      */
-    public String getLibelle()
-    {
+    public String getLibelle() {
         return this.libelle;
     }
 
@@ -54,8 +51,7 @@ public enum ModeCalcul
      * {@inheritDoc}
      */
     @Override
-    public String toString()
-    {
+    public String toString() {
         return this.getLibelle();
     }
 }

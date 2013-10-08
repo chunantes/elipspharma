@@ -11,12 +11,10 @@ import fr.pharma.eclipse.jasper.engine.filler.JasperReportBeanFiller;
 /**
  * Filler en charge de construire les attributs de randomisation du bean
  * {@link JRBeanFicheAideDispensationPart3}.
- 
+ * @author Netapsys
  * @version $Revision$ $Date$
  */
-public class AideDispensationPart3RandomisationFiller
-    implements JasperReportBeanFiller
-{
+public class AideDispensationPart3RandomisationFiller implements JasperReportBeanFiller {
 
     /**
      * Serial ID.
@@ -28,32 +26,25 @@ public class AideDispensationPart3RandomisationFiller
      */
     @Override
     public void fill(final Essai essai,
-                     final JasperReportBean bean)
-    {
-        final JRBeanFicheAideDispensationPart3 beanSource =
-            (JRBeanFicheAideDispensationPart3) bean;
+                     final JasperReportBean bean) {
+        final JRBeanFicheAideDispensationPart3 beanSource = (JRBeanFicheAideDispensationPart3) bean;
 
-        final InfosComplementaires infosComplementaires =
-            essai.getDetailDonneesPharma().getInfosComplementaires();
+        final InfosComplementaires infosComplementaires = essai.getDetailDonneesPharma().getInfosComplementaires();
 
         // Responsabilité randomisation.
         final Responsabilite resp = infosComplementaires.getResponsabiliteRandomisation();
-        if (resp != null)
-        {
+        if (resp != null) {
             beanSource.setRespRandomisation(resp.getLibelle());
         }
 
         // MO Associé.
         final DocumentEclipse doc = infosComplementaires.getDocumentResponsabiliteRandomisation();
-        if (doc != null)
-        {
+        if (doc != null) {
             beanSource.setMoAssocie(doc.getNomUtilisateur());
         }
 
         // HasMoAssocie.
-        final Boolean hasMoAssocie = resp != null
-                                     && doc != null
-                                     && Responsabilite.PHARMACIE.equals(resp);
+        final Boolean hasMoAssocie = (resp != null) && (doc != null) && Responsabilite.PHARMACIE.equals(resp);
         beanSource.setHasMoAssocie(hasMoAssocie);
     }
 }

@@ -8,12 +8,10 @@ import fr.pharma.eclipse.utils.constants.EclipseConstants;
 
 /**
  * Comparator de Conditionnement.
- 
+ * @author Netapsys
  * @version $Revision$ $Date$
  */
-public class ConditionnementComparator
-    implements Comparator<Conditionnement>, Serializable
-{
+public class ConditionnementComparator implements Comparator<Conditionnement>, Serializable {
     /**
      * SerialVersionUID.
      */
@@ -24,8 +22,7 @@ public class ConditionnementComparator
      */
     @Override
     public int compare(final Conditionnement p1,
-                       final Conditionnement p2)
-    {
+                       final Conditionnement p2) {
         final String key1 = this.buildKey(p1);
         final String key2 = this.buildKey(p2);
 
@@ -37,8 +34,7 @@ public class ConditionnementComparator
      * @param p Conditionnement dont on veut construire la clé.
      * @return La clé du Conditionnement.
      */
-    private String buildKey(final Conditionnement p)
-    {
+    private String buildKey(final Conditionnement p) {
         final StringBuilder builder = new StringBuilder();
         builder.append(p.getLibelle()).append(EclipseConstants.COMMA);
         return builder.toString();

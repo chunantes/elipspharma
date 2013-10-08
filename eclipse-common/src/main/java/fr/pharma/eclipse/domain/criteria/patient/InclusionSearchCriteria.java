@@ -8,12 +8,10 @@ import fr.pharma.eclipse.domain.model.patient.Patient;
 
 /**
  * Critère de recherche sur Inclusion.
- 
+ * @author Netapsys
  * @version $Revision$ $Date$
  */
-public class InclusionSearchCriteria
-    extends AbstractSearchCriteria
-{
+public class InclusionSearchCriteria extends AbstractSearchCriteria {
 
     /**
      * SerialVersionUID.
@@ -49,8 +47,7 @@ public class InclusionSearchCriteria
      * {@inheritDoc}
      */
     @Override
-    public void clear()
-    {
+    public void clear() {
         this.setEssai(null);
         this.actif = null;
         this.dateDebut = null;
@@ -61,8 +58,7 @@ public class InclusionSearchCriteria
      * Getter sur essai.
      * @return Retourne le essai.
      */
-    public Essai getEssai()
-    {
+    public Essai getEssai() {
         return this.essai;
     }
 
@@ -70,8 +66,7 @@ public class InclusionSearchCriteria
      * Setter pour essai.
      * @param essai le essai à écrire.
      */
-    public void setEssai(final Essai essai)
-    {
+    public void setEssai(final Essai essai) {
         this.essai = essai;
     }
 
@@ -79,8 +74,7 @@ public class InclusionSearchCriteria
      * Getter sur dateDebut.
      * @return Retourne le dateDebut.
      */
-    public Calendar getDateDebut()
-    {
+    public Calendar getDateDebut() {
         return this.dateDebut;
     }
 
@@ -88,8 +82,7 @@ public class InclusionSearchCriteria
      * Setter pour dateDebut.
      * @param dateDebut le dateDebut à écrire.
      */
-    public void setDateDebut(final Calendar dateDebut)
-    {
+    public void setDateDebut(final Calendar dateDebut) {
         this.dateDebut = dateDebut;
     }
 
@@ -97,8 +90,7 @@ public class InclusionSearchCriteria
      * Getter sur dateFin.
      * @return Retourne le dateFin.
      */
-    public Calendar getDateFin()
-    {
+    public Calendar getDateFin() {
         return this.dateFin;
     }
 
@@ -106,8 +98,7 @@ public class InclusionSearchCriteria
      * Setter pour dateFin.
      * @param dateFin le dateFin à écrire.
      */
-    public void setDateFin(final Calendar dateFin)
-    {
+    public void setDateFin(final Calendar dateFin) {
         this.dateFin = dateFin;
     }
 
@@ -115,8 +106,7 @@ public class InclusionSearchCriteria
      * Getter sur actif.
      * @return Retourne le actif.
      */
-    public Boolean getActif()
-    {
+    public Boolean getActif() {
         return this.actif;
     }
 
@@ -124,24 +114,21 @@ public class InclusionSearchCriteria
      * Setter pour actif.
      * @param actif le actif à écrire.
      */
-    public void setActif(final Boolean actif)
-    {
+    public void setActif(final Boolean actif) {
         this.actif = actif;
     }
     /**
      * Getter pour patient.
      * @return Le patient
      */
-    public Patient getPatient()
-    {
+    public Patient getPatient() {
         return this.patient;
     }
     /**
      * Setter pour patient.
      * @param patient Le patient à écrire.
      */
-    public void setPatient(final Patient patient)
-    {
+    public void setPatient(final Patient patient) {
         this.patient = patient;
     }
 

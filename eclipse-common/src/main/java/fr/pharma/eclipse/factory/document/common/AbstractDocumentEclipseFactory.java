@@ -14,12 +14,10 @@ import fr.pharma.eclipse.utils.file.FileHelper;
 /**
  * Fabrique abstraite de documents Eclipse.
  * @param <DOC> Type de document Eclipse créé.
- 
+ * @author Netapsys
  * @version $Revision$ $Date$
  */
-public abstract class AbstractDocumentEclipseFactory<DOC extends DocumentEclipse>
-    implements Serializable
-{
+public abstract class AbstractDocumentEclipseFactory<DOC extends DocumentEclipse> implements Serializable {
     /**
      * Serial ID.
      */
@@ -31,13 +29,13 @@ public abstract class AbstractDocumentEclipseFactory<DOC extends DocumentEclipse
     private FileHelper fileHelper;
 
     /**
-     * Méthode en charge d'initinialiser un document Eclipse à partir d'un fichier.
+     * Méthode en charge d'initinialiser un document Eclipse à partir d'un
+     * fichier.
      * @param document Document Eclipse à initialiser.
      * @param fichier Fichier.
      */
     public void initializeObject(final DOC document,
-                                 final Fichier fichier)
-    {
+                                 final Fichier fichier) {
         document.setNomUtilisateur(this.formatNomUtilisateur(fichier));
         document.setNomDisque(this.makeNomDisque(document.getNomUtilisateur()));
     }
@@ -47,34 +45,24 @@ public abstract class AbstractDocumentEclipseFactory<DOC extends DocumentEclipse
      * @param fichier Fichier importé par l'utilisateur.
      * @return Le nom de fichier formaté.
      */
-    private String formatNomUtilisateur(final Fichier fichier)
-    {
+    private String formatNomUtilisateur(final Fichier fichier) {
         String nom = fichier.getNom();
-        nom = nom.replace(" ",
-                          EclipseConstants.UNDERSCORE);
+        nom = nom.replace(" ", EclipseConstants.UNDERSCORE);
         return nom;
     }
 
     /**
-     * Méthode en charge de créer le nom du fichier sur le disque à partir du nom utilisateur.
+     * Méthode en charge de créer le nom du fichier sur le disque à partir du
+     * nom utilisateur.
      * @param nomUtilisateur Nom utilisateur du document.
      * @return Le nom Disque du document.
      */
-    private String makeNomDisque(final String nomUtilisateur)
-    {
-        final String extension =
-            EclipseConstants.DOT.concat(this.fileHelper.getExtension(nomUtilisateur));
-        final String nomSimple = StringUtils.removeEnd(nomUtilisateur,
-                                                       extension);
+    private String makeNomDisque(final String nomUtilisateur) {
+        final String extension = EclipseConstants.DOT.concat(this.fileHelper.getExtension(nomUtilisateur));
+        final String nomSimple = StringUtils.removeEnd(nomUtilisateur, extension);
         final StringBuilder builder =
-            new StringBuilder()
-                    .append(nomSimple)
-                    .append(EclipseConstants.UNDERSCORE)
-                    .append(Utils.formatDate(Calendar
-                                                     .getInstance(EclipseConstants.LOCALE)
-                                                     .getTime(),
-                                             EclipseConstants.PATTERN_FILE_DISK))
-                    .append(extension);
+            new StringBuilder().append(nomSimple).append(EclipseConstants.UNDERSCORE)
+                    .append(Utils.formatDate(Calendar.getInstance(EclipseConstants.LOCALE).getTime(), EclipseConstants.PATTERN_FILE_DISK)).append(extension);
         return builder.toString();
     }
 
@@ -82,8 +70,7 @@ public abstract class AbstractDocumentEclipseFactory<DOC extends DocumentEclipse
      * Getter sur fileHelper.
      * @return Retourne le fileHelper.
      */
-    protected FileHelper getFileHelper()
-    {
+    protected FileHelper getFileHelper() {
         return this.fileHelper;
     }
 
@@ -91,8 +78,7 @@ public abstract class AbstractDocumentEclipseFactory<DOC extends DocumentEclipse
      * Setter pour fileHelper.
      * @param fileHelper le fileHelper à écrire.
      */
-    public void setFileHelper(final FileHelper fileHelper)
-    {
+    public void setFileHelper(final FileHelper fileHelper) {
         this.fileHelper = fileHelper;
     }
 

@@ -13,14 +13,11 @@ import fr.pharma.eclipse.domain.model.sigrec.essai.EssaiSigrec;
 
 /**
  * Classe du modèle d'import SIGREC représentant un CRO.
- 
+ * @author Netapsys
  * @version $Revision$ $Date$
  */
 @Entity(name = "cro_sigrec")
-public class CROSigrec
-    extends BeanObject
-    implements Contactable
-{
+public class CROSigrec extends BeanObject implements Contactable {
 
     /**
      * SerialVersionUID.
@@ -53,8 +50,8 @@ public class CROSigrec
      * Getter sur contact.
      * @return Retourne le contact.
      */
-    public ContactSigrec getContact()
-    {
+    @Override
+    public ContactSigrec getContact() {
         return this.contact;
     }
 
@@ -62,8 +59,8 @@ public class CROSigrec
      * Setter pour contact.
      * @param contact le contact à écrire.
      */
-    public void setContact(final ContactSigrec contact)
-    {
+    @Override
+    public void setContact(final ContactSigrec contact) {
         this.contact = contact;
     }
 
@@ -71,8 +68,7 @@ public class CROSigrec
      * Getter sur identifiant.
      * @return Retourne le identifiant.
      */
-    public String getIdentifiant()
-    {
+    public String getIdentifiant() {
         return this.identifiant;
     }
 
@@ -80,8 +76,7 @@ public class CROSigrec
      * Setter pour identifiant.
      * @param identifiant le identifiant à écrire.
      */
-    public void setIdentifiant(final String identifiant)
-    {
+    public void setIdentifiant(final String identifiant) {
         this.identifiant = identifiant;
     }
 
@@ -89,8 +84,7 @@ public class CROSigrec
      * Getter sur essai.
      * @return Retourne le essai.
      */
-    public EssaiSigrec getEssai()
-    {
+    public EssaiSigrec getEssai() {
         return this.essai;
     }
 
@@ -98,8 +92,7 @@ public class CROSigrec
      * Setter pour essai.
      * @param essai le essai à écrire.
      */
-    public void setEssai(final EssaiSigrec essai)
-    {
+    public void setEssai(final EssaiSigrec essai) {
         this.essai = essai;
     }
 

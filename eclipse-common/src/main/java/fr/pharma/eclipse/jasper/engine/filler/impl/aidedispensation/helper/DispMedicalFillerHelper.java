@@ -8,12 +8,10 @@ import fr.pharma.eclipse.domain.model.produit.Produit;
 
 /**
  * Helper pour la création des beans de dispositifs médicaux.
- 
+ * @author Netapsys
  * @version $Revision$ $Date$
  */
-public class DispMedicalFillerHelper
-    extends AbstractProduitsFillerHelper
-{
+public class DispMedicalFillerHelper extends AbstractProduitsFillerHelper {
 
     /**
      * Serial ID.
@@ -25,12 +23,10 @@ public class DispMedicalFillerHelper
      */
     @Override
     protected void fill(final Produit source,
-                        final JRBeanProduit dest)
-    {
+                        final JRBeanProduit dest) {
         final DispositifMedical dispMedical = (DispositifMedical) source;
         final String classeTherapeutique = dispMedical.getClasseTherapeutique();
-        if (StringUtils.hasText(classeTherapeutique))
-        {
+        if (StringUtils.hasText(classeTherapeutique)) {
             dest.setClasseTherapeuthique(classeTherapeutique);
         }
     }

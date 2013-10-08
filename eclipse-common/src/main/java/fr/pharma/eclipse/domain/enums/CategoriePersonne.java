@@ -2,11 +2,10 @@ package fr.pharma.eclipse.domain.enums;
 
 /**
  * Enumération pour les catégories de personne.
- 
+ * @author Netapsys
  * @version $Revision$ $Date$
  */
-public enum CategoriePersonne
-{
+public enum CategoriePersonne {
     /**
      * Interne (présent dans SIR).
      */
@@ -26,8 +25,7 @@ public enum CategoriePersonne
      * Constructeur privé.
      * @param libelle Libellé de la valeur de l'énumération.
      */
-    private CategoriePersonne(final String libelle)
-    {
+    private CategoriePersonne(final String libelle) {
         this.libelle = libelle;
     }
 
@@ -35,8 +33,7 @@ public enum CategoriePersonne
      * Getter sur libelle.
      * @return Retourne le libelle.
      */
-    public String getLibelle()
-    {
+    public String getLibelle() {
         return this.libelle;
     }
 
@@ -44,8 +41,7 @@ public enum CategoriePersonne
      * {@inheritDoc}
      */
     @Override
-    public String toString()
-    {
+    public String toString() {
         return this.getLibelle();
     }
 }

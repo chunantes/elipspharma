@@ -8,14 +8,13 @@ import fr.pharma.eclipse.domain.model.essai.detail.pharma.embedded.InfosCompleme
 import fr.pharma.eclipse.jasper.engine.filler.JasperReportBeanFiller;
 
 /**
- * Filler en charge de valoriser l'attribut de {@link JRBeanFicheAideDispensationPart4}<br>
+ * Filler en charge de valoriser l'attribut de
+ * {@link JRBeanFicheAideDispensationPart4}<br>
  * qui indique si la gestion des retours est faite par la pharmacie.
- 
+ * @author Netapsys
  * @version $Revision$ $Date$
  */
-public class AideDispensationPart4GestionRetourPharmaFiller
-    implements JasperReportBeanFiller
-{
+public class AideDispensationPart4GestionRetourPharmaFiller implements JasperReportBeanFiller {
     /**
      * Serial ID.
      */
@@ -26,13 +25,10 @@ public class AideDispensationPart4GestionRetourPharmaFiller
      */
     @Override
     public void fill(final Essai essai,
-                     final JasperReportBean bean)
-    {
+                     final JasperReportBean bean) {
         final JRBeanFicheAideDispensationPart4 partie4 = (JRBeanFicheAideDispensationPart4) bean;
-        final InfosComplementaires infosComplementaires =
-            essai.getDetailDonneesPharma().getInfosComplementaires();
-        partie4.setHasGestionRetoursPharma(Responsabilite.PHARMACIE.equals(infosComplementaires
-                .getGestionRetour()));
+        final InfosComplementaires infosComplementaires = essai.getDetailDonneesPharma().getInfosComplementaires();
+        partie4.setHasGestionRetoursPharma(Responsabilite.PHARMACIE.equals(infosComplementaires.getGestionRetour()));
     }
 
 }

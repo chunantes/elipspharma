@@ -12,13 +12,12 @@ import fr.pharma.eclipse.domain.criteria.dispensation.DispensationForOrdoSearchC
 import fr.pharma.eclipse.utils.constants.EclipseConstants;
 
 /**
- * Artisan de recherche pour les Dispensations dans la gestion des ordonnanciers.
- 
+ * Artisan de recherche pour les Dispensations dans la gestion des
+ * ordonnanciers.
+ * @author Netapsys
  * @version $Revision$ $Date$
  */
-public class DispensationForOrdoSearchCriteriaMaker
-    extends AbstractCriteriaMaker
-{
+public class DispensationForOrdoSearchCriteriaMaker extends AbstractCriteriaMaker {
     /**
      * SerialVersionUID.
      */
@@ -27,8 +26,7 @@ public class DispensationForOrdoSearchCriteriaMaker
     /**
      * Constructeur par défaut.
      */
-    public DispensationForOrdoSearchCriteriaMaker()
-    {
+    public DispensationForOrdoSearchCriteriaMaker() {
         super(DispensationForOrdoSearchCriteria.class);
     }
 
@@ -37,15 +35,11 @@ public class DispensationForOrdoSearchCriteriaMaker
      */
     @Override
     public void transform(final Criteria criteria,
-                          final SearchCriteria searchCrit)
-    {
-        final DispensationForOrdoSearchCriteria crit =
-            (DispensationForOrdoSearchCriteria) searchCrit;
+                          final SearchCriteria searchCrit) {
+        final DispensationForOrdoSearchCriteria crit = (DispensationForOrdoSearchCriteria) searchCrit;
 
         // Dispensé
-        CriteriaMakerUtils.addCritere(criteria,
-                                      "dispense",
-                                      Boolean.TRUE);
+        CriteriaMakerUtils.addCritere(criteria, "dispense", Boolean.TRUE);
 
         // Infos Ordonnancier null
         criteria.add(Restrictions.isNull("ordonnancier"));
@@ -56,30 +50,22 @@ public class DispensationForOrdoSearchCriteriaMaker
         final Criteria critDispensationProduit = criteria.createCriteria("dispensationsProduit");
 
         // Pharmacie
-        if (crit.getPharmacie() != null)
-        {
-            CriteriaMakerUtils.addCritere(critDispensationProduit,
-                                          "pharmacie",
-                                          crit.getPharmacie());
+        if (crit.getPharmacie() != null) {
+            CriteriaMakerUtils.addCritere(critDispensationProduit, "pharmacie", crit.getPharmacie());
         }
 
         // Date de début
-        if (crit.getDateDebut() != null)
-        {
-            critDispensationProduit.add(Restrictions.ge("dateCreation",
-                                                        crit.getDateDebut()));
+        if (crit.getDateDebut() != null) {
+            critDispensationProduit.add(Restrictions.ge("dateCreation", crit.getDateDebut()));
         }
 
         // Date de fin
-        if (crit.getDateFin() != null)
-        {
+        if (crit.getDateFin() != null) {
             final Calendar fin = Calendar.getInstance(EclipseConstants.LOCALE);
             fin.setTime(crit.getDateFin().getTime());
             // Ajout d'un jour
-            fin.add(Calendar.DAY_OF_MONTH,
-                    1);
-            critDispensationProduit.add(Restrictions.le("dateCreation",
-                                                        fin));
+            fin.add(Calendar.DAY_OF_MONTH, 1);
+            critDispensationProduit.add(Restrictions.le("dateCreation", fin));
         }
     }
 

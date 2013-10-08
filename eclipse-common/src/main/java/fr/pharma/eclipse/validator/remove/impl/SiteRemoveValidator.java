@@ -8,12 +8,10 @@ import fr.pharma.eclipse.validator.remove.RemoveValidator;
 
 /**
  * Classe de validation de suppression d'un objet Site.
- 
+ * @author Netapsys
  * @version $Revision$ $Date$
  */
-public class SiteRemoveValidator
-    implements RemoveValidator<Site>, Serializable
-{
+public class SiteRemoveValidator implements RemoveValidator<Site>, Serializable {
     /**
      * Serial ID.
      */
@@ -23,15 +21,10 @@ public class SiteRemoveValidator
      * {@inheritDoc}
      */
     @Override
-    public void validate(final Site site)
-    {
+    public void validate(final Site site) {
         // Si le site est présent au niveau d'une pharmacie
-        if (!site.getPharmacies().isEmpty())
-        {
-            throw new ValidationException("remove",
-                                          new String[]
-                                          {"impossible" },
-                                          site);
+        if (!site.getPharmacies().isEmpty()) {
+            throw new ValidationException("remove", new String[]{"impossible" }, site);
         }
     }
 

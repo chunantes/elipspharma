@@ -11,13 +11,10 @@ import fr.pharma.eclipse.jasper.constants.JasperConstants;
  * Classe représentant la source de données principale<br>
  * du rapport Jasper intitulé<br>
  * "Prescription nominative de médicament en expérimentation clinique".
- 
+ * @author Netapsys
  * @version $Revision$ $Date$
  */
-public class JRBeanModelePrescNominative
-    extends AbstractJRBeanWithHeader
-    implements Serializable
-{
+public class JRBeanModelePrescNominative extends AbstractJRBeanWithHeader implements Serializable {
 
     /**
      * Serial ID.
@@ -64,8 +61,7 @@ public class JRBeanModelePrescNominative
      * @return Retourne le header.
      */
     @Override
-    public JRBeanHeader getHeader()
-    {
+    public JRBeanHeader getHeader() {
         return this.header;
     }
 
@@ -73,8 +69,7 @@ public class JRBeanModelePrescNominative
      * Setter pour header.
      * @param header le header à écrire.
      */
-    public void setHeader(final JRBeanHeader header)
-    {
+    public void setHeader(final JRBeanHeader header) {
         this.header = header;
     }
 
@@ -82,8 +77,7 @@ public class JRBeanModelePrescNominative
      * Getter sur promoteur.
      * @return Retourne le promoteur.
      */
-    public String getPromoteur()
-    {
+    public String getPromoteur() {
         return this.promoteur;
     }
 
@@ -91,8 +85,7 @@ public class JRBeanModelePrescNominative
      * Setter pour promoteur.
      * @param promoteur le promoteur à écrire.
      */
-    public void setPromoteur(final String promoteur)
-    {
+    public void setPromoteur(final String promoteur) {
         this.promoteur = promoteur;
     }
 
@@ -100,8 +93,7 @@ public class JRBeanModelePrescNominative
      * Getter sur codeProtocole.
      * @return Retourne le codeProtocole.
      */
-    public String getCodeProtocole()
-    {
+    public String getCodeProtocole() {
         return this.codeProtocole;
     }
 
@@ -109,8 +101,7 @@ public class JRBeanModelePrescNominative
      * Setter pour codeProtocole.
      * @param codeProtocole le codeProtocole à écrire.
      */
-    public void setCodeProtocole(final String codeProtocole)
-    {
+    public void setCodeProtocole(final String codeProtocole) {
         this.codeProtocole = codeProtocole;
     }
 
@@ -118,8 +109,7 @@ public class JRBeanModelePrescNominative
      * Getter sur nomUsuel.
      * @return Retourne le nomUsuel.
      */
-    public String getNomUsuel()
-    {
+    public String getNomUsuel() {
         return this.nomUsuel;
     }
 
@@ -127,8 +117,7 @@ public class JRBeanModelePrescNominative
      * Setter pour nomUsuel.
      * @param nomUsuel le nomUsuel à écrire.
      */
-    public void setNomUsuel(final String nomUsuel)
-    {
+    public void setNomUsuel(final String nomUsuel) {
         this.nomUsuel = nomUsuel;
     }
 
@@ -136,8 +125,7 @@ public class JRBeanModelePrescNominative
      * Getter pour produits.
      * @return Le produits
      */
-    public JRDataSource getProduits()
-    {
+    public JRDataSource getProduits() {
         return this.produits;
     }
 
@@ -145,8 +133,7 @@ public class JRBeanModelePrescNominative
      * Setter pour produits.
      * @param produits Le produits à écrire.
      */
-    public void setProduits(final JRDataSource produits)
-    {
+    public void setProduits(final JRDataSource produits) {
         this.produits = produits;
     }
 
@@ -154,8 +141,7 @@ public class JRBeanModelePrescNominative
      * Getter pour numInclusion.
      * @return Le numInclusion
      */
-    public String getNumInclusion()
-    {
+    public String getNumInclusion() {
         return this.numInclusion;
     }
 
@@ -163,8 +149,7 @@ public class JRBeanModelePrescNominative
      * Setter pour numInclusion.
      * @param numInclusion Le numInclusion à écrire.
      */
-    public void setNumInclusion(final String numInclusion)
-    {
+    public void setNumInclusion(final String numInclusion) {
         this.numInclusion = numInclusion;
     }
 
@@ -172,8 +157,7 @@ public class JRBeanModelePrescNominative
      * Getter pour numVisite.
      * @return Le numVisite
      */
-    public String getNumVisite()
-    {
+    public String getNumVisite() {
         return this.numVisite;
     }
 
@@ -181,8 +165,7 @@ public class JRBeanModelePrescNominative
      * Setter pour numVisite.
      * @param numVisite Le numVisite à écrire.
      */
-    public void setNumVisite(final String numVisite)
-    {
+    public void setNumVisite(final String numVisite) {
         this.numVisite = numVisite;
     }
 

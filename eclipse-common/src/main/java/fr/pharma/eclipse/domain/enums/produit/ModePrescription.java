@@ -2,11 +2,10 @@ package fr.pharma.eclipse.domain.enums.produit;
 
 /**
  * Enumération représentant le mode de prescription d'un produit.
- 
+ * @author Netapsys
  * @version $Revision$ $Date$
  */
-public enum ModePrescription
-{
+public enum ModePrescription {
     /**
      * Numéro de traitement.
      */
@@ -46,8 +45,7 @@ public enum ModePrescription
      * Constructeur.
      * @param libelle Le libellé de la nature du Dm.
      */
-    ModePrescription(final String libelle)
-    {
+    ModePrescription(final String libelle) {
         this.libelle = libelle;
     }
 
@@ -55,8 +53,7 @@ public enum ModePrescription
      * Getter pour libelle.
      * @return Retourne le libelle.
      */
-    public String getLibelle()
-    {
+    public String getLibelle() {
         return this.libelle;
     }
 
@@ -64,8 +61,7 @@ public enum ModePrescription
      * {@inheritDoc}
      */
     @Override
-    public String toString()
-    {
+    public String toString() {
         return this.getLibelle();
     }
 

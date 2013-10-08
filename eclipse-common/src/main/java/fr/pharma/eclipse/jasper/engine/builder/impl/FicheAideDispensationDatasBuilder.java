@@ -20,12 +20,10 @@ import fr.pharma.eclipse.jasper.exception.JasperReportBuildException;
 /**
  * Classe en charge de constuire les données pour le rapport Jasper de type
  * {@link TypeRapportJasper}.FICHE_AIDE_DISPENSATION.
- 
+ * @author Netapsys
  * @version $Revision$ $Date$
  */
-public class FicheAideDispensationDatasBuilder
-    implements JasperReportDatasBuilder
-{
+public class FicheAideDispensationDatasBuilder implements JasperReportDatasBuilder {
 
     /**
      * Serial ID.
@@ -43,7 +41,8 @@ public class FicheAideDispensationDatasBuilder
     private JRDataSourceFactory jrDataSourceFactory;
 
     /**
-     * Helper pour la levée d'exception JasperReportBuildException sur condition.
+     * Helper pour la levée d'exception JasperReportBuildException sur
+     * condition.
      */
     private SourceCheckingHandler checkHandler;
 
@@ -61,25 +60,18 @@ public class FicheAideDispensationDatasBuilder
      * {@inheritDoc}
      */
     @Override
-    public JRDataSource buildDataSource(final Object source)
-    {
+    public JRDataSource buildDataSource(final Object source) {
         final Essai essai = (Essai) source;
 
         // Construction du bean.
         final JRBeanFicheAideDispensation dataSource = new JRBeanFicheAideDispensation();
-        for (final JasperReportBeanFiller filler : this.dataSourceFillers)
-        {
-            filler.fill(essai,
-                        dataSource);
+        for (final JasperReportBeanFiller filler : this.dataSourceFillers) {
+            filler.fill(essai, dataSource);
         }
 
         // Construction de l'en-tête.
-        final String sousTitre =
-            "Fiche de gestion et d'aide à la dispensation d'un médicament en essai clinique";
-        final JRBeanHeader dataHeader = this.headerBuilder.build(sousTitre,
-                                                                 "Management",
-                                                                 "Essais cliniques",
-                                                                 "Pharmacie");
+        final String sousTitre = "Fiche de gestion et d'aide à la dispensation d'un médicament en essai clinique";
+        final JRBeanHeader dataHeader = this.headerBuilder.build(sousTitre, "Management", "Essais cliniques", "Pharmacie");
         dataSource.setHeader(dataHeader);
         return this.jrDataSourceFactory.getInitializedObject(dataSource);
     }
@@ -88,8 +80,7 @@ public class FicheAideDispensationDatasBuilder
      * {@inheritDoc}
      */
     @Override
-    public Map<String, Object> buildParameters(final Object source)
-    {
+    public Map<String, Object> buildParameters(final Object source) {
         return new HashMap<String, Object>();
     }
 
@@ -98,17 +89,13 @@ public class FicheAideDispensationDatasBuilder
      */
     @Override
     public String buildReportName(final Object source,
-                                  final TypeRapportJasper typeRapport)
-    {
+                                  final TypeRapportJasper typeRapport) {
         final Essai essai = (Essai) source;
         final StringBuilder builder = new StringBuilder();
-        this.reportNameHelper.addCommonNamePart(builder,
-                                                typeRapport);
-        this.reportNameHelper.addIdEssaiPart(builder,
-                                             essai);
+        this.reportNameHelper.addCommonNamePart(builder, typeRapport);
+        this.reportNameHelper.addIdEssaiPart(builder, essai);
         this.reportNameHelper.addDatePart(builder);
-        this.reportNameHelper.addCommonExtensionPart(builder,
-                                                     typeRapport);
+        this.reportNameHelper.addCommonExtensionPart(builder, typeRapport);
         return builder.toString();
     }
 
@@ -116,28 +103,17 @@ public class FicheAideDispensationDatasBuilder
      * {@inheritDoc}
      */
     @Override
-    public void checkSource(final Object source)
-        throws JasperReportBuildException
-    {
-        this.checkHandler.handleCheck(source != null,
-                                      new StringBuilder("[FicheAideDispensationDatasBuilder] ")
-                                              .append("La source est nulle.")
-                                              .toString());
-        this.checkHandler
-                .handleCheck(source instanceof Essai,
-                             new StringBuilder("[FicheAideDispensationDatasBuilder] ")
-                                     .append("Le type attendu de la source est Essai (source: ")
-                                     .append(source)
-                                     .append(").")
-                                     .toString());
+    public void checkSource(final Object source) throws JasperReportBuildException {
+        this.checkHandler.handleCheck(source != null, new StringBuilder("[FicheAideDispensationDatasBuilder] ").append("La source est nulle.").toString());
+        this.checkHandler.handleCheck(source instanceof Essai, new StringBuilder("[FicheAideDispensationDatasBuilder] ").append("Le type attendu de la source est Essai (source: ")
+                .append(source).append(").").toString());
     }
 
     /**
      * Getter sur reportNameHelper.
      * @return Retourne le reportNameHelper.
      */
-    ReportNameBuildHelper getReportNameHelper()
-    {
+    ReportNameBuildHelper getReportNameHelper() {
         return this.reportNameHelper;
     }
 
@@ -145,8 +121,7 @@ public class FicheAideDispensationDatasBuilder
      * Setter pour reportNameHelper.
      * @param reportNameHelper le reportNameHelper à écrire.
      */
-    public void setReportNameHelper(final ReportNameBuildHelper reportNameHelper)
-    {
+    public void setReportNameHelper(final ReportNameBuildHelper reportNameHelper) {
         this.reportNameHelper = reportNameHelper;
     }
 
@@ -154,8 +129,7 @@ public class FicheAideDispensationDatasBuilder
      * Getter sur jrDataSourceFactory.
      * @return Retourne le jrDataSourceFactory.
      */
-    JRDataSourceFactory getJrDataSourceFactory()
-    {
+    JRDataSourceFactory getJrDataSourceFactory() {
         return this.jrDataSourceFactory;
     }
 
@@ -163,8 +137,7 @@ public class FicheAideDispensationDatasBuilder
      * Setter pour jrDataSourceFactory.
      * @param jrDataSourceFactory le jrDataSourceFactory à écrire.
      */
-    public void setJrDataSourceFactory(final JRDataSourceFactory jrDataSourceFactory)
-    {
+    public void setJrDataSourceFactory(final JRDataSourceFactory jrDataSourceFactory) {
         this.jrDataSourceFactory = jrDataSourceFactory;
     }
 
@@ -172,8 +145,7 @@ public class FicheAideDispensationDatasBuilder
      * Getter sur checkHandler.
      * @return Retourne le checkHandler.
      */
-    SourceCheckingHandler getCheckHandler()
-    {
+    SourceCheckingHandler getCheckHandler() {
         return this.checkHandler;
     }
 
@@ -181,8 +153,7 @@ public class FicheAideDispensationDatasBuilder
      * Setter pour checkHandler.
      * @param checkHandler le checkHandler à écrire.
      */
-    public void setCheckHandler(final SourceCheckingHandler checkHandler)
-    {
+    public void setCheckHandler(final SourceCheckingHandler checkHandler) {
         this.checkHandler = checkHandler;
     }
 
@@ -190,8 +161,7 @@ public class FicheAideDispensationDatasBuilder
      * Getter sur headerBuilder.
      * @return Retourne le headerBuilder.
      */
-    JRBeanHeaderBuilder getHeaderBuilder()
-    {
+    JRBeanHeaderBuilder getHeaderBuilder() {
         return this.headerBuilder;
     }
 
@@ -199,8 +169,7 @@ public class FicheAideDispensationDatasBuilder
      * Setter pour headerBuilder.
      * @param headerBuilder le headerBuilder à écrire.
      */
-    public void setHeaderBuilder(final JRBeanHeaderBuilder headerBuilder)
-    {
+    public void setHeaderBuilder(final JRBeanHeaderBuilder headerBuilder) {
         this.headerBuilder = headerBuilder;
     }
 
@@ -208,8 +177,7 @@ public class FicheAideDispensationDatasBuilder
      * Getter sur dataSourceFillers.
      * @return Retourne le dataSourceFillers.
      */
-    public List<JasperReportBeanFiller> getDataSourceFillers()
-    {
+    public List<JasperReportBeanFiller> getDataSourceFillers() {
         return this.dataSourceFillers;
     }
 
@@ -217,8 +185,7 @@ public class FicheAideDispensationDatasBuilder
      * Setter pour dataSourceFillers.
      * @param dataSourceFillers le dataSourceFillers à écrire.
      */
-    public void setDataSourceFillers(final List<JasperReportBeanFiller> dataSourceFillers)
-    {
+    public void setDataSourceFillers(final List<JasperReportBeanFiller> dataSourceFillers) {
         this.dataSourceFillers = dataSourceFillers;
     }
 

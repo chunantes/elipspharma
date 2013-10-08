@@ -9,12 +9,10 @@ import fr.pharma.eclipse.utils.introspection.BeanTool;
 /**
  * Helper générique pour la manipulation des beans par les classes de services.
  * @param <BEAN> Type générique d'objets Eclipse.
- 
+ * @author Netapsys
  * @version $Revision$ $Date$
  */
-public class BeanHelper<BEAN extends BeanObject>
-    implements Serializable
-{
+public class BeanHelper<BEAN extends BeanObject> implements Serializable {
 
     /**
      * Serial ID.
@@ -25,17 +23,15 @@ public class BeanHelper<BEAN extends BeanObject>
      * Méthode en charge d'ajouter un objet dans une liste d'objets d'un bean.
      * @param <CHILD> Type générique des objets de la liste.
      * @param bean Objet principal.
-     * @param beanCollectionProperty Propriété du bean contenant la collection à mettre à jour.
+     * @param beanCollectionProperty Propriété du bean contenant la collection à
+     * mettre à jour.
      * @param childToAdd Elément à ajouter à la liste du bean principal.
      */
     @SuppressWarnings("unchecked")
     public <CHILD extends BeanObject> void addToCollection(final BEAN bean,
                                                            final String beanCollectionProperty,
-                                                           final CHILD childToAdd)
-    {
-        final Collection<CHILD> collection =
-            (Collection<CHILD>) BeanTool.getPropriete(bean,
-                                                      beanCollectionProperty);
+                                                           final CHILD childToAdd) {
+        final Collection<CHILD> collection = (Collection<CHILD>) BeanTool.getPropriete(bean, beanCollectionProperty);
         collection.add(childToAdd);
     }
 

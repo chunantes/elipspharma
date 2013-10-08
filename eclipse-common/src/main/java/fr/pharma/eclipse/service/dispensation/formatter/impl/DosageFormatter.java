@@ -7,14 +7,12 @@ import fr.pharma.eclipse.service.dispensation.formatter.ConseilFormatter;
 import fr.pharma.eclipse.utils.constants.EclipseConstants;
 
 /**
- * Classe en charge de formatter le conseil pour un conditionnement de type Dosage.
- 
+ * Classe en charge de formatter le conseil pour un conditionnement de type
+ * Dosage.
+ * @author Netapsys
  * @version $Revision$ $Date$
  */
-public class DosageFormatter
-    extends GenericConseilFormatter
-    implements ConseilFormatter, Serializable
-{
+public class DosageFormatter extends GenericConseilFormatter implements ConseilFormatter, Serializable {
 
     /**
      * SerialVersionUID.
@@ -25,15 +23,9 @@ public class DosageFormatter
      * {@inheritDoc}
      */
     @Override
-    public String format(final ConseilDispensation conseil)
-    {
-        final StringBuffer buff =
-            new StringBuffer(this.messageBuilder.getMessage("conseil.dispensation.aide"));
-        buff
-                .append(this.formatNbDoses(conseil))
-                .append(EclipseConstants.SPACE)
-                .append(EclipseConstants.DASH)
-                .append(EclipseConstants.SPACE);
+    public String format(final ConseilDispensation conseil) {
+        final StringBuffer buff = new StringBuffer(this.messageBuilder.getMessage("conseil.dispensation.aide"));
+        buff.append(this.formatNbDoses(conseil)).append(EclipseConstants.SPACE).append(EclipseConstants.DASH).append(EclipseConstants.SPACE);
         buff.append(this.formatFrequence(conseil));
         buff.append(" => ").append(this.formatTotal(conseil));
         return buff.toString();
@@ -44,24 +36,21 @@ public class DosageFormatter
      * @param conseil ConseilDispensation.
      * @return Le message contenant le nombre de doses unitaires.
      */
-    private String formatNbDoses(final ConseilDispensation conseil)
-    {
+    private String formatNbDoses(final ConseilDispensation conseil) {
         final Object[] args = new Object[1];
         args[0] = conseil.getProduitPrescrit().getNbUniteDosage();
-        return this.messageBuilder.getMessage("conseil.dispensation.dose",
-                                              args);
+        return this.messageBuilder.getMessage("conseil.dispensation.dose", args);
     }
 
     /**
-     * Méthode en charge de formatter le message contenant le nombre total de doses à sortir.
+     * Méthode en charge de formatter le message contenant le nombre total de
+     * doses à sortir.
      * @param conseil Le ConseilDispensation.
      * @return Le message contenant le nombre total de doses.
      */
-    private String formatTotal(final ConseilDispensation conseil)
-    {
+    private String formatTotal(final ConseilDispensation conseil) {
         final Object[] args = new Object[1];
         args[0] = conseil.getNbASortir();
-        return this.messageBuilder.getMessage("conseil.dispensation.dose.total",
-                                              args);
+        return this.messageBuilder.getMessage("conseil.dispensation.dose.total", args);
     }
 }

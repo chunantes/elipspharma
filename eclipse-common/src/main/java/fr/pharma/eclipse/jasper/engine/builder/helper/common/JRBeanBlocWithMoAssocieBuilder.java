@@ -10,13 +10,12 @@ import fr.pharma.eclipse.domain.model.essai.Essai;
 import fr.pharma.eclipse.utils.introspection.BeanTool;
 
 /**
- * Classe en charge de construire un bean jasper {@link JRBeanBlocWithMoAssocie}.
- 
+ * Classe en charge de construire un bean jasper {@link JRBeanBlocWithMoAssocie}
+ * .
+ * @author Netapsys
  * @version $Revision$ $Date$
  */
-public class JRBeanBlocWithMoAssocieBuilder
-    implements Serializable
-{
+public class JRBeanBlocWithMoAssocieBuilder implements Serializable {
 
     /**
      * Serial ID.
@@ -49,19 +48,17 @@ public class JRBeanBlocWithMoAssocieBuilder
     /**
      * Constructeur.
      * @param titreBloc Titre du bloc géré.
-     * @param essaiPropertyForPresence Propriété pour calculer la valeur du champ presence,<br>
+     * @param essaiPropertyForPresence Propriété pour calculer la valeur du
+     * champ presence,<br>
      * à partir de l'essai.
      * @param essaiPropertyForCommentaire Propriété pour calculer la valeur<br>
      * du champ commentaire, à partir de l'essai.
-     * @param essaiPropertyForMoAssocie Propriété pour calculer la valeur du champ moAssocie,<br>
+     * @param essaiPropertyForMoAssocie Propriété pour calculer la valeur du
+     * champ moAssocie,<br>
      * à partir de l'essai.
      */
-    public JRBeanBlocWithMoAssocieBuilder(
-                                          final String titreBloc,
-                                          final String essaiPropertyForPresence,
-                                          final String essaiPropertyForCommentaire,
-                                          final String essaiPropertyForMoAssocie)
-    {
+    public JRBeanBlocWithMoAssocieBuilder(final String titreBloc, final String essaiPropertyForPresence, final String essaiPropertyForCommentaire,
+                                          final String essaiPropertyForMoAssocie) {
         this.titreBloc = titreBloc;
         this.essaiPropertyForPresence = essaiPropertyForPresence;
         this.essaiPropertyForCommentaire = essaiPropertyForCommentaire;
@@ -71,17 +68,12 @@ public class JRBeanBlocWithMoAssocieBuilder
     /**
      * Constructeur simple.
      * @param titreBloc Titre du bloc géré.
-     * @param essaiPropertyForPresence Propriété pour calculer la valeur du champ presence,<br>
+     * @param essaiPropertyForPresence Propriété pour calculer la valeur du
+     * champ presence,<br>
      * à partir de l'essai.
      */
-    public JRBeanBlocWithMoAssocieBuilder(
-                                          final String titreBloc,
-                                          final String essaiPropertyForPresence)
-    {
-        this(titreBloc,
-             essaiPropertyForPresence,
-             null,
-             null);
+    public JRBeanBlocWithMoAssocieBuilder(final String titreBloc, final String essaiPropertyForPresence) {
+        this(titreBloc, essaiPropertyForPresence, null, null);
     }
 
     /**
@@ -90,19 +82,13 @@ public class JRBeanBlocWithMoAssocieBuilder
      * @param essai Essai à partir duquel créer le bean jasper.
      * @return Le bean {@link JRBeanBlocWithMoAssocie}.
      */
-    public JRBeanBlocWithMoAssocie build(final Essai essai)
-    {
+    public JRBeanBlocWithMoAssocie build(final Essai essai) {
         final JRBeanBlocWithMoAssocie jrBlocWithMoAssocie = new JRBeanBlocWithMoAssocie();
         jrBlocWithMoAssocie.setTitre(this.titreBloc);
 
-        final boolean isPresent = this.fillPresence(essai,
-                                                    jrBlocWithMoAssocie);
-        this.fillCommentaire(essai,
-                             jrBlocWithMoAssocie,
-                             isPresent);
-        this.fillMoAssocie(essai,
-                           jrBlocWithMoAssocie,
-                           isPresent);
+        final boolean isPresent = this.fillPresence(essai, jrBlocWithMoAssocie);
+        this.fillCommentaire(essai, jrBlocWithMoAssocie, isPresent);
+        this.fillMoAssocie(essai, jrBlocWithMoAssocie, isPresent);
 
         return jrBlocWithMoAssocie;
     }
@@ -114,20 +100,18 @@ public class JRBeanBlocWithMoAssocieBuilder
      * @return Présent ou non.
      */
     private boolean fillPresence(final Essai essai,
-                                 final JRBeanBlocWithMoAssocie jrBlocWithMoAssocie)
-    {
+                                 final JRBeanBlocWithMoAssocie jrBlocWithMoAssocie) {
         boolean isPresent;
-        if (!StringUtils.hasText(this.essaiPropertyForPresence))
-        {
+        if (!StringUtils.hasText(this.essaiPropertyForPresence)) {
             // Si propriété pas renseignée, présence à true par défaut.
             isPresent = true;
             jrBlocWithMoAssocie.setPresence(isPresent);
-            jrBlocWithMoAssocie.setShowPresence(false); // on ne montre pas le OUI/NON
+            jrBlocWithMoAssocie.setShowPresence(false); // on ne montre pas le
+                                                        // OUI/NON
             return isPresent;
         }
 
-        final Boolean presence = (Boolean) BeanTool.getPropriete(essai,
-                                                                 this.essaiPropertyForPresence);
+        final Boolean presence = (Boolean) BeanTool.getPropriete(essai, this.essaiPropertyForPresence);
         isPresent = Boolean.TRUE.equals(presence);
         jrBlocWithMoAssocie.setPresence(isPresent);
         return isPresent;
@@ -141,19 +125,13 @@ public class JRBeanBlocWithMoAssocieBuilder
      */
     private void fillMoAssocie(final Essai essai,
                                final JRBeanBlocWithMoAssocie jrBlocWithMoAssocie,
-                               final boolean isPresent)
-    {
-        if (!StringUtils.hasText(this.essaiPropertyForMoAssocie)
-            || !isPresent)
-        {
+                               final boolean isPresent) {
+        if (!StringUtils.hasText(this.essaiPropertyForMoAssocie) || !isPresent) {
             return;
         }
 
-        final DocumentEclipse docAssocie =
-            (DocumentEclipse) BeanTool.getPropriete(essai,
-                                                    this.essaiPropertyForMoAssocie);
-        if (docAssocie != null)
-        {
+        final DocumentEclipse docAssocie = (DocumentEclipse) BeanTool.getPropriete(essai, this.essaiPropertyForMoAssocie);
+        if (docAssocie != null) {
             jrBlocWithMoAssocie.setMoAssocie(docAssocie.getNomUtilisateur());
         }
     }
@@ -166,17 +144,12 @@ public class JRBeanBlocWithMoAssocieBuilder
      */
     private void fillCommentaire(final Essai essai,
                                  final JRBeanBlocWithMoAssocie jrBlocWithMoAssocie,
-                                 final Boolean isPresent)
-    {
-        if (!StringUtils.hasText(this.essaiPropertyForCommentaire)
-            || !isPresent)
-        {
+                                 final Boolean isPresent) {
+        if (!StringUtils.hasText(this.essaiPropertyForCommentaire) || !isPresent) {
             return;
         }
 
-        final String commentaire =
-            (String) BeanTool.getPropriete(essai,
-                                           this.essaiPropertyForCommentaire);
+        final String commentaire = (String) BeanTool.getPropriete(essai, this.essaiPropertyForCommentaire);
         jrBlocWithMoAssocie.setCommentaire(commentaire);
     }
 
@@ -184,8 +157,7 @@ public class JRBeanBlocWithMoAssocieBuilder
      * Getter sur titreBloc.
      * @return Retourne le titreBloc.
      */
-    String getTitreBloc()
-    {
+    String getTitreBloc() {
         return this.titreBloc;
     }
 
@@ -193,8 +165,7 @@ public class JRBeanBlocWithMoAssocieBuilder
      * Getter sur essaiPropertyForPresence.
      * @return Retourne le essaiPropertyForPresence.
      */
-    String getEssaiPropertyForPresence()
-    {
+    String getEssaiPropertyForPresence() {
         return this.essaiPropertyForPresence;
     }
 
@@ -202,8 +173,7 @@ public class JRBeanBlocWithMoAssocieBuilder
      * Getter sur essaiPropertyForCommentaire.
      * @return Retourne le essaiPropertyForCommentaire.
      */
-    String getEssaiPropertyForCommentaire()
-    {
+    String getEssaiPropertyForCommentaire() {
         return this.essaiPropertyForCommentaire;
     }
 
@@ -211,8 +181,7 @@ public class JRBeanBlocWithMoAssocieBuilder
      * Getter sur essaiPropertyForMoAssocie.
      * @return Retourne le essaiPropertyForMoAssocie.
      */
-    String getEssaiPropertyForMoAssocie()
-    {
+    String getEssaiPropertyForMoAssocie() {
         return this.essaiPropertyForMoAssocie;
     }
 
@@ -220,8 +189,7 @@ public class JRBeanBlocWithMoAssocieBuilder
      * Setter pour essaiPropertyForPresence.
      * @param essaiPropertyForPresence le essaiPropertyForPresence à écrire.
      */
-    void setEssaiPropertyForPresence(final String essaiPropertyForPresence)
-    {
+    void setEssaiPropertyForPresence(final String essaiPropertyForPresence) {
         this.essaiPropertyForPresence = essaiPropertyForPresence;
     }
 

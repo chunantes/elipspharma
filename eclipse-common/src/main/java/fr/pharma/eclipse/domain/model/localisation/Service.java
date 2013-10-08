@@ -30,14 +30,11 @@ import fr.pharma.eclipse.domain.model.suivi.localisation.ServiceSuivi;
 
 /**
  * Classe métier représentant un service.
- 
+ * @author Netapsys
  * @version $Revision$ $Date$
  */
 @Entity(name = "service")
-public class Service
-    extends BeanObjectSuivi
-    implements BeanWithNom
-{
+public class Service extends BeanObjectSuivi implements BeanWithNom {
     /**
      * Serial ID.
      */
@@ -81,8 +78,7 @@ public class Service
     @ManyToMany(targetEntity = Investigateur.class, mappedBy = "services", cascade = CascadeType.ALL)
     @LazyCollection(LazyCollectionOption.TRUE)
     @Sort(type = SortType.COMPARATOR, comparator = BeanWithNomComparator.class)
-    private SortedSet<Investigateur> investigateurs =
-        new TreeSet<Investigateur>(new BeanWithNomComparator());
+    private SortedSet<Investigateur> investigateurs = new TreeSet<Investigateur>(new BeanWithNomComparator());
 
     /**
      * ARC Investigateurs.
@@ -90,8 +86,7 @@ public class Service
     @ManyToMany(targetEntity = ArcInvestigateur.class, mappedBy = "services", cascade = CascadeType.ALL)
     @LazyCollection(LazyCollectionOption.TRUE)
     @Sort(type = SortType.COMPARATOR, comparator = BeanWithNomComparator.class)
-    private SortedSet<ArcInvestigateur> arcInvestigateurs =
-        new TreeSet<ArcInvestigateur>(new BeanWithNomComparator());
+    private SortedSet<ArcInvestigateur> arcInvestigateurs = new TreeSet<ArcInvestigateur>(new BeanWithNomComparator());
 
     /**
      * Liste des modifications du service.
@@ -99,15 +94,14 @@ public class Service
     @OneToMany(mappedBy = "service", cascade = CascadeType.ALL)
     @LazyCollection(LazyCollectionOption.TRUE)
     @Sort(type = SortType.COMPARATOR, comparator = SuiviComparator.class)
-    private final SortedSet<ServiceSuivi> modifs =
-        new TreeSet<ServiceSuivi>(new SuiviComparator());
+    private final SortedSet<ServiceSuivi> modifs = new TreeSet<ServiceSuivi>(new SuiviComparator());
 
     /**
      * Getter sur nom.
      * @return Retourne le nom.
      */
-    public String getNom()
-    {
+    @Override
+    public String getNom() {
         return this.nom;
     }
 
@@ -115,8 +109,7 @@ public class Service
      * Setter pour nom.
      * @param nom le nom à écrire.
      */
-    public void setNom(final String nom)
-    {
+    public void setNom(final String nom) {
         this.nom = nom;
     }
 
@@ -124,8 +117,7 @@ public class Service
      * Getter sur pole.
      * @return Retourne le pole.
      */
-    public Pole getPole()
-    {
+    public Pole getPole() {
         return this.pole;
     }
 
@@ -133,8 +125,7 @@ public class Service
      * Setter pour pole.
      * @param pole le pole à écrire.
      */
-    public void setPole(final Pole pole)
-    {
+    public void setPole(final Pole pole) {
         this.pole = pole;
     }
 
@@ -143,8 +134,7 @@ public class Service
      * @return Retourne le modifs.
      */
     @Override
-    public SortedSet<ServiceSuivi> getModifs()
-    {
+    public SortedSet<ServiceSuivi> getModifs() {
         return this.modifs;
     }
 
@@ -152,8 +142,7 @@ public class Service
      * Getter sur essais.
      * @return Retourne le essais.
      */
-    public SortedSet<Essai> getEssais()
-    {
+    public SortedSet<Essai> getEssais() {
         return this.essais;
     }
 
@@ -161,8 +150,7 @@ public class Service
      * Setter pour essais.
      * @param essais le essais à écrire.
      */
-    public void setEssais(final SortedSet<Essai> essais)
-    {
+    public void setEssais(final SortedSet<Essai> essais) {
         this.essais = essais;
     }
 
@@ -170,8 +158,7 @@ public class Service
      * {@inheritDoc}
      */
     @Override
-    public String toString()
-    {
+    public String toString() {
         final StringBuilder builder = new StringBuilder("[");
         builder.append("id: ").append(this.getId());
         builder.append(", nom: ").append(this.nom);
@@ -183,8 +170,7 @@ public class Service
      * Getter sur investigateurs.
      * @return Retourne le investigateurs.
      */
-    public SortedSet<Investigateur> getInvestigateurs()
-    {
+    public SortedSet<Investigateur> getInvestigateurs() {
         return this.investigateurs;
     }
 
@@ -192,8 +178,7 @@ public class Service
      * Setter pour investigateurs.
      * @param investigateurs le investigateurs à écrire.
      */
-    public void setInvestigateurs(final SortedSet<Investigateur> investigateurs)
-    {
+    public void setInvestigateurs(final SortedSet<Investigateur> investigateurs) {
         this.investigateurs = investigateurs;
     }
 
@@ -201,8 +186,7 @@ public class Service
      * Getter pour arcInvestigateurs.
      * @return Le arcInvestigateurs
      */
-    public SortedSet<ArcInvestigateur> getArcInvestigateurs()
-    {
+    public SortedSet<ArcInvestigateur> getArcInvestigateurs() {
         return this.arcInvestigateurs;
     }
 
@@ -210,8 +194,7 @@ public class Service
      * Setter pour arcInvestigateurs.
      * @param arcInvestigateurs Le arcInvestigateurs à écrire.
      */
-    public void setArcInvestigateurs(final SortedSet<ArcInvestigateur> arcInvestigateurs)
-    {
+    public void setArcInvestigateurs(final SortedSet<ArcInvestigateur> arcInvestigateurs) {
         this.arcInvestigateurs = arcInvestigateurs;
     }
 
@@ -219,8 +202,7 @@ public class Service
      * Getter pour site.
      * @return Le site
      */
-    public Site getSite()
-    {
+    public Site getSite() {
         return this.site;
     }
 
@@ -228,8 +210,7 @@ public class Service
      * Setter pour site.
      * @param site Le site à écrire.
      */
-    public void setSite(final Site site)
-    {
+    public void setSite(final Site site) {
         this.site = site;
     }
 

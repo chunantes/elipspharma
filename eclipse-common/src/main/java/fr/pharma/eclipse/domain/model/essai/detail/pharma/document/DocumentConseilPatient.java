@@ -6,15 +6,14 @@ import javax.persistence.Entity;
 import fr.pharma.eclipse.domain.enums.document.TypeDocumentEssai;
 
 /**
- * Bean métier représentant un document relatif aux conseils patients de l'essai clinique.
- 
+ * Bean métier représentant un document relatif aux conseils patients de l'essai
+ * clinique.
+ * @author Netapsys
  * @version $Revision$ $Date$
  */
 @Entity
 @DiscriminatorValue("CONSEIL_PATIENT")
-public class DocumentConseilPatient
-    extends DocumentDonneesPharma
-{
+public class DocumentConseilPatient extends DocumentDonneesPharma {
 
     /**
      * SerialVersionUID.
@@ -24,8 +23,7 @@ public class DocumentConseilPatient
     /**
      * Constructeur par défaut.
      */
-    public DocumentConseilPatient()
-    {
+    public DocumentConseilPatient() {
         this.setType(TypeDocumentEssai.CONSEIL_PATIENT);
     }
 }

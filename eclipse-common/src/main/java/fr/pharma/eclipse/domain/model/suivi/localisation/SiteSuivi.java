@@ -12,13 +12,11 @@ import fr.pharma.eclipse.domain.model.suivi.common.Suivi;
 
 /**
  * Bean métier représentant les suivis de modifications sur le bean Site.
- 
+ * @author Netapsys
  * @version $Revision$ $Date$
  */
 @Entity(name = "site_suivi")
-public class SiteSuivi
-    extends Suivi
-{
+public class SiteSuivi extends Suivi {
     /**
      * Serial ID.
      */
@@ -36,8 +34,7 @@ public class SiteSuivi
      * Getter sur site.
      * @return Retourne le site.
      */
-    public Site getSite()
-    {
+    public Site getSite() {
         return this.site;
     }
 
@@ -45,8 +42,7 @@ public class SiteSuivi
      * Setter pour site.
      * @param site le site à écrire.
      */
-    public void setSite(final Site site)
-    {
+    public void setSite(final Site site) {
         this.site = site;
     }
 

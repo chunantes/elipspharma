@@ -24,21 +24,16 @@ import org.hibernate.validator.constraints.NotEmpty;
 import fr.pharma.eclipse.comparator.suivi.SuiviComparator;
 import fr.pharma.eclipse.domain.model.common.BeanObjectSuivi;
 import fr.pharma.eclipse.domain.model.essai.Essai;
-import fr.pharma.eclipse.domain.model.essai.EssaiElement;
 import fr.pharma.eclipse.domain.model.suivi.common.Suivi;
 import fr.pharma.eclipse.domain.model.suivi.incident.IncidentSuivi;
 
 /**
  * Bean métier représant un incident.
- 
+ * @author Netapsys
  * @version $Revision$ $Date$
  */
 @Entity(name = "incident")
-public class Incident
-    extends BeanObjectSuivi
-    implements EssaiElement
-
-{
+public class Incident extends BeanObjectSuivi {
     /**
      * Serial ID.
      */
@@ -47,8 +42,7 @@ public class Incident
     /**
      * Essai.
      */
-    @ManyToOne(cascade =
-    {CascadeType.REFRESH, CascadeType.MERGE })
+    @ManyToOne(cascade = {CascadeType.REFRESH, CascadeType.MERGE })
     @JoinColumn(name = "id_essai", nullable = false)
     @Index(name = "idx_essai_incident")
     @NotNull
@@ -82,15 +76,13 @@ public class Incident
     @OneToMany(mappedBy = "incident", cascade = CascadeType.ALL)
     @LazyCollection(LazyCollectionOption.TRUE)
     @Sort(type = SortType.COMPARATOR, comparator = SuiviComparator.class)
-    private final SortedSet<IncidentSuivi> modifs =
-        new TreeSet<IncidentSuivi>(new SuiviComparator());
+    private final SortedSet<IncidentSuivi> modifs = new TreeSet<IncidentSuivi>(new SuiviComparator());
 
     /**
      * Getter pour libelle.
      * @return Le libelle
      */
-    public String getLibelle()
-    {
+    public String getLibelle() {
         return this.libelle;
     }
 
@@ -98,8 +90,7 @@ public class Incident
      * Setter pour libelle.
      * @param libelle Le libelle à écrire.
      */
-    public void setLibelle(final String libelle)
-    {
+    public void setLibelle(final String libelle) {
         this.libelle = libelle;
     }
 
@@ -107,8 +98,7 @@ public class Incident
      * Getter pour commentaire.
      * @return Le commentaire
      */
-    public String getCommentaire()
-    {
+    public String getCommentaire() {
         return this.commentaire;
     }
 
@@ -116,8 +106,7 @@ public class Incident
      * Setter pour commentaire.
      * @param commentaire Le commentaire à écrire.
      */
-    public void setCommentaire(final String commentaire)
-    {
+    public void setCommentaire(final String commentaire) {
         this.commentaire = commentaire;
     }
 
@@ -125,8 +114,7 @@ public class Incident
      * Getter pour dateDebut.
      * @return Le dateDebut
      */
-    public Calendar getDate()
-    {
+    public Calendar getDate() {
         return this.date;
     }
 
@@ -134,8 +122,7 @@ public class Incident
      * Setter pour dateDebut.
      * @param dateDebut Le dateDebut à écrire.
      */
-    public void setDate(final Calendar dateDebut)
-    {
+    public void setDate(final Calendar dateDebut) {
         this.date = dateDebut;
     }
 
@@ -143,8 +130,7 @@ public class Incident
      * Getter pour essai.
      * @return Le essai
      */
-    public Essai getEssai()
-    {
+    public Essai getEssai() {
         return this.essai;
     }
 
@@ -152,8 +138,7 @@ public class Incident
      * Setter pour essai.
      * @param essai Le essai à écrire.
      */
-    public void setEssai(final Essai essai)
-    {
+    public void setEssai(final Essai essai) {
         this.essai = essai;
     }
 
@@ -161,8 +146,7 @@ public class Incident
      * {@inheritDoc}
      */
     @Override
-    public SortedSet<? extends Suivi> getModifs()
-    {
+    public SortedSet<? extends Suivi> getModifs() {
         return this.modifs;
     }
 

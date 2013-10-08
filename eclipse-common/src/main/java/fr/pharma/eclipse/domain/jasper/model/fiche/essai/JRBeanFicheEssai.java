@@ -9,13 +9,10 @@ import fr.pharma.eclipse.jasper.constants.JasperConstants;
  * Classe représentant la source de données principale<br>
  * du rapport Jasper intitulé<br>
  * "Fiche information 'essais cliniques'".
- 
+ * @author Netapsys
  * @version $Revision$ $Date$
  */
-public class JRBeanFicheEssai
-    extends AbstractJRBeanWithHeader
-    implements JasperReportBean
-{
+public class JRBeanFicheEssai extends AbstractJRBeanWithHeader implements JasperReportBean {
 
     /**
      * Serial ID.
@@ -51,8 +48,7 @@ public class JRBeanFicheEssai
      * Getter sur promoteur.
      * @return Retourne le promoteur.
      */
-    public String getPromoteur()
-    {
+    public String getPromoteur() {
         return this.promoteur;
     }
 
@@ -60,8 +56,7 @@ public class JRBeanFicheEssai
      * Setter pour promoteur.
      * @param promoteur le promoteur à écrire.
      */
-    public void setPromoteur(final String promoteur)
-    {
+    public void setPromoteur(final String promoteur) {
         this.promoteur = promoteur;
     }
 
@@ -69,8 +64,7 @@ public class JRBeanFicheEssai
      * Getter sur codeProtocole.
      * @return Retourne le codeProtocole.
      */
-    public String getCodeProtocole()
-    {
+    public String getCodeProtocole() {
         return this.codeProtocole;
     }
 
@@ -78,8 +72,7 @@ public class JRBeanFicheEssai
      * Setter pour codeProtocole.
      * @param codeProtocole le codeProtocole à écrire.
      */
-    public void setCodeProtocole(final String codeProtocole)
-    {
+    public void setCodeProtocole(final String codeProtocole) {
         this.codeProtocole = codeProtocole;
     }
 
@@ -87,8 +80,7 @@ public class JRBeanFicheEssai
      * Getter sur nomUsuel.
      * @return Retourne le nomUsuel.
      */
-    public String getNomUsuel()
-    {
+    public String getNomUsuel() {
         return this.nomUsuel;
     }
 
@@ -96,8 +88,7 @@ public class JRBeanFicheEssai
      * Setter pour nomUsuel.
      * @param nomUsuel le nomUsuel à écrire.
      */
-    public void setNomUsuel(final String nomUsuel)
-    {
+    public void setNomUsuel(final String nomUsuel) {
         this.nomUsuel = nomUsuel;
     }
 
@@ -105,8 +96,7 @@ public class JRBeanFicheEssai
      * Getter sur investigateur.
      * @return Retourne le investigateur.
      */
-    public String getInvestigateur()
-    {
+    public String getInvestigateur() {
         return this.investigateur;
     }
 
@@ -114,8 +104,7 @@ public class JRBeanFicheEssai
      * Setter pour investigateur.
      * @param investigateur le investigateur à écrire.
      */
-    public void setInvestigateur(final String investigateur)
-    {
+    public void setInvestigateur(final String investigateur) {
         this.investigateur = investigateur;
     }
 
@@ -123,8 +112,7 @@ public class JRBeanFicheEssai
      * {@inheritDoc}
      */
     @Override
-    public String toString()
-    {
+    public String toString() {
         final StringBuilder builder = new StringBuilder("[");
         builder.append("promoteur: ").append(this.promoteur);
         builder.append(", codeProtocole: ").append(this.codeProtocole);
@@ -138,8 +126,7 @@ public class JRBeanFicheEssai
      * @return Retourne le header.
      */
     @Override
-    public JRBeanHeader getHeader()
-    {
+    public JRBeanHeader getHeader() {
         return this.header;
     }
 
@@ -147,8 +134,7 @@ public class JRBeanFicheEssai
      * Setter pour header.
      * @param header le header à écrire.
      */
-    public void setHeader(final JRBeanHeader header)
-    {
+    public void setHeader(final JRBeanHeader header) {
         this.header = header;
     }
 }

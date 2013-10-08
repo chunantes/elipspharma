@@ -2,11 +2,10 @@ package fr.pharma.eclipse.domain.enums.produit;
 
 /**
  * Enumération représentant la nature d'un produit thérapeutique annexe.
- 
+ * @author Netapsys
  * @version $Revision$ $Date$
  */
-public enum TypeProduitTherapeutique
-{
+public enum TypeProduitTherapeutique {
     /**
      * Alicament.
      */
@@ -31,8 +30,7 @@ public enum TypeProduitTherapeutique
      * Constructeur.
      * @param libelle Le libellé de la nature du produit.
      */
-    TypeProduitTherapeutique(final String libelle)
-    {
+    TypeProduitTherapeutique(final String libelle) {
         this.libelle = libelle;
     }
 
@@ -40,8 +38,7 @@ public enum TypeProduitTherapeutique
      * Getter pour libelle.
      * @return Retourne le libelle.
      */
-    public String getLibelle()
-    {
+    public String getLibelle() {
         return this.libelle;
     }
 
@@ -49,8 +46,7 @@ public enum TypeProduitTherapeutique
      * {@inheritDoc}
      */
     @Override
-    public String toString()
-    {
+    public String toString() {
         return this.getLibelle();
     }
 

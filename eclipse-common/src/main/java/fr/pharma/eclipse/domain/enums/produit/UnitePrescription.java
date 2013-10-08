@@ -2,11 +2,10 @@ package fr.pharma.eclipse.domain.enums.produit;
 
 /**
  * Enumération représentant les unités de prescription.
- 
+ * @author Netapsys
  * @version $Revision$ $Date$
  */
-public enum UnitePrescription
-{
+public enum UnitePrescription {
     /**
      * Unité de gestion.
      */
@@ -41,8 +40,7 @@ public enum UnitePrescription
      * Constructeur.
      * @param libelle Le libellé de la nature du Dm.
      */
-    UnitePrescription(final String libelle)
-    {
+    UnitePrescription(final String libelle) {
         this.libelle = libelle;
     }
 
@@ -50,8 +48,7 @@ public enum UnitePrescription
      * Getter pour libelle.
      * @return Retourne le libelle.
      */
-    public String getLibelle()
-    {
+    public String getLibelle() {
         return this.libelle;
     }
 
@@ -59,8 +56,7 @@ public enum UnitePrescription
      * {@inheritDoc}
      */
     @Override
-    public String toString()
-    {
+    public String toString() {
         return this.getLibelle();
     }
 }

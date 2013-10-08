@@ -15,12 +15,10 @@ import fr.pharma.eclipse.validator.remove.RemoveValidator;
 
 /**
  * Classe de validation de suppression d'un objet Produit.
- 
+ * @author Netapsys
  * @version $Revision$ $Date$
  */
-public class ProduitRemoveValidator
-    implements RemoveValidator<Produit>, Serializable
-{
+public class ProduitRemoveValidator implements RemoveValidator<Produit>, Serializable {
     /**
      * Serial ID.
      */
@@ -42,38 +40,27 @@ public class ProduitRemoveValidator
      * {@inheritDoc}
      */
     @Override
-    public void validate(final Produit produit)
-    {
+    public void validate(final Produit produit) {
         final MvtStockSearchCriteria mvtStockCriteria = new MvtStockSearchCriteria();
         mvtStockCriteria.setProduit(produit);
-        if (!this.mvtStockService.getAll(mvtStockCriteria).isEmpty())
-        {
+        if (!this.mvtStockService.getAll(mvtStockCriteria).isEmpty()) {
 
-            throw new ValidationException("remove",
-                                          new String[]
-                                          {"impossible" },
-                                          produit);
+            throw new ValidationException("remove", new String[]{"impossible" }, produit);
         }
 
         final ProduitPrescritSearchCriteria crit = new ProduitPrescritSearchCriteria();
         crit.setProduit(produit);
-        if (!this.produitPrescritService.getAll(crit).isEmpty())
-        {
+        if (!this.produitPrescritService.getAll(crit).isEmpty()) {
 
-            throw new ValidationException("remove",
-                                          new String[]
-                                          {"impossible" },
-                                          produit);
+            throw new ValidationException("remove", new String[]{"impossible" }, produit);
         }
     }
 
-    public void setMvtStockService(final MvtStockService mvtStockService)
-    {
+    public void setMvtStockService(final MvtStockService mvtStockService) {
         this.mvtStockService = mvtStockService;
     }
 
-    public void setProduitPrescritService(final GenericService<ProduitPrescrit> produitPrescritService)
-    {
+    public void setProduitPrescritService(final GenericService<ProduitPrescrit> produitPrescritService) {
         this.produitPrescritService = produitPrescritService;
     }
 

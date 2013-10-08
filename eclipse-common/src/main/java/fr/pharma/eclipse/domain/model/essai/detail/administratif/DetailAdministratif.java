@@ -32,15 +32,13 @@ import fr.pharma.eclipse.domain.model.essai.detail.administratif.embedded.InfosP
 import fr.pharma.eclipse.domain.model.suivi.essai.detail.DetailAdministratifSuivi;
 
 /**
- * Classe métier représentant les informations administratives/reglementaires d'un essai clinique.
- 
+ * Classe métier représentant les informations administratives/reglementaires
+ * d'un essai clinique.
+ * @author Netapsys
  * @version $Revision$ $Date$
  */
 @Entity(name = "essai_detail_administratif")
-public class DetailAdministratif
-    extends BeanObjectSuivi
-    implements Serializable
-{
+public class DetailAdministratif extends BeanObjectSuivi implements Serializable {
 
     /**
      * SerialVersionUID.
@@ -94,15 +92,13 @@ public class DetailAdministratif
      * Informations sur l'autorisation d'importation.
      */
     @Embedded
-    private InfosAutorisationImportation infosAutorisationImportation =
-        new InfosAutorisationImportation();
+    private InfosAutorisationImportation infosAutorisationImportation = new InfosAutorisationImportation();
 
     /**
      * Informations sur l'autorisation de distribution.
      */
     @Embedded
-    private InfosAutorisationDistribution infosAutorisationDistribution =
-        new InfosAutorisationDistribution();
+    private InfosAutorisationDistribution infosAutorisationDistribution = new InfosAutorisationDistribution();
 
     /**
      * Archivage.
@@ -116,16 +112,14 @@ public class DetailAdministratif
     @OneToMany(mappedBy = "detailAdministratif", cascade = CascadeType.ALL)
     @LazyCollection(LazyCollectionOption.TRUE)
     @Sort(type = SortType.COMPARATOR, comparator = SuiviComparator.class)
-    private final SortedSet<DetailAdministratifSuivi> modifs =
-        new TreeSet<DetailAdministratifSuivi>(new SuiviComparator());
+    private final SortedSet<DetailAdministratifSuivi> modifs = new TreeSet<DetailAdministratifSuivi>(new SuiviComparator());
 
     /**
      * Getter sur modifs.
      * @return Retourne le modifs.
      */
     @Override
-    public SortedSet<DetailAdministratifSuivi> getModifs()
-    {
+    public SortedSet<DetailAdministratifSuivi> getModifs() {
         return this.modifs;
     }
 
@@ -133,8 +127,7 @@ public class DetailAdministratif
      * Getter sur essai.
      * @return Retourne le essai.
      */
-    public Essai getEssai()
-    {
+    public Essai getEssai() {
         return this.essai;
     }
 
@@ -142,8 +135,7 @@ public class DetailAdministratif
      * Setter pour essai.
      * @param essai le essai à écrire.
      */
-    public void setEssai(final Essai essai)
-    {
+    public void setEssai(final Essai essai) {
         this.essai = essai;
     }
 
@@ -151,8 +143,7 @@ public class DetailAdministratif
      * Getter sur infosAssurance.
      * @return Retourne le infosAssurance.
      */
-    public InfosAssurance getInfosAssurance()
-    {
+    public InfosAssurance getInfosAssurance() {
         return this.infosAssurance;
     }
 
@@ -160,8 +151,7 @@ public class DetailAdministratif
      * Setter pour infosAssurance.
      * @param infosAssurance le infosAssurance à écrire.
      */
-    public void setInfosAssurance(final InfosAssurance infosAssurance)
-    {
+    public void setInfosAssurance(final InfosAssurance infosAssurance) {
         this.infosAssurance = infosAssurance;
     }
 
@@ -169,8 +159,7 @@ public class DetailAdministratif
      * Getter sur infosAC.
      * @return Retourne le infosAC.
      */
-    public InfosAutoriteCompetente getInfosAC()
-    {
+    public InfosAutoriteCompetente getInfosAC() {
         return this.infosAC;
     }
 
@@ -178,8 +167,7 @@ public class DetailAdministratif
      * Setter pour infosAC.
      * @param infosAC le infosAC à écrire.
      */
-    public void setInfosAC(final InfosAutoriteCompetente infosAC)
-    {
+    public void setInfosAC(final InfosAutoriteCompetente infosAC) {
         this.infosAC = infosAC;
     }
 
@@ -187,8 +175,7 @@ public class DetailAdministratif
      * Getter sur infosCPP.
      * @return Retourne le infosCPP.
      */
-    public InfosComiteProtection getInfosCPP()
-    {
+    public InfosComiteProtection getInfosCPP() {
         return this.infosCPP;
     }
 
@@ -196,8 +183,7 @@ public class DetailAdministratif
      * Setter pour infosCPP.
      * @param infosCPP le infosCPP à écrire.
      */
-    public void setInfosCPP(final InfosComiteProtection infosCPP)
-    {
+    public void setInfosCPP(final InfosComiteProtection infosCPP) {
         this.infosCPP = infosCPP;
     }
 
@@ -205,8 +191,7 @@ public class DetailAdministratif
      * Getter sur infosConvention.
      * @return Retourne le infosConvention.
      */
-    public InfosConvention getInfosConvention()
-    {
+    public InfosConvention getInfosConvention() {
         return this.infosConvention;
     }
 
@@ -214,8 +199,7 @@ public class DetailAdministratif
      * Setter pour infosConvention.
      * @param infosConvention le infosConvention à écrire.
      */
-    public void setInfosConvention(final InfosConvention infosConvention)
-    {
+    public void setInfosConvention(final InfosConvention infosConvention) {
         this.infosConvention = infosConvention;
     }
 
@@ -223,8 +207,7 @@ public class DetailAdministratif
      * Getter sur infosArchivage.
      * @return Retourne le infosArchivage.
      */
-    public InfosArchivage getInfosArchivage()
-    {
+    public InfosArchivage getInfosArchivage() {
         return this.infosArchivage;
     }
 
@@ -232,8 +215,7 @@ public class DetailAdministratif
      * Setter pour infosArchivage.
      * @param infosArchivage le infosArchivage à écrire.
      */
-    public void setInfosArchivage(final InfosArchivage infosArchivage)
-    {
+    public void setInfosArchivage(final InfosArchivage infosArchivage) {
         this.infosArchivage = infosArchivage;
     }
 
@@ -241,8 +223,7 @@ public class DetailAdministratif
      * Getter sur infosProtocole.
      * @return Retourne le infosProtocole.
      */
-    public InfosProtocole getInfosProtocole()
-    {
+    public InfosProtocole getInfosProtocole() {
         return this.infosProtocole;
     }
 
@@ -250,8 +231,7 @@ public class DetailAdministratif
      * Setter pour infosProtocole.
      * @param infosProtocole le infosProtocole à écrire.
      */
-    public void setInfosProtocole(final InfosProtocole infosProtocole)
-    {
+    public void setInfosProtocole(final InfosProtocole infosProtocole) {
         this.infosProtocole = infosProtocole;
     }
 
@@ -259,8 +239,7 @@ public class DetailAdministratif
      * Getter sur infosBrochure.
      * @return Retourne le infosBrochure.
      */
-    public InfosBrochureProduits getInfosBrochure()
-    {
+    public InfosBrochureProduits getInfosBrochure() {
         return this.infosBrochure;
     }
 
@@ -268,8 +247,7 @@ public class DetailAdministratif
      * Setter pour infosBrochure.
      * @param infosBrochure le infosBrochure à écrire.
      */
-    public void setInfosBrochure(final InfosBrochureProduits infosBrochure)
-    {
+    public void setInfosBrochure(final InfosBrochureProduits infosBrochure) {
         this.infosBrochure = infosBrochure;
     }
 
@@ -277,8 +255,7 @@ public class DetailAdministratif
      * Getter sur infosAutorisationImportation.
      * @return Retourne le infosAutorisationImportation.
      */
-    public InfosAutorisationImportation getInfosAutorisationImportation()
-    {
+    public InfosAutorisationImportation getInfosAutorisationImportation() {
         return this.infosAutorisationImportation;
     }
 
@@ -286,26 +263,25 @@ public class DetailAdministratif
      * Getter sur infosAutorisationDistribution.
      * @return Retourne le infosAutorisationDistribution.
      */
-    public InfosAutorisationDistribution getInfosAutorisationDistribution()
-    {
+    public InfosAutorisationDistribution getInfosAutorisationDistribution() {
         return this.infosAutorisationDistribution;
     }
 
     /**
      * Setter pour infosAutorisationImportation.
-     * @param infosAutorisationImportation le infosAutorisationImportation à écrire.
+     * @param infosAutorisationImportation le infosAutorisationImportation à
+     * écrire.
      */
-    public void setInfosAutorisationImportation(final InfosAutorisationImportation infosAutorisationImportation)
-    {
+    public void setInfosAutorisationImportation(final InfosAutorisationImportation infosAutorisationImportation) {
         this.infosAutorisationImportation = infosAutorisationImportation;
     }
 
     /**
      * Setter pour infosAutorisationDistribution.
-     * @param infosAutorisationDistribution le infosAutorisationDistribution à écrire.
+     * @param infosAutorisationDistribution le infosAutorisationDistribution à
+     * écrire.
      */
-    public void setInfosAutorisationDistribution(final InfosAutorisationDistribution infosAutorisationDistribution)
-    {
+    public void setInfosAutorisationDistribution(final InfosAutorisationDistribution infosAutorisationDistribution) {
         this.infosAutorisationDistribution = infosAutorisationDistribution;
     }
 

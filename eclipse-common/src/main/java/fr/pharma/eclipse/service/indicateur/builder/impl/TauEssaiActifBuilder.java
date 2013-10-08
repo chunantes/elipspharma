@@ -19,13 +19,12 @@ import fr.pharma.eclipse.service.essai.EssaiService;
 import fr.pharma.eclipse.service.indicateur.builder.IndicateurBuilder;
 
 /**
- * Classe en charge de construire l'indicateur taux d'essais actis en dispensation nominatives.
- 
+ * Classe en charge de construire l'indicateur taux d'essais actis en
+ * dispensation nominatives.
+ * @author Netapsys
  * @version $Revision$ $Date$
  */
-public class TauEssaiActifBuilder
-    implements Serializable, IndicateurBuilder
-{
+public class TauEssaiActifBuilder implements Serializable, IndicateurBuilder {
 
     /**
      * SerialVersionUID.
@@ -49,36 +48,24 @@ public class TauEssaiActifBuilder
     @Override
     public Indicateur build(final Pharmacie pharmacie,
                             final Calendar dateDebut,
-                            final Calendar dateFin)
-    {
-        final List<Essai> essais = this.essaiService.getEssaisActifs(dateFin,
-                                                                     pharmacie);
+                            final Calendar dateFin) {
+        final List<Essai> essais = this.essaiService.getEssaisActifs(dateFin, pharmacie);
         final int nbEssaisActifs = essais.size();
-        CollectionUtils
-                .filter(essais,
-                        new GenericPredicate("detailDonneesPharma.infosDispensations.typeDispensation",
-                                             TypeDispensation.NOMINATIVE));
+        CollectionUtils.filter(essais, new GenericPredicate("detailDonneesPharma.infosDispensations.typeDispensation", TypeDispensation.NOMINATIVE));
         BigDecimal result;
-        if (nbEssaisActifs == 0)
-        {
+        if (nbEssaisActifs == 0) {
             result = new BigDecimal(0);
+        } else {
+            result = new BigDecimal(essais.size()).divide(new BigDecimal(nbEssaisActifs), 3, RoundingMode.HALF_DOWN);
         }
-        else
-        {
-            result = new BigDecimal(essais.size()).divide(new BigDecimal(nbEssaisActifs),
-                                                          3,
-                                                          RoundingMode.HALF_DOWN);
-        }
-        return new Indicateur(this.libelle,
-                              result);
+        return new Indicateur(this.libelle, result);
 
     }
     /**
      * Setter pour essaiService.
      * @param essaiService Le essaiService à écrire.
      */
-    public void setEssaiService(final EssaiService essaiService)
-    {
+    public void setEssaiService(final EssaiService essaiService) {
         this.essaiService = essaiService;
     }
 
@@ -86,8 +73,7 @@ public class TauEssaiActifBuilder
      * Setter pour libelle.
      * @param libelle Le libelle à écrire.
      */
-    public void setLibelle(final String libelle)
-    {
+    public void setLibelle(final String libelle) {
         this.libelle = libelle;
     }
 

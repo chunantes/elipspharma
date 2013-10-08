@@ -8,14 +8,13 @@ import fr.pharma.eclipse.domain.model.stockage.Pharmacie;
 
 /**
  * Service de gestion des indicateurs.
- 
+ * @author Netapsys
  * @version $Revision$ $Date$
  */
-public interface IndicateurService
-{
+public interface IndicateurService {
     /**
-     * Méthode en charge de retourner la liste des indicateurs générés trié par ordre
-     * alphabétique.
+     * Méthode en charge de retourner la liste des indicateurs générés trié par
+     * ordre alphabétique.
      * @param pharmacie Pharmacie.
      * @param dateDebut Date de début de l'intervalle.
      * @param dateFin Date de fin de l'intervalle.

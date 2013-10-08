@@ -5,24 +5,21 @@ import java.util.List;
 import javax.annotation.Resource;
 
 import fr.pharma.eclipse.dao.common.GenericDao;
-import fr.pharma.eclipse.domain.criteria.common.SearchCriteria;
+import fr.pharma.eclipse.dao.search.PrescriptionSearchDao;
 import fr.pharma.eclipse.domain.criteria.prescription.PrescriptionSearchCriteria;
+import fr.pharma.eclipse.domain.dto.PrescriptionDTO;
 import fr.pharma.eclipse.domain.model.design.Sequence;
 import fr.pharma.eclipse.domain.model.prescription.Prescription;
-import fr.pharma.eclipse.handler.habilitation.HabilitationHandler;
 import fr.pharma.eclipse.service.common.impl.GenericServiceImpl;
 import fr.pharma.eclipse.service.prescription.PrescriptionService;
 import fr.pharma.eclipse.validator.save.impl.PrescriptionSaveValidator;
 
 /**
  * Implémentation des services liés à la prescription.
- 
+ * @author Netapsys
  * @version $Revision$ $Date$
  */
-public class PrescriptionServiceImpl
-    extends GenericServiceImpl<Prescription>
-    implements PrescriptionService
-{
+public class PrescriptionServiceImpl extends GenericServiceImpl<Prescription> implements PrescriptionService {
 
     /**
      * SerialVersionUID.
@@ -36,27 +33,28 @@ public class PrescriptionServiceImpl
     private PrescriptionSaveValidator prscriptionSaveValidator;
 
     /**
-     * Gestionnaire d'habilitations sur les prescriptions.
+     * DAO de recherche de prescriptions.
      */
-    @Resource(name = "essaiElementHabilitationHandler")
-    private HabilitationHandler<Prescription> habilitationHandler;
+    @Resource(name = "prescriptionSearchDao")
+    private PrescriptionSearchDao prescriptionSearchDao;
 
     /**
      * Constructeur.
      * @param genericDao Dao.
      */
-    public PrescriptionServiceImpl(final GenericDao<Prescription> genericDao)
-    {
+    public PrescriptionServiceImpl(final GenericDao<Prescription> genericDao) {
         super(genericDao);
     }
 
     /**
-     * Retourne <true> si la sequence en paramètre est utilisée dans une prescription.
+     * Retourne <true> si la sequence en paramètre est utilisée dans une
+     * prescription.
      * @param sequence La séquence.
-     * @return <true> si la sequence en paramètre est utilisée dans une prescription.
+     * @return <true> si la sequence en paramètre est utilisée dans une
+     * prescription.
      */
-    public boolean isSequenceUsedInPrescriptions(final Sequence sequence)
-    {
+    @Override
+    public boolean isSequenceUsedInPrescriptions(final Sequence sequence) {
         final PrescriptionSearchCriteria criteria = new PrescriptionSearchCriteria();
         criteria.setSequence(sequence);
         return !this.getAll(criteria).isEmpty();
@@ -66,10 +64,8 @@ public class PrescriptionServiceImpl
      * {@inheritDoc}
      */
     @Override
-    public Prescription save(final Prescription object)
-    {
-        this.prscriptionSaveValidator.validate(object,
-                                               this);
+    public Prescription save(final Prescription object) {
+        this.prscriptionSaveValidator.validate(object, this);
         return this.getGenericDao().save(object);
     }
 
@@ -77,41 +73,24 @@ public class PrescriptionServiceImpl
      * {@inheritDoc}
      */
     @Override
-    public List<Prescription> getAll()
-    {
-        final List<Prescription> essais = super.getAll();
-        // Purge des essais par rapport aux habilitations
-        this.habilitationHandler.purge(essais);
-        return essais;
+    public List<Prescription> getAll() {
+        return this.getAll(new PrescriptionSearchCriteria());
     }
 
     /**
      * {@inheritDoc}
      */
     @Override
-    public List<Prescription> getAll(final SearchCriteria criteria)
-    {
-        final List<Prescription> essais = super.getAll(criteria);
-        // Purge des essais par rapport aux habilitations
-        this.habilitationHandler.purge(essais);
-        return essais;
+    public List<PrescriptionDTO> retrieveResults(final PrescriptionSearchCriteria criteria) {
+        return this.prescriptionSearchDao.findByEssaiAndPatientAndDispenseOrderByIdAsc(criteria.getEssaiDTO(), criteria.getPatient(), criteria.getDispense());
     }
 
     /**
      * Setter pour prscriptionSaveValidator.
      * @param prscriptionSaveValidator le prscriptionSaveValidator à écrire.
      */
-    public void setPrscriptionSaveValidator(final PrescriptionSaveValidator prscriptionSaveValidator)
-    {
+    public void setPrscriptionSaveValidator(final PrescriptionSaveValidator prscriptionSaveValidator) {
         this.prscriptionSaveValidator = prscriptionSaveValidator;
     }
 
-    /**
-     * Setter pour habilitationHandler.
-     * @param habilitationHandler le habilitationHandler à écrire.
-     */
-    public void setHabilitationHandler(final HabilitationHandler<Prescription> habilitationHandler)
-    {
-        this.habilitationHandler = habilitationHandler;
-    }
 }

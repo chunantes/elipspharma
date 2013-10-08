@@ -7,14 +7,13 @@ import org.apache.commons.collections.Predicate;
 import fr.pharma.eclipse.domain.model.prescription.ProduitPrescrit;
 
 /**
- * Classe de prédicat sur les ProduitsPrescrits. Il repère si un produit prescrit avec le meme
- * produit et le meme mode de prescription est déjà présent.
- 
+ * Classe de prédicat sur les ProduitsPrescrits. Il repère si un produit
+ * prescrit avec le meme produit et le meme mode de prescription est déjà
+ * présent.
+ * @author Netapsys
  * @version $Revision$ $Date$
  */
-public class ProduitPrescritPredicate
-    implements Predicate, Serializable
-{
+public class ProduitPrescritPredicate implements Predicate, Serializable {
 
     /**
      * SerialVersionUID.
@@ -30,8 +29,7 @@ public class ProduitPrescritPredicate
      * Constructeur.
      * @param produitPrescrit ProduitPrescrit à controler.
      */
-    public ProduitPrescritPredicate(final ProduitPrescrit produitPrescrit)
-    {
+    public ProduitPrescritPredicate(final ProduitPrescrit produitPrescrit) {
         this.produitPrescrit = produitPrescrit;
     }
 
@@ -39,15 +37,11 @@ public class ProduitPrescritPredicate
      * {@inheritDoc}
      */
     @Override
-    public boolean evaluate(final Object object)
-    {
+    public boolean evaluate(final Object object) {
         final ProduitPrescrit p = (ProduitPrescrit) object;
 
         if (p.getProduit().getId().equals(this.produitPrescrit.getProduit().getId())
-            && p.getConditionnement().getModePrescription().equals(this.produitPrescrit
-                    .getConditionnement()
-                    .getModePrescription()))
-        {
+            && p.getConditionnement().getModePrescription().equals(this.produitPrescrit.getConditionnement().getModePrescription())) {
             return true;
         }
         return false;

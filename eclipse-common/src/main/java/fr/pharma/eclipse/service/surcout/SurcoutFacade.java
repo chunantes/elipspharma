@@ -5,17 +5,16 @@ import java.util.Calendar;
 import fr.pharma.eclipse.domain.model.essai.Essai;
 
 /**
- * Interface de la façade d'appel aux méthodes permettant d'obtenir certains nombres pour les
- * calculs des surcouts.
- 
+ * Interface de la façade d'appel aux méthodes permettant d'obtenir certains
+ * nombres pour les calculs des surcouts.
+ * @author Netapsys
  * @version $Revision$ $Date$
  */
-public interface SurcoutFacade
-{
+public interface SurcoutFacade {
 
     /**
-     * Méthode en charge de compter le nombre de dispensations d'un essai dans l'intervalle des
-     * dates.
+     * Méthode en charge de compter le nombre de dispensations d'un essai dans
+     * l'intervalle des dates.
      * @param essai L'essai.
      * @param dateDebut Date de début.
      * @param dateFin Date de fin.
@@ -39,13 +38,13 @@ public interface SurcoutFacade
                       final Calendar dateFin);
 
     /**
-     * Retourne <true> si la facturation de la premiere année est comprise dans l'intervalle en
-     * paramètre.
+     * Retourne <true> si la facturation de la premiere année est comprise dans
+     * l'intervalle en paramètre.
      * @param essai L'essai.
      * @param dateDebut Date de début de l'intervalle.
      * @param dateFin Date de fin de l'intervalle.
-     * @return <true> si la facturation de la premiere année est comprise dans l'intervalle en
-     * paramètre.
+     * @return <true> si la facturation de la premiere année est comprise dans
+     * l'intervalle en paramètre.
      */
     boolean inPremiereAnnee(final Essai essai,
                             final Calendar dateDebut,

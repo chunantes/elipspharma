@@ -21,13 +21,12 @@ import fr.pharma.eclipse.comparator.suivi.SuiviComparator;
 import fr.pharma.eclipse.domain.model.essai.detail.administratif.document.DocumentAdministratif;
 
 /**
- * Informations, de la partie détail de l'administratif de l'essai, relatives à l'assurance.
- 
+ * Informations, de la partie détail de l'administratif de l'essai, relatives à
+ * l'assurance.
+ * @author Netapsys
  * @version $Revision$ $Date$
  */
-public class InfosAssurance
-    implements Serializable
-{
+public class InfosAssurance implements Serializable {
 
     /**
      * SerialVersionUID.
@@ -84,8 +83,7 @@ public class InfosAssurance
     @Where(clause = "type='ASSURANCE'")
     @LazyCollection(LazyCollectionOption.FALSE)
     @Sort(type = SortType.COMPARATOR, comparator = SuiviComparator.class)
-    private SortedSet<DocumentAdministratif> documents =
-        new TreeSet<DocumentAdministratif>(new SuiviComparator());
+    private SortedSet<DocumentAdministratif> documents = new TreeSet<DocumentAdministratif>(new SuiviComparator());
 
     /**
      * Booléen indiquant qu'il faut se référer au dossier papier<br>
@@ -99,8 +97,7 @@ public class InfosAssurance
      * Getter sur numeroContrat.
      * @return Retourne le numeroContrat.
      */
-    public String getNumeroContrat()
-    {
+    public String getNumeroContrat() {
         return this.numeroContrat;
     }
 
@@ -108,8 +105,7 @@ public class InfosAssurance
      * Setter pour numeroContrat.
      * @param numeroContrat le numeroContrat à écrire.
      */
-    public void setNumeroContrat(final String numeroContrat)
-    {
+    public void setNumeroContrat(final String numeroContrat) {
         this.numeroContrat = numeroContrat;
     }
 
@@ -117,8 +113,7 @@ public class InfosAssurance
      * Getter sur nomCompagnie.
      * @return Retourne le nomCompagnie.
      */
-    public String getNomCompagnie()
-    {
+    public String getNomCompagnie() {
         return this.nomCompagnie;
     }
 
@@ -126,8 +121,7 @@ public class InfosAssurance
      * Setter pour nomCompagnie.
      * @param nomCompagnie le nomCompagnie à écrire.
      */
-    public void setNomCompagnie(final String nomCompagnie)
-    {
+    public void setNomCompagnie(final String nomCompagnie) {
         this.nomCompagnie = nomCompagnie;
     }
 
@@ -135,8 +129,7 @@ public class InfosAssurance
      * Getter sur codePostal.
      * @return Retourne le codePostal.
      */
-    public String getCodePostal()
-    {
+    public String getCodePostal() {
         return this.codePostal;
     }
 
@@ -144,8 +137,7 @@ public class InfosAssurance
      * Setter pour codePostal.
      * @param codePostal le codePostal à écrire.
      */
-    public void setCodePostal(final String codePostal)
-    {
+    public void setCodePostal(final String codePostal) {
         this.codePostal = codePostal;
     }
 
@@ -153,8 +145,7 @@ public class InfosAssurance
      * Getter sur ville.
      * @return Retourne le ville.
      */
-    public String getVille()
-    {
+    public String getVille() {
         return this.ville;
     }
 
@@ -162,8 +153,7 @@ public class InfosAssurance
      * Setter pour ville.
      * @param ville le ville à écrire.
      */
-    public void setVille(final String ville)
-    {
+    public void setVille(final String ville) {
         this.ville = ville;
     }
 
@@ -171,8 +161,7 @@ public class InfosAssurance
      * Getter sur dateDebutValidite.
      * @return Retourne le dateDebutValidite.
      */
-    public Calendar getDateDebutValidite()
-    {
+    public Calendar getDateDebutValidite() {
         return this.dateDebutValidite;
     }
 
@@ -180,8 +169,7 @@ public class InfosAssurance
      * Setter pour dateDebutValidite.
      * @param dateDebutValidite le dateDebutValidite à écrire.
      */
-    public void setDateDebutValidite(final Calendar dateDebutValidite)
-    {
+    public void setDateDebutValidite(final Calendar dateDebutValidite) {
         this.dateDebutValidite = dateDebutValidite;
     }
 
@@ -189,8 +177,7 @@ public class InfosAssurance
      * Getter sur dateFinValidite.
      * @return Retourne le dateFinValidite.
      */
-    public Calendar getDateFinValidite()
-    {
+    public Calendar getDateFinValidite() {
         return this.dateFinValidite;
     }
 
@@ -198,8 +185,7 @@ public class InfosAssurance
      * Setter pour dateFinValidite.
      * @param dateFinValidite le dateFinValidite à écrire.
      */
-    public void setDateFinValidite(final Calendar dateFinValidite)
-    {
+    public void setDateFinValidite(final Calendar dateFinValidite) {
         this.dateFinValidite = dateFinValidite;
     }
 
@@ -207,8 +193,7 @@ public class InfosAssurance
      * Getter sur numeroAvenant.
      * @return Retourne le numeroAvenant.
      */
-    public String getNumeroAvenant()
-    {
+    public String getNumeroAvenant() {
         return this.numeroAvenant;
     }
 
@@ -216,8 +201,7 @@ public class InfosAssurance
      * Setter pour numeroAvenant.
      * @param numeroAvenant le numeroAvenant à écrire.
      */
-    public void setNumeroAvenant(final String numeroAvenant)
-    {
+    public void setNumeroAvenant(final String numeroAvenant) {
         this.numeroAvenant = numeroAvenant;
     }
 
@@ -225,8 +209,7 @@ public class InfosAssurance
      * Getter sur documents.
      * @return Retourne le documents.
      */
-    public SortedSet<DocumentAdministratif> getDocuments()
-    {
+    public SortedSet<DocumentAdministratif> getDocuments() {
         return this.documents;
     }
 
@@ -234,8 +217,7 @@ public class InfosAssurance
      * Setter pour documents.
      * @param documents le documents à écrire.
      */
-    public void setDocuments(final SortedSet<DocumentAdministratif> documents)
-    {
+    public void setDocuments(final SortedSet<DocumentAdministratif> documents) {
         this.documents = documents;
     }
 
@@ -243,8 +225,7 @@ public class InfosAssurance
      * Getter sur docsDossierPapier.
      * @return Retourne le docsDossierPapier.
      */
-    public boolean isDocsDossierPapier()
-    {
+    public boolean isDocsDossierPapier() {
         return this.docsDossierPapier;
     }
 
@@ -252,8 +233,7 @@ public class InfosAssurance
      * Setter pour docsDossierPapier.
      * @param docsDossierPapier le docsDossierPapier à écrire.
      */
-    public void setDocsDossierPapier(final boolean docsDossierPapier)
-    {
+    public void setDocsDossierPapier(final boolean docsDossierPapier) {
         this.docsDossierPapier = docsDossierPapier;
     }
 

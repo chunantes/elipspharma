@@ -6,15 +6,14 @@ import javax.persistence.Entity;
 import fr.pharma.eclipse.domain.enums.document.TypeDocumentEssai;
 
 /**
- * Bean métier représentant un document rattaché à l'autorité compétente de l'essai clinique.
- 
+ * Bean métier représentant un document rattaché à l'autorité compétente de
+ * l'essai clinique.
+ * @author Netapsys
  * @version $Revision$ $Date$
  */
 @Entity
 @DiscriminatorValue("AUTORITE_COMPETENTE")
-public class DocumentAutoriteCompetente
-    extends DocumentAdministratif
-{
+public class DocumentAutoriteCompetente extends DocumentAdministratif {
 
     /**
      * Serial ID.
@@ -24,8 +23,7 @@ public class DocumentAutoriteCompetente
     /**
      * Constructeur par défaut.
      */
-    public DocumentAutoriteCompetente()
-    {
+    public DocumentAutoriteCompetente() {
         this.setType(TypeDocumentEssai.AUTORITE_COMPETENTE);
     }
 

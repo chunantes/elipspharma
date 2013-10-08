@@ -6,12 +6,10 @@ import fr.pharma.eclipse.domain.model.common.DocumentEclipse;
 
 /**
  * Classe de résolveur de filename de document Pharmacien.
- 
+ * @author Netapsys
  * @version $Revision$ $Date$
  */
-public class DocPharmacienFileNameResolver
-    extends AbstractDocEclipseFileNameResolver
-{
+public class DocPharmacienFileNameResolver extends AbstractDocEclipseFileNameResolver {
     /**
      * Serial ID.
      */
@@ -21,8 +19,7 @@ public class DocPharmacienFileNameResolver
      * Constructeur.
      * @param documentsDirectory Chemin de stockage des documents sur le disque.
      */
-    public DocPharmacienFileNameResolver(final String documentsDirectory)
-    {
+    public DocPharmacienFileNameResolver(final String documentsDirectory) {
         super(documentsDirectory);
     }
 
@@ -30,10 +27,8 @@ public class DocPharmacienFileNameResolver
      * {@inheritDoc}
      */
     @Override
-    public boolean supports(final DocumentEclipse doc)
-    {
-        return super.supports(doc)
-               && TypeDocumentEclipse.PHARMACIEN.equals(doc.getTypeDocument().getTypeEclipse());
+    public boolean supports(final DocumentEclipse doc) {
+        return super.supports(doc) && TypeDocumentEclipse.PHARMACIEN.equals(doc.getTypeDocument().getTypeEclipse());
     }
 
     /**
@@ -41,12 +36,11 @@ public class DocPharmacienFileNameResolver
      */
     @Override
     protected void fillDynamicDocPart(final StringBuilder builder,
-                                      final DocumentEclipse doc)
-    {
-        super.fillDynamicDocPart(builder,
-                                 doc);
+                                      final DocumentEclipse doc) {
+        super.fillDynamicDocPart(builder, doc);
         super.appendSeparator(builder);
-        final DocumentPharmacien docStock = (DocumentPharmacien) doc; // car supports
+        final DocumentPharmacien docStock = (DocumentPharmacien) doc; // car
+                                                                      // supports
         builder.append(docStock.getType().getRepertoire());
     }
 }

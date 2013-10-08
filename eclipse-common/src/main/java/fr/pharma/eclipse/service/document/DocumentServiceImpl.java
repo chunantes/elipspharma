@@ -12,13 +12,10 @@ import fr.pharma.eclipse.utils.file.FileHelper;
 
 /**
  * Service pour la gestion des documents.
- 
+ * @author Netapsys
  * @version $Revision$ $Date$
  */
-public class DocumentServiceImpl
-    extends GenericServiceImpl<DocumentEclipse>
-    implements DocumentService
-{
+public class DocumentServiceImpl extends GenericServiceImpl<DocumentEclipse> implements DocumentService {
 
     /**
      * Serial ID.
@@ -39,8 +36,7 @@ public class DocumentServiceImpl
      * Constructeur.
      * @param genericDao Dao.
      */
-    public DocumentServiceImpl(final GenericDao<DocumentEclipse> genericDao)
-    {
+    public DocumentServiceImpl(final GenericDao<DocumentEclipse> genericDao) {
         super(genericDao);
     }
 
@@ -49,20 +45,16 @@ public class DocumentServiceImpl
      */
     @Override
     public File getFile(final BeanParentDocument bean,
-                        final DocumentEclipse doc)
-    {
-        return this.fileBuilder.build(bean,
-                                      doc);
+                        final DocumentEclipse doc) {
+        return this.fileBuilder.build(bean, doc);
     }
 
     /**
      * {@inheritDoc}
      */
     @Override
-    public boolean canBeDownloaded(final DocumentEclipse doc)
-    {
-        return doc != null
-               && doc.getId() != null;
+    public boolean canBeDownloaded(final DocumentEclipse doc) {
+        return doc != null && doc.getId() != null;
     }
 
     /**
@@ -71,25 +63,18 @@ public class DocumentServiceImpl
     @Override
     public void saveOnDisk(final BeanParentDocument bean,
                            final DocumentEclipse doc,
-                           final Fichier fichier)
-    {
-        final File file = this.getFile(bean,
-                                       doc); // sert à récupérer le chemin
+                           final Fichier fichier) {
+        final File file = this.getFile(bean, doc); // sert à récupérer le chemin
         final String absPath = file.getAbsolutePath();
-        final String directoryPath =
-            absPath.substring(0,
-                              absPath.lastIndexOf(this.fileHelper.getSystemFileSeparator()));
-        this.fileHelper.save(fichier,
-                             doc.getNomDisque(),
-                             directoryPath);
+        final String directoryPath = absPath.substring(0, absPath.lastIndexOf(this.fileHelper.getSystemFileSeparator()));
+        this.fileHelper.save(fichier, doc.getNomDisque(), directoryPath);
     }
 
     /**
      * Getter sur fileBuilder.
      * @return Retourne le fileBuilder.
      */
-    FileDocumentBuilder getFileBuilder()
-    {
+    FileDocumentBuilder getFileBuilder() {
         return this.fileBuilder;
     }
 
@@ -97,8 +82,7 @@ public class DocumentServiceImpl
      * Setter pour fileBuilder.
      * @param fileBuilder le fileBuilder à écrire.
      */
-    public void setFileBuilder(final FileDocumentBuilder fileBuilder)
-    {
+    public void setFileBuilder(final FileDocumentBuilder fileBuilder) {
         this.fileBuilder = fileBuilder;
     }
 
@@ -106,8 +90,7 @@ public class DocumentServiceImpl
      * Getter sur fileHelper.
      * @return Retourne le fileHelper.
      */
-    FileHelper getFileHelper()
-    {
+    FileHelper getFileHelper() {
         return this.fileHelper;
     }
 
@@ -115,8 +98,7 @@ public class DocumentServiceImpl
      * Setter pour fileHelper.
      * @param fileHelper le fileHelper à écrire.
      */
-    public void setFileHelper(final FileHelper fileHelper)
-    {
+    public void setFileHelper(final FileHelper fileHelper) {
         this.fileHelper = fileHelper;
     }
 

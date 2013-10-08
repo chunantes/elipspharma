@@ -31,14 +31,11 @@ import fr.pharma.eclipse.utils.constants.EclipseConstants;
 
 /**
  * Bean métier représentant une sequence.
- 
+ * @author Netapsys
  * @version $Revision$ $Date$
  */
 @Entity(name = "sequence")
-public class Sequence
-    extends BeanObject
-    implements Designable
-{
+public class Sequence extends BeanObject implements Designable {
 
     /**
      * SerialVersionUID.
@@ -55,18 +52,14 @@ public class Sequence
      * Début de la séquence.
      */
     @Embedded
-    @AttributeOverrides(
-    {@AttributeOverride(name = "nb", column = @Column(name = "nb_debut")),
-     @AttributeOverride(name = "unite", column = @Column(name = "unite_debut")) })
+    @AttributeOverrides({@AttributeOverride(name = "nb", column = @Column(name = "nb_debut")), @AttributeOverride(name = "unite", column = @Column(name = "unite_debut")) })
     private TempsPrescription debut = new TempsPrescription();
 
     /**
      * Fin de la séquence.
      */
     @Embedded
-    @AttributeOverrides(
-    {@AttributeOverride(name = "nb", column = @Column(name = "nb_fin")),
-     @AttributeOverride(name = "unite", column = @Column(name = "unite_fin")) })
+    @AttributeOverrides({@AttributeOverride(name = "nb", column = @Column(name = "nb_fin")), @AttributeOverride(name = "unite", column = @Column(name = "unite_fin")) })
     private TempsPrescription fin = new TempsPrescription();
 
     /**
@@ -98,8 +91,7 @@ public class Sequence
     /**
      * Bras parent.
      */
-    @ManyToOne(cascade =
-    {CascadeType.REFRESH, CascadeType.MERGE })
+    @ManyToOne(cascade = {CascadeType.REFRESH, CascadeType.MERGE })
     @JoinColumn(name = "id_bras_sequence")
     @Index(name = "idx_bras_sequence")
     private Bras parent;
@@ -110,15 +102,13 @@ public class Sequence
     @OneToMany(mappedBy = "sequence", cascade = CascadeType.ALL, orphanRemoval = true)
     @LazyCollection(LazyCollectionOption.FALSE)
     @Sort(type = SortType.COMPARATOR, comparator = PrescriptionTypeComparator.class)
-    private SortedSet<PrescriptionType> prescriptions =
-        new TreeSet<PrescriptionType>(new PrescriptionTypeComparator());
+    private SortedSet<PrescriptionType> prescriptions = new TreeSet<PrescriptionType>(new PrescriptionTypeComparator());
 
     /**
      * Getter sur description.
      * @return Retourne le description.
      */
-    public String getDescription()
-    {
+    public String getDescription() {
         return this.description;
     }
 
@@ -126,8 +116,7 @@ public class Sequence
      * Setter pour description.
      * @param description le description à écrire.
      */
-    public void setDescription(final String description)
-    {
+    public void setDescription(final String description) {
         this.description = description;
     }
 
@@ -135,8 +124,8 @@ public class Sequence
      * Getter sur parent.
      * @return Retourne le parent.
      */
-    public Bras getParent()
-    {
+    @Override
+    public Bras getParent() {
         return this.parent;
     }
 
@@ -144,8 +133,7 @@ public class Sequence
      * Setter pour parent.
      * @param parent le parent à écrire.
      */
-    public void setParent(final Bras parent)
-    {
+    public void setParent(final Bras parent) {
         this.parent = parent;
     }
 
@@ -153,8 +141,7 @@ public class Sequence
      * Getter sur prescriptions.
      * @return Retourne le prescriptions.
      */
-    public SortedSet<PrescriptionType> getPrescriptions()
-    {
+    public SortedSet<PrescriptionType> getPrescriptions() {
         return this.prescriptions;
     }
 
@@ -162,8 +149,7 @@ public class Sequence
      * {@inheritDoc}
      */
     @Override
-    public String getNom()
-    {
+    public String getNom() {
         return this.nom;
     }
 
@@ -171,8 +157,7 @@ public class Sequence
      * Setter pour nom.
      * @param nom le nom à écrire.
      */
-    public void setNom(final String nom)
-    {
+    public void setNom(final String nom) {
         this.nom = nom;
     }
 
@@ -180,11 +165,9 @@ public class Sequence
      * {@inheritDoc}
      */
     @Override
-    public String getLibelleProduit()
-    {
+    public String getLibelleProduit() {
         final StringBuffer buff = new StringBuffer();
-        for (final PrescriptionType p : this.prescriptions)
-        {
+        for (final PrescriptionType p : this.prescriptions) {
             buff.append(p.getProduit().getDenomination());
             buff.append(" ");
         }
@@ -195,8 +178,8 @@ public class Sequence
      * Getter sur type.
      * @return Retourne le type.
      */
-    public TypeDesignable getType()
-    {
+    @Override
+    public TypeDesignable getType() {
         return this.type;
     }
 
@@ -204,8 +187,7 @@ public class Sequence
      * Setter pour type.
      * @param type le type à écrire.
      */
-    public void setType(final TypeDesignable type)
-    {
+    public void setType(final TypeDesignable type) {
         this.type = type;
     }
 
@@ -213,8 +195,7 @@ public class Sequence
      * {@inheritDoc}
      */
     @Override
-    public SortedSet<Designable> getEnfants()
-    {
+    public SortedSet<Designable> getEnfants() {
         return new TreeSet<Designable>(new DesignableComparator());
     }
 
@@ -222,8 +203,7 @@ public class Sequence
      * Setter pour debut.
      * @param debut le debut à écrire.
      */
-    public void setDebut(final TempsPrescription debut)
-    {
+    public void setDebut(final TempsPrescription debut) {
         this.debut = debut;
     }
 
@@ -231,8 +211,7 @@ public class Sequence
      * Setter pour fin.
      * @param fin le fin à écrire.
      */
-    public void setFin(final TempsPrescription fin)
-    {
+    public void setFin(final TempsPrescription fin) {
         this.fin = fin;
     }
 
@@ -240,8 +219,7 @@ public class Sequence
      * Setter pour prescriptions.
      * @param prescriptions le prescriptions à écrire.
      */
-    public void setPrescriptions(final SortedSet<PrescriptionType> prescriptions)
-    {
+    public void setPrescriptions(final SortedSet<PrescriptionType> prescriptions) {
         this.prescriptions = prescriptions;
     }
 
@@ -249,8 +227,8 @@ public class Sequence
      * Getter sur debut.
      * @return Retourne le debut.
      */
-    public TempsPrescription getDebut()
-    {
+    @Override
+    public TempsPrescription getDebut() {
         return this.debut;
     }
 
@@ -258,8 +236,8 @@ public class Sequence
      * Getter sur fin.
      * @return Retourne le fin.
      */
-    public TempsPrescription getFin()
-    {
+    @Override
+    public TempsPrescription getFin() {
         return this.fin;
     }
 
@@ -267,12 +245,8 @@ public class Sequence
      * {@inheritDoc}
      */
     @Override
-    public String getNomComplet()
-    {
-        final StringBuffer buff =
-            new StringBuffer(this.getParent().getNomComplet())
-                    .append(EclipseConstants.DASH)
-                    .append(this.getNom());
+    public String getNomComplet() {
+        final StringBuffer buff = new StringBuffer(this.getParent().getNomComplet()).append(EclipseConstants.DASH).append(this.getNom());
         return buff.toString();
     }
 
@@ -280,16 +254,14 @@ public class Sequence
      * Getter pour duree.
      * @return Le duree
      */
-    public TempsPrescription getDuree()
-    {
+    public TempsPrescription getDuree() {
         final TempsPrescription t = new TempsPrescription();
         t.setNb(this.nbDuree);
         t.setUnite(this.uniteDuree);
         return t;
     }
 
-    public void setDuree(final TempsPrescription t)
-    {
+    public void setDuree(final TempsPrescription t) {
         this.nbDuree = t.getNb();
         this.uniteDuree = t.getUnite();
     }
@@ -298,8 +270,7 @@ public class Sequence
      * Getter pour nbDuree.
      * @return Le nbDuree
      */
-    public Integer getNbDuree()
-    {
+    public Integer getNbDuree() {
         return this.nbDuree;
     }
 
@@ -307,8 +278,7 @@ public class Sequence
      * Setter pour nbDuree.
      * @param nbDuree Le nbDuree à écrire.
      */
-    public void setNbDuree(final Integer nbDuree)
-    {
+    public void setNbDuree(final Integer nbDuree) {
         this.nbDuree = nbDuree;
     }
 
@@ -316,8 +286,7 @@ public class Sequence
      * Getter pour uniteDuree.
      * @return Le uniteDuree
      */
-    public UniteTemps getUniteDuree()
-    {
+    public UniteTemps getUniteDuree() {
         return this.uniteDuree;
     }
 
@@ -325,8 +294,7 @@ public class Sequence
      * Setter pour uniteDuree.
      * @param uniteDuree Le uniteDuree à écrire.
      */
-    public void setUniteDuree(final UniteTemps uniteDuree)
-    {
+    public void setUniteDuree(final UniteTemps uniteDuree) {
         this.uniteDuree = uniteDuree;
     }
 }

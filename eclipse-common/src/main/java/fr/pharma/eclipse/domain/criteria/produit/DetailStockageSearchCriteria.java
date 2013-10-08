@@ -4,12 +4,10 @@ import fr.pharma.eclipse.domain.criteria.common.AbstractSearchCriteria;
 
 /**
  * Critère de recherche sur DetailStockage.
- 
+ * @author Netapsys
  * @version $Revision$ $Date$
  */
-public class DetailStockageSearchCriteria
-    extends AbstractSearchCriteria
-{
+public class DetailStockageSearchCriteria extends AbstractSearchCriteria {
 
     /**
      * SerialVersionUID.
@@ -20,8 +18,7 @@ public class DetailStockageSearchCriteria
      * {@inheritDoc}
      */
     @Override
-    public void clear()
-    {
+    public void clear() {
     }
 
 }

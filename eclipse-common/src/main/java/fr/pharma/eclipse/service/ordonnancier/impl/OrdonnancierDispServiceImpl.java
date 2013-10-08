@@ -17,13 +17,12 @@ import fr.pharma.eclipse.factory.suivi.SuiviFactory;
 import fr.pharma.eclipse.service.dispensation.DispensationService;
 
 /**
- * Classe d'implémentation du service de gestion des ordonnanciers de dispensation.
- 
+ * Classe d'implémentation du service de gestion des ordonnanciers de
+ * dispensation.
+ * @author Netapsys
  * @version $Revision$ $Date$
  */
-public class OrdonnancierDispServiceImpl
-    extends OrdonnancierServiceImpl<OrdonnancierDisp>
-{
+public class OrdonnancierDispServiceImpl extends OrdonnancierServiceImpl<OrdonnancierDisp> {
     /**
      * Serial ID.
      */
@@ -43,10 +42,10 @@ public class OrdonnancierDispServiceImpl
 
     /**
      * Constructeur.
-     * @param ordonnancierDispDao Dao de gestion des ordonnanciers de dispensation.
+     * @param ordonnancierDispDao Dao de gestion des ordonnanciers de
+     * dispensation.
      */
-    public OrdonnancierDispServiceImpl(final GenericDao<OrdonnancierDisp> ordonnancierDispDao)
-    {
+    public OrdonnancierDispServiceImpl(final GenericDao<OrdonnancierDisp> ordonnancierDispDao) {
         super(ordonnancierDispDao);
     }
 
@@ -55,8 +54,7 @@ public class OrdonnancierDispServiceImpl
      */
     @Override
     @Transactional
-    public OrdonnancierDisp calculerOrdonnancier(final OrdonnancierSearchCriteria criteria)
-    {
+    public OrdonnancierDisp calculerOrdonnancier(final OrdonnancierSearchCriteria criteria) {
         final Pharmacie pharmacie = criteria.getPharmacie();
 
         // Récupération des dispensations éligibles pour l'ordonnancier
@@ -69,23 +67,18 @@ public class OrdonnancierDispServiceImpl
 
         final List<Dispensation> dispensations = this.dispensationService.getAll(crit);
 
-        if (dispensations.isEmpty())
-        {
-            throw new ValidationException("ordonnancier.dispensations",
-                                          new String[]
-                                          {"empty" });
-        }
-        else
-        {
+        if (dispensations.isEmpty()) {
+            throw new ValidationException("ordonnancier.dispensations", new String[]{"empty" });
+        } else {
             // Création de l'ordonnancier
             final OrdonnancierDisp ordonnancier = this.ordonnancierFactory.getInitializedObject();
             ordonnancier.setDateDebut(criteria.getDateDebut());
             ordonnancier.setDateFin(criteria.getDateFin());
             ordonnancier.setPharmacie(pharmacie);
 
-            for (final Dispensation dispensation : dispensations)
-            {
-                // Le numéro d'ordonnancier est créé à l'enregistrement de la dispensation
+            for (final Dispensation dispensation : dispensations) {
+                // Le numéro d'ordonnancier est créé à l'enregistrement de la
+                // dispensation
                 dispensation.setOrdonnancier(ordonnancier);
                 ordonnancier.getDispensations().add(dispensation);
             }
@@ -99,8 +92,7 @@ public class OrdonnancierDispServiceImpl
      * Setter pour dispensationService.
      * @param dispensationService Le dispensationService à écrire.
      */
-    public void setDispensationService(final DispensationService dispensationService)
-    {
+    public void setDispensationService(final DispensationService dispensationService) {
         this.dispensationService = dispensationService;
     }
 
@@ -108,8 +100,7 @@ public class OrdonnancierDispServiceImpl
      * Setter pour ordonnancierFactory.
      * @param ordonnancierFactory Le ordonnancierFactory à écrire.
      */
-    public void setOrdonnancierFactory(final SuiviFactory<OrdonnancierDisp> ordonnancierFactory)
-    {
+    public void setOrdonnancierFactory(final SuiviFactory<OrdonnancierDisp> ordonnancierFactory) {
         this.ordonnancierFactory = ordonnancierFactory;
     }
 

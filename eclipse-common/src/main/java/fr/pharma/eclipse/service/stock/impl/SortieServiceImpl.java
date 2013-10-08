@@ -7,6 +7,8 @@ import java.util.List;
 
 import javax.annotation.Resource;
 
+import org.springframework.transaction.annotation.Transactional;
+
 import fr.pharma.eclipse.domain.enums.evenement.TypeEvenement;
 import fr.pharma.eclipse.domain.enums.jasper.TypeRapportJasper;
 import fr.pharma.eclipse.domain.enums.stock.RaisonSortie;
@@ -29,21 +31,19 @@ import fr.pharma.eclipse.factory.evenement.EvenementFactory;
 import fr.pharma.eclipse.factory.stock.DispensationProduitFactory;
 import fr.pharma.eclipse.factory.stock.MvtStockFactory;
 import fr.pharma.eclipse.jasper.document.DocumentMakerDictionary;
-import fr.pharma.eclipse.service.common.GenericService;
 import fr.pharma.eclipse.service.evenement.EvenementService;
 import fr.pharma.eclipse.service.stock.MvtStockService;
 import fr.pharma.eclipse.service.stock.SortieService;
+import fr.pharma.eclipse.service.stock.StockService;
 import fr.pharma.eclipse.service.user.UserService;
 import fr.pharma.eclipse.utils.constants.EclipseConstants;
 
 /**
  * Classe d'implémentation du service de gestion des sorties de stock.
- 
+ * @author Netapsys
  * @version $Revision$ $Date$
  */
-public class SortieServiceImpl
-    implements SortieService, Serializable
-{
+public class SortieServiceImpl implements SortieService, Serializable {
     /**
      * Serial ID.
      */
@@ -79,6 +79,9 @@ public class SortieServiceImpl
     @Resource(name = "destructionService")
     private MvtStockService<Destruction> destructionService;
 
+    @Resource(name = "stockService")
+    private StockService stockService;
+
     /**
      * Service de gestion des destructions.
      */
@@ -96,12 +99,6 @@ public class SortieServiceImpl
      */
     @Resource(name = "autreSortieService")
     private MvtStockService<AutreSortie> autreSortieService;
-
-    /**
-     * Service de gestion des dispensations.
-     */
-    @Resource(name = "dispensationService")
-    private GenericService<Dispensation> dispensationService;
 
     /**
      * Factory des autres sorties.
@@ -149,6 +146,7 @@ public class SortieServiceImpl
      * {@inheritDoc}
      */
     @Override
+    @Transactional
     public ResultSortie save(final RaisonSortie raisonSortie,
                              final String commentaireRaison,
                              final TypeMvtStock type,
@@ -157,57 +155,20 @@ public class SortieServiceImpl
                              final String commentaire,
                              final Pharmacie pharmacieDest,
                              final List<Sortie> sorties,
-                             final Dispensation dispensation)
-    {
+                             final Dispensation dispensation) {
         final ResultSortie resultSortie = new ResultSortie();
-        if (TypeMvtStock.RETOUR_PROMOTEUR.equals(type))
-        {
-            this.handleRetourPromoteur(raisonSortie,
-                                       commentaireRaison,
-                                       commentaire,
-                                       nomSocieteTransport,
-                                       referenceEnvoi,
-                                       sorties,
-                                       resultSortie);
-        }
-        else if (TypeMvtStock.CESSION_PUI.equals(type))
-        {
-            this.handleCessionPui(raisonSortie,
-                                  commentaireRaison,
-                                  commentaire,
-                                  sorties,
-                                  resultSortie,
-                                  pharmacieDest);
-        }
-        else if (TypeMvtStock.DESTRUCTION.equals(type))
-        {
-            this.handleDestruction(raisonSortie,
-                                   commentaireRaison,
-                                   commentaire,
-                                   sorties,
-                                   resultSortie);
-        }
-        else if (TypeMvtStock.AUTRE_SORTIE.equals(type))
-        {
-            this.handleAutreSortie(raisonSortie,
-                                   commentaireRaison,
-                                   commentaire,
-                                   sorties,
-                                   resultSortie);
-        }
-        else if (TypeMvtStock.DISPENSATION.equals(type))
-        {
-            this.handleDispensation(commentaire,
-                                    sorties,
-                                    resultSortie,
-                                    dispensation);
-        }
-        else if (TypeMvtStock.PREPARATION_SORTIE.equals(type))
-        {
-            this.handlePreparationSortie(commentaire,
-                                         sorties,
-                                         resultSortie,
-                                         dispensation);
+        if (TypeMvtStock.RETOUR_PROMOTEUR.equals(type)) {
+            this.handleRetourPromoteur(raisonSortie, commentaireRaison, commentaire, nomSocieteTransport, referenceEnvoi, sorties, resultSortie);
+        } else if (TypeMvtStock.CESSION_PUI.equals(type)) {
+            this.handleCessionPui(raisonSortie, commentaireRaison, commentaire, sorties, resultSortie, pharmacieDest);
+        } else if (TypeMvtStock.DESTRUCTION.equals(type)) {
+            this.handleDestruction(raisonSortie, commentaireRaison, commentaire, sorties, resultSortie);
+        } else if (TypeMvtStock.AUTRE_SORTIE.equals(type)) {
+            this.handleAutreSortie(raisonSortie, commentaireRaison, commentaire, sorties, resultSortie);
+        } else if (TypeMvtStock.DISPENSATION.equals(type)) {
+            this.handleDispensation(commentaire, sorties, resultSortie, dispensation);
+        } else if (TypeMvtStock.PREPARATION_SORTIE.equals(type)) {
+            this.handlePreparationSortie(commentaire, sorties, resultSortie, dispensation);
         }
 
         // Méthode en charge de compléter les informations du résultat de sortie
@@ -217,13 +178,12 @@ public class SortieServiceImpl
     }
 
     /**
-     * Méthode en charge de compléter les informations de récapitulatif de la sortie.
+     * Méthode en charge de compléter les informations de récapitulatif de la
+     * sortie.
      * @param resultSortie Récapitulatif à compléter.
      */
-    protected void completeResult(final ResultSortie resultSortie)
-    {
-        if (resultSortie.getSorties().size() > 0)
-        {
+    protected void completeResult(final ResultSortie resultSortie) {
+        if (resultSortie.getSorties().size() > 0) {
             final Sortie sortie = resultSortie.getSorties().get(0);
             final MvtStock mvt = sortie.getMvtSortie();
             resultSortie.setEssai(mvt.getEssai());
@@ -244,14 +204,11 @@ public class SortieServiceImpl
                                    final String commentaireRaison,
                                    final String commentaire,
                                    final List<Sortie> sorties,
-                                   final ResultSortie resultSortie)
-    {
+                                   final ResultSortie resultSortie) {
         final List<AutreSortie> autresSorties = new ArrayList<AutreSortie>();
-        for (final Sortie sortie : sorties)
-        {
+        for (final Sortie sortie : sorties) {
             final List<LigneStock> lignesStock = sortie.getLignesStockCompletees();
-            for (final LigneStock ligneStock : lignesStock)
-            {
+            for (final LigneStock ligneStock : lignesStock) {
                 final AutreSortie autreSortie = this.autreSortieFactory.getInitializedObject();
                 autreSortie.setCommentaire(commentaire);
                 autreSortie.setEssai(ligneStock.getEssai());
@@ -267,11 +224,12 @@ public class SortieServiceImpl
                 autreSortie.setApproApprouve(ligneStock.getApproApprouve());
                 autresSorties.add(autreSortie);
             }
-            if (!lignesStock.isEmpty())
-            {
+            if (!lignesStock.isEmpty()) {
                 resultSortie.getSorties().add(sortie);
             }
         }
+        // Sauvegarde du stock
+        this.stockService.update(autresSorties);
         // Sauvegarde des autres sorties
         resultSortie.setMvts(this.autreSortieService.saveAll(autresSorties));
     }
@@ -286,15 +244,12 @@ public class SortieServiceImpl
                                    final String commentaireRaison,
                                    final String commentaire,
                                    final List<Sortie> sorties,
-                                   final ResultSortie resultSortie)
-    {
+                                   final ResultSortie resultSortie) {
         final List<Destruction> destructions = new ArrayList<Destruction>();
         resultSortie.setRaisonSortie(raisonSortie);
-        for (final Sortie sortie : sorties)
-        {
+        for (final Sortie sortie : sorties) {
             final List<LigneStock> lignesStock = sortie.getLignesStockCompletees();
-            for (final LigneStock ligneStock : lignesStock)
-            {
+            for (final LigneStock ligneStock : lignesStock) {
                 final Destruction destruction = this.destructionFactory.getInitializedObject();
                 destruction.setCommentaire(commentaire);
                 destruction.setEssai(ligneStock.getEssai());
@@ -311,15 +266,15 @@ public class SortieServiceImpl
                 destructions.add(destruction);
                 resultSortie.setEssai(ligneStock.getEssai());
             }
-            if (!lignesStock.isEmpty())
-            {
+            if (!lignesStock.isEmpty()) {
                 resultSortie.getSorties().add(sortie);
             }
         }
+        // Sauvegarde du stock
+        this.stockService.update(destructions);
         // Sauvegarde des destructions
         resultSortie.setMvts(this.destructionService.saveAll(destructions));
-        this.documentMakerDictionary.make(TypeRapportJasper.CERTIFICAT_DESTRUCTION,
-                                          resultSortie);
+        this.documentMakerDictionary.make(TypeRapportJasper.CERTIFICAT_DESTRUCTION, resultSortie);
     }
 
     /**
@@ -333,15 +288,12 @@ public class SortieServiceImpl
                                   final String commentaire,
                                   final List<Sortie> sorties,
                                   final ResultSortie resultSortie,
-                                  final Pharmacie pharmacieDest)
-    {
+                                  final Pharmacie pharmacieDest) {
         final List<CessionPui> cessions = new ArrayList<CessionPui>();
         Essai essai = null;
-        for (final Sortie sortie : sorties)
-        {
+        for (final Sortie sortie : sorties) {
             final List<LigneStock> lignesStock = sortie.getLignesStockCompletees();
-            for (final LigneStock ligneStock : lignesStock)
-            {
+            for (final LigneStock ligneStock : lignesStock) {
                 essai = ligneStock.getEssai();
                 final CessionPui cessionPui = this.cessionPuiFactory.getInitializedObject();
                 cessionPui.setCommentaire(commentaire);
@@ -359,16 +311,16 @@ public class SortieServiceImpl
                 cessionPui.setApproApprouve(ligneStock.getApproApprouve());
                 cessions.add(cessionPui);
             }
-            if (!lignesStock.isEmpty())
-            {
+            if (!lignesStock.isEmpty()) {
                 resultSortie.getSorties().add(sortie);
             }
         }
+        // Sauvegarde du stock
+        this.stockService.update(cessions);
         // Sauvegarde des cessions
         resultSortie.setMvts(this.cessionPuiService.saveAll(cessions));
 
-        if (essai != null)
-        {
+        if (essai != null) {
             // création de l'évènement lié.
             final Evenement evenement = this.evenementFactory.getInitializedObject();
             evenement.setTypeEvenement(TypeEvenement.CESSION_PUI);
@@ -378,11 +330,7 @@ public class SortieServiceImpl
             evenement.setJournee(true);
             evenement.setLibelle(TypeEvenement.CESSION_PUI.getLibelle());
             evenement.setEssai(sorties.get(0).getLignesStock().get(0).getEssai());
-            evenement.setDestinataire(pharmacieDest.getEtablissement().getNom()
-                                      + EclipseConstants.SPACE
-                                      + EclipseConstants.DASH
-                                      + EclipseConstants.SPACE
-                                      + pharmacieDest.getNom());
+            evenement.setDestinataire(pharmacieDest.getEtablissement().getNom() + EclipseConstants.SPACE + EclipseConstants.DASH + EclipseConstants.SPACE + pharmacieDest.getNom());
             this.evenementService.save(evenement);
         }
 
@@ -403,16 +351,13 @@ public class SortieServiceImpl
                                        final String nomSocieteTransport,
                                        final String referenceEnvoi,
                                        final List<Sortie> sorties,
-                                       final ResultSortie resultSortie)
-    {
+                                       final ResultSortie resultSortie) {
         final List<RetourPromoteur> retours = new ArrayList<RetourPromoteur>();
 
         resultSortie.setRaisonSortie(raisonSortie);
-        for (final Sortie sortie : sorties)
-        {
+        for (final Sortie sortie : sorties) {
             final List<LigneStock> lignesStock = sortie.getLignesStockCompletees();
-            for (final LigneStock ligneStock : lignesStock)
-            {
+            for (final LigneStock ligneStock : lignesStock) {
                 final RetourPromoteur retourPromoteur = this.retourFactory.getInitializedObject();
                 retourPromoteur.setCommentaire(commentaire);
                 retourPromoteur.setNomSocieteTransport(nomSocieteTransport);
@@ -431,37 +376,34 @@ public class SortieServiceImpl
                 retours.add(retourPromoteur);
                 resultSortie.setEssai(ligneStock.getEssai());
             }
-            if (!lignesStock.isEmpty())
-            {
+            if (!lignesStock.isEmpty()) {
                 resultSortie.getSorties().add(sortie);
             }
         }
+        // Sauvegarde du stock
+        this.stockService.update(retours);
         // Sauvegarde des retours promoteurs
         resultSortie.setMvts(this.retourService.saveAll(retours));
-        this.documentMakerDictionary.make(TypeRapportJasper.CERTIFICAT_RETOUR,
-                                          resultSortie);
+        this.documentMakerDictionary.make(TypeRapportJasper.CERTIFICAT_RETOUR, resultSortie);
     }
     /**
-     * Méthode en charge de gérer une saisie de sortie de type DispensationProduit.
+     * Méthode en charge de gérer une saisie de sortie de type
+     * DispensationProduit.
      * @param commentaire Commentaire.
      * @param sorties Liste de sorties.
      * @param resultSortie Résultat de la sortie à compléter.
-     * @param dispensation Bean métier contenant les informations de dispensation.
+     * @param dispensation Bean métier contenant les informations de
+     * dispensation.
      */
     private void handleDispensation(final String commentaire,
                                     final List<Sortie> sorties,
                                     final ResultSortie resultSortie,
-                                    final Dispensation dispensation)
-    {
-        for (final Sortie sortie : sorties)
-        {
+                                    final Dispensation dispensation) {
+        for (final Sortie sortie : sorties) {
             final List<LigneStock> lignesStock = sortie.getLignesStockCompletees();
-            for (final LigneStock ligneStock : lignesStock)
-            {
-                final DispensationProduit dispensationProduit =
-                    this.dispensationProduitFactory.getInitializedObject();
-                dispensationProduit.setProduitPrescrit(((DispensationProduit) sortie
-                        .getMvtSortie()).getProduitPrescrit());
+            for (final LigneStock ligneStock : lignesStock) {
+                final DispensationProduit dispensationProduit = this.dispensationProduitFactory.getInitializedObject();
+                dispensationProduit.setProduitPrescrit(((DispensationProduit) sortie.getMvtSortie()).getProduitPrescrit());
                 dispensationProduit.setDispensation(dispensation);
                 dispensationProduit.setDatePeremption(ligneStock.getDatePeremption());
                 dispensationProduit.setEssai(ligneStock.getEssai());
@@ -472,38 +414,39 @@ public class SortieServiceImpl
                 dispensationProduit.setNumTraitement(ligneStock.getNumTraitement());
                 dispensationProduit.setQuantite(ligneStock.getQteASortir());
                 dispensationProduit.setApproApprouve(ligneStock.getApproApprouve());
-                dispensationProduit
-                        .setDateCreation(Calendar.getInstance(EclipseConstants.LOCALE));
+                dispensationProduit.setDateCreation(Calendar.getInstance(EclipseConstants.LOCALE));
                 dispensationProduit.setPersonne(this.userService.getPersonne());
                 dispensation.getDispensationsProduit().add(dispensationProduit);
+                if (ligneStock.getDotation()) {
+                    ligneStock.setQteDispensationGlobal(ligneStock.getQteDispensationGlobal() - ligneStock.getQteASortir());
+                } else {
+                    ligneStock.setQteGlobalStock(ligneStock.getQteGlobalStock() - ligneStock.getQteASortir());
+                }
             }
-            if (!lignesStock.isEmpty())
-            {
+            if (!lignesStock.isEmpty()) {
                 resultSortie.getSorties().add(sortie);
             }
         }
     }
 
     /**
-     * Méthode en charge de gérer une saisie de sortie de type Preparation Sortie.
+     * Méthode en charge de gérer une saisie de sortie de type Preparation
+     * Sortie.
      * @param commentaire Commentaire.
      * @param sorties Liste de sorties.
      * @param resultSortie Résultat de la sortie à compléter.
-     * @param dispensation Bean métier contenant les informations de dispensation.
+     * @param dispensation Bean métier contenant les informations de
+     * dispensation.
      */
     private void handlePreparationSortie(final String commentaire,
                                          final List<Sortie> sorties,
                                          final ResultSortie resultSortie,
-                                         final Dispensation dispensation)
-    {
+                                         final Dispensation dispensation) {
         final List<PreparationSortie> preparations = new ArrayList<PreparationSortie>();
-        for (final Sortie sortie : sorties)
-        {
+        for (final Sortie sortie : sorties) {
             final List<LigneStock> lignesStock = sortie.getLignesStockCompletees();
-            for (final LigneStock ligneStock : lignesStock)
-            {
-                final PreparationSortie preparation =
-                    this.preparationSortieFactory.getInitializedObject();
+            for (final LigneStock ligneStock : lignesStock) {
+                final PreparationSortie preparation = this.preparationSortieFactory.getInitializedObject();
                 preparation.setDatePeremption(ligneStock.getDatePeremption());
                 preparation.setEssai(ligneStock.getEssai());
                 preparation.setPharmacie(ligneStock.getPharmacie());
@@ -517,12 +460,13 @@ public class SortieServiceImpl
                 preparation.setPersonne(this.userService.getPersonne());
                 preparations.add(preparation);
             }
-            if (!lignesStock.isEmpty())
-            {
+            if (!lignesStock.isEmpty()) {
                 resultSortie.getSorties().add(sortie);
             }
         }
-        // Sauvegarde des cessions
+        // Sauvegarde du stock
+        this.stockService.update(preparations);
+        // Sauvegarde des préparations
         resultSortie.setMvts(this.preparationSortieService.saveAll(preparations));
     }
 
@@ -530,8 +474,7 @@ public class SortieServiceImpl
      * Setter pour cessionPuiService.
      * @param cessionPuiService Le cessionPuiService à écrire.
      */
-    public void setCessionPuiService(final MvtStockService<CessionPui> cessionPuiService)
-    {
+    public void setCessionPuiService(final MvtStockService<CessionPui> cessionPuiService) {
         this.cessionPuiService = cessionPuiService;
     }
 
@@ -539,8 +482,7 @@ public class SortieServiceImpl
      * Setter pour retourService.
      * @param retourService Le retourService à écrire.
      */
-    public void setRetourService(final MvtStockService<RetourPromoteur> retourService)
-    {
+    public void setRetourService(final MvtStockService<RetourPromoteur> retourService) {
         this.retourService = retourService;
     }
 
@@ -548,8 +490,7 @@ public class SortieServiceImpl
      * Setter pour retourFactory.
      * @param retourFactory Le retourFactory à écrire.
      */
-    public void setRetourFactory(final MvtStockFactory<RetourPromoteur> retourFactory)
-    {
+    public void setRetourFactory(final MvtStockFactory<RetourPromoteur> retourFactory) {
         this.retourFactory = retourFactory;
     }
 
@@ -557,8 +498,7 @@ public class SortieServiceImpl
      * Setter pour destructionService.
      * @param destructionService Le destructionService à écrire.
      */
-    public void setDestructionService(final MvtStockService<Destruction> destructionService)
-    {
+    public void setDestructionService(final MvtStockService<Destruction> destructionService) {
         this.destructionService = destructionService;
     }
 
@@ -566,8 +506,7 @@ public class SortieServiceImpl
      * Setter pour destructionFactory.
      * @param destructionFactory Le destructionFactory à écrire.
      */
-    public void setDestructionFactory(final MvtStockFactory<Destruction> destructionFactory)
-    {
+    public void setDestructionFactory(final MvtStockFactory<Destruction> destructionFactory) {
         this.destructionFactory = destructionFactory;
     }
 
@@ -575,8 +514,7 @@ public class SortieServiceImpl
      * Setter pour autreSortieFactory.
      * @param autreSortieFactory Le autreSortieFactory à écrire.
      */
-    public void setAutreSortieFactory(final MvtStockFactory<AutreSortie> autreSortieFactory)
-    {
+    public void setAutreSortieFactory(final MvtStockFactory<AutreSortie> autreSortieFactory) {
         this.autreSortieFactory = autreSortieFactory;
     }
 
@@ -584,8 +522,7 @@ public class SortieServiceImpl
      * Setter pour autreSortieService.
      * @param autreSortieService Le autreSortieService à écrire.
      */
-    public void setAutreSortieService(final MvtStockService<AutreSortie> autreSortieService)
-    {
+    public void setAutreSortieService(final MvtStockService<AutreSortie> autreSortieService) {
         this.autreSortieService = autreSortieService;
     }
 
@@ -593,8 +530,7 @@ public class SortieServiceImpl
      * Getter pour userService.
      * @return Le userService
      */
-    public UserService getUserService()
-    {
+    public UserService getUserService() {
         return this.userService;
     }
 
@@ -602,8 +538,7 @@ public class SortieServiceImpl
      * Setter pour userService.
      * @param userService Le userService à écrire.
      */
-    public void setUserService(final UserService userService)
-    {
+    public void setUserService(final UserService userService) {
         this.userService = userService;
     }
 
@@ -611,26 +546,15 @@ public class SortieServiceImpl
      * Setter pour cessionPuiFactory.
      * @param cessionPuiFactory Le cessionPuiFactory à écrire.
      */
-    public void setCessionPuiFactory(final MvtStockFactory<CessionPui> cessionPuiFactory)
-    {
+    public void setCessionPuiFactory(final MvtStockFactory<CessionPui> cessionPuiFactory) {
         this.cessionPuiFactory = cessionPuiFactory;
-    }
-
-    /**
-     * Setter pour dispensationService.
-     * @param dispensationService le dispensationService à écrire.
-     */
-    public void setDispensationService(final GenericService<Dispensation> dispensationService)
-    {
-        this.dispensationService = dispensationService;
     }
 
     /**
      * Setter pour dispensationProduitFactory.
      * @param dispensationProduitFactory le dispensationProduitFactory à écrire.
      */
-    public void setDispensationProduitFactory(final DispensationProduitFactory dispensationProduitFactory)
-    {
+    public void setDispensationProduitFactory(final DispensationProduitFactory dispensationProduitFactory) {
         this.dispensationProduitFactory = dispensationProduitFactory;
     }
 
@@ -638,8 +562,7 @@ public class SortieServiceImpl
      * Setter pour evenementFactory.
      * @param evenementFactory Le evenementFactory à écrire.
      */
-    public void setEvenementFactory(final EvenementFactory evenementFactory)
-    {
+    public void setEvenementFactory(final EvenementFactory evenementFactory) {
         this.evenementFactory = evenementFactory;
     }
 
@@ -647,8 +570,7 @@ public class SortieServiceImpl
      * Setter pour evenementService.
      * @param evenementService Le evenementService à écrire.
      */
-    public void setEvenementService(final EvenementService evenementService)
-    {
+    public void setEvenementService(final EvenementService evenementService) {
         this.evenementService = evenementService;
     }
 
@@ -656,8 +578,7 @@ public class SortieServiceImpl
      * Setter pour documentMakerDictionary.
      * @param documentMakerDictionary Le documentMakerDictionary à écrire.
      */
-    public void setDocumentMakerDictionary(final DocumentMakerDictionary documentMakerDictionary)
-    {
+    public void setDocumentMakerDictionary(final DocumentMakerDictionary documentMakerDictionary) {
         this.documentMakerDictionary = documentMakerDictionary;
     }
 
@@ -665,8 +586,7 @@ public class SortieServiceImpl
      * Setter pour preparationSortieFactory.
      * @param preparationSortieFactory Le preparationSortieFactory à écrire.
      */
-    public void setPreparationSortieFactory(final MvtStockFactory<PreparationSortie> preparationSortieFactory)
-    {
+    public void setPreparationSortieFactory(final MvtStockFactory<PreparationSortie> preparationSortieFactory) {
         this.preparationSortieFactory = preparationSortieFactory;
     }
 
@@ -674,9 +594,12 @@ public class SortieServiceImpl
      * Setter pour preparationSortieService.
      * @param preparationSortieService Le preparationSortieService à écrire.
      */
-    public void setPreparationSortieService(final MvtStockService<PreparationSortie> preparationSortieService)
-    {
+    public void setPreparationSortieService(final MvtStockService<PreparationSortie> preparationSortieService) {
         this.preparationSortieService = preparationSortieService;
+    }
+
+    public void setStockService(final StockService stockService) {
+        this.stockService = stockService;
     }
 
 }

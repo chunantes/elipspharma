@@ -9,14 +9,13 @@ import fr.pharma.eclipse.domain.model.sir.common.BeanSirObject;
 import fr.pharma.eclipse.service.sir.GenericSirService;
 
 /**
- * Implémentation du manager générique pour l'utilisation standard des POJOs de SIR.
- 
+ * Implémentation du manager générique pour l'utilisation standard des POJOs de
+ * SIR.
+ * @author Netapsys
  * @version $Revision$ $Date$
  * @param <SIR> Bean Objet Métier SIR.
  */
-public class GenericSirServiceImpl<SIR extends BeanSirObject>
-    implements GenericSirService<SIR>, Serializable
-{
+public class GenericSirServiceImpl<SIR extends BeanSirObject> implements GenericSirService<SIR>, Serializable {
     /**
      * Serial ID.
      */
@@ -28,12 +27,11 @@ public class GenericSirServiceImpl<SIR extends BeanSirObject>
     private GenericSirDao<SIR> genericSirDao;
 
     /**
-     * Constructeur principal pour la création de nouvelle implémentation de manager, plus
-     * spécifique.
+     * Constructeur principal pour la création de nouvelle implémentation de
+     * manager, plus spécifique.
      * @param genericSirDao La DAO à utiliser.
      */
-    public GenericSirServiceImpl(final GenericSirDao<SIR> genericSirDao)
-    {
+    public GenericSirServiceImpl(final GenericSirDao<SIR> genericSirDao) {
         this.setGenericSirDao(genericSirDao);
     }
 
@@ -41,8 +39,7 @@ public class GenericSirServiceImpl<SIR extends BeanSirObject>
      * {@inheritDoc}
      */
     @Override
-    public SIR get(final Integer id)
-    {
+    public SIR get(final Integer id) {
         return this.genericSirDao.get(id);
     }
 
@@ -50,8 +47,7 @@ public class GenericSirServiceImpl<SIR extends BeanSirObject>
      * {@inheritDoc}
      */
     @Override
-    public List<SIR> getAll(final SearchCriteria criteria)
-    {
+    public List<SIR> getAll(final SearchCriteria criteria) {
         return this.genericSirDao.getAll(criteria);
     }
 
@@ -59,8 +55,7 @@ public class GenericSirServiceImpl<SIR extends BeanSirObject>
      * {@inheritDoc}
      */
     @Override
-    public List<SIR> getAll()
-    {
+    public List<SIR> getAll() {
         return this.genericSirDao.getAll();
     }
 
@@ -68,8 +63,7 @@ public class GenericSirServiceImpl<SIR extends BeanSirObject>
      * Setter pour genericSirDao.
      * @param genericSirDao Le genericSirDao à écrire.
      */
-    public void setGenericSirDao(final GenericSirDao<SIR> genericSirDao)
-    {
+    public void setGenericSirDao(final GenericSirDao<SIR> genericSirDao) {
         this.genericSirDao = genericSirDao;
     }
 

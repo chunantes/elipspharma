@@ -9,13 +9,10 @@ import fr.pharma.eclipse.factory.common.BeanObjectFactory;
 
 /**
  * Factory de Bean Conditionnement.
- 
+ * @author Netapsys
  * @version $Revision$ $Date$
- * @param <CONDITIONNEMENT> Type Conditionnement.
  */
-public class ConditionnementFactory<CONDITIONNEMENT extends Conditionnement>
-    extends BeanObjectFactory<CONDITIONNEMENT>
-{
+public class ConditionnementFactory extends BeanObjectFactory<Conditionnement> {
 
     /**
      * SerialVersionUID.
@@ -26,8 +23,7 @@ public class ConditionnementFactory<CONDITIONNEMENT extends Conditionnement>
      * Constructeur.
      * @param bean Classe.
      */
-    public ConditionnementFactory(final Class<CONDITIONNEMENT> bean)
-    {
+    public ConditionnementFactory(final Class<Conditionnement> bean) {
         super(bean);
     }
 
@@ -36,21 +32,21 @@ public class ConditionnementFactory<CONDITIONNEMENT extends Conditionnement>
      * @param dm Le dispositif Médical.
      * @return Le conditionnement.
      */
-    public CONDITIONNEMENT getInitializedObject(final DispositifMedical dm)
-    {
-        final CONDITIONNEMENT conditionnement = super.getInitializedObject();
+    public Conditionnement getInitializedObject(final DispositifMedical dm) {
+        final Conditionnement conditionnement = super.getInitializedObject();
         conditionnement.setProduit(dm);
+        // Initialization des modifications pour eviter un LazyLoadingException
+        // dans produitTherapeutique/ongletPrescription
+        conditionnement.getProduit().getModifs();
         return conditionnement;
     }
-
     /**
      * Construction d'un conditionnement à partir d'un médicament.
      * @param medicament Le médicament.
      * @return Le conditionnement.
      */
-    public CONDITIONNEMENT getInitializedObject(final Medicament medicament)
-    {
-        final CONDITIONNEMENT conditionnement = super.getInitializedObject();
+    public Conditionnement getInitializedObject(final Medicament medicament) {
+        final Conditionnement conditionnement = super.getInitializedObject();
         conditionnement.setProduit(medicament);
         return conditionnement;
     }
@@ -60,9 +56,8 @@ public class ConditionnementFactory<CONDITIONNEMENT extends Conditionnement>
      * @param produit Le produit thérapeutique.
      * @return Le conditionnement.
      */
-    public CONDITIONNEMENT getInitializedObject(final ProduitTherapeutique produit)
-    {
-        final CONDITIONNEMENT conditionnement = super.getInitializedObject();
+    public Conditionnement getInitializedObject(final ProduitTherapeutique produit) {
+        final Conditionnement conditionnement = super.getInitializedObject();
         conditionnement.setProduit(produit);
         return conditionnement;
     }
@@ -72,9 +67,8 @@ public class ConditionnementFactory<CONDITIONNEMENT extends Conditionnement>
      * @param produit La préparation.
      * @return Le conditionnement.
      */
-    public CONDITIONNEMENT getInitializedObject(final Preparation produit)
-    {
-        final CONDITIONNEMENT conditionnement = super.getInitializedObject();
+    public Conditionnement getInitializedObject(final Preparation produit) {
+        final Conditionnement conditionnement = super.getInitializedObject();
         conditionnement.setProduit(produit);
         return conditionnement;
     }

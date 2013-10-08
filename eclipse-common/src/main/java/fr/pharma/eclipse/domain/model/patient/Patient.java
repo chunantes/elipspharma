@@ -12,7 +12,6 @@ import javax.persistence.Enumerated;
 import javax.persistence.OneToMany;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
-import javax.validation.constraints.Pattern;
 
 import org.hibernate.annotations.LazyCollection;
 import org.hibernate.annotations.LazyCollectionOption;
@@ -30,13 +29,11 @@ import fr.pharma.eclipse.domain.model.suivi.patient.PatientSuivi;
 
 /**
  * Classe métier représentant un patient.
- 
+ * @author Netapsys
  * @version $Revision$ $Date$
  */
 @Entity(name = "patient")
-public class Patient
-    extends BeanObject
-{
+public class Patient extends BeanObject {
 
     /**
      * SerialVersionUID.
@@ -47,7 +44,6 @@ public class Patient
      * Numéro IPP.
      */
     @Column(name = "numeroIpp")
-    @Pattern(regexp = "[0-9]+", message = "Le numéro IPP doit être un nombre.")
     private String numeroIpp;
 
     /**
@@ -137,8 +133,7 @@ public class Patient
     @OneToMany(mappedBy = "patient", cascade = CascadeType.ALL)
     @LazyCollection(LazyCollectionOption.FALSE)
     @Sort(type = SortType.COMPARATOR, comparator = HistoriquePatientComparator.class)
-    private SortedSet<HistoriquePatient> historiquePatient =
-        new TreeSet<HistoriquePatient>(new HistoriquePatientComparator());
+    private SortedSet<HistoriquePatient> historiquePatient = new TreeSet<HistoriquePatient>(new HistoriquePatientComparator());
 
     /**
      * Liste des inclusions dans des essais.
@@ -146,8 +141,7 @@ public class Patient
     @OneToMany(mappedBy = "patient")
     @LazyCollection(LazyCollectionOption.TRUE)
     @Sort(type = SortType.COMPARATOR, comparator = EclipseListComparator.class)
-    private SortedSet<RetourPatient> retours =
-        new TreeSet<RetourPatient>(new EclipseListComparator());
+    private SortedSet<RetourPatient> retours = new TreeSet<RetourPatient>(new EclipseListComparator());
 
     /**
      * Liste des modifications du patient.
@@ -161,8 +155,7 @@ public class Patient
      * Getter sur numeroIpp.
      * @return Retourne le numeroIpp.
      */
-    public String getNumeroIpp()
-    {
+    public String getNumeroIpp() {
         return this.numeroIpp;
     }
 
@@ -170,8 +163,7 @@ public class Patient
      * Setter pour numeroIpp.
      * @param numeroIpp le numeroIpp à écrire.
      */
-    public void setNumeroIpp(final String numeroIpp)
-    {
+    public void setNumeroIpp(final String numeroIpp) {
         this.numeroIpp = numeroIpp;
     }
 
@@ -179,8 +171,7 @@ public class Patient
      * Getter sur nom.
      * @return Retourne le nom.
      */
-    public String getNom()
-    {
+    public String getNom() {
         return this.nom;
     }
 
@@ -188,8 +179,7 @@ public class Patient
      * Setter pour nom.
      * @param nom le nom à écrire.
      */
-    public void setNom(final String nom)
-    {
+    public void setNom(final String nom) {
         this.nom = nom;
     }
 
@@ -197,8 +187,7 @@ public class Patient
      * Getter sur nomJeuneFille.
      * @return Retourne le nomJeuneFille.
      */
-    public String getNomJeuneFille()
-    {
+    public String getNomJeuneFille() {
         return this.nomJeuneFille;
     }
 
@@ -206,8 +195,7 @@ public class Patient
      * Setter pour nomJeuneFille.
      * @param nomJeuneFille le nomJeuneFille à écrire.
      */
-    public void setNomJeuneFille(final String nomJeuneFille)
-    {
+    public void setNomJeuneFille(final String nomJeuneFille) {
         this.nomJeuneFille = nomJeuneFille;
     }
 
@@ -215,8 +203,7 @@ public class Patient
      * Getter sur prenom.
      * @return Retourne le prenom.
      */
-    public String getPrenom()
-    {
+    public String getPrenom() {
         return this.prenom;
     }
 
@@ -224,8 +211,7 @@ public class Patient
      * Setter pour prenom.
      * @param prenom le prenom à écrire.
      */
-    public void setPrenom(final String prenom)
-    {
+    public void setPrenom(final String prenom) {
         this.prenom = prenom;
     }
 
@@ -233,8 +219,7 @@ public class Patient
      * Getter sur adresse.
      * @return Retourne le adresse.
      */
-    public String getAdresse()
-    {
+    public String getAdresse() {
         return this.adresse;
     }
 
@@ -242,8 +227,7 @@ public class Patient
      * Setter pour adresse.
      * @param adresse le adresse à écrire.
      */
-    public void setAdresse(final String adresse)
-    {
+    public void setAdresse(final String adresse) {
         this.adresse = adresse;
     }
 
@@ -251,8 +235,7 @@ public class Patient
      * Getter sur codePostal.
      * @return Retourne le codePostal.
      */
-    public String getCodePostal()
-    {
+    public String getCodePostal() {
         return this.codePostal;
     }
 
@@ -260,8 +243,7 @@ public class Patient
      * Setter pour codePostal.
      * @param codePostal le codePostal à écrire.
      */
-    public void setCodePostal(final String codePostal)
-    {
+    public void setCodePostal(final String codePostal) {
         this.codePostal = codePostal;
     }
 
@@ -269,8 +251,7 @@ public class Patient
      * Getter sur ville.
      * @return Retourne le ville.
      */
-    public String getVille()
-    {
+    public String getVille() {
         return this.ville;
     }
 
@@ -278,8 +259,7 @@ public class Patient
      * Setter pour ville.
      * @param ville le ville à écrire.
      */
-    public void setVille(final String ville)
-    {
+    public void setVille(final String ville) {
         this.ville = ville;
     }
 
@@ -287,8 +267,7 @@ public class Patient
      * Getter sur telephone.
      * @return Retourne le telephone.
      */
-    public String getTelephone()
-    {
+    public String getTelephone() {
         return this.telephone;
     }
 
@@ -296,8 +275,7 @@ public class Patient
      * Setter pour telephone.
      * @param telephone le telephone à écrire.
      */
-    public void setTelephone(final String telephone)
-    {
+    public void setTelephone(final String telephone) {
         this.telephone = telephone;
     }
 
@@ -305,8 +283,7 @@ public class Patient
      * Getter sur mail.
      * @return Retourne le mail.
      */
-    public String getMail()
-    {
+    public String getMail() {
         return this.mail;
     }
 
@@ -314,8 +291,7 @@ public class Patient
      * Setter pour mail.
      * @param mail le mail à écrire.
      */
-    public void setMail(final String mail)
-    {
+    public void setMail(final String mail) {
         this.mail = mail;
     }
 
@@ -323,8 +299,7 @@ public class Patient
      * Getter sur historiquePatient.
      * @return Retourne le historiquePatient.
      */
-    public SortedSet<HistoriquePatient> getHistoriquePatient()
-    {
+    public SortedSet<HistoriquePatient> getHistoriquePatient() {
         return this.historiquePatient;
     }
 
@@ -332,8 +307,7 @@ public class Patient
      * Setter pour historiquePatient.
      * @param historiquePatient le historiquePatient à écrire.
      */
-    public void setHistoriquePatient(final SortedSet<HistoriquePatient> historiquePatient)
-    {
+    public void setHistoriquePatient(final SortedSet<HistoriquePatient> historiquePatient) {
         this.historiquePatient = historiquePatient;
     }
 
@@ -341,8 +315,7 @@ public class Patient
      * Getter sur civilite.
      * @return Retourne le civilite.
      */
-    public Civilite getCivilite()
-    {
+    public Civilite getCivilite() {
         return this.civilite;
     }
 
@@ -350,8 +323,7 @@ public class Patient
      * Setter pour civilite.
      * @param civilite le civilite à écrire.
      */
-    public void setCivilite(final Civilite civilite)
-    {
+    public void setCivilite(final Civilite civilite) {
         this.civilite = civilite;
     }
 
@@ -359,8 +331,7 @@ public class Patient
      * Getter sur dateNaissance.
      * @return Retourne le dateNaissance.
      */
-    public Calendar getDateNaissance()
-    {
+    public Calendar getDateNaissance() {
         return this.dateNaissance;
     }
 
@@ -368,23 +339,19 @@ public class Patient
      * Setter pour dateNaissance.
      * @param dateNaissance le dateNaissance à écrire.
      */
-    public void setDateNaissance(final Calendar dateNaissance)
-    {
+    public void setDateNaissance(final Calendar dateNaissance) {
         this.dateNaissance = dateNaissance;
     }
 
     /**
-     * Retourne la taille actuelle du patient sous forme de chaine de caractères.
+     * Retourne la taille actuelle du patient sous forme de chaine de
+     * caractères.
      * @return La taille actuelle du patient sous forme de chaine de caractères.
      */
-    public Double getTaille()
-    {
-        if (!this.historiquePatient.isEmpty())
-        {
+    public Double getTaille() {
+        if (!this.historiquePatient.isEmpty()) {
             return this.historiquePatient.first().getTaille();
-        }
-        else
-        {
+        } else {
             return null;
         }
     }
@@ -393,30 +360,24 @@ public class Patient
      * Retourne le poid actuel du patient sous forme de chaine de caractères.
      * @return le poid actuel du patient sous forme de chaine de caractères.
      */
-    public Double getPoid()
-    {
-        if (!this.historiquePatient.isEmpty())
-        {
+    public Double getPoid() {
+        if (!this.historiquePatient.isEmpty()) {
             return this.historiquePatient.first().getPoid();
-        }
-        else
-        {
+        } else {
             return null;
         }
     }
 
     /**
-     * Retourne la surface corporelle actuelle du patient sous forme de chaine de caractères.
-     * @return La surface corporelle actuelle du patient sous forme de chaine de caractères.
+     * Retourne la surface corporelle actuelle du patient sous forme de chaine
+     * de caractères.
+     * @return La surface corporelle actuelle du patient sous forme de chaine de
+     * caractères.
      */
-    public Double getSurface()
-    {
-        if (!this.historiquePatient.isEmpty())
-        {
+    public Double getSurface() {
+        if (!this.historiquePatient.isEmpty()) {
             return this.historiquePatient.first().getSurfaceCorporelle();
-        }
-        else
-        {
+        } else {
             return null;
         }
     }
@@ -425,8 +386,7 @@ public class Patient
      * Getter sur modifs.
      * @return Retourne le modifs.
      */
-    public SortedSet<PatientSuivi> getModifs()
-    {
+    public SortedSet<PatientSuivi> getModifs() {
         return this.modifs;
     }
 
@@ -434,8 +394,7 @@ public class Patient
      * Setter pour modifs.
      * @param modifs le modifs à écrire.
      */
-    public void setModifs(final SortedSet<PatientSuivi> modifs)
-    {
+    public void setModifs(final SortedSet<PatientSuivi> modifs) {
         this.modifs = modifs;
     }
 
@@ -443,8 +402,7 @@ public class Patient
      * Getter sur inclusions.
      * @return Retourne le inclusions.
      */
-    public SortedSet<Inclusion> getInclusions()
-    {
+    public SortedSet<Inclusion> getInclusions() {
         return this.inclusions;
     }
 
@@ -452,8 +410,7 @@ public class Patient
      * Setter pour inclusions.
      * @param inclusions le inclusions à écrire.
      */
-    public void setInclusions(final SortedSet<Inclusion> inclusions)
-    {
+    public void setInclusions(final SortedSet<Inclusion> inclusions) {
         this.inclusions = inclusions;
     }
 
@@ -461,8 +418,7 @@ public class Patient
      * Getter sur initiales.
      * @return Retourne le initiales.
      */
-    public String getInitiales()
-    {
+    public String getInitiales() {
         return this.initiales;
     }
 
@@ -470,8 +426,7 @@ public class Patient
      * Setter pour initiales.
      * @param initiales le initiales à écrire.
      */
-    public void setInitiales(final String initiales)
-    {
+    public void setInitiales(final String initiales) {
         this.initiales = initiales;
     }
 
@@ -479,8 +434,7 @@ public class Patient
      * Getter pour numeroSejour.
      * @return Le numeroSejour
      */
-    public String getNumeroSejour()
-    {
+    public String getNumeroSejour() {
         return this.numeroSejour;
     }
 
@@ -488,8 +442,7 @@ public class Patient
      * Setter pour numeroSejour.
      * @param numeroSejour Le numeroSejour à écrire.
      */
-    public void setNumeroSejour(final String numeroSejour)
-    {
+    public void setNumeroSejour(final String numeroSejour) {
         this.numeroSejour = numeroSejour;
     }
 
@@ -497,8 +450,7 @@ public class Patient
      * Getter pour retours.
      * @return Le retours
      */
-    public SortedSet<RetourPatient> getRetours()
-    {
+    public SortedSet<RetourPatient> getRetours() {
         return this.retours;
     }
 
@@ -506,9 +458,16 @@ public class Patient
      * Setter pour retours.
      * @param retours Le retours à écrire.
      */
-    public void setRetours(final SortedSet<RetourPatient> retours)
-    {
+    public void setRetours(final SortedSet<RetourPatient> retours) {
         this.retours = retours;
     }
 
+    @Override
+    public String toString() {
+        try {
+            return "Patient #" + getId();
+        } catch (RuntimeException e) {
+            return super.toString();
+        }
+    }
 }

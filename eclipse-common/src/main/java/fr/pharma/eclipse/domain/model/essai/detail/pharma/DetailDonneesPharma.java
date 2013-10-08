@@ -32,15 +32,12 @@ import fr.pharma.eclipse.domain.model.stockage.Pharmacie;
 import fr.pharma.eclipse.domain.model.suivi.essai.detail.DetailDonneesPharmaSuivi;
 
 /**
- * Classe métier représentant les donnees pharma d'un essai clinique.
- 
+ * Classe mÃ©tier reprÃ©sentant les donnees pharma d'un essai clinique.
+ * @author Netapsys
  * @version $Revision$ $Date$
  */
 @Entity(name = "essai_detail_pharma")
-public class DetailDonneesPharma
-    extends BeanObjectSuivi
-    implements Serializable
-{
+public class DetailDonneesPharma extends BeanObjectSuivi implements Serializable {
 
     /**
      * SerialVersionUID.
@@ -48,14 +45,14 @@ public class DetailDonneesPharma
     private static final long serialVersionUID = -3445795792052149996L;
 
     /**
-     * Essai auquel est rattaché le détail.
+     * Essai auquel est rattachÃ© le dÃ©tail.
      */
     @OneToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "id_essai")
     private Essai essai;
 
     /**
-     * Informations générales sur les données pharma.
+     * Informations gÃ©nÃ©rales sur les donnÃ©es pharma.
      */
     @Embedded
     private final InfosGenerales infosGenerales = new InfosGenerales();
@@ -73,7 +70,7 @@ public class DetailDonneesPharma
     private final InfosDispensations infosDispensations = new InfosDispensations();
 
     /**
-     * Formation spécifique à l'étude.
+     * Formation spÃ©cifique Ã  l'Ã©tude.
      */
     @Column(name = "formationSpecifique")
     private Boolean formationSpecifique;
@@ -94,25 +91,22 @@ public class DetailDonneesPharma
     @JoinTable(name = "essai_detail_pharma_etablissement", joinColumns = @JoinColumn(name = "id_detail_pharma"), inverseJoinColumns = @JoinColumn(name = "id_etablissement"))
     @LazyCollection(LazyCollectionOption.TRUE)
     @Sort(type = SortType.COMPARATOR, comparator = BeanWithNomComparator.class)
-    private final SortedSet<Etablissement> etablissements =
-        new TreeSet<Etablissement>(new BeanWithNomComparator());
+    private final SortedSet<Etablissement> etablissements = new TreeSet<Etablissement>(new BeanWithNomComparator());
 
     /**
-     * Liste des modifications du détail.
+     * Liste des modifications du dÃ©tail.
      */
     @OneToMany(mappedBy = "detailDonneesPharma", cascade = CascadeType.ALL)
     @LazyCollection(LazyCollectionOption.TRUE)
     @Sort(type = SortType.COMPARATOR, comparator = SuiviComparator.class)
-    private final SortedSet<DetailDonneesPharmaSuivi> modifs =
-        new TreeSet<DetailDonneesPharmaSuivi>(new SuiviComparator());
+    private final SortedSet<DetailDonneesPharmaSuivi> modifs = new TreeSet<DetailDonneesPharmaSuivi>(new SuiviComparator());
 
     /**
      * Getter sur modifs.
      * @return Retourne le modifs.
      */
     @Override
-    public SortedSet<DetailDonneesPharmaSuivi> getModifs()
-    {
+    public SortedSet<DetailDonneesPharmaSuivi> getModifs() {
         return this.modifs;
     }
 
@@ -120,17 +114,15 @@ public class DetailDonneesPharma
      * Getter sur essai.
      * @return Retourne le essai.
      */
-    public Essai getEssai()
-    {
+    public Essai getEssai() {
         return this.essai;
     }
 
     /**
      * Setter pour essai.
-     * @param essai le essai à écrire.
+     * @param essai le essai Ã  Ã©crire.
      */
-    public void setEssai(final Essai essai)
-    {
+    public void setEssai(final Essai essai) {
         this.essai = essai;
     }
 
@@ -138,8 +130,7 @@ public class DetailDonneesPharma
      * Getter sur infosGenerales.
      * @return Retourne le infosGenerales.
      */
-    public InfosGenerales getInfosGenerales()
-    {
+    public InfosGenerales getInfosGenerales() {
         return this.infosGenerales;
     }
 
@@ -147,8 +138,7 @@ public class DetailDonneesPharma
      * Getter sur formationSpecifique.
      * @return Retourne le formationSpecifique.
      */
-    public Boolean getFormationSpecifique()
-    {
+    public Boolean getFormationSpecifique() {
         return this.formationSpecifique;
     }
 
@@ -156,26 +146,23 @@ public class DetailDonneesPharma
      * Getter sur pharmacies.
      * @return Retourne le pharmacies.
      */
-    public SortedSet<Pharmacie> getPharmacies()
-    {
+    public SortedSet<Pharmacie> getPharmacies() {
         return this.pharmacies;
     }
 
     /**
      * Setter pour pharmacies.
-     * @param pharmacies Le pharmacies à écrire.
+     * @param pharmacies Le pharmacies Ã  Ã©crire.
      */
-    public void setPharmacies(final SortedSet<Pharmacie> pharmacies)
-    {
+    public void setPharmacies(final SortedSet<Pharmacie> pharmacies) {
         this.pharmacies = pharmacies;
     }
 
     /**
      * Setter pour formationSpecifique.
-     * @param formationSpecifique le formationSpecifique à écrire.
+     * @param formationSpecifique le formationSpecifique Ã  Ã©crire.
      */
-    public void setFormationSpecifique(final Boolean formationSpecifique)
-    {
+    public void setFormationSpecifique(final Boolean formationSpecifique) {
         this.formationSpecifique = formationSpecifique;
     }
 
@@ -183,8 +170,7 @@ public class DetailDonneesPharma
      * Getter sur infosComplementaires.
      * @return Retourne le infosComplementaires.
      */
-    public InfosComplementaires getInfosComplementaires()
-    {
+    public InfosComplementaires getInfosComplementaires() {
         return this.infosComplementaires;
     }
 
@@ -192,8 +178,7 @@ public class DetailDonneesPharma
      * Getter sur infosDispensations.
      * @return Retourne le infosDispensations.
      */
-    public InfosDispensations getInfosDispensations()
-    {
+    public InfosDispensations getInfosDispensations() {
         return this.infosDispensations;
     }
 
@@ -201,8 +186,7 @@ public class DetailDonneesPharma
      * Getter pour etablissements.
      * @return Le etablissements
      */
-    public SortedSet<Etablissement> getEtablissements()
-    {
+    public SortedSet<Etablissement> getEtablissements() {
         return this.etablissements;
     }
 

@@ -4,11 +4,14 @@ import javax.annotation.Resource;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.transaction.annotation.Transactional;
 
 import fr.pharma.eclipse.dao.common.GenericDao;
 import fr.pharma.eclipse.domain.model.acteur.Personne;
 import fr.pharma.eclipse.domain.model.suivi.acteur.PersonneSuivi;
 import fr.pharma.eclipse.factory.suivi.SuiviFactory;
+import fr.pharma.eclipse.service.acl.AclService;
 import fr.pharma.eclipse.service.acteur.PersonneService;
 import fr.pharma.eclipse.service.acteur.helper.PasswordEncoderHelper;
 import fr.pharma.eclipse.service.common.impl.GenericServiceImpl;
@@ -17,14 +20,11 @@ import fr.pharma.eclipse.validator.save.impl.PersonneSaveValidator;
 
 /**
  * Classe d'implémentation du service de gestion de personne.
- 
+ * @author Netapsys
  * @version $Revision$ $Date$
  * @param <PERSONNE> Bean Objet Personne.
  */
-public class PersonneServiceImpl<PERSONNE extends Personne>
-    extends GenericServiceImpl<PERSONNE>
-    implements PersonneService<PERSONNE>
-{
+public class PersonneServiceImpl<PERSONNE extends Personne> extends GenericServiceImpl<PERSONNE> implements PersonneService<PERSONNE> {
 
     /**
      * Logger
@@ -60,11 +60,16 @@ public class PersonneServiceImpl<PERSONNE extends Personne>
     private PersonneSaveValidator personneSaveValidator;
 
     /**
+     * Service de gestion des acls.
+     */
+    @Autowired
+    private AclService aclService;
+
+    /**
      * Constructeur.
      * @param personneDao Dao de gestion des personnes.
      */
-    public PersonneServiceImpl(final GenericDao<PERSONNE> personneDao)
-    {
+    public PersonneServiceImpl(final GenericDao<PERSONNE> personneDao) {
         super(personneDao);
     }
 
@@ -72,39 +77,54 @@ public class PersonneServiceImpl<PERSONNE extends Personne>
      * {@inheritDoc}
      */
     @Override
-    public PERSONNE save(final PERSONNE personne)
-    {
+    public PERSONNE save(final PERSONNE personne) {
+
         // Validation commune de Personne
         this.personneSaveValidator.validate(personne);
 
         // Validation de la personne si un validator spécifique est défini
-        if (this.saveValidator != null)
-        {
-            this.saveValidator.validate(personne,
-                                        this);
+        if (this.saveValidator != null) {
+            this.saveValidator.validate(personne, this);
         }
 
         // Encodage du mot de passe de l'utilisateur
         this.passwordEncoderHelper.encodePassword(personne);
 
-        return this.saveCommon(personne);
+        final PERSONNE personneSaved = this.saveCommon(personne);
+        this.updateAcls(personneSaved);
+
+        return personneSaved;
+    }
+
+    /**
+     * Méthode en charge de mettre à jour les acls.
+     * @param personneSaved Personne sauvegardée.
+     */
+    @Transactional
+    public void updateAcls(final Personne personneSaved) {
+        this.aclService.updateAclsPharmacies(personneSaved);
+        this.aclService.updateAclsEssais(personneSaved);
     }
 
     /**
      * {@inheritDoc}
      */
     @Override
-    public PERSONNE get(final Long id)
-    {
+    public void remove(final PERSONNE personne) {
+        super.remove(personne);
+        this.aclService.removeAclsPharmacies(personne);
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public PERSONNE get(final Long id) {
         final PERSONNE personne = super.get(id);
-        if (personne != null)
-        {
+        if (personne != null) {
             personne.setConfirmPassword(personne.getPassword());
-        }
-        else
-        {
-            this.log.error("get : l'id personne n'est pas en base : "
-                           + id);
+        } else {
+            this.log.debug("get : l'id personne n'est pas en base : " + id);
         }
         return personne;
     }
@@ -114,8 +134,7 @@ public class PersonneServiceImpl<PERSONNE extends Personne>
      * @param personne Personne à sauvegarde.
      * @return La personne sauvegardée.
      */
-    private PERSONNE saveCommon(final PERSONNE personne)
-    {
+    private PERSONNE saveCommon(final PERSONNE personne) {
         final PERSONNE personneToSave = this.reattach(personne);
         final PersonneSuivi personneSuivi = this.personneSuiviFactory.getInitializedObject();
         personneSuivi.setPersonne(personneToSave);
@@ -127,8 +146,7 @@ public class PersonneServiceImpl<PERSONNE extends Personne>
      * {@inheritDoc}
      */
     @Override
-    public PERSONNE saveForSigrec(final PERSONNE personne)
-    {
+    public PERSONNE saveForSigrec(final PERSONNE personne) {
         return this.saveCommon(personne);
     }
 
@@ -136,8 +154,7 @@ public class PersonneServiceImpl<PERSONNE extends Personne>
      * Setter pour personneSuiviFactory.
      * @param personneSuiviFactory le personneSuiviFactory à écrire.
      */
-    public void setPersonneSuiviFactory(final SuiviFactory<PersonneSuivi> personneSuiviFactory)
-    {
+    public void setPersonneSuiviFactory(final SuiviFactory<PersonneSuivi> personneSuiviFactory) {
         this.personneSuiviFactory = personneSuiviFactory;
     }
 
@@ -146,8 +163,7 @@ public class PersonneServiceImpl<PERSONNE extends Personne>
      * @param saveValidator Le saveValidator à écrire.
      */
     @Override
-    public void setSaveValidator(final SaveValidator<PERSONNE> saveValidator)
-    {
+    public void setSaveValidator(final SaveValidator<PERSONNE> saveValidator) {
         this.saveValidator = saveValidator;
     }
 
@@ -155,8 +171,7 @@ public class PersonneServiceImpl<PERSONNE extends Personne>
      * Setter pour passwordEncoderHelper.
      * @param passwordEncoderHelper le passwordEncoderHelper à écrire.
      */
-    public void setPasswordEncoderHelper(final PasswordEncoderHelper passwordEncoderHelper)
-    {
+    public void setPasswordEncoderHelper(final PasswordEncoderHelper passwordEncoderHelper) {
         this.passwordEncoderHelper = passwordEncoderHelper;
     }
 
@@ -164,9 +179,16 @@ public class PersonneServiceImpl<PERSONNE extends Personne>
      * Setter pour personneSaveValidator.
      * @param personneSaveValidator le personneSaveValidator à écrire.
      */
-    public void setPersonneSaveValidator(final PersonneSaveValidator personneSaveValidator)
-    {
+    public void setPersonneSaveValidator(final PersonneSaveValidator personneSaveValidator) {
         this.personneSaveValidator = personneSaveValidator;
+    }
+
+    /**
+     * Setter pour aclService.
+     * @param aclService Le aclService à écrire.
+     */
+    public void setAclService(final AclService aclService) {
+        this.aclService = aclService;
     }
 
 }

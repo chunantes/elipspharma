@@ -6,7 +6,6 @@ import java.io.IOException;
 import java.io.Serializable;
 import java.util.Map;
 
-import org.apache.commons.lang.StringUtils;
 import org.apache.poi.hssf.usermodel.HSSFSheet;
 import org.apache.poi.hssf.usermodel.HSSFWorkbook;
 import org.slf4j.Logger;
@@ -16,18 +15,15 @@ import fr.pharma.eclipse.domain.enums.surcout.TypeCalcul;
 import fr.pharma.eclipse.domain.model.essai.Essai;
 import fr.pharma.eclipse.domain.model.surcout.Item;
 import fr.pharma.eclipse.domain.model.surcout.Resultat;
-import fr.pharma.eclipse.exception.TechnicalException;
 import fr.pharma.eclipse.poi.builder.SheetBuilder;
-import fr.pharma.eclipse.utils.constants.EclipseConstants;
 
 /**
- * Classe en charge de créer le fichier excel dans l'arborescence de fichier de l'application.
- 
+ * Classe en charge de créer le fichier excel dans l'arborescence de fichier de
+ * l'application.
+ * @author Netapsys
  * @version $Revision$ $Date$
  */
-public class FileCreator
-    implements Serializable
-{
+public class FileCreator implements Serializable {
 
     /**
      * SerialVersionUID.
@@ -40,9 +36,9 @@ public class FileCreator
     private final Logger log = LoggerFactory.getLogger(FileCreator.class);
 
     /**
-     * Répertoire contenant les documents.
+     * Répertoire contenant les documents des essais.
      */
-    private String documentsDirectory;
+    private File documentsDirectory;
 
     /**
      * Builders en charge de construire les grilles excel.
@@ -50,86 +46,60 @@ public class FileCreator
     private Map<TypeCalcul, SheetBuilder> builders;
 
     /**
-     * Méthode en charge de créer et d'appeler le constructeur de fichier correspondant au type de
-     * calcul.
+     * Méthode en charge de créer et d'appeler le constructeur de fichier
+     * correspondant au type de calcul.
      * @param essai Essai.
      * @param datas Les données
      * @param type Le type.
+     * @throws IOException
      */
     public File createFile(final Essai essai,
                            final Map<Item, Resultat> datas,
-                           final TypeCalcul type)
-    {
+                           final TypeCalcul type) throws IOException {
+        final File file = new File(buildEssaiDirectory(essai, type), "surcouts.xls");
 
-        final HSSFWorkbook wb = new HSSFWorkbook();
-        try
-        {
+        file.delete();
+
+        final FileOutputStream fileOut = new FileOutputStream(file);
+        try {
+            final HSSFWorkbook wb = new HSSFWorkbook();
             final HSSFSheet sheet = wb.createSheet("Surcouts");
 
-            this.builders.get(type).build(essai,
-                                          datas,
-                                          sheet,
-                                          wb);
-
-            final String filename = this.buildFileName(essai,
-                                                       type);
-
-            // creation du répertoire
-            final File directory =
-                new File(StringUtils.substringBeforeLast(filename,
-                                                         EclipseConstants.SLASH));
-            if (!directory.exists())
-            {
-                final boolean result = directory.mkdirs();
-                if (!result)
-                {
-                    this.log.error("Erreur lors de la création du répertoire "
-                                   + "de stockage des fichiers : "
-                                   + directory.getName());
-                }
-            }
-            final File file = new File(filename);
-            file.delete();
-            final FileOutputStream fileOut = new FileOutputStream(file);
+            this.builders.get(type).build(essai, datas, sheet, wb);
             wb.write(fileOut);
-            fileOut.close();
-            return file;
+        } finally {
+            if (fileOut != null) {
+                fileOut.close();
+            }
         }
-        catch (final IOException e)
-        {
-            throw new TechnicalException("Le fichier ne peut être ecrit.");
-        }
+
+        return file;
 
     }
-    /**
-     * Méthode en charge de construire le nom du fichier sur le disque.
-     * @param essai L'essai.
-     * @param type Le type de calcul
-     * @return Le nom du fichier.
-     */
-    private String buildFileName(final Essai essai,
-                                 final TypeCalcul type)
-    {
 
-        final StringBuilder builder = new StringBuilder();
-        builder.append(this.documentsDirectory);
-        builder.append(EclipseConstants.SLASH);
-        builder.append("essais");
-        builder.append(EclipseConstants.SLASH);
-        builder.append(essai.getId());
-        builder.append(EclipseConstants.SLASH);
-        builder.append(type.getRepertoire());
-        builder.append(EclipseConstants.SLASH);
-        builder.append("surcouts.xls");
-        return builder.toString();
+    /**
+     * @param essai - l'essai pour lequel ou souhaite générer la grille de
+     * surcoûts
+     * @param type le type d'essai
+     * @return le répertoire permettant de stocker le fichier de surcoûts pour
+     * l'essai spécifié.
+     */
+    private File buildEssaiDirectory(final Essai essai,
+                                     final TypeCalcul type) {
+        final File directory = new File(new File(this.documentsDirectory, String.valueOf(essai.getId())), type.getRepertoire());
+
+        final boolean result = directory.mkdirs();
+        if (!result && this.log.isWarnEnabled()) {
+            this.log.warn("Echec de création du répertoire de stockage des fichiers : " + directory.getAbsolutePath());
+        }
+        return directory;
     }
 
     /**
      * Setter pour builders.
      * @param builders le builders à écrire.
      */
-    public void setBuilders(final Map<TypeCalcul, SheetBuilder> builders)
-    {
+    public void setBuilders(final Map<TypeCalcul, SheetBuilder> builders) {
         this.builders = builders;
     }
 
@@ -137,9 +107,7 @@ public class FileCreator
      * Setter pour documentsDirectory.
      * @param documentsDirectory le documentsDirectory à écrire.
      */
-    public void setDocumentsDirectory(final String documentsDirectory)
-    {
+    public void setDocumentsDirectory(final File documentsDirectory) {
         this.documentsDirectory = documentsDirectory;
     }
-
 }

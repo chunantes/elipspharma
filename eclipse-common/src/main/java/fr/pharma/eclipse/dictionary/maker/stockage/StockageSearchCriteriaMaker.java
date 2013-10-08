@@ -11,12 +11,10 @@ import fr.pharma.eclipse.domain.criteria.stockage.StockageSearchCriteria;
 
 /**
  * Artisan de recherche pour les stockages.
- 
+ * @author Netapsys
  * @version $Revision$ $Date$
  */
-public class StockageSearchCriteriaMaker
-    extends AbstractCriteriaMaker
-{
+public class StockageSearchCriteriaMaker extends AbstractCriteriaMaker {
     /**
      * Serial ID.
      */
@@ -25,8 +23,7 @@ public class StockageSearchCriteriaMaker
     /**
      * Constructeur par défaut.
      */
-    public StockageSearchCriteriaMaker()
-    {
+    public StockageSearchCriteriaMaker() {
         super(StockageSearchCriteria.class);
     }
 
@@ -35,34 +32,25 @@ public class StockageSearchCriteriaMaker
      */
     @Override
     public void transform(final Criteria criteria,
-                          final SearchCriteria searchCrit)
-    {
+                          final SearchCriteria searchCrit) {
         final StockageSearchCriteria crit = (StockageSearchCriteria) searchCrit;
         // Nom
-        if (StringUtils.isNotEmpty(crit.getNom()))
-        {
-            CriteriaMakerUtils.addSqlCritere(criteria,
-                                             "this_.nom",
-                                             crit.getNom());
+        if (StringUtils.isNotEmpty(crit.getNom())) {
+            CriteriaMakerUtils.addSqlCritere(criteria, "this_.nom", crit.getNom());
         }
 
         // stockage parent
-        if (crit.getHasParent().booleanValue())
-        {
-            if (crit.getParent() != null)
-            {
+        if (crit.getHasParent().booleanValue()) {
+            if (crit.getParent() != null) {
                 final Criteria criteriaParent = criteria.createCriteria("parent");
                 criteriaParent.add(Restrictions.idEq(crit.getParent().getId()));
             }
-        }
-        else
-        {
+        } else {
             criteria.add(Restrictions.isNull("parent"));
         }
 
         // pharmacie du stockage
-        if (crit.getPharmacie() != null)
-        {
+        if (crit.getPharmacie() != null) {
             final Criteria criteriaParent = criteria.createCriteria("pharmacie");
             criteriaParent.add(Restrictions.idEq(crit.getPharmacie().getId()));
         }

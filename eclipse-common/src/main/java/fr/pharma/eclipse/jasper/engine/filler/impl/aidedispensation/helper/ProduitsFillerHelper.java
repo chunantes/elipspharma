@@ -8,16 +8,15 @@ import fr.pharma.eclipse.domain.jasper.model.fiche.aidedispensation.JRBeanProdui
 import fr.pharma.eclipse.domain.model.produit.Produit;
 
 /**
- * Interface de helpers pour la création des beans de produits à partir des produits de l'essai.
- 
+ * Interface de helpers pour la création des beans de produits à partir des
+ * produits de l'essai.
+ * @author Netapsys
  * @version $Revision$ $Date$
  */
-public interface ProduitsFillerHelper
-    extends Serializable
-{
+public interface ProduitsFillerHelper extends Serializable {
     /**
-     * Méthode en charge de transformer un ensemble de produits en une collection de
-     * {@link JRBeanProduit}.
+     * Méthode en charge de transformer un ensemble de produits en une
+     * collection de {@link JRBeanProduit}.
      * @param produits Produits à transformer.
      * @return La collection des {@link JRBeanProduit} correspondante.
      */

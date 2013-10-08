@@ -17,13 +17,11 @@ import fr.pharma.eclipse.utils.constants.EclipseConstants;
 
 /**
  * Bean abstrait contenant les champs de gestion des ordonnanciers.
- 
+ * @author Netapsys
  * @version $Revision$ $Date$
  */
 @MappedSuperclass
-public abstract class Ordonnancier
-    extends Suivi
-{
+public abstract class Ordonnancier extends Suivi {
 
     /**
      * Serial ID.
@@ -58,8 +56,7 @@ public abstract class Ordonnancier
      * Getter pour pharmacie.
      * @return Le pharmacie
      */
-    public Pharmacie getPharmacie()
-    {
+    public Pharmacie getPharmacie() {
         return this.pharmacie;
     }
 
@@ -67,8 +64,7 @@ public abstract class Ordonnancier
      * Setter pour pharmacie.
      * @param pharmacie Le pharmacie à écrire.
      */
-    public void setPharmacie(final Pharmacie pharmacie)
-    {
+    public void setPharmacie(final Pharmacie pharmacie) {
         this.pharmacie = pharmacie;
     }
 
@@ -76,8 +72,7 @@ public abstract class Ordonnancier
      * Getter pour dateDebut.
      * @return Le dateDebut
      */
-    public Calendar getDateDebut()
-    {
+    public Calendar getDateDebut() {
         return this.dateDebut;
     }
 
@@ -85,8 +80,7 @@ public abstract class Ordonnancier
      * Setter pour dateDebut.
      * @param dateDebut Le dateDebut à écrire.
      */
-    public void setDateDebut(final Calendar dateDebut)
-    {
+    public void setDateDebut(final Calendar dateDebut) {
         this.dateDebut = dateDebut;
     }
 
@@ -94,8 +88,7 @@ public abstract class Ordonnancier
      * Getter pour dateFin.
      * @return Le dateFin
      */
-    public Calendar getDateFin()
-    {
+    public Calendar getDateFin() {
         return this.dateFin;
     }
 
@@ -103,8 +96,7 @@ public abstract class Ordonnancier
      * Setter pour dateFin.
      * @param dateFin Le dateFin à écrire.
      */
-    public void setDateFin(final Calendar dateFin)
-    {
+    public void setDateFin(final Calendar dateFin) {
         this.dateFin = dateFin;
     }
 
@@ -112,17 +104,11 @@ public abstract class Ordonnancier
      * Méthode en charge de retourner la description d'un ordonnancier.
      * @return Description de l'ordonnancier.
      */
-    public String getDescription()
-    {
+    public String getDescription() {
         final SimpleDateFormat sdf = new SimpleDateFormat(EclipseConstants.PATTERN_SIMPLE);
         final StringBuilder sb = new StringBuilder();
-        sb.append(EclipseConstants.DU)
-                .append(EclipseConstants.SPACE)
-                .append(sdf.format(this.getDateDebut().getTime()))
-                .append(EclipseConstants.SPACE)
-                .append(EclipseConstants.AU)
-                .append(EclipseConstants.SPACE)
-                .append(sdf.format(this.getDateFin().getTime()));
+        sb.append(EclipseConstants.DU).append(EclipseConstants.SPACE).append(sdf.format(this.getDateDebut().getTime())).append(EclipseConstants.SPACE).append(EclipseConstants.AU)
+                .append(EclipseConstants.SPACE).append(sdf.format(this.getDateFin().getTime()));
         return sb.toString();
     }
 

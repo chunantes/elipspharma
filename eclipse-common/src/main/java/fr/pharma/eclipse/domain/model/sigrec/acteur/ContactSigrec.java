@@ -10,13 +10,11 @@ import fr.pharma.eclipse.domain.model.common.BeanObject;
 
 /**
  * Classe Contact du modèle métier Sigrec.
- 
+ * @author Netapsys
  * @version $Revision$ $Date$
  */
 @Entity(name = "contact_sigrec")
-public class ContactSigrec
-    extends BeanObject
-{
+public class ContactSigrec extends BeanObject {
 
     /**
      * SerialVersionUID.
@@ -88,8 +86,7 @@ public class ContactSigrec
      * Getter sur codePostal.
      * @return Retourne le codePostal.
      */
-    public String getCodePostal()
-    {
+    public String getCodePostal() {
         return this.codePostal;
     }
 
@@ -97,8 +94,7 @@ public class ContactSigrec
      * Setter pour codePostal.
      * @param codePostal le codePostal à écrire.
      */
-    public void setCodePostal(final String codePostal)
-    {
+    public void setCodePostal(final String codePostal) {
         this.codePostal = codePostal;
     }
 
@@ -106,8 +102,7 @@ public class ContactSigrec
      * Getter sur adresse.
      * @return Retourne le adresse.
      */
-    public String getAdresse()
-    {
+    public String getAdresse() {
         return this.adresse;
     }
 
@@ -115,8 +110,7 @@ public class ContactSigrec
      * Setter pour adresse.
      * @param adresse le adresse à écrire.
      */
-    public void setAdresse(final String adresse)
-    {
+    public void setAdresse(final String adresse) {
         this.adresse = adresse;
     }
 
@@ -124,8 +118,7 @@ public class ContactSigrec
      * Getter sur ville.
      * @return Retourne le ville.
      */
-    public String getVille()
-    {
+    public String getVille() {
         return this.ville;
     }
 
@@ -133,8 +126,7 @@ public class ContactSigrec
      * Setter pour ville.
      * @param ville le ville à écrire.
      */
-    public void setVille(final String ville)
-    {
+    public void setVille(final String ville) {
         this.ville = ville;
     }
 
@@ -142,8 +134,7 @@ public class ContactSigrec
      * Getter sur telephone.
      * @return Retourne le telephone.
      */
-    public String getTelephone()
-    {
+    public String getTelephone() {
         return this.telephone;
     }
 
@@ -151,8 +142,7 @@ public class ContactSigrec
      * Setter pour telephone.
      * @param telephone le telephone à écrire.
      */
-    public void setTelephone(final String telephone)
-    {
+    public void setTelephone(final String telephone) {
         this.telephone = telephone;
     }
 
@@ -160,8 +150,7 @@ public class ContactSigrec
      * Getter sur fax.
      * @return Retourne le fax.
      */
-    public String getFax()
-    {
+    public String getFax() {
         return this.fax;
     }
 
@@ -169,8 +158,7 @@ public class ContactSigrec
      * Setter pour fax.
      * @param fax le fax à écrire.
      */
-    public void setFax(final String fax)
-    {
+    public void setFax(final String fax) {
         this.fax = fax;
     }
 
@@ -178,8 +166,7 @@ public class ContactSigrec
      * Getter sur email.
      * @return Retourne le email.
      */
-    public String getEmail()
-    {
+    public String getEmail() {
         return this.email;
     }
 
@@ -187,8 +174,7 @@ public class ContactSigrec
      * Setter pour email.
      * @param email le email à écrire.
      */
-    public void setEmail(final String email)
-    {
+    public void setEmail(final String email) {
         this.email = email;
     }
 
@@ -196,8 +182,7 @@ public class ContactSigrec
      * Getter sur nom.
      * @return Retourne le nom.
      */
-    public String getNom()
-    {
+    public String getNom() {
         return this.nom;
     }
 
@@ -205,8 +190,7 @@ public class ContactSigrec
      * Setter pour nom.
      * @param nom le nom à écrire.
      */
-    public void setNom(final String nom)
-    {
+    public void setNom(final String nom) {
         this.nom = nom;
     }
 
@@ -214,8 +198,7 @@ public class ContactSigrec
      * Getter sur prenom.
      * @return Retourne le prenom.
      */
-    public String getPrenom()
-    {
+    public String getPrenom() {
         return this.prenom;
     }
 
@@ -223,8 +206,7 @@ public class ContactSigrec
      * Setter pour prenom.
      * @param prenom le prenom à écrire.
      */
-    public void setPrenom(final String prenom)
-    {
+    public void setPrenom(final String prenom) {
         this.prenom = prenom;
     }
 
@@ -232,8 +214,7 @@ public class ContactSigrec
      * Getter sur civilite.
      * @return Retourne le civilite.
      */
-    public Civilite getCivilite()
-    {
+    public Civilite getCivilite() {
         return this.civilite;
     }
 
@@ -241,8 +222,7 @@ public class ContactSigrec
      * Setter pour civilite.
      * @param civilite le civilite à écrire.
      */
-    public void setCivilite(final Civilite civilite)
-    {
+    public void setCivilite(final Civilite civilite) {
         this.civilite = civilite;
     }
 
@@ -250,8 +230,7 @@ public class ContactSigrec
      * Getter sur raisonSociale.
      * @return Retourne le raisonSociale.
      */
-    public String getRaisonSociale()
-    {
+    public String getRaisonSociale() {
         return this.raisonSociale;
     }
 
@@ -259,8 +238,7 @@ public class ContactSigrec
      * Setter pour raisonSociale.
      * @param raisonSociale le raisonSociale à écrire.
      */
-    public void setRaisonSociale(final String raisonSociale)
-    {
+    public void setRaisonSociale(final String raisonSociale) {
         this.raisonSociale = raisonSociale;
     }
 

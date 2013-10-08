@@ -7,11 +7,10 @@ import fr.pharma.eclipse.domain.model.stockage.Pharmacie;
 
 /**
  * Interfaces des builder en charge de construire les indicateurs.
- 
+ * @author Netapsys
  * @version $Revision$ $Date$
  */
-public interface IndicateurBuilder
-{
+public interface IndicateurBuilder {
     /**
      * Méthode en charge de construire l'indicateur en fonction des paramètres.
      * @param pharmacie La pharmacie.

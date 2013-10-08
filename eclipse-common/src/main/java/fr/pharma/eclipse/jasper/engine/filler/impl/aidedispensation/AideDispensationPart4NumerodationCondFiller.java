@@ -8,14 +8,12 @@ import fr.pharma.eclipse.domain.model.essai.Essai;
 import fr.pharma.eclipse.jasper.engine.filler.JasperReportBeanFiller;
 
 /**
- * Filler en charge de valoriser les attributs de numérotation des conditionnements
- * {@link JRBeanFicheAideDispensationPart4}.
- 
+ * Filler en charge de valoriser les attributs de numérotation des
+ * conditionnements {@link JRBeanFicheAideDispensationPart4}.
+ * @author Netapsys
  * @version $Revision$ $Date$
  */
-public class AideDispensationPart4NumerodationCondFiller
-    implements JasperReportBeanFiller
-{
+public class AideDispensationPart4NumerodationCondFiller implements JasperReportBeanFiller {
     /**
      * Serial ID.
      */
@@ -30,8 +28,7 @@ public class AideDispensationPart4NumerodationCondFiller
      * Constructeur.
      * @param essaiPredicate Prédicat à appliquer sur l'essai.
      */
-    public AideDispensationPart4NumerodationCondFiller(final Predicate essaiPredicate)
-    {
+    public AideDispensationPart4NumerodationCondFiller(final Predicate essaiPredicate) {
         this.essaiPredicate = essaiPredicate;
     }
 
@@ -40,8 +37,7 @@ public class AideDispensationPart4NumerodationCondFiller
      */
     @Override
     public void fill(final Essai essai,
-                     final JasperReportBean bean)
-    {
+                     final JasperReportBean bean) {
         final JRBeanFicheAideDispensationPart4 partie4 = (JRBeanFicheAideDispensationPart4) bean;
 
         // Evaluation de l'essai.
@@ -55,8 +51,7 @@ public class AideDispensationPart4NumerodationCondFiller
      * Getter sur essaiPredicate.
      * @return Retourne le essaiPredicate.
      */
-    Predicate getEssaiPredicate()
-    {
+    Predicate getEssaiPredicate() {
         return this.essaiPredicate;
     }
 

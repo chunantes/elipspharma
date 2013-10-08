@@ -4,12 +4,10 @@ import java.io.Serializable;
 
 /**
  * Classe de gestion des critères de recherche.
- 
+ * @author Netapsys
  * @version $Revision$ $Date$
  */
-public interface SearchCriteria
-    extends Serializable
-{
+public interface SearchCriteria extends Serializable {
     /**
      * Getter pour activeOrder.
      * @return le critère d'ordonancement.

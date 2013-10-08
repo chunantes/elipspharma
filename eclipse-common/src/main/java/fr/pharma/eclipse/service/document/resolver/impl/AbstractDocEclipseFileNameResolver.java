@@ -8,12 +8,10 @@ import fr.pharma.eclipse.utils.constants.EclipseConstants;
 
 /**
  * Classe de résolveur de filename de document Eclipse.
- 
+ * @author Netapsys
  * @version $Revision$ $Date$
  */
-public abstract class AbstractDocEclipseFileNameResolver
-    implements DocEclipseFileNameResolver
-{
+public abstract class AbstractDocEclipseFileNameResolver implements DocEclipseFileNameResolver {
 
     /**
      * Serial ID.
@@ -29,16 +27,15 @@ public abstract class AbstractDocEclipseFileNameResolver
      * Constructeur.
      * @param documentsDirectory Chemin de stockage des documents sur le disque.
      */
-    public AbstractDocEclipseFileNameResolver(final String documentsDirectory)
-    {
+    public AbstractDocEclipseFileNameResolver(final String documentsDirectory) {
         this.documentsDirectory = documentsDirectory;
     }
 
     /**
      * {@inheritDoc}
      */
-    public boolean supports(final DocumentEclipse doc)
-    {
+    @Override
+    public boolean supports(final DocumentEclipse doc) {
         return doc.getTypeDocument() != null;
     }
 
@@ -47,20 +44,17 @@ public abstract class AbstractDocEclipseFileNameResolver
      */
     @Override
     public String resolve(final BeanParentDocument bean,
-                          final DocumentEclipse doc)
-    {
-        // chemin : <base>/<dynamic_enumTypeDoc>/<dynamic_bean>/<dynamic_doc>/<doc.nomDique>
+                          final DocumentEclipse doc) {
+        // chemin :
+        // <base>/<dynamic_enumTypeDoc>/<dynamic_bean>/<dynamic_doc>/<doc.nomDique>
         final StringBuilder builder = new StringBuilder();
         builder.append(this.documentsDirectory); // <base>
         this.appendSeparator(builder);
-        this.fillDynamicEnumTypeDoc(builder,
-                                    doc.getTypeDocument()); // <dynamic_enumTypeDoc>
+        this.fillDynamicEnumTypeDoc(builder, doc.getTypeDocument()); // <dynamic_enumTypeDoc>
         this.appendSeparator(builder);
-        this.fillDynamicBeanPart(builder,
-                                 bean); // <dynamic_bean>
+        this.fillDynamicBeanPart(builder, bean); // <dynamic_bean>
         // this.appendSeparator(builder);
-        this.fillDynamicDocPart(builder,
-                                doc); // <dynamic_doc>
+        this.fillDynamicDocPart(builder, doc); // <dynamic_doc>
         this.appendSeparator(builder);
         builder.append(doc.getNomDisque()); // <doc.nomDique>
         return builder.toString();
@@ -70,20 +64,18 @@ public abstract class AbstractDocEclipseFileNameResolver
      * Méthode qui rajoute au builder le séparateur.
      * @param builder Builder de fileName.
      */
-    protected final void appendSeparator(final StringBuilder builder)
-    {
+    protected final void appendSeparator(final StringBuilder builder) {
         builder.append(EclipseConstants.SLASH);
     }
 
     /**
-     * Méthode en charge d'ajouter au builder la partie fixe correspondant au répertoire de
-     * l'énumération TypeDocumentEclipse rattachée au document.
+     * Méthode en charge d'ajouter au builder la partie fixe correspondant au
+     * répertoire de l'énumération TypeDocumentEclipse rattachée au document.
      * @param builder Builder de fileName.
      * @param enumTypeDoc Type du document.
      */
     private void fillDynamicEnumTypeDoc(final StringBuilder builder,
-                                        final EnumTypeDocument enumTypeDoc)
-    {
+                                        final EnumTypeDocument enumTypeDoc) {
         builder.append(enumTypeDoc.getTypeEclipse().getRepertoire());
     }
 
@@ -93,8 +85,7 @@ public abstract class AbstractDocEclipseFileNameResolver
      * @param bean Bean porteur du document.
      */
     protected void fillDynamicBeanPart(final StringBuilder builder,
-                                       final BeanParentDocument bean)
-    {
+                                       final BeanParentDocument bean) {
         builder.append(bean.getId());
     }
 
@@ -104,8 +95,7 @@ public abstract class AbstractDocEclipseFileNameResolver
      * @param doc Document dont on cherche l'emplacement.
      */
     protected void fillDynamicDocPart(final StringBuilder builder,
-                                      final DocumentEclipse doc)
-    {
+                                      final DocumentEclipse doc) {
 
     }
 
@@ -113,8 +103,7 @@ public abstract class AbstractDocEclipseFileNameResolver
      * Getter sur documentsDirectory.
      * @return Retourne le documentsDirectory.
      */
-    String getDocumentsDirectory()
-    {
+    String getDocumentsDirectory() {
         return this.documentsDirectory;
     }
 

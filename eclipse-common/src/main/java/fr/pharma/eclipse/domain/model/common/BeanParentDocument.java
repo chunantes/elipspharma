@@ -2,11 +2,10 @@ package fr.pharma.eclipse.domain.model.common;
 
 /**
  * Interface des objets métier qui sont parents d'un document.
- 
+ * @author Netapsys
  * @version $Revision$ $Date$
  */
-public interface BeanParentDocument
-{
+public interface BeanParentDocument {
     /**
      * Accès à l'identifiant technique du bean.
      * @return Identifiant technique.

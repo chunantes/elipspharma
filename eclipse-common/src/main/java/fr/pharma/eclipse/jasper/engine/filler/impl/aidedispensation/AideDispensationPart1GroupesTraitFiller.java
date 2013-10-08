@@ -17,12 +17,10 @@ import fr.pharma.eclipse.service.helper.design.DesignHelper;
 /**
  * Filler en charge de construire l'attribut groupesTraitement du bean
  * {@link JRBeanFicheAideDispensationPart1}.
- 
+ * @author Netapsys
  * @version $Revision$ $Date$
  */
-public class AideDispensationPart1GroupesTraitFiller
-    implements JasperReportBeanFiller
-{
+public class AideDispensationPart1GroupesTraitFiller implements JasperReportBeanFiller {
 
     /**
      * Serial ID.
@@ -49,27 +47,20 @@ public class AideDispensationPart1GroupesTraitFiller
      */
     @Override
     public void fill(final Essai essai,
-                     final JasperReportBean bean)
-    {
-        final JRBeanFicheAideDispensationPart1 beanSource =
-            (JRBeanFicheAideDispensationPart1) bean;
+                     final JasperReportBean bean) {
+        final JRBeanFicheAideDispensationPart1 beanSource = (JRBeanFicheAideDispensationPart1) bean;
 
         // Création des beans.
-        final List<JRBeanGroupeTraitement> groupesTraitement =
-            new ArrayList<JRBeanGroupeTraitement>();
+        final List<JRBeanGroupeTraitement> groupesTraitement = new ArrayList<JRBeanGroupeTraitement>();
 
         final Set<Designable> roots = this.designHelper.getDesignRoots(essai);
         final int nbAlineas = 0;
-        for (final Designable root : roots)
-        {
-            this.handleTree(groupesTraitement,
-                            root,
-                            nbAlineas);
+        for (final Designable root : roots) {
+            this.handleTree(groupesTraitement, root, nbAlineas);
         }
 
         // Transformation en source de données.
-        beanSource.setGroupesTraitement(this.jrDataSourceFactory
-                .getInitializedObject(groupesTraitement));
+        beanSource.setGroupesTraitement(this.jrDataSourceFactory.getInitializedObject(groupesTraitement));
     }
 
     /**
@@ -80,17 +71,12 @@ public class AideDispensationPart1GroupesTraitFiller
      */
     private void handleTree(final List<JRBeanGroupeTraitement> groupesTraitement,
                             final Designable root,
-                            final int niveau)
-    {
+                            final int niveau) {
         // Ajout du root.
-        groupesTraitement.add(this.helper.transform(root,
-                                                    niveau));
+        groupesTraitement.add(this.helper.transform(root, niveau));
         // Ajout des enfants, s'il y en a.
-        for (final Designable child : root.getEnfants())
-        {
-            this.handleTree(groupesTraitement,
-                            child,
-                            niveau + 1);
+        for (final Designable child : root.getEnfants()) {
+            this.handleTree(groupesTraitement, child, niveau + 1);
         }
     }
 
@@ -98,8 +84,7 @@ public class AideDispensationPart1GroupesTraitFiller
      * Getter sur designHelper.
      * @return Retourne le designHelper.
      */
-    DesignHelper getDesignHelper()
-    {
+    DesignHelper getDesignHelper() {
         return this.designHelper;
     }
 
@@ -107,8 +92,7 @@ public class AideDispensationPart1GroupesTraitFiller
      * Setter pour designHelper.
      * @param designHelper le designHelper à écrire.
      */
-    public void setDesignHelper(final DesignHelper designHelper)
-    {
+    public void setDesignHelper(final DesignHelper designHelper) {
         this.designHelper = designHelper;
     }
 
@@ -116,8 +100,7 @@ public class AideDispensationPart1GroupesTraitFiller
      * Getter sur helper.
      * @return Retourne le helper.
      */
-    GroupesTraitFillerHelper getHelper()
-    {
+    GroupesTraitFillerHelper getHelper() {
         return this.helper;
     }
 
@@ -125,8 +108,7 @@ public class AideDispensationPart1GroupesTraitFiller
      * Setter pour helper.
      * @param helper le helper à écrire.
      */
-    public void setHelper(final GroupesTraitFillerHelper helper)
-    {
+    public void setHelper(final GroupesTraitFillerHelper helper) {
         this.helper = helper;
     }
 
@@ -134,8 +116,7 @@ public class AideDispensationPart1GroupesTraitFiller
      * Getter sur jrDataSourceFactory.
      * @return Retourne le jrDataSourceFactory.
      */
-    JRDataSourceFactory getJrDataSourceFactory()
-    {
+    JRDataSourceFactory getJrDataSourceFactory() {
         return this.jrDataSourceFactory;
     }
 
@@ -143,8 +124,7 @@ public class AideDispensationPart1GroupesTraitFiller
      * Setter pour jrDataSourceFactory.
      * @param jrDataSourceFactory le jrDataSourceFactory à écrire.
      */
-    public void setJrDataSourceFactory(final JRDataSourceFactory jrDataSourceFactory)
-    {
+    public void setJrDataSourceFactory(final JRDataSourceFactory jrDataSourceFactory) {
         this.jrDataSourceFactory = jrDataSourceFactory;
     }
 

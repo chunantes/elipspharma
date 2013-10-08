@@ -11,14 +11,12 @@ import fr.pharma.eclipse.domain.model.essai.Essai;
 import fr.pharma.eclipse.domain.model.habilitation.Habilitation;
 
 /**
- * Classe de prédicat sur les essais qu'a le droit de voir l'utilisateur courant (présence dans la
- * liste des habilitations de l'essai).
- 
+ * Classe de prédicat sur les essais qu'a le droit de voir l'utilisateur courant
+ * (présence dans la liste des habilitations de l'essai).
+ * @author Netapsys
  * @version $Revision$ $Date$
  */
-public class EssaiHabilitationUserPredicate
-    implements Predicate, Serializable
-{
+public class EssaiHabilitationUserPredicate implements Predicate, Serializable {
     /**
      * Serial ID.
      */
@@ -30,11 +28,11 @@ public class EssaiHabilitationUserPredicate
     private final Personne personne;
 
     /**
-     * Constructeur prenant en paramètre la Personne représentant l'utilisateur courant.
+     * Constructeur prenant en paramètre la Personne représentant l'utilisateur
+     * courant.
      * @param personne Personne.
      */
-    public EssaiHabilitationUserPredicate(final Personne personne)
-    {
+    public EssaiHabilitationUserPredicate(final Personne personne) {
         this.personne = personne;
     }
 
@@ -42,15 +40,11 @@ public class EssaiHabilitationUserPredicate
      * {@inheritDoc}
      */
     @Override
-    public boolean evaluate(final Object object)
-    {
+    public boolean evaluate(final Object object) {
         final Essai essai = (Essai) object;
-        final SortedSet<Habilitation> habilitations =
-            essai.getDetailContacts().getHabilitations();
+        final SortedSet<Habilitation> habilitations = essai.getDetailContacts().getHabilitations();
 
-        final Habilitation habilitation =
-            (Habilitation) CollectionUtils.find(habilitations,
-                                                new HabilitationPersonnePredicate(this.personne));
+        final Habilitation habilitation = (Habilitation) CollectionUtils.find(habilitations, new HabilitationPersonnePredicate(this.personne));
 
         return habilitation != null;
     }

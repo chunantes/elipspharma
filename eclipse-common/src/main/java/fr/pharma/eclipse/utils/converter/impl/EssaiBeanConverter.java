@@ -13,12 +13,10 @@ import fr.pharma.eclipse.utils.introspection.GenericFetcher;
 
 /**
  * Converter en charge de convertir un essai Sigrec en Essai Eclipse.
- 
+ * @author Netapsys
  * @version $Revision$ $Date$
  */
-public class EssaiBeanConverter
-    extends GenericBeanConverter<EssaiSigrec, Essai>
-{
+public class EssaiBeanConverter extends GenericBeanConverter<EssaiSigrec, Essai> {
 
     /**
      * Service essai.
@@ -31,30 +29,23 @@ public class EssaiBeanConverter
      * @param fetcher GenericFetcher.
      * @param factory Factory du bean métier.
      */
-    public EssaiBeanConverter(
-                              final GenericFetcher<EssaiSigrec, Essai> fetcher,
-                              final BeanObjectFactory<Essai> factory)
-    {
-        super(fetcher,
-              factory);
+    public EssaiBeanConverter(final GenericFetcher<EssaiSigrec, Essai> fetcher, final BeanObjectFactory<Essai> factory) {
+        super(fetcher, factory);
     }
 
     /**
      * {@inheritDoc}
      */
     @Override
-    public Essai convert(final EssaiSigrec essai)
-    {
-        // On regarde si un essai avec l'identifiant sigrec existe, si oui on le retourne.
+    public Essai convert(final EssaiSigrec essai) {
+        // On regarde si un essai avec l'identifiant sigrec existe, si oui on le
+        // retourne.
         final EssaiSearchCriteria criteria = new EssaiSearchCriteria();
         criteria.setNumSigrec(essai.getDetailRecherche().getNumEnregistrement());
         final List<Essai> results = this.essaiService.getAll(criteria);
-        if (results.size() > 0)
-        {
+        if (results.size() > 0) {
             return results.get(0);
-        }
-        else
-        {
+        } else {
             return super.convert(essai);
         }
 
@@ -64,8 +55,7 @@ public class EssaiBeanConverter
      * Setter pour essaiService.
      * @param essaiService le essaiService à écrire.
      */
-    public void setEssaiService(final GenericService<Essai> essaiService)
-    {
+    public void setEssaiService(final GenericService<Essai> essaiService) {
         this.essaiService = essaiService;
     }
 

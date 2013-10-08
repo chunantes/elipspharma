@@ -23,13 +23,10 @@ import fr.pharma.eclipse.validator.save.impl.PrevisionValidator;
 
 /**
  * Implémentaion des services de gestion d'un Grille.
- 
+ * @author Netapsys
  * @version $Revision$ $Date$
  */
-public class GrilleServiceImpl
-    extends GenericServiceImpl<Grille>
-    implements GrilleService
-{
+public class GrilleServiceImpl extends GenericServiceImpl<Grille> implements GrilleService {
 
     /**
      * Processors.
@@ -56,8 +53,7 @@ public class GrilleServiceImpl
      * Constructeur.
      * @param genericDao Dao.
      */
-    public GrilleServiceImpl(final GenericDao<Grille> genericDao)
-    {
+    public GrilleServiceImpl(final GenericDao<Grille> genericDao) {
         super(genericDao);
     }
 
@@ -67,31 +63,22 @@ public class GrilleServiceImpl
     @Override
     public Map<Item, Resultat> processReel(final Grille grille,
                                            final Calendar dateDebut,
-                                           final Calendar dateFin)
-    {
-        if (dateDebut == null
-            || dateFin == null)
-        {
-            throw new ValidationException("surcout.date",
-                                          new String[]
-                                          {"notNull" });
+                                           final Calendar dateFin) {
+        if ((dateDebut == null) || (dateFin == null)) {
+            throw new ValidationException("surcout.date", new String[]{"notNull" });
         }
 
         final Map<Item, Resultat> results = new HashMap<Item, Resultat>();
-        for (final Item item : grille.getItems())
-        {
-            results.put(item,
-                        this.processReel(item,
-                                         grille.getDetailSurcout().getEssai(),
-                                         dateDebut,
-                                         dateFin));
+        for (final Item item : grille.getItems()) {
+            results.put(item, this.processReel(item, grille.getDetailSurcout().getEssai(), dateDebut, dateFin));
 
         }
         return results;
     }
 
     /**
-     * Méthode en charge d'appliquer la liste des processors pour l'item en paramètre.
+     * Méthode en charge d'appliquer la liste des processors pour l'item en
+     * paramètre.
      * @param item L'item.
      * @param essai L'essai.
      * @param dateDebut Date de début de l'intervalle de calcul.
@@ -101,15 +88,10 @@ public class GrilleServiceImpl
     private Resultat processReel(final Item item,
                                  final Essai essai,
                                  final Calendar dateDebut,
-                                 final Calendar dateFin)
-    {
+                                 final Calendar dateFin) {
         final Resultat result = new Resultat();
-        for (final SurcoutProcessor processor : this.processors)
-        {
-            final Resultat r = processor.process(item,
-                                                 essai,
-                                                 dateDebut,
-                                                 dateFin);
+        for (final SurcoutProcessor processor : this.processors) {
+            final Resultat r = processor.process(item, essai, dateDebut, dateFin);
             result.setMontant(result.getMontant().add(r.getMontant()));
             result.setNbActes(r.getNbActes());
         }
@@ -121,24 +103,20 @@ public class GrilleServiceImpl
      */
     @Override
     public Map<Item, Resultat> processPrevision(final Grille grille,
-                                                final DonneesPrevision prevision)
-    {
+                                                final DonneesPrevision prevision) {
 
         this.previsionValidator.validate(prevision);
 
         final Map<Item, Resultat> results = new HashMap<Item, Resultat>();
-        for (final Item item : grille.getItems())
-        {
-            results.put(item,
-                        this.processPrevision(item,
-                                              grille.getDetailSurcout().getEssai(),
-                                              prevision));
+        for (final Item item : grille.getItems()) {
+            results.put(item, this.processPrevision(item, grille.getDetailSurcout().getEssai(), prevision));
 
         }
         return results;
     }
     /**
-     * Méthode en charge d'appliquer la liste des processors pour l'item en paramètre.
+     * Méthode en charge d'appliquer la liste des processors pour l'item en
+     * paramètre.
      * @param item L'item.
      * @param essai L'essai.
      * @param dateDebut Date de début de l'intervalle de calcul.
@@ -147,21 +125,13 @@ public class GrilleServiceImpl
      */
     private Resultat processPrevision(final Item item,
                                       final Essai essai,
-                                      final DonneesPrevision prevision)
-    {
+                                      final DonneesPrevision prevision) {
         final Resultat result = new Resultat();
-        for (final SurcoutProcessor processor : this.processors)
-        {
-            result.setMontant(result.getMontant().add(processor.process(item,
-                                                                        essai,
-                                                                        prevision).getMontant()));
+        for (final SurcoutProcessor processor : this.processors) {
+            result.setMontant(result.getMontant().add(processor.process(item, essai, prevision).getMontant()));
         }
-        if (item.getActe() != null
-            && this.acteCounters.containsKey(item.getActe()))
-        {
-            result.setNbActes(this.acteCounters.get(item.getActe()).process(essai,
-                                                                            null,
-                                                                            prevision));
+        if ((item.getActe() != null) && this.acteCounters.containsKey(item.getActe())) {
+            result.setNbActes(this.acteCounters.get(item.getActe()).process(essai, null, prevision));
         }
         return result;
     }
@@ -169,8 +139,7 @@ public class GrilleServiceImpl
      * Setter pour processors.
      * @param processors le processors à écrire.
      */
-    public void setProcessors(final List<SurcoutProcessor> processors)
-    {
+    public void setProcessors(final List<SurcoutProcessor> processors) {
         this.processors = processors;
     }
 
@@ -178,8 +147,7 @@ public class GrilleServiceImpl
      * Setter pour previsionValidator.
      * @param previsionValidator le previsionValidator à écrire.
      */
-    public void setPrevisionValidator(final PrevisionValidator previsionValidator)
-    {
+    public void setPrevisionValidator(final PrevisionValidator previsionValidator) {
         this.previsionValidator = previsionValidator;
     }
 
@@ -187,8 +155,7 @@ public class GrilleServiceImpl
      * Setter pour acteCounters.
      * @param acteCounters le acteCounters à écrire.
      */
-    public void setActeCounters(final Map<Acte, ActeCounter> acteCounters)
-    {
+    public void setActeCounters(final Map<Acte, ActeCounter> acteCounters) {
         this.acteCounters = acteCounters;
     }
 }

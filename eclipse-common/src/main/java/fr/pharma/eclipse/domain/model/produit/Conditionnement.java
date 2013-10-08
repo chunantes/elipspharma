@@ -24,13 +24,11 @@ import fr.pharma.eclipse.domain.model.common.BeanObject;
 
 /**
  * Classe métier représentant un Conditionnement.
- 
+ * @author Netapsys
  * @version $Revision$ $Date$
  */
 @Entity(name = "conditionnement")
-public class Conditionnement
-    extends BeanObject
-{
+public class Conditionnement extends BeanObject {
 
     /**
      * SerialVersionUID.
@@ -131,8 +129,7 @@ public class Conditionnement
      * Getter sur libelle.
      * @return Retourne le libelle.
      */
-    public String getLibelle()
-    {
+    public String getLibelle() {
         return this.libelle;
     }
 
@@ -140,8 +137,7 @@ public class Conditionnement
      * Setter pour libelle.
      * @param libelle le libelle à écrire.
      */
-    public void setLibelle(final String libelle)
-    {
+    public void setLibelle(final String libelle) {
         this.libelle = libelle;
     }
 
@@ -149,8 +145,7 @@ public class Conditionnement
      * Getter sur modePrescription.
      * @return Retourne le modePrescription.
      */
-    public ModePrescription getModePrescription()
-    {
+    public ModePrescription getModePrescription() {
         return this.modePrescription;
     }
 
@@ -158,8 +153,7 @@ public class Conditionnement
      * Setter pour modePrescription.
      * @param modePrescription le modePrescription à écrire.
      */
-    public void setModePrescription(final ModePrescription modePrescription)
-    {
+    public void setModePrescription(final ModePrescription modePrescription) {
         this.modePrescription = modePrescription;
     }
 
@@ -167,8 +161,7 @@ public class Conditionnement
      * Getter sur uniteGestion.
      * @return Retourne le uniteGestion.
      */
-    public UniteGestion getUniteGestion()
-    {
+    public UniteGestion getUniteGestion() {
         return this.uniteGestion;
     }
 
@@ -176,8 +169,7 @@ public class Conditionnement
      * Setter pour uniteGestion.
      * @param uniteGestion le uniteGestion à écrire.
      */
-    public void setUniteGestion(final UniteGestion uniteGestion)
-    {
+    public void setUniteGestion(final UniteGestion uniteGestion) {
         this.uniteGestion = uniteGestion;
     }
 
@@ -185,8 +177,7 @@ public class Conditionnement
      * Getter sur unitePrescription.
      * @return Retourne le unitePrescription.
      */
-    public String getUnitePrescription()
-    {
+    public String getUnitePrescription() {
         return this.unitePrescription;
     }
 
@@ -194,8 +185,7 @@ public class Conditionnement
      * Setter pour unitePrescription.
      * @param unitePrescription le unitePrescription à écrire.
      */
-    public void setUnitePrescription(final String unitePrescription)
-    {
+    public void setUnitePrescription(final String unitePrescription) {
         this.unitePrescription = unitePrescription;
     }
 
@@ -203,8 +193,7 @@ public class Conditionnement
      * Getter sur voieAdministration.
      * @return Retourne le voieAdministration.
      */
-    public VoieAdministration getVoieAdministration()
-    {
+    public VoieAdministration getVoieAdministration() {
         return this.voieAdministration;
     }
 
@@ -212,26 +201,32 @@ public class Conditionnement
      * Setter pour voieAdministration.
      * @param voieAdministration le voieAdministration à écrire.
      */
-    public void setVoieAdministration(final VoieAdministration voieAdministration)
-    {
+    public void setVoieAdministration(final VoieAdministration voieAdministration) {
         this.voieAdministration = voieAdministration;
     }
 
     /**
-     * Getter sur dosage.
-     * @return Retourne le dosage.
+     * Getter sur dosage.<br>
+     * Enlever les 0 à la fin du nombre décimal.<br>
+     * Dans la base, la valeur a 6 nombres décimaux et les six sont gardé à
+     * l'affichage. La conversion BigDecimal->String->BigDecimal est necessaire
+     * pour bien afficher par exemple "20" après le stripTrailingZeros.
+     * @return le dosage.
      */
-    public BigDecimal getDosage()
-    {
-        return this.dosage;
+    public BigDecimal getDosage() {
+        if ((this.dosage != null) && (this.dosage.scale() > 0)) {
+            final BigDecimal newDosage = new BigDecimal(this.dosage.stripTrailingZeros().toPlainString());
+            return newDosage;
+        } else {
+            return this.dosage;
+        }
     }
 
     /**
      * Getter sur contenance.
      * @return Retourne le contenance.
      */
-    public BigDecimal getContenance()
-    {
+    public BigDecimal getContenance() {
         return this.contenance;
     }
 
@@ -239,8 +234,7 @@ public class Conditionnement
      * Getter sur uniteContenance.
      * @return Retourne le uniteContenance.
      */
-    public UniteDosage getUniteContenance()
-    {
+    public UniteDosage getUniteContenance() {
         return this.uniteContenance;
     }
 
@@ -248,8 +242,7 @@ public class Conditionnement
      * Setter pour dosage.
      * @param dosage le dosage à écrire.
      */
-    public void setDosage(final BigDecimal dosage)
-    {
+    public void setDosage(final BigDecimal dosage) {
         this.dosage = dosage;
     }
 
@@ -257,8 +250,7 @@ public class Conditionnement
      * Setter pour contenance.
      * @param contenance le contenance à écrire.
      */
-    public void setContenance(final BigDecimal contenance)
-    {
+    public void setContenance(final BigDecimal contenance) {
         this.contenance = contenance;
     }
 
@@ -266,8 +258,7 @@ public class Conditionnement
      * Setter pour uniteContenance.
      * @param uniteContenance le uniteContenance à écrire.
      */
-    public void setUniteContenance(final UniteDosage uniteContenance)
-    {
+    public void setUniteContenance(final UniteDosage uniteContenance) {
         this.uniteContenance = uniteContenance;
     }
 
@@ -275,8 +266,7 @@ public class Conditionnement
      * Getter sur nbUnitePrescription.
      * @return Retourne le nbUnitePrescription.
      */
-    public BigDecimal getNbUnitePrescription()
-    {
+    public BigDecimal getNbUnitePrescription() {
         return this.nbUnitePrescription;
     }
 
@@ -284,8 +274,7 @@ public class Conditionnement
      * Setter pour nbUnitePrescription.
      * @param nbUnitePrescription le nbUnitePrescription à écrire.
      */
-    public void setNbUnitePrescription(final BigDecimal nbUnitePrescription)
-    {
+    public void setNbUnitePrescription(final BigDecimal nbUnitePrescription) {
         this.nbUnitePrescription = nbUnitePrescription;
     }
 
@@ -293,8 +282,7 @@ public class Conditionnement
      * Getter sur uniteDosage.
      * @return Retourne le uniteDosage.
      */
-    public UniteDosage getUniteDosage()
-    {
+    public UniteDosage getUniteDosage() {
         return this.uniteDosage;
     }
 
@@ -302,8 +290,7 @@ public class Conditionnement
      * Setter pour uniteDosage.
      * @param uniteDosage le uniteDosage à écrire.
      */
-    public void setUniteDosage(final UniteDosage uniteDosage)
-    {
+    public void setUniteDosage(final UniteDosage uniteDosage) {
         this.uniteDosage = uniteDosage;
     }
 
@@ -311,8 +298,7 @@ public class Conditionnement
      * Getter sur quantiteParPatient.
      * @return Retourne le quantiteParPatient.
      */
-    public Integer getQuantiteParPatient()
-    {
+    public Integer getQuantiteParPatient() {
         return this.quantiteParPatient;
     }
 
@@ -320,8 +306,7 @@ public class Conditionnement
      * Setter pour quantiteParPatient.
      * @param quantiteParPatient le quantiteParPatient à écrire.
      */
-    public void setQuantiteParPatient(final Integer quantiteParPatient)
-    {
+    public void setQuantiteParPatient(final Integer quantiteParPatient) {
         this.quantiteParPatient = quantiteParPatient;
     }
 
@@ -329,8 +314,7 @@ public class Conditionnement
      * Getter sur produit.
      * @return Retourne le produit.
      */
-    public Produit getProduit()
-    {
+    public Produit getProduit() {
         return this.produit;
     }
 
@@ -338,8 +322,7 @@ public class Conditionnement
      * Setter pour produit.
      * @param produit le produit à écrire.
      */
-    public void setProduit(final Produit produit)
-    {
+    public void setProduit(final Produit produit) {
         this.produit = produit;
     }
 
@@ -347,8 +330,7 @@ public class Conditionnement
      * Getter sur forme.
      * @return Retourne le forme.
      */
-    public FormeConditionnement getForme()
-    {
+    public FormeConditionnement getForme() {
         return this.forme;
     }
 
@@ -356,18 +338,12 @@ public class Conditionnement
      * Setter pour forme.
      * @param forme le forme à écrire.
      */
-    public void setForme(final FormeConditionnement forme)
-    {
+    public void setForme(final FormeConditionnement forme) {
         this.forme = forme;
     }
 
     @Override
-    public String toString()
-    {
-        return this.libelle
-               + ":"
-               + this.modePrescription
-               + ":"
-               + this.forme;
+    public String toString() {
+        return this.libelle + ":" + this.modePrescription + ":" + this.forme;
     }
 }

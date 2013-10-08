@@ -12,12 +12,10 @@ import fr.pharma.eclipse.utils.constants.EclipseConstants;
 
 /**
  * Factory de Prescription.
- 
+ * @author Netapsys
  * @version $Revision$ $Date$
  */
-public class PrescriptionFactory
-    extends BeanObjectFactory<Prescription>
-{
+public class PrescriptionFactory extends BeanObjectFactory<Prescription> {
 
     /**
      * SerialVersionUID.
@@ -28,18 +26,17 @@ public class PrescriptionFactory
      * Constructeur.
      * @param bean La classe.
      */
-    public PrescriptionFactory(final Class<Prescription> bean)
-    {
+    public PrescriptionFactory(final Class<Prescription> bean) {
         super(bean);
     }
 
     /**
-     * Méthode en charge de fournir une prescription en initialisant certains champs.
+     * Méthode en charge de fournir une prescription en initialisant certains
+     * champs.
      * @param inclusion L'inclusion.
      * @return La prescription initialisée.
      */
-    public Prescription getInitializedObject(final Inclusion inclusion)
-    {
+    public Prescription getInitializedObject(final Inclusion inclusion) {
         final Prescription prescription = super.getInitializedObject();
         prescription.setInclusion(inclusion);
         prescription.setDispense(false);
@@ -49,13 +46,13 @@ public class PrescriptionFactory
     }
 
     /**
-     * Méthode en charge de fournir une prescription à partir d'un prescription. Elle incrémente
-     * le compteur et met à jour la date de prescription et les produits.
+     * Méthode en charge de fournir une prescription à partir d'un prescription.
+     * Elle incrémente le compteur et met à jour la date de prescription et les
+     * produits.
      * @param prescriptionOld La prescription.
      * @return La prescription initialisée.
      */
-    public Prescription getInitializedObject(final Prescription prescriptionOld)
-    {
+    public Prescription getInitializedObject(final Prescription prescriptionOld) {
         final Prescription prescription = super.getInitializedObject();
         prescription.setInclusion(prescriptionOld.getInclusion());
         prescription.setDispense(false);
@@ -65,21 +62,17 @@ public class PrescriptionFactory
         prescription.setInvestigateur(prescriptionOld.getInvestigateur());
         prescription.setSequence(prescriptionOld.getSequence());
         prescription.setService(prescriptionOld.getService());
-        for (final ProduitPrescrit p : prescriptionOld.getProduitsPrescrits())
-        {
+        for (final ProduitPrescrit p : prescriptionOld.getProduitsPrescrits()) {
             final ProduitPrescrit clone = p.cloneMe();
             clone.setPrescription(prescription);
             prescription.getProduitsPrescrits().add(clone);
-            if (p.getDebut() == null)
-            {
+            if (p.getDebut() == null) {
                 clone.setDebut(new TempsPrescription());
             }
-            if (p.getDuree() == null)
-            {
+            if (p.getDuree() == null) {
                 clone.setDuree(new TempsPrescription());
             }
-            if (p.getFrequence() == null)
-            {
+            if (p.getFrequence() == null) {
                 clone.setFrequence(new Frequence());
             }
         }

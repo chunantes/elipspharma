@@ -12,13 +12,11 @@ import fr.pharma.eclipse.domain.enums.design.UniteTemps;
 
 /**
  * Classe du modèle représentant une fréquence pour la prescription.
- 
+ * @author Netapsys
  * @version $Revision$ $Date$
  */
 @Embeddable
-public class Frequence
-    implements Serializable
-{
+public class Frequence implements Serializable {
 
     /**
      * SerialVersionUID.
@@ -55,27 +53,21 @@ public class Frequence
      * {@inheritDoc}
      */
     @Override
-    public String toString()
-    {
+    public String toString() {
         final StringBuffer buff = new StringBuffer();
-        if (this.getNbFrequence() != null)
-        {
+        if (this.getNbFrequence() != null) {
             buff.append(this.nbFrequence);
             buff.append(" fois ");
         }
-        if (this.getTypeRegularite() != null)
-        {
-            if (!this.getTypeRegularite().equals(TypeRegularite.FOIS))
-            {
+        if (this.getTypeRegularite() != null) {
+            if (!this.getTypeRegularite().equals(TypeRegularite.FOIS)) {
                 buff.append(this.typeRegularite.getLibelle());
                 buff.append(" ");
-                if (this.typeRegularite.equals(TypeRegularite.TOUS_LES))
-                {
+                if (this.typeRegularite.equals(TypeRegularite.TOUS_LES)) {
                     buff.append(this.getNbUniteTempsFrequence());
                     buff.append(" ");
                 }
-                if (this.getUniteFrequence() != null)
-                {
+                if (this.getUniteFrequence() != null) {
                     buff.append(this.uniteFrequence.getLibelleCourt());
                 }
             }
@@ -87,8 +79,7 @@ public class Frequence
      * Getter sur nbFrequence.
      * @return Retourne le nbFrequence.
      */
-    public Integer getNbFrequence()
-    {
+    public Integer getNbFrequence() {
         return this.nbFrequence;
     }
 
@@ -96,8 +87,7 @@ public class Frequence
      * Setter pour nbFrequence.
      * @param nbFrequence le nbFrequence à écrire.
      */
-    public void setNbFrequence(final Integer nbFrequence)
-    {
+    public void setNbFrequence(final Integer nbFrequence) {
         this.nbFrequence = nbFrequence;
     }
 
@@ -105,8 +95,7 @@ public class Frequence
      * Getter sur nbUniteTempsFrequence.
      * @return Retourne le nbUniteTempsFrequence.
      */
-    public Integer getNbUniteTempsFrequence()
-    {
+    public Integer getNbUniteTempsFrequence() {
         return this.nbUniteTempsFrequence;
     }
 
@@ -114,8 +103,7 @@ public class Frequence
      * Setter pour nbUniteTempsFrequence.
      * @param nbUniteTempsFrequence le nbUniteTempsFrequence à écrire.
      */
-    public void setNbUniteTempsFrequence(final Integer nbUniteTempsFrequence)
-    {
+    public void setNbUniteTempsFrequence(final Integer nbUniteTempsFrequence) {
         this.nbUniteTempsFrequence = nbUniteTempsFrequence;
     }
 
@@ -123,8 +111,7 @@ public class Frequence
      * Getter sur uniteFrequence.
      * @return Retourne le uniteFrequence.
      */
-    public UniteTemps getUniteFrequence()
-    {
+    public UniteTemps getUniteFrequence() {
         return this.uniteFrequence;
     }
 
@@ -132,8 +119,7 @@ public class Frequence
      * Setter pour uniteFrequence.
      * @param uniteFrequence le uniteFrequence à écrire.
      */
-    public void setUniteFrequence(final UniteTemps uniteFrequence)
-    {
+    public void setUniteFrequence(final UniteTemps uniteFrequence) {
         this.uniteFrequence = uniteFrequence;
     }
 
@@ -141,8 +127,7 @@ public class Frequence
      * Getter sur typeRegularite.
      * @return Retourne le typeRegularite.
      */
-    public TypeRegularite getTypeRegularite()
-    {
+    public TypeRegularite getTypeRegularite() {
         return this.typeRegularite;
     }
 
@@ -150,8 +135,7 @@ public class Frequence
      * Setter pour typeRegularite.
      * @param typeRegularite le typeRegularite à écrire.
      */
-    public void setTypeRegularite(final TypeRegularite typeRegularite)
-    {
+    public void setTypeRegularite(final TypeRegularite typeRegularite) {
         this.typeRegularite = typeRegularite;
     }
 

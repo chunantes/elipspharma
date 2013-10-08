@@ -6,12 +6,10 @@ import fr.pharma.eclipse.domain.model.produit.DocumentProduit;
 
 /**
  * Classe de résolveur de filename de document Produit.
- 
+ * @author Netapsys
  * @version $Revision$ $Date$
  */
-public class DocProduitFileNameResolver
-    extends AbstractDocEclipseFileNameResolver
-{
+public class DocProduitFileNameResolver extends AbstractDocEclipseFileNameResolver {
 
     /**
      * SerialVersionUID.
@@ -22,8 +20,7 @@ public class DocProduitFileNameResolver
      * Constructeur.
      * @param documentsDirectory Chemin de stockage des documents sur le disque.
      */
-    public DocProduitFileNameResolver(final String documentsDirectory)
-    {
+    public DocProduitFileNameResolver(final String documentsDirectory) {
         super(documentsDirectory);
     }
 
@@ -31,10 +28,8 @@ public class DocProduitFileNameResolver
      * {@inheritDoc}
      */
     @Override
-    public boolean supports(final DocumentEclipse doc)
-    {
-        return super.supports(doc)
-               && TypeDocumentEclipse.PRODUIT.equals(doc.getTypeDocument().getTypeEclipse());
+    public boolean supports(final DocumentEclipse doc) {
+        return super.supports(doc) && TypeDocumentEclipse.PRODUIT.equals(doc.getTypeDocument().getTypeEclipse());
     }
 
     /**
@@ -42,12 +37,11 @@ public class DocProduitFileNameResolver
      */
     @Override
     protected void fillDynamicDocPart(final StringBuilder builder,
-                                      final DocumentEclipse doc)
-    {
-        super.fillDynamicDocPart(builder,
-                                 doc);
+                                      final DocumentEclipse doc) {
+        super.fillDynamicDocPart(builder, doc);
         super.appendSeparator(builder);
-        final DocumentProduit docProduit = (DocumentProduit) doc; // car supports
+        final DocumentProduit docProduit = (DocumentProduit) doc; // car
+                                                                  // supports
         builder.append(docProduit.getType().getRepertoire());
     }
 }

@@ -5,12 +5,10 @@ import fr.pharma.eclipse.domain.model.sigrec.acteur.PromoteurSigrec;
 
 /**
  * Critère de recherche sur Essai.
- 
+ * @author Netapsys
  * @version $Revision$ $Date$
  */
-public class EssaiSigrecSearchCriteria
-    extends AbstractSearchCriteria
-{
+public class EssaiSigrecSearchCriteria extends AbstractSearchCriteria {
     /**
      * Serial ID.
      */
@@ -35,8 +33,7 @@ public class EssaiSigrecSearchCriteria
      * Getter sur nom.
      * @return Retourne le nom.
      */
-    public String getNom()
-    {
+    public String getNom() {
         return this.nom;
     }
 
@@ -44,8 +41,7 @@ public class EssaiSigrecSearchCriteria
      * Setter pour nom.
      * @param nom le nom à écrire.
      */
-    public void setNom(final String nom)
-    {
+    public void setNom(final String nom) {
         this.nom = nom;
     }
 
@@ -53,8 +49,7 @@ public class EssaiSigrecSearchCriteria
      * {@inheritDoc}
      */
     @Override
-    public void clear()
-    {
+    public void clear() {
         this.setNom(null);
         this.setNumSigrec(null);
         this.setPromoteur(null);
@@ -64,8 +59,7 @@ public class EssaiSigrecSearchCriteria
      * Getter sur promoteur.
      * @return Retourne le promoteur.
      */
-    public PromoteurSigrec getPromoteur()
-    {
+    public PromoteurSigrec getPromoteur() {
         return this.promoteur;
     }
 
@@ -73,8 +67,7 @@ public class EssaiSigrecSearchCriteria
      * Setter pour promoteur.
      * @param promoteur le promoteur à écrire.
      */
-    public void setPromoteur(final PromoteurSigrec promoteur)
-    {
+    public void setPromoteur(final PromoteurSigrec promoteur) {
         this.promoteur = promoteur;
     }
 
@@ -82,8 +75,7 @@ public class EssaiSigrecSearchCriteria
      * Getter sur numSigrec.
      * @return Retourne le numSigrec.
      */
-    public String getNumSigrec()
-    {
+    public String getNumSigrec() {
         return this.numSigrec;
     }
 
@@ -91,8 +83,7 @@ public class EssaiSigrecSearchCriteria
      * Setter pour numSigrec.
      * @param numSigrec le numSigrec à écrire.
      */
-    public void setNumSigrec(final String numSigrec)
-    {
+    public void setNumSigrec(final String numSigrec) {
         this.numSigrec = numSigrec;
     }
 

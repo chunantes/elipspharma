@@ -32,16 +32,13 @@ import fr.pharma.eclipse.domain.model.suivi.acteur.PersonneSuivi;
 
 /**
  * Classe métier représentant une Personne.
- 
+ * @author Netapsys
  * @version $Revision$ $Date$
  */
 @Entity(name = "personne")
 @Inheritance(strategy = InheritanceType.SINGLE_TABLE)
 @DiscriminatorColumn(name = "type", discriminatorType = DiscriminatorType.STRING)
-public abstract class Personne
-    extends BeanObjectSuivi
-    implements BeanWithNom
-{
+public abstract class Personne extends BeanObjectSuivi implements BeanWithNom {
     /**
      * Serial ID.
      */
@@ -139,8 +136,7 @@ public abstract class Personne
     @OneToMany(mappedBy = "personne", cascade = CascadeType.ALL)
     @LazyCollection(LazyCollectionOption.TRUE)
     @Sort(type = SortType.COMPARATOR, comparator = HabilitationComparator.class)
-    private SortedSet<Habilitation> habilitations =
-        new TreeSet<Habilitation>(new HabilitationComparator());
+    private SortedSet<Habilitation> habilitations = new TreeSet<Habilitation>(new HabilitationComparator());
 
     /**
      * Liste des modifications de la personne.
@@ -148,15 +144,14 @@ public abstract class Personne
     @OneToMany(mappedBy = "personne", cascade = CascadeType.ALL)
     @LazyCollection(LazyCollectionOption.TRUE)
     @Sort(type = SortType.COMPARATOR, comparator = SuiviComparator.class)
-    private final SortedSet<PersonneSuivi> modifs =
-        new TreeSet<PersonneSuivi>(new SuiviComparator());
+    private final SortedSet<PersonneSuivi> modifs = new TreeSet<PersonneSuivi>(new SuiviComparator());
 
     /**
      * Getter sur nom.
      * @return Retourne le nom.
      */
-    public String getNom()
-    {
+    @Override
+    public String getNom() {
         return this.nom;
     }
 
@@ -164,8 +159,7 @@ public abstract class Personne
      * Setter pour nom.
      * @param nom le nom à écrire.
      */
-    public void setNom(final String nom)
-    {
+    public void setNom(final String nom) {
         this.nom = nom;
     }
 
@@ -173,8 +167,7 @@ public abstract class Personne
      * Getter sur prenom.
      * @return Retourne le prenom.
      */
-    public String getPrenom()
-    {
+    public String getPrenom() {
         return this.prenom;
     }
 
@@ -182,8 +175,7 @@ public abstract class Personne
      * Setter pour prenom.
      * @param prenom le prenom à écrire.
      */
-    public void setPrenom(final String prenom)
-    {
+    public void setPrenom(final String prenom) {
         this.prenom = prenom;
     }
 
@@ -191,8 +183,7 @@ public abstract class Personne
      * Getter sur telephone.
      * @return Retourne le telephone.
      */
-    public String getTelephone()
-    {
+    public String getTelephone() {
         return this.telephone;
     }
 
@@ -200,8 +191,7 @@ public abstract class Personne
      * Setter pour telephone.
      * @param telephone le telephone à écrire.
      */
-    public void setTelephone(final String telephone)
-    {
+    public void setTelephone(final String telephone) {
         this.telephone = telephone;
     }
 
@@ -209,8 +199,7 @@ public abstract class Personne
      * Getter sur mail.
      * @return Retourne le mail.
      */
-    public String getMail()
-    {
+    public String getMail() {
         return this.mail;
     }
 
@@ -218,8 +207,7 @@ public abstract class Personne
      * Setter pour mail.
      * @param mail le mail à écrire.
      */
-    public void setMail(final String mail)
-    {
+    public void setMail(final String mail) {
         this.mail = mail;
     }
 
@@ -227,8 +215,7 @@ public abstract class Personne
      * Getter sur fax.
      * @return Retourne le fax.
      */
-    public String getFax()
-    {
+    public String getFax() {
         return this.fax;
     }
 
@@ -236,8 +223,7 @@ public abstract class Personne
      * Setter pour fax.
      * @param fax le fax à écrire.
      */
-    public void setFax(final String fax)
-    {
+    public void setFax(final String fax) {
         this.fax = fax;
     }
 
@@ -246,8 +232,7 @@ public abstract class Personne
      * @return Retourne le modifs.
      */
     @Override
-    public SortedSet<PersonneSuivi> getModifs()
-    {
+    public SortedSet<PersonneSuivi> getModifs() {
         return this.modifs;
     }
 
@@ -255,8 +240,7 @@ public abstract class Personne
      * Getter sur type.
      * @return Retourne le type.
      */
-    public TypePersonne getType()
-    {
+    public TypePersonne getType() {
         return this.type;
     }
 
@@ -264,8 +248,7 @@ public abstract class Personne
      * Setter pour type.
      * @param type le type à écrire.
      */
-    public void setType(final TypePersonne type)
-    {
+    public void setType(final TypePersonne type) {
         this.type = type;
     }
 
@@ -273,8 +256,7 @@ public abstract class Personne
      * Getter sur adresse.
      * @return Retourne le adresse.
      */
-    public String getAdresse()
-    {
+    public String getAdresse() {
         return this.adresse;
     }
 
@@ -282,8 +264,7 @@ public abstract class Personne
      * Setter pour adresse.
      * @param adresse le adresse à écrire.
      */
-    public void setAdresse(final String adresse)
-    {
+    public void setAdresse(final String adresse) {
         this.adresse = adresse;
     }
 
@@ -291,8 +272,7 @@ public abstract class Personne
      * Getter sur codePostal.
      * @return Retourne le codePostal.
      */
-    public String getCodePostal()
-    {
+    public String getCodePostal() {
         return this.codePostal;
     }
 
@@ -300,8 +280,7 @@ public abstract class Personne
      * Setter pour codePostal.
      * @param codePostal le codePostal à écrire.
      */
-    public void setCodePostal(final String codePostal)
-    {
+    public void setCodePostal(final String codePostal) {
         this.codePostal = codePostal;
     }
 
@@ -309,8 +288,7 @@ public abstract class Personne
      * Getter sur ville.
      * @return Retourne le ville.
      */
-    public String getVille()
-    {
+    public String getVille() {
         return this.ville;
     }
 
@@ -318,8 +296,7 @@ public abstract class Personne
      * Setter pour ville.
      * @param ville le ville à écrire.
      */
-    public void setVille(final String ville)
-    {
+    public void setVille(final String ville) {
         this.ville = ville;
     }
 
@@ -327,8 +304,7 @@ public abstract class Personne
      * Getter pour habilitations.
      * @return Le habilitations
      */
-    public SortedSet<Habilitation> getHabilitations()
-    {
+    public SortedSet<Habilitation> getHabilitations() {
         return this.habilitations;
     }
 
@@ -336,8 +312,7 @@ public abstract class Personne
      * Setter pour habilitations.
      * @param habilitations Le habilitations à écrire.
      */
-    public void setHabilitations(final SortedSet<Habilitation> habilitations)
-    {
+    public void setHabilitations(final SortedSet<Habilitation> habilitations) {
         this.habilitations = habilitations;
     }
 
@@ -345,8 +320,7 @@ public abstract class Personne
      * Getter sur isAdmin.
      * @return Retourne le isAdmin.
      */
-    public Boolean getIsAdmin()
-    {
+    public Boolean getIsAdmin() {
         return this.isAdmin;
     }
 
@@ -354,8 +328,7 @@ public abstract class Personne
      * Setter pour isAdmin.
      * @param isAdmin le isAdmin à écrire.
      */
-    public void setIsAdmin(final Boolean isAdmin)
-    {
+    public void setIsAdmin(final Boolean isAdmin) {
         this.isAdmin = isAdmin;
     }
 
@@ -363,8 +336,7 @@ public abstract class Personne
      * Getter pour login.
      * @return Le login
      */
-    public String getLogin()
-    {
+    public String getLogin() {
         return this.login;
     }
 
@@ -372,8 +344,7 @@ public abstract class Personne
      * Setter pour login.
      * @param login Le login à écrire.
      */
-    public void setLogin(final String login)
-    {
+    public void setLogin(final String login) {
         this.login = login;
     }
 
@@ -381,8 +352,7 @@ public abstract class Personne
      * Getter pour password.
      * @return Le password
      */
-    public String getPassword()
-    {
+    public String getPassword() {
         return this.password;
     }
 
@@ -390,8 +360,7 @@ public abstract class Personne
      * Setter pour password.
      * @param password Le password à écrire.
      */
-    public void setPassword(final String password)
-    {
+    public void setPassword(final String password) {
         this.password = password;
     }
 
@@ -399,8 +368,7 @@ public abstract class Personne
      * Getter pour confirmPassword.
      * @return Le confirmPassword
      */
-    public String getConfirmPassword()
-    {
+    public String getConfirmPassword() {
         return this.confirmPassword;
     }
 
@@ -408,8 +376,7 @@ public abstract class Personne
      * Setter pour confirmPassword.
      * @param confirmPassword Le confirmPassword à écrire.
      */
-    public void setConfirmPassword(final String confirmPassword)
-    {
+    public void setConfirmPassword(final String confirmPassword) {
         this.confirmPassword = confirmPassword;
     }
 
@@ -417,8 +384,7 @@ public abstract class Personne
      * {@inheritDoc}
      */
     @Override
-    public String toString()
-    {
+    public String toString() {
         final StringBuilder builder = new StringBuilder("[");
         builder.append("id=").append(this.getId());
         builder.append(", ").append(this.prenom).append(" ").append(this.nom);
@@ -430,8 +396,7 @@ public abstract class Personne
      * Getter sur telephonePortable.
      * @return Retourne le telephonePortable.
      */
-    public String getTelephonePortable()
-    {
+    public String getTelephonePortable() {
         return this.telephonePortable;
     }
 
@@ -439,8 +404,7 @@ public abstract class Personne
      * Setter pour telephonePortable.
      * @param telephonePortable le telephonePortable à écrire.
      */
-    public void setTelephonePortable(final String telephonePortable)
-    {
+    public void setTelephonePortable(final String telephonePortable) {
         this.telephonePortable = telephonePortable;
     }
 

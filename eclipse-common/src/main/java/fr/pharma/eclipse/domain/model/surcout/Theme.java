@@ -26,14 +26,11 @@ import fr.pharma.eclipse.domain.model.surcout.regle.Regle;
 
 /**
  * Classe du modèle représentant un thème dans la grille des surcouts.
- 
+ * @author Netapsys
  * @version $Revision$ $Date$
  */
 @Entity(name = "theme")
-public class Theme
-    extends BeanObject
-    implements BeanWithNom, Clonable<Theme>
-{
+public class Theme extends BeanObject implements BeanWithNom, Clonable<Theme> {
 
     /**
      * SerialVersionUID.
@@ -72,13 +69,12 @@ public class Theme
     private SortedSet<Regle> regles = new TreeSet<Regle>(new RegleComparator());
 
     /**
-     * Retourne <true> si le thème ne contient aucune catégorie et peut donc être considéré comme
-     * une catégorie.
-     * @return <true> si le thème ne contient aucune catégorie et peut donc être considéré comme
-     * une catégorie.
+     * Retourne <true> si le thème ne contient aucune catégorie et peut donc
+     * être considéré comme une catégorie.
+     * @return <true> si le thème ne contient aucune catégorie et peut donc être
+     * considéré comme une catégorie.
      */
-    public boolean isCategorie()
-    {
+    public boolean isCategorie() {
         return this.getCategories().isEmpty();
     }
 
@@ -86,8 +82,7 @@ public class Theme
      * Getter sur categories.
      * @return Retourne le categories.
      */
-    public SortedSet<Categorie> getCategories()
-    {
+    public SortedSet<Categorie> getCategories() {
         return this.categories;
     }
 
@@ -95,8 +90,7 @@ public class Theme
      * Setter pour categories.
      * @param categories le categories à écrire.
      */
-    public void setCategories(final SortedSet<Categorie> categories)
-    {
+    public void setCategories(final SortedSet<Categorie> categories) {
         this.categories = categories;
     }
 
@@ -104,8 +98,7 @@ public class Theme
      * Getter sur grilleModele.
      * @return Retourne le grilleModele.
      */
-    public GrilleModele getGrilleModele()
-    {
+    public GrilleModele getGrilleModele() {
         return this.grilleModele;
     }
 
@@ -113,8 +106,7 @@ public class Theme
      * Setter pour grilleModele.
      * @param grilleModele le grilleModele à écrire.
      */
-    public void setGrilleModele(final GrilleModele grilleModele)
-    {
+    public void setGrilleModele(final GrilleModele grilleModele) {
         this.grilleModele = grilleModele;
     }
 
@@ -122,8 +114,7 @@ public class Theme
      * Getter sur libelle.
      * @return Retourne le libelle.
      */
-    public String getLibelle()
-    {
+    public String getLibelle() {
         return this.libelle;
     }
 
@@ -131,8 +122,7 @@ public class Theme
      * Setter pour libelle.
      * @param libelle le libelle à écrire.
      */
-    public void setLibelle(final String libelle)
-    {
+    public void setLibelle(final String libelle) {
         this.libelle = libelle;
     }
 
@@ -140,8 +130,7 @@ public class Theme
      * {@inheritDoc}
      */
     @Override
-    public String getNom()
-    {
+    public String getNom() {
         return this.getLibelle();
     }
 
@@ -149,12 +138,10 @@ public class Theme
      * {@inheritDoc}
      */
     @Override
-    public Theme cloneMe()
-    {
+    public Theme cloneMe() {
         final Theme theme = new Theme();
         theme.setLibelle(this.getLibelle());
-        for (final Categorie cat : this.getCategories())
-        {
+        for (final Categorie cat : this.getCategories()) {
             final Categorie copie = cat.cloneMe();
             copie.setTheme(theme);
             theme.getCategories().add(copie);
@@ -166,8 +153,7 @@ public class Theme
      * Getter sur regles.
      * @return Retourne le regles.
      */
-    public SortedSet<Regle> getRegles()
-    {
+    public SortedSet<Regle> getRegles() {
         return this.regles;
     }
 
@@ -175,8 +161,7 @@ public class Theme
      * Setter pour regles.
      * @param regles le regles à écrire.
      */
-    public void setRegles(final SortedSet<Regle> regles)
-    {
+    public void setRegles(final SortedSet<Regle> regles) {
         this.regles = regles;
     }
 

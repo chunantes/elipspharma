@@ -6,12 +6,12 @@ import fr.pharma.eclipse.domain.enums.TypeDesignable;
 import fr.pharma.eclipse.domain.model.design.embedded.TempsPrescription;
 
 /**
- * Interface commune des éléments liés au design de l'essai : Bras (et sous bras), Sequence.
- 
+ * Interface commune des éléments liés au design de l'essai : Bras (et sous
+ * bras), Sequence.
+ * @author Netapsys
  * @version $Revision$ $Date$
  */
-public interface Designable
-{
+public interface Designable {
     /**
      * Retourne le nom de l'élément designable.
      * @return le nom de l'élément designable.

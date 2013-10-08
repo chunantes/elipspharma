@@ -15,12 +15,10 @@ import fr.pharma.eclipse.jasper.exception.JasperReportBuildException;
 
 /**
  * Classe en charge de manager la création d'un rapport Jasper.
- 
+ * @author Netapsys
  * @version $Revision$ $Date$
  */
-public class JasperReportBuildManager
-    implements Serializable
-{
+public class JasperReportBuildManager implements Serializable {
 
     /**
      * Serial ID.
@@ -54,10 +52,10 @@ public class JasperReportBuildManager
 
     /**
      * Constructeur.
-     * @param typeRapportName Type du rapport Jasper supporté sous forme de chaîne de caractères.
+     * @param typeRapportName Type du rapport Jasper supporté sous forme de
+     * chaîne de caractères.
      */
-    public JasperReportBuildManager(final String typeRapportName)
-    {
+    public JasperReportBuildManager(final String typeRapportName) {
         this(TypeRapportJasper.valueOf(typeRapportName));
     }
 
@@ -65,8 +63,7 @@ public class JasperReportBuildManager
      * Constructeur.
      * @param typeRapport Type du rapport Jasper supporté.
      */
-    public JasperReportBuildManager(final TypeRapportJasper typeRapport)
-    {
+    public JasperReportBuildManager(final TypeRapportJasper typeRapport) {
         this.typeRapport = typeRapport;
     }
 
@@ -74,11 +71,10 @@ public class JasperReportBuildManager
      * Méthode en charge de piloter la génération du rapport Jasper.
      * @param source Source de données servant de base au rapport.
      * @return Le flux du rapport.
-     * @throws JasperReportBuildException En cas d'erreur lors de la génération du rapport.
+     * @throws JasperReportBuildException En cas d'erreur lors de la génération
+     * du rapport.
      */
-    public byte[] build(final Object source)
-        throws JasperReportBuildException
-    {
+    public byte[] build(final Object source) throws JasperReportBuildException {
         // Construction des données.
         this.datasBuilder.checkSource(source);
         final JRDataSource datasource = this.datasBuilder.buildDataSource(source);
@@ -88,11 +84,9 @@ public class JasperReportBuildManager
         this.commonParametersHelper.addCommonParameters(mapParameters);
 
         // Génération du résultat.
-        final JasperPrint jasperPrint = this.jpFactory.getInitializedObject(datasource,
-                                                                            mapParameters);
+        final JasperPrint jasperPrint = this.jpFactory.getInitializedObject(datasource, mapParameters);
         // Export du résultat.
-        final ByteArrayOutputStream stream = this.jpExporter.export(this.typeRapport,
-                                                                    jasperPrint);
+        final ByteArrayOutputStream stream = this.jpExporter.export(this.typeRapport, jasperPrint);
         return stream.toByteArray();
     }
 
@@ -100,22 +94,19 @@ public class JasperReportBuildManager
      * Méthode en charge de construire le nom du rapport.
      * @param source Source de données servant de base au rapport.
      * @return Le nom du rapport.
-     * @throws JasperReportBuildException En cas d'erreur lors de la génération du rapport.
+     * @throws JasperReportBuildException En cas d'erreur lors de la génération
+     * du rapport.
      */
-    public String buildFileName(final Object source)
-        throws JasperReportBuildException
-    {
+    public String buildFileName(final Object source) throws JasperReportBuildException {
         this.datasBuilder.checkSource(source);
-        return this.datasBuilder.buildReportName(source,
-                                                 this.typeRapport);
+        return this.datasBuilder.buildReportName(source, this.typeRapport);
     }
 
     /**
      * Getter sur datasBuilder.
      * @return Retourne le datasBuilder.
      */
-    JasperReportDatasBuilder getDatasBuilder()
-    {
+    JasperReportDatasBuilder getDatasBuilder() {
         return this.datasBuilder;
     }
 
@@ -123,8 +114,7 @@ public class JasperReportBuildManager
      * Setter pour datasBuilder.
      * @param datasBuilder le datasBuilder à écrire.
      */
-    public void setDatasBuilder(final JasperReportDatasBuilder datasBuilder)
-    {
+    public void setDatasBuilder(final JasperReportDatasBuilder datasBuilder) {
         this.datasBuilder = datasBuilder;
     }
 
@@ -132,8 +122,7 @@ public class JasperReportBuildManager
      * Getter sur jpFactory.
      * @return Retourne le jpFactory.
      */
-    JasperPrintFactory getJpFactory()
-    {
+    JasperPrintFactory getJpFactory() {
         return this.jpFactory;
     }
 
@@ -141,8 +130,7 @@ public class JasperReportBuildManager
      * Setter pour jpFactory.
      * @param jpFactory le jpFactory à écrire.
      */
-    public void setJpFactory(final JasperPrintFactory jpFactory)
-    {
+    public void setJpFactory(final JasperPrintFactory jpFactory) {
         this.jpFactory = jpFactory;
     }
 
@@ -150,8 +138,7 @@ public class JasperReportBuildManager
      * Getter sur jpExporter.
      * @return Retourne le jpExporter.
      */
-    JasperPrintExporter getJpExporter()
-    {
+    JasperPrintExporter getJpExporter() {
         return this.jpExporter;
     }
 
@@ -159,8 +146,7 @@ public class JasperReportBuildManager
      * Setter pour jpExporter.
      * @param jpExporter le jpExporter à écrire.
      */
-    public void setJpExporter(final JasperPrintExporter jpExporter)
-    {
+    public void setJpExporter(final JasperPrintExporter jpExporter) {
         this.jpExporter = jpExporter;
     }
 
@@ -168,8 +154,7 @@ public class JasperReportBuildManager
      * Getter sur typeRapport.
      * @return Retourne le typeRapport.
      */
-    TypeRapportJasper getTypeRapport()
-    {
+    TypeRapportJasper getTypeRapport() {
         return this.typeRapport;
     }
 
@@ -177,8 +162,7 @@ public class JasperReportBuildManager
      * Getter sur commonParametersHelper.
      * @return Retourne le commonParametersHelper.
      */
-    CommonParametersHelper getCommonParametersHelper()
-    {
+    CommonParametersHelper getCommonParametersHelper() {
         return this.commonParametersHelper;
     }
 
@@ -186,8 +170,7 @@ public class JasperReportBuildManager
      * Setter pour commonParametersHelper.
      * @param commonParametersHelper le commonParametersHelper à écrire.
      */
-    public void setCommonParametersHelper(final CommonParametersHelper commonParametersHelper)
-    {
+    public void setCommonParametersHelper(final CommonParametersHelper commonParametersHelper) {
         this.commonParametersHelper = commonParametersHelper;
     }
 

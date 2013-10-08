@@ -2,11 +2,10 @@ package fr.pharma.eclipse.domain.enums;
 
 /**
  * Enumération pour les types d'anonymisation.
- 
+ * @author Netapsys
  * @version $Revision$ $Date$
  */
-public enum TypeAnonymisation
-{
+public enum TypeAnonymisation {
     /**
      * Interne (présent dans SIR).
      */
@@ -26,8 +25,7 @@ public enum TypeAnonymisation
      * Constructeur privé.
      * @param libelle Libellé de la valeur de l'énumération.
      */
-    private TypeAnonymisation(final String libelle)
-    {
+    private TypeAnonymisation(final String libelle) {
         this.libelle = libelle;
     }
 
@@ -35,8 +33,7 @@ public enum TypeAnonymisation
      * Getter sur libelle.
      * @return Retourne le libelle.
      */
-    public String getLibelle()
-    {
+    public String getLibelle() {
         return this.libelle;
     }
 
@@ -44,8 +41,7 @@ public enum TypeAnonymisation
      * {@inheritDoc}
      */
     @Override
-    public String toString()
-    {
+    public String toString() {
         return this.getLibelle();
     }
 }

@@ -1,6 +1,9 @@
 package fr.pharma.eclipse.dictionary.maker.patient;
 
+import java.util.List;
+
 import org.hibernate.Criteria;
+import org.hibernate.criterion.Restrictions;
 
 import fr.pharma.eclipse.dictionary.maker.common.AbstractCriteriaMaker;
 import fr.pharma.eclipse.dictionary.maker.common.utils.CriteriaMakerUtils;
@@ -9,12 +12,10 @@ import fr.pharma.eclipse.domain.criteria.patient.InclusionSearchCriteria;
 
 /**
  * Artisan de recherche pour les inclusions.
- 
+ * @author Netapsys
  * @version $Revision$ $Date$
  */
-public class InclusionSearchCriteriaMaker
-    extends AbstractCriteriaMaker
-{
+public class InclusionSearchCriteriaMaker extends AbstractCriteriaMaker {
 
     /**
      * SerialVersionUID.
@@ -24,8 +25,7 @@ public class InclusionSearchCriteriaMaker
     /**
      * Constructeur par défaut.
      */
-    public InclusionSearchCriteriaMaker()
-    {
+    public InclusionSearchCriteriaMaker() {
         super(InclusionSearchCriteria.class);
     }
 
@@ -34,33 +34,33 @@ public class InclusionSearchCriteriaMaker
      */
     @Override
     public void transform(final Criteria criteria,
-                          final SearchCriteria searchCrit)
-    {
+                          final SearchCriteria searchCrit) {
         final InclusionSearchCriteria crit = (InclusionSearchCriteria) searchCrit;
 
+        Criteria critEssai = null;
+
         // Essai
-        if (crit.getEssai() != null)
-        {
-            CriteriaMakerUtils.addCritere(criteria,
-                                          "essai",
-                                          crit.getEssai());
+        if (crit.getEssai() != null) {
+            critEssai = criteria.createCriteria("essai");
+            critEssai.add(Restrictions.idEq(crit.getEssai().getId()));
         }
 
         // PAtient
-        if (crit.getPatient() != null)
-        {
-            CriteriaMakerUtils.addCritere(criteria,
-                                          "patient",
-                                          crit.getPatient());
+        if (crit.getPatient() != null) {
+            CriteriaMakerUtils.addCritere(criteria, "patient", crit.getPatient());
         }
 
         // Actif
-        if (crit.getActif() != null)
-        {
-            CriteriaMakerUtils.addCritere(criteria,
-                                          "actif",
-                                          crit.getActif());
+        if (crit.getActif() != null) {
+            CriteriaMakerUtils.addCritere(criteria, "actif", crit.getActif());
         }
+
+        // Restriction par rapport aux acls des essais
+        final List<Long> idsEssais = this.getAclSearchDao().findIdsEssais();
+        if (critEssai == null) {
+            critEssai = criteria.createCriteria("essai");
+        }
+        CriteriaMakerUtils.addInCritere(criteria, "essai.id", idsEssais.toArray(new Object[idsEssais.size()]));
 
         // // Date de début
         // if (crit.getDateDebut() != null)

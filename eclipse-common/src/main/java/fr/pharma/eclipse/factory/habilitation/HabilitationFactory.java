@@ -9,12 +9,10 @@ import fr.pharma.eclipse.utils.constants.EclipseConstants;
 
 /**
  * Fabrique d'objets Habilitation.
- 
+ * @author Netapsys
  * @version $Revision$ $Date$
  */
-public class HabilitationFactory
-    extends BeanObjectFactory<Habilitation>
-{
+public class HabilitationFactory extends BeanObjectFactory<Habilitation> {
 
     /**
      * Serial ID.
@@ -30,8 +28,7 @@ public class HabilitationFactory
      * Constructeur.
      * @param bean Classe à instancier.
      */
-    public HabilitationFactory(final Class<Habilitation> bean)
-    {
+    public HabilitationFactory(final Class<Habilitation> bean) {
         super(bean);
     }
 
@@ -39,8 +36,7 @@ public class HabilitationFactory
      * {@inheritDoc}
      */
     @Override
-    public Habilitation getInitializedObject()
-    {
+    public Habilitation getInitializedObject() {
         final Habilitation habilitation = super.getInitializedObject();
         habilitation.setActive(true);
         habilitation.setDesactivable(true);
@@ -53,8 +49,7 @@ public class HabilitationFactory
      * Getter sur userService.
      * @return Retourne le userService.
      */
-    UserService getUserService()
-    {
+    UserService getUserService() {
         return this.userService;
     }
 
@@ -62,8 +57,7 @@ public class HabilitationFactory
      * Setter pour userService.
      * @param userService le userService à écrire.
      */
-    public void setUserService(final UserService userService)
-    {
+    public void setUserService(final UserService userService) {
         this.userService = userService;
     }
 }

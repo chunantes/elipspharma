@@ -1,6 +1,7 @@
 package fr.pharma.eclipse.domain.criteria.dotation;
 
 import java.util.Calendar;
+import java.util.List;
 
 import fr.pharma.eclipse.domain.criteria.common.AbstractSearchCriteria;
 import fr.pharma.eclipse.domain.model.essai.Essai;
@@ -10,12 +11,10 @@ import fr.pharma.eclipse.domain.model.stockage.Pharmacie;
 
 /**
  * Critère de recherche sur Dotation.
- 
+ * @author Netapsys
  * @version $Revision$ $Date$
  */
-public class DotationSearchCriteria
-    extends AbstractSearchCriteria
-{
+public class DotationSearchCriteria extends AbstractSearchCriteria {
     /**
      * Serial ID.
      */
@@ -57,11 +56,25 @@ public class DotationSearchCriteria
     private Calendar dateFin;
 
     /**
+     * Alerte active sur produit.
+     */
+    private Boolean alerteActiveProduit;
+
+    /**
+     * Liste d'identifiants d'essais.
+     */
+    private List<Long> idsEssais;
+
+    /**
+     * Liste d'identifiants de pharmacies.
+     */
+    private List<Long> idsPharmacies;
+
+    /**
      * {@inheritDoc}
      */
     @Override
-    public void clear()
-    {
+    public void clear() {
         this.setEssai(null);
         this.setPharmacie(null);
         this.setProduit(null);
@@ -75,8 +88,7 @@ public class DotationSearchCriteria
      * Getter pour service.
      * @return Le service
      */
-    public Service getService()
-    {
+    public Service getService() {
         return this.service;
     }
 
@@ -84,8 +96,7 @@ public class DotationSearchCriteria
      * Setter pour service.
      * @param service Le service à écrire.
      */
-    public void setService(final Service service)
-    {
+    public void setService(final Service service) {
         this.service = service;
     }
 
@@ -93,8 +104,7 @@ public class DotationSearchCriteria
      * Getter pour produit.
      * @return Le produit
      */
-    public Produit getProduit()
-    {
+    public Produit getProduit() {
         return this.produit;
     }
 
@@ -102,8 +112,7 @@ public class DotationSearchCriteria
      * Setter pour produit.
      * @param produit Le produit à écrire.
      */
-    public void setProduit(final Produit produit)
-    {
+    public void setProduit(final Produit produit) {
         this.produit = produit;
     }
 
@@ -111,8 +120,7 @@ public class DotationSearchCriteria
      * Getter pour traitee.
      * @return Le traitee
      */
-    public Boolean getTraitee()
-    {
+    public Boolean getTraitee() {
         return this.traitee;
     }
 
@@ -120,8 +128,7 @@ public class DotationSearchCriteria
      * Setter pour traitee.
      * @param traitee Le traitee à écrire.
      */
-    public void setTraitee(final Boolean traitee)
-    {
+    public void setTraitee(final Boolean traitee) {
         this.traitee = traitee;
     }
 
@@ -129,8 +136,7 @@ public class DotationSearchCriteria
      * Getter pour essai.
      * @return Le essai
      */
-    public Essai getEssai()
-    {
+    public Essai getEssai() {
         return this.essai;
     }
 
@@ -138,8 +144,7 @@ public class DotationSearchCriteria
      * Setter pour essai.
      * @param essai Le essai à écrire.
      */
-    public void setEssai(final Essai essai)
-    {
+    public void setEssai(final Essai essai) {
         this.essai = essai;
     }
 
@@ -147,8 +152,7 @@ public class DotationSearchCriteria
      * Getter pour pharmacie.
      * @return Le pharmacie
      */
-    public Pharmacie getPharmacie()
-    {
+    public Pharmacie getPharmacie() {
         return this.pharmacie;
     }
 
@@ -156,8 +160,7 @@ public class DotationSearchCriteria
      * Setter pour pharmacie.
      * @param pharmacie Le pharmacie à écrire.
      */
-    public void setPharmacie(final Pharmacie pharmacie)
-    {
+    public void setPharmacie(final Pharmacie pharmacie) {
         this.pharmacie = pharmacie;
     }
 
@@ -165,8 +168,7 @@ public class DotationSearchCriteria
      * Getter pour dateDebut.
      * @return Le dateDebut
      */
-    public Calendar getDateDebut()
-    {
+    public Calendar getDateDebut() {
         return this.dateDebut;
     }
 
@@ -174,8 +176,7 @@ public class DotationSearchCriteria
      * Setter pour dateDebut.
      * @param dateDebut Le dateDebut à écrire.
      */
-    public void setDateDebut(final Calendar dateDebut)
-    {
+    public void setDateDebut(final Calendar dateDebut) {
         this.dateDebut = dateDebut;
     }
 
@@ -183,8 +184,7 @@ public class DotationSearchCriteria
      * Getter pour dateFin.
      * @return Le dateFin
      */
-    public Calendar getDateFin()
-    {
+    public Calendar getDateFin() {
         return this.dateFin;
     }
 
@@ -192,9 +192,56 @@ public class DotationSearchCriteria
      * Setter pour dateFin.
      * @param dateFin Le dateFin à écrire.
      */
-    public void setDateFin(final Calendar dateFin)
-    {
+    public void setDateFin(final Calendar dateFin) {
         this.dateFin = dateFin;
+    }
+
+    /**
+     * Getter pour alerteActiveProduit.
+     * @return Le alerteActiveProduit
+     */
+    public Boolean getAlerteActiveProduit() {
+        return this.alerteActiveProduit;
+    }
+
+    /**
+     * Setter pour alerteActiveProduit.
+     * @param alerteActiveProduit Le alerteActiveProduit à écrire.
+     */
+    public void setAlerteActiveProduit(final Boolean alerteActiveProduit) {
+        this.alerteActiveProduit = alerteActiveProduit;
+    }
+
+    /**
+     * Getter pour idsEssais.
+     * @return Le idsEssais
+     */
+    public List<Long> getIdsEssais() {
+        return this.idsEssais;
+    }
+
+    /**
+     * Setter pour idsEssais.
+     * @param idsEssais Le idsEssais à écrire.
+     */
+    public void setIdsEssais(final List<Long> idsEssais) {
+        this.idsEssais = idsEssais;
+    }
+
+    /**
+     * Getter pour idsPharmacies.
+     * @return Le idsPharmacies
+     */
+    public List<Long> getIdsPharmacies() {
+        return this.idsPharmacies;
+    }
+
+    /**
+     * Setter pour idsPharmacies.
+     * @param idsPharmacies Le idsPharmacies à écrire.
+     */
+    public void setIdsPharmacies(final List<Long> idsPharmacies) {
+        this.idsPharmacies = idsPharmacies;
     }
 
 }

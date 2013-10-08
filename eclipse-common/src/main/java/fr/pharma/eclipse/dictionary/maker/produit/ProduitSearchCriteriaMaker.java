@@ -9,12 +9,10 @@ import fr.pharma.eclipse.domain.criteria.produit.ProduitSearchCriteria;
 
 /**
  * Artisan de recherche pour les produits.
- 
+ * @author Netapsys
  * @version $Revision$ $Date$
  */
-public class ProduitSearchCriteriaMaker
-    extends AbstractCriteriaMaker
-{
+public class ProduitSearchCriteriaMaker extends AbstractCriteriaMaker {
     /**
      * Serial ID.
      */
@@ -23,8 +21,7 @@ public class ProduitSearchCriteriaMaker
     /**
      * Constructeur par défaut.
      */
-    public ProduitSearchCriteriaMaker()
-    {
+    public ProduitSearchCriteriaMaker() {
         super(ProduitSearchCriteria.class);
     }
 
@@ -33,54 +30,36 @@ public class ProduitSearchCriteriaMaker
      */
     @Override
     public void transform(final Criteria criteria,
-                          final SearchCriteria searchCrit)
-    {
+                          final SearchCriteria searchCrit) {
         final ProduitSearchCriteria crit = (ProduitSearchCriteria) searchCrit;
 
         // Type de produit
-        if (crit.getTypeProduit() != null)
-        {
-            CriteriaMakerUtils.addCritere(criteria,
-                                          "type",
-                                          crit.getTypeProduit());
+        if (crit.getTypeProduit() != null) {
+            CriteriaMakerUtils.addCritere(criteria, "type", crit.getTypeProduit());
         }
 
         // Essai
-        if (null != crit.getEssai())
-        {
-            CriteriaMakerUtils.addCritere(criteria,
-                                          "essai",
-                                          crit.getEssai());
+        if (null != crit.getEssai()) {
+            CriteriaMakerUtils.addCritere(criteria, "essai", crit.getEssai());
         }
 
-        if (null != crit.getStockage())
-        {
-            // Création d'un critère sur les habilitations du du détail des contacts de l'essai
-            final Criteria critDetailLogistique = criteria.createCriteria("detailLogistique",
-                                                                          "detailLogistique");
-            final Criteria critStockages = critDetailLogistique.createCriteria("stockages",
-                                                                               "stockages");
+        if (null != crit.getStockage()) {
+            // Création d'un critère sur les habilitations du du détail des
+            // contacts de l'essai
+            final Criteria critDetailLogistique = criteria.createCriteria("detailLogistique", "detailLogistique");
+            final Criteria critStockages = critDetailLogistique.createCriteria("detailsStockages", "stockages");
 
-            CriteriaMakerUtils.addInCritere(critStockages,
-                                            "stockage.id",
-                                            new Long[]
-                                            {crit.getStockage().getId() });
+            CriteriaMakerUtils.addInCritere(critStockages, "stockage.id", new Long[]{crit.getStockage().getId() });
 
         }
 
-        if (null != crit.getStockageRetour())
-        {
-            // Création d'un critère sur les habilitations du du détail des contacts de l'essai
-            final Criteria critDetailLogistique = criteria.createCriteria("detailLogistique",
-                                                                          "detailLogistique");
-            final Criteria critStockages =
-                critDetailLogistique.createCriteria("stockagesRetours",
-                                                    "stockagesRetours");
+        if (null != crit.getStockageRetour()) {
+            // Création d'un critère sur les habilitations du du détail des
+            // contacts de l'essai
+            final Criteria critDetailLogistique = criteria.createCriteria("detailLogistique", "detailLogistique");
+            final Criteria critStockages = critDetailLogistique.createCriteria("stockagesRetours", "stockagesRetours");
 
-            CriteriaMakerUtils.addInCritere(critStockages,
-                                            "stockage.id",
-                                            new Long[]
-                                            {crit.getStockageRetour().getId() });
+            CriteriaMakerUtils.addInCritere(critStockages, "stockage.id", new Long[]{crit.getStockageRetour().getId() });
 
         }
     }

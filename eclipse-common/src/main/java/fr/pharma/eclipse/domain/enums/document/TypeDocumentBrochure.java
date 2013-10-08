@@ -2,11 +2,10 @@ package fr.pharma.eclipse.domain.enums.document;
 
 /**
  * Enumération représentant le type de document de brochure produits.
- 
+ * @author Netapsys
  * @version $Revision$ $Date$
  */
-public enum TypeDocumentBrochure
-{
+public enum TypeDocumentBrochure {
     /**
      * Brochure.
      */
@@ -26,8 +25,7 @@ public enum TypeDocumentBrochure
      * Constructeur.
      * @param libelle Le libellé.
      */
-    TypeDocumentBrochure(final String libelle)
-    {
+    TypeDocumentBrochure(final String libelle) {
         this.libelle = libelle;
     }
 
@@ -35,8 +33,7 @@ public enum TypeDocumentBrochure
      * Getter pour libelle.
      * @return Retourne le libelle.
      */
-    public String getLibelle()
-    {
+    public String getLibelle() {
         return this.libelle;
     }
 
@@ -44,8 +41,7 @@ public enum TypeDocumentBrochure
      * {@inheritDoc}
      */
     @Override
-    public String toString()
-    {
+    public String toString() {
         return this.getLibelle();
     }
 

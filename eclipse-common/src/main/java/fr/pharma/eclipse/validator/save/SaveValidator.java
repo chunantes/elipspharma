@@ -8,12 +8,10 @@ import fr.pharma.eclipse.service.common.GenericService;
 /**
  * Interface de validation sur la sauvegarde d'un objet.
  * @param <BEAN> Bean Objet Métier.
- 
+ * @author Netapsys
  * @version $Revision$ $Date$
  */
-public interface SaveValidator<BEAN extends BeanObject>
-    extends Serializable
-{
+public interface SaveValidator<BEAN extends BeanObject> extends Serializable {
     /**
      * Méthode en charge de valider la sauvegarde d'un objet.
      * @param bean Bean à sauvegarder.

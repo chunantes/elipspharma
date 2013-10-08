@@ -19,15 +19,13 @@ import fr.pharma.eclipse.domain.model.stock.MvtStock;
 
 /**
  * Bean métier représentant un document lié aux mouvements de stock.
- 
+ * @author Netapsys
  * @version $Revision$ $Date$
  */
 @Entity(name = "mvtstock_document")
 @Inheritance(strategy = InheritanceType.SINGLE_TABLE)
 @DiscriminatorColumn(name = "type", discriminatorType = DiscriminatorType.STRING)
-public abstract class DocumentMvtStock
-    extends DocumentStock
-{
+public abstract class DocumentMvtStock extends DocumentStock {
     /**
      * Serial ID.
      */
@@ -52,8 +50,7 @@ public abstract class DocumentMvtStock
      * Getter pour mvtStock.
      * @return Le mvtStock
      */
-    public MvtStock getMvtStock()
-    {
+    public MvtStock getMvtStock() {
         return this.mvtStock;
     }
 
@@ -61,8 +58,7 @@ public abstract class DocumentMvtStock
      * Setter pour mvtStock.
      * @param mvtStock Le mvtStock à écrire.
      */
-    public void setMvtStock(final MvtStock mvtStock)
-    {
+    public void setMvtStock(final MvtStock mvtStock) {
         this.mvtStock = mvtStock;
     }
 
@@ -71,8 +67,7 @@ public abstract class DocumentMvtStock
      * @return Le type
      */
     @Override
-    public TypeDocumentStock getType()
-    {
+    public TypeDocumentStock getType() {
         return this.type;
     }
 
@@ -81,8 +76,7 @@ public abstract class DocumentMvtStock
      * @param type Le type à écrire.
      */
     @Override
-    public void setType(final TypeDocumentStock type)
-    {
+    public void setType(final TypeDocumentStock type) {
         this.type = type;
     }
 

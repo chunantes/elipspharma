@@ -7,12 +7,10 @@ import fr.pharma.eclipse.domain.model.stockage.Stockage;
 
 /**
  * Critère de recherche sur Produit.
- 
+ * @author Netapsys
  * @version $Revision$ $Date$
  */
-public class ProduitSearchCriteria
-    extends AbstractSearchCriteria
-{
+public class ProduitSearchCriteria extends AbstractSearchCriteria {
 
     /**
      * SerialVersionUID.
@@ -43,8 +41,7 @@ public class ProduitSearchCriteria
      * Getter sur essai.
      * @return Retourne le essai.
      */
-    public Essai getEssai()
-    {
+    public Essai getEssai() {
         return this.essai;
     }
 
@@ -52,8 +49,7 @@ public class ProduitSearchCriteria
      * Setter pour essai.
      * @param essai le essai à écrire.
      */
-    public void setEssai(final Essai essai)
-    {
+    public void setEssai(final Essai essai) {
         this.essai = essai;
     }
 
@@ -61,8 +57,7 @@ public class ProduitSearchCriteria
      * Getter sur typeProduit.
      * @return Retourne le typeProduit.
      */
-    public TypeProduit getTypeProduit()
-    {
+    public TypeProduit getTypeProduit() {
         return this.typeProduit;
     }
 
@@ -70,8 +65,7 @@ public class ProduitSearchCriteria
      * Setter pour typeProduit.
      * @param typeProduit le typeProduit à écrire.
      */
-    public void setTypeProduit(final TypeProduit typeProduit)
-    {
+    public void setTypeProduit(final TypeProduit typeProduit) {
         this.typeProduit = typeProduit;
     }
 
@@ -79,8 +73,7 @@ public class ProduitSearchCriteria
      * {@inheritDoc}
      */
     @Override
-    public void clear()
-    {
+    public void clear() {
         this.essai = null;
         this.typeProduit = null;
 
@@ -90,8 +83,7 @@ public class ProduitSearchCriteria
      * Getter pour stockage.
      * @return Le stockage
      */
-    public Stockage getStockage()
-    {
+    public Stockage getStockage() {
         return this.stockage;
     }
 
@@ -99,8 +91,7 @@ public class ProduitSearchCriteria
      * Setter pour stockage.
      * @param stockage Le stockage à écrire.
      */
-    public void setStockage(final Stockage stockage)
-    {
+    public void setStockage(final Stockage stockage) {
         this.stockage = stockage;
     }
 
@@ -108,8 +99,7 @@ public class ProduitSearchCriteria
      * Getter pour stockageRetour.
      * @return Le stockageRetour
      */
-    public Stockage getStockageRetour()
-    {
+    public Stockage getStockageRetour() {
         return this.stockageRetour;
     }
 
@@ -117,8 +107,7 @@ public class ProduitSearchCriteria
      * Setter pour stockageRetour.
      * @param stockageRetour Le stockageRetour à écrire.
      */
-    public void setStockageRetour(final Stockage stockageRetour)
-    {
+    public void setStockageRetour(final Stockage stockageRetour) {
         this.stockageRetour = stockageRetour;
     }
 

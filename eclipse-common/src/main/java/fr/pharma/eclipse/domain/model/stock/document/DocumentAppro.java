@@ -6,15 +6,14 @@ import javax.persistence.Entity;
 import fr.pharma.eclipse.domain.enums.document.TypeDocumentStock;
 
 /**
- * Bean métier représentant un document relatif à un approvisionnement (certificat d'analyse).
- 
+ * Bean métier représentant un document relatif à un approvisionnement
+ * (certificat d'analyse).
+ * @author Netapsys
  * @version $Revision$ $Date$
  */
 @Entity
 @DiscriminatorValue("APPRO")
-public class DocumentAppro
-    extends DocumentMvtStock
-{
+public class DocumentAppro extends DocumentMvtStock {
     /**
      * Serial ID.
      */
@@ -23,8 +22,7 @@ public class DocumentAppro
     /**
      * Constructeur par défaut.
      */
-    public DocumentAppro()
-    {
+    public DocumentAppro() {
         this.setType(TypeDocumentStock.APPRO);
     }
 

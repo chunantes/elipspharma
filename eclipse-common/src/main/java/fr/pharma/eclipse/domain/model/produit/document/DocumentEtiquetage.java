@@ -7,14 +7,12 @@ import fr.pharma.eclipse.domain.enums.document.TypeDocumentProduit;
 
 /**
  * Bean métier représentant un document relatif à l'étiquetage d'un acte pharma.
- 
+ * @author Netapsys
  * @version $Revision$ $Date$
  */
 @Entity
 @DiscriminatorValue("ETIQUETAGE")
-public class DocumentEtiquetage
-    extends DocumentActesPharma
-{
+public class DocumentEtiquetage extends DocumentActesPharma {
 
     /**
      * Serial ID.
@@ -24,8 +22,7 @@ public class DocumentEtiquetage
     /**
      * Constructeur par défaut.
      */
-    public DocumentEtiquetage()
-    {
+    public DocumentEtiquetage() {
         this.setType(TypeDocumentProduit.ETIQUETAGE);
     }
 

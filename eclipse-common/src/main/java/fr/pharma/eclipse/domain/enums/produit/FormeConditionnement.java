@@ -2,11 +2,10 @@ package fr.pharma.eclipse.domain.enums.produit;
 
 /**
  * Enumération des différentes formes.
- 
+ * @author Netapsys
  * @version $Revision$ $Date$
  */
-public enum FormeConditionnement
-{
+public enum FormeConditionnement {
     /**
      * Forme galénique.
      */
@@ -26,8 +25,7 @@ public enum FormeConditionnement
      * Constructeur privé.
      * @param libelle Libellé de la valeur de l'énumération.
      */
-    private FormeConditionnement(final String libelle)
-    {
+    private FormeConditionnement(final String libelle) {
         this.libelle = libelle;
     }
 
@@ -35,8 +33,7 @@ public enum FormeConditionnement
      * Getter sur libelle.
      * @return Retourne le libelle.
      */
-    public String getLibelle()
-    {
+    public String getLibelle() {
         return this.libelle;
     }
 
@@ -44,8 +41,7 @@ public enum FormeConditionnement
      * {@inheritDoc}
      */
     @Override
-    public String toString()
-    {
+    public String toString() {
         return this.getLibelle();
     }
 }

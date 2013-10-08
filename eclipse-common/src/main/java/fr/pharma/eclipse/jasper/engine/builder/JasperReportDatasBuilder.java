@@ -8,20 +8,18 @@ import fr.pharma.eclipse.domain.enums.jasper.TypeRapportJasper;
 import fr.pharma.eclipse.jasper.exception.JasperReportBuildException;
 
 /**
- * Interface des classe en charge de construire les données d'entrée d'un rapport Jasper.
- 
+ * Interface des classe en charge de construire les données d'entrée d'un
+ * rapport Jasper.
+ * @author Netapsys
  * @version $Revision$ $Date$
  */
-public interface JasperReportDatasBuilder
-    extends Serializable
-{
+public interface JasperReportDatasBuilder extends Serializable {
     /**
      * Méthode à appeler pour valider la source que l'on va passer au builder.
      * @param source Source de données servant de base au rapport à valider.
      * @throws JasperReportBuildException En cas de source non valide.
      */
-    void checkSource(Object source)
-        throws JasperReportBuildException;
+    void checkSource(Object source) throws JasperReportBuildException;
 
     /**
      * Méthode en charge de construire le nom du rapport à exporter.<br>

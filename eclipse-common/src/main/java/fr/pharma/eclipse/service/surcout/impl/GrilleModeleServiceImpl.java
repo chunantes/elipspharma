@@ -10,13 +10,10 @@ import fr.pharma.eclipse.validator.save.SaveValidator;
 
 /**
  * Implémentaion des services de gestion d'un GrilleModele.
- 
+ * @author Netapsys
  * @version $Revision$ $Date$
  */
-public class GrilleModeleServiceImpl
-    extends GenericServiceImpl<GrilleModele>
-    implements GrilleModeleService
-{
+public class GrilleModeleServiceImpl extends GenericServiceImpl<GrilleModele> implements GrilleModeleService {
 
     /**
      * SerialVersionUID.
@@ -31,20 +28,16 @@ public class GrilleModeleServiceImpl
     /**
      * @param genericDao
      */
-    public GrilleModeleServiceImpl(final GenericDao<GrilleModele> genericDao)
-    {
+    public GrilleModeleServiceImpl(final GenericDao<GrilleModele> genericDao) {
         super(genericDao);
     }
 
     @Override
-    public GrilleModele save(final GrilleModele grille)
-    {
+    public GrilleModele save(final GrilleModele grille) {
 
         // Validation.
-        for (final SaveValidator<GrilleModele> validator : this.saveValidators)
-        {
-            validator.validate(grille,
-                               this);
+        for (final SaveValidator<GrilleModele> validator : this.saveValidators) {
+            validator.validate(grille, this);
         }
         return super.save(grille);
     }
@@ -53,8 +46,7 @@ public class GrilleModeleServiceImpl
      * Setter pour saveValidators.
      * @param saveValidators le saveValidators à écrire.
      */
-    public void setSaveValidators(final List<SaveValidator<GrilleModele>> saveValidators)
-    {
+    public void setSaveValidators(final List<SaveValidator<GrilleModele>> saveValidators) {
         this.saveValidators = saveValidators;
     }
 

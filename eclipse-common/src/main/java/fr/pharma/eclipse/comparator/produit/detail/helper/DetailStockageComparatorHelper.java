@@ -9,14 +9,12 @@ import fr.pharma.eclipse.domain.model.stockage.Pharmacie;
 import fr.pharma.eclipse.domain.model.stockage.Stockage;
 
 /**
- * Classe de helper pour la constitution de la clé d'un détail de stockage, dans le comparateur de
- * {@link DetailStockage}.
- 
+ * Classe de helper pour la constitution de la clé d'un détail de stockage, dans
+ * le comparateur de {@link DetailStockage}.
+ * @author Netapsys
  * @version $Revision$ $Date$
  */
-public class DetailStockageComparatorHelper
-    implements Serializable
-{
+public class DetailStockageComparatorHelper implements Serializable {
 
     /**
      * Serial ID.
@@ -24,7 +22,8 @@ public class DetailStockageComparatorHelper
     private static final long serialVersionUID = 1965807748831784923L;
 
     /**
-     * Méthode en charge d'ajouter la partie relative à la pharmacie dans la clé.
+     * Méthode en charge d'ajouter la partie relative à la pharmacie dans la
+     * clé.
      * @param keyBuilder Builder de clé.
      * @param pharmacie Pharmacie.
      * @pre Si la pharmacie est non nulle, elle possède un identifiant non nul.
@@ -32,10 +31,8 @@ public class DetailStockageComparatorHelper
      */
     public void appendPharmaciePart(final StringBuilder keyBuilder,
                                     final Pharmacie pharmacie,
-                                    final String defaultValue)
-    {
-        if (pharmacie == null)
-        {
+                                    final String defaultValue) {
+        if (pharmacie == null) {
             keyBuilder.append(defaultValue);
             return;
         }
@@ -50,10 +47,8 @@ public class DetailStockageComparatorHelper
      */
     public void appendStockagePart(final StringBuilder keyBuilder,
                                    final Stockage stockage,
-                                   final String defaultValue)
-    {
-        if (stockage == null)
-        {
+                                   final String defaultValue) {
+        if (stockage == null) {
             keyBuilder.append(defaultValue);
             return;
         }
@@ -61,17 +56,16 @@ public class DetailStockageComparatorHelper
     }
 
     /**
-     * Méthode en charge d'ajouter la partie relative à l'identifiant de stockage dans la clé.
+     * Méthode en charge d'ajouter la partie relative à l'identifiant de
+     * stockage dans la clé.
      * @param keyBuilder Builder de clé.
      * @param identifiantStockage Identifiant de stockage.
      * @param defaultValue Valeur par défaut de la clé.
      */
     public void appendIdStockagePart(final StringBuilder keyBuilder,
                                      final String identifiantStockage,
-                                     final String defaultValue)
-    {
-        if (!StringUtils.hasText(identifiantStockage))
-        {
+                                     final String defaultValue) {
+        if (!StringUtils.hasText(identifiantStockage)) {
             keyBuilder.append(defaultValue);
             return;
         }

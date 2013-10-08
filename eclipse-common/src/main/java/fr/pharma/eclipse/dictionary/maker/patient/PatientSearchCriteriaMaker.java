@@ -13,12 +13,10 @@ import fr.pharma.eclipse.domain.enums.TypeRechercheParEssai;
 
 /**
  * Artisan de recherche pour les patients.
- 
+ * @author Netapsys
  * @version $Revision$ $Date$
  */
-public class PatientSearchCriteriaMaker
-    extends AbstractCriteriaMaker
-{
+public class PatientSearchCriteriaMaker extends AbstractCriteriaMaker {
     /**
      * Serial ID.
      */
@@ -27,8 +25,7 @@ public class PatientSearchCriteriaMaker
     /**
      * Constructeur par défaut.
      */
-    public PatientSearchCriteriaMaker()
-    {
+    public PatientSearchCriteriaMaker() {
         super(PatientSearchCriteria.class);
     }
 
@@ -37,145 +34,96 @@ public class PatientSearchCriteriaMaker
      */
     @Override
     public void transform(final Criteria criteria,
-                          final SearchCriteria searchCrit)
-    {
+                          final SearchCriteria searchCrit) {
         final PatientSearchCriteria crit = (PatientSearchCriteria) searchCrit;
 
         // Nom
-        if (StringUtils.isNotEmpty(crit.getNom()))
-        {
-            CriteriaMakerUtils.addSqlCritere(criteria,
-                                             "this_.nom",
-                                             crit.getNom());
+        if (StringUtils.isNotEmpty(crit.getNom())) {
+            CriteriaMakerUtils.addSqlCritere(criteria, "this_.nom", crit.getNom());
         }
 
         // Prénom
-        if (StringUtils.isNotEmpty(crit.getPrenom()))
-        {
-            CriteriaMakerUtils.addSqlCritere(criteria,
-                                             "this_.prenom",
-                                             crit.getPrenom());
+        if (StringUtils.isNotEmpty(crit.getPrenom())) {
+            CriteriaMakerUtils.addSqlCritere(criteria, "this_.prenom", crit.getPrenom());
         }
 
         // Prénom
-        if (StringUtils.isNotEmpty(crit.getInitiales()))
-        {
-            CriteriaMakerUtils.addSqlCritere(criteria,
-                                             "this_.initiales",
-                                             crit.getInitiales());
+        if (StringUtils.isNotEmpty(crit.getInitiales())) {
+            CriteriaMakerUtils.addSqlCritere(criteria, "this_.initiales", crit.getInitiales());
         }
 
         // Numéro IPP
-        if (StringUtils.isNotEmpty(crit.getNumeroIpp()))
-        {
-            CriteriaMakerUtils.addSqlCritere(criteria,
-                                             "this_.numeroIpp",
-                                             crit.getNumeroIpp());
+        if (StringUtils.isNotEmpty(crit.getNumeroIpp())) {
+            CriteriaMakerUtils.addSqlCritere(criteria, "this_.numeroIpp", crit.getNumeroIpp());
         }
 
         // Numéro IPP
-        if (StringUtils.isNotEmpty(crit.getNumeroIppExact()))
-        {
-            CriteriaMakerUtils.addCritere(criteria,
-                                          "numeroIpp",
-                                          crit.getNumeroIppExact());
+        if (StringUtils.isNotEmpty(crit.getNumeroIppExact())) {
+            CriteriaMakerUtils.addCritere(criteria, "numeroIpp", crit.getNumeroIppExact());
         }
 
-        this.handleCriteriaEssai(criteria,
-                                 crit);
+        this.handleCriteriaEssai(criteria, crit);
 
-        this.handleCriteriaByTypeInclusion(criteria,
-                                           crit);
+        this.handleCriteriaByTypeInclusion(criteria, crit);
 
-        this.handleCriteriaNumeroIppOrNomOrPrenom(criteria,
-                                                  crit);
+        this.handleCriteriaNumeroIppOrNomOrPrenom(criteria, crit);
     }
 
     /**
-     * Méthode en charge de traiter le critère posé sur le type de recherche par essai.
+     * Méthode en charge de traiter le critère posé sur le type de recherche par
+     * essai.
      * @param criteria Criteria Hibernate.
      * @param crit Critère de recherche patient.
      */
     private void handleCriteriaByTypeInclusion(final Criteria criteria,
-                                               final PatientSearchCriteria crit)
-    {
+                                               final PatientSearchCriteria crit) {
         // Si seulelement l'énumération est sélectionnée
-        if (crit.getByEssai() != null
-            && crit.getEssaiByType() == null)
-        {
-            if (crit.getByEssai().equals(TypeRechercheParEssai.ACUTELLEMENT_INCLU))
-            {
-                final Criteria critInclusion = criteria.createCriteria("inclusions",
-                                                                       "inclusions");
+        if ((crit.getByEssai() != null) && (crit.getEssaiByType() == null)) {
+            if (crit.getByEssai().equals(TypeRechercheParEssai.ACUTELLEMENT_INCLU)) {
+                final Criteria critInclusion = criteria.createCriteria("inclusions", "inclusions");
 
-                CriteriaMakerUtils.addCritere(critInclusion,
-                                              "inclusions.actif",
-                                              true);
-            }
-            else
-            {
+                CriteriaMakerUtils.addCritere(critInclusion, "inclusions.actif", true);
+            } else {
                 criteria.add(Restrictions.isNotEmpty("inclusions"));
             }
         }
 
         // si un essai est saisi sans type d'inclusion.
-        if (crit.getByEssai() == null
-            && crit.getEssaiByType() != null)
-        {
-            final Criteria critInclusion = criteria.createCriteria("inclusions",
-                                                                   "inclusions");
+        if ((crit.getByEssai() == null) && (crit.getEssaiByType() != null)) {
+            final Criteria critInclusion = criteria.createCriteria("inclusions", "inclusions");
 
-            CriteriaMakerUtils.addCritere(critInclusion,
-                                          "inclusions.essai",
-                                          crit.getEssaiByType());
+            CriteriaMakerUtils.addCritere(critInclusion, "inclusions.essai", crit.getEssaiByType());
 
-            CriteriaMakerUtils.addCritere(critInclusion,
-                                          "inclusions.actif",
-                                          true);
+            CriteriaMakerUtils.addCritere(critInclusion, "inclusions.actif", true);
         }
 
         // si un type est saisi et l'essai aussi
-        if (crit.getByEssai() != null
-            && crit.getEssaiByType() != null)
-        {
+        if ((crit.getByEssai() != null) && (crit.getEssaiByType() != null)) {
 
-            final Criteria critInclusion = criteria.createCriteria("inclusions",
-                                                                   "inclusions");
-            CriteriaMakerUtils.addCritere(critInclusion,
-                                          "inclusions.essai",
-                                          crit.getEssaiByType());
+            final Criteria critInclusion = criteria.createCriteria("inclusions", "inclusions");
+            CriteriaMakerUtils.addCritere(critInclusion, "inclusions.essai", crit.getEssaiByType());
 
-            if (crit.getByEssai().equals(TypeRechercheParEssai.ACUTELLEMENT_INCLU))
-            {
-                CriteriaMakerUtils.addCritere(critInclusion,
-                                              "inclusions.actif",
-                                              true);
+            if (crit.getByEssai().equals(TypeRechercheParEssai.ACUTELLEMENT_INCLU)) {
+                CriteriaMakerUtils.addCritere(critInclusion, "inclusions.actif", true);
             }
         }
     }
     /**
-     * Méthode en charge de traiter le critère posé sur numéro IPP ou nom ou prénom.
+     * Méthode en charge de traiter le critère posé sur numéro IPP ou nom ou
+     * prénom.
      * @param criteria Criteria Hibernate.
      * @param crit Critère de recherche Patient.
      */
     private void handleCriteriaNumeroIppOrNomOrPrenom(final Criteria criteria,
-                                                      final PatientSearchCriteria crit)
-    {
-        if (StringUtils.isNotEmpty(crit.getNumeroIppOrNomOrPrenom()))
-        {
+                                                      final PatientSearchCriteria crit) {
+        if (StringUtils.isNotEmpty(crit.getNumeroIppOrNomOrPrenom())) {
             final Disjunction dij = Restrictions.disjunction();
             // Numéro interne
-            CriteriaMakerUtils.addSqlCritere(dij,
-                                             "this_.numeroIpp",
-                                             crit.getNumeroIppOrNomOrPrenom());
+            CriteriaMakerUtils.addSqlCritere(dij, "this_.numeroIpp", crit.getNumeroIppOrNomOrPrenom());
             // Nom
-            CriteriaMakerUtils.addSqlCritere(dij,
-                                             "this_.nom",
-                                             crit.getNumeroIppOrNomOrPrenom());
+            CriteriaMakerUtils.addSqlCritere(dij, "this_.nom", crit.getNumeroIppOrNomOrPrenom());
             // Promoteur
-            CriteriaMakerUtils.addSqlCritere(dij,
-                                             "this_.prenom",
-                                             crit.getNumeroIppOrNomOrPrenom());
+            CriteriaMakerUtils.addSqlCritere(dij, "this_.prenom", crit.getNumeroIppOrNomOrPrenom());
 
             criteria.add(dij);
         }
@@ -187,16 +135,11 @@ public class PatientSearchCriteriaMaker
      * @param crit Critère de recherche Patient.
      */
     protected void handleCriteriaEssai(final Criteria criteria,
-                                       final PatientSearchCriteria crit)
-    {
-        if (crit.getEssai() != null)
-        {
-            final Criteria critInclusion = criteria.createCriteria("inclusions",
-                                                                   "inclusions");
+                                       final PatientSearchCriteria crit) {
+        if (crit.getEssai() != null) {
+            final Criteria critInclusion = criteria.createCriteria("inclusions", "inclusions");
 
-            CriteriaMakerUtils.addCritere(critInclusion,
-                                          "inclusions.essai",
-                                          crit.getEssai());
+            CriteriaMakerUtils.addCritere(critInclusion, "inclusions.essai", crit.getEssai());
         }
     }
 }

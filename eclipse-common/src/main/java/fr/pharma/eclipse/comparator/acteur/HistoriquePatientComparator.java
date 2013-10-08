@@ -7,12 +7,10 @@ import fr.pharma.eclipse.domain.model.patient.HistoriquePatient;
 
 /**
  * Comparateur d'historique de patient.
- 
+ * @author Netapsys
  * @version $Revision$ $Date$
  */
-public class HistoriquePatientComparator
-    implements Comparator<HistoriquePatient>, Serializable
-{
+public class HistoriquePatientComparator implements Comparator<HistoriquePatient>, Serializable {
 
     /**
      * SerialVersionUID.
@@ -24,8 +22,7 @@ public class HistoriquePatientComparator
      */
     @Override
     public int compare(final HistoriquePatient o1,
-                       final HistoriquePatient o2)
-    {
+                       final HistoriquePatient o2) {
         return o2.getDate().compareTo(o1.getDate());
     }
 

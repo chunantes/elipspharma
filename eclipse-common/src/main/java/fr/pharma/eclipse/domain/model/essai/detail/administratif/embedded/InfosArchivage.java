@@ -21,14 +21,12 @@ import fr.pharma.eclipse.comparator.suivi.SuiviComparator;
 import fr.pharma.eclipse.domain.model.essai.detail.administratif.CommentaireEssaiArchivage;
 
 /**
- * Informations relatives à l'archivage sur le détail Administratif/Réglementaire d'un essai
- * clinique.
- 
+ * Informations relatives à l'archivage sur le détail
+ * Administratif/Réglementaire d'un essai clinique.
+ * @author Netapsys
  * @version $Revision$ $Date$
  */
-public class InfosArchivage
-    implements Serializable
-{
+public class InfosArchivage implements Serializable {
 
     /**
      * Serial ID.
@@ -66,15 +64,13 @@ public class InfosArchivage
     @OneToMany(mappedBy = "detailAdministratif", cascade = CascadeType.ALL, orphanRemoval = true)
     @LazyCollection(LazyCollectionOption.TRUE)
     @Sort(type = SortType.COMPARATOR, comparator = SuiviComparator.class)
-    private SortedSet<CommentaireEssaiArchivage> commentaires =
-        new TreeSet<CommentaireEssaiArchivage>(new SuiviComparator());
+    private SortedSet<CommentaireEssaiArchivage> commentaires = new TreeSet<CommentaireEssaiArchivage>(new SuiviComparator());
 
     /**
      * Getter sur date.
      * @return Retourne le date.
      */
-    public Calendar getDate()
-    {
+    public Calendar getDate() {
         return this.date;
     }
 
@@ -82,8 +78,7 @@ public class InfosArchivage
      * Setter pour date.
      * @param date le date à écrire.
      */
-    public void setDate(final Calendar date)
-    {
+    public void setDate(final Calendar date) {
         this.date = date;
     }
 
@@ -91,8 +86,7 @@ public class InfosArchivage
      * Getter sur identification.
      * @return Retourne le identification.
      */
-    public String getIdentification()
-    {
+    public String getIdentification() {
         return this.identification;
     }
 
@@ -100,8 +94,7 @@ public class InfosArchivage
      * Setter pour identification.
      * @param identification le identification à écrire.
      */
-    public void setIdentification(final String identification)
-    {
+    public void setIdentification(final String identification) {
         this.identification = identification;
     }
 
@@ -109,8 +102,7 @@ public class InfosArchivage
      * Getter sur lieu.
      * @return Retourne le lieu.
      */
-    public String getLieu()
-    {
+    public String getLieu() {
         return this.lieu;
     }
 
@@ -118,8 +110,7 @@ public class InfosArchivage
      * Setter pour lieu.
      * @param lieu le lieu à écrire.
      */
-    public void setLieu(final String lieu)
-    {
+    public void setLieu(final String lieu) {
         this.lieu = lieu;
     }
 
@@ -127,8 +118,7 @@ public class InfosArchivage
      * Getter sur duree.
      * @return Retourne le duree.
      */
-    public Integer getDuree()
-    {
+    public Integer getDuree() {
         return this.duree;
     }
 
@@ -136,8 +126,7 @@ public class InfosArchivage
      * Setter pour duree.
      * @param duree le duree à écrire.
      */
-    public void setDuree(final Integer duree)
-    {
+    public void setDuree(final Integer duree) {
         this.duree = duree;
     }
 
@@ -145,8 +134,7 @@ public class InfosArchivage
      * Getter sur commentaires.
      * @return Retourne le commentaires.
      */
-    public SortedSet<CommentaireEssaiArchivage> getCommentaires()
-    {
+    public SortedSet<CommentaireEssaiArchivage> getCommentaires() {
         return this.commentaires;
     }
 
@@ -154,8 +142,7 @@ public class InfosArchivage
      * Setter pour commentaires.
      * @param commentaires le commentaires à écrire.
      */
-    public void setCommentaires(final SortedSet<CommentaireEssaiArchivage> commentaires)
-    {
+    public void setCommentaires(final SortedSet<CommentaireEssaiArchivage> commentaires) {
         this.commentaires = commentaires;
     }
 

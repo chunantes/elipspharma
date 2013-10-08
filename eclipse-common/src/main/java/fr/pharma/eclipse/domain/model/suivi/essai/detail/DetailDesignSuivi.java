@@ -13,15 +13,13 @@ import fr.pharma.eclipse.domain.model.essai.detail.design.DetailDesign;
 import fr.pharma.eclipse.domain.model.suivi.common.Suivi;
 
 /**
- * Bean métier représentant les suivis de modifications sur le bean {@link DetailDesign}.
- 
+ * Bean métier représentant les suivis de modifications sur le bean
+ * {@link DetailDesign}.
+ * @author Netapsys
  * @version $Revision$ $Date$
  */
 @Entity(name = "essai_detail_design_suivi")
-public class DetailDesignSuivi
-    extends Suivi
-    implements Serializable
-{
+public class DetailDesignSuivi extends Suivi implements Serializable {
 
     /**
      * SerialVersionUID.
@@ -40,8 +38,7 @@ public class DetailDesignSuivi
      * Getter sur detailDesign.
      * @return Retourne le detailDesign.
      */
-    public DetailDesign getDetailDesign()
-    {
+    public DetailDesign getDetailDesign() {
         return this.detailDesign;
     }
 
@@ -49,8 +46,7 @@ public class DetailDesignSuivi
      * Setter pour detailDesign.
      * @param detailDesign le detailDesign à écrire.
      */
-    public void setDetailDesign(final DetailDesign detailDesign)
-    {
+    public void setDetailDesign(final DetailDesign detailDesign) {
         this.detailDesign = detailDesign;
     }
 

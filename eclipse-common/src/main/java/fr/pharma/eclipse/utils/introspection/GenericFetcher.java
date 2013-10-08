@@ -7,14 +7,14 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 /**
- * Fetcher générique permettant de populer des beans métier à partir d'autres beans.
- 
+ * Fetcher générique permettant de populer des beans métier à partir d'autres
+ * beans.
+ * @author Netapsys
  * @version $Revision$ $Date$
  * @param <BEANTECH> Le bean d'origine
  * @param <BEAN> le bean destination
  */
-public class GenericFetcher<BEANTECH, BEAN>
-{
+public class GenericFetcher<BEANTECH, BEAN> {
     /**
      * Logger.
      */
@@ -26,21 +26,16 @@ public class GenericFetcher<BEANTECH, BEAN>
     private Map<String, String> mapping;
 
     /**
-     * Méthodes permettant d'insérer les données du bean technique dans le bean métier selon le
-     * mapping.
+     * Méthodes permettant d'insérer les données du bean technique dans le bean
+     * métier selon le mapping.
      * @param source le bean technique.
      * @param destination Le bean métier.
      */
     public void fetch(final BEANTECH source,
-                      final BEAN destination)
-    {
-        for (final Entry<String, String> entry : this.mapping.entrySet())
-        {
+                      final BEAN destination) {
+        for (final Entry<String, String> entry : this.mapping.entrySet()) {
 
-            BeanTool.setPropriete(destination,
-                                  entry.getKey(),
-                                  BeanTool.getPropriete(source,
-                                                        entry.getValue()));
+            BeanTool.setPropriete(destination, entry.getKey(), BeanTool.getPropriete(source, entry.getValue()));
 
         }
     }
@@ -48,8 +43,7 @@ public class GenericFetcher<BEANTECH, BEAN>
      * Set mapping avec mapping.
      * @param mapping Le mapping à écrire.
      */
-    public void setMapping(final Map<String, String> mapping)
-    {
+    public void setMapping(final Map<String, String> mapping) {
         this.mapping = mapping;
     }
 

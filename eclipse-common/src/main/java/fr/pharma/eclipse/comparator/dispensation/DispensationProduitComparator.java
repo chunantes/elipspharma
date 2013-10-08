@@ -8,12 +8,10 @@ import fr.pharma.eclipse.utils.constants.EclipseConstants;
 
 /**
  * Comparateur de Dispensation Produit.
- 
+ * @author Netapsys
  * @version $Revision$ $Date$
  */
-public class DispensationProduitComparator
-    implements Comparator<DispensationProduit>, Serializable
-{
+public class DispensationProduitComparator implements Comparator<DispensationProduit>, Serializable {
     /**
      * SerialVersionUID.
      */
@@ -24,8 +22,7 @@ public class DispensationProduitComparator
      */
     @Override
     public int compare(final DispensationProduit p1,
-                       final DispensationProduit p2)
-    {
+                       final DispensationProduit p2) {
         final String key1 = this.buildKey(p1);
         final String key2 = this.buildKey(p2);
 
@@ -37,12 +34,10 @@ public class DispensationProduitComparator
      * @param p DispensationProduit dont on veut construire la clé.
      * @return La clé du DispensationProduit.
      */
-    private String buildKey(final DispensationProduit p)
-    {
+    private String buildKey(final DispensationProduit p) {
         final StringBuilder builder = new StringBuilder();
         builder.append(p.getNumLot()).append(EclipseConstants.COMMA);
-        if (p.getNumTraitement() != null)
-        {
+        if (p.getNumTraitement() != null) {
             builder.append(p.getNumTraitement()).append(EclipseConstants.COMMA);
         }
         return builder.toString();

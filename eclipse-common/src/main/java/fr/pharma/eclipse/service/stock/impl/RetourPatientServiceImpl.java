@@ -13,13 +13,10 @@ import fr.pharma.eclipse.service.user.UserService;
 
 /**
  * Implémentation du service de gestion des retours patients.
- 
+ * @author Netapsys
  * @version $Revision$ $Date$
  */
-public class RetourPatientServiceImpl
-    extends GenericServiceImpl<RetourPatient>
-    implements RetourPatientService
-{
+public class RetourPatientServiceImpl extends GenericServiceImpl<RetourPatient> implements RetourPatientService {
 
     /**
      * SerialVersionUID.
@@ -36,8 +33,7 @@ public class RetourPatientServiceImpl
      * Constructeur.
      * @param genericDao Dao.
      */
-    public RetourPatientServiceImpl(final GenericDao<RetourPatient> genericDao)
-    {
+    public RetourPatientServiceImpl(final GenericDao<RetourPatient> genericDao) {
         super(genericDao);
     }
 
@@ -45,21 +41,23 @@ public class RetourPatientServiceImpl
      * {@inheritDoc}
      */
     @Override
-    public RetourPatient save(final RetourPatient retourPatient)
-    {
+    public RetourPatient save(final RetourPatient retourPatient) {
+        // set de la personne sur le bean avant la sauvegarde
         retourPatient.setPersonne(this.userService.getPersonne());
-        return super.save(retourPatient);
+        // valorisation du résultat du savae
+        final RetourPatient result = super.save(retourPatient);
+        // retache de l'objet pharmacie sur le bean pour eviter le lazyloading
+        result.getDetailStockage().getPharmacie();
+        return result;
     }
 
     /**
      * {@inheritDoc}
      */
     @Override
-    public List<RetourPatient> save(final List<RetourPatient> retours)
-    {
+    public List<RetourPatient> save(final List<RetourPatient> retours) {
         final List<RetourPatient> result = new ArrayList<RetourPatient>();
-        for (final RetourPatient r : retours)
-        {
+        for (final RetourPatient r : retours) {
             result.add(this.save(r));
         }
         return result;
@@ -69,8 +67,7 @@ public class RetourPatientServiceImpl
      * Setter pour userService.
      * @param userService le userService à écrire.
      */
-    public void setUserService(final UserService userService)
-    {
+    public void setUserService(final UserService userService) {
         this.userService = userService;
     }
 

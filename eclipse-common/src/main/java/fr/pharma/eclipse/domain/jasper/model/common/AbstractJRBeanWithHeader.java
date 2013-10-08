@@ -6,12 +6,10 @@ import fr.pharma.eclipse.jasper.constants.JasperConstants;
 
 /**
  * Classe abstraite des beans Jasper avec en-tête.
- 
+ * @author Netapsys
  * @version $Revision$ $Date$
  */
-public abstract class AbstractJRBeanWithHeader
-    implements Serializable
-{
+public abstract class AbstractJRBeanWithHeader implements Serializable {
     /**
      * Serial ID.
      */
@@ -27,10 +25,8 @@ public abstract class AbstractJRBeanWithHeader
      * Getter sur headSousTitre.
      * @return header.sousTitre.
      */
-    public String getHeadSousTitre()
-    {
-        if (this.getHeader() == null)
-        {
+    public String getHeadSousTitre() {
+        if (this.getHeader() == null) {
             return JasperConstants.DEFAULT_FIELD_VALUE;
         }
         return this.getHeader().getSousTitre();
@@ -40,10 +36,8 @@ public abstract class AbstractJRBeanWithHeader
      * Getter sur headProcessus.
      * @return header.processus.
      */
-    public String getHeadProcessus()
-    {
-        if (this.getHeader() == null)
-        {
+    public String getHeadProcessus() {
+        if (this.getHeader() == null) {
             return JasperConstants.DEFAULT_FIELD_VALUE;
         }
         return this.getHeader().getProcessus();
@@ -53,10 +47,8 @@ public abstract class AbstractJRBeanWithHeader
      * Getter sur headThemes.
      * @return header.themes.
      */
-    public String getHeadThemes()
-    {
-        if (this.getHeader() == null)
-        {
+    public String getHeadThemes() {
+        if (this.getHeader() == null) {
             return JasperConstants.DEFAULT_FIELD_VALUE;
         }
         return this.getHeader().getThemes();
@@ -66,10 +58,8 @@ public abstract class AbstractJRBeanWithHeader
      * Getter sur headUrlImage.
      * @return header.urlImage.
      */
-    public String getHeadUrlImage()
-    {
-        if (this.getHeader() == null)
-        {
+    public String getHeadUrlImage() {
+        if (this.getHeader() == null) {
             return JasperConstants.DEFAULT_FIELD_VALUE;
         }
         return this.getHeader().getUrlImage();
@@ -79,10 +69,8 @@ public abstract class AbstractJRBeanWithHeader
      * Getter sur headDiffusionPar.
      * @return header.diffusionPar.
      */
-    public String getHeadDiffusionPar()
-    {
-        if (this.getHeader() == null)
-        {
+    public String getHeadDiffusionPar() {
+        if (this.getHeader() == null) {
             return JasperConstants.DEFAULT_FIELD_VALUE;
         }
         return this.getHeader().getDiffusionPar();

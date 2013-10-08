@@ -7,7 +7,7 @@ import java.util.List;
 import javax.annotation.Resource;
 
 import org.springframework.security.core.GrantedAuthority;
-import org.springframework.security.core.authority.GrantedAuthorityImpl;
+import org.springframework.security.core.authority.SimpleGrantedAuthority;
 
 import fr.pharma.eclipse.domain.criteria.acteur.PersonneSearchCriteria;
 import fr.pharma.eclipse.domain.enums.RolePersonne;
@@ -18,12 +18,10 @@ import fr.pharma.eclipse.utils.constants.EclipseConstants;
 
 /**
  * Classe de Helper pour l'authentification des utilisateurs.
- 
+ * @author Netapsys
  * @version $Revision$ $Date$
  */
-public class AuthenticationHelper
-    implements Serializable
-{
+public class AuthenticationHelper implements Serializable {
     /**
      * Serial ID.
      */
@@ -40,20 +38,16 @@ public class AuthenticationHelper
      * @param login Login.
      * @return Personne.
      */
-    public Personne getPersonneEclipse(final String login)
-    {
+    public Personne getPersonneEclipse(final String login) {
         final PersonneSearchCriteria criteria = new PersonneSearchCriteria();
         criteria.setLogin(login);
 
         final List<Personne> personnes = this.personneService.getAll(criteria);
 
         // Récupération OK dans Eclipse
-        if (personnes.size() == 1)
-        {
+        if (personnes.size() == 1) {
             return personnes.get(0);
-        }
-        else
-        {
+        } else {
             return null;
         }
     }
@@ -63,12 +57,10 @@ public class AuthenticationHelper
      * @param personne Personne.
      * @return Authorities de la personne (seulement 1 rôle).
      */
-    public List<GrantedAuthority> getAuthorities(final Personne personne)
-    {
+    public List<GrantedAuthority> getAuthorities(final Personne personne) {
         final List<GrantedAuthority> authorities = new ArrayList<GrantedAuthority>();
         final String role = this.buildRole(personne);
-        authorities.add(new GrantedAuthorityImpl(EclipseConstants.ROLE
-                                                 + role));
+        authorities.add(new SimpleGrantedAuthority(EclipseConstants.ROLE + role));
         return authorities;
     }
 
@@ -77,17 +69,14 @@ public class AuthenticationHelper
      * @param personne Personne.
      * @return Rôle de la personne.
      */
-    protected String buildRole(final Personne personne)
-    {
+    protected String buildRole(final Personne personne) {
         String role = personne.getType().getRolePersonne().name();
 
         // Dans le cas d'un rôle de type pharmacien
-        if (RolePersonne.PHARMACIEN.name().equals(role))
-        {
+        if (RolePersonne.PHARMACIEN.name().equals(role)) {
             final Pharmacien pharmacien = (Pharmacien) personne;
             // Concaténation du role et du type de pharmacien
-            role += EclipseConstants.UNDERSCORE
-                    + pharmacien.getTypePharmacien().name();
+            role += EclipseConstants.UNDERSCORE + pharmacien.getTypePharmacien().name();
         }
 
         return role;
@@ -97,8 +86,7 @@ public class AuthenticationHelper
      * Setter pour personneService.
      * @param personneService Le personneService à écrire.
      */
-    public void setPersonneService(final GenericService<Personne> personneService)
-    {
+    public void setPersonneService(final GenericService<Personne> personneService) {
         this.personneService = personneService;
     }
 

@@ -6,15 +6,15 @@ import fr.pharma.eclipse.domain.jasper.model.common.JasperReportBean;
 import fr.pharma.eclipse.jasper.constants.JasperConstants;
 
 /**
- * Classe représentant la source de données de la partie 7 (infos. levée de l'insu)<br>
+ * Classe représentant la source de données de la partie 7 (infos. levée de
+ * l'insu)<br>
  * du rapport Jasper intitulé<br>
- * "Fiche de gestion et d'aide à la dispensation d'un médicament en essai clinique". *
- 
+ * "Fiche de gestion et d'aide à la dispensation d'un médicament en essai clinique"
+ * . *
+ * @author Netapsys
  * @version $Revision$ $Date$
  */
-public class JRBeanFicheAideDispensationPart7
-    implements JasperReportBean
-{
+public class JRBeanFicheAideDispensationPart7 implements JasperReportBean {
     /**
      * Serial ID.
      */
@@ -39,8 +39,7 @@ public class JRBeanFicheAideDispensationPart7
      * Getter sur respLeveeInsu.
      * @return Retourne le respLeveeInsu.
      */
-    public String getRespLeveeInsu()
-    {
+    public String getRespLeveeInsu() {
         return this.respLeveeInsu;
     }
 
@@ -48,8 +47,7 @@ public class JRBeanFicheAideDispensationPart7
      * Setter pour respLeveeInsu.
      * @param respLeveeInsu le respLeveeInsu à écrire.
      */
-    public void setRespLeveeInsu(final String respLeveeInsu)
-    {
+    public void setRespLeveeInsu(final String respLeveeInsu) {
         this.respLeveeInsu = respLeveeInsu;
     }
 
@@ -57,8 +55,7 @@ public class JRBeanFicheAideDispensationPart7
      * Getter sur moAssocie.
      * @return Retourne le moAssocie.
      */
-    public String getMoAssocie()
-    {
+    public String getMoAssocie() {
         return this.moAssocie;
     }
 
@@ -66,8 +63,7 @@ public class JRBeanFicheAideDispensationPart7
      * Setter pour moAssocie.
      * @param moAssocie le moAssocie à écrire.
      */
-    public void setMoAssocie(final String moAssocie)
-    {
+    public void setMoAssocie(final String moAssocie) {
         this.moAssocie = moAssocie;
         this.showMoAssocie = StringUtils.hasText(moAssocie);
     }
@@ -76,8 +72,7 @@ public class JRBeanFicheAideDispensationPart7
      * Getter sur showMoAssocie.
      * @return Retourne le showMoAssocie.
      */
-    public boolean getShowMoAssocie()
-    {
+    public boolean getShowMoAssocie() {
         return this.showMoAssocie;
     }
 

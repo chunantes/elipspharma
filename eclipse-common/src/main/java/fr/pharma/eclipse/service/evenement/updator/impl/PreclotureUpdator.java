@@ -12,13 +12,12 @@ import fr.pharma.eclipse.service.evenement.updator.EvenementBeforeSaveUpdator;
 import fr.pharma.eclipse.utils.constants.EclipseConstants;
 
 /**
- * Classe en charge de mettre à jour la date de pré cloture de l'essai lié à l'evenement.
- 
+ * Classe en charge de mettre à jour la date de pré cloture de l'essai lié à
+ * l'evenement.
+ * @author Netapsys
  * @version $Revision$ $Date$
  */
-public class PreclotureUpdator
-    implements EvenementBeforeSaveUpdator, Serializable
-{
+public class PreclotureUpdator implements EvenementBeforeSaveUpdator, Serializable {
 
     /**
      * SerialVersionUID.
@@ -29,11 +28,8 @@ public class PreclotureUpdator
      * {@inheritDoc}
      */
     @Override
-    public boolean support(final Evenement evenement)
-    {
-        return evenement.getTypeEvenement().equals(TypeEvenement.VISITE)
-               && evenement.getTypeVisite().equals(TypeVisite.PRE_CLOTURE)
-               && evenement.getResultatVisite() != null
+    public boolean support(final Evenement evenement) {
+        return evenement.getTypeEvenement().equals(TypeEvenement.VISITE) && evenement.getTypeVisite().equals(TypeVisite.PRE_CLOTURE) && (evenement.getResultatVisite() != null)
                && evenement.getResultatVisite().equals(ResultatVisite.EFFECTUE);
     }
 
@@ -42,10 +38,8 @@ public class PreclotureUpdator
      */
     @Override
     public void update(final Evenement evenement,
-                       final EvenementServiceImpl service)
-    {
-        evenement.getEssai().getDetailDates().setPreCloture(Calendar
-                .getInstance(EclipseConstants.LOCALE));
+                       final EvenementServiceImpl service) {
+        evenement.getEssai().getDetailDates().setPreCloture(Calendar.getInstance(EclipseConstants.LOCALE));
         service.getEssaiService().save(evenement.getEssai());
     }
 

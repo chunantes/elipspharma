@@ -10,13 +10,10 @@ import fr.pharma.eclipse.domain.model.produit.detail.DetailStockage;
 
 /**
  * Description de la classe.
- 
+ * @author Netapsys
  * @version $Revision$ $Date$
  */
-public class RetourPatientSearchCriteria
-    extends AbstractSearchCriteria
-    implements SearchCriteria
-{
+public class RetourPatientSearchCriteria extends AbstractSearchCriteria implements SearchCriteria {
 
     /**
      * SerialVersionUID.
@@ -52,8 +49,7 @@ public class RetourPatientSearchCriteria
      * {@inheritDoc}
      */
     @Override
-    public void clear()
-    {
+    public void clear() {
         this.produit = null;
         this.etat = null;
         this.stockage = null;
@@ -65,8 +61,7 @@ public class RetourPatientSearchCriteria
      * Getter sur patient.
      * @return Retourne le patient.
      */
-    public Patient getPatient()
-    {
+    public Patient getPatient() {
         return this.patient;
     }
 
@@ -74,8 +69,7 @@ public class RetourPatientSearchCriteria
      * Getter sur essai.
      * @return Retourne le essai.
      */
-    public Essai getEssai()
-    {
+    public Essai getEssai() {
         return this.essai;
     }
 
@@ -83,8 +77,7 @@ public class RetourPatientSearchCriteria
      * Getter sur produit.
      * @return Retourne le produit.
      */
-    public Produit getProduit()
-    {
+    public Produit getProduit() {
         return this.produit;
     }
 
@@ -92,8 +85,7 @@ public class RetourPatientSearchCriteria
      * Setter pour patient.
      * @param patient le patient à écrire.
      */
-    public void setPatient(final Patient patient)
-    {
+    public void setPatient(final Patient patient) {
         this.patient = patient;
     }
 
@@ -101,8 +93,7 @@ public class RetourPatientSearchCriteria
      * Setter pour essai.
      * @param essai le essai à écrire.
      */
-    public void setEssai(final Essai essai)
-    {
+    public void setEssai(final Essai essai) {
         this.essai = essai;
     }
 
@@ -110,8 +101,7 @@ public class RetourPatientSearchCriteria
      * Setter pour produit.
      * @param produit le produit à écrire.
      */
-    public void setProduit(final Produit produit)
-    {
+    public void setProduit(final Produit produit) {
         this.produit = produit;
     }
 
@@ -119,8 +109,7 @@ public class RetourPatientSearchCriteria
      * Getter pour etat.
      * @return Le etat
      */
-    public EtatRetour getEtat()
-    {
+    public EtatRetour getEtat() {
         return this.etat;
     }
 
@@ -128,8 +117,7 @@ public class RetourPatientSearchCriteria
      * Setter pour etat.
      * @param etat Le etat à écrire.
      */
-    public void setEtat(final EtatRetour etat)
-    {
+    public void setEtat(final EtatRetour etat) {
         this.etat = etat;
     }
 
@@ -137,8 +125,7 @@ public class RetourPatientSearchCriteria
      * Getter pour stockage.
      * @return Le stockage
      */
-    public DetailStockage getStockage()
-    {
+    public DetailStockage getStockage() {
         return this.stockage;
     }
 
@@ -146,8 +133,7 @@ public class RetourPatientSearchCriteria
      * Setter pour stockage.
      * @param stockage Le stockage à écrire.
      */
-    public void setStockage(final DetailStockage stockage)
-    {
+    public void setStockage(final DetailStockage stockage) {
         this.stockage = stockage;
     }
 

@@ -19,12 +19,10 @@ import fr.pharma.eclipse.factory.common.BeanObjectFactory;
 
 /**
  * Factory de grille de surcout.
- 
+ * @author Netapsys
  * @version $Revision$ $Date$
  */
-public class GrilleFactory
-    extends BeanObjectFactory<Grille>
-{
+public class GrilleFactory extends BeanObjectFactory<Grille> {
 
     /**
      * SerialVersionUID.
@@ -41,62 +39,52 @@ public class GrilleFactory
      * Constructeur.
      * @param bean Classe.
      */
-    public GrilleFactory(final Class<Grille> bean)
-    {
+    public GrilleFactory(final Class<Grille> bean) {
         super(bean);
     }
 
     /**
-     * Méthode en charge de construire une grille de surcout et d'intialiser ses items à partir
-     * d'une grille modèle.
+     * Méthode en charge de construire une grille de surcout et d'intialiser ses
+     * items à partir d'une grille modèle.
      * @param modele La grille modèle.
      * @return La grille de surcout.
      */
-    public Grille getInitializedObject(final GrilleModele modele)
-    {
+    public Grille getInitializedObject(final GrilleModele modele) {
         final Grille grille = super.getInitializedObject();
         grille.setGrilleModele(modele);
-        for (final Theme theme : modele.getThemes())
-        {
-            grille.getItems().addAll(this.buildItems(grille,
-                                                     theme));
+        for (final Theme theme : modele.getThemes()) {
+            grille.getItems().addAll(this.buildItems(grille, theme));
         }
         return grille;
     }
 
     /**
-     * Méthode en charge de construire la liste des items pour un thème du modèle. Il s'agit de
-     * construire un item par catégorie et par thème/catégorie.
+     * Méthode en charge de construire la liste des items pour un thème du
+     * modèle. Il s'agit de construire un item par catégorie et par
+     * thème/catégorie.
      * @param grille La grille.
      * @param theme Le thème.
      * @return La liste des items correspondants aux catégories.
      */
     private Collection<Item> buildItems(final Grille grille,
-                                        final Theme theme)
-    {
+                                        final Theme theme) {
         final SortedSet<Item> items = new TreeSet<Item>(new ItemComparator());
 
         // Gestion des thèmes qui sont aussi des catégories
-        if (BooleanUtils.isTrue(theme.isCategorie()))
-        {
-            items.add(this.buildItem(grille,
-                                     theme,
-                                     null));
+        if (BooleanUtils.isTrue(theme.isCategorie())) {
+            items.add(this.buildItem(grille, theme, null));
         }
 
         // gestion des catégories.
-        for (final Categorie categorie : theme.getCategories())
-        {
-            items.add(this.buildItem(grille,
-                                     theme,
-                                     categorie));
+        for (final Categorie categorie : theme.getCategories()) {
+            items.add(this.buildItem(grille, theme, categorie));
         }
         return items;
     }
 
     /**
-     * Méthode en charge de constuire un item à partir d'un thème, d'une grille et d'une
-     * catégorie.
+     * Méthode en charge de constuire un item à partir d'un thème, d'une grille
+     * et d'une catégorie.
      * @param theme Le thème
      * @param grille La grille
      * @param La catégorie
@@ -104,28 +92,23 @@ public class GrilleFactory
      */
     private Item buildItem(final Grille grille,
                            final Theme theme,
-                           final Categorie categorie)
-    {
+                           final Categorie categorie) {
         final Item item = this.itemFactory.getInitializedObject();
         item.setTheme(theme.getNom());
         item.setGrille(grille);
-        if (categorie != null)
-        {
+        if (categorie != null) {
             item.setCategorie(categorie.getLibelle());
             item.setActe(categorie.getActe());
             item.getRegles().addAll(categorie.getRegles());
-            for (final Regle regle : item.getRegles())
-            {
+            for (final Regle regle : item.getRegles()) {
                 regle.getItems().add(item);
             }
 
         }
         // Cas d'un thème qui est aussi une catégorie.
-        else if (theme.isCategorie())
-        {
+        else if (theme.isCategorie()) {
             item.getRegles().addAll(theme.getRegles());
-            for (final Regle regle : item.getRegles())
-            {
+            for (final Regle regle : item.getRegles()) {
                 regle.getItems().add(item);
             }
         }
@@ -136,8 +119,7 @@ public class GrilleFactory
      * Setter pour itemFactory.
      * @param itemFactory le itemFactory à écrire.
      */
-    public void setItemFactory(final BeanObjectFactory<Item> itemFactory)
-    {
+    public void setItemFactory(final BeanObjectFactory<Item> itemFactory) {
         this.itemFactory = itemFactory;
     }
 

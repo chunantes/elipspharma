@@ -15,12 +15,10 @@ import fr.pharma.eclipse.utils.file.FileHelper;
 
 /**
  * Classe en charge de fabriquer l'objet File correspondant à un document.
- 
+ * @author Netapsys
  * @version $Revision$ $Date$
  */
-public class FileDocumentBuilder
-    implements Serializable
-{
+public class FileDocumentBuilder implements Serializable {
 
     /**
      * Serial ID.
@@ -44,14 +42,10 @@ public class FileDocumentBuilder
      * @return L'objet File correspondant.
      */
     public File build(final BeanParentDocument bean,
-                      final DocumentEclipse doc)
-    {
+                      final DocumentEclipse doc) {
         final DocEclipseFileNameResolver resolver = this.getResolver(doc);
-        Assert.notNull(resolver,
-                       "Aucun résolveur n'est présent dans la liste pour le type "
-                               + doc.getTypeDocument());
-        final String filename = resolver.resolve(bean,
-                                                 doc);
+        Assert.notNull(resolver, "Aucun résolveur n'est présent dans la liste pour le type " + doc.getTypeDocument());
+        final String filename = resolver.resolve(bean, doc);
         return this.fileHelper.getFile(filename);
     }
 
@@ -61,26 +55,22 @@ public class FileDocumentBuilder
      * @param doc Document à résoudre.
      * @return Le résolveur associé.
      */
-    private DocEclipseFileNameResolver getResolver(final DocumentEclipse doc)
-    {
+    private DocEclipseFileNameResolver getResolver(final DocumentEclipse doc) {
         final Predicate predicate = new Predicate() {
 
             @Override
-            public boolean evaluate(final Object object)
-            {
+            public boolean evaluate(final Object object) {
                 return ((DocEclipseFileNameResolver) object).supports(doc);
             }
         };
-        return (DocEclipseFileNameResolver) CollectionUtils.find(this.resolvers,
-                                                                 predicate);
+        return (DocEclipseFileNameResolver) CollectionUtils.find(this.resolvers, predicate);
     }
 
     /**
      * Setter pour resolvers.
      * @param resolvers le resolvers à écrire.
      */
-    public void setResolvers(final List<DocEclipseFileNameResolver> resolvers)
-    {
+    public void setResolvers(final List<DocEclipseFileNameResolver> resolvers) {
         this.resolvers = resolvers;
     }
 
@@ -88,8 +78,7 @@ public class FileDocumentBuilder
      * Setter pour fileHelper.
      * @param fileHelper le fileHelper à écrire.
      */
-    public void setFileHelper(final FileHelper fileHelper)
-    {
+    public void setFileHelper(final FileHelper fileHelper) {
         this.fileHelper = fileHelper;
     }
 }

@@ -2,11 +2,10 @@ package fr.pharma.eclipse.domain.model.common.constants;
 
 /**
  * Constantes associées au BeanObject.
- 
+ * @author Netapsys
  * @version $Revision$ $Date$
  */
-public final class BeanCstes
-{
+public final class BeanCstes {
     /**
      * Nombre premier utilisé pour le calcul de la valeur de hashcode.
      */
@@ -25,8 +24,7 @@ public final class BeanCstes
     /**
      * Constructeur.
      */
-    protected BeanCstes()
-    {
+    protected BeanCstes() {
     }
 
 }

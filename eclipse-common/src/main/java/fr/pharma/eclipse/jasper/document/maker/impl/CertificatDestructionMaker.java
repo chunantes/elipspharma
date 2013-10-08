@@ -10,12 +10,10 @@ import fr.pharma.eclipse.domain.model.stock.document.DocumentDestruction;
 
 /**
  * Description de la classe.
- 
+ * @author Netapsys
  * @version $Revision$ $Date$
  */
-public class CertificatDestructionMaker
-    extends GenericCertificatMaker
-{
+public class CertificatDestructionMaker extends GenericCertificatMaker {
 
     /**
      * SerialVersionUID.
@@ -27,20 +25,14 @@ public class CertificatDestructionMaker
      */
     @Override
     protected DocumentEclipse makeForMvt(final List<? extends MvtStock> mvts,
-                                         final Fichier fichier)
-    {
+                                         final Fichier fichier) {
         DocumentEclipse result = null;
-        for (final MvtStock mvt : mvts)
-        {
+        for (final MvtStock mvt : mvts) {
             final Destruction destruction = (Destruction) mvt;
-            final DocumentDestruction doc =
-                (DocumentDestruction) this.getDocumentFactory().getInitializedObject(fichier,
-                                                                                     mvt);
+            final DocumentDestruction doc = (DocumentDestruction) this.getDocumentFactory().getInitializedObject(fichier, mvt);
             ((Destruction) mvt).setDocumentDestruction(doc);
             this.getService().save(destruction);
-            this.getDocService().saveOnDisk(mvt,
-                                            doc,
-                                            fichier);
+            this.getDocService().saveOnDisk(mvt, doc, fichier);
             result = doc;
         }
         return result;

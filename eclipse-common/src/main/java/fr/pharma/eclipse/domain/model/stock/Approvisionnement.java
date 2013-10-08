@@ -16,17 +16,16 @@ import org.hibernate.annotations.LazyCollectionOption;
 import org.hibernate.annotations.Where;
 
 import fr.pharma.eclipse.domain.enums.stock.MotifRefus;
+import fr.pharma.eclipse.domain.enums.stock.TypeMvtStock;
 import fr.pharma.eclipse.domain.model.stock.document.DocumentAppro;
 
 /**
  * Bean métier représentant un approvisionnement de stock.
- 
+ * @author Netapsys
  * @version $Revision$ $Date$
  */
 @Entity(name = "mvt_approvisionnement")
-public class Approvisionnement
-    extends MvtStock
-{
+public class Approvisionnement extends MvtStock {
     /**
      * Serial ID.
      */
@@ -93,12 +92,18 @@ public class Approvisionnement
     private DocumentAppro documentAppro;
 
     /**
+     * Constructeur
+     */
+    public Approvisionnement() {
+        this.setType(TypeMvtStock.APPROVISIONNEMENT);
+    }
+
+    /**
      * Getter pour datePeremption.
      * @return Le datePeremption
      */
     @Override
-    public Calendar getDatePeremption()
-    {
+    public Calendar getDatePeremption() {
         return this.datePeremption;
     }
 
@@ -107,8 +112,7 @@ public class Approvisionnement
      * @param datePeremption Le datePeremption à écrire.
      */
     @Override
-    public void setDatePeremption(final Calendar datePeremption)
-    {
+    public void setDatePeremption(final Calendar datePeremption) {
         this.datePeremption = datePeremption;
     }
 
@@ -116,8 +120,7 @@ public class Approvisionnement
      * Getter pour motifRefus.
      * @return Le motifRefus
      */
-    public MotifRefus getMotifRefus()
-    {
+    public MotifRefus getMotifRefus() {
         return this.motifRefus;
     }
 
@@ -125,8 +128,7 @@ public class Approvisionnement
      * Setter pour motifRefus.
      * @param motifRefus Le motifRefus à écrire.
      */
-    public void setMotifRefus(final MotifRefus motifRefus)
-    {
+    public void setMotifRefus(final MotifRefus motifRefus) {
         this.motifRefus = motifRefus;
     }
 
@@ -134,8 +136,7 @@ public class Approvisionnement
      * Getter pour commentaireRefus.
      * @return Le commentaireRefus
      */
-    public String getCommentaireRefus()
-    {
+    public String getCommentaireRefus() {
         return this.commentaireRefus;
     }
 
@@ -143,8 +144,7 @@ public class Approvisionnement
      * Setter pour commentaireRefus.
      * @param commentaireRefus Le commentaireRefus à écrire.
      */
-    public void setCommentaireRefus(final String commentaireRefus)
-    {
+    public void setCommentaireRefus(final String commentaireRefus) {
         this.commentaireRefus = commentaireRefus;
     }
 
@@ -152,8 +152,7 @@ public class Approvisionnement
      * Getter pour dateReception.
      * @return Le dateReception
      */
-    public Calendar getDateReception()
-    {
+    public Calendar getDateReception() {
         return this.dateReception;
     }
 
@@ -161,8 +160,7 @@ public class Approvisionnement
      * Setter pour dateReception.
      * @param dateReception Le dateReception à écrire.
      */
-    public void setDateReception(final Calendar dateReception)
-    {
+    public void setDateReception(final Calendar dateReception) {
         this.dateReception = dateReception;
     }
 
@@ -170,8 +168,7 @@ public class Approvisionnement
      * Getter pour dateArriveeColis.
      * @return Le dateArriveeColis
      */
-    public Calendar getDateArriveeColis()
-    {
+    public Calendar getDateArriveeColis() {
         return this.dateArriveeColis;
     }
 
@@ -179,8 +176,7 @@ public class Approvisionnement
      * Setter pour dateArriveeColis.
      * @param dateArriveeColis Le dateArriveeColis à écrire.
      */
-    public void setDateArriveeColis(final Calendar dateArriveeColis)
-    {
+    public void setDateArriveeColis(final Calendar dateArriveeColis) {
         this.dateArriveeColis = dateArriveeColis;
     }
 
@@ -188,17 +184,16 @@ public class Approvisionnement
      * Getter pour commentaireExtensionPeremption.
      * @return Le commentaireExtensionPeremption
      */
-    public String getCommentaireExtensionPeremption()
-    {
+    public String getCommentaireExtensionPeremption() {
         return this.commentaireExtensionPeremption;
     }
 
     /**
      * Setter pour commentaireExtensionPeremption.
-     * @param commentaireExtensionPeremption Le commentaireExtensionPeremption à écrire.
+     * @param commentaireExtensionPeremption Le commentaireExtensionPeremption à
+     * écrire.
      */
-    public void setCommentaireExtensionPeremption(final String commentaireExtensionPeremption)
-    {
+    public void setCommentaireExtensionPeremption(final String commentaireExtensionPeremption) {
         this.commentaireExtensionPeremption = commentaireExtensionPeremption;
     }
 
@@ -206,8 +201,7 @@ public class Approvisionnement
      * Getter pour extensionPeremption.
      * @return Le extensionPeremption
      */
-    public Boolean getExtensionPeremption()
-    {
+    public Boolean getExtensionPeremption() {
         return this.extensionPeremption;
     }
 
@@ -215,8 +209,7 @@ public class Approvisionnement
      * Setter pour extensionPeremption.
      * @param extensionPeremption Le extensionPeremption à écrire.
      */
-    public void setExtensionPeremption(final Boolean extensionPeremption)
-    {
+    public void setExtensionPeremption(final Boolean extensionPeremption) {
         this.extensionPeremption = extensionPeremption;
     }
 
@@ -224,8 +217,7 @@ public class Approvisionnement
      * Getter pour documentAppro.
      * @return Le documentAppro
      */
-    public DocumentAppro getDocumentAppro()
-    {
+    public DocumentAppro getDocumentAppro() {
         return this.documentAppro;
     }
 
@@ -233,8 +225,7 @@ public class Approvisionnement
      * Setter pour documentAppro.
      * @param documentAppro Le documentAppro à écrire.
      */
-    public void setDocumentAppro(final DocumentAppro documentAppro)
-    {
+    public void setDocumentAppro(final DocumentAppro documentAppro) {
         this.documentAppro = documentAppro;
     }
 
@@ -242,17 +233,16 @@ public class Approvisionnement
      * Getter pour historiqueExtensionPeremption.
      * @return Le historiqueExtensionPeremption
      */
-    public String getHistoriqueExtensionPeremption()
-    {
+    public String getHistoriqueExtensionPeremption() {
         return this.historiqueExtensionPeremption;
     }
 
     /**
      * Setter pour historiqueExtensionPeremption.
-     * @param historiqueExtensionPeremption Le historiqueExtensionPeremption à écrire.
+     * @param historiqueExtensionPeremption Le historiqueExtensionPeremption à
+     * écrire.
      */
-    public void setHistoriqueExtensionPeremption(final String historiqueExtensionPeremption)
-    {
+    public void setHistoriqueExtensionPeremption(final String historiqueExtensionPeremption) {
         this.historiqueExtensionPeremption = historiqueExtensionPeremption;
     }
 

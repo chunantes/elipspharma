@@ -6,15 +6,14 @@ import javax.persistence.Entity;
 import fr.pharma.eclipse.domain.enums.document.TypeDocumentProduit;
 
 /**
- * Bean métier représentant un document relatif au conditionnement d'un acte pharma.
- 
+ * Bean métier représentant un document relatif au conditionnement d'un acte
+ * pharma.
+ * @author Netapsys
  * @version $Revision$ $Date$
  */
 @Entity
 @DiscriminatorValue("CONDITIONNEMENT")
-public class DocumentConditionnement
-    extends DocumentActesPharma
-{
+public class DocumentConditionnement extends DocumentActesPharma {
 
     /**
      * Serial ID.
@@ -24,8 +23,7 @@ public class DocumentConditionnement
     /**
      * Constructeur par défaut.
      */
-    public DocumentConditionnement()
-    {
+    public DocumentConditionnement() {
         this.setType(TypeDocumentProduit.CONDITIONNEMENT);
     }
 

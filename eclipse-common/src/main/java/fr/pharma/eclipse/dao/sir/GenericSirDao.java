@@ -8,14 +8,13 @@ import fr.pharma.eclipse.domain.model.sir.common.BeanSirObject;
 /**
  * DAO (Data Access Object) générique pour l'utilisation de SIR.
  * @param <SIR> Bean Objet Métier SIR.
- 
+ * @author NETAPSYS
  * @version $Revision$ $Date$
  */
-public interface GenericSirDao<SIR extends BeanSirObject>
-{
+public interface GenericSirDao<SIR extends BeanSirObject> {
     /**
-     * Méthode générique de listing de tous les objets d'un type particulier avec un critère de
-     * recherche.
+     * Méthode générique de listing de tous les objets d'un type particulier
+     * avec un critère de recherche.
      * @param criteria Le critère de recherche.
      * @return La liste de tous les objets filtrés.
      */
@@ -28,8 +27,8 @@ public interface GenericSirDao<SIR extends BeanSirObject>
     List<SIR> getAll();
 
     /**
-     * Méthode générique de récupération d'un objet d'un type particulier, en fonction de son
-     * identifiant.
+     * Méthode générique de récupération d'un objet d'un type particulier, en
+     * fonction de son identifiant.
      * @param id L'identifiant de l'objet (sa clef primaire).
      * @return L'objet recherché.
      */

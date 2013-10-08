@@ -19,14 +19,12 @@ import fr.pharma.eclipse.comparator.suivi.SuiviComparator;
 import fr.pharma.eclipse.domain.model.essai.detail.faisabilite.CommentaireEssaiFaisabilite;
 
 /**
- * Informations, de la partie détail de faisabilité de l'essai, relatives à la conclusion de
- * l'étude de faisabilité.
- 
+ * Informations, de la partie détail de faisabilité de l'essai, relatives à la
+ * conclusion de l'étude de faisabilité.
+ * @author Netapsys
  * @version $Revision$ $Date$
  */
-public class InfosConclusionFaisabilite
-    implements Serializable
-{
+public class InfosConclusionFaisabilite implements Serializable {
 
     /**
      * Serial ID.
@@ -46,7 +44,8 @@ public class InfosConclusionFaisabilite
     private Calendar dateDeliberation;
 
     /**
-     * Convention signée (promoteur externe/CHU) / promotion accordée (promotion interne).
+     * Convention signée (promoteur externe/CHU) / promotion accordée (promotion
+     * interne).
      */
     @Column(name = "concl_convSignee")
     private Boolean convSignee;
@@ -58,15 +57,13 @@ public class InfosConclusionFaisabilite
     @Where(clause = "type='FAISABILITE_CONCL'")
     @LazyCollection(LazyCollectionOption.TRUE)
     @Sort(type = SortType.COMPARATOR, comparator = SuiviComparator.class)
-    private SortedSet<CommentaireEssaiFaisabilite> commentaires =
-        new TreeSet<CommentaireEssaiFaisabilite>(new SuiviComparator());
+    private SortedSet<CommentaireEssaiFaisabilite> commentaires = new TreeSet<CommentaireEssaiFaisabilite>(new SuiviComparator());
 
     /**
      * Getter sur favorable.
      * @return Retourne le favorable.
      */
-    public Boolean getFavorable()
-    {
+    public Boolean getFavorable() {
         return this.favorable;
     }
 
@@ -74,8 +71,7 @@ public class InfosConclusionFaisabilite
      * Setter pour favorable.
      * @param favorable le favorable à écrire.
      */
-    public void setFavorable(final Boolean favorable)
-    {
+    public void setFavorable(final Boolean favorable) {
         this.favorable = favorable;
     }
 
@@ -83,8 +79,7 @@ public class InfosConclusionFaisabilite
      * Getter sur dateDeliberation.
      * @return Retourne le dateDeliberation.
      */
-    public Calendar getDateDeliberation()
-    {
+    public Calendar getDateDeliberation() {
         return this.dateDeliberation;
     }
 
@@ -92,8 +87,7 @@ public class InfosConclusionFaisabilite
      * Setter pour dateDeliberation.
      * @param dateDeliberation le dateDeliberation à écrire.
      */
-    public void setDateDeliberation(final Calendar dateDeliberation)
-    {
+    public void setDateDeliberation(final Calendar dateDeliberation) {
         this.dateDeliberation = dateDeliberation;
     }
 
@@ -101,8 +95,7 @@ public class InfosConclusionFaisabilite
      * Getter sur convSignee.
      * @return Retourne le convSignee.
      */
-    public Boolean getConvSignee()
-    {
+    public Boolean getConvSignee() {
         return this.convSignee;
     }
 
@@ -110,8 +103,7 @@ public class InfosConclusionFaisabilite
      * Setter pour convSignee.
      * @param convSignee le convSignee à écrire.
      */
-    public void setConvSignee(final Boolean convSignee)
-    {
+    public void setConvSignee(final Boolean convSignee) {
         this.convSignee = convSignee;
     }
 
@@ -119,8 +111,7 @@ public class InfosConclusionFaisabilite
      * Setter pour commentaires.
      * @param commentaires le commentaires à écrire.
      */
-    public void setCommentaires(final SortedSet<CommentaireEssaiFaisabilite> commentaires)
-    {
+    public void setCommentaires(final SortedSet<CommentaireEssaiFaisabilite> commentaires) {
         this.commentaires = commentaires;
     }
 
@@ -128,8 +119,7 @@ public class InfosConclusionFaisabilite
      * Getter sur commentaires.
      * @return Retourne le commentaires.
      */
-    public SortedSet<CommentaireEssaiFaisabilite> getCommentaires()
-    {
+    public SortedSet<CommentaireEssaiFaisabilite> getCommentaires() {
         return this.commentaires;
     }
 

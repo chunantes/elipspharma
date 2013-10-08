@@ -2,11 +2,10 @@ package fr.pharma.eclipse.domain.enums.produit;
 
 /**
  * Enumération des différentes classes de Dispositifs médicaux.
- 
+ * @author Netapsys
  * @version $Revision$ $Date$
  */
-public enum ClasseDM
-{
+public enum ClasseDM {
     /**
      * Classe I.
      */
@@ -36,8 +35,7 @@ public enum ClasseDM
      * Constructeur privé.
      * @param libelle Libellé de la valeur de l'énumération.
      */
-    private ClasseDM(final String libelle)
-    {
+    private ClasseDM(final String libelle) {
         this.libelle = libelle;
     }
 
@@ -45,8 +43,7 @@ public enum ClasseDM
      * Getter sur libelle.
      * @return Retourne le libelle.
      */
-    public String getLibelle()
-    {
+    public String getLibelle() {
         return this.libelle;
     }
 
@@ -54,8 +51,7 @@ public enum ClasseDM
      * {@inheritDoc}
      */
     @Override
-    public String toString()
-    {
+    public String toString() {
         return this.getLibelle();
     }
 }

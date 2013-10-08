@@ -19,12 +19,10 @@ import fr.pharma.eclipse.jasper.utils.JasperUtils;
 /**
  * Helper (abstrait) pour la création des beans de produits<br>
  * commun à tous les types de produits.
- 
+ * @author Netapsys
  * @version $Revision$ $Date$
  */
-public abstract class AbstractProduitsFillerHelper
-    implements ProduitsFillerHelper
-{
+public abstract class AbstractProduitsFillerHelper implements ProduitsFillerHelper {
 
     /**
      * Serial ID.
@@ -35,23 +33,17 @@ public abstract class AbstractProduitsFillerHelper
      * {@inheritDoc}
      */
     @Override
-    public Collection<JRBeanProduit> transform(final Set<Produit> produits)
-    {
+    public Collection<JRBeanProduit> transform(final Set<Produit> produits) {
         final Collection<JRBeanProduit> beanProduits = new ArrayList<JRBeanProduit>();
-        for (final Produit produit : produits)
-        {
+        for (final Produit produit : produits) {
             final JRBeanProduit jrProduit = new JRBeanProduit();
             jrProduit.setDenomination(produit.getDenomination());
             jrProduit.setCode(produit.getCode());
-            this.fillConservation(produit,
-                                  jrProduit);
-            this.fillLieuStockage(produit,
-                                  jrProduit);
-            this.fillConditionnement(produit,
-                                     jrProduit);
+            this.fillConservation(produit, jrProduit);
+            this.fillLieuStockage(produit, jrProduit);
+            this.fillConditionnement(produit, jrProduit);
 
-            this.fill(produit,
-                      jrProduit);
+            this.fill(produit, jrProduit);
             beanProduits.add(jrProduit);
         }
 
@@ -64,14 +56,11 @@ public abstract class AbstractProduitsFillerHelper
      * @param jrProduit Bean Jasper.
      */
     private void fillConditionnement(final Produit produit,
-                                     final JRBeanProduit jrProduit)
-    {
+                                     final JRBeanProduit jrProduit) {
         final List<String> libConditionnements = new ArrayList<String>();
-        for (final Conditionnement conditionnement : produit.getConditionnements())
-        {
+        for (final Conditionnement conditionnement : produit.getConditionnements()) {
             final String currentLib = this.buildLibConditionnement(conditionnement);
-            if (StringUtils.hasText(currentLib))
-            {
+            if (StringUtils.hasText(currentLib)) {
                 libConditionnements.add(currentLib);
             }
         }
@@ -84,12 +73,9 @@ public abstract class AbstractProduitsFillerHelper
      * @param jrProduit Bean Jasper.
      */
     private void fillConservation(final Produit produit,
-                                  final JRBeanProduit jrProduit)
-    {
-        final ConditionConservation conservation =
-            produit.getDetailLogistique().getConditionConservation();
-        if (conservation != null)
-        {
+                                  final JRBeanProduit jrProduit) {
+        final ConditionConservation conservation = produit.getDetailLogistique().getConditionConservation();
+        if (conservation != null) {
             jrProduit.setConservation(conservation.getLibelle());
         }
     }
@@ -100,11 +86,9 @@ public abstract class AbstractProduitsFillerHelper
      * @param jrProduit Bean Jasper.
      */
     private void fillLieuStockage(final Produit produit,
-                                  final JRBeanProduit jrProduit)
-    {
+                                  final JRBeanProduit jrProduit) {
         final List<String> libellesStockages = new ArrayList<String>();
-        for (final DetailStockage detailStockage : produit.getDetailLogistique().getDetailsStockages())
-        {
+        for (final DetailStockage detailStockage : produit.getDetailLogistique().getDetailsStockages()) {
             // Récupération des informations sur le lieu de stockage.
             final Pharmacie pharmacie = detailStockage.getPharmacie();
             final Stockage stockage = detailStockage.getStockage();
@@ -113,13 +97,9 @@ public abstract class AbstractProduitsFillerHelper
             // Formation de la chaîne de caractères.
             final StringBuilder builder = new StringBuilder();
 
-            final boolean needSeparateur = this.addLibPharmacie(builder,
-                                                                pharmacie);
-            this.addLibSiteSiteStockage(builder,
-                                        stockage,
-                                        needSeparateur);
-            this.addLibIdStockage(builder,
-                                  idStockage);
+            final boolean needSeparateur = this.addLibPharmacie(builder, pharmacie);
+            this.addLibSiteSiteStockage(builder, stockage, needSeparateur);
+            this.addLibIdStockage(builder, idStockage);
 
             // Ajout dans la liste.
             libellesStockages.add(builder.toString());
@@ -135,15 +115,12 @@ public abstract class AbstractProduitsFillerHelper
      */
     private void addLibSiteSiteStockage(final StringBuilder builder,
                                         final Stockage stockage,
-                                        final boolean needSeparateur)
-    {
-        if (stockage == null)
-        {
+                                        final boolean needSeparateur) {
+        if (stockage == null) {
             return;
         }
 
-        if (needSeparateur)
-        {
+        if (needSeparateur) {
             builder.append(" : ");
         }
         builder.append(stockage.getNomComplet());
@@ -156,10 +133,8 @@ public abstract class AbstractProduitsFillerHelper
      * @return Flag qui indique si un nom de pharmacie a été ajouté.
      */
     private boolean addLibPharmacie(final StringBuilder builder,
-                                    final Pharmacie pharmacie)
-    {
-        if (pharmacie == null)
-        {
+                                    final Pharmacie pharmacie) {
+        if (pharmacie == null) {
             return false;
         }
         builder.append(pharmacie.getNom());
@@ -172,10 +147,8 @@ public abstract class AbstractProduitsFillerHelper
      * @param idStockage Identifiant de stockage.
      */
     private void addLibIdStockage(final StringBuilder builder,
-                                  final String idStockage)
-    {
-        if (StringUtils.hasText(idStockage))
-        {
+                                  final String idStockage) {
+        if (StringUtils.hasText(idStockage)) {
             builder.append(" (").append(idStockage).append(")");
         }
     }
@@ -185,18 +158,13 @@ public abstract class AbstractProduitsFillerHelper
      * @param conditionnement Conditionnement.
      * @return Libellé du conditionnement.
      */
-    private String buildLibConditionnement(final Conditionnement conditionnement)
-    {
+    private String buildLibConditionnement(final Conditionnement conditionnement) {
         final StringBuilder builder = new StringBuilder();
-        if (conditionnement.getUniteGestion() != null)
-        {
+        if (conditionnement.getUniteGestion() != null) {
             builder.append(conditionnement.getUniteGestion().getLibelle()).append(" : ");
         }
-        if (conditionnement.getDosage() != null
-            && conditionnement.getUniteDosage() != null)
-        {
-            builder.append(conditionnement.getDosage()).append(" ").append(conditionnement
-                    .getUniteDosage());
+        if ((conditionnement.getDosage() != null) && (conditionnement.getUniteDosage() != null)) {
+            builder.append(conditionnement.getDosage()).append(" ").append(conditionnement.getUniteDosage());
         }
         return builder.toString();
     }

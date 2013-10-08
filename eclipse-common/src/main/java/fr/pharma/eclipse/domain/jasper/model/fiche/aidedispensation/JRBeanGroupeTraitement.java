@@ -6,12 +6,10 @@ import fr.pharma.eclipse.jasper.constants.JasperConstants;
 /**
  * Classe représentant la source de données<br>
  * relative à un bras de l'essai.
- 
+ * @author Netapsys
  * @version $Revision$ $Date$
  */
-public class JRBeanGroupeTraitement
-    implements JasperReportBean
-{
+public class JRBeanGroupeTraitement implements JasperReportBean {
 
     /**
      * Serial ID.
@@ -42,8 +40,7 @@ public class JRBeanGroupeTraitement
      * Getter sur design.
      * @return Retourne le design.
      */
-    public String getDesign()
-    {
+    public String getDesign() {
         return this.design;
     }
 
@@ -51,8 +48,7 @@ public class JRBeanGroupeTraitement
      * Setter pour design.
      * @param design le design à écrire.
      */
-    public void setDesign(final String design)
-    {
+    public void setDesign(final String design) {
         this.design = design;
     }
 
@@ -60,8 +56,7 @@ public class JRBeanGroupeTraitement
      * Getter sur debut.
      * @return Retourne le debut.
      */
-    public String getDebut()
-    {
+    public String getDebut() {
         return this.debut;
     }
 
@@ -69,8 +64,7 @@ public class JRBeanGroupeTraitement
      * Setter pour debut.
      * @param debut le debut à écrire.
      */
-    public void setDebut(final String debut)
-    {
+    public void setDebut(final String debut) {
         this.debut = debut;
     }
 
@@ -78,8 +72,7 @@ public class JRBeanGroupeTraitement
      * Getter sur fin.
      * @return Retourne le fin.
      */
-    public String getFin()
-    {
+    public String getFin() {
         return this.fin;
     }
 
@@ -87,8 +80,7 @@ public class JRBeanGroupeTraitement
      * Setter pour fin.
      * @param fin le fin à écrire.
      */
-    public void setFin(final String fin)
-    {
+    public void setFin(final String fin) {
         this.fin = fin;
     }
 
@@ -96,8 +88,7 @@ public class JRBeanGroupeTraitement
      * Getter sur produits.
      * @return Retourne le produits.
      */
-    public String getProduits()
-    {
+    public String getProduits() {
         return this.produits;
     }
 
@@ -105,8 +96,7 @@ public class JRBeanGroupeTraitement
      * Setter pour produits.
      * @param produits le produits à écrire.
      */
-    public void setProduits(final String produits)
-    {
+    public void setProduits(final String produits) {
         this.produits = produits;
     }
 
@@ -114,18 +104,8 @@ public class JRBeanGroupeTraitement
      * {@inheritDoc}
      */
     @Override
-    public String toString()
-    {
-        return new StringBuilder("[")
-                .append(this.design)
-                .append(", ")
-                .append(this.debut)
-                .append(", ")
-                .append(this.fin)
-                .append(", ")
-                .append(this.produits)
-                .append("]")
-                .toString();
+    public String toString() {
+        return new StringBuilder("[").append(this.design).append(", ").append(this.debut).append(", ").append(this.fin).append(", ").append(this.produits).append("]").toString();
     }
 
 }

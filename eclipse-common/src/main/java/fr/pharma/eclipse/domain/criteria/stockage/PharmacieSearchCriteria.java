@@ -6,12 +6,10 @@ import fr.pharma.eclipse.domain.model.localisation.Etablissement;
 
 /**
  * Critère de recherche sur Pharmacie.
- 
+ * @author Netapsys
  * @version $Revision$ $Date$
  */
-public class PharmacieSearchCriteria
-    extends AbstractSearchCriteria
-{
+public class PharmacieSearchCriteria extends AbstractSearchCriteria {
     /**
      * Serial ID.
      */
@@ -33,11 +31,15 @@ public class PharmacieSearchCriteria
     private Essai essai;
 
     /**
+     * Boolean indiquant la prise en compte des acls.
+     */
+    private Boolean withAcl = true;
+
+    /**
      * Getter pour nom.
      * @return Retourne le nom.
      */
-    public String getNom()
-    {
+    public String getNom() {
         return this.nom;
     }
 
@@ -45,8 +47,7 @@ public class PharmacieSearchCriteria
      * Setter pour nom.
      * @param nom le nom à écrire.
      */
-    public void setNom(final String nom)
-    {
+    public void setNom(final String nom) {
         this.nom = nom;
     }
 
@@ -54,8 +55,7 @@ public class PharmacieSearchCriteria
      * Getter sur etablissement.
      * @return Retourne le etablissement.
      */
-    public Etablissement getEtablissement()
-    {
+    public Etablissement getEtablissement() {
         return this.etablissement;
     }
 
@@ -63,8 +63,7 @@ public class PharmacieSearchCriteria
      * Setter pour etablissement.
      * @param etablissement le etablissement à écrire.
      */
-    public void setEtablissement(final Etablissement etablissement)
-    {
+    public void setEtablissement(final Etablissement etablissement) {
         this.etablissement = etablissement;
     }
 
@@ -72,8 +71,7 @@ public class PharmacieSearchCriteria
      * Getter sur essai.
      * @return Retourne le essai.
      */
-    public Essai getEssai()
-    {
+    public Essai getEssai() {
         return this.essai;
     }
 
@@ -81,8 +79,7 @@ public class PharmacieSearchCriteria
      * Setter pour essai.
      * @param essai le essai à écrire.
      */
-    public void setEssai(final Essai essai)
-    {
+    public void setEssai(final Essai essai) {
         this.essai = essai;
     }
 
@@ -90,11 +87,26 @@ public class PharmacieSearchCriteria
      * {@inheritDoc}
      */
     @Override
-    public void clear()
-    {
+    public void clear() {
         this.setEtablissement(null);
         this.setEssai(null);
         this.setNom(null);
+    }
+
+    /**
+     * Getter pour withAcl.
+     * @return Le withAcl
+     */
+    public Boolean getWithAcl() {
+        return this.withAcl;
+    }
+
+    /**
+     * Setter pour withAcl.
+     * @param withAcl Le withAcl à écrire.
+     */
+    public void setWithAcl(final Boolean withAcl) {
+        this.withAcl = withAcl;
     }
 
 }

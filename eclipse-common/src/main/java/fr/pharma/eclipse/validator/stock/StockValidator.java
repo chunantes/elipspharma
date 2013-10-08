@@ -8,11 +8,10 @@ import fr.pharma.eclipse.domain.model.stock.Sortie;
 
 /**
  * Interface de validator de stock.
- 
+ * @author Netapsys
  * @version $Revision$ $Date$
  */
-public interface StockValidator
-{
+public interface StockValidator {
 
     /**
      * Méthode en charge de valider les lignes de stock d'une sortie.
@@ -23,7 +22,8 @@ public interface StockValidator
                                    final Sortie currentSortie);
 
     /**
-     * Méthode en charge de vérifier une liste de lignes de stock par rapport à la quantite.
+     * Méthode en charge de vérifier une liste de lignes de stock par rapport à
+     * la quantite.
      * @param lignesStock Lignes de stock à valider.
      */
     void validateQteLignesStock(final List<LigneStock> lignesStock);

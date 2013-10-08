@@ -21,12 +21,10 @@ import fr.pharma.eclipse.service.habilitation.helper.HabilitationsHelper;
 /**
  * Classe en charge de constuire les données pour le rapport Jasper de type
  * TypeRapportJasper.FICHE_INFO_ESSAI.
- 
+ * @author Netapsys
  * @version $Revision$ $Date$
  */
-public class FicheInfosEssaiDatasBuilder
-    implements JasperReportDatasBuilder
-{
+public class FicheInfosEssaiDatasBuilder implements JasperReportDatasBuilder {
 
     /**
      * Serial ID.
@@ -44,7 +42,8 @@ public class FicheInfosEssaiDatasBuilder
     private JRDataSourceFactory jrDataSourceFactory;
 
     /**
-     * Helper pour la levée d'exception JasperReportBuildException sur condition.
+     * Helper pour la levée d'exception JasperReportBuildException sur
+     * condition.
      */
     private SourceCheckingHandler checkHandler;
 
@@ -61,20 +60,11 @@ public class FicheInfosEssaiDatasBuilder
     /**
      * {@inheritDoc}
      */
-    public void checkSource(final Object source)
-        throws JasperReportBuildException
-    {
-        this.checkHandler.handleCheck(source != null,
-                                      new StringBuilder("[FicheInfosEssaiDatasBuilder] ")
-                                              .append("La source est nulle.")
-                                              .toString());
-        this.checkHandler
-                .handleCheck(source instanceof Essai,
-                             new StringBuilder("[FicheInfosEssaiDatasBuilder] ")
-                                     .append("Le type attendu de la source est Essai (source: ")
-                                     .append(source)
-                                     .append(").")
-                                     .toString());
+    @Override
+    public void checkSource(final Object source) throws JasperReportBuildException {
+        this.checkHandler.handleCheck(source != null, new StringBuilder("[FicheInfosEssaiDatasBuilder] ").append("La source est nulle.").toString());
+        this.checkHandler.handleCheck(source instanceof Essai, new StringBuilder("[FicheInfosEssaiDatasBuilder] ").append("Le type attendu de la source est Essai (source: ")
+                .append(source).append(").").toString());
     }
 
     /**
@@ -82,17 +72,13 @@ public class FicheInfosEssaiDatasBuilder
      */
     @Override
     public String buildReportName(final Object source,
-                                  final TypeRapportJasper typeRapport)
-    {
+                                  final TypeRapportJasper typeRapport) {
         final Essai essai = (Essai) source;
         final StringBuilder builder = new StringBuilder();
-        this.reportNameHelper.addCommonNamePart(builder,
-                                                typeRapport);
-        this.reportNameHelper.addIdEssaiPart(builder,
-                                             essai);
+        this.reportNameHelper.addCommonNamePart(builder, typeRapport);
+        this.reportNameHelper.addIdEssaiPart(builder, essai);
         this.reportNameHelper.addDatePart(builder);
-        this.reportNameHelper.addCommonExtensionPart(builder,
-                                                     typeRapport);
+        this.reportNameHelper.addCommonExtensionPart(builder, typeRapport);
         return builder.toString();
     }
 
@@ -100,11 +86,9 @@ public class FicheInfosEssaiDatasBuilder
      * {@inheritDoc}
      */
     @Override
-    public JRDataSource buildDataSource(final Object source)
-    {
+    public JRDataSource buildDataSource(final Object source) {
         final Essai essai = (Essai) source;
-        final Investigateur invPrincipal =
-            this.habilitationsHelper.getInvestigateurPrincipal(essai);
+        final Investigateur invPrincipal = this.habilitationsHelper.getInvestigateurPrincipal(essai);
 
         // Conctruction du bean.
         final JRBeanFicheEssai dataSource = new JRBeanFicheEssai();
@@ -115,11 +99,7 @@ public class FicheInfosEssaiDatasBuilder
         dataSource.setInvestigateur(JasperUtils.makeLibelleInvestigateur(invPrincipal));
 
         // Construction de l'en-tête.
-        final JRBeanHeader dataHeader =
-            this.headerBuilder.build("Fiche d'information 'essais cliniques'",
-                                     "Management",
-                                     "Essais cliniques",
-                                     "Pharmacie");
+        final JRBeanHeader dataHeader = this.headerBuilder.build("Fiche d'information 'essais cliniques'", "Management", "Essais cliniques", "Pharmacie");
         dataSource.setHeader(dataHeader);
 
         // Retour
@@ -130,8 +110,7 @@ public class FicheInfosEssaiDatasBuilder
      * {@inheritDoc}
      */
     @Override
-    public Map<String, Object> buildParameters(final Object source)
-    {
+    public Map<String, Object> buildParameters(final Object source) {
         return new HashMap<String, Object>();
     }
 
@@ -139,8 +118,7 @@ public class FicheInfosEssaiDatasBuilder
      * Getter sur reportNameHelper.
      * @return Retourne le reportNameHelper.
      */
-    ReportNameBuildHelper getReportNameHelper()
-    {
+    ReportNameBuildHelper getReportNameHelper() {
         return this.reportNameHelper;
     }
 
@@ -148,8 +126,7 @@ public class FicheInfosEssaiDatasBuilder
      * Setter pour reportNameHelper.
      * @param reportNameHelper le reportNameHelper à écrire.
      */
-    public void setReportNameHelper(final ReportNameBuildHelper reportNameHelper)
-    {
+    public void setReportNameHelper(final ReportNameBuildHelper reportNameHelper) {
         this.reportNameHelper = reportNameHelper;
     }
 
@@ -157,8 +134,7 @@ public class FicheInfosEssaiDatasBuilder
      * Getter sur checkHandler.
      * @return Retourne le checkHandler.
      */
-    SourceCheckingHandler getCheckHandler()
-    {
+    SourceCheckingHandler getCheckHandler() {
         return this.checkHandler;
     }
 
@@ -166,8 +142,7 @@ public class FicheInfosEssaiDatasBuilder
      * Setter pour checkHandler.
      * @param checkHandler le checkHandler à écrire.
      */
-    public void setCheckHandler(final SourceCheckingHandler checkHandler)
-    {
+    public void setCheckHandler(final SourceCheckingHandler checkHandler) {
         this.checkHandler = checkHandler;
     }
 
@@ -175,8 +150,7 @@ public class FicheInfosEssaiDatasBuilder
      * Getter sur jrDataSourceFactory.
      * @return Retourne le jrDataSourceFactory.
      */
-    JRDataSourceFactory getJrDataSourceFactory()
-    {
+    JRDataSourceFactory getJrDataSourceFactory() {
         return this.jrDataSourceFactory;
     }
 
@@ -184,8 +158,7 @@ public class FicheInfosEssaiDatasBuilder
      * Setter pour jrDataSourceFactory.
      * @param jrDataSourceFactory le jrDataSourceFactory à écrire.
      */
-    public void setJrDataSourceFactory(final JRDataSourceFactory jrDataSourceFactory)
-    {
+    public void setJrDataSourceFactory(final JRDataSourceFactory jrDataSourceFactory) {
         this.jrDataSourceFactory = jrDataSourceFactory;
     }
 
@@ -193,8 +166,7 @@ public class FicheInfosEssaiDatasBuilder
      * Getter sur habilitationsHelper.
      * @return Retourne le habilitationsHelper.
      */
-    HabilitationsHelper getHabilitationsHelper()
-    {
+    HabilitationsHelper getHabilitationsHelper() {
         return this.habilitationsHelper;
     }
 
@@ -202,8 +174,7 @@ public class FicheInfosEssaiDatasBuilder
      * Setter pour habilitationsHelper.
      * @param habilitationsHelper le habilitationsHelper à écrire.
      */
-    public void setHabilitationsHelper(final HabilitationsHelper habilitationsHelper)
-    {
+    public void setHabilitationsHelper(final HabilitationsHelper habilitationsHelper) {
         this.habilitationsHelper = habilitationsHelper;
     }
 
@@ -211,8 +182,7 @@ public class FicheInfosEssaiDatasBuilder
      * Getter sur headerBuilder.
      * @return Retourne le headerBuilder.
      */
-    JRBeanHeaderBuilder getHeaderBuilder()
-    {
+    JRBeanHeaderBuilder getHeaderBuilder() {
         return this.headerBuilder;
     }
 
@@ -220,8 +190,7 @@ public class FicheInfosEssaiDatasBuilder
      * Setter pour headerBuilder.
      * @param headerBuilder le headerBuilder à écrire.
      */
-    public void setHeaderBuilder(final JRBeanHeaderBuilder headerBuilder)
-    {
+    public void setHeaderBuilder(final JRBeanHeaderBuilder headerBuilder) {
         this.headerBuilder = headerBuilder;
     }
 }

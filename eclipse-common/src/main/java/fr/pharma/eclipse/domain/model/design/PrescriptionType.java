@@ -22,12 +22,11 @@ import fr.pharma.eclipse.domain.model.produit.Produit;
 
 /**
  * Bean métier représentant une prescription type.
- 
+ * @author Netapsys
  * @version $Revision$ $Date$
  */
 @Entity(name = "prescription_type")
-public class PrescriptionType
-    extends BeanObject
+public class PrescriptionType extends BeanObject
 
 {
 
@@ -40,18 +39,14 @@ public class PrescriptionType
      * Début.
      */
     @Embedded
-    @AttributeOverrides(
-    {@AttributeOverride(name = "nb", column = @Column(name = "nb_debut")),
-     @AttributeOverride(name = "unite", column = @Column(name = "unite_debut")) })
+    @AttributeOverrides({@AttributeOverride(name = "nb", column = @Column(name = "nb_debut")), @AttributeOverride(name = "unite", column = @Column(name = "unite_debut")) })
     private TempsPrescription debut = new TempsPrescription();
 
     /**
      * Durée.
      */
     @Embedded
-    @AttributeOverrides(
-    {@AttributeOverride(name = "nb", column = @Column(name = "nb_duree")),
-     @AttributeOverride(name = "unite", column = @Column(name = "unite_duree")) })
+    @AttributeOverrides({@AttributeOverride(name = "nb", column = @Column(name = "nb_duree")), @AttributeOverride(name = "unite", column = @Column(name = "unite_duree")) })
     private TempsPrescription duree = new TempsPrescription();
 
     /**
@@ -103,26 +98,21 @@ public class PrescriptionType
     @NotNull
     private Produit produit;
 
-    public String getDosageAsString()
-    {
+    public String getDosageAsString() {
         final StringBuffer buff = new StringBuffer();
-        if (this.nbUniteDosage != null)
-        {
+        if (this.nbUniteDosage != null) {
             buff.append(this.nbUniteDosage);
             buff.append(" ");
             buff.append("doses - ");
         }
-        if (this.conditionnement.getDosage() != null)
-        {
+        if (this.conditionnement.getDosage() != null) {
             buff.append(this.conditionnement.getDosage());
         }
-        if (this.conditionnement.getUniteDosage() != null)
-        {
+        if (this.conditionnement.getUniteDosage() != null) {
             buff.append(" ");
             buff.append(this.conditionnement.getUniteDosage());
         }
-        if (buff.length() > 0)
-        {
+        if (buff.length() > 0) {
             buff.append(" : ");
         }
         return buff.toString();
@@ -132,8 +122,7 @@ public class PrescriptionType
      * Getter sur description.
      * @return Retourne le description.
      */
-    public String getDescription()
-    {
+    public String getDescription() {
         return this.description;
     }
 
@@ -141,8 +130,7 @@ public class PrescriptionType
      * Setter pour description.
      * @param description le description à écrire.
      */
-    public void setDescription(final String description)
-    {
+    public void setDescription(final String description) {
         this.description = description;
     }
 
@@ -150,8 +138,7 @@ public class PrescriptionType
      * Getter sur sequence.
      * @return Retourne le sequence.
      */
-    public Sequence getSequence()
-    {
+    public Sequence getSequence() {
         return this.sequence;
     }
 
@@ -159,8 +146,7 @@ public class PrescriptionType
      * Setter pour sequence.
      * @param sequence le sequence à écrire.
      */
-    public void setSequence(final Sequence sequence)
-    {
+    public void setSequence(final Sequence sequence) {
         this.sequence = sequence;
     }
 
@@ -168,8 +154,7 @@ public class PrescriptionType
      * Getter sur produit.
      * @return Retourne le produit.
      */
-    public Produit getProduit()
-    {
+    public Produit getProduit() {
         return this.produit;
     }
 
@@ -177,8 +162,7 @@ public class PrescriptionType
      * Setter pour produit.
      * @param produit le produit à écrire.
      */
-    public void setProduit(final Produit produit)
-    {
+    public void setProduit(final Produit produit) {
         this.produit = produit;
     }
 
@@ -186,10 +170,8 @@ public class PrescriptionType
      * Getter sur debut.
      * @return Retourne le debut.
      */
-    public TempsPrescription getDebut()
-    {
-        if (this.debut == null)
-        {
+    public TempsPrescription getDebut() {
+        if (this.debut == null) {
             return new TempsPrescription();
         }
         return this.debut;
@@ -199,8 +181,7 @@ public class PrescriptionType
      * Setter pour debut.
      * @param debut le debut à écrire.
      */
-    public void setDebut(final TempsPrescription debut)
-    {
+    public void setDebut(final TempsPrescription debut) {
         this.debut = debut;
     }
 
@@ -208,10 +189,8 @@ public class PrescriptionType
      * Getter sur duree.
      * @return Retourne le duree.
      */
-    public TempsPrescription getDuree()
-    {
-        if (this.duree == null)
-        {
+    public TempsPrescription getDuree() {
+        if (this.duree == null) {
             return new TempsPrescription();
         }
         return this.duree;
@@ -221,8 +200,7 @@ public class PrescriptionType
      * Setter pour duree.
      * @param duree le duree à écrire.
      */
-    public void setDuree(final TempsPrescription duree)
-    {
+    public void setDuree(final TempsPrescription duree) {
         this.duree = duree;
     }
 
@@ -230,10 +208,8 @@ public class PrescriptionType
      * Getter sur frequence.
      * @return Retourne le frequence.
      */
-    public Frequence getFrequence()
-    {
-        if (this.frequence == null)
-        {
+    public Frequence getFrequence() {
+        if (this.frequence == null) {
             return new Frequence();
         }
         return this.frequence;
@@ -243,8 +219,7 @@ public class PrescriptionType
      * Setter pour frequence.
      * @param frequence le frequence à écrire.
      */
-    public void setFrequence(final Frequence frequence)
-    {
+    public void setFrequence(final Frequence frequence) {
         this.frequence = frequence;
     }
 
@@ -252,8 +227,7 @@ public class PrescriptionType
      * Getter sur nbUniteDosage.
      * @return Retourne le nbUniteDosage.
      */
-    public BigDecimal getNbUniteDosage()
-    {
+    public BigDecimal getNbUniteDosage() {
         return this.nbUniteDosage;
     }
 
@@ -261,8 +235,7 @@ public class PrescriptionType
      * Setter pour nbUniteDosage.
      * @param nbUniteDosage le nbUniteDosage à écrire.
      */
-    public void setNbUniteDosage(final BigDecimal nbUniteDosage)
-    {
+    public void setNbUniteDosage(final BigDecimal nbUniteDosage) {
         this.nbUniteDosage = nbUniteDosage;
     }
 
@@ -270,8 +243,7 @@ public class PrescriptionType
      * Getter sur dosage.
      * @return Retourne le dosage.
      */
-    public BigDecimal getDosage()
-    {
+    public BigDecimal getDosage() {
         return this.dosage;
     }
 
@@ -279,8 +251,7 @@ public class PrescriptionType
      * Setter pour dosage.
      * @param dosage le dosage à écrire.
      */
-    public void setDosage(final BigDecimal dosage)
-    {
+    public void setDosage(final BigDecimal dosage) {
         this.dosage = dosage;
     }
 
@@ -288,8 +259,7 @@ public class PrescriptionType
      * Getter sur conditionnement.
      * @return Retourne le conditionnement.
      */
-    public Conditionnement getConditionnement()
-    {
+    public Conditionnement getConditionnement() {
         return this.conditionnement;
     }
 
@@ -297,8 +267,7 @@ public class PrescriptionType
      * Setter pour conditionnement.
      * @param conditionnement le conditionnement à écrire.
      */
-    public void setConditionnement(final Conditionnement conditionnement)
-    {
+    public void setConditionnement(final Conditionnement conditionnement) {
         this.conditionnement = conditionnement;
     }
 

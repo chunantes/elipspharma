@@ -18,12 +18,10 @@ import fr.pharma.eclipse.domain.model.stockage.Pharmacie;
 
 /**
  * Bean métier représentant un état de stock.
- 
+ * @author Netapsys
  * @version $Revision$ $Date$
  */
-public class EtatStock
-    implements Serializable
-{
+public class EtatStock implements Serializable {
     /**
      * Serial ID.
      */
@@ -76,13 +74,7 @@ public class EtatStock
      * @param produit Produit.
      * @param conditionnement Conditionnement.
      */
-    public EtatStock(
-                     final Essai essai,
-                     final Pharmacie pharmacie,
-                     final Produit produit,
-                     final Conditionnement conditionnement,
-                     final Boolean enQuarantaine)
-    {
+    public EtatStock(final Essai essai, final Pharmacie pharmacie, final Produit produit, final Conditionnement conditionnement, final Boolean enQuarantaine) {
         this.setEssai(essai);
         this.setPharmacie(pharmacie);
         this.setProduit(produit);
@@ -97,8 +89,7 @@ public class EtatStock
      * Getter pour essai.
      * @return Le essai
      */
-    public Essai getEssai()
-    {
+    public Essai getEssai() {
         return this.essai;
     }
 
@@ -106,8 +97,7 @@ public class EtatStock
      * Setter pour essai.
      * @param essai Le essai à écrire.
      */
-    public void setEssai(final Essai essai)
-    {
+    public void setEssai(final Essai essai) {
         this.essai = essai;
     }
 
@@ -115,8 +105,7 @@ public class EtatStock
      * Getter pour pharmacie.
      * @return Le pharmacie
      */
-    public Pharmacie getPharmacie()
-    {
+    public Pharmacie getPharmacie() {
         return this.pharmacie;
     }
 
@@ -124,8 +113,7 @@ public class EtatStock
      * Setter pour pharmacie.
      * @param pharmacie Le pharmacie à écrire.
      */
-    public void setPharmacie(final Pharmacie pharmacie)
-    {
+    public void setPharmacie(final Pharmacie pharmacie) {
         this.pharmacie = pharmacie;
     }
 
@@ -133,8 +121,7 @@ public class EtatStock
      * Getter pour produit.
      * @return Le produit
      */
-    public Produit getProduit()
-    {
+    public Produit getProduit() {
         return this.produit;
     }
 
@@ -142,8 +129,7 @@ public class EtatStock
      * Setter pour produit.
      * @param produit Le produit à écrire.
      */
-    public void setProduit(final Produit produit)
-    {
+    public void setProduit(final Produit produit) {
         this.produit = produit;
     }
 
@@ -151,8 +137,7 @@ public class EtatStock
      * Getter pour conditionnement.
      * @return Le conditionnement
      */
-    public Conditionnement getConditionnement()
-    {
+    public Conditionnement getConditionnement() {
         return this.conditionnement;
     }
 
@@ -160,8 +145,7 @@ public class EtatStock
      * Setter pour conditionnement.
      * @param conditionnement Le conditionnement à écrire.
      */
-    public void setConditionnement(final Conditionnement conditionnement)
-    {
+    public void setConditionnement(final Conditionnement conditionnement) {
         this.conditionnement = conditionnement;
     }
 
@@ -169,8 +153,7 @@ public class EtatStock
      * Getter pour stockage.
      * @return Le stockage
      */
-    public String getStockage()
-    {
+    public String getStockage() {
         return this.stockage;
     }
 
@@ -178,8 +161,7 @@ public class EtatStock
      * Setter pour stockage.
      * @param stockage Le stockage à écrire.
      */
-    public void setStockage(final String stockage)
-    {
+    public void setStockage(final String stockage) {
         this.stockage = stockage;
     }
 
@@ -187,8 +169,7 @@ public class EtatStock
      * Getter pour qteEnStock.
      * @return Le qteEnStock
      */
-    public Integer getQteEnStock()
-    {
+    public Integer getQteEnStock() {
         return this.qteEnStock;
     }
 
@@ -196,8 +177,7 @@ public class EtatStock
      * Setter pour qteEnStock.
      * @param qteEnStock Le qteEnStock à écrire.
      */
-    public void setQteEnStock(final Integer qteEnStock)
-    {
+    public void setQteEnStock(final Integer qteEnStock) {
         this.qteEnStock = qteEnStock;
     }
 
@@ -206,34 +186,24 @@ public class EtatStock
      * @return Retourne le etatsLignesStock.
      */
     @SuppressWarnings("unchecked")
-    public List<EtatLigneStock> getEtatsLignesStockAsList()
-    {
-        final List<EtatLigneStock> lignes =
-            new ArrayList<EtatLigneStock>(CollectionUtils.select(this.etatsLignesStock.values(),
-                                                                 new Predicate() {
+    public List<EtatLigneStock> getEtatsLignesStockAsList() {
+        final List<EtatLigneStock> lignes = new ArrayList<EtatLigneStock>(CollectionUtils.select(this.etatsLignesStock.values(), new Predicate() {
 
-                                                                     @Override
-                                                                     public boolean evaluate(final Object object)
-                                                                     {
-                                                                         return ((EtatLigneStock) object)
-                                                                                 .getQteEnStock() > 0;
-                                                                     }
-                                                                 }));
+            @Override
+            public boolean evaluate(final Object object) {
+                return ((EtatLigneStock) object).getQteEnStock() > 0;
+            }
+        }));
 
-        Collections.sort(lignes,
-                         new Comparator<EtatLigneStock>() {
+        Collections.sort(lignes, new Comparator<EtatLigneStock>() {
 
-                             @Override
-                             public int compare(final EtatLigneStock o1,
-                                                final EtatLigneStock o2)
-                             {
-                                 return (o1.getNumLot() + o1.getNumTraitement()).compareTo(o2
-                                         .getNumLot()
-                                                                                           + o2
-                                                                                                   .getNumTraitement());
-                             }
+            @Override
+            public int compare(final EtatLigneStock o1,
+                               final EtatLigneStock o2) {
+                return (o1.getNumLot() + o1.getNumTraitement()).compareTo(o2.getNumLot() + o2.getNumTraitement());
+            }
 
-                         });
+        });
         return lignes;
     }
 
@@ -241,8 +211,7 @@ public class EtatStock
      * Getter sur etatsLignesStock.
      * @return Retourne le etatsLignesStock.
      */
-    public Map<String, EtatLigneStock> getEtatsLignesStock()
-    {
+    public Map<String, EtatLigneStock> getEtatsLignesStock() {
         return this.etatsLignesStock;
     }
 
@@ -250,8 +219,7 @@ public class EtatStock
      * Setter pour etatsLignesStock.
      * @param etatsLignesStock le etatsLignesStock à écrire.
      */
-    public void setEtatsLignesStock(final Map<String, EtatLigneStock> etatsLignesStock)
-    {
+    public void setEtatsLignesStock(final Map<String, EtatLigneStock> etatsLignesStock) {
         this.etatsLignesStock = etatsLignesStock;
     }
 
@@ -259,8 +227,7 @@ public class EtatStock
      * Getter sur enQuarantaine.
      * @return Retourne le enQuarantaine.
      */
-    public Boolean getEnQuarantaine()
-    {
+    public Boolean getEnQuarantaine() {
         return this.enQuarantaine;
     }
 
@@ -268,9 +235,21 @@ public class EtatStock
      * Setter pour enQuarantaine.
      * @param enQuarantaine le enQuarantaine à écrire.
      */
-    public void setEnQuarantaine(final Boolean enQuarantaine)
-    {
+    public void setEnQuarantaine(final Boolean enQuarantaine) {
         this.enQuarantaine = enQuarantaine;
+    }
+
+    /**
+     * Méthode en charge de retourner la clé d'un mouvement de stock côté état. <br />
+     * La clé est la concaténation de essai + pharmacie + produit +
+     * conditionnement.
+     * @return Clé.
+     */
+    public String getKeyStock() {
+        final StringBuilder sb = new StringBuilder();
+        sb.append(this.getEssai().getId()).append(this.getPharmacie().getId()).append(this.getProduit().getId()).append(this.getConditionnement().getId())
+                .append(!this.getEnQuarantaine());
+        return sb.toString();
     }
 
 }

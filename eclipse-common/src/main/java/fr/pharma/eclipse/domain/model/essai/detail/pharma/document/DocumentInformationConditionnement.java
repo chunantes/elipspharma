@@ -6,16 +6,14 @@ import javax.persistence.Entity;
 import fr.pharma.eclipse.domain.enums.document.TypeDocumentEssai;
 
 /**
- * Bean métier représentant un document relatif aux informations de conditionnements de l'essai
- * clinique.
- 
+ * Bean métier représentant un document relatif aux informations de
+ * conditionnements de l'essai clinique.
+ * @author Netapsys
  * @version $Revision$ $Date$
  */
 @Entity
 @DiscriminatorValue("INFORMATION_CONDITIONNEMENT")
-public class DocumentInformationConditionnement
-    extends DocumentDonneesPharma
-{
+public class DocumentInformationConditionnement extends DocumentDonneesPharma {
 
     /**
      * SerialVersionUID.
@@ -25,8 +23,7 @@ public class DocumentInformationConditionnement
     /**
      * Constructeur par défaut.
      */
-    public DocumentInformationConditionnement()
-    {
+    public DocumentInformationConditionnement() {
         this.setType(TypeDocumentEssai.INFORMATION_CONDITIONNEMENT);
     }
 }

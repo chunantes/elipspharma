@@ -10,13 +10,11 @@ import fr.pharma.eclipse.domain.model.suivi.common.Suivi;
 
 /**
  * Classe abstraite représentant un commentaire suivi posé sur l'essai.
- 
+ * @author Netapsys
  * @version $Revision$ $Date$
  */
 @MappedSuperclass
-public abstract class CommentaireEssai
-    extends Suivi
-{
+public abstract class CommentaireEssai extends Suivi {
 
     /**
      * Serial ID.
@@ -35,8 +33,7 @@ public abstract class CommentaireEssai
      * Getter sur libelle.
      * @return Retourne le libelle.
      */
-    public String getLibelle()
-    {
+    public String getLibelle() {
         return this.libelle;
     }
 
@@ -44,8 +41,7 @@ public abstract class CommentaireEssai
      * Setter pour libelle.
      * @param libelle le libelle à écrire.
      */
-    public void setLibelle(final String libelle)
-    {
+    public void setLibelle(final String libelle) {
         this.libelle = libelle;
     }
 
@@ -53,14 +49,8 @@ public abstract class CommentaireEssai
      * {@inheritDoc}
      */
     @Override
-    public String toString()
-    {
-        return new StringBuilder("[CommentaireEssai: ")
-                .append(this.getId())
-                .append(", ")
-                .append(this.libelle)
-                .append("]")
-                .toString();
+    public String toString() {
+        return new StringBuilder("[CommentaireEssai: ").append(this.getId()).append(", ").append(this.libelle).append("]").toString();
     }
 
 }

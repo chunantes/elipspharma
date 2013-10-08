@@ -6,15 +6,14 @@ import javax.persistence.Entity;
 import fr.pharma.eclipse.domain.enums.document.TypeDocumentPharmacien;
 
 /**
- * Bean métier représentant un document de validation de formation d'un pharmacien.
- 
+ * Bean métier représentant un document de validation de formation d'un
+ * pharmacien.
+ * @author Netapsys
  * @version $Revision$ $Date$
  */
 @Entity
 @DiscriminatorValue("VALIDATION_FORMATION")
-public class DocumentValidationFormation
-    extends DocumentPharmacien
-{
+public class DocumentValidationFormation extends DocumentPharmacien {
 
     /**
      * Serial ID.
@@ -24,8 +23,7 @@ public class DocumentValidationFormation
     /**
      * Constructeur par défaut.
      */
-    public DocumentValidationFormation()
-    {
+    public DocumentValidationFormation() {
         this.setType(TypeDocumentPharmacien.VALIDATION_FORMATION);
     }
 

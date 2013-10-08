@@ -29,12 +29,10 @@ import fr.pharma.eclipse.jasper.exception.JasperReportBuildException;
 /**
  * Classe en charge de constuire les données pour le rapport Jasper de type
  * TypeRapportJasper.ACCUSE_RECEPTION.
- 
+ * @author Netapsys
  * @version $Revision$ $Date$
  */
-public class AccuseReceptionDatasBuilder
-    implements JasperReportDatasBuilder
-{
+public class AccuseReceptionDatasBuilder implements JasperReportDatasBuilder {
 
     /**
      * Serial ID.
@@ -52,7 +50,8 @@ public class AccuseReceptionDatasBuilder
     private JRDataSourceFactory jrDataSourceFactory;
 
     /**
-     * Helper pour la levée d'exception JasperReportBuildException sur condition.
+     * Helper pour la levée d'exception JasperReportBuildException sur
+     * condition.
      */
     private SourceCheckingHandler checkHandler;
 
@@ -76,16 +75,13 @@ public class AccuseReceptionDatasBuilder
      * {@inheritDoc}
      */
     @Override
-    public JRDataSource buildDataSource(final Object source)
-    {
+    public JRDataSource buildDataSource(final Object source) {
         final ResultSortie result = (ResultSortie) source;
 
         // Conctruction du bean.
         final JRBeanModeleAccuseReception dataSource = new JRBeanModeleAccuseReception();
         dataSource.setPromoteur(result.getEssai().getPromoteur().getRaisonSociale());
-        dataSource.setCodeProtocole(result.getEssai().getCodePromoteur()
-                                    + " - "
-                                    + result.getEssai().getNom());
+        dataSource.setCodeProtocole(result.getEssai().getCodePromoteur() + " - " + result.getEssai().getNom());
         final CessionPui cession = (CessionPui) result.getMvts().get(0);
 
         dataSource.setCentre(cession.getPharmacieDest().getEtablissement().getNom());
@@ -96,16 +92,12 @@ public class AccuseReceptionDatasBuilder
         final Collection<JRBeanTraitement> beansProduit = this.helper.transform(result.getMvts());
 
         // Création de la source de données.
-        final JRDataSource dtProduits =
-            this.jrDataSourceFactory.getInitializedObject(beansProduit);
+        final JRDataSource dtProduits = this.jrDataSourceFactory.getInitializedObject(beansProduit);
         dataSource.setTraitements(dtProduits);
 
         // Construction de l'en-tête.
         final String sousTitre = "Accusé de réception";
-        final JRBeanHeader dataHeader = this.headerBuilder.build(sousTitre,
-                                                                 "",
-                                                                 "Essais cliniques",
-                                                                 "Pharmacie");
+        final JRBeanHeader dataHeader = this.headerBuilder.build(sousTitre, "", "Essais cliniques", "Pharmacie");
         dataSource.setHeader(dataHeader);
 
         // Retour
@@ -116,26 +108,17 @@ public class AccuseReceptionDatasBuilder
      * @param pharmacie Pharmacie.
      * @return Libellé de la pharmacie coordinatrice.
      */
-    private String buildPharmacie(final Pharmacie pharmacie)
-    {
+    private String buildPharmacie(final Pharmacie pharmacie) {
         final StringBuffer sb = new StringBuffer();
-        sb.append(pharmacie.getEtablissement().getNom()
-                  + " - "
-                  + pharmacie.getNom());
-        if (StringUtils.isNotBlank(pharmacie.getAdresse()))
-        {
-            sb.append("\n"
-                      + pharmacie.getAdresse());
+        sb.append(pharmacie.getEtablissement().getNom() + " - " + pharmacie.getNom());
+        if (StringUtils.isNotBlank(pharmacie.getAdresse())) {
+            sb.append("\n" + pharmacie.getAdresse());
         }
-        if (StringUtils.isNotBlank(pharmacie.getTelephone()))
-        {
-            sb.append("\nTéléphone : "
-                      + pharmacie.getTelephone());
+        if (StringUtils.isNotBlank(pharmacie.getTelephone())) {
+            sb.append("\nTéléphone : " + pharmacie.getTelephone());
         }
-        if (StringUtils.isNotBlank(pharmacie.getFax()))
-        {
-            sb.append("\nFax : "
-                      + pharmacie.getFax());
+        if (StringUtils.isNotBlank(pharmacie.getFax())) {
+            sb.append("\nFax : " + pharmacie.getFax());
         }
         return sb.toString();
     }
@@ -143,8 +126,7 @@ public class AccuseReceptionDatasBuilder
      * {@inheritDoc}
      */
     @Override
-    public Map<String, Object> buildParameters(final Object source)
-    {
+    public Map<String, Object> buildParameters(final Object source) {
         return new HashMap<String, Object>();
     }
 
@@ -153,18 +135,14 @@ public class AccuseReceptionDatasBuilder
      */
     @Override
     public String buildReportName(final Object source,
-                                  final TypeRapportJasper typeRapport)
-    {
+                                  final TypeRapportJasper typeRapport) {
         Essai essai = null;
         essai = ((ResultSortie) source).getEssai();
         final StringBuilder builder = new StringBuilder();
-        this.reportNameHelper.addCommonNamePart(builder,
-                                                typeRapport);
-        this.reportNameHelper.addIdEssaiPart(builder,
-                                             essai);
+        this.reportNameHelper.addCommonNamePart(builder, typeRapport);
+        this.reportNameHelper.addIdEssaiPart(builder, essai);
         this.reportNameHelper.addDatePart(builder);
-        this.reportNameHelper.addCommonExtensionPart(builder,
-                                                     typeRapport);
+        this.reportNameHelper.addCommonExtensionPart(builder, typeRapport);
         return builder.toString();
     }
 
@@ -172,20 +150,10 @@ public class AccuseReceptionDatasBuilder
      * {@inheritDoc}
      */
     @Override
-    public void checkSource(final Object source)
-        throws JasperReportBuildException
-    {
-        this.checkHandler.handleCheck(source != null,
-                                      new StringBuilder("[CertificatSortiDatasBuilder] ")
-                                              .append("La source est nulle.")
-                                              .toString());
-        this.checkHandler
-                .handleCheck(source instanceof ResultSortie,
-                             new StringBuilder("[CertificatSortiDatasBuilder] ")
-                                     .append("Le type attendu de la source est Result(source: ")
-                                     .append(source)
-                                     .append(").")
-                                     .toString());
+    public void checkSource(final Object source) throws JasperReportBuildException {
+        this.checkHandler.handleCheck(source != null, new StringBuilder("[CertificatSortiDatasBuilder] ").append("La source est nulle.").toString());
+        this.checkHandler.handleCheck(source instanceof ResultSortie, new StringBuilder("[CertificatSortiDatasBuilder] ")
+                .append("Le type attendu de la source est Result(source: ").append(source).append(").").toString());
 
     }
 
@@ -193,8 +161,7 @@ public class AccuseReceptionDatasBuilder
      * Getter sur reportNameHelper.
      * @return Retourne le reportNameHelper.
      */
-    ReportNameBuildHelper getReportNameHelper()
-    {
+    ReportNameBuildHelper getReportNameHelper() {
         return this.reportNameHelper;
     }
 
@@ -202,8 +169,7 @@ public class AccuseReceptionDatasBuilder
      * Setter pour reportNameHelper.
      * @param reportNameHelper le reportNameHelper à écrire.
      */
-    public void setReportNameHelper(final ReportNameBuildHelper reportNameHelper)
-    {
+    public void setReportNameHelper(final ReportNameBuildHelper reportNameHelper) {
         this.reportNameHelper = reportNameHelper;
     }
 
@@ -211,8 +177,7 @@ public class AccuseReceptionDatasBuilder
      * Getter sur jrDataSourceFactory.
      * @return Retourne le jrDataSourceFactory.
      */
-    JRDataSourceFactory getJrDataSourceFactory()
-    {
+    JRDataSourceFactory getJrDataSourceFactory() {
         return this.jrDataSourceFactory;
     }
 
@@ -220,8 +185,7 @@ public class AccuseReceptionDatasBuilder
      * Setter pour jrDataSourceFactory.
      * @param jrDataSourceFactory le jrDataSourceFactory à écrire.
      */
-    public void setJrDataSourceFactory(final JRDataSourceFactory jrDataSourceFactory)
-    {
+    public void setJrDataSourceFactory(final JRDataSourceFactory jrDataSourceFactory) {
         this.jrDataSourceFactory = jrDataSourceFactory;
     }
 
@@ -229,8 +193,7 @@ public class AccuseReceptionDatasBuilder
      * Getter sur checkHandler.
      * @return Retourne le checkHandler.
      */
-    SourceCheckingHandler getCheckHandler()
-    {
+    SourceCheckingHandler getCheckHandler() {
         return this.checkHandler;
     }
 
@@ -238,8 +201,7 @@ public class AccuseReceptionDatasBuilder
      * Setter pour checkHandler.
      * @param checkHandler le checkHandler à écrire.
      */
-    public void setCheckHandler(final SourceCheckingHandler checkHandler)
-    {
+    public void setCheckHandler(final SourceCheckingHandler checkHandler) {
         this.checkHandler = checkHandler;
     }
 
@@ -247,8 +209,7 @@ public class AccuseReceptionDatasBuilder
      * Getter sur headerBuilder.
      * @return Retourne le headerBuilder.
      */
-    JRBeanHeaderBuilder getHeaderBuilder()
-    {
+    JRBeanHeaderBuilder getHeaderBuilder() {
         return this.headerBuilder;
     }
 
@@ -256,40 +217,35 @@ public class AccuseReceptionDatasBuilder
      * Setter pour headerBuilder.
      * @param headerBuilder le headerBuilder à écrire.
      */
-    public void setHeaderBuilder(final JRBeanHeaderBuilder headerBuilder)
-    {
+    public void setHeaderBuilder(final JRBeanHeaderBuilder headerBuilder) {
         this.headerBuilder = headerBuilder;
     }
     /**
      * Getter pour titre.
      * @return Le titre
      */
-    public String getTitre()
-    {
+    public String getTitre() {
         return this.titre;
     }
     /**
      * Setter pour titre.
      * @param titre Le titre à écrire.
      */
-    public void setTitre(final String titre)
-    {
+    public void setTitre(final String titre) {
         this.titre = titre;
     }
     /**
      * Getter pour helper.
      * @return Le helper
      */
-    public TraitementFillerHelper getHelper()
-    {
+    public TraitementFillerHelper getHelper() {
         return this.helper;
     }
     /**
      * Setter pour helper.
      * @param helper Le helper à écrire.
      */
-    public void setHelper(final TraitementFillerHelper helper)
-    {
+    public void setHelper(final TraitementFillerHelper helper) {
         this.helper = helper;
     }
 

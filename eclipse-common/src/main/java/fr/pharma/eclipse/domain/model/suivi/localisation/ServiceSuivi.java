@@ -11,13 +11,11 @@ import fr.pharma.eclipse.domain.model.suivi.common.Suivi;
 
 /**
  * Bean métier représentant les suivis de modifications sur le bean Service.
- 
+ * @author Netapsys
  * @version $Revision$ $Date$
  */
 @Entity(name = "service_suivi")
-public class ServiceSuivi
-    extends Suivi
-{
+public class ServiceSuivi extends Suivi {
     /**
      * Serial ID.
      */
@@ -35,8 +33,7 @@ public class ServiceSuivi
      * Getter sur service.
      * @return Retourne le service.
      */
-    public Service getService()
-    {
+    public Service getService() {
         return this.service;
     }
 
@@ -44,8 +41,7 @@ public class ServiceSuivi
      * Setter pour service.
      * @param service le service à écrire.
      */
-    public void setService(final Service service)
-    {
+    public void setService(final Service service) {
         this.service = service;
     }
 

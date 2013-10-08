@@ -4,12 +4,10 @@ import fr.pharma.eclipse.domain.criteria.common.AbstractSearchCriteria;
 
 /**
  * Critère de recherche sur une Personne SIR.
- 
+ * @author Netapsys
  * @version $Revision$ $Date$
  */
-public class PersonneSirSearchCriteria
-    extends AbstractSearchCriteria
-{
+public class PersonneSirSearchCriteria extends AbstractSearchCriteria {
     /**
      * Serial ID.
      */
@@ -21,7 +19,8 @@ public class PersonneSirSearchCriteria
     private String login;
 
     /**
-     * Booléen indiquant si la recherche doit se faire de manière stricte (égale) sur le login.
+     * Booléen indiquant si la recherche doit se faire de manière stricte
+     * (égale) sur le login.
      */
     private Boolean strictSearchLogin;
 
@@ -39,8 +38,7 @@ public class PersonneSirSearchCriteria
      * {@inheritDoc}
      */
     @Override
-    public void clear()
-    {
+    public void clear() {
         this.setLogin(null);
         this.setNom(null);
         this.setPrenom(null);
@@ -51,8 +49,7 @@ public class PersonneSirSearchCriteria
      * Getter pour login.
      * @return Le login
      */
-    public String getLogin()
-    {
+    public String getLogin() {
         return this.login;
     }
 
@@ -60,8 +57,7 @@ public class PersonneSirSearchCriteria
      * Setter pour login.
      * @param login Le login à écrire.
      */
-    public void setLogin(final String login)
-    {
+    public void setLogin(final String login) {
         this.login = login;
     }
 
@@ -69,8 +65,7 @@ public class PersonneSirSearchCriteria
      * Getter sur nom.
      * @return Retourne le nom.
      */
-    public String getNom()
-    {
+    public String getNom() {
         return this.nom;
     }
 
@@ -78,8 +73,7 @@ public class PersonneSirSearchCriteria
      * Setter pour nom.
      * @param nom le nom à écrire.
      */
-    public void setNom(final String nom)
-    {
+    public void setNom(final String nom) {
         this.nom = nom;
     }
 
@@ -87,8 +81,7 @@ public class PersonneSirSearchCriteria
      * Getter sur prenom.
      * @return Retourne le prenom.
      */
-    public String getPrenom()
-    {
+    public String getPrenom() {
         return this.prenom;
     }
 
@@ -96,8 +89,7 @@ public class PersonneSirSearchCriteria
      * Setter pour prenom.
      * @param prenom le prenom à écrire.
      */
-    public void setPrenom(final String prenom)
-    {
+    public void setPrenom(final String prenom) {
         this.prenom = prenom;
     }
 
@@ -105,8 +97,7 @@ public class PersonneSirSearchCriteria
      * Getter pour strictSearchLogin.
      * @return Le strictSearchLogin
      */
-    public Boolean getStrictSearchLogin()
-    {
+    public Boolean getStrictSearchLogin() {
         return this.strictSearchLogin;
     }
 
@@ -114,8 +105,7 @@ public class PersonneSirSearchCriteria
      * Setter pour strictSearchLogin.
      * @param strictSearchLogin Le strictSearchLogin à écrire.
      */
-    public void setStrictSearchLogin(final Boolean strictSearchLogin)
-    {
+    public void setStrictSearchLogin(final Boolean strictSearchLogin) {
         this.strictSearchLogin = strictSearchLogin;
     }
 }

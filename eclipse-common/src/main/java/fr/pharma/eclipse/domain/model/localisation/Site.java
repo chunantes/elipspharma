@@ -28,14 +28,11 @@ import fr.pharma.eclipse.domain.model.suivi.localisation.SiteSuivi;
 
 /**
  * Classe métier représentant un site.
- 
+ * @author Netapsys
  * @version $Revision$ $Date$
  */
 @Entity(name = "site")
-public class Site
-    extends BeanObjectSuivi
-    implements BeanWithNom
-{
+public class Site extends BeanObjectSuivi implements BeanWithNom {
     /**
      * Serial ID.
      */
@@ -104,8 +101,8 @@ public class Site
      * Getter sur nom.
      * @return Retourne le nom.
      */
-    public String getNom()
-    {
+    @Override
+    public String getNom() {
         return this.nom;
     }
 
@@ -113,8 +110,7 @@ public class Site
      * Setter pour nom.
      * @param nom le nom à écrire.
      */
-    public void setNom(final String nom)
-    {
+    public void setNom(final String nom) {
         this.nom = nom;
     }
 
@@ -122,8 +118,7 @@ public class Site
      * Getter sur etablissement.
      * @return Retourne le etablissement.
      */
-    public Etablissement getEtablissement()
-    {
+    public Etablissement getEtablissement() {
         return this.etablissement;
     }
 
@@ -131,8 +126,7 @@ public class Site
      * Setter pour etablissement.
      * @param etablissement le etablissement à écrire.
      */
-    public void setEtablissement(final Etablissement etablissement)
-    {
+    public void setEtablissement(final Etablissement etablissement) {
         this.etablissement = etablissement;
     }
 
@@ -141,8 +135,7 @@ public class Site
      * @return Retourne le modifs.
      */
     @Override
-    public SortedSet<SiteSuivi> getModifs()
-    {
+    public SortedSet<SiteSuivi> getModifs() {
         return this.modifs;
     }
 
@@ -150,8 +143,7 @@ public class Site
      * Getter sur pharmacies.
      * @return Retourne le pharmacies.
      */
-    public SortedSet<Pharmacie> getPharmacies()
-    {
+    public SortedSet<Pharmacie> getPharmacies() {
         return this.pharmacies;
     }
 
@@ -159,8 +151,7 @@ public class Site
      * Setter pour pharmacies.
      * @param pharmacies le pharmacies à écrire.
      */
-    public void setPharmacies(final SortedSet<Pharmacie> pharmacies)
-    {
+    public void setPharmacies(final SortedSet<Pharmacie> pharmacies) {
         this.pharmacies = pharmacies;
     }
 
@@ -168,8 +159,7 @@ public class Site
      * Getter sur code.
      * @return Retourne le code.
      */
-    public String getCode()
-    {
+    public String getCode() {
         return this.code;
     }
 
@@ -177,8 +167,7 @@ public class Site
      * Setter pour code.
      * @param code le code à écrire.
      */
-    public void setCode(final String code)
-    {
+    public void setCode(final String code) {
         this.code = code;
     }
 
@@ -186,8 +175,7 @@ public class Site
      * Getter pour adresse.
      * @return Le adresse
      */
-    public String getAdresse()
-    {
+    public String getAdresse() {
         return this.adresse;
     }
 
@@ -195,8 +183,7 @@ public class Site
      * Setter pour adresse.
      * @param adresse Le adresse à écrire.
      */
-    public void setAdresse(final String adresse)
-    {
+    public void setAdresse(final String adresse) {
         this.adresse = adresse;
     }
 
@@ -204,8 +191,7 @@ public class Site
      * Getter pour codePostal.
      * @return Le codePostal
      */
-    public String getCodePostal()
-    {
+    public String getCodePostal() {
         return this.codePostal;
     }
 
@@ -213,8 +199,7 @@ public class Site
      * Setter pour codePostal.
      * @param codePostal Le codePostal à écrire.
      */
-    public void setCodePostal(final String codePostal)
-    {
+    public void setCodePostal(final String codePostal) {
         this.codePostal = codePostal;
     }
 
@@ -222,8 +207,7 @@ public class Site
      * Getter pour ville.
      * @return Le ville
      */
-    public String getVille()
-    {
+    public String getVille() {
         return this.ville;
     }
 
@@ -231,8 +215,7 @@ public class Site
      * Setter pour ville.
      * @param ville Le ville à écrire.
      */
-    public void setVille(final String ville)
-    {
+    public void setVille(final String ville) {
         this.ville = ville;
     }
 

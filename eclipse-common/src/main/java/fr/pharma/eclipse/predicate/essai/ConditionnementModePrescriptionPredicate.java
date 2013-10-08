@@ -7,12 +7,10 @@ import fr.pharma.eclipse.predicate.GenericPredicate;
 
 /**
  * Prédicat portant sur le mode de prescription d'un conditionnement.
- 
+ * @author Netapsys
  * @version $Revision$ $Date$
  */
-public class ConditionnementModePrescriptionPredicate
-    implements Predicate
-{
+public class ConditionnementModePrescriptionPredicate implements Predicate {
     /**
      * Prédicat générique initialisé.
      */
@@ -22,19 +20,17 @@ public class ConditionnementModePrescriptionPredicate
      * Constructeur.
      * @param modePrescriptionAttendu Mode de prescription attendu.
      */
-    public ConditionnementModePrescriptionPredicate(final ModePrescription modePrescriptionAttendu)
-    {
-        this.predicate = new GenericPredicate("modePrescription",
-                                              modePrescriptionAttendu);
+    public ConditionnementModePrescriptionPredicate(final ModePrescription modePrescriptionAttendu) {
+        this.predicate = new GenericPredicate("modePrescription", modePrescriptionAttendu);
     }
 
     /**
      * Constructeur.
      * @param modePrescriptionAttenduStr Nom du mode de prescription attendu.<br>
-     * modePrescriptionAttendu doit correspondre à une valeur de l'énumération ModePrescription.
+     * modePrescriptionAttendu doit correspondre à une valeur de l'énumération
+     * ModePrescription.
      */
-    public ConditionnementModePrescriptionPredicate(final String modePrescriptionAttenduStr)
-    {
+    public ConditionnementModePrescriptionPredicate(final String modePrescriptionAttenduStr) {
         this(ModePrescription.valueOf(modePrescriptionAttenduStr));
     }
 
@@ -42,8 +38,7 @@ public class ConditionnementModePrescriptionPredicate
      * {@inheritDoc}
      */
     @Override
-    public boolean evaluate(final Object object)
-    {
+    public boolean evaluate(final Object object) {
         return this.predicate.evaluate(object);
     }
 

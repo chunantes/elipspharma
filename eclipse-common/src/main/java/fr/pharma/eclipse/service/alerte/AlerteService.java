@@ -7,11 +7,10 @@ import fr.pharma.eclipse.domain.model.essai.Essai;
 
 /**
  * Interface de service de gestion des alertes.
- 
+ * @author Netapsys
  * @version $Revision$ $Date$
  */
-public interface AlerteService
-{
+public interface AlerteService {
     /**
      * Méthode en charge de retourner les alertes.
      * @return Liste des alertes.

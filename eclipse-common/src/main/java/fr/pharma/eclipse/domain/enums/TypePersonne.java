@@ -2,62 +2,48 @@ package fr.pharma.eclipse.domain.enums;
 
 /**
  * Enumération représentant le type de personne.
- 
+ * @author Netapsys
  * @version $Revision$ $Date$
  */
-public enum TypePersonne
-{
+public enum TypePersonne {
     /**
      * ARC Investigateur.
      */
-    ARC_INVESTIGATEUR("ARC Investigateur", RolePersonne.ARC_INVESTIGATEUR,
-            CategoriePersonne.INTERNE, new Droit[]
-            {Droit.ARC_INVESTIGATEUR }),
+    ARC_INVESTIGATEUR("ARC Investigateur", RolePersonne.ARC_INVESTIGATEUR, CategoriePersonne.INTERNE, new Droit[]{Droit.ARC_INVESTIGATEUR }),
 
     /**
      * ARC Promoteur.
      */
-    ARC_PROMOTEUR("ARC Promoteur", RolePersonne.ARC_PROMOTEUR, CategoriePersonne.EXTERNE,
-            new Droit[]
-            {Droit.ARC_PROMOTEUR }),
+    ARC_PROMOTEUR("ARC Promoteur", RolePersonne.ARC_PROMOTEUR, CategoriePersonne.EXTERNE, new Droit[]{Droit.ARC_PROMOTEUR }),
 
     /**
      * CRO.
      */
-    CRO("ARC CRO", RolePersonne.CRO, CategoriePersonne.EXTERNE, new Droit[]
-    {Droit.CRO }),
+    CRO("ARC CRO", RolePersonne.CRO, CategoriePersonne.EXTERNE, new Droit[]{Droit.CRO }),
 
     /**
      * Direction de la Recherche.
      */
-    DIRECTION_RECHERCHE(
-            "Direction Recherche",
-            RolePersonne.DIRECTION_RECHERCHE,
-            CategoriePersonne.INTERNE,
-            new Droit[]
-            {Droit.DIRECTION_RECHERCHE_ADMINISTRATIF, Droit.DIRECTION_RECHERCHE_PHARMACOVIGILANT }),
+    DIRECTION_RECHERCHE("Direction Recherche", RolePersonne.DIRECTION_RECHERCHE, CategoriePersonne.INTERNE, new Droit[]{Droit.DIRECTION_RECHERCHE_ADMINISTRATIF,
+                                                                                                                        Droit.DIRECTION_RECHERCHE_PHARMACOVIGILANT }),
 
     /**
      * Investigateur.
      */
-    INVESTIGATEUR("Investigateur", RolePersonne.INVESTIGATEUR, CategoriePersonne.INTERNE,
-            new Droit[]
-            {Droit.INVESTIGATEUR_CO, Droit.INVESTIGATEUR_PRINCIPAL }),
+    INVESTIGATEUR("Investigateur", RolePersonne.INVESTIGATEUR, CategoriePersonne.INTERNE, new Droit[]{Droit.INVESTIGATEUR_CO, Droit.INVESTIGATEUR_PRINCIPAL }),
 
     /**
      * Pharmacien.
      */
-    PHARMACIEN("Personnel Pharmaceutique", RolePersonne.PHARMACIEN, CategoriePersonne.INTERNE,
-            new Droit[]
-            {Droit.PHARMACIEN_INTERNE, Droit.PHARMACIEN_EXTERNE, Droit.PHARMACIEN_PREPARATEUR,
-             Droit.PHARMACIEN_TITULAIRE, Droit.PHARMACIEN_ATTACHE, Droit.PHARMACIEN_ASSISTANT,
-             Droit.PHARMACIEN_INTERNE_GARDE, }),
+    PHARMACIEN("Personnel Pharmaceutique", RolePersonne.PHARMACIEN, CategoriePersonne.INTERNE, new Droit[]{Droit.PHARMACIEN_INTERNE, Droit.PHARMACIEN_EXTERNE,
+                                                                                                           Droit.PHARMACIEN_PREPARATEUR, Droit.PHARMACIEN_TITULAIRE,
+                                                                                                           Droit.PHARMACIEN_ATTACHE, Droit.PHARMACIEN_ASSISTANT,
+                                                                                                           Droit.PHARMACIEN_INTERNE_GARDE, }),
 
     /**
      * Promoteur.
      */
-    PROMOTEUR("Promoteur", RolePersonne.PROMOTEUR, CategoriePersonne.EXTERNE, new Droit[]
-    {Droit.PROMOTEUR });
+    PROMOTEUR("Promoteur", RolePersonne.PROMOTEUR, CategoriePersonne.EXTERNE, new Droit[]{Droit.PROMOTEUR });
 
     /**
      * Libellé.
@@ -86,12 +72,7 @@ public enum TypePersonne
      * @param categorie Catégorie du type de personne.
      * @param droits Liste des droits possibles pour le type de personne.
      */
-    private TypePersonne(
-                         final String libelle,
-                         final RolePersonne rolePersonne,
-                         final CategoriePersonne categorie,
-                         final Droit[] droits)
-    {
+    private TypePersonne(final String libelle, final RolePersonne rolePersonne, final CategoriePersonne categorie, final Droit[] droits) {
         this.libelle = libelle;
         this.categorie = categorie;
         this.droits = droits;
@@ -102,8 +83,7 @@ public enum TypePersonne
      * Getter sur libelle.
      * @return Retourne le libelle.
      */
-    public String getLibelle()
-    {
+    public String getLibelle() {
         return this.libelle;
     }
 
@@ -111,8 +91,7 @@ public enum TypePersonne
      * Getter pour droits.
      * @return Le droits
      */
-    public Droit[] getDroits()
-    {
+    public Droit[] getDroits() {
         return this.droits;
     }
 
@@ -120,8 +99,7 @@ public enum TypePersonne
      * {@inheritDoc}
      */
     @Override
-    public String toString()
-    {
+    public String toString() {
         return this.getLibelle();
     }
 
@@ -129,8 +107,7 @@ public enum TypePersonne
      * Getter sur categorie.
      * @return Retourne le categorie.
      */
-    public CategoriePersonne getCategorie()
-    {
+    public CategoriePersonne getCategorie() {
         return this.categorie;
     }
 
@@ -138,8 +115,7 @@ public enum TypePersonne
      * Getter pour rolePersonne.
      * @return Le rolePersonne
      */
-    public RolePersonne getRolePersonne()
-    {
+    public RolePersonne getRolePersonne() {
         return this.rolePersonne;
     }
 

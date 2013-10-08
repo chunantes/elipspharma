@@ -10,12 +10,10 @@ import fr.pharma.eclipse.jasper.exception.JasperReportBuildException;
 
 /**
  * Stratégy des maker de document.
- 
+ * @author Netapsys
  * @version $Revision$ $Date$
  */
-public class DocumentMakerDictionary
-    implements Serializable
-{
+public class DocumentMakerDictionary implements Serializable {
 
     /**
      * SerialVersionUID.
@@ -31,18 +29,12 @@ public class DocumentMakerDictionary
      * Méthode en charge d'appeler le bon maker.
      */
     public void make(final TypeRapportJasper type,
-                     final Object source)
-    {
-        try
-        {
-            if (this.map.containsKey(type))
-            {
-                this.map.get(type).make(type,
-                                        source);
+                     final Object source) {
+        try {
+            if (this.map.containsKey(type)) {
+                this.map.get(type).make(type, source);
             }
-        }
-        catch (final JasperReportBuildException e)
-        {
+        } catch (final JasperReportBuildException e) {
             throw new CommonException(e);
         }
     }
@@ -51,8 +43,7 @@ public class DocumentMakerDictionary
      * Setter pour map.
      * @param map Le map à écrire.
      */
-    public void setMap(final Map<TypeRapportJasper, DocumentMaker> map)
-    {
+    public void setMap(final Map<TypeRapportJasper, DocumentMaker> map) {
         this.map = map;
     }
 }

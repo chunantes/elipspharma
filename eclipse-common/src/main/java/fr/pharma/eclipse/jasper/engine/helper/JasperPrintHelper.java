@@ -14,12 +14,10 @@ import net.sf.jasperreports.engine.util.JRLoader;
 
 /**
  * Helper pour la génération des objets de type JasperPrint.
- 
+ * @author Netapsys
  * @version $Revision$ $Date$
  */
-public class JasperPrintHelper
-    implements Serializable
-{
+public class JasperPrintHelper implements Serializable {
 
     /**
      * Serial ID.
@@ -27,21 +25,21 @@ public class JasperPrintHelper
     private static final long serialVersionUID = 7076765564289907694L;
 
     /**
-     * Méthode en charge de créer un objet JasperReport à partir d'un flux d'entrée.
+     * Méthode en charge de créer un objet JasperReport à partir d'un flux
+     * d'entrée.
      * @param is Flux d'entrée.
      * @return Un objet JasperReport.
      * @throws JRException En cas d'erreur.
      */
-    public JasperReport loadObject(final InputStream is)
-        throws JRException
-    {
+    public JasperReport loadObject(final InputStream is) throws JRException {
         return (JasperReport) JRLoader.loadObject(is);
     }
 
     /**
-     * Fills the compiled report design loaded from the supplied input stream and returns the
-     * generated report object.
-     * @param jasperReport input stream to read the compiled report design object from
+     * Fills the compiled report design loaded from the supplied input stream
+     * and returns the generated report object.
+     * @param jasperReport input stream to read the compiled report design
+     * object from
      * @param mapParameters report parameters map
      * @param dataSource data source object
      * @return generated report object
@@ -50,28 +48,22 @@ public class JasperPrintHelper
      */
     public JasperPrint fillReport(final JasperReport jasperReport,
                                   final Map<String, ? extends Object> mapParameters,
-                                  final JRDataSource dataSource)
-        throws JRException
-    {
-        return JasperFillManager.fillReport(jasperReport,
-                                            mapParameters,
-                                            dataSource);
+                                  final JRDataSource dataSource) throws JRException {
+        return JasperFillManager.fillReport(jasperReport, mapParameters, dataSource);
     }
 
     /**
-     * Fills the compiled report design loaded from the supplied input stream and returns the
-     * generated report object.
-     * @param jasperReport input stream to read the compiled report design object from
+     * Fills the compiled report design loaded from the supplied input stream
+     * and returns the generated report object.
+     * @param jasperReport input stream to read the compiled report design
+     * object from
      * @param mapParameters report parameters map
      * @return generated report object
      * @throws JRException JRException.
      * @see JRFiller#fillReport(JasperReport, Map)
      */
     public JasperPrint fillReport(final JasperReport jasperReport,
-                                  final Map<String, ? extends Object> mapParameters)
-        throws JRException
-    {
-        return JasperFillManager.fillReport(jasperReport,
-                                            mapParameters);
+                                  final Map<String, ? extends Object> mapParameters) throws JRException {
+        return JasperFillManager.fillReport(jasperReport, mapParameters);
     }
 }

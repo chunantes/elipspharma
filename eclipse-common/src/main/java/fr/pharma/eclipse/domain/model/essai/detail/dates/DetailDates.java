@@ -27,14 +27,11 @@ import fr.pharma.eclipse.domain.model.suivi.essai.detail.DetailDatesSuivi;
 
 /**
  * Classe métier représentant les dates d'un essai clinique.
- 
+ * @author Netapsys
  * @version $Revision$ $Date$
  */
 @Entity(name = "essai_detail_dates")
-public class DetailDates
-    extends BeanObjectSuivi
-    implements Serializable
-{
+public class DetailDates extends BeanObjectSuivi implements Serializable {
 
     /**
      * Serial ID.
@@ -152,15 +149,13 @@ public class DetailDates
     @OneToMany(mappedBy = "detailDates", cascade = CascadeType.ALL)
     @LazyCollection(LazyCollectionOption.TRUE)
     @Sort(type = SortType.COMPARATOR, comparator = SuiviComparator.class)
-    private SortedSet<DetailDatesSuivi> modifs =
-        new TreeSet<DetailDatesSuivi>(new SuiviComparator());
+    private SortedSet<DetailDatesSuivi> modifs = new TreeSet<DetailDatesSuivi>(new SuiviComparator());
 
     /**
      * Getter sur essai.
      * @return Retourne le essai.
      */
-    public Essai getEssai()
-    {
+    public Essai getEssai() {
         return this.essai;
     }
 
@@ -168,8 +163,7 @@ public class DetailDates
      * Setter pour essai.
      * @param essai le essai à écrire.
      */
-    public void setEssai(final Essai essai)
-    {
+    public void setEssai(final Essai essai) {
         this.essai = essai;
     }
 
@@ -177,8 +171,7 @@ public class DetailDates
      * Getter sur debutEtudePrev.
      * @return Retourne le debutEtudePrev.
      */
-    public Calendar getDebutEtudePrev()
-    {
+    public Calendar getDebutEtudePrev() {
         return this.debutEtudePrev;
     }
 
@@ -186,8 +179,7 @@ public class DetailDates
      * Setter pour debutEtudePrev.
      * @param debutEtudePrev le debutEtudePrev à écrire.
      */
-    public void setDebutEtudePrev(final Calendar debutEtudePrev)
-    {
+    public void setDebutEtudePrev(final Calendar debutEtudePrev) {
         this.debutEtudePrev = debutEtudePrev;
     }
 
@@ -195,8 +187,7 @@ public class DetailDates
      * Getter sur finEtudePrev.
      * @return Retourne le finEtudePrev.
      */
-    public Calendar getFinEtudePrev()
-    {
+    public Calendar getFinEtudePrev() {
         return this.finEtudePrev;
     }
 
@@ -204,8 +195,7 @@ public class DetailDates
      * Setter pour finEtudePrev.
      * @param finEtudePrev le finEtudePrev à écrire.
      */
-    public void setFinEtudePrev(final Calendar finEtudePrev)
-    {
+    public void setFinEtudePrev(final Calendar finEtudePrev) {
         this.finEtudePrev = finEtudePrev;
     }
 
@@ -213,8 +203,7 @@ public class DetailDates
      * Getter sur activationPrev.
      * @return Retourne le activationPrev.
      */
-    public Calendar getActivationPrev()
-    {
+    public Calendar getActivationPrev() {
         return this.activationPrev;
     }
 
@@ -222,8 +211,7 @@ public class DetailDates
      * Setter pour activationPrev.
      * @param activationPrev le activationPrev à écrire.
      */
-    public void setActivationPrev(final Calendar activationPrev)
-    {
+    public void setActivationPrev(final Calendar activationPrev) {
         this.activationPrev = activationPrev;
     }
 
@@ -231,8 +219,7 @@ public class DetailDates
      * Getter sur debutInclusionPrev.
      * @return Retourne le debutInclusionPrev.
      */
-    public Calendar getDebutInclusionPrev()
-    {
+    public Calendar getDebutInclusionPrev() {
         return this.debutInclusionPrev;
     }
 
@@ -240,8 +227,7 @@ public class DetailDates
      * Setter pour debutInclusionPrev.
      * @param debutInclusionPrev le debutInclusionPrev à écrire.
      */
-    public void setDebutInclusionPrev(final Calendar debutInclusionPrev)
-    {
+    public void setDebutInclusionPrev(final Calendar debutInclusionPrev) {
         this.debutInclusionPrev = debutInclusionPrev;
     }
 
@@ -249,8 +235,7 @@ public class DetailDates
      * Getter sur finInclusionPrev.
      * @return Retourne le finInclusionPrev.
      */
-    public Calendar getFinInclusionPrev()
-    {
+    public Calendar getFinInclusionPrev() {
         return this.finInclusionPrev;
     }
 
@@ -258,8 +243,7 @@ public class DetailDates
      * Setter pour finInclusionPrev.
      * @param finInclusionPrev le finInclusionPrev à écrire.
      */
-    public void setFinInclusionPrev(final Calendar finInclusionPrev)
-    {
+    public void setFinInclusionPrev(final Calendar finInclusionPrev) {
         this.finInclusionPrev = finInclusionPrev;
     }
 
@@ -268,8 +252,7 @@ public class DetailDates
      * @return Retourne le modifs.
      */
     @Override
-    public SortedSet<DetailDatesSuivi> getModifs()
-    {
+    public SortedSet<DetailDatesSuivi> getModifs() {
         return this.modifs;
     }
 
@@ -277,8 +260,7 @@ public class DetailDates
      * Setter pour modifs.
      * @param modifs le modifs à écrire.
      */
-    public void setModifs(final SortedSet<DetailDatesSuivi> modifs)
-    {
+    public void setModifs(final SortedSet<DetailDatesSuivi> modifs) {
         this.modifs = modifs;
     }
 
@@ -286,8 +268,7 @@ public class DetailDates
      * Getter sur debutEtude.
      * @return Retourne le debutEtude.
      */
-    public Calendar getDebutEtude()
-    {
+    public Calendar getDebutEtude() {
         return this.debutEtude;
     }
 
@@ -295,8 +276,7 @@ public class DetailDates
      * Setter pour debutEtude.
      * @param debutEtude le debutEtude à écrire.
      */
-    public void setDebutEtude(final Calendar debutEtude)
-    {
+    public void setDebutEtude(final Calendar debutEtude) {
         this.debutEtude = debutEtude;
     }
 
@@ -304,8 +284,7 @@ public class DetailDates
      * Getter sur finEtude.
      * @return Retourne le finEtude.
      */
-    public Calendar getFinEtude()
-    {
+    public Calendar getFinEtude() {
         return this.finEtude;
     }
 
@@ -313,8 +292,7 @@ public class DetailDates
      * Setter pour finEtude.
      * @param finEtude le finEtude à écrire.
      */
-    public void setFinEtude(final Calendar finEtude)
-    {
+    public void setFinEtude(final Calendar finEtude) {
         this.finEtude = finEtude;
     }
 
@@ -322,8 +300,7 @@ public class DetailDates
      * Getter sur debutInclusion.
      * @return Retourne le debutInclusion.
      */
-    public Calendar getDebutInclusion()
-    {
+    public Calendar getDebutInclusion() {
         return this.debutInclusion;
     }
 
@@ -331,8 +308,7 @@ public class DetailDates
      * Setter pour debutInclusion.
      * @param debutInclusion le debutInclusion à écrire.
      */
-    public void setDebutInclusion(final Calendar debutInclusion)
-    {
+    public void setDebutInclusion(final Calendar debutInclusion) {
         this.debutInclusion = debutInclusion;
     }
 
@@ -340,8 +316,7 @@ public class DetailDates
      * Getter sur finInclusion.
      * @return Retourne le finInclusion.
      */
-    public Calendar getFinInclusion()
-    {
+    public Calendar getFinInclusion() {
         return this.finInclusion;
     }
 
@@ -349,8 +324,7 @@ public class DetailDates
      * Setter pour finInclusion.
      * @param finInclusion le finInclusion à écrire.
      */
-    public void setFinInclusion(final Calendar finInclusion)
-    {
+    public void setFinInclusion(final Calendar finInclusion) {
         this.finInclusion = finInclusion;
     }
 
@@ -358,8 +332,7 @@ public class DetailDates
      * Getter sur finDispensations.
      * @return Retourne le finDispensations.
      */
-    public Calendar getFinDispensations()
-    {
+    public Calendar getFinDispensations() {
         return this.finDispensations;
     }
 
@@ -367,8 +340,7 @@ public class DetailDates
      * Setter pour finDispensations.
      * @param finDispensations le finDispensations à écrire.
      */
-    public void setFinDispensations(final Calendar finDispensations)
-    {
+    public void setFinDispensations(final Calendar finDispensations) {
         this.finDispensations = finDispensations;
     }
 
@@ -376,8 +348,7 @@ public class DetailDates
      * Getter sur preCloture.
      * @return Retourne le preCloture.
      */
-    public Calendar getPreCloture()
-    {
+    public Calendar getPreCloture() {
         return this.preCloture;
     }
 
@@ -385,8 +356,7 @@ public class DetailDates
      * Setter pour preCloture.
      * @param preCloture le preCloture à écrire.
      */
-    public void setPreCloture(final Calendar preCloture)
-    {
+    public void setPreCloture(final Calendar preCloture) {
         this.preCloture = preCloture;
     }
 
@@ -394,8 +364,7 @@ public class DetailDates
      * Getter sur cloture.
      * @return Retourne le cloture.
      */
-    public Calendar getCloture()
-    {
+    public Calendar getCloture() {
         return this.cloture;
     }
 
@@ -403,8 +372,7 @@ public class DetailDates
      * Setter pour cloture.
      * @param cloture le cloture à écrire.
      */
-    public void setCloture(final Calendar cloture)
-    {
+    public void setCloture(final Calendar cloture) {
         this.cloture = cloture;
     }
 
@@ -412,8 +380,7 @@ public class DetailDates
      * Getter sur activation.
      * @return Retourne le activation.
      */
-    public Calendar getActivation()
-    {
+    public Calendar getActivation() {
         return this.activation;
     }
 
@@ -421,8 +388,7 @@ public class DetailDates
      * Setter pour activation.
      * @param activation le activation à écrire.
      */
-    public void setActivation(final Calendar activation)
-    {
+    public void setActivation(final Calendar activation) {
         this.activation = activation;
     }
 
@@ -430,8 +396,7 @@ public class DetailDates
      * Getter pour reception.
      * @return Le reception
      */
-    public Calendar getReception()
-    {
+    public Calendar getReception() {
         return this.reception;
     }
 
@@ -439,8 +404,7 @@ public class DetailDates
      * Setter pour reception.
      * @param reception Le reception à écrire.
      */
-    public void setReception(final Calendar reception)
-    {
+    public void setReception(final Calendar reception) {
         this.reception = reception;
     }
 
