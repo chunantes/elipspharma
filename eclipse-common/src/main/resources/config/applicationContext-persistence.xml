@@ -1,0 +1,134 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans 
+    xmlns="http://www.springframework.org/schema/beans" 
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd">
+
+	<!-- ============================= -->
+	<!-- DATASOURCE ECLIPSE            -->
+	<!-- ============================= -->	
+    
+    <bean class="org.apache.commons.dbcp.BasicDataSource" destroy-method="close" id="dataSource">
+        <property name="driverClassName" value="${hibernate.jdbc.driver}"/>
+        <property name="url" value="${hibernate.jdbc.url}"/>
+        <property name="username" value="${hibernate.jdbc.user}"/>
+        <property name="password" value="${hibernate.jdbc.password}"/>
+        <property name="testOnBorrow" value="true"/>
+        <property name="testOnReturn" value="true"/>
+        <property name="testWhileIdle" value="true"/>
+        <property name="timeBetweenEvictionRunsMillis" value="1800000"/>
+        <property name="numTestsPerEvictionRun" value="3"/>
+        <property name="minEvictableIdleTimeMillis" value="1800000"/>
+        <property name="validationQuery" value="SELECT 1"/>
+        <property name="initialSize" value="1"></property>
+        <property name="maxActive" value="50"></property>
+        <property name="maxIdle" value="20"></property>
+    </bean>
+    
+    <!-- liquibase -->
+    <bean id="liquibase" class="liquibase.integration.spring.SpringLiquibase">
+      <property name="dataSource" ref="dataSource" />
+      <property name="changeLog" value="classpath:liquibase/db-changelog.xml" />
+ 	</bean>
+ 		
+
+    
+	<!-- ============================= -->
+	<!-- DATASOURCE SIR                -->
+	<!-- ============================= -->	
+    
+      <bean class="org.apache.commons.dbcp.BasicDataSource" destroy-method="close" id="dataSourceSir">
+        <property name="driverClassName" value="${sir.hibernate.jdbc.driver}"/>
+        <property name="url" value="${sir.hibernate.jdbc.url}"/>
+        <property name="username" value="${sir.hibernate.jdbc.user}"/>
+        <property name="password" value="${sir.hibernate.jdbc.password}"/>
+        <property name="testOnBorrow" value="true"/>
+        <property name="testOnReturn" value="true"/>
+        <property name="testWhileIdle" value="true"/>
+        <property name="timeBetweenEvictionRunsMillis" value="1800000"/>
+        <property name="numTestsPerEvictionRun" value="3"/>
+        <property name="minEvictableIdleTimeMillis" value="1800000"/>
+        <property name="validationQuery" value="SELECT 1"/>
+        <property name="initialSize" value="1"></property>
+        <property name="maxActive" value="50"></property>
+        <property name="maxIdle" value="20"></property>
+    </bean>
+    
+    <!-- ============================= -->
+	<!-- ENTITY MANAGER ECLIPSE        -->
+	<!-- ============================= -->	
+    <bean id="entityManagerFactory" class="org.springframework.orm.jpa.LocalContainerEntityManagerFactoryBean" depends-on="liquibase">
+    	<property name="dataSource" ref="dataSource" />
+        <property name="persistenceUnitName" value="eclipse" />
+        <property name="jpaVendorAdapter">
+            <bean class="org.springframework.orm.jpa.vendor.HibernateJpaVendorAdapter" />
+        </property>
+        <property name="jpaProperties">
+            <props>
+                <!-- dialect -->
+                <prop key="hibernate.dialect">${hibernate.dialect}</prop>
+                <prop key="hibernate.connection.useUnicode">${hibernate.connection.useUnicode}</prop>
+                <prop key="hibernate.connection.charSet">${hibernate.connection.characterEncoding}</prop>
+                <!-- 2d level cache -->
+                <prop key="hibernate.cache.use_query_cache">${hibernate.use.query.cache}</prop>
+                <prop key="hibernate.cache.use_second_level_cache">${hibernate.use.second.level.cache}</prop>
+                <!-- misc -->
+                <prop key="hibernate.bytecode.use_reflection_optimizer">true</prop>
+                <prop key="hibernate.jdbc.use_scrollable_resultset">true</prop>
+                <prop key="hibernate.jdbc.use_streams_for_binary">true</prop>
+                <prop key="hibernate.jdbc.fetch_size">300</prop>
+                <!-- logging debug information -->
+                <prop key="hibernate.show_sql">${hibernate.show.sql}</prop>
+                <prop key="hibernate.format_sql">${hibernate.format.sql}</prop>
+                <prop key="hibernate.generate_statistics">${hibernate.generate_statistics}</prop>
+                <prop key="hibernate.use_sql_comments">${hibernate.use_sql_comments}</prop>
+                <prop key="hibernate.hbm2ddl.auto">${hibernate.hbm2ddl.auto}</prop>
+            </props>
+        </property>
+    </bean>
+    
+    <!-- Publishing session factory to be able view statistics -->
+	<bean id="sessionFactory" factory-bean="entityManagerFactory" factory-method="getSessionFactory" />
+    
+    <!-- ============================= -->
+	<!-- TRANSACTION MANAGER ECLIPSE   -->
+	<!-- ============================= -->	
+    <bean id="transactionManager" class="org.springframework.orm.jpa.JpaTransactionManager">
+        <property name="entityManagerFactory" ref="entityManagerFactory"/>
+    </bean>
+    
+    <!-- ============================= -->
+	<!-- ENTITY MANAGER SIR            -->
+	<!-- ============================= -->	
+    <bean id="sirEntityManagerFactory" class="org.springframework.orm.jpa.LocalContainerEntityManagerFactoryBean">
+    	<property name="dataSource" ref="dataSourceSir" />
+        <property name="persistenceUnitName" value="sir" />
+        <property name="jpaVendorAdapter">
+            <bean class="org.springframework.orm.jpa.vendor.HibernateJpaVendorAdapter" />
+        </property>
+        <property name="jpaProperties">
+            <props>
+                <!-- dialect -->
+                <prop key="hibernate.dialect">${sir.hibernate.dialect}</prop>
+                <prop key="hibernate.default_schema">${sir.hibernate.schema}</prop>
+                <prop key="hibernate.connection.useUnicode">${sir.hibernate.connection.useUnicode}</prop>
+                <prop key="hibernate.connection.charSet">${sir.hibernate.connection.characterEncoding}</prop>
+                <!-- 2d level cache -->
+                <prop key="hibernate.cache.use_query_cache">${sir.hibernate.use.query.cache}</prop>
+                <prop key="hibernate.cache.use_second_level_cache">${sir.hibernate.use.second.level.cache}</prop>
+                <!-- misc -->
+                <prop key="hibernate.bytecode.use_reflection_optimizer">true</prop>
+                <prop key="hibernate.jdbc.use_scrollable_resultset">true</prop>
+                <prop key="hibernate.jdbc.use_streams_for_binary">true</prop>
+                <prop key="hibernate.jdbc.fetch_size">300</prop>
+                <!-- logging debug information -->
+                <prop key="hibernate.show_sql">${sir.hibernate.show.sql}</prop>
+                <prop key="hibernate.format_sql">${sir.hibernate.format.sql}</prop>
+                <prop key="hibernate.generate_statistics">${sir.hibernate.generate_statistics}</prop>
+                <prop key="hibernate.use_sql_comments">${sir.hibernate.use_sql_comments}</prop>
+                <prop key="hibernate.hbm2ddl.auto">validate</prop>
+            </props>
+        </property>
+    </bean>
+          
+</beans>

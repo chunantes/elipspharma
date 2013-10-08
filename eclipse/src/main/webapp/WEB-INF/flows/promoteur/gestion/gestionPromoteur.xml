@@ -1,44 +1,43 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<flow xmlns="http://www.springframework.org/schema/webflow"
-	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-	xsi:schemaLocation="http://www.springframework.org/schema/webflow
-    http://www.springframework.org/schema/webflow/spring-webflow-2.0.xsd" parent="main">
+<flow xmlns="http://www.springframework.org/schema/webflow" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.springframework.org/schema/webflow
+    http://www.springframework.org/schema/webflow/spring-webflow-2.0.xsd"
+	parent="main">
 
 	<!-- Démarrage -->
 	<on-start>
-		<evaluate expression="promoteurSearchCriteria.clear()"/>
-		<evaluate expression="promoteurService.getAll(promoteurSearchCriteria)" result="promoteursManager.beans"/>
+		<evaluate expression="promoteurSearchCriteria.clear()" />
+		<evaluate expression="promoteurService.getAll(promoteurSearchCriteria)" result="promoteursManager.beans" />
 	</on-start>
 
 	<!-- Page principale -->
 	<view-state id="gestionPromoteur" view="../../../pages/promoteur/gestion/gestionPromoteur.xhtml">
-		<transition on="search" to="search"/>
-		<transition on="delete" to="delete"/>
+		<transition on="search" to="search" />
+		<transition on="delete" to="delete" />
 		<transition on="edit" to="edit">
 			<set name="flashScope.idPromoteur" value="promoteursManager.beanSelected.id" type="java.lang.Long" />
-			<evaluate expression="null" result="promoteursManager.beanSelected"/>		
+			<evaluate expression="null" result="promoteursManager.beanSelected" />
 		</transition>
-		<transition on="add" to="edit"/>
-		<transition on="error" to="gestionPromoteur"/>
+		<transition on="add" to="edit" />
+		<transition on="error" to="gestionPromoteur" />
 	</view-state>
-	
+
 	<!-- Recherche -->
 	<action-state id="search">
-		<evaluate expression="promoteurService.getAll(promoteurSearchCriteria)" result="promoteursManager.beans"/>
-		<transition to="gestionPromoteur"/>
+		<evaluate expression="promoteurService.getAll(promoteurSearchCriteria)" result="promoteursManager.beans" />
+		<transition to="gestionPromoteur" />
 	</action-state>
-	
+
 	<!-- Suppression -->
 	<action-state id="delete">
-		<evaluate expression="promoteurService.remove(promoteursManager.beansSelected)"/>
-		<transition on="error" to="search"/>
-		<transition to="search"/>
+		<evaluate expression="promoteurService.remove(promoteursManager.beansSelected)" />
+		<transition on="error" to="search" />
+		<transition to="search" />
 	</action-state>
-	
+
 	<!-- Edition -->
 	<subflow-state id="edit" subflow="promoteur/edit">
-		<input name="idPromoteur" value="flashScope.idPromoteur"/>
-		<transition to="search"/>
+		<input name="idPromoteur" value="flashScope.idPromoteur" />
+		<transition to="search" />
 	</subflow-state>
-	
+
 </flow>

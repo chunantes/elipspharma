@@ -13,12 +13,10 @@ import fr.pharma.eclipse.utils.FacesUtils;
 
 /**
  * Classe de validation de saisie d'un stockage de pharmacie.
- 
+ * @author Netapsys
  * @version $Revision$ $Date$
  */
-public class StockageValidator
-    implements Serializable
-{
+public class StockageValidator implements Serializable {
     /**
      * Serial ID.
      */
@@ -42,31 +40,23 @@ public class StockageValidator
      * @param stockages Liste des stockages de la pharmacie.
      * @return Indique si la validation est OK.
      */
-    public boolean validateStockage(final Stockage stockageCurrent)
-    {
+    public boolean validateStockage(final Stockage stockageCurrent) {
         boolean valid = true;
         final String nom = stockageCurrent.getNom();
 
         // Vérification de la valorisation du nom
-        if (nom == null
-            || StringUtils.isEmpty(nom.trim()))
-        {
-            this.facesUtils.addMessage(FacesMessage.SEVERITY_ERROR,
-                                       "stockage.nom.notEmpty");
+        if ((nom == null) || StringUtils.isEmpty(nom.trim())) {
+            this.facesUtils.addMessage(FacesMessage.SEVERITY_ERROR, "stockage.nom.notEmpty");
             valid = false;
 
         }
 
-        // Vérification de l'unicité du nom (un stockage de même niveau ne doit pas porter le même nom)
-        if (this.stockageService.isNomStockageUtiliseParAutreStockageDeMemeNiveau(stockageCurrent,
-                                                                      stockageCurrent
-                                                                              .getPharmacie()))
-        {
-            this.facesUtils.addMessage(FacesMessage.SEVERITY_ERROR,
-                                       "stockage.nom.notUnique");
+        // Vérification de l'unicité du nom (un stockage de même niveau ne doit
+        // pas porter le même nom)
+        if (this.stockageService.isNomStockageUtiliseParAutreStockageDeMemeNiveau(stockageCurrent, stockageCurrent.getPharmacie())) {
+            this.facesUtils.addMessage(FacesMessage.SEVERITY_ERROR, "stockage.nom.notUnique");
             valid = false;
         }
-   
 
         // Valorisation du paramètre de retour dans la requête.
         this.facesUtils.putCallbackValidityParam(valid);
@@ -77,8 +67,7 @@ public class StockageValidator
      * Setter pour facesUtils.
      * @param facesUtils Le facesUtils à écrire.
      */
-    public void setFacesUtils(final FacesUtils facesUtils)
-    {
+    public void setFacesUtils(final FacesUtils facesUtils) {
         this.facesUtils = facesUtils;
     }
 
@@ -86,8 +75,7 @@ public class StockageValidator
      * Setter pour stockageService.
      * @param stockageService Le stockageService à écrire.
      */
-    public void setStockageService(final StockageService stockageService)
-    {
+    public void setStockageService(final StockageService stockageService) {
         this.stockageService = stockageService;
     }
 

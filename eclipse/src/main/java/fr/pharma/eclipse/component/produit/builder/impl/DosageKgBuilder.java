@@ -6,14 +6,12 @@ import fr.pharma.eclipse.component.produit.builder.UnitePrescriptionBuilder;
 import fr.pharma.eclipse.domain.model.produit.Conditionnement;
 
 /**
- * Classe en charge de construire l'unité de prescription pour un conditionnement ayant comme mode
- * de prescription : Dose par kg.
- 
+ * Classe en charge de construire l'unité de prescription pour un
+ * conditionnement ayant comme mode de prescription : Dose par kg.
+ * @author Netapsys
  * @version $Revision$ $Date$
  */
-public class DosageKgBuilder
-    implements UnitePrescriptionBuilder, Serializable
-{
+public class DosageKgBuilder implements UnitePrescriptionBuilder, Serializable {
 
     /**
      * SerialVersionUID.
@@ -24,15 +22,10 @@ public class DosageKgBuilder
      * {@inheritDoc}
      */
     @Override
-    public void build(final Conditionnement conditionnement)
-    {
-        if (conditionnement.getUniteDosage() != null)
-        {
-            conditionnement.setUnitePrescription(conditionnement.getUniteDosage().getLibelle()
-                                                 + "/kg");
-        }
-        else
-        {
+    public void build(final Conditionnement conditionnement) {
+        if (conditionnement.getUniteDosage() != null) {
+            conditionnement.setUnitePrescription(conditionnement.getUniteDosage().getLibelle() + "/kg");
+        } else {
             conditionnement.setUnitePrescription("unité inconnue/kg");
         }
     }

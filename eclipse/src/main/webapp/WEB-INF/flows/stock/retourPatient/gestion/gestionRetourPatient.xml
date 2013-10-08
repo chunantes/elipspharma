@@ -1,75 +1,74 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<flow xmlns="http://www.springframework.org/schema/webflow"
-	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-	xsi:schemaLocation="http://www.springframework.org/schema/webflow
-    http://www.springframework.org/schema/webflow/spring-webflow-2.0.xsd" parent="main">
+<flow xmlns="http://www.springframework.org/schema/webflow" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.springframework.org/schema/webflow
+    http://www.springframework.org/schema/webflow/spring-webflow-2.0.xsd"
+	parent="main">
 
 	<!-- Démarrage -->
 	<on-start>
 		<!-- Initialisation complétion automatique des essais -->
-		<evaluate expression="essaiSearchCriteria.clear()"/>
+		<evaluate expression="essaiSearchCriteria.clear()" />
 		<evaluate expression="'numInterne'" result="autoCompleteEssaiManager.searchCriteria.activeOrder" />
 		<evaluate expression="'numInterneOrNomOrPromoteur'" result="autoCompleteEssaiManager.searchCriteriaProperty" />
-		
+
 		<!-- Initialisation complétion automatique des patients -->
-		<evaluate expression="patientSearchCriteria.clear()"/>
+		<evaluate expression="patientSearchCriteria.clear()" />
 		<evaluate expression="'numeroIpp'" result="autoCompletePatientManager.searchCriteria.activeOrder" />
-		<evaluate expression="'numeroIppOrNomOrPrenom'" result="autoCompletePatientManager.searchCriteriaProperty" />		
-		<evaluate expression="retoursPatientManager.init()"/>
-		<evaluate expression="retourPatientSearchCriteria.clear()"/>
+		<evaluate expression="'numeroIppOrNomOrPrenom'" result="autoCompletePatientManager.searchCriteriaProperty" />
+		<evaluate expression="retoursPatientManager.init()" />
+		<evaluate expression="retourPatientSearchCriteria.clear()" />
 	</on-start>
 
 	<!-- Page principale -->
 	<view-state id="gestionRetourPatient" view="../../../../pages/stock/retourPatient/gestion/gestionRetourPatient.xhtml">
-		<transition on="search" to="search"/>
+		<transition on="search" to="search" />
 		<transition on="edit" to="edit">
 			<set name="flashScope.idRetourPatient" value="retoursPatientManager.beanSelected.id" type="java.lang.Long" />
-			<evaluate expression="null" result="retoursPatientManager.beanSelected"/>		
+			<evaluate expression="null" result="retoursPatientManager.beanSelected" />
 		</transition>
-		
+
 		<transition on="recap" to="recapRetourPatient">
 			<set name="flashScope.idRetourPatient" value="requestParameters.id" type="java.lang.Long" />
-			<set name="retourPatientManager.result" value="retourPatientService.get(flashScope.idRetourPatient)"/>
 		</transition>
-		
+
 		<transition on="modifierEtat" to="search">
-			<evaluate expression="retoursPatientManager.applyEtat()"/>
-			<evaluate expression="retourPatientService.save(retoursPatientManager.beans)"/>
+			<evaluate expression="retoursPatientManager.applyEtat()" />
+			<evaluate expression="retourPatientService.save(retoursPatientManager.beans)" />
 		</transition>
-		
+
 		<transition on="add" to="add">
-			<evaluate expression="retourPatientManager.setAction('')"/>
+			<evaluate expression="retourPatientManager.setAction('')" />
 		</transition>
-		<transition on="error" to="gestionRetourPatient"/>
+		<transition on="error" to="gestionRetourPatient" />
 	</view-state>
-	
+
 	<!-- Recherche -->
 	<action-state id="search">
-		<evaluate expression="retourPatientService.getAll(retourPatientSearchCriteria)" result="retoursPatientManager.beans"/>
-		<transition to="gestionRetourPatient"/>
+		<evaluate expression="retourPatientService.getAll(retourPatientSearchCriteria)" result="retoursPatientManager.beans" />
+		<transition to="gestionRetourPatient" />
 	</action-state>
-	
+
 	<subflow-state id="edit" subflow="stock/retourPatient/edit">
-		<input name="idRetourPatient" value="flashScope.idRetourPatient"/>
-		<transition to="search"/>
+		<input name="idRetourPatient" value="flashScope.idRetourPatient" />
+		<transition to="search" />
 	</subflow-state>
-	
+
 	<!-- Edition -->
 	<subflow-state id="add" subflow="stock/retourPatient/edit">
 		<transition to="gestionRetourPatient">
-			<set name="retourPatientManager.result" value="retourPatientManager.bean"/>
+			<set name="retourPatientManager.result" value="retourPatientManager.bean" />
 		</transition>
 	</subflow-state>
-	
-	
+
+
 	<!-- Page récapitulative de réception de stock -->
-	<view-state id="recapRetourPatient"
-		view="../../../../pages/stock/retourPatient/edit/recapRetourPatient.xhtml">
-		
-		<transition on="cancel" to="search"/>
+	<view-state id="recapRetourPatient" view="../../../../pages/stock/retourPatient/edit/recapRetourPatient.xhtml">
+		<on-render>
+			<set name="retourPatientManager.result" value="retourPatientService.get(flashScope.idRetourPatient)" />
+		</on-render>
+		<transition on="cancel" to="search" />
 	</view-state>
 
-	
-	<end-state id="comeback"/>
-	
+
+	<end-state id="comeback" />
+
 </flow>

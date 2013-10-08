@@ -18,13 +18,12 @@ import fr.pharma.eclipse.domain.model.localisation.Service;
 import fr.pharma.eclipse.service.common.GenericService;
 
 /**
- * Classe en charge de rechercher les ARC investigateurs sélectionnables pour l'essai.
- 
+ * Classe en charge de rechercher les ARC investigateurs sélectionnables pour
+ * l'essai.
+ * @author Netapsys
  * @version $Revision$ $Date$
  */
-public class ArcInvestigateurSeeker
-    implements SelectableContactsSeeker, BeanFactoryAware
-{
+public class ArcInvestigateurSeeker implements SelectableContactsSeeker, BeanFactoryAware {
 
     /**
      * Serial ID.
@@ -45,8 +44,7 @@ public class ArcInvestigateurSeeker
      * {@inheritDoc}
      */
     @Override
-    public boolean supports(final TypeContact typeContact)
-    {
+    public boolean supports(final TypeContact typeContact) {
         return TypeContact.ARC_INVESTIGATEUR.equals(typeContact);
     }
 
@@ -54,8 +52,7 @@ public class ArcInvestigateurSeeker
      * {@inheritDoc}
      */
     @Override
-    public List<Personne> getContacts(final Essai essai)
-    {
+    public List<Personne> getContacts(final Essai essai) {
         return new ArrayList<Personne>(this.service.getAll(this.getSearchCriteria(essai)));
     }
 
@@ -65,10 +62,8 @@ public class ArcInvestigateurSeeker
      * @param essai Essai pour lequel on souhaite ajouter des contacts.
      * @return Le critère de recherche qui permet de récupérer les contacts.
      */
-    private PersonneSearchCriteria getSearchCriteria(final Essai essai)
-    {
-        final ArcInvestigateurSearchCriteria criteria =
-            (ArcInvestigateurSearchCriteria) this.beanFactory.getBean("arcInvestigateurCriteria");
+    private PersonneSearchCriteria getSearchCriteria(final Essai essai) {
+        final ArcInvestigateurSearchCriteria criteria = (ArcInvestigateurSearchCriteria) this.beanFactory.getBean("arcInvestigateurCriteria");
         final List<Service> services = new ArrayList<Service>();
         services.addAll(essai.getServices());
         criteria.setServices(services);
@@ -79,9 +74,7 @@ public class ArcInvestigateurSeeker
      * {@inheritDoc}
      */
     @Override
-    public void setBeanFactory(final BeanFactory beanFactory)
-        throws BeansException
-    {
+    public void setBeanFactory(final BeanFactory beanFactory) throws BeansException {
         this.beanFactory = beanFactory;
     }
 
@@ -89,8 +82,7 @@ public class ArcInvestigateurSeeker
      * Getter sur beanFactory.
      * @return Retourne le beanFactory.
      */
-    BeanFactory getBeanFactory()
-    {
+    BeanFactory getBeanFactory() {
         return this.beanFactory;
     }
 
@@ -98,8 +90,7 @@ public class ArcInvestigateurSeeker
      * Getter sur service.
      * @return Retourne le service.
      */
-    GenericService<ArcInvestigateur> getService()
-    {
+    GenericService<ArcInvestigateur> getService() {
         return this.service;
     }
 
@@ -107,8 +98,7 @@ public class ArcInvestigateurSeeker
      * Setter pour service.
      * @param service le service à écrire.
      */
-    public void setService(final GenericService<ArcInvestigateur> service)
-    {
+    public void setService(final GenericService<ArcInvestigateur> service) {
         this.service = service;
     }
 

@@ -19,13 +19,12 @@ import fr.pharma.eclipse.domain.model.acteur.Personne;
 import fr.pharma.eclipse.domain.model.essai.Essai;
 
 /**
- * Classe en charge de récupérer la liste des contacts sélectionnables pour un essai.
- 
+ * Classe en charge de récupérer la liste des contacts sélectionnables pour un
+ * essai.
+ * @author Netapsys
  * @version $Revision$ $Date$
  */
-public class SelectableContactsRetriever
-    implements Serializable
-{
+public class SelectableContactsRetriever implements Serializable {
 
     /**
      * Serial ID.
@@ -38,7 +37,8 @@ public class SelectableContactsRetriever
     private final Logger log = LoggerFactory.getLogger(SelectableContactsRetriever.class);
 
     /**
-     * Dictionnaire des services pour la récupération des contacts sélectionnables sur un essai.
+     * Dictionnaire des services pour la récupération des contacts
+     * sélectionnables sur un essai.
      */
     private List<SelectableContactsSeeker> contactsSeekers;
 
@@ -48,33 +48,29 @@ public class SelectableContactsRetriever
     private SelectableContactsFilter filter;
 
     /**
-     * Cette méthode renvoie la liste des contacts d'un certain type que l'on peut habiliter pour
-     * un essai.
+     * Cette méthode renvoie la liste des contacts d'un certain type que l'on
+     * peut habiliter pour un essai.
      * @param essai Essai à inspecter.
      * @param typeContact Type de contact.
-     * @return La liste des contacts du type spécifié que l'on peut encore habiliter sur l'essai.
+     * @return La liste des contacts du type spécifié que l'on peut encore
+     * habiliter sur l'essai.
      */
     public Collection<Personne> retrieveSelectableContacts(final Essai essai,
-                                                           final TypeContact typeContact)
-    {
+                                                           final TypeContact typeContact) {
         final Comparator<Personne> comparator = this.prepareComparator();
         final SortedSet<Personne> selectableBeans = new TreeSet<Personne>(comparator);
         boolean supportTrouve = false;
-        for (final SelectableContactsSeeker seeker : this.contactsSeekers)
-        {
-            if (seeker.supports(typeContact))
-            {
+        for (final SelectableContactsSeeker seeker : this.contactsSeekers) {
+            if (seeker.supports(typeContact)) {
                 selectableBeans.addAll(seeker.getContacts(essai));
                 supportTrouve = true;
             }
         }
-        this.handleSupportTrouve(typeContact,
-                                 supportTrouve);
+        this.handleSupportTrouve(typeContact, supportTrouve);
 
-        // On retire des personnes sélectionnables celles qui sont déjà habilitées sur l'essai.
-        this.filter.filter(essai,
-                           typeContact,
-                           selectableBeans);
+        // On retire des personnes sélectionnables celles qui sont déjà
+        // habilitées sur l'essai.
+        this.filter.filter(essai, typeContact, selectableBeans);
         return selectableBeans;
     }
 
@@ -84,15 +80,10 @@ public class SelectableContactsRetriever
      * @param supportTrouve Flag qui indique si un exécuteur a été trouvé.
      */
     private void handleSupportTrouve(final TypeContact typeContact,
-                                     final boolean supportTrouve)
-    {
-        if (!supportTrouve)
-        {
-            this.log.error(new StringBuilder("[retrieveSelectableContacts] ")
-                    .append("Aucun support pour le type de contacts '")
-                    .append(typeContact)
-                    .append("' => aucun ajout possible!")
-                    .toString());
+                                     final boolean supportTrouve) {
+        if (!supportTrouve) {
+            this.log.error(new StringBuilder("[retrieveSelectableContacts] ").append("Aucun support pour le type de contacts '").append(typeContact)
+                    .append("' => aucun ajout possible!").toString());
         }
     }
 
@@ -101,12 +92,8 @@ public class SelectableContactsRetriever
      * @return Comparateur de personnes.
      */
     @SuppressWarnings("unchecked")
-    private Comparator<Personne> prepareComparator()
-    {
-        final Comparator<Personne> comparator =
-            ComparatorUtils.chainedComparator(Arrays
-                    .asList(new GenericComparator<Personne>("nom"),
-                            new GenericComparator<Personne>("prenom")));
+    private Comparator<Personne> prepareComparator() {
+        final Comparator<Personne> comparator = ComparatorUtils.chainedComparator(Arrays.asList(new GenericComparator<Personne>("nom"), new GenericComparator<Personne>("prenom")));
         return comparator;
     }
 
@@ -114,8 +101,7 @@ public class SelectableContactsRetriever
      * Getter sur contactsSeekers.
      * @return Retourne le contactsSeekers.
      */
-    List<SelectableContactsSeeker> getContactsSeekers()
-    {
+    List<SelectableContactsSeeker> getContactsSeekers() {
         return this.contactsSeekers;
     }
 
@@ -123,8 +109,7 @@ public class SelectableContactsRetriever
      * Setter pour contactsSeekers.
      * @param contactsSeekers le contactsSeekers à écrire.
      */
-    public void setContactsSeekers(final List<SelectableContactsSeeker> contactsSeekers)
-    {
+    public void setContactsSeekers(final List<SelectableContactsSeeker> contactsSeekers) {
         this.contactsSeekers = contactsSeekers;
     }
 
@@ -132,8 +117,7 @@ public class SelectableContactsRetriever
      * Getter sur filter.
      * @return Retourne le filter.
      */
-    SelectableContactsFilter getFilter()
-    {
+    SelectableContactsFilter getFilter() {
         return this.filter;
     }
 
@@ -141,8 +125,7 @@ public class SelectableContactsRetriever
      * Setter pour filter.
      * @param filter le filter à écrire.
      */
-    public void setFilter(final SelectableContactsFilter filter)
-    {
+    public void setFilter(final SelectableContactsFilter filter) {
         this.filter = filter;
     }
 

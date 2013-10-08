@@ -43,7 +43,7 @@
 				<textElement lineSpacing="Single" markup="none">
 					<font fontName="Arial" size="10" isBold="false" isStrikeThrough="false"/>
 				</textElement>
-				<textFieldExpression class="java.lang.String"><![CDATA["Thème(s) : "+$F{headThemes}]]></textFieldExpression>
+				<textFieldExpression class="java.lang.String"><![CDATA["Th\u00E8me(s) : "+$F{headThemes}]]></textFieldExpression>
 			</textField>
 			<rectangle>
 				<reportElement mode="Transparent" x="425" y="48" width="130" height="37"/>

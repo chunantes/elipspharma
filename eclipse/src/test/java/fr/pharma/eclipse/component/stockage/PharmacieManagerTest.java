@@ -37,11 +37,10 @@ import fr.pharma.eclipse.utils.FacesUtils;
 
 /**
  * Classe en charge de tester le manager de Pharmacie.
- 
+ * @author Netapsys
  * @version $Revision$ $Date$
  */
-public class PharmacieManagerTest
-{
+public class PharmacieManagerTest {
     /**
      * PharmacieManager à tester.
      */
@@ -81,8 +80,7 @@ public class PharmacieManagerTest
      * Méthode en charge d'initialiser les données de test.
      */
     @Before
-    public void init()
-    {
+    public void init() {
         this.mockPharmacieService = Mockito.mock(PharmacieService.class);
         this.manager = new PharmacieManager(this.mockPharmacieService);
         this.mockSiteService = Mockito.mock(SiteService.class);
@@ -101,8 +99,7 @@ public class PharmacieManagerTest
      * Méthode en charge de purger les données de test.
      */
     @After
-    public void end()
-    {
+    public void end() {
         this.mockPharmacieService = null;
         this.manager = null;
         this.mockSiteService = null;
@@ -115,8 +112,7 @@ public class PharmacieManagerTest
      * Méthode en charge de tester l'initialisation des données de test.
      */
     @Test
-    public void testInit()
-    {
+    public void testInit() {
         Assert.assertNotNull(this.mockPharmacieService);
         Assert.assertNotNull(this.manager);
         Assert.assertNotNull(this.mockSiteService);
@@ -129,44 +125,37 @@ public class PharmacieManagerTest
      * Méthode en charge de récupérer les sites sélectables.
      */
     @Test
-    public void testGetSitesSelectableSansEtablissement()
-    {
+    public void testGetSitesSelectableSansEtablissement() {
         final Pharmacie pharmacie = new Pharmacie();
         this.manager.setBean(pharmacie);
         final List<Site> sitesExpected = new ArrayList<Site>();
-        Mockito.when(this.mockSiteService.getAll((SearchCriteria) Matchers.any()))
-                .thenReturn(sitesExpected);
+        Mockito.when(this.mockSiteService.getAll((SearchCriteria) Matchers.any())).thenReturn(sitesExpected);
         final List<Site> sites = this.manager.getSitesSelectable();
         Assert.assertNotNull(sites);
-        Mockito.verify(this.mockHelper).updateSelectable(pharmacie.getSites(),
-                                                         sitesExpected);
+        Mockito.verify(this.mockHelper).updateSelectable(pharmacie.getSites(), sitesExpected);
     }
 
     /**
      * Méthode en charge de récupérer les sites sélectables.
      */
     @Test
-    public void testGetSitesSelectableAvecEtablissement()
-    {
+    public void testGetSitesSelectableAvecEtablissement() {
         final Pharmacie pharmacie = new Pharmacie();
         final Etablissement etablissement = new Etablissement();
         pharmacie.setEtablissement(etablissement);
         this.manager.setBean(pharmacie);
         final List<Site> sitesExpected = new ArrayList<Site>();
-        Mockito.when(this.mockSiteService.getAll((SearchCriteria) Matchers.any()))
-                .thenReturn(sitesExpected);
+        Mockito.when(this.mockSiteService.getAll((SearchCriteria) Matchers.any())).thenReturn(sitesExpected);
         final List<Site> sites = this.manager.getSitesSelectable();
         Assert.assertNotNull(sites);
-        Mockito.verify(this.mockHelper).updateSelectable(pharmacie.getSites(),
-                                                         sitesExpected);
+        Mockito.verify(this.mockHelper).updateSelectable(pharmacie.getSites(), sitesExpected);
     }
 
     /**
      * Méthode en charge de tester la mise à jour des sites d'une pharmacie.
      */
     @Test
-    public void testUpdateSites()
-    {
+    public void testUpdateSites() {
         final Pharmacie mockPharmacie = Mockito.mock(Pharmacie.class);
         final SortedSet<Site> sites = Mockito.mock(TreeSet.class);
         final List<Site> selectables = Mockito.mock(List.class);
@@ -174,16 +163,15 @@ public class PharmacieManagerTest
         this.manager.setSitesSelectable(selectables);
         Mockito.when(mockPharmacie.getSites()).thenReturn(sites);
         this.manager.updateSites();
-        Mockito.verify(this.mockHelper).updateSelected(sites,
-                                                       selectables);
+        Mockito.verify(this.mockHelper).updateSelected(sites, selectables);
     }
 
     /**
-     * Méthode en charge de tester la méthode d'effacement des sites d'une pharmacie.
+     * Méthode en charge de tester la méthode d'effacement des sites d'une
+     * pharmacie.
      */
     @Test
-    public void testClearSites()
-    {
+    public void testClearSites() {
         final SortedSet<Site> sites = new TreeSet<Site>(new BeanWithNomComparator());
         final Site site = new Site();
         site.setNom("site");
@@ -192,28 +180,24 @@ public class PharmacieManagerTest
         final Pharmacie pharmacie = new Pharmacie();
         pharmacie.setSites(sites);
 
-        Assert.assertEquals(1,
-                            pharmacie.getSites().size());
+        Assert.assertEquals(1, pharmacie.getSites().size());
         this.manager.setBean(pharmacie);
         this.manager.clearSites();
-        Assert.assertEquals(0,
-                            pharmacie.getSites().size());
+        Assert.assertEquals(0, pharmacie.getSites().size());
     }
 
     /**
      * Méthode en charge de tester la construction de l'arbre de stockage.
      */
     @Test
-    public void testGetRootSansCalculIdsNodesToExpand()
-    {
+    public void testGetRootSansCalculIdsNodesToExpand() {
         final Pharmacie pharmacie = Mockito.mock(Pharmacie.class);
         this.manager.setBean(pharmacie);
         final TreeNode rootExpected = Mockito.mock(TreeNode.class);
         Mockito.when(this.mockTreeStockageHelper.buildTree(pharmacie)).thenReturn(rootExpected);
         final TreeNode root = this.manager.getRoot();
         Mockito.verify(this.mockTreeStockageHelper).buildTree(pharmacie);
-        Assert.assertEquals(rootExpected,
-                            root);
+        Assert.assertEquals(rootExpected, root);
         Assert.assertNull(this.manager.getIdsNodesToExpand());
     }
 
@@ -221,8 +205,7 @@ public class PharmacieManagerTest
      * Méthode en charge de tester la construction de l'arbre de stockage.
      */
     @Test
-    public void testGetRootAvecCalculIdsNodesToExpand()
-    {
+    public void testGetRootAvecCalculIdsNodesToExpand() {
         final Pharmacie pharmacie = Mockito.mock(Pharmacie.class);
         final Stockage stockageDisplay = Mockito.mock(Stockage.class);
         final String idsNodesToExpand = "idsNodesToExpand";
@@ -231,43 +214,32 @@ public class PharmacieManagerTest
         this.manager.setIdsNodesToExpand(StringUtils.EMPTY);
         final TreeNode rootExpected = Mockito.mock(TreeNode.class);
         Mockito.when(this.mockTreeStockageHelper.buildTree(pharmacie)).thenReturn(rootExpected);
-        Mockito.when(this.mockTreeStockageHelper.calculateNodesToExpand(rootExpected,
-                                                                        stockageDisplay))
-                .thenReturn(idsNodesToExpand);
+        Mockito.when(this.mockTreeStockageHelper.calculateNodesToExpand(rootExpected, stockageDisplay)).thenReturn(idsNodesToExpand);
         final TreeNode root = this.manager.getRoot();
         Mockito.verify(this.mockTreeStockageHelper).buildTree(pharmacie);
-        Mockito.verify(this.mockTreeStockageHelper).calculateNodesToExpand(rootExpected,
-                                                                           stockageDisplay);
-        Assert.assertEquals(rootExpected,
-                            root);
-        Assert.assertEquals(idsNodesToExpand,
-                            this.manager.getIdsNodesToExpand());
+        Mockito.verify(this.mockTreeStockageHelper).calculateNodesToExpand(rootExpected, stockageDisplay);
+        Assert.assertEquals(rootExpected, root);
+        Assert.assertEquals(idsNodesToExpand, this.manager.getIdsNodesToExpand());
     }
 
     /**
      * Méthode en charge de tester le changement d'onglet.
      */
     @Test
-    public void testOnOngletChange()
-    {
+    public void testOnOngletChange() {
         final TabChangeEvent event = Mockito.mock(TabChangeEvent.class);
         final Tab tab = Mockito.mock(Tab.class);
         Mockito.when(event.getTab()).thenReturn(tab);
-        Mockito.when(tab.getId()).thenReturn(PharmacieManager.INFOS_ONGLETS
-                .keySet()
-                .iterator()
-                .next());
+        Mockito.when(tab.getId()).thenReturn(PharmacieManager.INFOS_ONGLETS.keySet().iterator().next());
         this.manager.onOngletChange(event);
-        Assert.assertEquals(0,
-                            this.manager.getIndexOngletCourant());
+        Assert.assertEquals(0, this.manager.getIndexOngletCourant());
     }
 
     /**
      * Méthode en charge de tester l'ajout de stockage.
      */
     @Test
-    public void addStockageAvecParent()
-    {
+    public void addStockageAvecParent() {
         final ActionEvent event = Mockito.mock(ActionEvent.class);
         final UIComponent component = Mockito.mock(UIComponent.class);
         Mockito.when(event.getComponent()).thenReturn(component);
@@ -284,8 +256,7 @@ public class PharmacieManagerTest
      * Méthode en charge de tester l'ajout de stockage.
      */
     @Test
-    public void addStockageSansParent()
-    {
+    public void addStockageSansParent() {
         final ActionEvent event = Mockito.mock(ActionEvent.class);
         final UIComponent component = Mockito.mock(UIComponent.class);
         Mockito.when(event.getComponent()).thenReturn(component);
@@ -301,8 +272,7 @@ public class PharmacieManagerTest
      * Méthode en charge de tester l'édition de stockage.
      */
     @Test
-    public void testEditStockage()
-    {
+    public void testEditStockage() {
         final ActionEvent event = Mockito.mock(ActionEvent.class);
         final UIComponent component = Mockito.mock(UIComponent.class);
         Mockito.when(event.getComponent()).thenReturn(component);
@@ -319,8 +289,7 @@ public class PharmacieManagerTest
      * Méthode en charge de tester la suppression de stockage.
      */
     @Test
-    public void testDelStockageAvecParent()
-    {
+    public void testDelStockageAvecParent() {
         final ActionEvent event = Mockito.mock(ActionEvent.class);
         final UIComponent component = Mockito.mock(UIComponent.class);
         Mockito.when(event.getComponent()).thenReturn(component);
@@ -334,16 +303,14 @@ public class PharmacieManagerTest
         final Pharmacie pharmacie = Mockito.mock(Pharmacie.class);
         this.manager.setBean(pharmacie);
         this.manager.delStockage(event);
-        Mockito.verify(this.mockPharmacieService).removeStockage(pharmacie,
-                                                                 stockageToDelete);
+        Mockito.verify(this.mockPharmacieService).removeStockage(pharmacie, stockageToDelete);
     }
 
     /**
      * Méthode en charge de tester la suppression de stockage.
      */
     @Test
-    public void testDelStockageSansParent()
-    {
+    public void testDelStockageSansParent() {
         final ActionEvent event = Mockito.mock(ActionEvent.class);
         final UIComponent component = Mockito.mock(UIComponent.class);
         Mockito.when(event.getComponent()).thenReturn(component);
@@ -356,16 +323,14 @@ public class PharmacieManagerTest
         final Pharmacie pharmacie = Mockito.mock(Pharmacie.class);
         this.manager.setBean(pharmacie);
         this.manager.delStockage(event);
-        Mockito.verify(this.mockPharmacieService).removeStockage(pharmacie,
-                                                                 stockageToDelete);
+        Mockito.verify(this.mockPharmacieService).removeStockage(pharmacie, stockageToDelete);
     }
 
     /**
      * Méthode en charge de tester l'ajout de stockage.
      */
     @Test
-    public void testAddsWithValidKO()
-    {
+    public void testAddsWithValidKO() {
         final Pharmacie pharmacie = Mockito.mock(Pharmacie.class);
         final SortedSet<Stockage> stockages = Mockito.mock(TreeSet.class);
         Mockito.when(pharmacie.getStockages()).thenReturn(stockages);
@@ -373,8 +338,7 @@ public class PharmacieManagerTest
         this.manager.setStockageCurrent(stockageCurrent);
         this.manager.setBean(pharmacie);
         this.manager.setActionStockageCurrent("ADD");
-        Mockito.when(this.mockStockagevalidator.validateStockage(stockageCurrent))
-                .thenReturn(Boolean.FALSE);
+        Mockito.when(this.mockStockagevalidator.validateStockage(stockageCurrent)).thenReturn(Boolean.FALSE);
         this.manager.updateStockages();
         Mockito.verify(this.mockStockagevalidator).validateStockage(stockageCurrent);
     }
@@ -383,8 +347,7 @@ public class PharmacieManagerTest
      * Méthode en charge de tester l'ajout de stockage.
      */
     @Test
-    public void testAddsWithValidOK()
-    {
+    public void testAddsWithValidOK() {
         final Pharmacie pharmacie = Mockito.mock(Pharmacie.class);
         final SortedSet<Stockage> stockages = Mockito.mock(TreeSet.class);
         Mockito.when(pharmacie.getStockages()).thenReturn(stockages);
@@ -403,8 +366,7 @@ public class PharmacieManagerTest
      * Méthode en charge de tester l'ajout de stockage.
      */
     @Test
-    public void testAddsWithValidOKAndParent()
-    {
+    public void testAddsWithValidOKAndParent() {
         final Pharmacie pharmacie = Mockito.mock(Pharmacie.class);
         final SortedSet<Stockage> stockages = Mockito.mock(TreeSet.class);
         Mockito.when(pharmacie.getStockages()).thenReturn(stockages);
@@ -425,8 +387,7 @@ public class PharmacieManagerTest
      * Méthode en charge de tester la mise à jour de stockage.
      */
     @Test
-    public void testUpdatesWithValidKO()
-    {
+    public void testUpdatesWithValidKO() {
         final Pharmacie pharmacie = Mockito.mock(Pharmacie.class);
         final SortedSet<Stockage> stockages = Mockito.mock(TreeSet.class);
         Mockito.when(pharmacie.getStockages()).thenReturn(stockages);
@@ -434,8 +395,7 @@ public class PharmacieManagerTest
         this.manager.setStockageCurrent(stockageCurrent);
         this.manager.setBean(pharmacie);
         this.manager.setActionStockageCurrent("EDIT");
-        Mockito.when(this.mockStockagevalidator.validateStockage(stockageCurrent))
-                .thenReturn(Boolean.FALSE);
+        Mockito.when(this.mockStockagevalidator.validateStockage(stockageCurrent)).thenReturn(Boolean.FALSE);
         this.manager.updateStockages();
         Mockito.verify(this.mockStockagevalidator).validateStockage(stockageCurrent);
     }
@@ -444,8 +404,7 @@ public class PharmacieManagerTest
      * Méthode en charge de tester la mise à jour de stockage.
      */
     @Test
-    public void testUpdatesWithValidOK()
-    {
+    public void testUpdatesWithValidOK() {
         final Pharmacie pharmacie = Mockito.mock(Pharmacie.class);
         final SortedSet<Stockage> stockages = new TreeSet<Stockage>();
         final Stockage stockage1 = Mockito.mock(Stockage.class);
@@ -457,8 +416,7 @@ public class PharmacieManagerTest
         this.manager.setActionStockageCurrent("EDIT");
         final StockageService stockageService = Mockito.mock(StockageService.class);
         this.manager.setStockageService(stockageService);
-        Mockito.when(this.mockStockagevalidator.validateStockage(stockageCurrent))
-                .thenReturn(Boolean.TRUE);
+        Mockito.when(this.mockStockagevalidator.validateStockage(stockageCurrent)).thenReturn(Boolean.TRUE);
         Mockito.when(stockageService.save(stockageCurrent)).thenReturn(stockageCurrent);
 
         this.manager.updateStockages();
@@ -470,8 +428,7 @@ public class PharmacieManagerTest
      * Méthode en charge de tester la mise à jour de stockage.
      */
     @Test
-    public void testUpdatesWithValidOKAndParent()
-    {
+    public void testUpdatesWithValidOKAndParent() {
         final Pharmacie pharmacie = Mockito.mock(Pharmacie.class);
         final SortedSet<Stockage> stockages = new TreeSet<Stockage>();
         final Stockage stockage1 = Mockito.mock(Stockage.class);
@@ -485,8 +442,7 @@ public class PharmacieManagerTest
         this.manager.setActionStockageCurrent("EDIT");
         final StockageService stockageService = Mockito.mock(StockageService.class);
         this.manager.setStockageService(stockageService);
-        Mockito.when(this.mockStockagevalidator.validateStockage(stockageCurrent))
-                .thenReturn(Boolean.TRUE);
+        Mockito.when(this.mockStockagevalidator.validateStockage(stockageCurrent)).thenReturn(Boolean.TRUE);
         Mockito.when(stockageService.save(stockageCurrent)).thenReturn(stockageCurrent);
         this.manager.updateStockages();
         Mockito.verify(this.mockStockagevalidator).validateStockage(stockageCurrent);
@@ -496,11 +452,9 @@ public class PharmacieManagerTest
      * Test de la méthode confirmEnregistrement.
      */
     @Test
-    public void testConfirmEnregistrement()
-    {
+    public void testConfirmEnregistrement() {
         this.manager.confirmEnregistrement();
-        Mockito.verify(this.facesUtils).addMessage(FacesMessage.SEVERITY_INFO,
-                                                   "pharmacie.enregistrement.ok");
+        Mockito.verify(this.facesUtils).addMessage(FacesMessage.SEVERITY_INFO, "pharmacie.enregistrement.ok");
     }
 
 }

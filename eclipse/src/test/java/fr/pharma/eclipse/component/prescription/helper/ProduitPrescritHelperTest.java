@@ -17,12 +17,10 @@ import fr.pharma.eclipse.utils.AbstractEclipseJUnitTest;
 
 /**
  * Test de la classe ProduitPrescritHelper.
- 
+ * @author Netapsys
  * @version $Revision$ $Date$
  */
-public class ProduitPrescritHelperTest
-    extends AbstractEclipseJUnitTest
-{
+public class ProduitPrescritHelperTest extends AbstractEclipseJUnitTest {
 
     /**
      * Helper à tester.
@@ -30,20 +28,17 @@ public class ProduitPrescritHelperTest
     private ProduitPrescritHelper helper;
 
     @Override
-    public void setUp()
-    {
+    public void setUp() {
         this.helper = new ProduitPrescritHelper();
     }
 
     @Override
-    public void tearDown()
-    {
+    public void tearDown() {
         this.helper = null;
     }
 
     @Override
-    public void testInit()
-    {
+    public void testInit() {
         Assert.assertNotNull(this.helper);
     }
 
@@ -53,8 +48,7 @@ public class ProduitPrescritHelperTest
      * .
      */
     @Test
-    public void testBuildResumePrimaire()
-    {
+    public void testBuildResumePrimaire() {
         final ProduitPrescrit prescription = new ProduitPrescrit();
         final Conditionnement conditionnement = new Conditionnement();
         conditionnement.setModePrescription(ModePrescription.CONDITIONNEMENT_PRIMAIRE);
@@ -73,9 +67,7 @@ public class ProduitPrescritHelperTest
         frequence.setUniteFrequence(UniteTemps.HEURE);
         prescription.setFrequence(frequence);
 
-        Assert
-                .assertEquals("Prescription : 5 mg, 1 fois tous les 5 heure(s) à partir de j1 pendant 1 jour(s)",
-                              this.helper.buildResume(prescription));
+        Assert.assertEquals("Prescription : 5 mg, 1 fois tous les 5 heure(s) à partir de j1 pendant 1 jour(s)", this.helper.buildResume(prescription));
     }
     /**
      * Test method for
@@ -83,8 +75,7 @@ public class ProduitPrescritHelperTest
      * .
      */
     @Test
-    public void testBuildResumeDose()
-    {
+    public void testBuildResumeDose() {
         final ProduitPrescrit prescription = new ProduitPrescrit();
         prescription.setDosage(new BigDecimal(5));
         final Conditionnement conditionnement = new Conditionnement();
@@ -105,9 +96,7 @@ public class ProduitPrescritHelperTest
         frequence.setUniteFrequence(UniteTemps.HEURE);
         prescription.setFrequence(frequence);
 
-        Assert
-                .assertEquals("Prescription : 2 fois 5 mg, 1 fois tous les 5 heure(s) à partir de j1 pendant 1 jour(s)",
-                              this.helper.buildResume(prescription));
+        Assert.assertEquals("Prescription : 2 fois 5 mg, 1 fois tous les 5 heure(s) à partir de j1 pendant 1 jour(s)", this.helper.buildResume(prescription));
     }
 
     /**
@@ -116,8 +105,7 @@ public class ProduitPrescritHelperTest
      * .
      */
     @Test
-    public void testBuildResumeGalenique()
-    {
+    public void testBuildResumeGalenique() {
         final ProduitPrescrit prescription = new ProduitPrescrit();
         final Conditionnement conditionnement = new Conditionnement();
         conditionnement.setModePrescription(ModePrescription.FORME_GALENIQUE);
@@ -135,9 +123,7 @@ public class ProduitPrescritHelperTest
         frequence.setUniteFrequence(UniteTemps.HEURE);
         prescription.setFrequence(frequence);
 
-        Assert
-                .assertEquals("Prescription : 5 comprimés/gélules, 1 fois tous les 5 heure(s) à partir de j1 pendant 1 jour(s)",
-                              this.helper.buildResume(prescription));
+        Assert.assertEquals("Prescription : 5 comprimés/gélules, 1 fois tous les 5 heure(s) à partir de j1 pendant 1 jour(s)", this.helper.buildResume(prescription));
     }
 
     /**
@@ -146,8 +132,7 @@ public class ProduitPrescritHelperTest
      * .
      */
     @Test
-    public void testBuildResumeNumTraitement()
-    {
+    public void testBuildResumeNumTraitement() {
         final ProduitPrescrit prescription = new ProduitPrescrit();
         final Conditionnement conditionnement = new Conditionnement();
         conditionnement.setModePrescription(ModePrescription.NUM_TRAITEMENT);
@@ -164,9 +149,7 @@ public class ProduitPrescritHelperTest
         frequence.setUniteFrequence(UniteTemps.HEURE);
         prescription.setFrequence(frequence);
 
-        Assert
-                .assertEquals("Prescription : Par numéro de traitement, 1 fois tous les 5 heure(s) à partir de j1 pendant 1 jour(s)",
-                              this.helper.buildResume(prescription));
+        Assert.assertEquals("Prescription : Par numéro de traitement, 1 fois tous les 5 heure(s) à partir de j1 pendant 1 jour(s)", this.helper.buildResume(prescription));
     }
 
     /**
@@ -175,9 +158,7 @@ public class ProduitPrescritHelperTest
      * .
      */
     @Test
-    public void testBuildResumeEmpty()
-    {
-        Assert.assertEquals("",
-                            this.helper.buildResume(new ProduitPrescrit()));
+    public void testBuildResumeEmpty() {
+        Assert.assertEquals("", this.helper.buildResume(new ProduitPrescrit()));
     }
 }

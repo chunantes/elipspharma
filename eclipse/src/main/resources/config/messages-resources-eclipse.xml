@@ -11,7 +11,8 @@
 				<value>ErrorResources</value>
 				<value>LabelResources</value>
 				<value>ParametrageIHM</value>
-				<value>config/project</value>
+				<value>#{configPath}/project</value>
+				<value>version</value>
 			</list>
 		</property>
 		<property name="alwaysUseMessageFormat" value="true" />

@@ -20,12 +20,10 @@ import fr.pharma.eclipse.utils.FacesUtils;
 
 /**
  * Test de la classe InclusionManager.
- 
+ * @author Netapsys
  * @version $Revision$ $Date$
  */
-public class InlcusionManagerTest
-    extends AbstractEclipseJUnitTest
-{
+public class InlcusionManagerTest extends AbstractEclipseJUnitTest {
 
     /**
      * Manager.
@@ -51,8 +49,7 @@ public class InlcusionManagerTest
      * {@inheritDoc}
      */
     @Override
-    public void setUp()
-    {
+    public void setUp() {
         this.mockedFacesUtils = Mockito.mock(FacesUtils.class);
         this.mockedInclusionService = Mockito.mock(GenericService.class);
         this.mockedPatientService = Mockito.mock(PatientService.class);
@@ -65,8 +62,7 @@ public class InlcusionManagerTest
      * {@inheritDoc}
      */
     @Override
-    public void tearDown()
-    {
+    public void tearDown() {
         this.mockedFacesUtils = null;
         this.mockedInclusionService = null;
         this.mockedPatientService = null;
@@ -78,8 +74,7 @@ public class InlcusionManagerTest
      */
     @Override
     @Test
-    public void testInit()
-    {
+    public void testInit() {
         Assert.assertNotNull(this.manager);
         Assert.assertNotNull(this.mockedFacesUtils);
         Assert.assertNotNull(this.mockedInclusionService);
@@ -90,8 +85,7 @@ public class InlcusionManagerTest
      * Test de la méthode init().
      */
     @Test
-    public void testInitMethod()
-    {
+    public void testInitMethod() {
         this.manager.setEssaiSelected(new Essai());
         this.manager.setPatientSelected(new Patient());
         this.manager.setValid(true);
@@ -105,17 +99,14 @@ public class InlcusionManagerTest
      * Test de la méthode handleSelectPatient.
      */
     @Test
-    public void testHandleSelectPatientOk()
-    {
+    public void testHandleSelectPatientOk() {
         final SelectEvent event = Mockito.mock(SelectEvent.class);
         final Patient p = new Patient();
         Mockito.when(event.getObject()).thenReturn(p);
 
         this.manager.handleSelectPatient(event);
 
-        Mockito.verify(this.mockedFacesUtils,
-                       Mockito.never()).addMessage(Matchers.any(Severity.class),
-                                                   Matchers.anyString());
+        Mockito.verify(this.mockedFacesUtils, Mockito.never()).addMessage(Matchers.any(Severity.class), Matchers.anyString());
         Assert.assertTrue(this.manager.getValid());
     }
 
@@ -123,8 +114,7 @@ public class InlcusionManagerTest
      * Test de la méthode handleSelectPatient.
      */
     @Test
-    public void testHandleSelectPatientKo()
-    {
+    public void testHandleSelectPatientKo() {
         final SelectEvent event = Mockito.mock(SelectEvent.class);
         final Patient p = new Patient();
         final Inclusion i = new Inclusion();
@@ -132,14 +122,11 @@ public class InlcusionManagerTest
         p.getInclusions().add(i);
 
         Mockito.when(event.getObject()).thenReturn(p);
-        Mockito
-                .when(this.mockedPatientService.getInclusionCourante(Matchers.any(Patient.class)))
-                .thenReturn(i);
+        Mockito.when(this.mockedPatientService.getInclusionCourante(Matchers.any(Patient.class))).thenReturn(i);
 
         this.manager.handleSelectPatient(event);
 
-        Mockito.verify(this.mockedFacesUtils).addMessage(FacesMessage.SEVERITY_ERROR,
-                                                         "patient.inclu.error");
+        Mockito.verify(this.mockedFacesUtils).addMessage(FacesMessage.SEVERITY_ERROR, "patient.inclu.error");
         Assert.assertFalse(this.manager.getValid());
     }
 
@@ -147,11 +134,9 @@ public class InlcusionManagerTest
      * Test de la méthode confirmInclusion().
      */
     @Test
-    public void testConfirmInclusion()
-    {
+    public void testConfirmInclusion() {
         this.manager.confirmInclusion();
-        Mockito.verify(this.mockedFacesUtils).addMessage(FacesMessage.SEVERITY_INFO,
-                                                         "patient.inclu.ok");
+        Mockito.verify(this.mockedFacesUtils).addMessage(FacesMessage.SEVERITY_INFO, "patient.inclu.ok");
         Assert.assertFalse(this.manager.getValid());
         Assert.assertNull(this.manager.getEssaiSelected());
         Assert.assertNull(this.manager.getPatientSelected());

@@ -11,12 +11,10 @@ import fr.pharma.eclipse.utils.PersonneUtils;
 
 /**
  * Test de la classe InvestigateurDroitHabilitationInitializer.
- 
+ * @author Netapsys
  * @version $Revision$ $Date$
  */
-public class InvestigateurDroitHabilitationInitializerTest
-    extends AbstractEclipseJUnitTest
-{
+public class InvestigateurDroitHabilitationInitializerTest extends AbstractEclipseJUnitTest {
     /**
      * Classe testée.
      */
@@ -26,8 +24,7 @@ public class InvestigateurDroitHabilitationInitializerTest
      * {@inheritDoc}
      */
     @Override
-    public void setUp()
-    {
+    public void setUp() {
         this.initializer = new InvestigateurDroitHabilitationInitializer();
     }
 
@@ -35,8 +32,7 @@ public class InvestigateurDroitHabilitationInitializerTest
      * {@inheritDoc}
      */
     @Override
-    public void tearDown()
-    {
+    public void tearDown() {
         this.initializer = null;
     }
 
@@ -44,8 +40,7 @@ public class InvestigateurDroitHabilitationInitializerTest
      * {@inheritDoc}
      */
     @Override
-    public void testInit()
-    {
+    public void testInit() {
         Assert.assertNotNull(this.initializer);
     }
 
@@ -53,30 +48,26 @@ public class InvestigateurDroitHabilitationInitializerTest
      * Test de la méthode initialize - investigateur co.
      */
     @Test
-    public void testInitializeCo()
-    {
+    public void testInitializeCo() {
         final Personne personne = PersonneUtils.makeInvestigateur(1);
         final Habilitation habilitation = new Habilitation();
         habilitation.setPersonne(personne);
         Assert.assertNull(habilitation.getDroit());
         this.initializer.initialize(habilitation);
-        Assert.assertEquals(Droit.INVESTIGATEUR_CO,
-                            habilitation.getDroit());
+        Assert.assertEquals(Droit.INVESTIGATEUR_CO, habilitation.getDroit());
     }
 
     /**
      * Test de la méthode initialize - investigateur principal.
      */
     @Test
-    public void testInitializePrincipal()
-    {
+    public void testInitializePrincipal() {
         final Personne personne = PersonneUtils.makeInvestigateur(1);
         personne.setSelected(true);
         final Habilitation habilitation = new Habilitation();
         habilitation.setPersonne(personne);
         Assert.assertNull(habilitation.getDroit());
         this.initializer.initialize(habilitation);
-        Assert.assertEquals(Droit.INVESTIGATEUR_PRINCIPAL,
-                            habilitation.getDroit());
+        Assert.assertEquals(Droit.INVESTIGATEUR_PRINCIPAL, habilitation.getDroit());
     }
 }

@@ -34,7 +34,7 @@
 	 								itemLabel="#{essai.numInterne} #{essai.nom} - #{essai.promoteur.raisonSociale}"
 	 								itemValue="#{essai}"
 	 								converter="#{essaiConverter}"
-	 								onSelectUpdate="patient pharmacie produit"/>
+	 								onSelectUpdate="patient pharmacie produit conditionnement stockage"/>
 	 								<h:outputText value="#{retourPatientManager.bean.essai.numInterne} #{retourPatientManager.bean.essai.nom} - #{retourPatientManager.bean.essai.promoteur.raisonSociale}" 
 	 							 rendered="#{retourPatientManager.action eq 'edit'}"/>
 								<h:panelGroup />	 								
@@ -42,11 +42,11 @@
 	 									
 								<!-- Patient -->
 								<h:outputLabel id="labelPatient" for="patient" value="#{resourceBundle['gestionRetourPatient.patient.mandatory']}"/>
-								<h:selectOneMenu converter="#{patientConverter}"  rendered="#{retourPatientManager.bean.id eq null}"
+								<h:selectOneMenu converter="#{patientConverter}"  rendered="#{retourPatientManager.bean.id eq null}" required="true" requiredMessage="#{resourceBundle['retourPatient.patient.notEmpty']}"
 									 id="patient" value="#{retourPatientManager.patientSelected}" styleClass="selectRadio" immediate="true">
 									<f:selectItem noSelectionOption="true" itemLabel="" itemValue="" />
 									<f:selectItems value="#{retourPatientManager.patients}" var="patient" itemLabel="#{patient.nom}" itemValue="#{patient}"/>
-									<f:ajax render="@this numOrdonnancierPanel" listener="#{retourPatientManager.handleSelectPatient}"/>
+									<f:ajax render="pharmacie produit conditionnement stockage numOrdonnancierPanel" listener="#{retourPatientManager.handleSelectPatient}"/>
 								</h:selectOneMenu>
 	 							<h:outputText value="#{retourPatientManager.bean.patient.nom} "  
 	 							 rendered="#{retourPatientManager.action eq 'edit'}"/>
@@ -224,14 +224,14 @@
 					<p:dataTable id="dispensations" value="#{retourPatientManager.dispensations}" var="dispensation" emptyMessage="#{resourceBundle['results.none']}">
 						
 									    		
-			    			<p:column id="date" sortBy="#{dispensation.date}">
+			    			<p:column id="date" sortBy="#{dispensation.dateDispensation}">
 			    				<f:facet name="header">
 			    					<h:outputText value="#{resourceBundle['gestionRetourPatient.date']}"/>
 			    				</f:facet>
 			    				<h:outputText value="#{dispensation.dateDispensation.time}" onverter="#{calendarConverter}"/>
 			    			</p:column>	
 			    			
-			    			<p:column id="numero" sortBy="#{dispensation.numero}">
+			    			<p:column id="numero" sortBy="#{dispensation.numOrdonnancier}">
 			    				<f:facet name="header">
 			    					<h:outputText value="#{resourceBundle['gestionRetourPatient.numOrdonnancier']}"/>
 			    				</f:facet>

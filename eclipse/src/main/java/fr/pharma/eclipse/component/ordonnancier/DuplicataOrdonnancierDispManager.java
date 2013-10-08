@@ -2,12 +2,13 @@ package fr.pharma.eclipse.component.ordonnancier;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.SortedSet;
 
 import javax.annotation.Resource;
 import javax.faces.component.html.HtmlSelectOneMenu;
 import javax.faces.event.AjaxBehaviorEvent;
 
-import fr.pharma.eclipse.component.BeansManager;
+import fr.pharma.eclipse.component.BeanListManager;
 import fr.pharma.eclipse.domain.criteria.ordonnancier.OrdonnancierSearchCriteria;
 import fr.pharma.eclipse.domain.criteria.stockage.PharmacieSearchCriteria;
 import fr.pharma.eclipse.domain.enums.TypeAnonymisation;
@@ -21,12 +22,10 @@ import fr.pharma.eclipse.service.stockage.PharmacieService;
 
 /**
  * Manager de duplicata d'ordonnancier de dispensation.
- 
+ * @author Netapsys
  * @version $Revision$ $Date$
  */
-public class DuplicataOrdonnancierDispManager
-    extends BeansManager<OrdonnancierDisp>
-{
+public class DuplicataOrdonnancierDispManager extends BeanListManager<OrdonnancierDisp> {
     /**
      * Serial ID.
      */
@@ -74,8 +73,7 @@ public class DuplicataOrdonnancierDispManager
      * Constructeur.
      * @param criteria Critère de recherche.
      */
-    public DuplicataOrdonnancierDispManager(final OrdonnancierSearchCriteria criteria)
-    {
+    public DuplicataOrdonnancierDispManager(final OrdonnancierSearchCriteria criteria) {
         super(criteria);
         this.criteria = criteria;
     }
@@ -83,15 +81,14 @@ public class DuplicataOrdonnancierDispManager
     /**
      * Méthode en charge d'initialiser les données de pharmacies.
      */
-    public void init()
-    {
+    public void init() {
         final PharmacieSearchCriteria critPharma = new PharmacieSearchCriteria();
         critPharma.setActiveOrder("nom");
         this.pharmacies = this.pharmacieService.getAll(critPharma);
 
-        // Si une seule pharmacie => récupération des ordonnanciers de cette pharmacie
-        if (this.pharmacies.size() == 1)
-        {
+        // Si une seule pharmacie => récupération des ordonnanciers de cette
+        // pharmacie
+        if (this.pharmacies.size() == 1) {
             final Pharmacie pharmacie = this.pharmacies.get(0);
             this.criteria.setPharmacie(pharmacie);
             this.setBeans(this.ordoService.getAll(this.criteria));
@@ -103,18 +100,14 @@ public class DuplicataOrdonnancierDispManager
      * Méthode appelée via la couche IHM lorsqu'une pharmacie est sélectionnée.
      * @param event Evénement remonté via la couche IHM.
      */
-    public void handleSelectPharmacie(final AjaxBehaviorEvent event)
-    {
+    public void handleSelectPharmacie(final AjaxBehaviorEvent event) {
         // Récupération de la pharmacie sélectionnée
         final HtmlSelectOneMenu select = (HtmlSelectOneMenu) event.getSource();
         final Pharmacie pharmacie = (Pharmacie) select.getLocalValue();
         this.criteria.setPharmacie(pharmacie);
-        if (pharmacie != null)
-        {
+        if (pharmacie != null) {
             this.setBeans(this.ordoService.getAll(this.criteria));
-        }
-        else
-        {
+        } else {
             this.setBeans(null);
         }
         this.setOrdonnancierSelected(null);
@@ -124,8 +117,7 @@ public class DuplicataOrdonnancierDispManager
      * Getter pour ordonnancierSelected.
      * @return Le ordonnancierSelected
      */
-    public OrdonnancierDisp getOrdonnancierSelected()
-    {
+    public OrdonnancierDisp getOrdonnancierSelected() {
         return this.ordonnancierSelected;
     }
 
@@ -133,8 +125,7 @@ public class DuplicataOrdonnancierDispManager
      * Setter pour ordonnancierSelected.
      * @param ordonnancierSelected Le ordonnancierSelected à écrire.
      */
-    public void setOrdonnancierSelected(final OrdonnancierDisp ordonnancierSelected)
-    {
+    public void setOrdonnancierSelected(final OrdonnancierDisp ordonnancierSelected) {
         this.ordonnancierSelected = ordonnancierSelected;
     }
 
@@ -142,8 +133,7 @@ public class DuplicataOrdonnancierDispManager
      * Getter pour criteria.
      * @return Le criteria
      */
-    public OrdonnancierSearchCriteria getCriteria()
-    {
+    public OrdonnancierSearchCriteria getCriteria() {
         return this.criteria;
     }
 
@@ -151,8 +141,7 @@ public class DuplicataOrdonnancierDispManager
      * Getter pour pharmacies.
      * @return Le pharmacies
      */
-    public List<Pharmacie> getPharmacies()
-    {
+    public List<Pharmacie> getPharmacies() {
         return this.pharmacies;
     }
 
@@ -160,8 +149,7 @@ public class DuplicataOrdonnancierDispManager
      * Setter pour pharmacies.
      * @param pharmacies Le pharmacies à écrire.
      */
-    public void setPharmacies(final List<Pharmacie> pharmacies)
-    {
+    public void setPharmacies(final List<Pharmacie> pharmacies) {
         this.pharmacies = pharmacies;
     }
 
@@ -169,23 +157,24 @@ public class DuplicataOrdonnancierDispManager
      * Méthode en charge de retourner les dispensations de l'ordonnancier.
      * @return Liste des dispensations.
      */
-    public List<Dispensation> getListDispensations()
-    {
+    public List<Dispensation> getListDispensations() {
         final List<Dispensation> result = new ArrayList<Dispensation>();
-        if (this.getOrdonnancierSelected() != null)
-        {
-            result.addAll(this.getOrdonnancierSelected().getDispensations());
+        if (this.getOrdonnancierSelected() != null) {
+            final SortedSet<Dispensation> dispensations = this.getOrdonnancierSelected().getDispensations();
+            for (final Dispensation dispensation : dispensations) {
+                result.add(this.dispensationService.loadDispensation(dispensation));
+            }
         }
         return result;
     }
 
     /**
-     * Méthode en charge de retourner les dispensations de produit pour une dispensation.
+     * Méthode en charge de retourner les dispensations de produit pour une
+     * dispensation.
      * @param dispensation Dispensation.
      * @return Liste des dispensations de produit.
      */
-    public List<DispensationProduit> getListDispensationsProduit(final Dispensation dispensation)
-    {
+    public List<DispensationProduit> getListDispensationsProduit(final Dispensation dispensation) {
         final Dispensation disp = this.dispensationService.reattach(dispensation);
         final List<DispensationProduit> result = new ArrayList<DispensationProduit>();
         result.addAll(disp.getDispensationsProduit());
@@ -196,8 +185,7 @@ public class DuplicataOrdonnancierDispManager
      * Setter pour dispensationService.
      * @param dispensationService Le dispensationService à écrire.
      */
-    public void setDispensationService(final DispensationService dispensationService)
-    {
+    public void setDispensationService(final DispensationService dispensationService) {
         this.dispensationService = dispensationService;
     }
 
@@ -205,8 +193,7 @@ public class DuplicataOrdonnancierDispManager
      * Setter pour pharmacieService.
      * @param pharmacieService Le pharmacieService à écrire.
      */
-    public void setPharmacieService(final PharmacieService pharmacieService)
-    {
+    public void setPharmacieService(final PharmacieService pharmacieService) {
         this.pharmacieService = pharmacieService;
     }
 
@@ -214,8 +201,7 @@ public class DuplicataOrdonnancierDispManager
      * Setter pour ordoService.
      * @param ordoService Le ordoService à écrire.
      */
-    public void setOrdoService(final OrdonnancierService<OrdonnancierDisp> ordoService)
-    {
+    public void setOrdoService(final OrdonnancierService<OrdonnancierDisp> ordoService) {
         this.ordoService = ordoService;
     }
 
@@ -223,8 +209,7 @@ public class DuplicataOrdonnancierDispManager
      * Getter pour typeAnonymisation.
      * @return Le typeAnonymisation
      */
-    public TypeAnonymisation getTypeAnonymisation()
-    {
+    public TypeAnonymisation getTypeAnonymisation() {
         return this.typeAnonymisation;
     }
 
@@ -232,8 +217,7 @@ public class DuplicataOrdonnancierDispManager
      * Setter pour typeAnonymisation.
      * @param typeAnonymisation Le typeAnonymisation à écrire.
      */
-    public void setTypeAnonymisation(final TypeAnonymisation typeAnonymisation)
-    {
+    public void setTypeAnonymisation(final TypeAnonymisation typeAnonymisation) {
         this.typeAnonymisation = typeAnonymisation;
     }
 

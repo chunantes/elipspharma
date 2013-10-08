@@ -19,185 +19,167 @@
 					<ul class="ui-state-default first-of-type">
 					<security:authorize
 					ifAnyGranted="ROLE_INVESTIGATEUR,ROLE_PHARMACIEN_PREPARATEUR,ROLE_ARC_INVESTIGATEUR,ROLE_ARC_PROMOTEUR,ROLE_DIRECTION_RECHERCHE,ROLE_PHARMACIEN_INTERNE,ROLE_PHARMACIEN_INTERNE_GARDE,ROLE_PHARMACIEN_EXTERNE,ROLE_PHARMACIEN_PREPARATEUR,ROLE_PHARMACIEN_TITULAIRE,ROLE_PHARMACIEN_ATTACHE,ROLE_PHARMACIEN_ASSISTANT,ROLE_ADMIN">
-						<li
-							class="ui-menubar-item ui-menubar-item-hassubmenu first-of-type menuParent"
-							id="yui-gen10" groupindex="0" index="0"><a
-							href="#menuForm:j_idt28"
-							class="ui-menubar-item-label ui-menubar-item-label-hassubmenu">Déroulement
-								des essais</a>
+						<li><a href="#"><h:outputText value="#{resourceBundle['menu.deroulementEssais']}" /></a>
 							<div
 								class="ui-menu ui-widget ui-widget-content ui-corner-all yui-module yui-overlay"
 								id="menuForm:j_idt28"
 								style="position: absolute; visibility: hidden; z-index: 1;">
 								<div class="bd">
 									<ul class="first-of-type">
-									<!-- Inclusion -->
-									<security:authorize
-											ifAnyGranted="ROLE_INVESTIGATEUR,ROLE_PHARMACIEN_INTERNE,ROLE_PHARMACIEN_INTERNE_GARDE,ROLE_PHARMACIEN_TITULAIRE,ROLE_PHARMACIEN_ASSISTANT,ROLE_PHARMACIEN_ATTACHE,ROLE_ADMIN">
-										<li class="ui-menu-item ui-corner-all first-of-type"
-											id="yui-gen0" groupindex="0" index="0"><a
-											onclick="clickOnMenu('yui-gen0');" href="javascript:void(0)"
-											class="ui-menu-item-label ui-corner-all submenuItem"
-											id="menuForm:j_idt29">Inclusion</a></li>
-									</security:authorize>	
-									<!-- Inclusion -->
-									<security:authorize
-										ifAnyGranted="ROLE_INVESTIGATEUR,ROLE_ARC_INVESTIGATEUR,ROLE_ARC_PROMOTEUR,ROLE_PHARMACIEN_INTERNE,ROLE_PHARMACIEN_INTERNE_GARDE,ROLE_PHARMACIEN_TITULAIRE,ROLE_PHARMACIEN_ASSISTANT,ROLE_PHARMACIEN_ATTACHE,ROLE_ADMIN">
-										<li class="ui-menu-item ui-corner-all" id="yui-gen1"
-											groupindex="0" index="1"><a onclick="clickOnMenu('yui-gen1');"
-											href="javascript:void(0)"
-											class="ui-menu-item-label ui-corner-all submenuItem"
-											id="menuForm:j_idt30">Liste des prescriptions</a></li>
+									
+									<security:authorize ifAnyGranted="ROLE_INVESTIGATEUR,ROLE_PHARMACIEN_INTERNE,ROLE_PHARMACIEN_INTERNE_GARDE,ROLE_PHARMACIEN_TITULAIRE,ROLE_PHARMACIEN_ASSISTANT,ROLE_PHARMACIEN_ATTACHE,ROLE_ADMIN">
+										<li>
+											<a href="#{request.contextPath}/flows/inclusion/edit" class="submenuItem" >
+												<h:outputText value="#{resourceBundle['menu.inclusion']}" />
+											</a>
+										</li>
 									</security:authorize>
-									<!-- Inclusion -->
-									<security:authorize
-											ifAnyGranted="ROLE_INVESTIGATEUR,ROLE_PHARMACIEN_INTERNE,ROLE_PHARMACIEN_INTERNE_GARDE,ROLE_PHARMACIEN_TITULAIRE,ROLE_PHARMACIEN_ASSISTANT,ROLE_PHARMACIEN_ATTACHE,ROLE_ADMIN">		
-										<li class="ui-menu-item ui-corner-all" id="yui-gen2"
-											groupindex="0" index="2"><a onclick="clickOnMenu('yui-gen2');"
-											href="javascript:void(0)"
-											class="ui-menu-item-label ui-corner-all submenuItem"
-											id="menuForm:j_idt31">Effectuer une prescription</a></li>
-									</security:authorize>
-									<!-- Inclusion -->
-									<security:authorize
-											ifAnyGranted="ROLE_ARC_PROMOTEUR,ROLE_PHARMACIEN_PREPARATEUR,ROLE_PHARMACIEN_INTERNE,ROLE_PHARMACIEN_INTERNE_GARDE,ROLE_PHARMACIEN_TITULAIRE,ROLE_PHARMACIEN_ASSISTANT,ROLE_PHARMACIEN_ATTACHE,ROLE_ADMIN">
-											<li class="ui-menu-item ui-corner-all" id="yui-gen3"
-												groupindex="0" index="3"><a onclick="clickOnMenu('yui-gen3');"
-												href="javascript:void(0)"
-												class="ui-menu-item-label ui-corner-all submenuItem"
-												id="menuForm:j_idt32">Liste des dispensations</a></li>
-									</security:authorize>			
-									<security:authorize
-											ifAnyGranted="ROLE_ARC_PROMOTEUR,ROLE_PHARMACIEN_PREPARATEUR,ROLE_PHARMACIEN_INTERNE,ROLE_PHARMACIEN_INTERNE_GARDE,ROLE_PHARMACIEN_TITULAIRE,ROLE_PHARMACIEN_ASSISTANT,ROLE_PHARMACIEN_ATTACHE,ROLE_ADMIN">
-											<li class="ui-menu-item ui-corner-all" id="yui-gen4"
-												groupindex="0" index="4"><a onclick="clickOnMenu('yui-gen4');"
-												href="javascript:void(0)"
-												class="ui-menu-item-label ui-corner-all submenuItem"
-												id="menuForm:j_idt33">Effectuer une dispensation</a></li>
-									</security:authorize>
-									<security:authorize
-										ifAnyGranted="ROLE_ARC_PROMOTEUR,ROLE_PHARMACIEN_INTERNE,ROLE_PHARMACIEN_INTERNE_GARDE,ROLE_PHARMACIEN_TITULAIRE,ROLE_PHARMACIEN_ASSISTANT,ROLE_PHARMACIEN_ATTACHE,ROLE_ADMIN">			
-											<li class="ui-menu-item ui-corner-all" id="yui-gen5"
-												groupindex="0" index="5"><a onclick="clickOnMenu('yui-gen5');"
-												href="javascript:void(0)"
-												class="ui-menu-item-label ui-corner-all submenuItem"
-												id="menuForm:j_idt34">Dispensation globale</a></li>
+										
+									<security:authorize ifAnyGranted="ROLE_INVESTIGATEUR,ROLE_ARC_INVESTIGATEUR,ROLE_ARC_PROMOTEUR,ROLE_PHARMACIEN_INTERNE,ROLE_PHARMACIEN_INTERNE_GARDE,ROLE_PHARMACIEN_TITULAIRE,ROLE_PHARMACIEN_ASSISTANT,ROLE_PHARMACIEN_ATTACHE,ROLE_ADMIN">
+										<li>
+											<a href="#{request.contextPath}/flows/prescription/gestion" class="submenuItem" >
+												<h:outputText value="#{resourceBundle['menu.consulterPrescription']}" />
+											</a>
+										</li>
 									</security:authorize>
 									
-									<security:authorize
-											ifAnyGranted="ROLE_INVESTIGATEUR,ROLE_PHARMACIEN_INTERNE,ROLE_PHARMACIEN_INTERNE_GARDE,ROLE_PHARMACIEN_TITULAIRE,ROLE_PHARMACIEN_ASSISTANT,ROLE_PHARMACIEN_ATTACHE,ROLE_ADMIN">	
-											<li class="ui-menu-item ui-corner-all" id="yui-gen6"
-												groupindex="0" index="6"><a onclick="clickOnMenu('yui-gen6');"
-												href="javascript:void(0)"
-												class="ui-menu-item-label ui-corner-all submenuItem"
-												id="menuForm:j_idt35">Demande de dotation</a></li>
+									<security:authorize ifAnyGranted="ROLE_INVESTIGATEUR,ROLE_PHARMACIEN_INTERNE,ROLE_PHARMACIEN_INTERNE_GARDE,ROLE_PHARMACIEN_TITULAIRE,ROLE_PHARMACIEN_ASSISTANT,ROLE_PHARMACIEN_ATTACHE,ROLE_ADMIN">		
+										<li>
+											<a href="#{request.contextPath}/flows/prescription/edit" class="submenuItem" >
+												<h:outputText value="#{resourceBundle['menu.effectuerPrescription']}" />
+											</a>
+										</li>
 									</security:authorize>
-									<security:authorize
-											ifAnyGranted="ROLE_ARC_INVESTIGATEUR,ROLE_ARC_PROMOTEUR,ROLE_DIRECTION_RECHERCHE,ROLE_PHARMACIEN_INTERNE,ROLE_PHARMACIEN_INTERNE_GARDE,ROLE_PHARMACIEN_EXTERNE,ROLE_PHARMACIEN_PREPARATEUR,ROLE_PHARMACIEN_TITULAIRE,ROLE_PHARMACIEN_ASSISTANT,ROLE_PHARMACIEN_ATTACHE,ROLE_ADMIN">			
-											<li class="ui-menu-item ui-corner-all" id="yui-gen7"
-												groupindex="0" index="7"><a onclick="clickOnMenu('yui-gen7');"
-												href="javascript:void(0)"
-												class="ui-menu-item-label ui-corner-all submenuItem"
-												id="menuForm:j_idt36">Evénement</a></li>
+
+									<security:authorize ifAnyGranted="ROLE_ARC_PROMOTEUR,ROLE_PHARMACIEN_PREPARATEUR,ROLE_PHARMACIEN_INTERNE,ROLE_PHARMACIEN_INTERNE_GARDE,ROLE_PHARMACIEN_TITULAIRE,ROLE_PHARMACIEN_ASSISTANT,ROLE_PHARMACIEN_ATTACHE,ROLE_ADMIN">
+										<li>
+											<a href="#{request.contextPath}/flows/dispensation/gestion" class="submenuItem" >
+												<h:outputText value="#{resourceBundle['menu.dispensation']}" />
+											</a>
+										</li>
 									</security:authorize>
-									<security:authorize
-											ifAnyGranted="ROLE_ARC_INVESTIGATEUR,ROLE_ARC_PROMOTEUR,ROLE_DIRECTION_RECHERCHE,ROLE_PHARMACIEN_INTERNE,ROLE_PHARMACIEN_INTERNE_GARDE,ROLE_PHARMACIEN_EXTERNE,ROLE_PHARMACIEN_PREPARATEUR,ROLE_PHARMACIEN_TITULAIRE,ROLE_PHARMACIEN_ASSISTANT,ROLE_PHARMACIEN_ATTACHE,ROLE_ADMIN">			
-											<li class="ui-menu-item ui-corner-all" id="yui-gen8"
-												groupindex="0" index="8"><a onclick="clickOnMenu('yui-gen8');"
-												href="javascript:void(0)"
-												class="ui-menu-item-label ui-corner-all submenuItem"
-												id="menuForm:j_idt37">Incident</a></li>
+												
+									<security:authorize ifAnyGranted="ROLE_ARC_PROMOTEUR,ROLE_PHARMACIEN_PREPARATEUR,ROLE_PHARMACIEN_INTERNE,ROLE_PHARMACIEN_INTERNE_GARDE,ROLE_PHARMACIEN_TITULAIRE,ROLE_PHARMACIEN_ASSISTANT,ROLE_PHARMACIEN_ATTACHE,ROLE_ADMIN">
+										<li>
+											<a href="#{request.contextPath}/flows/dispensation/prescription" class="submenuItem" >
+												<h:outputText value="#{resourceBundle['menu.effectuerdispensation']}" />
+											</a>
+										</li>
 									</security:authorize>
-									<security:authorize
-										ifAnyGranted="ROLE_PHARMACIEN_INTERNE,ROLE_PHARMACIEN_INTERNE_GARDE,ROLE_PHARMACIEN_TITULAIRE,ROLE_PHARMACIEN_ASSISTANT,ROLE_PHARMACIEN_ATTACHE,ROLE_ADMIN">			
-											<li class="ui-menu-item ui-corner-all" id="yui-gen9"
-												groupindex="0" index="9"><a onclick="clickOnMenu('yui-gen9');"
-												href="javascript:void(0)"
-												class="ui-menu-item-label ui-corner-all submenuItem"
-												id="menuForm:j_idt38">Indicateurs</a></li>
+									
+									<security:authorize ifAnyGranted="ROLE_ARC_PROMOTEUR,ROLE_PHARMACIEN_INTERNE,ROLE_PHARMACIEN_INTERNE_GARDE,ROLE_PHARMACIEN_TITULAIRE,ROLE_PHARMACIEN_ASSISTANT,ROLE_PHARMACIEN_ATTACHE,ROLE_ADMIN">			
+										<li>
+											<a href="#{request.contextPath}/flows/dotation/dispensation" class="submenuItem" >
+												<h:outputText value="#{resourceBundle['menu.dispensationGlobale']}" />
+											</a>
+										</li>
+									</security:authorize>
+									
+									<security:authorize ifAnyGranted="ROLE_INVESTIGATEUR,ROLE_PHARMACIEN_INTERNE,ROLE_PHARMACIEN_INTERNE_GARDE,ROLE_PHARMACIEN_TITULAIRE,ROLE_PHARMACIEN_ASSISTANT,ROLE_PHARMACIEN_ATTACHE,ROLE_ADMIN">	
+										<li>
+											<a href="#{request.contextPath}/flows/dotation/demande" class="submenuItem" >
+												<h:outputText value="#{resourceBundle['menu.demandeDotation']}" />
+											</a>
+										</li>
+									</security:authorize>
+									
+									<security:authorize ifAnyGranted="ROLE_ARC_INVESTIGATEUR,ROLE_ARC_PROMOTEUR,ROLE_DIRECTION_RECHERCHE,ROLE_PHARMACIEN_INTERNE,ROLE_PHARMACIEN_INTERNE_GARDE,ROLE_PHARMACIEN_EXTERNE,ROLE_PHARMACIEN_PREPARATEUR,ROLE_PHARMACIEN_TITULAIRE,ROLE_PHARMACIEN_ASSISTANT,ROLE_PHARMACIEN_ATTACHE,ROLE_ADMIN">			
+										<li>
+											<a href="#{request.contextPath}/flows/evenement/gestion" class="submenuItem" >
+												<h:outputText value="#{resourceBundle['menu.evenement']}" />
+											</a>
+										</li>
+									</security:authorize>
+									
+									<security:authorize ifAnyGranted="ROLE_ARC_INVESTIGATEUR,ROLE_ARC_PROMOTEUR,ROLE_DIRECTION_RECHERCHE,ROLE_PHARMACIEN_INTERNE,ROLE_PHARMACIEN_INTERNE_GARDE,ROLE_PHARMACIEN_EXTERNE,ROLE_PHARMACIEN_PREPARATEUR,ROLE_PHARMACIEN_TITULAIRE,ROLE_PHARMACIEN_ASSISTANT,ROLE_PHARMACIEN_ATTACHE,ROLE_ADMIN">			
+										<li>
+											<a href="#{request.contextPath}/flows/incident/gestion" class="submenuItem" >
+												<h:outputText value="#{resourceBundle['menu.incident']}" />
+											</a>
+										</li>
+									</security:authorize>
+									<security:authorize ifAnyGranted="ROLE_PHARMACIEN_INTERNE,ROLE_PHARMACIEN_INTERNE_GARDE,ROLE_PHARMACIEN_TITULAIRE,ROLE_PHARMACIEN_ASSISTANT,ROLE_PHARMACIEN_ATTACHE,ROLE_ADMIN">			
+										<li>
+											<a href="#{request.contextPath}/flows/indicateur" class="submenuItem" >
+												<h:outputText value="#{resourceBundle['menu.indicateur']}" />
+											</a>
+										</li>
 									</security:authorize>			
 									</ul>
 								</div>
 							</div></li>
 						</security:authorize>	
-							<security:authorize
-					ifAnyGranted="ROLE_ARC_PROMOTEUR,ROLE_DIRECTION_RECHERCHE,ROLE_PHARMACIEN_INTERNE,ROLE_PHARMACIEN_INTERNE_GARDE,ROLE_PHARMACIEN_EXTERNE,ROLE_PHARMACIEN_PREPARATEUR,ROLE_PHARMACIEN_TITULAIRE,ROLE_PHARMACIEN_ASSISTANT,ROLE_PHARMACIEN_ATTACHE,ROLE_ADMIN">
-						<li class="ui-menubar-item ui-menubar-item-hassubmenu menuParent"
-							id="yui-gen17" groupindex="0" index="1"><a
-							href="#menuForm:j_idt39"
-							class="ui-menubar-item-label ui-menubar-item-label-hassubmenu">Stock</a>
+						<security:authorize ifAnyGranted="ROLE_ARC_PROMOTEUR,ROLE_DIRECTION_RECHERCHE,ROLE_PHARMACIEN_INTERNE,ROLE_PHARMACIEN_INTERNE_GARDE,ROLE_PHARMACIEN_EXTERNE,ROLE_PHARMACIEN_PREPARATEUR,ROLE_PHARMACIEN_TITULAIRE,ROLE_PHARMACIEN_ASSISTANT,ROLE_PHARMACIEN_ATTACHE,ROLE_ADMIN">
+						<li><a href="#"><h:outputText value="#{resourceBundle['menu.stock']}" /></a>
 							<div
 								class="ui-menu ui-widget ui-widget-content ui-corner-all yui-module yui-overlay"
 								id="menuForm:j_idt39"
 								style="position: absolute; visibility: hidden; z-index: 1;">
 								<div class="bd">
 									<ul class="first-of-type">
-										<security:authorize
-											ifAnyGranted="ROLE_ARC_PROMOTEUR,ROLE_DIRECTION_RECHERCHE,ROLE_PHARMACIEN_INTERNE,ROLE_PHARMACIEN_INTERNE_GARDE,ROLE_PHARMACIEN_EXTERNE,ROLE_PHARMACIEN_PREPARATEUR,ROLE_PHARMACIEN_TITULAIRE,ROLE_PHARMACIEN_ASSISTANT,ROLE_PHARMACIEN_ATTACHE,ROLE_ADMIN">
-											<li class="ui-menu-item ui-corner-all first-of-type"
-												id="yui-gen11" groupindex="0" index="0"><a
-												onclick="clickOnMenu('yui-gen11');" href="javascript:void(0)"
-												class="ui-menu-item-label ui-corner-all submenuItem"
-												id="menuForm:j_idt40">Consultation Flux</a></li>
-										</security:authorize>		
-										<security:authorize
-											ifAnyGranted="ROLE_ARC_PROMOTEUR,ROLE_DIRECTION_RECHERCHE,ROLE_PHARMACIEN_INTERNE,ROLE_PHARMACIEN_INTERNE_GARDE,ROLE_PHARMACIEN_EXTERNE,ROLE_PHARMACIEN_PREPARATEUR,ROLE_PHARMACIEN_TITULAIRE,ROLE_PHARMACIEN_ASSISTANT,ROLE_PHARMACIEN_ATTACHE,ROLE_ADMIN">
-											<li class="ui-menu-item ui-corner-all" id="yui-gen12"
-												groupindex="0" index="1"><a onclick="clickOnMenu('yui-gen12');"
-												href="javascript:void(0)"
-												class="ui-menu-item-label ui-corner-all submenuItem"
-												id="menuForm:j_idt41">Consultation Stock</a></li>
+										<security:authorize ifAnyGranted="ROLE_ARC_PROMOTEUR,ROLE_DIRECTION_RECHERCHE,ROLE_PHARMACIEN_INTERNE,ROLE_PHARMACIEN_INTERNE_GARDE,ROLE_PHARMACIEN_EXTERNE,ROLE_PHARMACIEN_PREPARATEUR,ROLE_PHARMACIEN_TITULAIRE,ROLE_PHARMACIEN_ASSISTANT,ROLE_PHARMACIEN_ATTACHE,ROLE_ADMIN">
+											<li>
+												<a href="#{request.contextPath}/flows/stock/consultationFlux" class="submenuItem" >
+													<h:outputText value="#{resourceBundle['menu.stock.consultationFlux']}" />
+												</a>
+											</li>
 										</security:authorize>
-										<security:authorize
-											ifAnyGranted="ROLE_PHARMACIEN_INTERNE,ROLE_PHARMACIEN_INTERNE_GARDE,ROLE_PHARMACIEN_EXTERNE,ROLE_PHARMACIEN_PREPARATEUR,ROLE_PHARMACIEN_TITULAIRE,ROLE_PHARMACIEN_ASSISTANT,ROLE_PHARMACIEN_ATTACHE,ROLE_ADMIN">
-											<li class="ui-menu-item ui-corner-all" id="yui-gen13"
-												groupindex="0" index="2"><a onclick="clickOnMenu('yui-gen13');"
-												href="javascript:void(0)"
-												class="ui-menu-item-label ui-corner-all submenuItem"
-												id="menuForm:j_idt42">Gestion de la péremption</a></li>
+											
+										<security:authorize ifAnyGranted="ROLE_ARC_PROMOTEUR,ROLE_DIRECTION_RECHERCHE,ROLE_PHARMACIEN_INTERNE,ROLE_PHARMACIEN_INTERNE_GARDE,ROLE_PHARMACIEN_EXTERNE,ROLE_PHARMACIEN_PREPARATEUR,ROLE_PHARMACIEN_TITULAIRE,ROLE_PHARMACIEN_ASSISTANT,ROLE_PHARMACIEN_ATTACHE,ROLE_ADMIN">
+											<li>
+												<a href="#{request.contextPath}/flows/stock/consultation" class="submenuItem" >
+													<h:outputText value="#{resourceBundle['menu.stock.consultation']}" />
+												</a>
+											</li>
 										</security:authorize>
-										<security:authorize
-											ifAnyGranted="ROLE_PHARMACIEN_INTERNE,ROLE_PHARMACIEN_INTERNE_GARDE,ROLE_PHARMACIEN_EXTERNE,ROLE_PHARMACIEN_PREPARATEUR,ROLE_PHARMACIEN_TITULAIRE,ROLE_PHARMACIEN_ASSISTANT,ROLE_PHARMACIEN_ATTACHE,ROLE_ADMIN">
-											<li class="ui-menu-item ui-corner-all" id="yui-gen14"
-												groupindex="0" index="3"><a onclick="clickOnMenu('yui-gen14');"
-												href="javascript:void(0)"
-												class="ui-menu-item-label ui-corner-all submenuItem"
-												id="menuForm:j_idt43">Entrée de stock</a></li>
+										
+										<security:authorize ifAnyGranted="ROLE_PHARMACIEN_INTERNE,ROLE_PHARMACIEN_INTERNE_GARDE,ROLE_PHARMACIEN_EXTERNE,ROLE_PHARMACIEN_PREPARATEUR,ROLE_PHARMACIEN_TITULAIRE,ROLE_PHARMACIEN_ASSISTANT,ROLE_PHARMACIEN_ATTACHE,ROLE_ADMIN">
+											<li>
+												<a href="#{request.contextPath}/flows/stock/extensionPeremption" class="submenuItem" >
+													<h:outputText value="#{resourceBundle['menu.stock.extensionPeremption']}" />
+												</a>
+											</li>
+											
 										</security:authorize>
-										<security:authorize
-											ifAnyGranted="ROLE_PHARMACIEN_INTERNE,ROLE_PHARMACIEN_INTERNE_GARDE,ROLE_PHARMACIEN_EXTERNE,ROLE_PHARMACIEN_PREPARATEUR,ROLE_PHARMACIEN_TITULAIRE,ROLE_PHARMACIEN_ASSISTANT,ROLE_PHARMACIEN_ATTACHE,ROLE_ADMIN">
-											<li class="ui-menu-item ui-corner-all" id="yui-gen15"
-												groupindex="0" index="4"><a onclick="clickOnMenu('yui-gen15');"
-												href="javascript:void(0)"
-												class="ui-menu-item-label ui-corner-all submenuItem"
-												id="menuForm:j_idt44">Sortie de stock</a></li>
+										
+										<security:authorize ifAnyGranted="ROLE_PHARMACIEN_INTERNE,ROLE_PHARMACIEN_INTERNE_GARDE,ROLE_PHARMACIEN_EXTERNE,ROLE_PHARMACIEN_PREPARATEUR,ROLE_PHARMACIEN_TITULAIRE,ROLE_PHARMACIEN_ASSISTANT,ROLE_PHARMACIEN_ATTACHE,ROLE_ADMIN">
+											<li>
+												<a href="#{request.contextPath}/flows/stock/reception" class="submenuItem" >
+													<h:outputText value="#{resourceBundle['menu.stock.reception']}" />
+												</a>
+											</li>
 										</security:authorize>
-										<security:authorize
-											ifAnyGranted="ROLE_PHARMACIEN_INTERNE,ROLE_PHARMACIEN_INTERNE_GARDE,ROLE_PHARMACIEN_EXTERNE,ROLE_PHARMACIEN_PREPARATEUR,ROLE_PHARMACIEN_TITULAIRE,ROLE_PHARMACIEN_ASSISTANT,ROLE_PHARMACIEN_ATTACHE,ROLE_ADMIN">
-											<li class="ui-menu-item ui-corner-all" id="yui-gen16"
-												groupindex="0" index="4"><a onclick="clickOnMenu('yui-gen16');"
-												href="javascript:void(0)"
-												class="ui-menu-item-label ui-corner-all submenuItem"
-												id="menuForm:j_idt44">Préparation</a></li>
+										
+										<security:authorize ifAnyGranted="ROLE_PHARMACIEN_INTERNE,ROLE_PHARMACIEN_INTERNE_GARDE,ROLE_PHARMACIEN_EXTERNE,ROLE_PHARMACIEN_PREPARATEUR,ROLE_PHARMACIEN_TITULAIRE,ROLE_PHARMACIEN_ASSISTANT,ROLE_PHARMACIEN_ATTACHE,ROLE_ADMIN">
+											<li>
+												<a href="#{request.contextPath}/flows/stock/sortie" class="submenuItem" >
+													<h:outputText value="#{resourceBundle['menu.stock.sortie']}" />
+												</a>
+											</li>
 										</security:authorize>
-										<security:authorize
-											ifAnyGranted="ROLE_ARC_PROMOTEUR,ROLE_PHARMACIEN_INTERNE,ROLE_PHARMACIEN_INTERNE_GARDE,ROLE_PHARMACIEN_EXTERNE,ROLE_PHARMACIEN_PREPARATEUR,ROLE_PHARMACIEN_TITULAIRE,ROLE_PHARMACIEN_ASSISTANT,ROLE_PHARMACIEN_ATTACHE,ROLE_ADMIN">
-											<li class="ui-menu-item ui-corner-all" id="yui-gen16b"
-												groupindex="0" index="5"><a onclick="clickOnMenu('yui-gen16b');"
-												href="javascript:void(0)"
-												class="ui-menu-item-label ui-corner-all submenuItem"
-												id="menuForm:j_idt45">Retour patient</a></li>
+										
+										<security:authorize ifAnyGranted="ROLE_PHARMACIEN_INTERNE,ROLE_PHARMACIEN_INTERNE_GARDE,ROLE_PHARMACIEN_EXTERNE,ROLE_PHARMACIEN_PREPARATEUR,ROLE_PHARMACIEN_TITULAIRE,ROLE_PHARMACIEN_ASSISTANT,ROLE_PHARMACIEN_ATTACHE,ROLE_ADMIN">
+											<li>
+												<a href="#{request.contextPath}/flows/stock/preparation" class="submenuItem" >
+													<h:outputText value="#{resourceBundle['menu.stock.preparation']}" />
+												</a>
+											</li>
+										</security:authorize>
+										
+										<security:authorize ifAnyGranted="ROLE_ARC_PROMOTEUR,ROLE_PHARMACIEN_INTERNE,ROLE_PHARMACIEN_INTERNE_GARDE,ROLE_PHARMACIEN_EXTERNE,ROLE_PHARMACIEN_PREPARATEUR,ROLE_PHARMACIEN_TITULAIRE,ROLE_PHARMACIEN_ASSISTANT,ROLE_PHARMACIEN_ATTACHE,ROLE_ADMIN">
+											<li>
+												<a href="#{request.contextPath}/flows/stock/retourPatient/gestion" class="submenuItem" >
+													<h:outputText value="#{resourceBundle['menu.stock.retourPatient']}" />
+												</a>
+											</li>
 										</security:authorize>		
 									</ul>
-									
 								</div>
 							</div></li>
-							</security:authorize> 
+							
+						</security:authorize> 
 						<li class="ui-menubar-item ui-menubar-item-hassubmenu"
-							id="yui-gen20" groupindex="0" index="2"><a
-							href="#menuForm:j_idt46"
-							class="ui-menubar-item-label ui-menubar-item-label-hassubmenu">Répertoire
-								des essais</a>
+							 groupindex="0" index="2"><a href="#"><h:outputText value="#{resourceBundle['menu.repertoireEssais']}" /></a>
 							<div
 								class="ui-menu ui-widget ui-widget-content ui-corner-all yui-module yui-overlay"
 								id="menuForm:j_idt46"
@@ -206,30 +188,28 @@
 									<ul class="first-of-type">
 										<security:authorize
 											ifAnyGranted="ROLE_CRO,ROLE_INVESTIGATEUR,ROLE_ARC_INVESTIGATEUR,ROLE_PROMOTEUR,ROLE_ARC_PROMOTEUR,ROLE_DIRECTION_RECHERCHE,ROLE_PHARMACIEN_INTERNE_GARDE,ROLE_PHARMACIEN_INTERNE,ROLE_PHARMACIEN_EXTERNE,ROLE_PHARMACIEN_PREPARATEUR,ROLE_PHARMACIEN_TITULAIRE,ROLE_PHARMACIEN_ASSISTANT,ROLE_PHARMACIEN_ATTACHE,ROLE_ADMIN">
-											<li class="ui-menu-item ui-corner-all first-of-type"
-												id="yui-gen18" groupindex="0" index="0"><a
-												onclick="clickOnMenu('yui-gen18');" href="javascript:void(0)"
-												class="ui-menu-item-label ui-corner-all submenuItem"
-												id="menuForm:j_idt47">Rechercher un essai</a></li>
+											<li>
+												<a href="#{request.contextPath}/flows/repertoireEssais" class="submenuItem" >
+													<h:outputText value="#{resourceBundle['menu.repertoireEssais.rechercher']}" />
+												</a>
+											</li>
 										</security:authorize>	
 										<security:authorize
 												ifAnyGranted="ROLE_PHARMACIEN_TITULAIRE,ROLE_PHARMACIEN_ATTACHE,ROLE_PHARMACIEN_ASSISTANT,ROLE_ADMIN">
-											<li class="ui-menu-item ui-corner-all" id="yui-gen19"
-												groupindex="0" index="1"><a onclick="clickOnMenu('yui-gen19');"
-												href="javascript:void(0)"
-												class="ui-menu-item-label ui-corner-all submenuItem"
-												id="menuForm:j_idt48">Créer un nouvel essai</a></li>
+											<li>
+												<a href="#{request.contextPath}/flows/repertoireEssaisSigrec" class="submenuItem" >
+													<h:outputText value="#{resourceBundle['menu.repertoireEssais.sigrec']}" />
+												</a>
+											</li>
 										</security:authorize>		
 									</ul>
 								</div>
-							</div></li>
+							</div>
+						</li>
+							
 					<security:authorize
 						ifAnyGranted="ROLE_INVESTIGATEUR,ROLE_ARC_INVESTIGATEUR,ROLE_ARC_PROMOTEUR,ROLE_DIRECTION_RECHERCHE,ROLE_PHARMACIEN_INTERNE,ROLE_PHARMACIEN_INTERNE_GARDE,ROLE_PHARMACIEN_PREPARATEUR,ROLE_PHARMACIEN_TITULAIRE,ROLE_PHARMACIEN_ATTACHE,ROLE_PHARMACIEN_ASSISTANT,ROLE_ADMIN">	
-						<li class="ui-menubar-item ui-menubar-item-hassubmenu"
-							id="yui-gen30" groupindex="0" index="3"><a
-							href="#menuForm:j_idt49"
-							class="ui-menubar-item-label ui-menubar-item-label-hassubmenu">Gérer
-								les données</a>
+						<li><a href="#"><h:outputText value="#{resourceBundle['menu.gestionData']}" /></a>
 							<div
 								class="ui-menu ui-widget ui-widget-content ui-corner-all yui-module yui-overlay"
 								id="menuForm:j_idt49"
@@ -239,58 +219,67 @@
 									
 										<security:authorize
 											ifAnyGranted="ROLE_PHARMACIEN_ATTACHE,ROLE_PHARMACIEN_TITULAIRE, ROLE_PHARMACIEN_ASSISTANT,ROLE_ADMIN">
-											<li class="ui-menu-item ui-corner-all first-of-type"
-												id="yui-gen21" groupindex="0" index="0"><a
-												onclick="clickOnMenu('yui-gen21');" href="javascript:void(0)"
-												class="ui-menu-item-label ui-corner-all submenuItem"
-												id="menuForm:j_idt50">Etablissement</a></li>
-											<li class="ui-menu-item ui-corner-all" id="yui-gen22"
-												groupindex="0" index="1"><a onclick="clickOnMenu('yui-gen22');"
-												href="javascript:void(0)"
-												class="ui-menu-item-label ui-corner-all submenuItem"
-												id="menuForm:j_idt51">Grilles de surcoûts</a></li>
-										</security:authorize>			
+											<li>
+												<a href="#{request.contextPath}/flows/etablissement/gestion" class="submenuItem" >
+													<h:outputText value="#{resourceBundle['menu.gestionEtablissement']}" />
+												</a>
+											</li>
+											
+											<li>
+												<a href="#{request.contextPath}/flows/surcout/grilleModele/gestion" class="submenuItem" >
+													<h:outputText value="#{resourceBundle['menu.gestionGrille']}" />
+												</a>
+											</li>
+										</security:authorize>
+												
 										<security:authorize 
 											ifAnyGranted="ROLE_INVESTIGATEUR,ROLE_ARC_INVESTIGATEUR,ROLE_ARC_PROMOTEUR,ROLE_DIRECTION_RECHERCHE,ROLE_PHARMACIEN_INTERNE,ROLE_PHARMACIEN_INTERNE_GARDE,ROLE_PHARMACIEN_PREPARATEUR,ROLE_PHARMACIEN_TITULAIRE,ROLE_PHARMACIEN_ATTACHE,ROLE_PHARMACIEN_ASSISTANT,ROLE_ADMIN">
-											<li class="ui-menu-item ui-corner-all" id="yui-gen23"
-												groupindex="0" index="2"><a onclick="clickOnMenu('yui-gen23');"
-												href="javascript:void(0)"
-												class="ui-menu-item-label ui-corner-all submenuItem"
-												id="menuForm:j_idt52">Patient</a></li>
+											<li>
+												<a href="#{request.contextPath}/flows/patient/gestion" class="submenuItem" >
+													<h:outputText value="#{resourceBundle['menu.gestionPatient']}" />
+												</a>
+											</li>
 										</security:authorize>	
 										
 										<security:authorize 
 											ifAnyGranted="ROLE_PHARMACIEN_ATTACHE,ROLE_PHARMACIEN_TITULAIRE, ROLE_PHARMACIEN_ASSISTANT,ROLE_ADMIN">	
-											<li class="ui-menu-item ui-corner-all" id="yui-gen24"
-												groupindex="0" index="3"><a onclick="clickOnMenu('yui-gen24');"
-												href="javascript:void(0)"
-												class="ui-menu-item-label ui-corner-all submenuItem"
-												id="menuForm:j_idt53">Personne</a></li>
-											<li class="ui-menu-item ui-corner-all" id="yui-gen25"
-												groupindex="0" index="4"><a onclick="clickOnMenu('yui-gen25');"
-												href="javascript:void(0)"
-												class="ui-menu-item-label ui-corner-all submenuItem"
-												id="menuForm:j_idt54">Pharmacie</a></li>
-											<li class="ui-menu-item ui-corner-all" id="yui-gen26"
-												groupindex="0" index="5"><a onclick="clickOnMenu('yui-gen26');"
-												href="javascript:void(0)"
-												class="ui-menu-item-label ui-corner-all submenuItem"
-												id="menuForm:j_idt55">Pôle</a></li>
-											<li class="ui-menu-item ui-corner-all" id="yui-gen27"
-												groupindex="0" index="6"><a onclick="clickOnMenu('yui-gen27');"
-												href="javascript:void(0)"
-												class="ui-menu-item-label ui-corner-all submenuItem"
-												id="menuForm:j_idt56">Promoteur</a></li>
-											<li class="ui-menu-item ui-corner-all" id="yui-gen28"
-												groupindex="0" index="7"><a onclick="clickOnMenu('yui-gen28');"
-												href="javascript:void(0)"
-												class="ui-menu-item-label ui-corner-all submenuItem"
-												id="menuForm:j_idt57">Service</a></li>
-											<li class="ui-menu-item ui-corner-all" id="yui-gen29"
-												groupindex="0" index="8"><a onclick="clickOnMenu('yui-gen29');"
-												href="javascript:void(0)"
-												class="ui-menu-item-label ui-corner-all submenuItem"
-												id="menuForm:j_idt58">Site</a></li>
+											
+											<li>
+												<a href="#{request.contextPath}/flows/personne/gestion" class="submenuItem" >
+													<h:outputText value="#{resourceBundle['menu.gestionPersonne']}" />
+												</a>
+											</li>
+											
+											<li>
+												<a href="#{request.contextPath}/flows/pharmacie/gestion" class="submenuItem" >
+													<h:outputText value="#{resourceBundle['menu.gestionPharmacie']}" />
+												</a>
+											</li>
+												
+											<li>
+												<a href="#{request.contextPath}/flows/pole/gestion" class="submenuItem" >
+													<h:outputText value="#{resourceBundle['menu.gestionPole']}" />
+												</a>
+											</li>
+											
+											<li>
+												<a href="#{request.contextPath}/flows/promoteur/gestion" class="submenuItem" >
+													<h:outputText value="#{resourceBundle['menu.gestionPromoteur']}" />
+												</a>
+											</li>
+											
+											<li>
+												<a href="#{request.contextPath}/flows/service/gestion" class="submenuItem" >
+													<h:outputText value="#{resourceBundle['menu.gestionService']}" />
+												</a>
+											</li>
+											
+											<li>
+												<a href="#{request.contextPath}/flows/site/gestion" class="submenuItem" >
+													<h:outputText value="#{resourceBundle['menu.gestionSite']}" />
+												</a>
+											</li>
+											
 										</security:authorize>		
 									</ul>
 								</div>
@@ -298,39 +287,47 @@
 						</security:authorize>	
 						<security:authorize 
 							ifAnyGranted="ROLE_PHARMACIEN_INTERNE,ROLE_PHARMACIEN_INTERNE_GARDE, ROLE_PHARMACIEN_EXTERNE,ROLE_PHARMACIEN_PREPARATEUR,ROLE_PHARMACIEN_TITULAIRE,ROLE_PHARMACIEN_ATTACHE,ROLE_PHARMACIEN_ASSISTANT,ROLE_ADMIN">
-							<li class="ui-menubar-item ui-menubar-item-hassubmenu"
-								id="yui-gen35" groupindex="0" index="4"><a
-								href="#menuForm:j_idt59"
-								class="ui-menubar-item-label ui-menubar-item-label-hassubmenu">Ordonnancier</a>
+							<li><a href="#"><h:outputText value="#{resourceBundle['menu.ordonnancier']}" /></a>
 								<div
 									class="ui-menu ui-widget ui-widget-content ui-corner-all yui-module yui-overlay"
 									id="menuForm:j_idt59"
 									style="position: absolute; visibility: hidden; z-index: 1;">
 									<div class="bd">
 										<ul class="first-of-type">
-											<li class="ui-menu-item ui-corner-all first-of-type"
-												id="yui-gen31" groupindex="0" index="0"><a
-												onclick="clickOnMenu('yui-gen31');" href="javascript:void(0)"
-												class="ui-menu-item-label ui-corner-all submenuItem"
-												id="menuForm:j_idt60">Dispensation</a></li>
-											<li class="ui-menu-item ui-corner-all" id="yui-gen32"
-												groupindex="0" index="1"><a onclick="clickOnMenu('yui-gen32');"
-												href="javascript:void(0)"
-												class="ui-menu-item-label ui-corner-all submenuItem"
-												id="menuForm:j_idt61">Duplicata Dispensation</a></li>
-											<li class="ui-menu-item ui-corner-all" id="yui-gen33"
-												groupindex="0" index="2"><a onclick="clickOnMenu('yui-gen33');"
-												href="javascript:void(0)"
-												class="ui-menu-item-label ui-corner-all submenuItem"
-												id="menuForm:j_idt62">Fabrication/Reconstitution</a></li>
-											<li class="ui-menu-item ui-corner-all" id="yui-gen34"
-												groupindex="0" index="3"><a onclick="clickOnMenu('yui-gen34');"
-												href="javascript:void(0)"
-												class="ui-menu-item-label ui-corner-all submenuItem"
-												id="menuForm:j_idt63">Duplicata Fabric/Reconst</a></li>
+											<li>
+												<a href="#{request.contextPath}/flows/ordonnancier/dispensation/impression" class="submenuItem" >
+													<h:outputText value="#{resourceBundle['ordonnancierDisp.menu']}" />
+												</a>
+											</li>
+											
+											<li>
+												<a href="#{request.contextPath}/flows/ordonnancier/dispensation/duplicata" class="submenuItem" >
+													<h:outputText value="#{resourceBundle['duplicataOrdonnancierDisp.menu']}" />
+												</a>
+											</li>
+											
+											<li>
+												<a href="#{request.contextPath}/flows/ordonnancier/fabReconst/impression" class="submenuItem" >
+													<h:outputText value="#{resourceBundle['ordonnancierFabReconst.menu']}" />
+												</a>
+											</li>
+											
+											<li>
+												<a href="#{request.contextPath}/flows/ordonnancier/fabReconst/duplicata" class="submenuItem" >
+													<h:outputText value="#{resourceBundle['duplicataOrdonnancierFabReconst.menu']}" />
+												</a>
+											</li>
+											<c:if test="#{applicationController.reprisePassif}">
+												<li>
+													<a href="#{request.contextPath}/flows/reprisePassif" class="submenuItem" >
+														<h:outputText value="#{resourceBundle['ordonnancierReprisePassif.menu']}" />
+													</a>
+												</li>
+											</c:if>										
 										</ul>
 									</div>
-								</div></li>
+								</div>
+							</li>
 						</security:authorize>		
 					</ul>
 				</div>
@@ -346,264 +343,7 @@
 						}
 					});
 		</script>
-
- 
-		<div style="display: none;">
-			<p:menubar id="hiddenMenu">
-
-				<!-- Deroulement des Essais -->
-				<security:authorize
-					ifAnyGranted="ROLE_INVESTIGATEUR,ROLE_PHARMACIEN_PREPARATEUR,ROLE_ARC_INVESTIGATEUR,ROLE_ARC_PROMOTEUR,ROLE_DIRECTION_RECHERCHE,ROLE_PHARMACIEN_INTERNE,ROLE_PHARMACIEN_INTERNE_GARDE,ROLE_PHARMACIEN_EXTERNE,ROLE_PHARMACIEN_PREPARATEUR,ROLE_PHARMACIEN_TITULAIRE,ROLE_PHARMACIEN_ATTACHE,ROLE_PHARMACIEN_ASSISTANT,ROLE_ADMIN">
-					<p:submenu label="#{resourceBundle['menu.deroulementEssais']}">
-
-						<!-- Inclusion -->
-						<security:authorize
-							ifAnyGranted="ROLE_INVESTIGATEUR,ROLE_PHARMACIEN_INTERNE,ROLE_PHARMACIEN_INTERNE_GARDE,ROLE_PHARMACIEN_TITULAIRE,ROLE_PHARMACIEN_ASSISTANT,ROLE_PHARMACIEN_ATTACHE,ROLE_ADMIN">
-							<p:menuitem value="#{resourceBundle['menu.inclusion']}"
-								action="goInclusion" ajax="false" styleClass="submenuItem" />
-						</security:authorize>
-
-						<!-- Prescription -->
-						<security:authorize
-							ifAnyGranted="ROLE_INVESTIGATEUR,ROLE_ARC_INVESTIGATEUR,ROLE_ARC_PROMOTEUR,ROLE_PHARMACIEN_INTERNE,ROLE_PHARMACIEN_INTERNE_GARDE,ROLE_PHARMACIEN_TITULAIRE,ROLE_PHARMACIEN_ASSISTANT,ROLE_PHARMACIEN_ATTACHE,ROLE_ADMIN">
-							<p:menuitem
-								value="#{resourceBundle['menu.consulterPrescription']}"
-								action="goConsulterPrescription" ajax="false"
-								styleClass="submenuItem" />
-						</security:authorize>
-
-						<security:authorize
-							ifAnyGranted="ROLE_INVESTIGATEUR,ROLE_PHARMACIEN_INTERNE,ROLE_PHARMACIEN_INTERNE_GARDE,ROLE_PHARMACIEN_TITULAIRE,ROLE_PHARMACIEN_ASSISTANT,ROLE_PHARMACIEN_ATTACHE,ROLE_ADMIN">
-							<p:menuitem
-								value="#{resourceBundle['menu.effectuerPrescription']}"
-								action="goEffectuerPrescription" ajax="false"
-								styleClass="submenuItem" />
-						</security:authorize>
-
-						<!-- Dispensation -->
-						<security:authorize
-							ifAnyGranted="ROLE_ARC_PROMOTEUR,ROLE_PHARMACIEN_PREPARATEUR,ROLE_PHARMACIEN_INTERNE,ROLE_PHARMACIEN_INTERNE_GARDE,ROLE_PHARMACIEN_TITULAIRE,ROLE_PHARMACIEN_ASSISTANT,ROLE_PHARMACIEN_ATTACHE,ROLE_ADMIN">
-							<p:menuitem value="#{resourceBundle['menu.dispensation']}"
-								action="goConsulterDispensation" ajax="false"
-								styleClass="submenuItem" />
-						</security:authorize>
-
-						<!-- Dispensation -->
-						<security:authorize
-							ifAnyGranted="ROLE_ARC_PROMOTEUR,ROLE_PHARMACIEN_PREPARATEUR,ROLE_PHARMACIEN_INTERNE,ROLE_PHARMACIEN_INTERNE_GARDE,ROLE_PHARMACIEN_TITULAIRE,ROLE_PHARMACIEN_ASSISTANT,ROLE_PHARMACIEN_ATTACHE,ROLE_ADMIN">
-							<p:menuitem
-								value="#{resourceBundle['menu.effectuerdispensation']}"
-								action="goEffectuerDispensation" ajax="false"
-								styleClass="submenuItem" />
-						</security:authorize>
-
-						<!-- Dispensation Globale -->
-						<security:authorize
-							ifAnyGranted="ROLE_ARC_PROMOTEUR,ROLE_PHARMACIEN_INTERNE,ROLE_PHARMACIEN_INTERNE_GARDE,ROLE_PHARMACIEN_TITULAIRE,ROLE_PHARMACIEN_ASSISTANT,ROLE_PHARMACIEN_ATTACHE,ROLE_ADMIN">
-							<p:menuitem value="#{resourceBundle['menu.dispensationGlobale']}"
-								action="goDispensationGlobale" ajax="false"
-								styleClass="submenuItem" />
-						</security:authorize>
-
-						<!-- Demande de dotation  -->
-						<security:authorize
-							ifAnyGranted="ROLE_INVESTIGATEUR,ROLE_PHARMACIEN_INTERNE,ROLE_PHARMACIEN_INTERNE_GARDE,ROLE_PHARMACIEN_TITULAIRE,ROLE_PHARMACIEN_ASSISTANT,ROLE_PHARMACIEN_ATTACHE,ROLE_ADMIN">
-							<p:menuitem value="#{resourceBundle['menu.demandeDotation']}"
-								action="goDemandeDotation" ajax="false" styleClass="submenuItem" />
-						</security:authorize>
-
-						<!-- Evenement -->
-						<security:authorize
-							ifAnyGranted="ROLE_ARC_INVESTIGATEUR,ROLE_ARC_PROMOTEUR,ROLE_DIRECTION_RECHERCHE,ROLE_PHARMACIEN_INTERNE,ROLE_PHARMACIEN_INTERNE_GARDE,ROLE_PHARMACIEN_EXTERNE,ROLE_PHARMACIEN_PREPARATEUR,ROLE_PHARMACIEN_TITULAIRE,ROLE_PHARMACIEN_ASSISTANT,ROLE_PHARMACIEN_ATTACHE,ROLE_ADMIN">
-							<p:menuitem value="#{resourceBundle['menu.evenement']}"
-								action="goGestionEvenement" ajax="false"
-								styleClass="submenuItem" />
-						</security:authorize>
-
-						<!-- Incident -->
-						<security:authorize
-							ifAnyGranted="ROLE_ARC_INVESTIGATEUR,ROLE_ARC_PROMOTEUR,ROLE_DIRECTION_RECHERCHE,ROLE_PHARMACIEN_INTERNE,ROLE_PHARMACIEN_INTERNE_GARDE,ROLE_PHARMACIEN_EXTERNE,ROLE_PHARMACIEN_PREPARATEUR,ROLE_PHARMACIEN_TITULAIRE,ROLE_PHARMACIEN_ASSISTANT,ROLE_PHARMACIEN_ATTACHE,ROLE_ADMIN">
-							<p:menuitem value="#{resourceBundle['menu.incident']}"
-								action="goGestionIncident" ajax="false" styleClass="submenuItem" />
-						</security:authorize>
-
-						<!-- Indicateur -->
-						<security:authorize
-							ifAnyGranted="ROLE_PHARMACIEN_INTERNE,ROLE_PHARMACIEN_INTERNE_GARDE,ROLE_PHARMACIEN_TITULAIRE,ROLE_PHARMACIEN_ASSISTANT,ROLE_PHARMACIEN_ATTACHE,ROLE_ADMIN">
-							<p:menuitem value="#{resourceBundle['menu.indicateur']}"
-								action="goIndicateur" ajax="false" styleClass="submenuItem" />
-						</security:authorize>
-
-
-					</p:submenu>
-				</security:authorize>
-
-				<!-- Stock -->
-				<security:authorize
-					ifAnyGranted="ROLE_ARC_PROMOTEUR,ROLE_DIRECTION_RECHERCHE,ROLE_PHARMACIEN_INTERNE,ROLE_PHARMACIEN_INTERNE_GARDE,ROLE_PHARMACIEN_EXTERNE,ROLE_PHARMACIEN_PREPARATEUR,ROLE_PHARMACIEN_TITULAIRE,ROLE_PHARMACIEN_ASSISTANT,ROLE_PHARMACIEN_ATTACHE,ROLE_ADMIN">
-
-					<p:submenu label="#{resourceBundle['menu.stock']}">
-
-						<!-- Consultation de flux -->
-						<security:authorize
-							ifAnyGranted="ROLE_ARC_PROMOTEUR,ROLE_DIRECTION_RECHERCHE,ROLE_PHARMACIEN_INTERNE,ROLE_PHARMACIEN_INTERNE_GARDE,ROLE_PHARMACIEN_EXTERNE,ROLE_PHARMACIEN_PREPARATEUR,ROLE_PHARMACIEN_TITULAIRE,ROLE_PHARMACIEN_ASSISTANT,ROLE_PHARMACIEN_ATTACHE,ROLE_ADMIN">
-							<p:menuitem
-								value="#{resourceBundle['menu.stock.consultationFlux']}"
-								action="goStockConsultationFlux" ajax="false"
-								styleClass="submenuItem" />
-						</security:authorize>
-
-						<!-- Consultation de stock -->
-						<security:authorize
-							ifAnyGranted="ROLE_ARC_PROMOTEUR,ROLE_DIRECTION_RECHERCHE,ROLE_PHARMACIEN_INTERNE,ROLE_PHARMACIEN_INTERNE_GARDE,ROLE_PHARMACIEN_EXTERNE,ROLE_PHARMACIEN_PREPARATEUR,ROLE_PHARMACIEN_TITULAIRE,ROLE_PHARMACIEN_ASSISTANT,ROLE_PHARMACIEN_ATTACHE,ROLE_ADMIN">
-							<p:menuitem value="#{resourceBundle['menu.stock.consultation']}"
-								action="goStockConsultation" ajax="false"
-								styleClass="submenuItem" />
-						</security:authorize>
-
-						<!-- Extension de peremption -->
-						<security:authorize
-							ifAnyGranted="ROLE_PHARMACIEN_INTERNE,ROLE_PHARMACIEN_INTERNE_GARDE,ROLE_PHARMACIEN_EXTERNE,ROLE_PHARMACIEN_PREPARATEUR,ROLE_PHARMACIEN_TITULAIRE,ROLE_PHARMACIEN_ASSISTANT,ROLE_PHARMACIEN_ATTACHE,ROLE_ADMIN">
-							<p:menuitem
-								value="#{resourceBundle['menu.stock.extensionPeremption']}"
-								action="goStockExtensionPeremption" ajax="false"
-								styleClass="submenuItem" />
-						</security:authorize>
-
-						<!-- Reception de stock -->
-						<security:authorize
-							ifAnyGranted="ROLE_PHARMACIEN_INTERNE,ROLE_PHARMACIEN_INTERNE_GARDE,ROLE_PHARMACIEN_EXTERNE,ROLE_PHARMACIEN_PREPARATEUR,ROLE_PHARMACIEN_TITULAIRE,ROLE_PHARMACIEN_ASSISTANT,ROLE_PHARMACIEN_ATTACHE,ROLE_ADMIN">
-							<p:menuitem value="#{resourceBundle['menu.stock.reception']}"
-								action="goStockReception" ajax="false" styleClass="submenuItem" />
-						</security:authorize>
-
-						<!-- Sortie de stock -->
-						<security:authorize
-							ifAnyGranted="ROLE_PHARMACIEN_INTERNE,ROLE_PHARMACIEN_INTERNE_GARDE,ROLE_PHARMACIEN_EXTERNE,ROLE_PHARMACIEN_PREPARATEUR,ROLE_PHARMACIEN_TITULAIRE,ROLE_PHARMACIEN_ASSISTANT,ROLE_PHARMACIEN_ATTACHE,ROLE_ADMIN">
-							<p:menuitem value="#{resourceBundle['menu.stock.sortie']}"
-								action="goStockSortie" ajax="false" styleClass="submenuItem" />
-						</security:authorize>
-
-						<!-- Preparation -->
-						<security:authorize
-							ifAnyGranted="ROLE_PHARMACIEN_INTERNE,ROLE_PHARMACIEN_INTERNE_GARDE,ROLE_PHARMACIEN_EXTERNE,ROLE_PHARMACIEN_PREPARATEUR,ROLE_PHARMACIEN_TITULAIRE,ROLE_PHARMACIEN_ASSISTANT,ROLE_PHARMACIEN_ATTACHE,ROLE_ADMIN">
-							<p:menuitem value="#{resourceBundle['menu.stock.preparation']}"
-								action="goStockPreparation" ajax="false" styleClass="submenuItem" />
-						</security:authorize>
-						
-						<!--				 Retour patient -->
-						<security:authorize
-							ifAnyGranted="ROLE_ARC_PROMOTEUR,ROLE_PHARMACIEN_INTERNE,ROLE_PHARMACIEN_INTERNE_GARDE,ROLE_PHARMACIEN_EXTERNE,ROLE_PHARMACIEN_PREPARATEUR,ROLE_PHARMACIEN_TITULAIRE,ROLE_PHARMACIEN_ASSISTANT,ROLE_PHARMACIEN_ATTACHE,ROLE_ADMIN">
-							<p:menuitem value="#{resourceBundle['menu.stock.retourPatient']}"
-								action="goRetourPatient" ajax="false" styleClass="submenuItem" />
-						</security:authorize>
-					</p:submenu>
-				</security:authorize>
-
-				<!-- Repertoire des essais -->
-				<p:submenu label="#{resourceBundle['menu.repertoireEssais']}">
-					<!-- Rechercher un essai -->
-					<security:authorize
-						ifAnyGranted="ROLE_CRO,ROLE_INVESTIGATEUR,ROLE_ARC_INVESTIGATEUR,ROLE_PROMOTEUR,ROLE_ARC_PROMOTEUR,ROLE_DIRECTION_RECHERCHE,ROLE_PHARMACIEN_INTERNE_GARDE,ROLE_PHARMACIEN_INTERNE,ROLE_PHARMACIEN_EXTERNE,ROLE_PHARMACIEN_PREPARATEUR,ROLE_PHARMACIEN_TITULAIRE,ROLE_PHARMACIEN_ASSISTANT,ROLE_PHARMACIEN_ATTACHE,ROLE_ADMIN">
-						<p:menuitem
-							value="#{resourceBundle['menu.repertoireEssais.rechercher']}"
-							action="goRepertoireEssais" ajax="false" styleClass="submenuItem" />
-					</security:authorize>
-
-					<!-- Creer un essai -->
-					<security:authorize
-						ifAnyGranted="ROLE_PHARMACIEN_TITULAIRE,ROLE_PHARMACIEN_ATTACHE,ROLE_PHARMACIEN_ASSISTANT,ROLE_ADMIN">
-						<p:menuitem
-							value="#{resourceBundle['menu.repertoireEssais.sigrec']}"
-							action="goRepertoireEssaisSigrec" ajax="false"
-							styleClass="submenuItem" />
-					</security:authorize>
-				</p:submenu>
-
-				<!-- Gestion des donnees -->
-				<security:authorize
-					ifAnyGranted="ROLE_INVESTIGATEUR,ROLE_ARC_INVESTIGATEUR,ROLE_ARC_PROMOTEUR,ROLE_DIRECTION_RECHERCHE,ROLE_PHARMACIEN_INTERNE,ROLE_PHARMACIEN_INTERNE_GARDE,ROLE_PHARMACIEN_PREPARATEUR,ROLE_PHARMACIEN_TITULAIRE,ROLE_PHARMACIEN_ATTACHE,ROLE_PHARMACIEN_ASSISTANT,ROLE_ADMIN">
-					<p:submenu label="#{resourceBundle['menu.gestionData']}">
-
-						<security:authorize
-							ifAnyGranted="ROLE_PHARMACIEN_ATTACHE,ROLE_PHARMACIEN_TITULAIRE, ROLE_PHARMACIEN_ASSISTANT,ROLE_ADMIN">
-							<!-- Gerer un etablissement -->
-							<p:menuitem
-								value="#{resourceBundle['menu.gestionEtablissement']}"
-								action="goGestionEtablissement" ajax="false"
-								styleClass="submenuItem" />
-							<!-- Gerer une grille -->
-							<p:menuitem value="#{resourceBundle['menu.gestionGrille']}"
-								action="goGestionGrilleModele" ajax="false"
-								styleClass="submenuItem" />
-						</security:authorize>
-
-						<!-- Gerer un patient --> 
-						<security:authorize ifAnyGranted="ROLE_INVESTIGATEUR,ROLE_ARC_INVESTIGATEUR,ROLE_ARC_PROMOTEUR,ROLE_DIRECTION_RECHERCHE,ROLE_PHARMACIEN_INTERNE,ROLE_PHARMACIEN_INTERNE_GARDE,ROLE_PHARMACIEN_PREPARATEUR,ROLE_PHARMACIEN_TITULAIRE,ROLE_PHARMACIEN_ATTACHE,ROLE_PHARMACIEN_ASSISTANT,ROLE_ADMIN">
-							<p:menuitem value="#{resourceBundle['menu.gestionPatient']}"
-								action="goGestionPatient" ajax="false" styleClass="submenuItem" />
-						</security:authorize>
-
-						<security:authorize
-							ifAnyGranted="ROLE_PHARMACIEN_ATTACHE,ROLE_PHARMACIEN_TITULAIRE, ROLE_PHARMACIEN_ASSISTANT,ROLE_ADMIN">
-							<!-- Gerer une personne -->
-							<p:menuitem value="#{resourceBundle['menu.gestionPersonne']}"
-								action="goGestionPersonne" ajax="false" styleClass="submenuItem" />
-							<!-- Gerer une pharmacie -->
-							<p:menuitem value="#{resourceBundle['menu.gestionPharmacie']}"
-								action="goGestionPharmacie" ajax="false"
-								styleClass="submenuItem" />
-							<!-- Gerer un pole -->
-							<p:menuitem value="#{resourceBundle['menu.gestionPole']}"
-								action="goGestionPole" ajax="false" styleClass="submenuItem" />
-							<!-- Gerer un promoteur -->
-							<p:menuitem value="#{resourceBundle['menu.gestionPromoteur']}"
-								action="goGestionPromoteur" ajax="false"
-								styleClass="submenuItem" />
-							<!-- Gerer une service -->
-							<p:menuitem value="#{resourceBundle['menu.gestionService']}"
-								action="goGestionService" ajax="false" styleClass="submenuItem" />
-							<!-- Gerer un site -->
-							<p:menuitem value="#{resourceBundle['menu.gestionSite']}"
-								action="goGestionSite" ajax="false" styleClass="submenuItem" />
-						</security:authorize>
-
-
-					</p:submenu>
-				</security:authorize>
-
-				<!-- Ordonnancier -->
-				<security:authorize
-					ifAnyGranted="ROLE_PHARMACIEN_INTERNE,ROLE_PHARMACIEN_INTERNE_GARDE, ROLE_PHARMACIEN_EXTERNE,ROLE_PHARMACIEN_PREPARATEUR,ROLE_PHARMACIEN_TITULAIRE,ROLE_PHARMACIEN_ATTACHE,ROLE_PHARMACIEN_ASSISTANT,ROLE_ADMIN">
-					<p:submenu label="#{resourceBundle['menu.ordonnancier']}">
-
-						<!-- Ordonnancier des dispensations -->
-						<p:menuitem value="#{resourceBundle['ordonnancierDisp.menu']}"
-							action="goOrdonnancierDisp" ajax="false" styleClass="submenuItem" />
-
-						<!-- Duplicata Ordonnancier des dispensations -->
-						<p:menuitem
-							value="#{resourceBundle['duplicataOrdonnancierDisp.menu']}"
-							action="goDuplicataOrdonnancierDisp" ajax="false"
-							styleClass="submenuItem" />
-
-						<!-- Ordonnancier des fabrications -->
-						<p:menuitem
-							value="#{resourceBundle['ordonnancierFabReconst.menu']}"
-							action="goOrdonnancierFabReconst" ajax="false"
-							styleClass="submenuItem" />
-
-						<!-- Duplicata Ordonnancier des fabrications -->
-						<p:menuitem
-							value="#{resourceBundle['duplicataOrdonnancierFabReconst.menu']}"
-							action="goDuplicataOrdonnancierFabReconst" ajax="false"
-							styleClass="submenuItem" />
-
-					</p:submenu>
-				</security:authorize>
-
-			</p:menubar>
-		</div>
+		
 	</h:form>
 
 </ui:composition>

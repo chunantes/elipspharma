@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<databaseChangeLog
+        xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xmlns:ext="http://www.liquibase.org/xml/ns/dbchangelog-ext"
+        xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.0.xsd
+        http://www.liquibase.org/xml/ns/dbchangelog-ext http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-ext.xsd">
+    
+    <changeSet id="create_database_1.31" author="SGL">
+        <preConditions onFail="MARK_RAN" onFailMessage="Structure de base à T0 déjà existante">
+            <not>
+                <tableExists tableName="acl_essai"/>
+            </not>  
+        </preConditions>
+        <comment>A sample change log</comment>
+        <sqlFile path="liquibase/create-database-1.31.sql"/>
+        <sql>-- Utilisateurs (password: eclipse*)
+            INSERT INTO personne (type, id, adresse, codepostal, fax, isadmin, login, mail, nom, password, prenom, telephone, ville, nomsociete, titre, typepharmacien, id_promoteur, telephoneportable, datearriveeservice, datedepartservice, datevalidationformation) 
+            VALUES ('PHARMACIEN', 1, '', '', '', true, 'administrateur', '', 'administrateur', 'ea617e2de44cac984883b76bd81092b6', 'administrateur', '', '', '', NULL, 'TITULAIRE', NULL, NULL, NULL, NULL, NULL);
+        </sql>
+    </changeSet>
+    <changeSet id="create_table_reprise_passif" author="SGL">
+        <preConditions onFail="MARK_RAN" onFailMessage="Table à T0 déjà existante">
+            <not>
+                <tableExists tableName="reprise_passif"/>
+            </not>  
+        </preConditions>
+        <comment>Creation de la table reprise_passif</comment>
+        <createTable tableName="reprise_passif">
+        	<column name="id" type="bigint">
+        		<constraints primaryKey="true" primaryKeyName="reprise_passif_pk"/>
+        	</column>
+        	<column name="version" type="bigint"/>
+        	<column name="numero_ordonnancier" type="varchar(255)"/>
+        	<column name="date_dispensation" type="timestamp" />
+        	<column name="initiales_patient" type="varchar(255)"/>
+        	<column name="essai_promoteur" type="varchar(255)"/>
+        	<column name="numlot_traitement" type="varchar(255)"/>
+        	<column name="produits" type="varchar(255)"/>
+        	<column name="dispense_par" type="varchar(255)"/>
+        </createTable>
+        <addNotNullConstraint tableName="reprise_passif" columnName="numero_ordonnancier"/>
+    </changeSet>
+</databaseChangeLog>

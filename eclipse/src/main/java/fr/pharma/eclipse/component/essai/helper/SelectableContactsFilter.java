@@ -14,14 +14,12 @@ import fr.pharma.eclipse.domain.model.essai.Essai;
 import fr.pharma.eclipse.domain.model.habilitation.Habilitation;
 
 /**
- * Helper en charge de filtrer des contacts retournés de la base, pour ne conserver que ceux qui
- * peuvent être ajoutés à l'essai.
- 
+ * Helper en charge de filtrer des contacts retournés de la base, pour ne
+ * conserver que ceux qui peuvent être ajoutés à l'essai.
+ * @author Netapsys
  * @version $Revision$ $Date$
  */
-public class SelectableContactsFilter
-    implements Serializable
-{
+public class SelectableContactsFilter implements Serializable {
 
     /**
      * Serial ID.
@@ -29,58 +27,48 @@ public class SelectableContactsFilter
     private static final long serialVersionUID = 7350017023436221015L;
 
     /**
-     * Méthode en charge de retirer de la liste des personnes les personnes qui sont déjà
-     * habilitées sur l'essai.
+     * Méthode en charge de retirer de la liste des personnes les personnes qui
+     * sont déjà habilitées sur l'essai.
      * @param essai Essai à inspecter.
      * @param typeContact Type de contact.
      * @param selectableBeans Liste des sélectionnables à filtrer.
      */
     public void filter(final Essai essai,
                        final TypeContact typeContact,
-                       final Collection<? extends Personne> selectableBeans)
-    {
-        if (selectableBeans.isEmpty())
-        {
+                       final Collection<? extends Personne> selectableBeans) {
+        if (selectableBeans.isEmpty()) {
             return;
         }
 
         // Récupération des habilitations existantes à inspecter.
-        final Collection<Habilitation> habilitationsReference =
-            new ArrayList<Habilitation>(essai.getDetailContacts().getHabilitations());
+        final Collection<Habilitation> habilitationsReference = new ArrayList<Habilitation>(essai.getDetailContacts().getHabilitations());
         // Conservation des habilitations actives
-        CollectionUtils.filter(habilitationsReference,
-                               new Predicate() {
+        CollectionUtils.filter(habilitationsReference, new Predicate() {
 
-                                   @Override
-                                   public boolean evaluate(final Object object)
-                                   {
-                                       final Habilitation habilitation = (Habilitation) object;
-                                       return habilitation.isActive();
-                                   }
-                               });
+            @Override
+            public boolean evaluate(final Object object) {
+                final Habilitation habilitation = (Habilitation) object;
+                return habilitation.isActive();
+            }
+        });
         // Récupération des personnes habilitées à inspecter.
-        final Collection<Object> personnesHabilitees =
-            new ArrayList<Object>(habilitationsReference);
-        CollectionUtils.transform(personnesHabilitees,
-                                  new Transformer() {
+        final Collection<Object> personnesHabilitees = new ArrayList<Object>(habilitationsReference);
+        CollectionUtils.transform(personnesHabilitees, new Transformer() {
 
-                                      @Override
-                                      public Object transform(final Object input)
-                                      {
-                                          final Habilitation habilitation = (Habilitation) input;
-                                          return habilitation.getPersonne();
-                                      }
-                                  });
+            @Override
+            public Object transform(final Object input) {
+                final Habilitation habilitation = (Habilitation) input;
+                return habilitation.getPersonne();
+            }
+        });
         // Filtrage des personnes sélectionnables.
-        CollectionUtils.filter(selectableBeans,
-                               new Predicate() {
+        CollectionUtils.filter(selectableBeans, new Predicate() {
 
-                                   @Override
-                                   public boolean evaluate(final Object object)
-                                   {
-                                       final Personne personne = (Personne) object;
-                                       return !personnesHabilitees.contains(personne);
-                                   }
-                               });
+            @Override
+            public boolean evaluate(final Object object) {
+                final Personne personne = (Personne) object;
+                return !personnesHabilitees.contains(personne);
+            }
+        });
     }
 }

@@ -52,12 +52,10 @@ import fr.pharma.eclipse.validator.prescription.ProduitPrescritValidator;
 
 /**
  * Test du manager PrescriptionManager.
- 
+ * @author Netapsys
  * @version $Revision$ $Date$
  */
-public class PrescriptionManagerTest
-    extends AbstractEclipseJUnitTest
-{
+public class PrescriptionManagerTest extends AbstractEclipseJUnitTest {
 
     /**
      * Manager.
@@ -113,8 +111,7 @@ public class PrescriptionManagerTest
      * {@inheritDoc}
      */
     @Override
-    public void setUp()
-    {
+    public void setUp() {
         this.validator = Mockito.mock(ProduitPrescritValidator.class);
         this.mockedService = Mockito.mock(GenericService.class);
         this.mockedPrescriptionHelper = Mockito.mock(PrescriptionManagerHelper.class);
@@ -139,8 +136,7 @@ public class PrescriptionManagerTest
      * {@inheritDoc}
      */
     @Override
-    public void tearDown()
-    {
+    public void tearDown() {
         this.mockedFacesUtils = null;
         this.mockedPatientService = null;
         this.mockedPrescriptionHelper = null;
@@ -158,8 +154,7 @@ public class PrescriptionManagerTest
      */
     @Override
     @Test
-    public void testInit()
-    {
+    public void testInit() {
         Assert.assertNotNull(this.manager);
         Assert.assertNotNull(this.mockedFacesUtils);
         Assert.assertNotNull(this.mockedPatientService);
@@ -178,8 +173,7 @@ public class PrescriptionManagerTest
      * Test de la méthode init().
      */
     @Test
-    public void testInitMethod()
-    {
+    public void testInitMethod() {
         this.manager.setEssaiSelected(new Essai());
         this.manager.setPatientSelected(new Patient());
         this.manager.setValid(true);
@@ -196,18 +190,15 @@ public class PrescriptionManagerTest
      * Test de la méthode handleSelectPatient.
      */
     @Test
-    public void testHandleSelectPatientNull()
-    {
+    public void testHandleSelectPatientNull() {
         final SelectEvent event = Mockito.mock(SelectEvent.class);
         final Patient patient = new Patient();
         Mockito.when(event.getObject()).thenReturn(patient);
-        Mockito.when(this.mockedPatientService.getInclusionCourante(Matchers.any(Patient.class)))
-                .thenReturn(null);
+        Mockito.when(this.mockedPatientService.getInclusionCourante(Matchers.any(Patient.class))).thenReturn(null);
 
         this.manager.handleSelectPatient(event);
 
-        Mockito.verify(this.mockedFacesUtils).addMessage(FacesMessage.SEVERITY_ERROR,
-                                                         "patient.non.inclu.error");
+        Mockito.verify(this.mockedFacesUtils).addMessage(FacesMessage.SEVERITY_ERROR, "patient.non.inclu.error");
         Assert.assertFalse(this.manager.getValid());
     }
 
@@ -215,17 +206,12 @@ public class PrescriptionManagerTest
      * Test de la méthode handleSelectPatient.
      */
     @Test
-    public void testHandleSelectPatientNotNullInvestigateursEmpty()
-    {
+    public void testHandleSelectPatientNotNullInvestigateursEmpty() {
         final Habilitation h = new Habilitation();
         h.setPersonne(new Investigateur());
-        final SortedSet<Habilitation> habilitations =
-            new TreeSet<Habilitation>(new HabilitationComparator());
+        final SortedSet<Habilitation> habilitations = new TreeSet<Habilitation>(new HabilitationComparator());
 
-        Mockito.when(this.mockedHabilitationHelper.getHabilitations(Matchers.any(Essai.class),
-                                                                    Matchers.anyList(),
-                                                                    Matchers.anyBoolean()))
-                .thenReturn(habilitations);
+        Mockito.when(this.mockedHabilitationHelper.getHabilitations(Matchers.any(Essai.class), Matchers.anyList(), Matchers.anyBoolean())).thenReturn(habilitations);
 
         final SelectEvent event = Mockito.mock(SelectEvent.class);
         final Patient patient = new Patient();
@@ -233,46 +219,34 @@ public class PrescriptionManagerTest
         final Essai essai = new Essai();
         final DetailDonneesPharma detailDonneesPharma = new DetailDonneesPharma();
         essai.setDetailDonneesPharma(detailDonneesPharma);
-        detailDonneesPharma
-                .getInfosDispensations()
-                .setTypeDispensation(TypeDispensation.NOMINATIVE);
+        detailDonneesPharma.getInfosDispensations().setTypeDispensation(TypeDispensation.NOMINATIVE);
         inclusion.setEssai(essai);
         inclusion.getEssai().setDetailProduit(new DetailProduit());
         Mockito.when(event.getObject()).thenReturn(patient);
-        Mockito.when(this.mockedPatientService.getInclusionCourante(Matchers.any(Patient.class)))
-                .thenReturn(inclusion);
-        Mockito.when(this.mockedFactory.getInitializedObject(Matchers.any(Inclusion.class)))
-                .thenReturn(new Prescription());
+        Mockito.when(this.mockedPatientService.getInclusionCourante(Matchers.any(Patient.class))).thenReturn(inclusion);
+        Mockito.when(this.mockedFactory.getInitializedObject(Matchers.any(Inclusion.class))).thenReturn(new Prescription());
 
         this.manager.handleSelectPatient(event);
 
-        Mockito.verify(this.mockedFacesUtils,
-                       Mockito.never()).addMessage(FacesMessage.SEVERITY_ERROR,
-                                                   "patient.non.inclu.error");
+        Mockito.verify(this.mockedFacesUtils, Mockito.never()).addMessage(FacesMessage.SEVERITY_ERROR, "patient.non.inclu.error");
 
         Assert.assertNull(this.manager.getBean());
         Assert.assertFalse(this.manager.getValid());
 
-        Mockito.verify(this.mockedFacesUtils).addMessage(FacesMessage.SEVERITY_ERROR,
-                                                         "investigateur.non.present.error");
+        Mockito.verify(this.mockedFacesUtils).addMessage(FacesMessage.SEVERITY_ERROR, "investigateur.non.present.error");
     }
 
     /**
      * Test de la méthode handleSelectPatient.
      */
     @Test
-    public void testHandleSelectPatientNotNull()
-    {
+    public void testHandleSelectPatientNotNull() {
         final Habilitation h = new Habilitation();
         h.setPersonne(new Investigateur());
-        final SortedSet<Habilitation> habilitations =
-            new TreeSet<Habilitation>(new HabilitationComparator());
+        final SortedSet<Habilitation> habilitations = new TreeSet<Habilitation>(new HabilitationComparator());
         habilitations.add(h);
 
-        Mockito.when(this.mockedHabilitationHelper.getHabilitations(Matchers.any(Essai.class),
-                                                                    Matchers.anyList(),
-                                                                    Matchers.anyBoolean()))
-                .thenReturn(habilitations);
+        Mockito.when(this.mockedHabilitationHelper.getHabilitations(Matchers.any(Essai.class), Matchers.anyList(), Matchers.anyBoolean())).thenReturn(habilitations);
 
         final SelectEvent event = Mockito.mock(SelectEvent.class);
         final Patient patient = new Patient();
@@ -280,22 +254,16 @@ public class PrescriptionManagerTest
         final Essai essai = new Essai();
         final DetailDonneesPharma detailDonneesPharma = new DetailDonneesPharma();
         essai.setDetailDonneesPharma(detailDonneesPharma);
-        detailDonneesPharma
-                .getInfosDispensations()
-                .setTypeDispensation(TypeDispensation.NOMINATIVE);
+        detailDonneesPharma.getInfosDispensations().setTypeDispensation(TypeDispensation.NOMINATIVE);
         inclusion.setEssai(essai);
         inclusion.getEssai().setDetailProduit(new DetailProduit());
         Mockito.when(event.getObject()).thenReturn(patient);
-        Mockito.when(this.mockedPatientService.getInclusionCourante(Matchers.any(Patient.class)))
-                .thenReturn(inclusion);
-        Mockito.when(this.mockedFactory.getInitializedObject(Matchers.any(Inclusion.class)))
-                .thenReturn(new Prescription());
+        Mockito.when(this.mockedPatientService.getInclusionCourante(Matchers.any(Patient.class))).thenReturn(inclusion);
+        Mockito.when(this.mockedFactory.getInitializedObject(Matchers.any(Inclusion.class))).thenReturn(new Prescription());
 
         this.manager.handleSelectPatient(event);
 
-        Mockito.verify(this.mockedFacesUtils,
-                       Mockito.never()).addMessage(FacesMessage.SEVERITY_ERROR,
-                                                   "patient.non.inclu.error");
+        Mockito.verify(this.mockedFacesUtils, Mockito.never()).addMessage(FacesMessage.SEVERITY_ERROR, "patient.non.inclu.error");
 
         Mockito.verify(this.mockedFactory).getInitializedObject(Matchers.any(Inclusion.class));
         Assert.assertNotNull(this.manager.getBean());
@@ -306,45 +274,33 @@ public class PrescriptionManagerTest
      * Test de la méthode handleSelectPatient.
      */
     @Test
-    public void testHandleSelectPatientNotNullNotEmpty()
-    {
+    public void testHandleSelectPatientNotNullNotEmpty() {
         final Habilitation h = new Habilitation();
         h.setPersonne(new Investigateur());
-        final SortedSet<Habilitation> habilitations =
-            new TreeSet<Habilitation>(new HabilitationComparator());
+        final SortedSet<Habilitation> habilitations = new TreeSet<Habilitation>(new HabilitationComparator());
         habilitations.add(h);
 
-        Mockito.when(this.mockedHabilitationHelper.getHabilitations(Matchers.any(Essai.class),
-                                                                    Matchers.anyList(),
-                                                                    Matchers.anyBoolean()))
-                .thenReturn(habilitations);
+        Mockito.when(this.mockedHabilitationHelper.getHabilitations(Matchers.any(Essai.class), Matchers.anyList(), Matchers.anyBoolean())).thenReturn(habilitations);
         final SelectEvent event = Mockito.mock(SelectEvent.class);
         final Patient patient = new Patient();
         final Inclusion inclusion = new Inclusion();
         final Essai essai = new Essai();
         final DetailDonneesPharma detailDonneesPharma = new DetailDonneesPharma();
         essai.setDetailDonneesPharma(detailDonneesPharma);
-        detailDonneesPharma
-                .getInfosDispensations()
-                .setTypeDispensation(TypeDispensation.NOMINATIVE);
+        detailDonneesPharma.getInfosDispensations().setTypeDispensation(TypeDispensation.NOMINATIVE);
         inclusion.setEssai(essai);
         inclusion.getEssai().setDetailProduit(new DetailProduit());
         Mockito.when(event.getObject()).thenReturn(patient);
-        Mockito.when(this.mockedPatientService.getInclusionCourante(Matchers.any(Patient.class)))
-                .thenReturn(inclusion);
-        Mockito.when(this.mockedFactory.getInitializedObject(Matchers.any(Prescription.class)))
-                .thenReturn(new Prescription());
+        Mockito.when(this.mockedPatientService.getInclusionCourante(Matchers.any(Patient.class))).thenReturn(inclusion);
+        Mockito.when(this.mockedFactory.getInitializedObject(Matchers.any(Prescription.class))).thenReturn(new Prescription());
 
         final List<Prescription> liste = new ArrayList<Prescription>();
         liste.add(new Prescription());
-        Mockito.when(this.mockedService.getAll(Matchers.any(SearchCriteria.class)))
-                .thenReturn(liste);
+        Mockito.when(this.mockedService.getAll(Matchers.any(SearchCriteria.class))).thenReturn(liste);
 
         this.manager.handleSelectPatient(event);
 
-        Mockito.verify(this.mockedFacesUtils,
-                       Mockito.never()).addMessage(FacesMessage.SEVERITY_ERROR,
-                                                   "patient.non.inclu.error");
+        Mockito.verify(this.mockedFacesUtils, Mockito.never()).addMessage(FacesMessage.SEVERITY_ERROR, "patient.non.inclu.error");
 
         Mockito.verify(this.mockedFactory).getInitializedObject(Matchers.any(Prescription.class));
         Assert.assertNotNull(this.manager.getBean());
@@ -355,8 +311,7 @@ public class PrescriptionManagerTest
      * Test de la méthode getInvestigateurs.
      */
     @Test
-    public void testGetInvestigateurs()
-    {
+    public void testGetInvestigateurs() {
 
         final Habilitation h = new Habilitation();
         final Personne p = new Investigateur();
@@ -367,22 +322,17 @@ public class PrescriptionManagerTest
         this.manager.setBean(new Prescription());
         this.manager.getBean().setInclusion(new Inclusion());
         this.manager.getBean().getInclusion().setEssai(new Essai());
-        Mockito.when(this.mockedHabilitationHelper.getHabilitations(Matchers.any(Essai.class),
-                                                                    Matchers.anyList(),
-                                                                    Matchers.anyBoolean()))
-                .thenReturn(liste);
+        Mockito.when(this.mockedHabilitationHelper.getHabilitations(Matchers.any(Essai.class), Matchers.anyList(), Matchers.anyBoolean())).thenReturn(liste);
 
         final Collection<Personne> result = this.manager.getInvestigateurs();
-        Assert.assertEquals(1,
-                            liste.size());
+        Assert.assertEquals(1, liste.size());
     }
 
     /**
      * Test de la méthode delProduitPrescrit.
      */
     @Test
-    public void testDelProduitPrescrit()
-    {
+    public void testDelProduitPrescrit() {
 
         final ProduitPrescrit produitPrescrit = new ProduitPrescrit();
         final Produit p = new Medicament();
@@ -398,47 +348,37 @@ public class PrescriptionManagerTest
         final UIComponent component = Mockito.mock(UIComponent.class);
         Mockito.when(event.getComponent()).thenReturn(component);
         final Map<String, Object> value = new HashMap<String, Object>();
-        value.put("produitToDelete",
-                  produitPrescrit);
+        value.put("produitToDelete", produitPrescrit);
         Mockito.when(component.getAttributes()).thenReturn(value);
 
-        Assert.assertEquals(1,
-                            prescription.getProduitsPrescrits().size());
+        Assert.assertEquals(1, prescription.getProduitsPrescrits().size());
         this.manager.delProduitPrescrit(event);
 
-        Assert.assertEquals(0,
-                            prescription.getProduitsPrescrits().size());
+        Assert.assertEquals(0, prescription.getProduitsPrescrits().size());
     }
 
     /**
      * Test de la méthode updateDesign.
      */
     @Test
-    public void testUpdateDesignNull()
-    {
+    public void testUpdateDesignNull() {
         this.manager.updateDesign();
-        Mockito.verify(this.mockedFacesUtils,
-                       Mockito.never()).addMessage(Matchers.any(Severity.class),
-                                                   Matchers.anyString());
-        Mockito.verify(this.mockedPrescriptionHelper,
-                       Mockito.never()).initProduitsPrescrits(Matchers.any(Prescription.class));
+        Mockito.verify(this.mockedFacesUtils, Mockito.never()).addMessage(Matchers.any(Severity.class), Matchers.anyString());
+        Mockito.verify(this.mockedPrescriptionHelper, Mockito.never()).initProduitsPrescrits(Matchers.any(Prescription.class));
     }
 
     /**
      * Test de la méthode updateDesign.
      */
     @Test
-    public void testUpdateDesignBras()
-    {
+    public void testUpdateDesignBras() {
         final TreeNode node = Mockito.mock(TreeNode.class);
         Mockito.when(node.getData()).thenReturn(new Bras());
         this.manager.setNodeSelected(node);
         this.manager.setBean(new Prescription());
         this.manager.updateDesign();
-        Mockito.verify(this.mockedFacesUtils).addMessage(FacesMessage.SEVERITY_ERROR,
-                                                         "prescription.designable.sequence");
-        Mockito.verify(this.mockedPrescriptionHelper,
-                       Mockito.never()).initProduitsPrescrits(Matchers.any(Prescription.class));
+        Mockito.verify(this.mockedFacesUtils).addMessage(FacesMessage.SEVERITY_ERROR, "prescription.designable.sequence");
+        Mockito.verify(this.mockedPrescriptionHelper, Mockito.never()).initProduitsPrescrits(Matchers.any(Prescription.class));
         Assert.assertNull(this.manager.getNodeSelected());
     }
 
@@ -446,18 +386,14 @@ public class PrescriptionManagerTest
      * Test de la méthode updateDesign.
      */
     @Test
-    public void testUpdateDesignSequence()
-    {
+    public void testUpdateDesignSequence() {
         final TreeNode node = Mockito.mock(TreeNode.class);
         this.manager.setNodeSelected(node);
         Mockito.when(node.getData()).thenReturn(new Sequence());
         this.manager.setBean(new Prescription());
         this.manager.updateDesign();
-        Mockito.verify(this.mockedFacesUtils,
-                       Mockito.never()).addMessage(FacesMessage.SEVERITY_ERROR,
-                                                   "prescription.designable.sequence");
-        Mockito.verify(this.mockedPrescriptionHelper)
-                .initProduitsPrescrits(Matchers.any(Prescription.class));
+        Mockito.verify(this.mockedFacesUtils, Mockito.never()).addMessage(FacesMessage.SEVERITY_ERROR, "prescription.designable.sequence");
+        Mockito.verify(this.mockedPrescriptionHelper).initProduitsPrescrits(Matchers.any(Prescription.class));
 
         Assert.assertNotNull(this.manager.getBean().getSequence());
     }
@@ -466,45 +402,38 @@ public class PrescriptionManagerTest
      * Test de la méthode getDesignablesSelectable.
      */
     @Test
-    public void testGetDesignablesSelectableNull1()
-    {
+    public void testGetDesignablesSelectableNull1() {
 
         Assert.assertNull(this.manager.getDesignablesSelectable());
-        Mockito.verify(this.mockedTreeHelper,
-                       Mockito.never()).buildTree(Matchers.any(Essai.class));
+        Mockito.verify(this.mockedTreeHelper, Mockito.never()).buildTree(Matchers.any(Essai.class));
     }
 
     /**
      * Test de la méthode getDesignablesSelectable.
      */
     @Test
-    public void testGetDesignablesSelectableNull2()
-    {
+    public void testGetDesignablesSelectableNull2() {
         this.manager.setBean(new Prescription());
         Assert.assertNull(this.manager.getDesignablesSelectable());
-        Mockito.verify(this.mockedTreeHelper,
-                       Mockito.never()).buildTree(Matchers.any(Essai.class));
+        Mockito.verify(this.mockedTreeHelper, Mockito.never()).buildTree(Matchers.any(Essai.class));
     }
 
     /**
      * Test de la méthode getDesignablesSelectable.
      */
     @Test
-    public void testGetDesignablesSelectableNull3()
-    {
+    public void testGetDesignablesSelectableNull3() {
         this.manager.setBean(new Prescription());
         this.manager.getBean().setInclusion(new Inclusion());
         Assert.assertNull(this.manager.getDesignablesSelectable());
-        Mockito.verify(this.mockedTreeHelper,
-                       Mockito.never()).buildTree(Matchers.any(Essai.class));
+        Mockito.verify(this.mockedTreeHelper, Mockito.never()).buildTree(Matchers.any(Essai.class));
     }
 
     /**
      * Test de la méthode getDesignablesSelectable.
      */
     @Test
-    public void testGetDesignablesSelectable()
-    {
+    public void testGetDesignablesSelectable() {
         final TreeNode node = Mockito.mock(TreeNode.class);
         this.manager.setBean(new Prescription());
         this.manager.getBean().setInclusion(new Inclusion());

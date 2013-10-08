@@ -1,0 +1,14 @@
+<?xml version="1.0"?>
+
+<!DOCTYPE facelet-taglib PUBLIC
+	"-//Sun Microsystems, Inc.//DTD Facelet Taglib 1.0//EN"
+	"http://java.sun.com/dtd/facelet-taglib_1_0.dtd">
+
+<facelet-taglib>
+	<namespace>http://www.elipspharma.fr/jsp/jstl/functions</namespace>
+	<function>
+		<function-name>getFullStackTrace</function-name>
+		<function-class>org.apache.commons.lang.exception.ExceptionUtils</function-class>
+		<function-signature>java.lang.String getFullStackTrace(java.lang.Throwable)</function-signature>
+	</function>
+</facelet-taglib>

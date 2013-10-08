@@ -13,28 +13,21 @@ import org.springframework.webflow.engine.support.TransitionExecutingFlowExecuti
 
 /**
  * Handler pour les ContraintViolationException (Validation BeanValidation).
- 
+ * @author Netapsys
  * @version $Revision$ $Date$
  */
-public class ConstraintViolationExceptionHandler
-    implements ExceptionHandler
-{
+public class ConstraintViolationExceptionHandler implements ExceptionHandler {
 
     /**
      * {@inheritDoc}
      */
     @Override
     public void handle(final Exception e,
-                       final RequestControlContext context)
-    {
-        final ConstraintViolationException constraintException =
-            (ConstraintViolationException) e.getCause();
-        for (final Iterator<ConstraintViolation<?>> it =
-            constraintException.getConstraintViolations().iterator(); it.hasNext();)
-        {
+                       final RequestControlContext context) {
+        final ConstraintViolationException constraintException = (ConstraintViolationException) e.getCause();
+        for (final Iterator<ConstraintViolation<?>> it = constraintException.getConstraintViolations().iterator(); it.hasNext();) {
             final ConstraintViolation<?> violation = it.next();
-            this.process(violation,
-                         context);
+            this.process(violation, context);
         }
 
     }
@@ -45,12 +38,10 @@ public class ConstraintViolationExceptionHandler
      * @param context Contexte de la requête.
      */
     private void process(final ConstraintViolation<?> violation,
-                         final RequestControlContext context)
-    {
+                         final RequestControlContext context) {
         // Construction de la clé du message.
         final MessageBuilder builder = new MessageBuilder().error();
-        builder.codes(new String[]
-        {violation.getMessage() });
+        builder.codes(new String[]{violation.getMessage() });
 
         // Construction des arguments du message.
 
@@ -59,15 +50,10 @@ public class ConstraintViolationExceptionHandler
 
         String messageKey = StringUtils.EMPTY;
         messageKey = violation.getMessage();
-        context.getFlashScope().put("messageContextKey",
-                                    messageKey);
-        context.getFlashScope().put("messageContext",
-                                    context.getMessageContext());
-        context.getFlashScope().put("messageSource",
-                                    violation.getRootBeanClass().getSimpleName());
-        final String excAtt2 =
-            TransitionExecutingFlowExecutionExceptionHandler.ROOT_CAUSE_EXCEPTION_ATTRIBUTE;
-        context.getFlashScope().put(excAtt2,
-                                    violation);
+        context.getFlashScope().put("messageContextKey", messageKey);
+        context.getFlashScope().put("messageContext", context.getMessageContext());
+        context.getFlashScope().put("messageSource", violation.getRootBeanClass().getSimpleName());
+        final String excAtt2 = TransitionExecutingFlowExecutionExceptionHandler.ROOT_CAUSE_EXCEPTION_ATTRIBUTE;
+        context.getFlashScope().put(excAtt2, violation);
     }
 }

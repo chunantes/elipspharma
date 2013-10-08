@@ -1,7 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<flow xmlns="http://www.springframework.org/schema/webflow"
-	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-	xsi:schemaLocation="http://www.springframework.org/schema/webflow
+<flow xmlns="http://www.springframework.org/schema/webflow" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.springframework.org/schema/webflow
     http://www.springframework.org/schema/webflow/spring-webflow-2.0.xsd"
 	parent="main">
 
@@ -10,46 +8,38 @@
 		<evaluate expression="essaiSearchCriteria.clear()" />
 		<evaluate expression="patientSearchCriteria.clear()" />
 		<!-- Initialisation complétion automatique des essais -->
-		<evaluate expression="'numInterne'"
-			result="autoCompleteEssaiManager.searchCriteria.activeOrder" />
-		<evaluate expression="'numInterneOrNomOrPromoteur'"
-			result="autoCompleteEssaiManager.searchCriteriaProperty" />
-		<evaluate expression="'numeroIpp'"
-			result="autoCompletePatientManager.searchCriteria.activeOrder" />
-		<set name="dispensationsManager.beans" value="null"/>
-		<evaluate expression="'numeroIppOrNomOrPrenom'"
-			result="autoCompletePatientManager.searchCriteriaProperty" />
+		<evaluate expression="'numInterne'" result="autoCompleteEssaiManager.searchCriteria.activeOrder" />
+		<evaluate expression="'numInterneOrNomOrPromoteur'" result="autoCompleteEssaiManager.searchCriteriaProperty" />
+		<evaluate expression="'numeroIpp'" result="autoCompletePatientManager.searchCriteria.activeOrder" />
+		<set name="dispensationDTOManager.beans" value="null" />
+		<evaluate expression="'numeroIppOrNomOrPrenom'" result="autoCompletePatientManager.searchCriteriaProperty" />
 		<evaluate expression="dispensationSearchCriteria.clear()" />
 	</on-start>
 
 	<!-- Page principale -->
-	<view-state id="gestionDispensation"
-		view="../../../pages/dispensation/gestion/gestionDispensation.xhtml">
+	<view-state id="gestionDispensation" view="../../../pages/dispensation/gestion/gestionDispensation.xhtml">
 
 		<!-- Recherche -->
 		<transition on="search" to="search">
-			<set name="dispensationsManager.searchCriteria.dispense" value="true" type="java.lang.Boolean"/>
+			<set name="dispensationDTOManager.searchCriteria.dispense" value="true" type="java.lang.Boolean" />
 		</transition>
 
 		<transition on="editDispensation" to="editDispensation">
-			<set name="flashScope.idDispensation" value="dispensationsManager.beanSelected.id"
-				type="java.lang.Long" />
-			<evaluate expression="null" result="dispensationsManager.beanSelected" />
+			<set name="flashScope.idDispensation" value="dispensationDTOManager.beanSelected.id" type="java.lang.Long" />
 		</transition>
 
 		<!-- Erreur -->
 		<transition on="error" to="gestionDispensation" />
 	</view-state>
-	
+
 	<action-state id="search">
-		<evaluate expression="dispensationService.getAll(dispensationSearchCriteria)"
-			result="dispensationsManager.beans" />
-		<transition to="gestionDispensation"/>
+		<evaluate expression="dispensationService.retrieveResults(dispensationSearchCriteria)" result="dispensationDTOManager.beans" />
+		<transition to="gestionDispensation" />
 	</action-state>
 
 	<!-- Editer un brouillon de dispensation -->
 	<subflow-state id="editDispensation" subflow="dispensation/edit">
-		<input name="idDispensation" value="flashScope.idDispensation"/>
+		<input name="idDispensation" value="flashScope.idDispensation" />
 		<transition to="search" />
 	</subflow-state>
 

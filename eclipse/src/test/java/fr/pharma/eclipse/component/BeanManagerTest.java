@@ -20,11 +20,10 @@ import fr.pharma.eclipse.service.stockage.PharmacieService;
 
 /**
  * Classe en charge de tester le manager de Bean.
- 
+ * @author Netapsys
  * @version $Revision$ $Date$
  */
-public class BeanManagerTest
-{
+public class BeanManagerTest {
     /**
      * BeanManager à tester.
      */
@@ -55,8 +54,7 @@ public class BeanManagerTest
      */
     @SuppressWarnings("unchecked")
     @Before
-    public void init()
-    {
+    public void init() {
         this.mockedHelper = Mockito.mock(BeanManagerHelper.class);
         this.mockedDataModel = Mockito.mock(DataModel.class);
         this.mockService = Mockito.mock(PharmacieService.class);
@@ -71,8 +69,7 @@ public class BeanManagerTest
      * Méthode en charge de purger les données de test.
      */
     @After
-    public void end()
-    {
+    public void end() {
         this.mockedHelper = null;
         this.mockedDataModel = null;
         this.mockService = null;
@@ -83,8 +80,7 @@ public class BeanManagerTest
      * Méthode en charge de tester l'initialisation des données de test.
      */
     @Test
-    public void testInit()
-    {
+    public void testInit() {
         Assert.assertNotNull(this.pharmacieManager);
         Assert.assertNotNull(this.mockedHelper);
         Assert.assertNotNull(this.mockedDataModel);
@@ -97,29 +93,23 @@ public class BeanManagerTest
      * Initialisation de la méthode mockedHelper.
      */
     @SuppressWarnings("unchecked")
-    private void initMockHelper()
-    {
-        Mockito
-                .when(this.mockedHelper.returnAsDataModel(Matchers.anyCollection()))
-                .thenAnswer(new Answer<DataModel>() {
+    private void initMockHelper() {
+        Mockito.when(this.mockedHelper.returnAsDataModel(Matchers.anyCollection())).thenAnswer(new Answer<DataModel>() {
 
-                    @Override
-                    public DataModel answer(final InvocationOnMock invocation)
-                        throws Throwable
-                    {
-                        @SuppressWarnings("unused")
-                        final Collection coll = (Collection) invocation.getArguments()[0];
-                        return BeanManagerTest.this.mockedDataModel;
-                    }
-                });
+            @Override
+            public DataModel answer(final InvocationOnMock invocation) throws Throwable {
+                @SuppressWarnings("unused")
+                final Collection coll = (Collection) invocation.getArguments()[0];
+                return BeanManagerTest.this.mockedDataModel;
+            }
+        });
     }
 
     /**
      * Méthode en charge de tester la récupération d'une liste de l'objet.
      */
     @Test
-    public void testGetListString()
-    {
+    public void testGetListString() {
         this.initMockHelper();
         Mockito.when(this.mockService.reattach(this.pharmacie)).thenReturn(this.pharmacie);
         final DataModel<Pharmacie> list = this.pharmacieManager.getList("sites");
@@ -127,33 +117,28 @@ public class BeanManagerTest
         Mockito.verify(this.mockService).reattach(this.pharmacie);
         Mockito.verify(this.mockedHelper).returnAsDataModel(this.pharmacie.getSites());
         Assert.assertNotNull(list);
-        Assert.assertEquals(this.mockedDataModel,
-                            list);
+        Assert.assertEquals(this.mockedDataModel, list);
     }
 
     /**
-     * Méthode en charge de tester la récupération d'une liste de l'objet en demandant ou non le
-     * réattachement du bean.
+     * Méthode en charge de tester la récupération d'une liste de l'objet en
+     * demandant ou non le réattachement du bean.
      */
     @Test
-    public void testGetListStringBoolean()
-    {
+    public void testGetListStringBoolean() {
         this.initMockHelper();
-        final DataModel<Pharmacie> list = this.pharmacieManager.getList("sites",
-                                                                        false);
+        final DataModel<Pharmacie> list = this.pharmacieManager.getList("sites", false);
 
         Mockito.verify(this.mockedHelper).returnAsDataModel(this.pharmacie.getSites());
         Assert.assertNotNull(list);
-        Assert.assertEquals(this.mockedDataModel,
-                            list);
+        Assert.assertEquals(this.mockedDataModel, list);
     }
 
     /**
      * Méthode en charge de tester la méthode de reattach.
      */
     @Test
-    public void testReattach()
-    {
+    public void testReattach() {
         this.pharmacieManager.reattach();
         Mockito.verify(this.mockService).reattach(this.pharmacie);
     }
@@ -162,16 +147,14 @@ public class BeanManagerTest
      * Test de la méthode getBeanAfterReattach.
      */
     @Test
-    public void testGetBeanAfterReattach()
-    {
+    public void testGetBeanAfterReattach() {
         final Pharmacie pharmacieReattached = Mockito.mock(Pharmacie.class);
         this.pharmacieManager.setBean(this.pharmacie);
         Mockito.when(this.mockService.reattach(this.pharmacie)).thenReturn(pharmacieReattached);
 
         final Pharmacie res = this.pharmacieManager.getBeanAfterReattach();
         Mockito.verify(this.mockService).reattach(this.pharmacie);
-        Assert.assertEquals(pharmacieReattached,
-                            res);
+        Assert.assertEquals(pharmacieReattached, res);
     }
 
 }

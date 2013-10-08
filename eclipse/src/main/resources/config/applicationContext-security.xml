@@ -1,39 +1,49 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
 <beans xmlns="http://www.springframework.org/schema/beans"
-  xmlns:security="http://www.springframework.org/schema/security"
-  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-  xsi:schemaLocation="http://www.springframework.org/schema/beans
+	xmlns:security="http://www.springframework.org/schema/security"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans
           http://www.springframework.org/schema/beans/spring-beans.xsd
           http://www.springframework.org/schema/security
           http://www.springframework.org/schema/security/spring-security.xsd">
-     
-     <security:http auto-config="true">
-		<security:intercept-url pattern="/**" access="IS_AUTHENTICATED_FULLY,IS_AUTHENTICATED_REMEMBERED"/>
-		<security:intercept-url pattern="/flows/login*" filters="none" />
-		<security:intercept-url pattern="/resources/**" filters="none" />
-		<security:intercept-url pattern="/css/**" filters="none" />
-		<security:intercept-url pattern="/images/**" filters="none" />
-		<security:intercept-url pattern="/js/**" filters="none" />
-	    <security:form-login login-page="/flows/login" authentication-failure-url="/flows/login?error=1" default-target-url="/flows/main" always-use-default-target="true"/>
-		<security:logout logout-success-url="/flows/login"/>
+
+
+	<security:http pattern="/flows/login*" security="none" />
+	<security:http pattern="/resources/**" security="none" />
+	<security:http pattern="/css/**" security="none" />
+	<security:http pattern="/images/**" security="none" />
+	<security:http pattern="/js/**" security="none" />
+	<security:http pattern="/index.html" security="none" />
+	<security:http pattern="/img/**" security="none" />
+	<security:http>
+		<security:form-login login-page="/flows/login"
+			authentication-failure-url="/flows/login?error=1" default-target-url="/flows/main"
+			always-use-default-target="true" />
+		<security:logout logout-success-url="/flows/login" />
+
+		<security:intercept-url pattern="/**"
+			access="IS_AUTHENTICATED_FULLY,IS_AUTHENTICATED_REMEMBERED" />
 	</security:http>
-	
+
 	<security:authentication-manager>
-	
+
 		<!-- Authentification par Eclipse -->
-		<security:authentication-provider user-service-ref="authenticationEclipseService">
-			<security:password-encoder hash="md5"/>
+		<security:authentication-provider
+			user-service-ref="authenticationEclipseService">
+			<security:password-encoder hash="md5" />
 		</security:authentication-provider>
-		
+
 		<!-- Authentification par SIR -->
-		<security:authentication-provider user-service-ref="authenticationSirService">
-			<security:password-encoder hash="md5" ref="passwordSirEncoder">
+		<security:authentication-provider
+			user-service-ref="authenticationSirService">
+			<security:password-encoder hash="md5"
+				ref="passwordSirEncoder">
 				<security:salt-source user-property="salt" />
 			</security:password-encoder>
 		</security:authentication-provider>
-	
-		
+
+
 	</security:authentication-manager>
 
 </beans>

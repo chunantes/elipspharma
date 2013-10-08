@@ -4,11 +4,10 @@ import org.springframework.webflow.engine.RequestControlContext;
 
 /**
  * Handler spécifique à une exception.
- 
+ * @author Netapsys
  * @version $Revision$ $Date$
  */
-public interface ExceptionHandler
-{
+public interface ExceptionHandler {
     /**
      * Méthode de gestion d'exception.
      * @param e Exception à gérer.

@@ -16,12 +16,10 @@ import fr.pharma.eclipse.service.incident.IncidentService;
 
 /**
  * Manager de gestion d'un incident.
- 
+ * @author Netapsys
  * @version $Revision$ $Date$
  */
-public class IncidentManager
-    extends BeanManager<Incident>
-{
+public class IncidentManager extends BeanManager<Incident> {
     /**
      * Serial ID.
      */
@@ -37,8 +35,7 @@ public class IncidentManager
      * Constructeur.
      * @param incidentService Service de gestion des incidents.
      */
-    public IncidentManager(final IncidentService incidentService)
-    {
+    public IncidentManager(final IncidentService incidentService) {
         super(incidentService);
     }
 
@@ -47,13 +44,11 @@ public class IncidentManager
      * @param essai L'essai.
      * @return Le dataModel des incidents.
      */
-    public DataModel<Incident> findIncidentsForEssai(final Essai essai)
-    {
+    public DataModel<Incident> findIncidentsForEssai(final Essai essai) {
         final SortedSet<Incident> result = new TreeSet<Incident>(new IncidentComparator());
 
         // on ne charge les incidents que si l'essai est présent en base.
-        if (essai.getId() != null)
-        {
+        if (essai.getId() != null) {
             final IncidentSearchCriteria criteria = new IncidentSearchCriteria();
             criteria.setEssai(essai);
             criteria.setActiveOrder("date");
@@ -67,27 +62,21 @@ public class IncidentManager
      * Méthode en charge d'initialiser un incident avec un essai.
      * @param essai Essai.
      */
-    public void init(final Essai essai)
-    {
-        if (essai != null)
-        {
+    public void init(final Essai essai) {
+        if (essai != null) {
             this.setBean(this.incidentFactory.getInitializedObject(essai));
-        }
-        else
-        {
+        } else {
             this.setBean(this.incidentFactory.getInitializedObject());
         }
     }
-    public void ajouterIncident()
-    {
+    public void ajouterIncident() {
         this.getService().save(this.getBean());
     }
 
     /**
      * Réinitialise le manager.
      */
-    public void reinit()
-    {
+    public void reinit() {
         this.setBean(null);
     }
 
@@ -95,8 +84,7 @@ public class IncidentManager
      * Setter pour incidentFactory.
      * @param incidentFactory le incidentFactory à écrire.
      */
-    public void setIncidentFactory(final IncidentFactory incidentFactory)
-    {
+    public void setIncidentFactory(final IncidentFactory incidentFactory) {
         this.incidentFactory = incidentFactory;
     }
 }

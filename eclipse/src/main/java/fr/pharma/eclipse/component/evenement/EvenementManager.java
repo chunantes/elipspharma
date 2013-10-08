@@ -17,12 +17,10 @@ import fr.pharma.eclipse.utils.constants.EclipseConstants;
 
 /**
  * Manager de gestion d'un événement.
- 
+ * @author Netapsys
  * @version $Revision$ $Date$
  */
-public class EvenementManager
-    extends BeanManager<Evenement>
-{
+public class EvenementManager extends BeanManager<Evenement> {
     /**
      * Serial ID.
      */
@@ -38,54 +36,61 @@ public class EvenementManager
      * Constructeur.
      * @param evenementService Service de gestion des événements.
      */
-    public EvenementManager(final EvenementService evenementService)
-    {
+    public EvenementManager(final EvenementService evenementService) {
         super(evenementService);
     }
 
-    public void handleSelectEssai(final SelectEvent event)
-    {
+    public void handleSelectEssai(final SelectEvent event) {
         this.getBean().setEssai((Essai) event.getObject());
         this.buildLibelle();
     }
 
     /**
-     * Méthode appelée via la couche IHM lorsqu'un type d'événement est sélectionné.
+     * Méthode appelée via la couche IHM lorsqu'un type d'événement est
+     * sélectionné.
      * @param event Evénement remonté via la couche IHM.
      */
-    public void handleSelectTypeEvenement(final ValueChangeEvent event)
-    {
+    public void handleSelectTypeEvenement(final ValueChangeEvent event) {
         final TypeEvenement typeEvenement = (TypeEvenement) event.getNewValue();
         // Récupération du type d'événement sélectionné
         this.getBean().setTypeEvenement(typeEvenement);
 
         // Si le type d'événement est différent de visite
-        if (!TypeEvenement.VISITE.equals(typeEvenement))
-        {
+        if (!TypeEvenement.VISITE.equals(typeEvenement)) {
             this.getBean().setTypeVisite(null);
             this.getBean().setResultatVisite(null);
         }
         this.getBean().setValidation(null);
         this.getBean().setRealisePar(null);
-        if (TypeEvenement.REETIQUETAGE.equals(typeEvenement))
-        {
+        if (TypeEvenement.REETIQUETAGE.equals(typeEvenement)) {
             final Personne p = this.userService.getPersonne();
-            this.getBean().setValidation(p.getPrenom()
-                                         + " "
-                                         + p.getNom());
+            this.getBean().setValidation(p.getPrenom() + " " + p.getNom());
         }
 
-        if (this.getBean().getTypeEvenement() != null)
-        {
+        if (this.getBean().getTypeEvenement() != null) {
             this.buildLibelle();
         }
     }
+
+    @Override
+    public void setBean(Evenement bean) {
+        super.setBean(bean);
+
+        // WORAROUND for PHARMA-509 (LazyInitializationException: could not
+        // initialize proxy - no Session)
+        try {
+            bean.getEssai().getDetailDonneesPharma().getInfosComplementaires().getDocumentModaliteDestruction();
+        } catch (RuntimeException e) {
+            // NullPointerException may append here : ignore them
+        }
+    }
+
     /**
-     * Méthode appelée via la couche IHM lorsqu'un type de visite est sélectionné.
+     * Méthode appelée via la couche IHM lorsqu'un type de visite est
+     * sélectionné.
      * @param event Evénement remonté via la couche IHM.
      */
-    public void handleSelectTypeVisite(final ValueChangeEvent event)
-    {
+    public void handleSelectTypeVisite(final ValueChangeEvent event) {
         // Récupération du type d'événement sélectionné
         final TypeVisite typeVisite = (TypeVisite) event.getNewValue();
         this.getBean().setTypeVisite(typeVisite);
@@ -95,37 +100,26 @@ public class EvenementManager
     /**
      * Méthode en charge de construire le libellé de l'évènement.
      */
-    private void buildLibelle()
-    {
+    private void buildLibelle() {
         final Evenement evenement = this.getBean();
+
+        if (evenement == null) {
+            return;
+        }
+
         final StringBuffer sb = new StringBuffer();
-        if (evenement != null
-            && evenement.getTypeEvenement() != null)
-        {
-            if (evenement.getTypeEvenement().equals(TypeEvenement.TACHE)
-                || evenement.getTypeEvenement().equals(TypeEvenement.VISITE))
-            {
-                if (evenement.getTypeEvenement().equals(TypeEvenement.VISITE)
-                    && evenement.getTypeVisite() != null)
-                {
-                    sb.append(evenement.getTypeVisite().getLibelle())
-                            .append(EclipseConstants.DASH);
-                }
-                else
-                {
-                    sb.append(evenement.getTypeEvenement().getLibelle())
-                            .append(EclipseConstants.DASH);
+        if (evenement.getTypeEvenement() != null) {
+            if (evenement.getTypeEvenement().equals(TypeEvenement.TACHE) || evenement.getTypeEvenement().equals(TypeEvenement.VISITE)) {
+                if (evenement.getTypeEvenement().equals(TypeEvenement.VISITE) && (evenement.getTypeVisite() != null)) {
+                    sb.append(evenement.getTypeVisite().getLibelle()).append(EclipseConstants.DASH);
+                } else {
+                    sb.append(evenement.getTypeEvenement().getLibelle()).append(EclipseConstants.DASH);
                 }
 
-                if (evenement.getEssai() != null)
-                {
-                    sb.append(evenement.getEssai().getPromoteur().getRaisonSociale())
-                            .append(EclipseConstants.DASH)
-                            .append(evenement.getEssai().getCodePromoteur());
+                if (evenement.getEssai() != null) {
+                    sb.append(evenement.getEssai().getPromoteur().getRaisonSociale()).append(EclipseConstants.DASH).append(evenement.getEssai().getCodePromoteur());
                 }
-            }
-            else
-            {
+            } else {
                 sb.append(evenement.getTypeEvenement().getLibelle());
             }
         }
@@ -135,8 +129,7 @@ public class EvenementManager
      * Méthode en charge de traiter le changement de valeur du booleen journee.
      * @param event Evenement JSF.
      */
-    public void handleCheckJournee(final ValueChangeEvent event)
-    {
+    public void handleCheckJournee(final ValueChangeEvent event) {
         this.getBean().setJournee((Boolean) event.getNewValue());
     }
 
@@ -144,8 +137,7 @@ public class EvenementManager
      * Setter pour userService.
      * @param userService Le userService à écrire.
      */
-    public void setUserService(final UserService userService)
-    {
+    public void setUserService(final UserService userService) {
         this.userService = userService;
     }
 

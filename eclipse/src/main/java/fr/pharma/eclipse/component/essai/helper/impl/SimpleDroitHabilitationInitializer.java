@@ -5,14 +5,12 @@ import fr.pharma.eclipse.component.essai.helper.DroitHabilitationInitializer;
 import fr.pharma.eclipse.domain.model.habilitation.Habilitation;
 
 /**
- * Initialiseur simple de droit d'habilitation, basé sur le type de contact avec lequel il est
- * paramétré.
- 
+ * Initialiseur simple de droit d'habilitation, basé sur le type de contact avec
+ * lequel il est paramétré.
+ * @author Netapsys
  * @version $Revision$ $Date$
  */
-public class SimpleDroitHabilitationInitializer
-    implements DroitHabilitationInitializer
-{
+public class SimpleDroitHabilitationInitializer implements DroitHabilitationInitializer {
 
     /**
      * Serial ID.
@@ -26,10 +24,10 @@ public class SimpleDroitHabilitationInitializer
 
     /**
      * Constructeur.
-     * @param typeContactName Nom de la valeur de l'énumération {@link TypeContact}.
+     * @param typeContactName Nom de la valeur de l'énumération
+     * {@link TypeContact}.
      */
-    public SimpleDroitHabilitationInitializer(final String typeContactName)
-    {
+    public SimpleDroitHabilitationInitializer(final String typeContactName) {
         this(TypeContact.valueOf(typeContactName));
     }
 
@@ -37,8 +35,7 @@ public class SimpleDroitHabilitationInitializer
      * Constructeur.
      * @param typeContact Type du contact.
      */
-    public SimpleDroitHabilitationInitializer(final TypeContact typeContact)
-    {
+    public SimpleDroitHabilitationInitializer(final TypeContact typeContact) {
         this.typeContact = typeContact;
     }
 
@@ -46,8 +43,7 @@ public class SimpleDroitHabilitationInitializer
      * {@inheritDoc}
      */
     @Override
-    public void initialize(final Habilitation habilitation)
-    {
+    public void initialize(final Habilitation habilitation) {
         habilitation.setDroit(this.typeContact.getDroit());
     }
 
@@ -55,8 +51,7 @@ public class SimpleDroitHabilitationInitializer
      * Getter sur typeContact.
      * @return Retourne le typeContact.
      */
-    TypeContact getTypeContact()
-    {
+    TypeContact getTypeContact() {
         return this.typeContact;
     }
 

@@ -13,14 +13,12 @@ import org.slf4j.LoggerFactory;
 import fr.pharma.eclipse.utils.file.FileHelper;
 
 /**
- * Fabrique d'objets {@link DefaultStreamedContent} pour les composants Primefaces de gestion de
- * fichiers.
- 
+ * Fabrique d'objets {@link DefaultStreamedContent} pour les composants
+ * Primefaces de gestion de fichiers.
+ * @author Netapsys
  * @version $Revision$ $Date$
  */
-public class DefaultStreamedContentFactory
-    implements Serializable
-{
+public class DefaultStreamedContentFactory implements Serializable {
 
     /**
      * Serial ID.
@@ -30,8 +28,7 @@ public class DefaultStreamedContentFactory
     /**
      * Log.
      */
-    private static final Logger LOG =
-        LoggerFactory.getLogger(DefaultStreamedContentFactory.class);
+    private static final Logger LOG = LoggerFactory.getLogger(DefaultStreamedContentFactory.class);
 
     /**
      * Helper pour la gestion des fichiers.
@@ -39,7 +36,8 @@ public class DefaultStreamedContentFactory
     private FileHelper fileHelper;
 
     /**
-     * Dictionnaire de correspondances extension/type du fichier dans la response.
+     * Dictionnaire de correspondances extension/type du fichier dans la
+     * response.
      */
     private SortedMap<String, String> dicoExtensions;
 
@@ -50,11 +48,8 @@ public class DefaultStreamedContentFactory
      * @return Un objet DefaultStreamedContent.
      */
     public DefaultStreamedContent getInitializedObject(final InputStream stream,
-                                                       final String fileName)
-    {
-        return new DefaultStreamedContent(stream,
-                                          this.getApplicationType(fileName),
-                                          fileName);
+                                                       final String fileName) {
+        return new DefaultStreamedContent(stream, this.getApplicationType(fileName), fileName);
     }
 
     /**
@@ -64,42 +59,31 @@ public class DefaultStreamedContentFactory
      * @return Un objet DefaultStreamedContent.
      */
     public DefaultStreamedContent getInitializedObject(final byte[] bytes,
-                                                       final String fileName)
-    {
+                                                       final String fileName) {
         final InputStream stream = new ByteArrayInputStream(bytes);
-        return new DefaultStreamedContent(stream,
-                                          this.getApplicationType(fileName),
-                                          fileName);
+        return new DefaultStreamedContent(stream, this.getApplicationType(fileName), fileName);
     }
 
     /**
-     * Méthode de création d'un objet DefaultStreamedContent à renvoyer lorsque le traitement ne
-     * s'est pas bien déroulé.
+     * Méthode de création d'un objet DefaultStreamedContent à renvoyer lorsque
+     * le traitement ne s'est pas bien déroulé.
      * @return Un objet DefaultStreamedContent.
      */
-    public DefaultStreamedContent getInitializedObjectInError()
-    {
+    public DefaultStreamedContent getInitializedObjectInError() {
         return new DefaultStreamedContent(new ByteArrayInputStream(new byte[0]));
     }
 
     /**
-     * Méthode en charge de récupérer le type d'application à indiquer dans la response lors du
-     * téléchargement de fichier, à partir du nom du fichier.
+     * Méthode en charge de récupérer le type d'application à indiquer dans la
+     * response lors du téléchargement de fichier, à partir du nom du fichier.
      * @param filename Nom du fichier à exporter.
      * @return Le type d'application à indiquer dans la response.
      */
-    private String getApplicationType(final String filename)
-    {
-        final String applicationType =
-            this.dicoExtensions.get(this.fileHelper.getExtension(filename));
-        if (applicationType == null)
-        {
-            DefaultStreamedContentFactory.LOG.warn(new StringBuilder("[getApplicationType] ")
-                    .append("Aucune correspondance trouvée ")
-                    .append("dans le dictionnaire pour le fichier '")
-                    .append(filename)
-                    .append("'.")
-                    .toString());
+    private String getApplicationType(final String filename) {
+        final String applicationType = this.dicoExtensions.get(this.fileHelper.getExtension(filename));
+        if (applicationType == null) {
+            DefaultStreamedContentFactory.LOG.warn(new StringBuilder("[getApplicationType] ").append("Aucune correspondance trouvée ")
+                    .append("dans le dictionnaire pour le fichier '").append(filename).append("'.").toString());
             return StringUtils.EMPTY;
         }
         return applicationType;
@@ -109,8 +93,7 @@ public class DefaultStreamedContentFactory
      * Getter sur dicoExtensions.
      * @return Retourne le dicoExtensions.
      */
-    SortedMap<String, String> getDicoExtensions()
-    {
+    SortedMap<String, String> getDicoExtensions() {
         return this.dicoExtensions;
     }
 
@@ -118,8 +101,7 @@ public class DefaultStreamedContentFactory
      * Setter pour dicoExtensions.
      * @param dicoExtensions le dicoExtensions à écrire.
      */
-    public void setDicoExtensions(final SortedMap<String, String> dicoExtensions)
-    {
+    public void setDicoExtensions(final SortedMap<String, String> dicoExtensions) {
         this.dicoExtensions = dicoExtensions;
     }
 
@@ -127,8 +109,7 @@ public class DefaultStreamedContentFactory
      * Getter sur fileHelper.
      * @return Retourne le fileHelper.
      */
-    FileHelper getFileHelper()
-    {
+    FileHelper getFileHelper() {
         return this.fileHelper;
     }
 
@@ -136,8 +117,7 @@ public class DefaultStreamedContentFactory
      * Setter pour fileHelper.
      * @param fileHelper le fileHelper à écrire.
      */
-    public void setFileHelper(final FileHelper fileHelper)
-    {
+    public void setFileHelper(final FileHelper fileHelper) {
         this.fileHelper = fileHelper;
     }
 

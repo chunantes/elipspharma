@@ -32,12 +32,10 @@ import fr.pharma.eclipse.service.produit.ProduitService;
 
 /**
  * Description de la classe.
- 
+ * @author Netapsys
  * @version $Revision$ $Date$
  */
-public class RetourPatientManager
-    extends BeanManager<RetourPatient>
-{
+public class RetourPatientManager extends BeanManager<RetourPatient> {
 
     /**
      * SerialVersionUID.
@@ -142,16 +140,14 @@ public class RetourPatientManager
      * Constructeur.
      * @param service Service.
      */
-    public RetourPatientManager(final GenericService<RetourPatient> service)
-    {
+    public RetourPatientManager(final GenericService<RetourPatient> service) {
         super(service);
     }
 
     /**
      * Méthode en charge de réinitialiser le manager.
      */
-    public void init()
-    {
+    public void init() {
         this.setEssaiSelected(null);
         this.setPatients(null);
         this.setBean(null);
@@ -170,17 +166,14 @@ public class RetourPatientManager
      * Méthode appelée via la couche IHM lorsqu'un essai est sélectionné.
      * @param event Evénement remonté via la couche IHM.
      */
-    public void handleSelectEssai(final SelectEvent event)
-    {
+    public void handleSelectEssai(final SelectEvent event) {
 
-        final List<Patient> patientsDisplay =
-            this.patientService.getAllPatientsForEssai(this.essaiSelected);
+        final List<Patient> patientsDisplay = this.patientService.getAllPatientsForEssai(this.essaiSelected);
         this.setPatients(patientsDisplay);
 
         this.getBean().setEssai(this.getEssaiSelected());
 
-        final List<Pharmacie> pharmaciesDisplay =
-            this.essaiService.getAllPharmaciesOfUser(this.getEssaiSelected());
+        final List<Pharmacie> pharmaciesDisplay = this.essaiService.getAllPharmaciesOfUser(this.getEssaiSelected());
         this.setPharmacies(pharmaciesDisplay);
 
     }
@@ -189,32 +182,28 @@ public class RetourPatientManager
      * Méthode appelée via la couche IHM lorsqu'une pharmacie est sélectionnée.
      * @param event Evénement remonté via la couche IHM.
      */
-    public void handleSelectPharmacie(final AjaxBehaviorEvent event)
-    {
+    public void handleSelectPharmacie(final AjaxBehaviorEvent event) {
         // Récupération de la pharmacie sélectionnée
         final HtmlSelectOneMenu select = (HtmlSelectOneMenu) event.getSource();
         final Pharmacie pharmacie = (Pharmacie) select.getLocalValue();
         this.setPharmacieSelected(pharmacie);
 
         // Calcul des produits de l'essai + pharmacie
-        this.setProduits(this.produitService.getProduitsWithPreparations(this.essaiSelected,
-                                                                         this.pharmacieSelected));
+        this.setProduits(this.produitService.getProduitsWithPreparations(this.essaiSelected, this.pharmacieSelected));
     }
 
     /**
      * Méthode appelée via la couche IHM lorsqu'un produit est sélectionné.
      * @param event Event.
      */
-    public void handleSelectProduit(final AjaxBehaviorEvent event)
-    {
+    public void handleSelectProduit(final AjaxBehaviorEvent event) {
         final HtmlSelectOneMenu select = (HtmlSelectOneMenu) event.getSource();
         final Produit produit = this.produitService.reattach((Produit) select.getLocalValue());
 
         this.getBean().setProduit(produit);
         // Calcul des conditionnements sélectionnables
         this.conditionnements = new ArrayList<Conditionnement>();
-        if (produit != null)
-        {
+        if (produit != null) {
             this.conditionnements.addAll(produit.getConditionnements());
         }
     }
@@ -223,38 +212,32 @@ public class RetourPatientManager
      * Méthode appelée via la couche IHM lorsqu'un patient est sélectionné.
      * @param event Evénement remonté via la couche IHM.
      */
-    public void handleSelectPatient(final AjaxBehaviorEvent event)
-    {
-        this.getBean()
-                .setPatient((Patient) ((HtmlSelectOneMenu) event.getSource()).getLocalValue());
+    public void handleSelectPatient(final AjaxBehaviorEvent event) {
+        final Patient patient = (Patient) ((HtmlSelectOneMenu) event.getSource()).getLocalValue();
+        this.getBean().setPatient(patient);
+        this.setPatientSelected(patient);
         this.initDispensations();
     }
 
     /**
-     * Méthode appelée via la couche IHM lorsqu'un conditionnement est sélectionné.
+     * Méthode appelée via la couche IHM lorsqu'un conditionnement est
+     * sélectionné.
      * @param event Evenement JSF.
      */
-    public void handleSelectConditionnement(final AjaxBehaviorEvent event)
-    {
+    public void handleSelectConditionnement(final AjaxBehaviorEvent event) {
         final HtmlSelectOneMenu select = (HtmlSelectOneMenu) event.getSource();
         final Conditionnement conditionnement = (Conditionnement) select.getLocalValue();
         this.getBean().setConditionnement(conditionnement);
         this.stockages =
-            new ArrayList<DetailStockage>(CollectionUtils.select(this.produitService
-                                                                         .reattach(this
-                                                                                 .getProduitSelected())
-                                                                         .getDetailLogistique()
-                                                                         .getStockagesRetours(),
-                                                                 new GenericPredicate("pharmacie",
-                                                                                      this.pharmacieSelected)));
+            new ArrayList<DetailStockage>(CollectionUtils.select(this.produitService.reattach(this.getProduitSelected()).getDetailLogistique().getStockagesRetours(),
+                                                                 new GenericPredicate("pharmacie", this.pharmacieSelected)));
 
     }
 
     /**
      * Méthode en charge d'initialiser la liste des dispensations.
      */
-    public void initDispensations()
-    {
+    public void initDispensations() {
         final DispensationSearchCriteria crit = new DispensationSearchCriteria();
         crit.setPatient(this.getBean().getPatient());
         crit.setEssai(this.getBean().getEssai());
@@ -262,40 +245,36 @@ public class RetourPatientManager
 
         final List<Dispensation> result = this.dispensationService.getAll(crit);
 
-        // On trie les dispensations dans l'ordre des décroissant des numéros d'ordonnancier et
+        // On trie les dispensations dans l'ordre des décroissant des numéros
+        // d'ordonnancier et
         // des dates.
-        Collections.sort(result,
-                         new Comparator<Dispensation>() {
+        Collections.sort(result, new Comparator<Dispensation>() {
 
-                             @Override
-                             public int compare(final Dispensation o1,
-                                                final Dispensation o2)
-                             {
-                                 return this.buildKey(o2).compareTo(this.buildKey(o1));
-                             }
+            @Override
+            public int compare(final Dispensation o1,
+                               final Dispensation o2) {
+                return this.buildKey(o2).compareTo(this.buildKey(o1));
+            }
 
-                             private String buildKey(final Dispensation dispensation)
-                             {
-                                 final StringBuffer sb = new StringBuffer();
-                                 sb.append(dispensation.getNumOrdonnancier());
-                                 sb.append(dispensation.getDateDispensation().getTimeInMillis());
-                                 return sb.toString();
-                             }
+            private String buildKey(final Dispensation dispensation) {
+                final StringBuffer sb = new StringBuffer();
+                sb.append(dispensation.getNumOrdonnancier());
+                if (dispensation.getDateDispensation() != null) {
+                    sb.append(dispensation.getDateDispensation().getTimeInMillis());
+                }
+                return sb.toString();
+            }
 
-                         });
+        });
         this.setDispensations(result);
     }
     /**
-     * Méthode en charge d'affecter le numéro d'ordonnancier de la dispenstion sélectionnée.
+     * Méthode en charge d'affecter le numéro d'ordonnancier de la dispenstion
+     * sélectionnée.
      */
-    public void handleSelectDispensation()
-    {
-        if (this.getDispensationSelected() != null)
-        {
-            this.getBean().setNumOrdonnancier(this
-                    .getDispensationSelected()
-                    .getDispensation()
-                    .getNumOrdonnancier());
+    public void handleSelectDispensation() {
+        if (this.getDispensationSelected() != null) {
+            this.getBean().setNumOrdonnancier(this.getDispensationSelected().getDispensation().getNumOrdonnancier());
             this.getBean().setNumLot(this.getDispensationSelected().getNumLot());
             this.getBean().setNumTraitement(this.getDispensationSelected().getNumTraitement());
         }
@@ -305,8 +284,7 @@ public class RetourPatientManager
      * Setter pour patientService.
      * @param patientService le patientService à écrire.
      */
-    public void setPatientService(final PatientService patientService)
-    {
+    public void setPatientService(final PatientService patientService) {
         this.patientService = patientService;
     }
 
@@ -314,8 +292,7 @@ public class RetourPatientManager
      * Getter sur essaiSelected.
      * @return Retourne le essaiSelected.
      */
-    public Essai getEssaiSelected()
-    {
+    public Essai getEssaiSelected() {
         return this.essaiSelected;
     }
 
@@ -323,8 +300,7 @@ public class RetourPatientManager
      * Setter pour essaiSelected.
      * @param essaiSelected le essaiSelected à écrire.
      */
-    public void setEssaiSelected(final Essai essaiSelected)
-    {
+    public void setEssaiSelected(final Essai essaiSelected) {
         this.essaiSelected = essaiSelected;
     }
 
@@ -332,8 +308,7 @@ public class RetourPatientManager
      * Getter sur patients.
      * @return Retourne le patients.
      */
-    public List<Patient> getPatients()
-    {
+    public List<Patient> getPatients() {
         return this.patients;
     }
 
@@ -341,8 +316,7 @@ public class RetourPatientManager
      * Setter pour patients.
      * @param patients le patients à écrire.
      */
-    public void setPatients(final List<Patient> patients)
-    {
+    public void setPatients(final List<Patient> patients) {
         this.patients = patients;
     }
 
@@ -350,8 +324,7 @@ public class RetourPatientManager
      * Getter sur patientSelected.
      * @return Retourne le patientSelected.
      */
-    public Patient getPatientSelected()
-    {
+    public Patient getPatientSelected() {
         return this.patientSelected;
     }
 
@@ -359,8 +332,7 @@ public class RetourPatientManager
      * Setter pour patientSelected.
      * @param patientSelected le patientSelected à écrire.
      */
-    public void setPatientSelected(final Patient patientSelected)
-    {
+    public void setPatientSelected(final Patient patientSelected) {
         this.patientSelected = patientSelected;
     }
 
@@ -368,8 +340,7 @@ public class RetourPatientManager
      * Getter sur produitSelected.
      * @return Retourne le produitSelected.
      */
-    public Produit getProduitSelected()
-    {
+    public Produit getProduitSelected() {
         return this.produitSelected;
     }
 
@@ -377,8 +348,7 @@ public class RetourPatientManager
      * Getter sur produits.
      * @return Retourne le produits.
      */
-    public List<Produit> getProduits()
-    {
+    public List<Produit> getProduits() {
         return this.produits;
     }
 
@@ -386,8 +356,7 @@ public class RetourPatientManager
      * Setter pour produitSelected.
      * @param produitSelected le produitSelected à écrire.
      */
-    public void setProduitSelected(final Produit produitSelected)
-    {
+    public void setProduitSelected(final Produit produitSelected) {
         this.produitSelected = produitSelected;
     }
 
@@ -395,8 +364,7 @@ public class RetourPatientManager
      * Setter pour produits.
      * @param produits le produits à écrire.
      */
-    public void setProduits(final List<Produit> produits)
-    {
+    public void setProduits(final List<Produit> produits) {
         this.produits = produits;
     }
 
@@ -404,8 +372,7 @@ public class RetourPatientManager
      * Getter sur stockages.
      * @return Retourne le stockages.
      */
-    public List<DetailStockage> getStockages()
-    {
+    public List<DetailStockage> getStockages() {
         return this.stockages;
     }
 
@@ -413,8 +380,7 @@ public class RetourPatientManager
      * Setter pour stockages.
      * @param stockages le stockages à écrire.
      */
-    public void setStockages(final List<DetailStockage> stockages)
-    {
+    public void setStockages(final List<DetailStockage> stockages) {
         this.stockages = stockages;
     }
 
@@ -422,8 +388,7 @@ public class RetourPatientManager
      * Getter sur pharmacies.
      * @return Retourne le pharmacies.
      */
-    public List<Pharmacie> getPharmacies()
-    {
+    public List<Pharmacie> getPharmacies() {
         return this.pharmacies;
     }
 
@@ -431,8 +396,7 @@ public class RetourPatientManager
      * Setter pour pharmacies.
      * @param pharmacies le pharmacies à écrire.
      */
-    public void setPharmacies(final List<Pharmacie> pharmacies)
-    {
+    public void setPharmacies(final List<Pharmacie> pharmacies) {
         this.pharmacies = pharmacies;
     }
 
@@ -440,8 +404,7 @@ public class RetourPatientManager
      * Getter sur pharmacieSelected.
      * @return Retourne le pharmacieSelected.
      */
-    public Pharmacie getPharmacieSelected()
-    {
+    public Pharmacie getPharmacieSelected() {
         return this.pharmacieSelected;
     }
 
@@ -449,8 +412,7 @@ public class RetourPatientManager
      * Setter pour pharmacieSelected.
      * @param pharmacieSelected le pharmacieSelected à écrire.
      */
-    public void setPharmacieSelected(final Pharmacie pharmacieSelected)
-    {
+    public void setPharmacieSelected(final Pharmacie pharmacieSelected) {
         this.pharmacieSelected = pharmacieSelected;
     }
 
@@ -458,8 +420,7 @@ public class RetourPatientManager
      * Getter sur conditionnements.
      * @return Retourne le conditionnements.
      */
-    public List<Conditionnement> getConditionnements()
-    {
+    public List<Conditionnement> getConditionnements() {
         return this.conditionnements;
     }
 
@@ -467,8 +428,7 @@ public class RetourPatientManager
      * Setter pour conditionnements.
      * @param conditionnements le conditionnements à écrire.
      */
-    public void setConditionnements(final List<Conditionnement> conditionnements)
-    {
+    public void setConditionnements(final List<Conditionnement> conditionnements) {
         this.conditionnements = conditionnements;
     }
 
@@ -476,8 +436,7 @@ public class RetourPatientManager
      * Getter sur conditionnementSelected.
      * @return Retourne le conditionnementSelected.
      */
-    public Conditionnement getConditionnementSelected()
-    {
+    public Conditionnement getConditionnementSelected() {
         return this.conditionnementSelected;
     }
 
@@ -485,8 +444,7 @@ public class RetourPatientManager
      * Setter pour conditionnementSelected.
      * @param conditionnementSelected le conditionnementSelected à écrire.
      */
-    public void setConditionnementSelected(final Conditionnement conditionnementSelected)
-    {
+    public void setConditionnementSelected(final Conditionnement conditionnementSelected) {
         this.conditionnementSelected = conditionnementSelected;
     }
 
@@ -494,8 +452,7 @@ public class RetourPatientManager
      * Getter sur result.
      * @return Retourne le result.
      */
-    public RetourPatient getResult()
-    {
+    public RetourPatient getResult() {
         return this.result;
     }
 
@@ -503,17 +460,23 @@ public class RetourPatientManager
      * Setter pour result.
      * @param result le result à écrire.
      */
-    public void setResult(final RetourPatient result)
-    {
+    public void setResult(final RetourPatient result) {
         this.result = result;
+
+        // Forcer le chargement du nom de pharmacie pour eviter un
+        // LazyLoadingException dans l'IHM
+        if ((result != null) && (result.getDetailStockage() != null) && (result.getDetailStockage().getStockage() != null)
+            && (result.getDetailStockage().getStockage().getPharmacie() != null)) {
+            result.getDetailStockage().getStockage().getPharmacie().getNom();
+        }
+
     }
 
     /**
      * Setter pour produitService.
      * @param produitService le produitService à écrire.
      */
-    public void setProduitService(final ProduitService<Produit> produitService)
-    {
+    public void setProduitService(final ProduitService<Produit> produitService) {
         this.produitService = produitService;
     }
 
@@ -521,8 +484,7 @@ public class RetourPatientManager
      * Setter pour essaiService.
      * @param essaiService le essaiService à écrire.
      */
-    public void setEssaiService(final EssaiService essaiService)
-    {
+    public void setEssaiService(final EssaiService essaiService) {
         this.essaiService = essaiService;
     }
 
@@ -530,8 +492,7 @@ public class RetourPatientManager
      * Getter pour dispensationSelected.
      * @return Le dispensationSelected
      */
-    public DispensationProduit getDispensationSelected()
-    {
+    public DispensationProduit getDispensationSelected() {
         return this.dispensationSelected;
     }
 
@@ -539,8 +500,7 @@ public class RetourPatientManager
      * Setter pour dispensationSelected.
      * @param dispensationSelected Le dispensationSelected à écrire.
      */
-    public void setDispensationSelected(final DispensationProduit dispensationSelected)
-    {
+    public void setDispensationSelected(final DispensationProduit dispensationSelected) {
         this.dispensationSelected = dispensationSelected;
     }
 
@@ -548,8 +508,7 @@ public class RetourPatientManager
      * Getter pour dispensations.
      * @return Le dispensations
      */
-    public List<Dispensation> getDispensations()
-    {
+    public List<Dispensation> getDispensations() {
         return this.dispensations;
     }
 
@@ -557,8 +516,7 @@ public class RetourPatientManager
      * Setter pour dispensations.
      * @param dispensations Le dispensations à écrire.
      */
-    public void setDispensations(final List<Dispensation> dispensations)
-    {
+    public void setDispensations(final List<Dispensation> dispensations) {
         this.dispensations = dispensations;
     }
 
@@ -566,8 +524,7 @@ public class RetourPatientManager
      * Setter pour dispensationService.
      * @param dispensationService Le dispensationService à écrire.
      */
-    public void setDispensationService(final DispensationService dispensationService)
-    {
+    public void setDispensationService(final DispensationService dispensationService) {
         this.dispensationService = dispensationService;
     }
 
@@ -575,8 +532,7 @@ public class RetourPatientManager
      * Getter pour action.
      * @return Le action
      */
-    public String getAction()
-    {
+    public String getAction() {
         return this.action;
     }
 
@@ -584,8 +540,7 @@ public class RetourPatientManager
      * Setter pour action.
      * @param action Le action à écrire.
      */
-    public void setAction(final String action)
-    {
+    public void setAction(final String action) {
         this.action = action;
     }
 

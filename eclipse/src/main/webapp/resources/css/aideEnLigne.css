@@ -1,0 +1,22 @@
+
+.bloc{
+	min-height:650px;
+	padding-top:50px;
+}
+.short-bloc{
+	padding-top:50px;
+}
+
+h2{
+	color:#5db677;
+}
+
+.ancre {
+    padding-top: 40px;
+}
+
+.dropdown-menu.last-menu-item li > a 
+{
+	white-space: normal;
+	word-wrap: break-word;
+}

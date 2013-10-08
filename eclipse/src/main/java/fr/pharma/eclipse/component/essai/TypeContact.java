@@ -6,11 +6,10 @@ import fr.pharma.eclipse.utils.constants.EclipseConstants;
 
 /**
  * Enumération des différents types de contacts que peux ajouter un utilisateur.
- 
+ * @author Netapsys
  * @version $Revision$ $Date$
  */
-public enum TypeContact
-{
+public enum TypeContact {
     /**
      * ARC Investigateur.
      */
@@ -29,22 +28,14 @@ public enum TypeContact
     /**
      * Direction de la Recherche Administratif.
      */
-    DIRECTION_RECHERCHE_ADMINISTRATIF(TypePersonne.DIRECTION_RECHERCHE,
-            Droit.DIRECTION_RECHERCHE_ADMINISTRATIF, new StringBuilder()
-                    .append(TypePersonne.DIRECTION_RECHERCHE.getLibelle())
-                    .append(EclipseConstants.SPACE)
-                    .append(Droit.DIRECTION_RECHERCHE_ADMINISTRATIF)
-                    .toString()),
+    DIRECTION_RECHERCHE_ADMINISTRATIF(TypePersonne.DIRECTION_RECHERCHE, Droit.DIRECTION_RECHERCHE_ADMINISTRATIF, new StringBuilder()
+            .append(TypePersonne.DIRECTION_RECHERCHE.getLibelle()).append(EclipseConstants.SPACE).append(Droit.DIRECTION_RECHERCHE_ADMINISTRATIF).toString()),
 
     /**
      * Direction de la Recherche Pharmacovigilan.
      */
-    DIRECTION_RECHERCHE_PHARMACOVIGILANT(TypePersonne.DIRECTION_RECHERCHE,
-            Droit.DIRECTION_RECHERCHE_PHARMACOVIGILANT, new StringBuilder()
-                    .append(TypePersonne.DIRECTION_RECHERCHE.getLibelle())
-                    .append(EclipseConstants.SPACE)
-                    .append(Droit.DIRECTION_RECHERCHE_PHARMACOVIGILANT)
-                    .toString()),
+    DIRECTION_RECHERCHE_PHARMACOVIGILANT(TypePersonne.DIRECTION_RECHERCHE, Droit.DIRECTION_RECHERCHE_PHARMACOVIGILANT, new StringBuilder()
+            .append(TypePersonne.DIRECTION_RECHERCHE.getLibelle()).append(EclipseConstants.SPACE).append(Droit.DIRECTION_RECHERCHE_PHARMACOVIGILANT).toString()),
 
     /**
      * Investigateur.
@@ -81,11 +72,8 @@ public enum TypeContact
      * @param typePersonne Type de personne associé.
      * @param droit Droit associé.
      */
-    private TypeContact(final TypePersonne typePersonne, final Droit droit)
-    {
-        this(typePersonne,
-             droit,
-             typePersonne.getLibelle());
+    private TypeContact(final TypePersonne typePersonne, final Droit droit) {
+        this(typePersonne, droit, typePersonne.getLibelle());
     }
 
     /**
@@ -94,8 +82,7 @@ public enum TypeContact
      * @param droit Droit associé.
      * @param libelle Libellé.
      */
-    private TypeContact(final TypePersonne typePersonne, final Droit droit, final String libelle)
-    {
+    private TypeContact(final TypePersonne typePersonne, final Droit droit, final String libelle) {
         this.libelle = libelle;
         this.typePersonne = typePersonne;
         this.droit = droit;
@@ -105,8 +92,7 @@ public enum TypeContact
      * Getter sur libelle.
      * @return Retourne le libelle.
      */
-    public String getLibelle()
-    {
+    public String getLibelle() {
         return this.libelle;
     }
 
@@ -114,8 +100,7 @@ public enum TypeContact
      * Getter sur typePersonne.
      * @return Retourne le typePersonne.
      */
-    public TypePersonne getTypePersonne()
-    {
+    public TypePersonne getTypePersonne() {
         return this.typePersonne;
     }
 
@@ -123,8 +108,7 @@ public enum TypeContact
      * {@inheritDoc}
      */
     @Override
-    public String toString()
-    {
+    public String toString() {
         return this.getLibelle();
     }
 
@@ -132,8 +116,7 @@ public enum TypeContact
      * Getter sur droit.
      * @return Retourne le droit.
      */
-    public Droit getDroit()
-    {
+    public Droit getDroit() {
         return this.droit;
     }
 }

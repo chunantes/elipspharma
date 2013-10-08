@@ -16,11 +16,10 @@ import fr.pharma.eclipse.domain.model.stockage.Stockage;
 
 /**
  * Classe en charge de tester le helper d'arbre de stockage.
- 
+ * @author Netapsys
  * @version $Revision$ $Date$
  */
-public class TreeStockageHelperTest
-{
+public class TreeStockageHelperTest {
     /**
      * TreeStockageHelper à tester.
      */
@@ -30,8 +29,7 @@ public class TreeStockageHelperTest
      * Méthode en charge d'initialiser les données de test.
      */
     @Before
-    public void init()
-    {
+    public void init() {
         this.helper = new TreeStockageHelper();
     }
 
@@ -39,8 +37,7 @@ public class TreeStockageHelperTest
      * Méthode en charge de purger les données de test.
      */
     @After
-    public void end()
-    {
+    public void end() {
         this.helper = null;
     }
 
@@ -48,8 +45,7 @@ public class TreeStockageHelperTest
      * Méthode en charge de tester l'initialisation des données de test.
      */
     @Test
-    public void testInit()
-    {
+    public void testInit() {
         Assert.assertNotNull(this.helper);
     }
 
@@ -57,30 +53,25 @@ public class TreeStockageHelperTest
      * Méthode en charge de tester la méthode de décomposition de noeud.
      */
     @Test
-    public void testDecomposeNodesNotEmpty()
-    {
+    public void testDecomposeNodesNotEmpty() {
         final String result = this.helper.decomposeNodes("0_1_2");
-        Assert.assertEquals("treeStockages_0_1_2,treeStockages_0_1,treeStockages_0",
-                            result);
+        Assert.assertEquals("treeStockages_0_1_2,treeStockages_0_1,treeStockages_0", result);
     }
 
     /**
      * Méthode en charge de tester la méthode de décomposition de noeud.
      */
     @Test
-    public void testDecomposeNodesEmpty()
-    {
+    public void testDecomposeNodesEmpty() {
         final String result = this.helper.decomposeNodes(StringUtils.EMPTY);
-        Assert.assertEquals(StringUtils.EMPTY,
-                            result);
+        Assert.assertEquals(StringUtils.EMPTY, result);
     }
 
     /**
      * Méthode en charge de tester la méthode de construction d'arbre.
      */
     @Test
-    public void testBuildTreeWithStockagesEmpty()
-    {
+    public void testBuildTreeWithStockagesEmpty() {
         final Pharmacie pharmacie = new Pharmacie();
         final TreeNode tree = this.helper.buildTree(pharmacie);
         Assert.assertNotNull(tree);
@@ -90,8 +81,7 @@ public class TreeStockageHelperTest
      * Méthode en charge de tester la méthode de construction d'arbre.
      */
     @Test
-    public void testBuildTreeWithStockagesNotEmpty()
-    {
+    public void testBuildTreeWithStockagesNotEmpty() {
         final Pharmacie pharmacie = new Pharmacie();
         final SortedSet<Stockage> stockages = new TreeSet<Stockage>(new StockageComparator());
 
@@ -120,8 +110,7 @@ public class TreeStockageHelperTest
      * Méthode en charge de tester la méthode de construction d'arbre.
      */
     @Test
-    public void testBuildTreeWithStockagesNotEmptyNLevel()
-    {
+    public void testBuildTreeWithStockagesNotEmptyNLevel() {
         final Pharmacie pharmacie = new Pharmacie();
         final SortedSet<Stockage> stockages = new TreeSet<Stockage>(new StockageComparator());
 
@@ -156,8 +145,7 @@ public class TreeStockageHelperTest
      * Méthode en charge de tester le calcul des noeuds à ouvrir à l'affichage.
      */
     @Test
-    public void testCalculateNodesToExpand1()
-    {
+    public void testCalculateNodesToExpand1() {
         final Pharmacie pharmacie = new Pharmacie();
         final SortedSet<Stockage> stockages = new TreeSet<Stockage>(new StockageComparator());
 
@@ -185,18 +173,15 @@ public class TreeStockageHelperTest
         pharmacie.setStockages(stockages);
         final TreeNode tree = this.helper.buildTree(pharmacie);
 
-        final String nodesToExpand = this.helper.calculateNodesToExpand(tree,
-                                                                        enfant11);
-        Assert.assertEquals("treeStockages_0_0,treeStockages_0",
-                            nodesToExpand);
+        final String nodesToExpand = this.helper.calculateNodesToExpand(tree, enfant11);
+        Assert.assertEquals("treeStockages_0_0,treeStockages_0", nodesToExpand);
     }
 
     /**
      * Méthode en charge de tester le calcul des noeuds à ouvrir à l'affichage.
      */
     @Test
-    public void testCalculateNodesToExpand2()
-    {
+    public void testCalculateNodesToExpand2() {
         final Pharmacie pharmacie = new Pharmacie();
         final SortedSet<Stockage> stockages = new TreeSet<Stockage>(new StockageComparator());
 
@@ -224,18 +209,15 @@ public class TreeStockageHelperTest
         pharmacie.setStockages(stockages);
         final TreeNode tree = this.helper.buildTree(pharmacie);
 
-        final String nodesToExpand = this.helper.calculateNodesToExpand(tree,
-                                                                        enfant2);
-        Assert.assertEquals("treeStockages_0",
-                            nodesToExpand);
+        final String nodesToExpand = this.helper.calculateNodesToExpand(tree, enfant2);
+        Assert.assertEquals("treeStockages_0", nodesToExpand);
     }
 
     /**
      * Méthode en charge de tester le calcul des noeuds à ouvrir à l'affichage.
      */
     @Test
-    public void testCalculateNodesToExpand3()
-    {
+    public void testCalculateNodesToExpand3() {
         final Pharmacie pharmacie = new Pharmacie();
         final SortedSet<Stockage> stockages = new TreeSet<Stockage>(new StockageComparator());
 
@@ -268,10 +250,8 @@ public class TreeStockageHelperTest
         pharmacie.setStockages(stockages);
         final TreeNode tree = this.helper.buildTree(pharmacie);
 
-        final String nodesToExpand = this.helper.calculateNodesToExpand(tree,
-                                                                        enfant2);
-        Assert.assertEquals("treeStockages_0_1,treeStockages_0",
-                            nodesToExpand);
+        final String nodesToExpand = this.helper.calculateNodesToExpand(tree, enfant2);
+        Assert.assertEquals("treeStockages_0_1,treeStockages_0", nodesToExpand);
     }
 
 }

@@ -5,361 +5,440 @@
 	xmlns:p="http://primefaces.prime.com.tr/ui"
 	xmlns:c="http://java.sun.com/jsp/jstl/core">
 
-			<h:outputLabel id="labelCcommentaire" for="commentaire"
-				value="#{resourceBundle['editEssai.onglet.pharma.commentaire']}" />
-			<h:inputTextarea id="commentaire" style="width:100%;" 
-				rows="#{resourceBundle['textarea.rows.big']}"
-				value="#{dispensationManager.bean.commentaire}" />
-			<h:panelGroup/>	
-	
+	<h:outputLabel id="labelCcommentaire" for="commentaire"
+		value="#{resourceBundle['editEssai.onglet.pharma.commentaire']}" />
+	<h:inputTextarea id="commentaire" style="width:100%;"
+		rows="#{resourceBundle['textarea.rows.big']}"
+		value="#{dispensationManager.bean.commentaire}" />
+	<h:panelGroup />
 
-			<h:outputText rendered="#{dispensationManager.isProduitDispense(produitPrescrit)  and droitAccesHelper.isEssaiDoubleAveugle(prescriptionManager.bean.essai) }" value="#{resourceBundle['modification.produit.impossible']}"/>
-	
-			<!--  Si on est dans un essai en double aveugle, on affiche l'arbre de selection de la sequence -->
-			<h:panelGrid id="panelEssai_infos_base" rendered="#{!dispensationManager.isProduitDispense(produitPrescrit)  and droitAccesHelper.isEssaiDoubleAveugle(prescriptionManager.bean.essai) }" 
-				columns="2" columnClasses="panelCol_40,panelCol_60" cellpadding="0" cellspacing="0" border="0">
-				<!-- Bras et sequence -->	
-				<h:outputLabel id="labelSequenceSelected" for="sequenceSelected" styleClass="mandatory"
-					value="#{resourceBundle['editPrescription.design']}" />
-					<h:panelGroup>
-						<c:choose>
-							<c:when test="#{prescriptionManager.bean.sequence != null}">
-								<h:outputText id="sequenceSelectedd" style="margin-right: 10px;"
-									value="#{prescriptionManager.bean.sequence.parent.nomComplet} #{prescriptionManager.bean.sequence.nom}" />
-							</c:when>
-							<c:otherwise>
-								<h:outputText id="sequenceSelected2" style="margin-right: 10px;" value="" />
-							</c:otherwise>
-						</c:choose>
-						<p:commandLink id="sequence"
-							update="treeDesign" rendered="#{not dispensationManager.readOnly}"
-							title="#{resourceBundle['editPrescription.design.select']}"
-							oncomplete="popupDesign.show();">
-						<h:graphicImage library="images" name="modify.gif" />
-					</p:commandLink>
-				</h:panelGroup>
-			</h:panelGrid>
-			
-			<br />
 
-	
-		<c:forEach  var="produitPrescrit" items="#{dispensationManager.bean.produitsPrescrits}" varStatus="index" >
-		
-			<h3><h:outputFormat value="#{resourceBundle['editDispensation.produitPrescrit.infoProduitPrescrit']}"/></h3>
-		
-			<!-- Infos generales sur le produit -->
-			<h:panelGrid columns="4"
-					columnClasses="panelCol_25, panelCol_25, panelCol_25, panelCol_25 selectRadio">
-		
-				<h:outputLabel value="#{resourceBundle['editPrescription.produitPrescrit.nom']}"/>
-				<h:inputText value="#{produitPrescrit.produit.nom}" readonly="true" style="width:auto"/>
-				
-				<h:outputLabel  value="#{resourceBundle['editPrescription.produitPrescrit.code']}"/>
-				<h:inputText value="#{produitPrescrit.produit.code}" readonly="true"  style="width:auto"/>
+	<h:outputText
+		rendered="#{dispensationManager.isProduitDispense(produitPrescrit)  and droitAccesHelper.isEssaiDoubleAveugle(prescriptionManager.bean.essai) }"
+		value="#{resourceBundle['modification.produit.impossible']}" />
+
+	<!--  Si on est dans un essai en double aveugle, on affiche l'arbre de selection de la sequence -->
+	<h:panelGrid id="panelEssai_infos_base"
+		rendered="#{!dispensationManager.isProduitDispense(produitPrescrit)  and droitAccesHelper.isEssaiDoubleAveugle(prescriptionManager.bean.essai) }"
+		columns="2" columnClasses="panelCol_40,panelCol_60" cellpadding="0"
+		cellspacing="0" border="0">
+		<!-- Bras et sequence -->
+		<h:outputLabel id="labelSequenceSelected" for="sequenceSelected"
+			styleClass="mandatory"
+			value="#{resourceBundle['editPrescription.design']}" />
+		<h:panelGroup>
+			<c:choose>
+				<c:when test="#{prescriptionManager.bean.sequence != null}">
+					<h:outputText id="sequenceSelectedd" style="margin-right: 10px;"
+						value="#{prescriptionManager.bean.sequence.parent.nomComplet} #{prescriptionManager.bean.sequence.nom}" />
+				</c:when>
+				<c:otherwise>
+					<h:outputText id="sequenceSelected2" style="margin-right: 10px;"
+						value="" />
+				</c:otherwise>
+			</c:choose>
+				<p:commandLink id="sequence" update="treeDesign"
+					rendered="#{not dispensationManager.readOnly and dispensationManager.validUpdateSequencePrescrite(dispensationManager.bean)}"
+					title="#{resourceBundle['editPrescription.design.select']}"
+					oncomplete="popupDesign.show();">
+					<h:graphicImage library="images" name="modify.gif" />
+				</p:commandLink>
+			<!-- </c:if> -->
+		</h:panelGroup>
+	</h:panelGrid>
+
+	<br />
+
+
+	<c:forEach var="produitPrescrit"
+		items="#{dispensationManager.bean.produitsPrescrits}"
+		varStatus="index">
+
+		<h3>
+			<h:outputFormat
+				value="#{resourceBundle['editDispensation.produitPrescrit.infoProduitPrescrit']}" />
+		</h3>
+
+		<!-- Infos generales sur le produit -->
+		<h:panelGrid columns="4"
+			columnClasses="panelCol_25, panelCol_25, panelCol_25, panelCol_25 selectRadio">
+
+			<h:outputLabel
+				value="#{resourceBundle['editPrescription.produitPrescrit.nom']}" />
+			<h:inputText value="#{produitPrescrit.produit.nom}" readonly="true"
+				style="width:auto" />
+
+			<h:outputLabel
+				value="#{resourceBundle['editPrescription.produitPrescrit.code']}" />
+			<h:inputText value="#{produitPrescrit.produit.code}" readonly="true"
+				style="width:auto" />
 		</h:panelGrid>
 		<h:panelGrid columns="4"
-					columnClasses="panelCol_25, panelCol_25, panelCol_25, panelCol_25 selectRadio">
-				<h:outputLabel value="#{resourceBundle['editPrescription.produitPrescrit.modePrescription']}"/>
-				<h:inputText  value="#{produitPrescrit.conditionnement.modePrescription.libelle}" readonly="true"  style="width:auto"/>
-		
-				<h:outputLabel  value="#{resourceBundle['editPrescription.produitPrescrit.posologie']}"/>
-				<h:inputText value="#{produitPrescrit.dosageAsString} #{produitPrescrit.frequence}" readonly="true"  style="width:auto"/>
-			
-		</h:panelGrid>	
+			columnClasses="panelCol_25, panelCol_25, panelCol_25, panelCol_25 selectRadio">
+			<h:outputLabel
+				value="#{resourceBundle['editPrescription.produitPrescrit.modePrescription']}" />
+			<h:inputText
+				value="#{produitPrescrit.conditionnement.modePrescription.libelle}"
+				readonly="true" style="width:auto" />
+
+			<h:outputLabel
+				value="#{resourceBundle['editPrescription.produitPrescrit.posologie']}" />
+			<h:inputText
+				value="#{produitPrescrit.dosageAsString} #{produitPrescrit.frequence}"
+				readonly="true" style="width:auto" />
+
+		</h:panelGrid>
 		<h:panelGrid columns="4"
-					columnClasses="panelCol_25, panelCol_25, panelCol_25, panelCol_25 selectRadio">
-				<h:outputLabel value="#{resourceBundle['editPrescription.produitPrescrit.duree']}" readonly="true"  />
-				<h:inputText value="#{produitPrescrit.duree}" readonly="true" style="width:auto"/>
-				
-				<h:outputLabel value="#{resourceBundle['editPrescription.produitPrescrit.numTraitement']}" rendered="#{produitPrescrit.conditionnement.modePrescription == 'NUM_TRAITEMENT'}"/>
-				<h:inputText value="#{produitPrescrit.numTraitement}"  style="width:auto" 
-					readonly="#{dispensationManager.bean.dispense }" rendered="#{produitPrescrit.conditionnement.modePrescription == 'NUM_TRAITEMENT'}">
-					<f:ajax/>
-					</h:inputText>
-				
-				<h:panelGroup rendered="#{produitPrescrit.conditionnement.modePrescription != 'NUM_TRAITEMENT'}"/>
-				<h:panelGroup rendered="#{produitPrescrit.conditionnement.modePrescription != 'NUM_TRAITEMENT'}"/>
-			
-		</h:panelGrid>		
-					<h:panelGrid columns="4"
-					columnClasses="panelCol_25, panelCol_25, panelCol_25, panelCol_25 selectRadio">
-				<p:commandButton immediate="true" ajax="true"
-					process="@form" value="#{resourceBundle['editPrescription.sortirStock']}"
-					update="dispensation_form" 
-					title="#{resourceBundle['produitPrescrit.dispenser']}"
-					style="margin-right:5px;" 
-					actionListener="#{dispensationManager.initSortieManager(produitPrescrit) }"
-					oncomplete="popupEditDispensation.show();" rendered="#{!dispensationManager.isProduitDispense(produitPrescrit) and !droitAccesHelper.isLectureSeule()}">
-				</p:commandButton>
-				<!--  Consulter dispensations  --> 
-				<p:commandButton
-					update="dispensations_consult_form"  immediate="true"
-					actionListener="#{dispensationManager.initSortiesForProduitPrescrit(produitPrescrit) }"
-					value="#{resourceBundle['editDispensation.produitPrescrit.voirSorties']}"
-					title="#{resourceBundle['editDispensation.produitPrescrit.voirSorties']}"
-					style="margin-right:5px;" 
-					oncomplete="popupConsDispensation.show();"
-					rendered="#{dispensationManager.isProduitDispense(produitPrescrit) }">
-				</p:commandButton>
-				
-				<p:commandButton immediate="true" ajax="false" actionListener="#{produitPrescritManager.setBean(produitPrescrit)}" value="#{resourceBundle['editPrescription.produitPrescrit.supprimer']}"
-					title="#{resourceBundle['editPrescription.produitPrescrit.supprimer']}"
-					style="margin-right:5px;" 
-					action="removeProduitPrescrit" rendered="#{!dispensationManager.isProduitDispense(produitPrescrit) and !droitAccesHelper.isLectureSeule() and !droitAccesHelper.isDispensationGlobale(produitPrescrit.prescription.essai) }">
-				</p:commandButton>
-				<h:panelGroup/>
-			</h:panelGrid>
-			
-			
-		<h3><h:outputFormat value="#{resourceBundle['editDispensation.produitPrescrit.infoActes']}"/></h3>
-			
-			<h:panelGrid columns="3"
-					columnClasses="panelCol_25, panelCol_50, panelCol_25 selectRadio" >
-				
-				<!-- Conseils -->
-				<h:outputLabel 
-					value="#{resourceBundle['editProduit.onglet.generales.conseils']}" />
-				<h:inputTextarea readonly="true" style="width:100%;"
-					rows="#{resourceBundle['textarea.rows.default']}"
-					value="#{produitPrescrit.produit.conseils}" />
-				<h:panelGroup/>
-				<h:panelGroup/>
-			</h:panelGrid>	
-	
+			columnClasses="panelCol_25, panelCol_25, panelCol_25, panelCol_25 selectRadio">
+			<h:outputLabel
+				value="#{resourceBundle['editPrescription.produitPrescrit.duree']}"
+				readonly="true" />
+			<h:inputText value="#{produitPrescrit.duree}" readonly="true"
+				style="width:auto" />
+
+			<h:outputLabel
+				value="#{resourceBundle['editPrescription.produitPrescrit.numTraitement']}"
+				rendered="#{produitPrescrit.conditionnement.modePrescription == 'NUM_TRAITEMENT'}" />
+			<h:inputText value="#{produitPrescrit.numTraitement}"
+				style="width:auto" readonly="#{dispensationManager.bean.dispense }"
+				rendered="#{produitPrescrit.conditionnement.modePrescription == 'NUM_TRAITEMENT'}">
+				<f:ajax />
+			</h:inputText>
+
+			<h:panelGroup
+				rendered="#{produitPrescrit.conditionnement.modePrescription != 'NUM_TRAITEMENT'}" />
+			<h:panelGroup
+				rendered="#{produitPrescrit.conditionnement.modePrescription != 'NUM_TRAITEMENT'}" />
+
+		</h:panelGrid>
+		<h:panelGrid columns="4"
+			columnClasses="panelCol_25, panelCol_25, panelCol_25, panelCol_25 selectRadio">
+			<p:commandButton immediate="true" ajax="true" process="@form"
+				value="#{resourceBundle['editPrescription.sortirStock']}"
+				update="dispensation_form"
+				title="#{resourceBundle['produitPrescrit.dispenser']}"
+				style="margin-right:5px;"
+				actionListener="#{dispensationManager.initSortieManager(produitPrescrit) }"
+				oncomplete="popupEditDispensation.show();"
+				rendered="#{!dispensationManager.isProduitDispense(produitPrescrit) and !droitAccesHelper.isLectureSeule()}">
+			</p:commandButton>
+			<!--  Consulter dispensations  -->
+			<p:commandButton update="dispensations_consult_form" immediate="true"
+				actionListener="#{dispensationManager.initSortiesForProduitPrescrit(produitPrescrit) }"
+				value="#{resourceBundle['editDispensation.produitPrescrit.voirSorties']}"
+				title="#{resourceBundle['editDispensation.produitPrescrit.voirSorties']}"
+				style="margin-right:5px;" oncomplete="popupConsDispensation.show();"
+				rendered="#{dispensationManager.isProduitDispense(produitPrescrit) }">
+			</p:commandButton>
+
+			<p:commandButton immediate="true" ajax="false"
+				actionListener="#{produitPrescritManager.setBean(produitPrescrit)}"
+				value="#{resourceBundle['editPrescription.produitPrescrit.supprimer']}"
+				title="#{resourceBundle['editPrescription.produitPrescrit.supprimer']}"
+				style="margin-right:5px;" action="removeProduitPrescrit"
+				rendered="#{!dispensationManager.isProduitDispense(produitPrescrit) and !droitAccesHelper.isLectureSeule() and !droitAccesHelper.isDispensationGlobale(produitPrescrit.prescription.essai) }">
+			</p:commandButton>
+			<h:panelGroup />
+		</h:panelGrid>
+
+
+		<h3>
+			<h:outputFormat
+				value="#{resourceBundle['editDispensation.produitPrescrit.infoActes']}" />
+		</h3>
+
+		<h:panelGrid columns="3"
+			columnClasses="panelCol_25, panelCol_50, panelCol_25 selectRadio">
+
+			<!-- Conseils -->
+			<h:outputLabel
+				value="#{resourceBundle['editProduit.onglet.generales.conseils']}" />
+			<h:inputTextarea readonly="true" style="width:100%;"
+				rows="#{resourceBundle['textarea.rows.default']}"
+				value="#{produitPrescrit.produit.conseils}" />
+			<h:panelGroup />
+			<h:panelGroup />
+		</h:panelGrid>
+
 		<c:if test="#{produitPrescrit.produit.type eq 'DISPOSITIF_MEDICAL'}">
-		
+
 			<!-- Randomisation -->
-			<c:if test="#{dispensationManager.getElementToCheck(produitPrescrit, 'randomisation')  != null}">
-			
+			<c:if
+				test="#{dispensationManager.getElementToCheck(produitPrescrit, 'randomisation')  != null}">
+
 				<h:panelGrid columns="3"
-					columnClasses="panelCol_25, panelCol_50, panelCol_25 selectRadio" >
-					<h:outputLabel  
+					columnClasses="panelCol_25, panelCol_50, panelCol_25 selectRadio">
+					<h:outputLabel
 						value="#{resourceBundle['editDispensation.onglet.information.randomisation']}" />
 					<h:panelGroup>
-							<c:set var="doc" value="#{produitPrescrit.produit.documentRandomisation}" />
-							<h:panelGrid  columns="2"
-								columnClasses="panelCol_50, panelCol_50">
-								<c:if test="#{doc != null}">
-									<h:outputText value="#{doc.nomUtilisateur}"
-										title="#{documentsIhmHelper.buildDocTitle(doc, resourceBundle['document.part1'], resourceBundle['document.part2'], resourceBundle['date.pattern.withHeures'])}" />
-									<p:commandButton value="#{resourceBundle['file.dwd']}" immediate="true"
-										title="#{resourceBundle['file.dwd']}" ajax="false">
-										<p:fileDownload 
-											value="#{fileDwdController.downloadDocument(produitPrescrit.produit, doc)}" />
-									</p:commandButton>
-								</c:if>
-							</h:panelGrid>
+						<c:set var="doc"
+							value="#{produitPrescrit.produit.documentRandomisation}" />
+						<h:panelGrid columns="2" columnClasses="panelCol_50, panelCol_50">
+							<c:if test="#{doc != null}">
+								<h:outputText value="#{doc.nomUtilisateur}"
+									title="#{documentsIhmHelper.buildDocTitle(doc, resourceBundle['document.part1'], resourceBundle['document.part2'], resourceBundle['date.pattern.withHeures'])}" />
+								<p:commandButton value="#{resourceBundle['file.dwd']}"
+									immediate="true" title="#{resourceBundle['file.dwd']}"
+									ajax="false">
+									<p:fileDownload
+										value="#{fileDwdController.downloadDocument(produitPrescrit.produit, doc)}" />
+								</p:commandButton>
+							</c:if>
+						</h:panelGrid>
 					</h:panelGroup>
 					<h:panelGroup>
-						<h:selectBooleanCheckbox  disabled="#{dispensationManager.bean.dispense  }" immediate="true"
-							title="#{resourceBundle['editDispensation.onglet.information.valider']}" 
+						<h:selectBooleanCheckbox
+							disabled="#{dispensationManager.bean.dispense  }"
+							immediate="true"
+							title="#{resourceBundle['editDispensation.onglet.information.valider']}"
 							label="#{resourceBundle['editDispensation.onglet.information.valider']}"
-							value="#{dispensationManager.getElementToCheck(produitPrescrit, 'randomisation').checked}" >
-							<f:ajax/>
+							value="#{dispensationManager.getElementToCheck(produitPrescrit, 'randomisation').checked}">
+							<f:ajax />
 						</h:selectBooleanCheckbox>
-						<h:outputLabel 
+						<h:outputLabel
 							value="#{resourceBundle['editDispensation.onglet.information.valider']}" />
 					</h:panelGroup>
 				</h:panelGrid>
 			</c:if>
 		</c:if>
-		
-		<c:if test="#{produitPrescrit.produit == 'MEDICAMENT' or produitPrescrit.produit == 'PRODUIT_THERAPEUTIQUE'}">
-			
-			
+
+		<c:if
+			test="#{produitPrescrit.produit == 'MEDICAMENT' or produitPrescrit.produit == 'PRODUIT_THERAPEUTIQUE'}">
+
+
 			<!-- Reconstitution simple -->
-			<p:outputPanel rendered="#{dispensationManager.getElementToCheck(produitPrescrit, 'reconstitutionSimple')!=null }">
+			<p:outputPanel
+				rendered="#{dispensationManager.getElementToCheck(produitPrescrit, 'reconstitutionSimple')!=null }">
 				<h:panelGrid columns="3"
 					columnClasses="panelCol_25, panelCol_25 selectRadio, panelCol_50">
-						
-					<h:outputLabel 
+
+					<h:outputLabel
 						value="#{resourceBundle['editDispensation.onglet.information.reconstitutionSimple']}" />
 					<h:panelGroup>
-						<h:selectBooleanCheckbox disabled="#{dispensationManager.bean.dispense || not empty dispensationManager.getElementToCheck(produitPrescrit, 'reconstitutionSimple').numOrdonnancier }" immediate="true"
-							title="#{resourceBundle['editDispensation.onglet.information.valider']}"  valueChangeListener="#{ dispensationManager.handleCaseCheckedReconstitutionSimple}"
+						<h:selectBooleanCheckbox
+							disabled="#{dispensationManager.bean.dispense || not empty dispensationManager.getElementToCheck(produitPrescrit, 'reconstitutionSimple').numOrdonnancier }"
+							immediate="true"
+							title="#{resourceBundle['editDispensation.onglet.information.valider']}"
+							valueChangeListener="#{ dispensationManager.handleCaseCheckedReconstitutionSimple}"
 							label="#{resourceBundle['editDispensation.onglet.information.valider']}"
-							value="#{ dispensationManager.getElementToCheck(produitPrescrit, 'reconstitutionSimple').checked}" 
-							id="caseReconstitutionSimple_#{index.index}" > 
-							<f:ajax listener="#{dispensationManager.getReadOnly()}" render="@this"/>
+							value="#{ dispensationManager.getElementToCheck(produitPrescrit, 'reconstitutionSimple').checked}"
+							id="caseReconstitutionSimple_#{index.index}">
+							<f:ajax listener="#{dispensationManager.getReadOnly()}"
+								render="@this" />
 						</h:selectBooleanCheckbox>
-						<h:outputLabel 
+						<h:outputLabel
 							value="#{resourceBundle['editDispensation.onglet.information.valider']}" />
 					</h:panelGroup>
-					
-					<h:panelGroup >
-							<c:set var="docReconstitutionSimple" value="#{produitPrescrit.produit.documentReconstitutionSimple}" />
-							<h:panelGrid  columns="2"
-								columnClasses="panelCol_50, panelCol_50">
-								<c:if test="#{docReconstitutionSimple != null}">
-									<h:outputText value="#{docReconstitutionSimple.nomUtilisateur}"
-										title="#{documentsIhmHelper.buildDocTitle(docReconstitutionSimple, resourceBundle['document.part1'], resourceBundle['document.part2'], resourceBundle['date.pattern.withHeures'])}" />
-									<p:commandButton value="#{resourceBundle['file.dwd']}" immediate="true"
-										title="#{resourceBundle['file.dwd']}" ajax="false">
-										<p:fileDownload
-											value="#{fileDwdController.downloadDocument(produitPrescrit.produit, docReconstitutionSimple)}" />
-									</p:commandButton>
-								</c:if>
-							</h:panelGrid>
+
+					<h:panelGroup>
+						<c:set var="docReconstitutionSimple"
+							value="#{produitPrescrit.produit.documentReconstitutionSimple}" />
+						<h:panelGrid columns="2" columnClasses="panelCol_50, panelCol_50">
+							<c:if test="#{docReconstitutionSimple != null}">
+								<h:outputText value="#{docReconstitutionSimple.nomUtilisateur}"
+									title="#{documentsIhmHelper.buildDocTitle(docReconstitutionSimple, resourceBundle['document.part1'], resourceBundle['document.part2'], resourceBundle['date.pattern.withHeures'])}" />
+								<p:commandButton value="#{resourceBundle['file.dwd']}"
+									immediate="true" title="#{resourceBundle['file.dwd']}"
+									ajax="false">
+									<p:fileDownload
+										value="#{fileDwdController.downloadDocument(produitPrescrit.produit, docReconstitutionSimple)}" />
+								</p:commandButton>
+							</c:if>
+						</h:panelGrid>
 					</h:panelGroup>
-					
+
 				</h:panelGrid>
-					<h:inputTextarea value="#{dispensationManager.getElementToCheck(produitPrescrit, 'reconstitutionSimple').commentaire}" disabled="#{dispensationManager.bean.dispense || not empty dispensationManager.getElementToCheck(produitPrescrit, 'reconstitutionSimple').numOrdonnancier }" style="width:100%;" rows="#{resourceBundle['textarea.rows.default']}" />										
+				<h:inputTextarea
+					value="#{dispensationManager.getElementToCheck(produitPrescrit, 'reconstitutionSimple').commentaire}"
+					disabled="#{dispensationManager.bean.dispense || not empty dispensationManager.getElementToCheck(produitPrescrit, 'reconstitutionSimple').numOrdonnancier }"
+					style="width:100%;"
+					rows="#{resourceBundle['textarea.rows.default']}" />
 			</p:outputPanel>
-				
-				
+
+
 			<!-- Reconstitution PSM -->
-		<c:if test="#{dispensationManager.getElementToCheck(produitPrescrit, 'reconstitutionPSM') != null}">
-				
+			<c:if
+				test="#{dispensationManager.getElementToCheck(produitPrescrit, 'reconstitutionPSM') != null}">
+
 				<h:panelGrid columns="3"
 					columnClasses="panelCol_25, panelCol_25 selectRadio, panelCol_50">
-					<h:outputLabel 
+					<h:outputLabel
 						value="#{resourceBundle['editDispensation.onglet.information.reconstitutionPSM']}" />
 					<h:panelGroup>
-						<h:selectBooleanCheckbox disabled="#{dispensationManager.bean.dispense || not empty dispensationManager.getElementToCheck(produitPrescrit, 'reconstitutionPSM').numOrdonnancier }" immediate="true"
-							title="#{resourceBundle['editDispensation.onglet.information.valider']}" 
-							label="#{resourceBundle['editDispensation.onglet.information.valider']}" valueChangeListener="#{dispensationManager.handleCaseCheckedReconstitutionPSM}"
-							value="#{dispensationManager.getElementToCheck(produitPrescrit, 'reconstitutionPSM').checked}"
-							id="caseReconstitutionPSM_#{index.index}" >
-							<f:ajax listener="#{dispensationManager.getReadOnly()}" render="@this"/>
-						</h:selectBooleanCheckbox>
-						<h:outputLabel 
-							value="#{resourceBundle['editDispensation.onglet.information.valider']}" />
-					</h:panelGroup>
-					<h:panelGroup >
-							<c:set var="docReconstitutionPSM" value="#{produitPrescrit.produit.documentReconstitutionPSM}" />
-							<h:panelGrid columns="2"
-								columnClasses="panelCol_50, panelCol_50">
-								<c:if test="#{docReconstitutionPSM != null}">
-									<h:outputText value="#{docReconstitutionPSM.nomUtilisateur}"
-										title="#{documentsIhmHelper.buildDocTitle(docReconstitutionPSM, resourceBundle['document.part1'], resourceBundle['document.part2'], resourceBundle['date.pattern.withHeures'])}" />
-									<p:commandButton value="#{resourceBundle['file.dwd']}" immediate="true"
-										title="#{resourceBundle['file.dwd']}" ajax="false">
-										<p:fileDownload
-											value="#{fileDwdController.downloadDocument(produitPrescrit.produit, docReconstitutionPSM)}" />
-									</p:commandButton>
-								</c:if>
-							</h:panelGrid>
-					</h:panelGroup>
-				</h:panelGrid>
-					<h:inputTextarea value="#{dispensationManager.getElementToCheck(produitPrescrit, 'reconstitutionPSM').commentaire}" disabled="#{dispensationManager.bean.dispense || not empty dispensationManager.getElementToCheck(produitPrescrit, 'reconstitutionPSM').numOrdonnancier }" style="width:100%;" rows="#{resourceBundle['textarea.rows.default']}" />						
-			</c:if>
-				
-			<!-- Fabrication-->
-			
-			<c:if test="#{dispensationManager.getElementToCheck(produitPrescrit, 'fabrication') != null}">
-				
-				<h:panelGrid columns="3"
-					columnClasses="panelCol_25, panelCol_25 selectRadio, panelCol_50">
-				
-					<h:outputLabel 
-						value="#{resourceBundle['editDispensation.onglet.information.fabrication']}" />
-					<h:panelGroup>
-						<h:selectBooleanCheckbox disabled="#{dispensationManager.bean.dispense || not empty dispensationManager.getElementToCheck(produitPrescrit, 'fabrication').numOrdonnancier }" immediate="true"
-							title="#{resourceBundle['editDispensation.onglet.information.valider']}" valueChangeListener="#{dispensationManager.handleCaseCheckedFabrication}"
-							label="#{resourceBundle['editDispensation.onglet.information.valider']}" 
-							value="#{dispensationManager.getElementToCheck(produitPrescrit, 'fabrication').checked}"							
-							id="caseFabrication_#{index.index}" >
-							<f:ajax listener="#{dispensationManager.getReadOnly()}" render="@this"/>
-						</h:selectBooleanCheckbox>
-						<h:outputLabel 
-							value="#{resourceBundle['editDispensation.onglet.information.valider']}" />
-					</h:panelGroup>
-					<h:panelGroup >
-							<c:set var="docFabrication" value="#{produitPrescrit.produit.documentFabrication}" />
-							<h:panelGrid columns="2"
-								columnClasses="panelCol_50, panelCol_50">
-								<c:if test="#{docFabrication != null}">
-									<h:outputText value="#{docFabrication.nomUtilisateur}"
-										title="#{documentsIhmHelper.buildDocTitle(docFabrication, resourceBundle['document.part1'], resourceBundle['document.part2'], resourceBundle['date.pattern.withHeures'])}" />
-									<p:commandButton value="#{resourceBundle['file.dwd']}" immediate="true"
-										title="#{resourceBundle['file.dwd']}" ajax="false">
-										<p:fileDownload
-											value="#{fileDwdController.downloadDocument(produitPrescrit.produit, docFabrication)}" />
-									</p:commandButton>
-								</c:if>
-							</h:panelGrid>
-					</h:panelGroup>
-				</h:panelGrid>
-					<h:inputTextarea value="#{dispensationManager.getElementToCheck(produitPrescrit, 'fabrication').commentaire}" disabled="#{dispensationManager.bean.dispense || not empty dispensationManager.getElementToCheck(produitPrescrit, 'fabrication').numOrdonnancier}" style="width:100%;" rows="#{resourceBundle['textarea.rows.default']}" />					
-			</c:if>
-				
-			<!-- Conditionnement -->
-			<c:if test="#{dispensationManager.getElementToCheck(produitPrescrit, 'conditionnement') != null}">
-				
-				<h:panelGrid columns="3"
-					columnClasses="panelCol_25, panelCol_25 selectRadio, panelCol_50">
-					<h:outputLabel 
-						value="#{resourceBundle['editDispensation.onglet.information.conditionnement']}" />
-					<h:panelGroup>
-						<h:selectBooleanCheckbox disabled="#{dispensationManager.bean.dispense }" immediate="true"
+						<h:selectBooleanCheckbox
+							disabled="#{dispensationManager.bean.dispense || not empty dispensationManager.getElementToCheck(produitPrescrit, 'reconstitutionPSM').numOrdonnancier }"
+							immediate="true"
 							title="#{resourceBundle['editDispensation.onglet.information.valider']}"
 							label="#{resourceBundle['editDispensation.onglet.information.valider']}"
-							value="#{dispensationManager.getElementToCheck(produitPrescrit, 'conditionnement').checked}" >
-							<f:ajax listener="#{dispensationManager.getReadOnly()}" render="@this"/>
+							valueChangeListener="#{dispensationManager.handleCaseCheckedReconstitutionPSM}"
+							value="#{dispensationManager.getElementToCheck(produitPrescrit, 'reconstitutionPSM').checked}"
+							id="caseReconstitutionPSM_#{index.index}">
+							<f:ajax listener="#{dispensationManager.getReadOnly()}"
+								render="@this" />
 						</h:selectBooleanCheckbox>
-						<h:outputLabel 
+						<h:outputLabel
 							value="#{resourceBundle['editDispensation.onglet.information.valider']}" />
 					</h:panelGroup>
-					<h:panelGroup >
-							<c:set var="docConditionnement" value="#{produitPrescrit.produit.documentConditionnement}" />
-							<h:panelGrid columns="2"
-								columnClasses="panelCol_50, panelCol_50">
-								<c:if test="#{docConditionnement != null}">
-									<h:outputText value="#{docConditionnement.nomUtilisateur}"
-										title="#{documentsIhmHelper.buildDocTitle(docConditionnement, resourceBundle['document.part1'], resourceBundle['document.part2'], resourceBundle['date.pattern.withHeures'])}" />
-									<p:commandButton value="#{resourceBundle['file.dwd']}" immediate="true"
-										title="#{resourceBundle['file.dwd']}" ajax="false">
-										<p:fileDownload
-											value="#{fileDwdController.downloadDocument(produitPrescrit.produit, docConditionnement)}" />
-									</p:commandButton>
-								</c:if>
-							</h:panelGrid>
+					<h:panelGroup>
+						<c:set var="docReconstitutionPSM"
+							value="#{produitPrescrit.produit.documentReconstitutionPSM}" />
+						<h:panelGrid columns="2" columnClasses="panelCol_50, panelCol_50">
+							<c:if test="#{docReconstitutionPSM != null}">
+								<h:outputText value="#{docReconstitutionPSM.nomUtilisateur}"
+									title="#{documentsIhmHelper.buildDocTitle(docReconstitutionPSM, resourceBundle['document.part1'], resourceBundle['document.part2'], resourceBundle['date.pattern.withHeures'])}" />
+								<p:commandButton value="#{resourceBundle['file.dwd']}"
+									immediate="true" title="#{resourceBundle['file.dwd']}"
+									ajax="false">
+									<p:fileDownload
+										value="#{fileDwdController.downloadDocument(produitPrescrit.produit, docReconstitutionPSM)}" />
+								</p:commandButton>
+							</c:if>
+						</h:panelGrid>
+					</h:panelGroup>
+				</h:panelGrid>
+				<h:inputTextarea
+					value="#{dispensationManager.getElementToCheck(produitPrescrit, 'reconstitutionPSM').commentaire}"
+					disabled="#{dispensationManager.bean.dispense || not empty dispensationManager.getElementToCheck(produitPrescrit, 'reconstitutionPSM').numOrdonnancier }"
+					style="width:100%;"
+					rows="#{resourceBundle['textarea.rows.default']}" />
+			</c:if>
+
+			<!-- Fabrication-->
+
+			<c:if
+				test="#{dispensationManager.getElementToCheck(produitPrescrit, 'fabrication') != null}">
+
+				<h:panelGrid columns="3"
+					columnClasses="panelCol_25, panelCol_25 selectRadio, panelCol_50">
+
+					<h:outputLabel
+						value="#{resourceBundle['editDispensation.onglet.information.fabrication']}" />
+					<h:panelGroup>
+						<h:selectBooleanCheckbox
+							disabled="#{dispensationManager.bean.dispense || not empty dispensationManager.getElementToCheck(produitPrescrit, 'fabrication').numOrdonnancier }"
+							immediate="true"
+							title="#{resourceBundle['editDispensation.onglet.information.valider']}"
+							valueChangeListener="#{dispensationManager.handleCaseCheckedFabrication}"
+							label="#{resourceBundle['editDispensation.onglet.information.valider']}"
+							value="#{dispensationManager.getElementToCheck(produitPrescrit, 'fabrication').checked}"
+							id="caseFabrication_#{index.index}">
+							<f:ajax listener="#{dispensationManager.getReadOnly()}"
+								render="@this" />
+						</h:selectBooleanCheckbox>
+						<h:outputLabel
+							value="#{resourceBundle['editDispensation.onglet.information.valider']}" />
+					</h:panelGroup>
+					<h:panelGroup>
+						<c:set var="docFabrication"
+							value="#{produitPrescrit.produit.documentFabrication}" />
+						<h:panelGrid columns="2" columnClasses="panelCol_50, panelCol_50">
+							<c:if test="#{docFabrication != null}">
+								<h:outputText value="#{docFabrication.nomUtilisateur}"
+									title="#{documentsIhmHelper.buildDocTitle(docFabrication, resourceBundle['document.part1'], resourceBundle['document.part2'], resourceBundle['date.pattern.withHeures'])}" />
+								<p:commandButton value="#{resourceBundle['file.dwd']}"
+									immediate="true" title="#{resourceBundle['file.dwd']}"
+									ajax="false">
+									<p:fileDownload
+										value="#{fileDwdController.downloadDocument(produitPrescrit.produit, docFabrication)}" />
+								</p:commandButton>
+							</c:if>
+						</h:panelGrid>
+					</h:panelGroup>
+				</h:panelGrid>
+				<h:inputTextarea
+					value="#{dispensationManager.getElementToCheck(produitPrescrit, 'fabrication').commentaire}"
+					disabled="#{dispensationManager.bean.dispense || not empty dispensationManager.getElementToCheck(produitPrescrit, 'fabrication').numOrdonnancier}"
+					style="width:100%;"
+					rows="#{resourceBundle['textarea.rows.default']}" />
+			</c:if>
+
+			<!-- Conditionnement -->
+			<c:if
+				test="#{dispensationManager.getElementToCheck(produitPrescrit, 'conditionnement') != null}">
+
+				<h:panelGrid columns="3"
+					columnClasses="panelCol_25, panelCol_25 selectRadio, panelCol_50">
+					<h:outputLabel
+						value="#{resourceBundle['editDispensation.onglet.information.conditionnement']}" />
+					<h:panelGroup>
+						<h:selectBooleanCheckbox
+							disabled="#{dispensationManager.bean.dispense }" immediate="true"
+							title="#{resourceBundle['editDispensation.onglet.information.valider']}"
+							label="#{resourceBundle['editDispensation.onglet.information.valider']}"
+							value="#{dispensationManager.getElementToCheck(produitPrescrit, 'conditionnement').checked}">
+							<f:ajax listener="#{dispensationManager.getReadOnly()}"
+								render="@this" />
+						</h:selectBooleanCheckbox>
+						<h:outputLabel
+							value="#{resourceBundle['editDispensation.onglet.information.valider']}" />
+					</h:panelGroup>
+					<h:panelGroup>
+						<c:set var="docConditionnement"
+							value="#{produitPrescrit.produit.documentConditionnement}" />
+						<h:panelGrid columns="2" columnClasses="panelCol_50, panelCol_50">
+							<c:if test="#{docConditionnement != null}">
+								<h:outputText value="#{docConditionnement.nomUtilisateur}"
+									title="#{documentsIhmHelper.buildDocTitle(docConditionnement, resourceBundle['document.part1'], resourceBundle['document.part2'], resourceBundle['date.pattern.withHeures'])}" />
+								<p:commandButton value="#{resourceBundle['file.dwd']}"
+									immediate="true" title="#{resourceBundle['file.dwd']}"
+									ajax="false">
+									<p:fileDownload
+										value="#{fileDwdController.downloadDocument(produitPrescrit.produit, docConditionnement)}" />
+								</p:commandButton>
+							</c:if>
+						</h:panelGrid>
 					</h:panelGroup>
 				</h:panelGrid>
 			</c:if>
-				
+
 			<!-- Etiquetage -->
-			<c:if test="#{dispensationManager.getElementToCheck(produitPrescrit, 'etiquetage')  != null}">
-				
+			<c:if
+				test="#{dispensationManager.getElementToCheck(produitPrescrit, 'etiquetage')  != null}">
+
 				<h:panelGrid columns="3"
 					columnClasses="panelCol_25, panelCol_25 selectRadio, panelCol_50">
-			
-					<h:outputLabel 
+
+					<h:outputLabel
 						value="#{resourceBundle['editDispensation.onglet.information.etiquetage']}" />
 					<h:panelGroup>
-						<h:selectBooleanCheckbox immediate="true" disabled="#{dispensationManager.bean.dispense }" 
-							title="#{resourceBundle['editDispensation.onglet.information.valider']}" 
+						<h:selectBooleanCheckbox immediate="true"
+							disabled="#{dispensationManager.bean.dispense }"
+							title="#{resourceBundle['editDispensation.onglet.information.valider']}"
 							label="#{resourceBundle['editDispensation.onglet.information.valider']}"
-							value="#{dispensationManager.getElementToCheck(produitPrescrit, 'etiquetage').checked}" >
-							<f:ajax/>
+							value="#{dispensationManager.getElementToCheck(produitPrescrit, 'etiquetage').checked}">
+							<f:ajax />
 						</h:selectBooleanCheckbox>
-						<h:outputLabel 
+						<h:outputLabel
 							value="#{resourceBundle['editDispensation.onglet.information.valider']}" />
 					</h:panelGroup>
-					<h:panelGroup >
-							<c:set var="docEtiquetage" value="#{produitPrescrit.produit.documentEtiquetage}" />
-							<h:panelGrid columns="2"
-								columnClasses="panelCol_50, panelCol_50">
-								<c:if test="#{docEtiquetage != null}">
-									<h:outputText value="#{docEtiquetage.nomUtilisateur}"
-										title="#{documentsIhmHelper.buildDocTitle(docEtiquetage, resourceBundle['document.part1'], resourceBundle['document.part2'], resourceBundle['date.pattern.withHeures'])}" />
-									<p:commandButton value="#{resourceBundle['file.dwd']}" immediate="true"
-										title="#{resourceBundle['file.dwd']}" ajax="false">
-										<p:fileDownload
-											value="#{fileDwdController.downloadDocument(produitPrescrit.produit, docEtiquetage)}" />
-									</p:commandButton>
-								</c:if>
-							</h:panelGrid>
-					</h:panelGroup> 
+					<h:panelGroup>
+						<c:set var="docEtiquetage"
+							value="#{produitPrescrit.produit.documentEtiquetage}" />
+						<h:panelGrid columns="2" columnClasses="panelCol_50, panelCol_50">
+							<c:if test="#{docEtiquetage != null}">
+								<h:outputText value="#{docEtiquetage.nomUtilisateur}"
+									title="#{documentsIhmHelper.buildDocTitle(docEtiquetage, resourceBundle['document.part1'], resourceBundle['document.part2'], resourceBundle['date.pattern.withHeures'])}" />
+								<p:commandButton value="#{resourceBundle['file.dwd']}"
+									immediate="true" title="#{resourceBundle['file.dwd']}"
+									ajax="false">
+									<p:fileDownload
+										value="#{fileDwdController.downloadDocument(produitPrescrit.produit, docEtiquetage)}" />
+								</p:commandButton>
+							</c:if>
+						</h:panelGrid>
+					</h:panelGroup>
 				</h:panelGrid>
-			</c:if> 
-		</c:if>	
-			<p:separator style="height: 8px;"/>
+			</c:if>
+		</c:if>
+		<p:separator style="height: 8px;" />
 	</c:forEach>
 
-		<p:commandButton id="addProduit" actionListener="#{produitPrescritManager.createProduitPrescrit(dispensationManager.bean.prescription)}"
-			ajax="true" rendered="#{!dispensationManager.bean.dispense  and !droitAccesHelper.isLectureSeule() and !droitAccesHelper.isDispensationGlobale(dispensationManager.bean.prescription.essai)  }"
-			value="#{resourceBundle['btn.addProduit']}"  oncomplete="popupAddProduit.show();" immediate="true"
-			title="#{resourceBundle['btn.addProduit']}" /> 
+	<p:commandButton id="addProduit"
+		actionListener="#{produitPrescritManager.createProduitPrescrit(dispensationManager.bean.prescription)}"
+		ajax="true"
+		rendered="#{!dispensationManager.bean.dispense  and !droitAccesHelper.isLectureSeule() and !droitAccesHelper.isDispensationGlobale(dispensationManager.bean.prescription.essai)  }"
+		value="#{resourceBundle['btn.addProduit']}"
+		oncomplete="popupAddProduit.show();" immediate="true"
+		title="#{resourceBundle['btn.addProduit']}" />
 
 </ui:composition>

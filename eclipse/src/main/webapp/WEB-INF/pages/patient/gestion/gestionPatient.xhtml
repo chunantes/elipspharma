@@ -113,7 +113,7 @@
 								title="#{resourceBundle['export.excel']}" />
 							<p:dataExporter type="xls" target="${targetExport}"
 								fileName="#{resourceBundle['export.patients.filename']}"
-								encoding="iso-8859-1" />
+								encoding="iso-8859-1" excludeColumns="5"/>
 						</h:commandLink>
 						<h:commandLink>
 							<h:graphicImage library="images" name="pdf.gif"
@@ -121,7 +121,7 @@
 								title="#{resourceBundle['export.pdf']}" />
 							<p:dataExporter type="pdf" target="${targetExport}"
 								fileName="#{resourceBundle['export.patients.filename']}"
-								encoding="iso-8859-1" />
+								encoding="iso-8859-1" excludeColumns="5"/>
 						</h:commandLink>
 						<h:commandLink>
 							<h:graphicImage library="images" name="csv.gif"
@@ -129,7 +129,7 @@
 								title="#{resourceBundle['export.csv']}" />
 							<p:dataExporter type="csv" target="${targetExport}"
 								fileName="#{resourceBundle['export.patients.filename']}"
-							 encoding="iso-8859-1" />
+							 encoding="iso-8859-1" excludeColumns="5"/>
 						</h:commandLink>
 					</div>
 				</div>
@@ -199,7 +199,7 @@
 									<h:outputText
 										value="#{patientsManager.getNumDateInclusion(patient)}" />
 								</p:column>
-								<p:column>
+								<p:column >
 									<f:facet name="header">
 										<div align="center">
 											<input type="checkbox" id="select_all"

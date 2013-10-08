@@ -1,10 +1,7 @@
 package fr.pharma.eclipse.component.surcout;
 
-import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.Calendar;
-import java.util.HashMap;
-import java.util.Map;
 import java.util.SortedSet;
 
 import javax.faces.component.html.HtmlSelectOneMenu;
@@ -16,26 +13,22 @@ import org.mockito.Matchers;
 import org.mockito.Mockito;
 
 import fr.pharma.eclipse.component.essai.EssaiManager;
-import fr.pharma.eclipse.component.surcout.validator.RegleValidator;
 import fr.pharma.eclipse.domain.model.essai.Essai;
 import fr.pharma.eclipse.domain.model.essai.detail.surcout.DetailSurcout;
 import fr.pharma.eclipse.domain.model.surcout.Grille;
 import fr.pharma.eclipse.domain.model.surcout.GrilleModele;
 import fr.pharma.eclipse.domain.model.surcout.Item;
 import fr.pharma.eclipse.factory.surcout.GrilleFactory;
-import fr.pharma.eclipse.service.essai.EssaiService;
 import fr.pharma.eclipse.service.surcout.GrilleModeleService;
 import fr.pharma.eclipse.service.surcout.GrilleService;
 import fr.pharma.eclipse.utils.AbstractEclipseJUnitTest;
 
 /**
  * Description de la classe.
- 
+ * @author Netapsys
  * @version $Revision$ $Date$
  */
-public class GrilleManagerTest
-    extends AbstractEclipseJUnitTest
-{
+public class GrilleManagerTest extends AbstractEclipseJUnitTest {
 
     /**
      * Manager de grille.
@@ -63,25 +56,17 @@ public class GrilleManagerTest
     private GrilleModeleService grilleModeleService;
 
     /**
-     * RegleValidator.
-     */
-    private RegleValidator validator;
-
-    /**
      * {@inheritDoc}
      */
     @Override
-    public void setUp()
-    {
+    public void setUp() {
         this.grilleModeleService = Mockito.mock(GrilleModeleService.class);
-        this.validator = Mockito.mock(RegleValidator.class);
         this.grilleFactory = Mockito.mock(GrilleFactory.class);
         this.service = Mockito.mock(GrilleService.class);
         this.essaiManager = Mockito.mock(EssaiManager.class);
         this.manager = new GrilleManager(this.service);
         this.manager.setEssaiManager(this.essaiManager);
         this.manager.setGrilleFactory(this.grilleFactory);
-        this.manager.setRegleValidator(this.validator);
         this.manager.setGrilleModeleService(this.grilleModeleService);
     }
 
@@ -89,8 +74,7 @@ public class GrilleManagerTest
      * {@inheritDoc}
      */
     @Override
-    public void tearDown()
-    {
+    public void tearDown() {
         this.essaiManager = null;
         this.grilleFactory = null;
         this.grilleModeleService = null;
@@ -103,8 +87,7 @@ public class GrilleManagerTest
      */
     @Override
     @Test
-    public void testInit()
-    {
+    public void testInit() {
         Assert.assertNotNull(this.manager);
         Assert.assertNotNull(this.essaiManager);
         Assert.assertNotNull(this.grilleFactory);
@@ -116,8 +99,7 @@ public class GrilleManagerTest
      * Test dela méthode init().
      */
     @Test
-    public void testInitMethodNull()
-    {
+    public void testInitMethodNull() {
         final DetailSurcout detail = Mockito.mock(DetailSurcout.class);
         final Essai essai = Mockito.mock(Essai.class);
         Mockito.when(this.essaiManager.getBean()).thenReturn(essai);
@@ -132,8 +114,7 @@ public class GrilleManagerTest
      * Test dela méthode init().
      */
     @Test
-    public void testInitMethodIdNull()
-    {
+    public void testInitMethodIdNull() {
         final Grille grille = new Grille();
         final DetailSurcout detail = Mockito.mock(DetailSurcout.class);
         final Essai essai = Mockito.mock(Essai.class);
@@ -149,8 +130,7 @@ public class GrilleManagerTest
      * Test dela méthode init().
      */
     @Test
-    public void testInitMethodIdNotNull()
-    {
+    public void testInitMethodIdNotNull() {
         final Grille grille = new Grille();
         grille.setId(1L);
         grille.setGrilleModele(new GrilleModele());
@@ -168,9 +148,7 @@ public class GrilleManagerTest
      * Test de la méthode handleSelectGrilleModele.
      */
     @Test
-    public void testHandleSelectGrilleModeleNull()
-    {
-        final Grille grille = new Grille();
+    public void testHandleSelectGrilleModeleNull() {
         final DetailSurcout detail = Mockito.mock(DetailSurcout.class);
         final Essai essai = Mockito.mock(Essai.class);
         Mockito.when(this.essaiManager.getBean()).thenReturn(essai);
@@ -191,8 +169,7 @@ public class GrilleManagerTest
      * Test de la méthode handleSelectGrilleModele.
      */
     @Test
-    public void testHandleSelectGrilleModeleNotNull()
-    {
+    public void testHandleSelectGrilleModeleNotNull() {
         final Grille grille = new Grille();
         final DetailSurcout detail = Mockito.mock(DetailSurcout.class);
         final Essai essai = Mockito.mock(Essai.class);
@@ -205,8 +182,7 @@ public class GrilleManagerTest
         final AjaxBehaviorEvent event = Mockito.mock(AjaxBehaviorEvent.class);
         Mockito.when(event.getSource()).thenReturn(htmlSelectOneMenu);
         Mockito.when(htmlSelectOneMenu.getLocalValue()).thenReturn(modele);
-        Mockito.when(this.grilleFactory.getInitializedObject(Matchers.any(GrilleModele.class)))
-                .thenReturn(grille);
+        Mockito.when(this.grilleFactory.getInitializedObject(Matchers.any(GrilleModele.class))).thenReturn(grille);
         this.manager.handleSelectGrilleModele(event);
 
         Assert.assertNotNull(this.manager.getBean());
@@ -218,9 +194,7 @@ public class GrilleManagerTest
      * TEst de la méthode removeGrille.
      */
     @Test
-    public void testRemoveGrille()
-    {
-        final EssaiService essaiService = Mockito.mock(EssaiService.class);
+    public void testRemoveGrille() {
         final Grille grille = new Grille();
         final DetailSurcout detail = Mockito.mock(DetailSurcout.class);
         final Essai essai = Mockito.mock(Essai.class);
@@ -229,16 +203,14 @@ public class GrilleManagerTest
         Mockito.when(detail.getGrille()).thenReturn(grille).thenReturn(null);
         this.manager.removeGrille();
 
-        Mockito.verify(detail,
-                       Mockito.times(2)).setGrille(null);
+        Mockito.verify(detail, Mockito.times(2)).setGrille(null);
     }
 
     /**
      * Test de la méthode findItemForTheme.
      */
     @Test
-    public void testFindItemForTheme()
-    {
+    public void testFindItemForTheme() {
         final Item i1 = new Item();
         final Item i2 = new Item();
         final Item i3 = new Item();
@@ -254,16 +226,14 @@ public class GrilleManagerTest
         essai.setDetailSurcout(new DetailSurcout());
         Mockito.when(this.essaiManager.getBean()).thenReturn(essai);
         this.manager.setBean(grille);
-        Assert.assertEquals(1,
-                            this.manager.findItemForTheme(theme).size());
+        Assert.assertEquals(1, this.manager.findItemForTheme(theme).size());
     }
 
     /**
      * Test de la méthode findTheme.
      */
     @Test
-    public void testFindThemeNull()
-    {
+    public void testFindThemeNull() {
         final Essai essai = new Essai();
         final DetailSurcout detailSurcout = new DetailSurcout();
         essai.setDetailSurcout(detailSurcout);
@@ -275,8 +245,7 @@ public class GrilleManagerTest
      * Test de la méthode findTheme.
      */
     @Test
-    public void testFindThemeNotNullEmpty()
-    {
+    public void testFindThemeNotNullEmpty() {
         final Grille grille = new Grille();
         final Essai essai = new Essai();
         final DetailSurcout detailSurcout = new DetailSurcout();
@@ -285,16 +254,14 @@ public class GrilleManagerTest
         Mockito.when(this.essaiManager.getBean()).thenReturn(essai);
         final SortedSet<String> themes = this.manager.findThemes();
         Assert.assertNotNull(themes);
-        Assert.assertEquals(0,
-                            themes.size());
+        Assert.assertEquals(0, themes.size());
     }
 
     /**
      * Test de la méthode findTheme.
      */
     @Test
-    public void testFindThemeNotNullNotEmpty()
-    {
+    public void testFindThemeNotNullNotEmpty() {
         final Grille grille = new Grille();
         final Item i1 = new Item();
         i1.setTheme("Theme 1");
@@ -315,16 +282,14 @@ public class GrilleManagerTest
         Mockito.when(this.essaiManager.getBean()).thenReturn(essai);
         final SortedSet<String> themes = this.manager.findThemes();
         Assert.assertNotNull(themes);
-        Assert.assertEquals(2,
-                            themes.size());
+        Assert.assertEquals(2, themes.size());
     }
 
     /**
      * Test de la méthode getGrillesModeles.
      */
     @Test
-    public void testGetGrillesModeles()
-    {
+    public void testGetGrillesModeles() {
         Mockito.when(this.grilleModeleService.getAll()).thenReturn(new ArrayList<GrilleModele>());
         Assert.assertNotNull(this.manager.getGrillesModeles());
     }
@@ -333,48 +298,19 @@ public class GrilleManagerTest
      * Test dateDebut.
      */
     @Test
-    public void testGetSetDateDebut()
-    {
+    public void testGetSetDateDebut() {
         final Calendar cal = Calendar.getInstance();
         this.manager.setDateDebut(cal);
-        Assert.assertEquals(cal,
-                            this.manager.getDateDebut());
+        Assert.assertEquals(cal, this.manager.getDateDebut());
     }
 
     /**
      * Test dateFin.
      */
     @Test
-    public void testGetSetDateFin()
-    {
+    public void testGetSetDateFin() {
         final Calendar cal = Calendar.getInstance();
         this.manager.setDateFin(cal);
-        Assert.assertEquals(cal,
-                            this.manager.getDateFin());
+        Assert.assertEquals(cal, this.manager.getDateFin());
     }
-
-    /**
-     * Test resultPrevisionnel.
-     */
-    @Test
-    public void testGetSetResultPrevisionnel()
-    {
-        final Map<Item, BigDecimal> val = new HashMap<Item, BigDecimal>();
-        this.manager.setResultPrevisionnel(val);
-        Assert.assertEquals(val,
-                            this.manager.getResultPrevisionnel());
-    }
-
-    /**
-     * Test resultReel.
-     */
-    @Test
-    public void testGetSetResultReel()
-    {
-        final Map<Item, BigDecimal> val = new HashMap<Item, BigDecimal>();
-        this.manager.setResultReel(val);
-        Assert.assertEquals(val,
-                            this.manager.getResultReel());
-    }
-
 }

@@ -2,6 +2,8 @@ package fr.pharma.eclipse.component.produit;
 
 import java.util.SortedMap;
 
+import javax.faces.model.DataModel;
+
 import org.primefaces.event.TabChangeEvent;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -18,12 +20,10 @@ import fr.pharma.eclipse.utils.introspection.BeanTool;
 
 /**
  * Manager de Produit.
- 
+ * @author Netapsys
  * @version $Revision$ $Date$
  */
-public class ProduitManager
-    extends BeanManager<Produit>
-{
+public class ProduitManager extends BeanManager<Produit> {
 
     /**
      * Serial ID.
@@ -60,16 +60,14 @@ public class ProduitManager
      * Constructeur.
      * @param service Service des essais.
      */
-    public ProduitManager(final GenericService<Produit> service)
-    {
+    public ProduitManager(final GenericService<Produit> service) {
         super(service);
     }
 
     /**
      * Méthode d'initialisation du manager.
      */
-    public void init()
-    {
+    public void init() {
         this.setBean(null);
         this.setEnregistre(false);
     }
@@ -82,8 +80,7 @@ public class ProduitManager
      * Listener appelé lorsque l'utilisateur change d'onglet.
      * @param event Evénement remonté par le composant primeFaces.
      */
-    public void onOngletChange(final TabChangeEvent event)
-    {
+    public void onOngletChange(final TabChangeEvent event) {
         final String tabId = event.getTab().getId();
         this.selectOngletCourant(tabId);
     }
@@ -92,22 +89,13 @@ public class ProduitManager
      * Méthode de sélection de l'onglet courant.
      * @param tabId Identifiant de l'onglet à sélectionner.
      */
-    public void selectOngletCourant(final String tabId)
-    {
-        try
-        {
+    public void selectOngletCourant(final String tabId) {
+        try {
             this.setIndexOngletCourant(TypeHistoriqueProduit.valueOf(tabId).getIndexIHM());
-        }
-        catch (final IllegalArgumentException illArgExc)
-        {
-            if (this.log.isDebugEnabled())
-            {
-                this.log.debug(new StringBuilder("[onOngletChange] ")
-                        .append("Erreur de récupération de l'onglet sélectionné : ")
-                        .append("pas de correspondance avec TypeHistoriqueProduit pour l'id ")
-                        .append(tabId)
-                        .append(".")
-                        .toString());
+        } catch (final IllegalArgumentException illArgExc) {
+            if (this.log.isDebugEnabled()) {
+                this.log.debug(new StringBuilder("[onOngletChange] ").append("Erreur de récupération de l'onglet sélectionné : ")
+                        .append("pas de correspondance avec TypeHistoriqueProduit pour l'id ").append(tabId).append(".").toString());
             }
         }
     }
@@ -117,23 +105,18 @@ public class ProduitManager
      * DOCUMENTS /** ************************
      **/
     /**
-     * Méthode de récupération du manager des documents d'un certain type dans la map.
+     * Méthode de récupération du manager des documents d'un certain type dans
+     * la map.
      * @param typeDocument Type de document.
-     * @return Le GenericDocumentManager correspondant au type de document dans la map. Null si
-     * inexistant.
+     * @return Le GenericDocumentManager correspondant au type de document dans
+     * la map. Null si inexistant.
      */
     @SuppressWarnings("unchecked")
-    public GenericDocumentManager getDocumentManager(final TypeDocumentProduit typeDocument)
-    {
+    public GenericDocumentManager getDocumentManager(final TypeDocumentProduit typeDocument) {
         final GenericDocumentManager manager = this.documentsManagers.get(typeDocument.name());
-        if (manager == null
-            && this.log.isDebugEnabled())
-        {
-            this.log.error(new StringBuilder("[getManager] ")
-                    .append("Aucun manager de documents n'est défini dans la map pour le type ")
-                    .append(typeDocument.name())
-                    .append(" : le document n'est pas traité.")
-                    .toString());
+        if ((manager == null) && this.log.isDebugEnabled()) {
+            this.log.error(new StringBuilder("[getManager] ").append("Aucun manager de documents n'est défini dans la map pour le type ").append(typeDocument.name())
+                    .append(" : le document n'est pas traité.").toString());
         }
         return manager;
     }
@@ -143,55 +126,32 @@ public class ProduitManager
      * @param typeDocument Type du document d'essai à ajouter.
      */
     @SuppressWarnings("unchecked")
-    public void ajouterDocument(final TypeDocumentProduit typeDocument)
-    {
+    public void ajouterDocument(final TypeDocumentProduit typeDocument) {
         final GenericDocumentManager docManager = this.getDocumentManager(typeDocument);
-        if (docManager == null)
-        {
+        if (docManager == null) {
             return;
         }
-        if (!docManager.canCreateDocument())
-        {
+        if (!docManager.canCreateDocument()) {
             docManager.resetFormDatas();
             return;
         }
         final DocumentProduit doc = docManager.createDocument(this.getBean());
-        BeanTool.setPropriete(this.getBean(),
-                              typeDocument.getPropriete(),
-                              doc);
+        BeanTool.setPropriete(this.getBean(), typeDocument.getPropriete(), doc);
     }
 
     /**
      * Méthode en charge de supprimer un document d'un produit.
      * @param typeDocument Le type de document.
      */
-    public void supprimerDocument(final TypeDocumentProduit typeDocument)
-    {
-        final DocumentProduit doc =
-            (DocumentProduit) BeanTool.getPropriete(this.getBean(),
-                                                    typeDocument.getPropriete());
+    public void supprimerDocument(final TypeDocumentProduit typeDocument) {
+        final DocumentProduit doc = (DocumentProduit) BeanTool.getPropriete(this.getBean(), typeDocument.getPropriete());
 
-        BeanTool.setPropriete(this.getBean(),
-                              typeDocument.getPropriete(),
-                              null);
+        BeanTool.setPropriete(this.getBean(), typeDocument.getPropriete(), null);
 
-        // Pour supprimer le document en BDD car le orphan removal de fonctionne pas...
-        if (doc.getId() != null)
-        {
+        // Pour supprimer le document en BDD car le orphan removal de fonctionne
+        // pas...
+        if (doc.getId() != null) {
             this.documentService.remove(doc);
-        }
-    }
-
-    public void onOngletChangeSave(final TabChangeEvent event)
-    {
-        this.onOngletChange(event);
-        try
-        {
-            this.setBean(this.getService().save(this.getBean()));
-        }
-        catch (final Exception e)
-        {
-            //
         }
     }
 
@@ -199,8 +159,7 @@ public class ProduitManager
      * Méthode en charge de supprimer un conditionnement du produit courant.
      * @param conditionnement Conditionnement.
      */
-    public void removeConditionnement(final Conditionnement conditionnement)
-    {
+    public void removeConditionnement(final Conditionnement conditionnement) {
         this.getBean().getConditionnements().remove(conditionnement);
     }
 
@@ -212,8 +171,7 @@ public class ProduitManager
      * Getter sur indexOngletCourant.
      * @return Retourne le indexOngletCourant.
      */
-    public int getIndexOngletCourant()
-    {
+    public int getIndexOngletCourant() {
         return this.indexOngletCourant;
     }
 
@@ -221,8 +179,7 @@ public class ProduitManager
      * Setter pour indexOngletCourant.
      * @param indexOngletCourant le indexOngletCourant à écrire.
      */
-    public void setIndexOngletCourant(final int indexOngletCourant)
-    {
+    public void setIndexOngletCourant(final int indexOngletCourant) {
         this.indexOngletCourant = indexOngletCourant;
     }
 
@@ -230,8 +187,7 @@ public class ProduitManager
      * Getter sur documentsManagers.
      * @return Retourne le documentsManagers.
      */
-    public SortedMap<String, GenericDocumentManager> getDocumentsManagers()
-    {
+    public SortedMap<String, GenericDocumentManager> getDocumentsManagers() {
         return this.documentsManagers;
     }
 
@@ -239,8 +195,7 @@ public class ProduitManager
      * Setter pour documentsManagers.
      * @param documentsManagers le documentsManagers à écrire.
      */
-    public void setDocumentsManagers(final SortedMap<String, GenericDocumentManager> documentsManagers)
-    {
+    public void setDocumentsManagers(final SortedMap<String, GenericDocumentManager> documentsManagers) {
         this.documentsManagers = documentsManagers;
     }
 
@@ -248,18 +203,15 @@ public class ProduitManager
      * Setter pour documentService.
      * @param documentService le documentService à écrire.
      */
-    public void setDocumentService(final DocumentService documentService)
-    {
+    public void setDocumentService(final DocumentService documentService) {
         this.documentService = documentService;
     }
 
-    public Boolean getEnregistre()
-    {
+    public Boolean getEnregistre() {
         return this.enregistre;
     }
 
-    public void setEnregistre(final Boolean enregistre)
-    {
+    public void setEnregistre(final Boolean enregistre) {
         this.enregistre = enregistre;
     }
 

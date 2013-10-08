@@ -26,7 +26,9 @@
 					<h:inputText size="70" id="nom"
 						value="#{grilleModeleManager.bean.nom}" required="true"
 						requiredMessage="#{resourceBundle['grilleModele.nom.notEmpty']}"
-						disabled="#{!grilleModeleManager.isEditable()}"/>
+						disabled="#{!grilleModeleManager.isEditable()}">
+						<f:ajax event="change" listener="#{grilleModeleManager.nothing}" />
+					</h:inputText>
 
 					<!-- Date de creation -->
 					<h:outputLabel id="labelDateCreation" for="dateCreation"
@@ -36,8 +38,9 @@
 						effect="#{resourceBundle['effect.calendar']}"
 						locale="#{resourceBundle['date.locale']}" showButtonPanel="true"
 						navigator="true" disabled="#{!grilleModeleManager.isEditable()}"
-						converter="#{calendarConverter}" />
-
+						converter="#{calendarConverter}" selectListener="#{grilleModeleManager.handleDateSelect}" 
+						valueChangeListener="#{grilleModeleManager.handleDateSelect}"  />
+						
 					<!-- Date de debut de validite -->
 					<h:outputLabel id="labelDateDebutValidite" for="dateDebutValidite"
 						value="#{resourceBundle['gestionGrilleModele.dateDebutValidite']}" />
@@ -46,7 +49,8 @@
 						effect="#{resourceBundle['effect.calendar']}"
 						locale="#{resourceBundle['date.locale']}" showButtonPanel="true"
 						navigator="true" disabled="#{!grilleModeleManager.isEditable()}"
-						converter="#{calendarConverter}" />
+						converter="#{calendarConverter}" selectListener="#{grilleModeleManager.handleDateSelect}" 
+						valueChangeListener="#{grilleModeleManager.handleDateSelect}"  />
 
 					<!-- Date de fin de validite -->
 					<h:outputLabel id="labelDateFinValidite" for="dateFinValidite"
@@ -56,7 +60,8 @@
 						effect="#{resourceBundle['effect.calendar']}"
 						locale="#{resourceBundle['date.locale']}" showButtonPanel="true"
 						navigator="true" disabled="#{!grilleModeleManager.isEditable()}" 
-						converter="#{calendarConverter}" />
+						converter="#{calendarConverter}" selectListener="#{grilleModeleManager.handleDateSelect}" 
+						valueChangeListener="#{grilleModeleManager.handleDateSelect}"  />
 				</h:panelGrid>
 			</p:panel>
 

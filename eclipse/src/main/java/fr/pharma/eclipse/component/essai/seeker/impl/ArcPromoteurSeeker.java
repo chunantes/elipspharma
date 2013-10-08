@@ -17,13 +17,12 @@ import fr.pharma.eclipse.domain.model.essai.Essai;
 import fr.pharma.eclipse.service.common.GenericService;
 
 /**
- * Classe en charge de rechercher les ARC promoteurs sélectionnables pour l'essai.
- 
+ * Classe en charge de rechercher les ARC promoteurs sélectionnables pour
+ * l'essai.
+ * @author Netapsys
  * @version $Revision$ $Date$
  */
-public class ArcPromoteurSeeker
-    implements SelectableContactsSeeker, BeanFactoryAware
-{
+public class ArcPromoteurSeeker implements SelectableContactsSeeker, BeanFactoryAware {
 
     /**
      * Serial ID.
@@ -44,8 +43,7 @@ public class ArcPromoteurSeeker
      * {@inheritDoc}
      */
     @Override
-    public boolean supports(final TypeContact typeContact)
-    {
+    public boolean supports(final TypeContact typeContact) {
         return TypeContact.ARC_PROMOTEUR.equals(typeContact);
     }
 
@@ -53,8 +51,7 @@ public class ArcPromoteurSeeker
      * {@inheritDoc}
      */
     @Override
-    public List<Personne> getContacts(final Essai essai)
-    {
+    public List<Personne> getContacts(final Essai essai) {
         return new ArrayList<Personne>(this.service.getAll(this.getSearchCriteria(essai)));
     }
 
@@ -64,10 +61,8 @@ public class ArcPromoteurSeeker
      * @param essai Essai pour lequel on souhaite ajouter des contacts.
      * @return Le critère de recherche qui permet de récupérer les contacts.
      */
-    private PersonneSearchCriteria getSearchCriteria(final Essai essai)
-    {
-        final ArcPromoteurSearchCriteria criteria =
-            (ArcPromoteurSearchCriteria) this.beanFactory.getBean("arcPromoteurCriteria");
+    private PersonneSearchCriteria getSearchCriteria(final Essai essai) {
+        final ArcPromoteurSearchCriteria criteria = (ArcPromoteurSearchCriteria) this.beanFactory.getBean("arcPromoteurCriteria");
         criteria.setPromoteur(essai.getPromoteur());
         return criteria;
     }
@@ -76,9 +71,7 @@ public class ArcPromoteurSeeker
      * {@inheritDoc}
      */
     @Override
-    public void setBeanFactory(final BeanFactory beanFactory)
-        throws BeansException
-    {
+    public void setBeanFactory(final BeanFactory beanFactory) throws BeansException {
         this.beanFactory = beanFactory;
     }
 
@@ -86,8 +79,7 @@ public class ArcPromoteurSeeker
      * Getter sur beanFactory.
      * @return Retourne le beanFactory.
      */
-    BeanFactory getBeanFactory()
-    {
+    BeanFactory getBeanFactory() {
         return this.beanFactory;
     }
 
@@ -95,8 +87,7 @@ public class ArcPromoteurSeeker
      * Getter sur service.
      * @return Retourne le service.
      */
-    GenericService<ArcPromoteur> getService()
-    {
+    GenericService<ArcPromoteur> getService() {
         return this.service;
     }
 
@@ -104,8 +95,7 @@ public class ArcPromoteurSeeker
      * Setter pour service.
      * @param service le service à écrire.
      */
-    public void setService(final GenericService<ArcPromoteur> service)
-    {
+    public void setService(final GenericService<ArcPromoteur> service) {
         this.service = service;
     }
 }

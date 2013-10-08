@@ -72,15 +72,14 @@ import fr.pharma.eclipse.domain.enums.surcout.TypeCout;
 
 /**
  * ManagedBean pour java faces.<br>
- * Pour rendres la classe (et donc tous les enum referenciel) accessible dans les pages xhtml.
- 
+ * Pour rendres la classe (et donc tous les enum referenciel) accessible dans
+ * les pages xhtml.
+ * @author Netapsys
  * @version $Revision$ $Date$
  */
 @ManagedBean
 @ApplicationScoped
-public class EnumManager
-    implements Serializable
-{
+public class EnumManager implements Serializable {
     /**
      * Serial ID.
      */
@@ -91,187 +90,119 @@ public class EnumManager
      */
     private static final Map<String, Enum<?>[]> ENUMS = new TreeMap<String, Enum<?>[]>();
 
-    static
-    {
-        EnumManager.ENUMS.put("TypePromoteur",
-                              TypePromoteur.values());
-        EnumManager.ENUMS.put("EtatEssai",
-                              EtatEssai.values());
-        EnumManager.ENUMS.put("TypeRecherche",
-                              TypeRecherche.values());
-        EnumManager.ENUMS.put("ObjetRecherche",
-                              ObjetRecherche.values());
-        EnumManager.ENUMS.put("NatureRecherche",
-                              NatureRecherche.values());
-        EnumManager.ENUMS.put("PhaseRecherche",
-                              PhaseRecherche.values());
-        EnumManager.ENUMS.put("Thematique",
-                              Thematique.values());
-        EnumManager.ENUMS.put("TypePersonne",
-                              TypePersonne.values());
-        EnumManager.ENUMS.put("TypeCommentaireEssai",
-                              TypeCommentaireEssai.values());
-        EnumManager.ENUMS.put("TypeAC",
-                              TypeAC.values());
-        EnumManager.ENUMS.put("TypeDocumentEssai",
-                              TypeDocumentEssai.values());
-        EnumManager.ENUMS.put("TypeDocumentProduit",
-                              TypeDocumentProduit.values());
-        EnumManager.ENUMS.put("TypeProduit",
-                              TypeProduit.values());
-        EnumManager.ENUMS.put("NatureProduit",
-                              NatureProduit.values());
-        EnumManager.ENUMS.put("NatureDM",
-                              NatureDM.values());
-        EnumManager.ENUMS.put("ConditionConservation",
-                              ConditionConservation.values());
-        EnumManager.ENUMS.put("ClasseDM",
-                              ClasseDM.values());
-        EnumManager.ENUMS.put("ModePrescription",
-                              ModePrescription.values());
-        EnumManager.ENUMS.put("VoieAdministration",
-                              VoieAdministration.values());
-        EnumManager.ENUMS.put("UnitePrescription",
-                              UnitePrescription.values());
-        EnumManager.ENUMS.put("UniteGestion",
-                              UniteGestion.values());
-        EnumManager.ENUMS.put("TypeProduitTherapeutique",
-                              TypeProduitTherapeutique.values());
-        EnumManager.ENUMS.put("TypePharmacien",
-                              TypePharmacien.values());
-        EnumManager.ENUMS.put("TypeContact",
-                              TypeContact.values());
-        EnumManager.ENUMS.put("QualiteInsu",
-                              QualiteInsu.values());
-        EnumManager.ENUMS.put("Responsabilite",
-                              Responsabilite.values());
-        EnumManager.ENUMS.put("TypeMvtStock",
-                              TypeMvtStock.values());
-        EnumManager.ENUMS.put("TypeMvtStockSortie",
-                              TypeMvtStock.valuesSortie());
-        EnumManager.ENUMS.put("TypeMvtStockSortieSaufPreparation",
-                              TypeMvtStock.valuesSortieSaufPreparation());
-        EnumManager.ENUMS.put("TypeDispensation",
-                              TypeDispensation.values());
-        EnumManager.ENUMS.put("TypeDesignable",
-                              TypeDesignable.values());
-        EnumManager.ENUMS.put("UniteTemps",
-                              UniteTemps.values());
-        EnumManager.ENUMS.put("TypeRegularite",
-                              TypeRegularite.values());
-        EnumManager.ENUMS.put("TypeRapportJasper",
-                              TypeRapportJasper.values());
-        EnumManager.ENUMS.put("MotifRefus",
-                              MotifRefus.values());
-        EnumManager.ENUMS.put("Civilite",
-                              Civilite.values());
-        EnumManager.ENUMS.put("TypeDocumentStock",
-                              TypeDocumentStock.values());
-        EnumManager.ENUMS.put("TypeEvenement",
-                              TypeEvenement.values());
-        EnumManager.ENUMS.put("TypeVisite",
-                              TypeVisite.values());
-        EnumManager.ENUMS.put("ResultatVisite",
-                              ResultatVisite.values());
-        EnumManager.ENUMS.put("TypeCout",
-                              TypeCout.values());
-        EnumManager.ENUMS.put("ModeCalcul",
-                              ModeCalcul.values());
-        EnumManager.ENUMS.put("PerimetreCout",
-                              PerimetreCout.values());
-        EnumManager.ENUMS.put("Acte",
-                              Acte.values());
-        EnumManager.ENUMS.put("UniteTempsPrevision",
-                              UniteTempsPrevision.values());
-        EnumManager.ENUMS.put("FormeConditionnement",
-                              FormeConditionnement.values());
-        EnumManager.ENUMS.put("UniteDosage",
-                              UniteDosage.values());
-        EnumManager.ENUMS.put("EtatRetour",
-                              EtatRetour.values());
-        EnumManager.ENUMS.put("TypeRetour",
-                              TypeRetour.values());
-        EnumManager.ENUMS.put("Droit",
-                              Droit.values());
-        EnumManager.ENUMS.put("TypeRechercheParEssai",
-                              TypeRechercheParEssai.values());
-        EnumManager.ENUMS.put("RaisonSortie",
-                              RaisonSortie.values());
-        EnumManager.ENUMS.put("TypeAnonymisation",
-                              TypeAnonymisation.values());
-        EnumManager.ENUMS.put("RealisePar",
-                              RealisePar.values());
-        EnumManager.ENUMS.put("TypeDesign",
-                              TypeDesign.values());
-        EnumManager.ENUMS.put("TypeDocumentProtocole",
-                              TypeDocumentProtocole.values());
-        EnumManager.ENUMS.put("TypeDocumentBrochure",
-                              TypeDocumentBrochure.values());
-        EnumManager.ENUMS.put("TypeDocumentPharmacien",
-                              TypeDocumentPharmacien.values());
-        EnumManager.ENUMS.put("TypeUniteGestion",
-                              TypeUniteGestion.values());
+    static {
+        EnumManager.ENUMS.put("TypePromoteur", TypePromoteur.values());
+        EnumManager.ENUMS.put("EtatEssai", EtatEssai.values());
+        EnumManager.ENUMS.put("TypeRecherche", TypeRecherche.values());
+        EnumManager.ENUMS.put("ObjetRecherche", ObjetRecherche.values());
+        EnumManager.ENUMS.put("NatureRecherche", NatureRecherche.values());
+        EnumManager.ENUMS.put("PhaseRecherche", PhaseRecherche.values());
+        EnumManager.ENUMS.put("Thematique", Thematique.values());
+        EnumManager.ENUMS.put("TypePersonne", TypePersonne.values());
+        EnumManager.ENUMS.put("TypeCommentaireEssai", TypeCommentaireEssai.values());
+        EnumManager.ENUMS.put("TypeAC", TypeAC.values());
+        EnumManager.ENUMS.put("TypeDocumentEssai", TypeDocumentEssai.values());
+        EnumManager.ENUMS.put("TypeDocumentProduit", TypeDocumentProduit.values());
+        EnumManager.ENUMS.put("TypeProduit", TypeProduit.values());
+        EnumManager.ENUMS.put("NatureProduit", NatureProduit.values());
+        EnumManager.ENUMS.put("NatureDM", NatureDM.values());
+        EnumManager.ENUMS.put("ConditionConservation", ConditionConservation.values());
+        EnumManager.ENUMS.put("ClasseDM", ClasseDM.values());
+        EnumManager.ENUMS.put("ModePrescription", ModePrescription.values());
+        EnumManager.ENUMS.put("VoieAdministration", VoieAdministration.values());
+        EnumManager.ENUMS.put("UnitePrescription", UnitePrescription.values());
+        EnumManager.ENUMS.put("UniteGestion", UniteGestion.values());
+        EnumManager.ENUMS.put("TypeProduitTherapeutique", TypeProduitTherapeutique.values());
+        EnumManager.ENUMS.put("TypePharmacien", TypePharmacien.values());
+        EnumManager.ENUMS.put("TypeContact", TypeContact.values());
+        EnumManager.ENUMS.put("QualiteInsu", QualiteInsu.values());
+        EnumManager.ENUMS.put("Responsabilite", Responsabilite.values());
+        EnumManager.ENUMS.put("TypeMvtStock", TypeMvtStock.values());
+        EnumManager.ENUMS.put("TypeMvtStockSortie", TypeMvtStock.SORTIES);
+        EnumManager.ENUMS.put("TypeMvtStockSortieSaufPreparation", TypeMvtStock.SORTIES_SANS_PREPARATION);
+        EnumManager.ENUMS.put("TypeDispensation", TypeDispensation.values());
+        EnumManager.ENUMS.put("TypeDesignable", TypeDesignable.values());
+        EnumManager.ENUMS.put("UniteTemps", UniteTemps.values());
+        EnumManager.ENUMS.put("TypeRegularite", TypeRegularite.values());
+        EnumManager.ENUMS.put("TypeRapportJasper", TypeRapportJasper.values());
+        EnumManager.ENUMS.put("MotifRefus", MotifRefus.values());
+        EnumManager.ENUMS.put("Civilite", Civilite.values());
+        EnumManager.ENUMS.put("TypeDocumentStock", TypeDocumentStock.values());
+        EnumManager.ENUMS.put("TypeEvenement", TypeEvenement.values());
+        EnumManager.ENUMS.put("TypeVisite", TypeVisite.values());
+        EnumManager.ENUMS.put("ResultatVisite", ResultatVisite.values());
+        EnumManager.ENUMS.put("TypeCout", TypeCout.values());
+        EnumManager.ENUMS.put("ModeCalcul", ModeCalcul.values());
+        EnumManager.ENUMS.put("PerimetreCout", PerimetreCout.values());
+        EnumManager.ENUMS.put("Acte", Acte.values());
+        EnumManager.ENUMS.put("UniteTempsPrevision", UniteTempsPrevision.values());
+        EnumManager.ENUMS.put("FormeConditionnement", FormeConditionnement.values());
+        EnumManager.ENUMS.put("UniteDosage", UniteDosage.values());
+        EnumManager.ENUMS.put("EtatRetour", EtatRetour.values());
+        EnumManager.ENUMS.put("TypeRetour", TypeRetour.values());
+        EnumManager.ENUMS.put("Droit", Droit.values());
+        EnumManager.ENUMS.put("TypeRechercheParEssai", TypeRechercheParEssai.values());
+        EnumManager.ENUMS.put("RaisonSortie", RaisonSortie.values());
+        EnumManager.ENUMS.put("TypeAnonymisation", TypeAnonymisation.values());
+        EnumManager.ENUMS.put("RealisePar", RealisePar.values());
+        EnumManager.ENUMS.put("TypeDesign", TypeDesign.values());
+        EnumManager.ENUMS.put("TypeDocumentProtocole", TypeDocumentProtocole.values());
+        EnumManager.ENUMS.put("TypeDocumentBrochure", TypeDocumentBrochure.values());
+        EnumManager.ENUMS.put("TypeDocumentPharmacien", TypeDocumentPharmacien.values());
+        EnumManager.ENUMS.put("TypeUniteGestion", TypeUniteGestion.values());
     }
 
     /**
-     * Méthode en charge de retourner les valeurs d'une Enum correspondant au nom.
+     * Méthode en charge de retourner les valeurs d'une Enum correspondant au
+     * nom.
      * @param name Nom de l'enum.
      * @return Liste des valeurs formatées pour l'affichage.
      */
-    public SelectItem[] getValues(final String name)
-    {
+    public SelectItem[] getValues(final String name) {
         final Enum<?>[] list = EnumManager.ENUMS.get(name);
         final SelectItem[] items = new SelectItem[list.length];
         int i = 0;
-        for (final Enum<?> element : list)
-        {
-            items[i++] = new SelectItem(element,
-                                        element.toString());
+        for (final Enum<?> element : list) {
+            items[i++] = new SelectItem(element, element.toString());
         }
         return items;
     }
 
     /**
-     * Méthode en charge de récupérer une certaine valeur d'une énumération managée.
+     * Méthode en charge de récupérer une certaine valeur d'une énumération
+     * managée.
      * @param enumKey Clé de l'énumération dans le manager.
      * @param enumValueName Nom de la valeur de l'énumération cherchée.
-     * @return La valeur de l'énumération cherchée, null si pas de correspondance.
+     * @return La valeur de l'énumération cherchée, null si pas de
+     * correspondance.
      */
     public Enum<?> getEnumValue(final String enumKey,
-                                final String enumValueName)
-    {
+                                final String enumValueName) {
         final Enum<?>[] enumValues = EnumManager.ENUMS.get(enumKey);
-        if (enumValues == null)
-        {
+        if (enumValues == null) {
             return null;
         }
-        return (Enum<?>) CollectionUtils.find(Arrays.asList(enumValues),
-                                              new EnumValuePredicate(enumValueName));
+        return (Enum<?>) CollectionUtils.find(Arrays.asList(enumValues), new EnumValuePredicate(enumValueName));
     }
 
     /**
-     * Méthode en charge de récupérer une certaine valeur d'une énumération managée et
-     * l'encapsuler dans un SelectItem.
+     * Méthode en charge de récupérer une certaine valeur d'une énumération
+     * managée et l'encapsuler dans un SelectItem.
      * @param enumKey Clé de l'énumération dans le manager.
      * @param enumValueName Nom de la valeur de l'énumération cherchée.
      * @return Le selectItem contenant la valeur de l'énumération.
      */
     public SelectItem getEnumValueAsSelectItem(final String enumKey,
-                                               final String enumValueName)
-    {
-        final Enum<?> element = this.getEnumValue(enumKey,
-                                                  enumValueName);
-        return new SelectItem(element,
-                              element.toString());
+                                               final String enumValueName) {
+        final Enum<?> element = this.getEnumValue(enumKey, enumValueName);
+        return new SelectItem(element, element.toString());
     }
     /**
      * Classe interne de prédicat pour la sélection des valeurs d'énumération.
-     
+     * @author Netapsys
      * @version $Revision$ $Date$
      */
-    private class EnumValuePredicate
-        implements Predicate
-    {
+    private class EnumValuePredicate implements Predicate {
         /**
          * Nom de la valeur d'énumération recherchée.
          */
@@ -281,14 +212,12 @@ public class EnumManager
          * Constructeur.
          * @param searchedValueName Nom de la valeur d'énumération recherchée.
          */
-        public EnumValuePredicate(final String searchedValueName)
-        {
+        public EnumValuePredicate(final String searchedValueName) {
             this.searchedValueName = searchedValueName;
         }
 
         @Override
-        public boolean evaluate(final Object object)
-        {
+        public boolean evaluate(final Object object) {
             final Enum<?> value = (Enum<?>) object;
             return value.name().equals(this.searchedValueName);
         }
@@ -298,8 +227,7 @@ public class EnumManager
      * Getter sur enums.
      * @return Retourne le enums.
      */
-    static Map<String, Enum<?>[]> getEnums()
-    {
+    static Map<String, Enum<?>[]> getEnums() {
         return EnumManager.ENUMS;
     }
 }

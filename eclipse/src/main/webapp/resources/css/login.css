@@ -113,6 +113,18 @@ fieldset
 	padding:0;
 }
 
+.header .banner-test
+{
+	background-image:url('../images/testbandeau_head.jpg');
+	background-repeat:no-repeat;
+	background-position:right;
+	width:1000px;
+	height:116px;
+	margin:0 auto;
+	text-align:left;
+	padding:0;
+}
+
 .main
 {
 	width:1000px;

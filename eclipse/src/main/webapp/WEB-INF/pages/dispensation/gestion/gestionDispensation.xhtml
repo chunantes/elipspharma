@@ -26,7 +26,7 @@
 									for="disp_patientAutoCom" />
 								<p:autoComplete immediate="true" 
 									id="disp_patientAutoCom" rendered="#{droitAccesHelper.isPatientVisible()}"
-									value="#{dispensationsManager.searchCriteria.patient}" 
+									value="#{dispensationDTOManager.searchCriteria.patient}" 
 									completeMethod="#{autoCompletePatientManager.complete}"
 									forceSelection="true" var="patient"
 									onSelectUpdate="@this" style="width : 200px;"
@@ -39,12 +39,12 @@
 									value="#{resourceBundle['gestionPrescription.essai']}"
 									for="disp_essaiAutoCom" />
 					            <p:autoComplete immediate="true" 
-											id="disp_essaiAutoCom" value="#{dispensationsManager.searchCriteria.essai}"
-											completeMethod="#{autoCompleteEssaiManager.complete}"
+											id="disp_essaiAutoCom" value="#{dispensationDTOManager.searchCriteria.essaiDTO}"
+											completeMethod="#{essaiService.autoCompleteEssai}"
 											onSelectUpdate="@this" style="width : 200px;"
 											forceSelection="true" var="essai"
-											itemLabel="#{essai.numInterne} #{essai.nom} #{essai.promoteur.raisonSociale}"
-											itemValue="#{essai}" converter="#{essaiConverter}" />
+											itemLabel="#{essai.numInterne} #{essai.nom} - #{essai.raisonSociale}"
+											itemValue="#{essai.id}" converter="#{essaiDtoConverter}" />
 	     					</h:panelGrid>
 	     					
 		     				<br />
@@ -75,7 +75,7 @@
 				         <h:commandLink>  
 				         	<h:graphicImage library="images" name="pdf.gif" 
 		    					alt="#{resourceBundle['export.pdf']}" title="#{resourceBundle['export.pdf']}" />
-				             <p:dataExporter type="pdf" target="dispensations" preProcessor="#{dispensationsManager.preProcessPDF}" fileName="#{resourceBundle['export.dispensations.filename']}" 
+				             <p:dataExporter type="pdf" target="dispensations" preProcessor="#{dispensationDTOManager.preProcessPDF}" fileName="#{resourceBundle['export.dispensations.filename']}" 
 				             	excludeColumns="2" encoding="iso-8859-1"/>  
 				         </h:commandLink>  
 				         <h:commandLink>  
@@ -90,8 +90,8 @@
 					<p:messages/>
 			    	<fieldset>
 			    	
-			    		<p:dataTable id="dispensations" value="#{dispensationsManager.beans}" var="dispensation" emptyMessage="#{resourceBundle['results.none']}"
-			    			selection="#{dispensationsManager.beanSelected}" selectionMode="single"
+			    		<p:dataTable id="dispensations" value="#{dispensationDTOManager.beans}" var="dispensation" emptyMessage="#{resourceBundle['results.none']}"
+			    			selection="#{dispensationDTOManager.beanSelected}" selectionMode="single"
 							update="dispensations"
 							onselectComplete="javascript:document.getElementById('editDispensationButton').click();">	
 			    		
@@ -100,44 +100,44 @@
 			    				<f:facet name="header">
 			    					<h:outputText value="#{resourceBundle['gestionPrescription.date']}"/>
 			    				</f:facet>
-			    				<h:outputText value="#{dispensation.prescription.datePrescription}"  converter="#{calendarConverter}"/>
+			    				<h:outputText value="#{dispensation.datePrescription}"  converter="#{calendarConverter}"/>
 			    			</p:column>
 			    			<p:column id="essai" >
 			    				<f:facet name="header">
 			    					<h:outputText value="#{resourceBundle['gestionPrescription.essai']}"/>
 			    				</f:facet>
-			    				<h:outputText value=" #{dispensation.prescription.inclusion.essai.promoteur.raisonSociale} - #{dispensation.prescription.inclusion.essai.codePromoteur} - #{dispensation.prescription.inclusion.essai.nom}"/>
+			    				<h:outputText value=" #{dispensation.raisonSociale} - #{dispensation.codePromoteur} - #{dispensation.nomEssai}"/>
 			    			</p:column>
 			    			<p:column id="patient">
 			    				<f:facet name="header">
 			    					<h:outputText value="#{resourceBundle['gestionPrescription.patient']}"/>
 			    				</f:facet>
-			    				<h:outputText value="#{dispensation.prescription.inclusion.patient.prenom} #{dispensation.prescription.inclusion.patient.nom}" rendered="#{droitAccesHelper.isPatientVisible()}"/>
-			    				<h:outputText value="#{dispensation.prescription.inclusion.patient.initiales}" rendered="#{!droitAccesHelper.isPatientVisible()}"/>
+			    				<h:outputText value="#{dispensation.prenomPatient} #{dispensation.nomPatient}" rendered="#{droitAccesHelper.isPatientVisible()}"/>
+			    				<h:outputText value="#{dispensation.initialesPatient}" rendered="#{!droitAccesHelper.isPatientVisible()}"/>
 			    			</p:column>
 			    			<p:column id="numeroPrescription" style="width:35px;text-align:center">
 			    				<f:facet name="header">
 			    					<h:outputText value="#{resourceBundle['gestionPrescription.numPrescription']}"/>
 			    				</f:facet>
-			    				<h:outputText value="#{dispensation.prescription.numPrescription}"/>
+			    				<h:outputText value="#{dispensation.numPrescription}"/>
 			    			</p:column>
 			    			<p:column id="patientPrint" style="display:none;">
 			    				<f:facet name="header">
 			    					<h:outputText value="#{resourceBundle['gestionPrescription.patientNumInclusion']}"/>
 			    				</f:facet>
-			    				<h:outputText value="#{dispensation.prescription.inclusion.patient.initiales} - #{dispensation.prescription.inclusion.numInclusion}" />
+			    				<h:outputText value="#{dispensation.initialesPatient} - #{dispensation.numInclusion}" />
 			    			</p:column>
 			    			<p:column id="produits" style="display:none;">
 			    				<f:facet name="header">
 			    					<h:outputText value="#{resourceBundle['gestionPrescription.produitsQuantite']}"/>
 			    				</f:facet>
-			    				<h:outputText value="#{dispensationsManager.getProduits(dispensation)}" />
+			    				<h:outputText value="#{dispensation.descriptionProduits}" />
 			    			</p:column>
 			    			<p:column id="realisePar" style="display:none;">
 			    				<f:facet name="header">
 			    					<h:outputText value="#{resourceBundle['gestionPrescription.realiseePar']}"/>
 			    				</f:facet>
-			    				<h:outputText value="#{dispensationsManager.getPersonneAsString(dispensation)} " />
+			    				<h:outputText value="#{dispensation.realisePar} " />
 			    			</p:column>
 			    			<p:column id="numeroOrdonnancier" style="width:40px;text-align:center">
 			    				<f:facet name="header">

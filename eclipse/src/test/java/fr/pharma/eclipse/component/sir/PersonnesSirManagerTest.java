@@ -18,11 +18,10 @@ import fr.pharma.eclipse.redirect.RedirectHandler;
 
 /**
  * Classe en charge de tester le manager de personnes SIR.
- 
+ * @author Netapsys
  * @version $Revision$ $Date$
  */
-public class PersonnesSirManagerTest
-{
+public class PersonnesSirManagerTest {
 
     /**
      * PersonnesSirManager à tester.
@@ -48,8 +47,7 @@ public class PersonnesSirManagerTest
      * Méthode en charge d'initialiser les données de test.
      */
     @Before
-    public void init()
-    {
+    public void init() {
         this.criteria = new PersonneSirSearchCriteria();
         this.personnesSirManager = new PersonnesSirManager(this.criteria);
         final PersonneSir personneSir1 = new PersonneSir();
@@ -70,8 +68,7 @@ public class PersonnesSirManagerTest
      * Méthode en charge de purger les données de test.
      */
     @After
-    public void end()
-    {
+    public void end() {
         this.criteria = null;
         this.personnesSirManager = null;
         this.mockPersonnesManager = null;
@@ -82,8 +79,7 @@ public class PersonnesSirManagerTest
      * Méthode en charge de tester l'initialisation des données de test.
      */
     @Test
-    public void testInit()
-    {
+    public void testInit() {
         Assert.assertNotNull(this.personnesSirManager);
         Assert.assertNotNull(this.criteria);
         Assert.assertNotNull(this.mockPersonnesManager);
@@ -93,25 +89,22 @@ public class PersonnesSirManagerTest
     }
 
     /**
-     * Méthode en charge de tester la récupération des beans sous forme de Model.
+     * Méthode en charge de tester la récupération des beans sous forme de
+     * Model.
      */
     @Test
-    public void testGetModel()
-    {
+    public void testGetModel() {
         final DataModel<PersonneSir> result = this.personnesSirManager.getModel();
-        Assert.assertEquals(result.getRowCount(),
-                            this.personnesSirManager.getBeans().size());
+        Assert.assertEquals(result.getRowCount(), this.personnesSirManager.getBeans().size());
     }
 
     /**
      * Méthode en charge de tester la récupération du bean selected.
      */
     @Test
-    public void testBeanSelected()
-    {
+    public void testBeanSelected() {
         this.personnesSirManager.setBeanSelected(this.personnesSirManager.getBeans().get(0));
-        Assert.assertEquals(this.personnesSirManager.getBeans().get(0),
-                            this.personnesSirManager.getBeanSelected());
+        Assert.assertEquals(this.personnesSirManager.getBeans().get(0), this.personnesSirManager.getBeanSelected());
     }
 
 }

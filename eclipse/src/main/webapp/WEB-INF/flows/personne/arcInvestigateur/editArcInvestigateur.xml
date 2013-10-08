@@ -1,63 +1,62 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<flow xmlns="http://www.springframework.org/schema/webflow"
-	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-	xsi:schemaLocation="http://www.springframework.org/schema/webflow
-    http://www.springframework.org/schema/webflow/spring-webflow-2.0.xsd" parent="main">
+<flow xmlns="http://www.springframework.org/schema/webflow" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.springframework.org/schema/webflow
+    http://www.springframework.org/schema/webflow/spring-webflow-2.0.xsd"
+	parent="main">
 
 	<!-- Variable d'entrée -->
 	<input name="idArcInvestigateur" />
 	<input name="idPersonneSir" />
 
 	<on-start>
-		<evaluate expression="serviceSearchCriteria.clear()"/>
-		<evaluate expression="serviceService.getAll(serviceSearchCriteria)" result="servicesManager.beans"/>
+		<evaluate expression="serviceSearchCriteria.clear()" />
+		<evaluate expression="serviceService.getAll(serviceSearchCriteria)" result="servicesManager.beans" />
 	</on-start>
 
 	<decision-state id="createOrEdit">
-		<if test="idArcInvestigateur==null" then="createFromScratchOrFromSir" else="edit"/>
+		<if test="idArcInvestigateur==null" then="createFromScratchOrFromSir" else="edit" />
 	</decision-state>
-	
+
 	<decision-state id="createFromScratchOrFromSir">
-		<if test="idPersonneSir==null" then="createFromScratch" else="createFromSir"/>
-	</decision-state>	
-	
+		<if test="idPersonneSir==null" then="createFromScratch" else="createFromSir" />
+	</decision-state>
+
 	<!-- Création From Sir -->
 	<action-state id="createFromSir">
-		<evaluate expression="arcInvestigateurManager.setBean(arcInvestigateurFactory.getInitializedObject(idPersonneSir))"/>
-		<transition to="initServices"/>
+		<evaluate expression="arcInvestigateurManager.setBean(arcInvestigateurFactory.getInitializedObject(idPersonneSir))" />
+		<transition to="initServices" />
 	</action-state>
-	
+
 	<!-- Création From Scratch -->
 	<action-state id="createFromScratch">
-		<evaluate expression="arcInvestigateurManager.setBean(arcInvestigateurFactory.getInitializedObject())"/>
-		<transition to="initServices"/>
+		<evaluate expression="arcInvestigateurManager.setBean(arcInvestigateurFactory.getInitializedObject())" />
+		<transition to="initServices" />
 	</action-state>
-	
+
 	<!-- Modification -->
 	<action-state id="edit">
-		<evaluate expression="arcInvestigateurManager.setBean(arcInvestigateurService.get(idArcInvestigateur))"/>
-		<transition to="initServices"/>
+		<evaluate expression="arcInvestigateurManager.setBean(arcInvestigateurService.get(idArcInvestigateur))" />
+		<transition to="initServices" />
 	</action-state>
 
 	<!-- Initialisation de la liste des services -->
 	<action-state id="initServices">
 		<evaluate expression="beanManagerHelper.updateSelectable(arcInvestigateurManager.bean.services, servicesManager.beans)" />
-		<transition to="editArcInvestigateur"/>
+		<transition to="editArcInvestigateur" />
 	</action-state>
 
 	<!-- Page principale -->
 	<view-state id="editArcInvestigateur" view="../../../pages/personne/arcInvestigateur/editArcInvestigateur.xhtml">
-		<transition on="cancel" to="createOrEdit"/>
+		<transition on="cancel" to="createOrEdit" />
 		<transition on="save" to="comeback">
-			<evaluate expression="arcInvestigateurService.save(arcInvestigateurManager.bean)"/>
+			<evaluate expression="arcInvestigateurService.save(arcInvestigateurManager.bean)" />
 		</transition>
 		<transition on="comeback" to="comeback">
-			<set name="arcInvestigateurManager.bean" value="null"/>
+			<set name="arcInvestigateurManager.bean" value="null" />
 		</transition>
-		<transition on="error" to="editArcInvestigateur"/>
+		<transition on="error" to="editArcInvestigateur" />
 	</view-state>
-	
+
 	<!-- Etat final -->
-	<end-state id="comeback"/>
-	
+	<end-state id="comeback" />
+
 </flow>

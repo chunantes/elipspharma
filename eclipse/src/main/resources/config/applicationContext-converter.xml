@@ -77,6 +77,13 @@
 	<bean id="essaiConverter" class="fr.pharma.eclipse.converter.GenericConverter">
 		<constructor-arg index="0" ref="essaiService" />
 	</bean>
+
+	<!-- ======================== -->
+	<!-- ESSAIDTO CONVERTER          -->
+	<!-- ======================== -->
+	<bean id="essaiDtoConverter" class="fr.pharma.eclipse.converter.dto.EssaiDTOConverter">
+		<property name="service" ref="essaiService"/>
+	</bean>
 	
 	<!-- ======================== -->
 	<!-- PATIENT CONVERTER        -->

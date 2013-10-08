@@ -1,54 +1,53 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<flow xmlns="http://www.springframework.org/schema/webflow"
-	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-	xsi:schemaLocation="http://www.springframework.org/schema/webflow
-    http://www.springframework.org/schema/webflow/spring-webflow-2.0.xsd" parent="main">
+<flow xmlns="http://www.springframework.org/schema/webflow" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.springframework.org/schema/webflow
+    http://www.springframework.org/schema/webflow/spring-webflow-2.0.xsd"
+	parent="main">
 
 	<!-- Variable d'entrée -->
 	<input name="idGrilleModele" />
-	
+
 
 	<decision-state id="createOrEdit">
-		<if test="idGrilleModele == null" then="create" else="edit"/>
+		<if test="idGrilleModele == null" then="create" else="edit" />
 	</decision-state>
-	
+
 	<!-- Création -->
 	<action-state id="create">
-		<evaluate expression="grilleModeleManager.setBean(grilleModeleFactory.getInitializedObject())"/>
-		<transition to="editGrilleModele"/>
+		<evaluate expression="grilleModeleManager.setBean(grilleModeleFactory.getInitializedObject())" />
+		<transition to="processEditable" />
 	</action-state>
-	
+
 	<!-- Modification -->
 	<action-state id="edit">
-		<evaluate expression="grilleModeleManager.setBean(grilleModeleService.get(idGrilleModele))"/>
-		<transition to="processEditable"/>
+		<evaluate expression="grilleModeleManager.setBean(grilleModeleService.get(idGrilleModele))" />
+		<transition to="processEditable" />
 	</action-state>
-	
+
 	<action-state id="processEditable">
-		<evaluate expression="grilleModeleManager.processEditable()"/>
-		<transition to="editGrilleModele"/>
+		<evaluate expression="grilleModeleManager.processEditable()" />
+		<transition to="editGrilleModele" />
 	</action-state>
-	
+
 	<!-- Page principale -->
 	<view-state id="editGrilleModele" view="../../../../pages/surcout/grilleModele/edit/editGrilleModele.xhtml">
 		<on-render>
-			<evaluate expression="grilleModeleService.reattach(grilleModeleManager.bean)" result="grilleModeleManager.bean"/>
+			<evaluate expression="grilleModeleService.reattach(grilleModeleManager.bean)" result="grilleModeleManager.bean" />
 		</on-render>
-		<transition on="cancel" to="createOrEdit"/>
+		<transition on="cancel" to="createOrEdit" />
 		<transition on="save" to="comeback">
-			<evaluate expression="grilleModeleService.save(grilleModeleManager.bean)"/>
+			<evaluate expression="grilleModeleService.save(grilleModeleManager.bean)" />
 		</transition>
-		<transition on="comeback" to="comeback"/>
-		
+		<transition on="comeback" to="comeback" />
+
 		<!-- Duplication -->
 		<transition on="dupliquer" to="processEditable">
-			<evaluate expression="grilleModeleManager.bean.cloneMe()" result="grilleModeleManager.bean"/>
+			<evaluate expression="grilleModeleManager.bean.cloneMe()" result="grilleModeleManager.bean" />
 		</transition>
-		
-		<transition on="error" to="editGrilleModele"/>
+
+		<transition on="error" to="editGrilleModele" />
 	</view-state>
-	
+
 	<!-- Etat final -->
-	<end-state id="comeback"/>
-	
+	<end-state id="comeback" />
+
 </flow>

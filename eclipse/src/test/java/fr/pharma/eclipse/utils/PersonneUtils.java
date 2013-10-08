@@ -8,16 +8,14 @@ import fr.pharma.eclipse.domain.model.acteur.Pharmacien;
 
 /**
  * Classe utilitaire pour les données de tests relatives aux beans Personne.
- 
+ * @author Netapsys
  * @version $Revision$ $Date$
  */
-public final class PersonneUtils
-{
+public final class PersonneUtils {
     /**
      * Constructeur privé.
      */
-    private PersonneUtils()
-    {
+    private PersonneUtils() {
         super();
     }
 
@@ -26,10 +24,8 @@ public final class PersonneUtils
      * @param id Identifiant technique.
      * @return Un bean Pharmacien.
      */
-    public static Pharmacien makePharmacien(final long id)
-    {
-        return PersonneUtils.makePharmacien(id,
-                                            TypePharmacien.TITULAIRE);
+    public static Pharmacien makePharmacien(final long id) {
+        return PersonneUtils.makePharmacien(id, TypePharmacien.TITULAIRE);
     }
 
     /**
@@ -39,8 +35,7 @@ public final class PersonneUtils
      * @return Un bean Pharmacien.
      */
     public static Pharmacien makePharmacien(final long id,
-                                            final TypePharmacien type)
-    {
+                                            final TypePharmacien type) {
         final Pharmacien personne = new Pharmacien();
         personne.setId(1L);
         personne.setType(TypePersonne.PHARMACIEN);
@@ -53,11 +48,8 @@ public final class PersonneUtils
      * @param id Identifiant technique.
      * @return Un bean Pharmacien.
      */
-    public static Cro makeCro(final long id)
-    {
-        return PersonneUtils.makeCro(id,
-                                     "nom_"
-                                             + id);
+    public static Cro makeCro(final long id) {
+        return PersonneUtils.makeCro(id, "nom_" + id);
     }
 
     /**
@@ -67,12 +59,8 @@ public final class PersonneUtils
      * @return Un bean Pharmacien.
      */
     public static Cro makeCro(final long id,
-                              final String nom)
-    {
-        return PersonneUtils.makeCro(id,
-                                     nom,
-                                     "prenom_"
-                                             + id);
+                              final String nom) {
+        return PersonneUtils.makeCro(id, nom, "prenom_" + id);
     }
 
     /**
@@ -84,8 +72,7 @@ public final class PersonneUtils
      */
     public static Cro makeCro(final long id,
                               final String nom,
-                              final String prenom)
-    {
+                              final String prenom) {
         final Cro cro = new Cro();
         cro.setId(id);
         cro.setType(TypePersonne.CRO);
@@ -99,8 +86,7 @@ public final class PersonneUtils
      * @param id Identifiant technique.
      * @return Un bean Investigateur.
      */
-    public static Investigateur makeInvestigateur(final long id)
-    {
+    public static Investigateur makeInvestigateur(final long id) {
         final Investigateur personne = new Investigateur();
         personne.setId(1L);
         personne.setType(TypePersonne.INVESTIGATEUR);

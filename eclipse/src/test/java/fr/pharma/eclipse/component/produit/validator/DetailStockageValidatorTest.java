@@ -17,12 +17,10 @@ import fr.pharma.eclipse.utils.FacesUtils;
 
 /**
  * Test de la classe {@link DetailStockageValidator}.
- 
+ * @author Netapsys
  * @version $Revision$ $Date$
  */
-public class DetailStockageValidatorTest
-    extends AbstractEclipseJUnitTest
-{
+public class DetailStockageValidatorTest extends AbstractEclipseJUnitTest {
     /**
      * Classe testée.
      */
@@ -37,8 +35,7 @@ public class DetailStockageValidatorTest
      * {@inheritDoc}
      */
     @Override
-    public void setUp()
-    {
+    public void setUp() {
         this.mockedFacesUtils = Mockito.mock(FacesUtils.class);
         this.validator = new DetailStockageValidator();
         this.validator.setFacesUtils(this.mockedFacesUtils);
@@ -48,8 +45,7 @@ public class DetailStockageValidatorTest
      * {@inheritDoc}
      */
     @Override
-    public void tearDown()
-    {
+    public void tearDown() {
         this.validator = null;
         this.mockedFacesUtils = null;
     }
@@ -58,19 +54,16 @@ public class DetailStockageValidatorTest
      * {@inheritDoc}
      */
     @Override
-    public void testInit()
-    {
+    public void testInit() {
         Assert.assertNotNull(this.validator);
-        Assert.assertEquals(this.mockedFacesUtils,
-                            this.validator.getFacesUtils());
+        Assert.assertEquals(this.mockedFacesUtils, this.validator.getFacesUtils());
     }
 
     /**
      * Test de la méthode validate - ok.
      */
     @Test
-    public void testValidateOk()
-    {
+    public void testValidateOk() {
         long id = 1;
         final Pharmacie pharmacie = Mockito.mock(Pharmacie.class);
         final DetailStockage detailStockage = new DetailStockage();
@@ -78,9 +71,7 @@ public class DetailStockageValidatorTest
         detailStockage.setStockage(Mockito.mock(Stockage.class));
         detailStockage.setPharmacie(pharmacie);
         final boolean expected = true;
-        Assert.assertEquals(expected,
-                            this.validator.validate(detailStockage,
-                                                    new ArrayList<DetailStockage>()));
+        Assert.assertEquals(expected, this.validator.validate(detailStockage, new ArrayList<DetailStockage>()));
         Mockito.verify(this.mockedFacesUtils).putCallbackValidityParam(expected);
     }
 
@@ -88,19 +79,15 @@ public class DetailStockageValidatorTest
      * Test de la méthode validate - ko à cause de la pharmacie.
      */
     @Test
-    public void testValidateKoPharmacie()
-    {
+    public void testValidateKoPharmacie() {
         long id = 1;
         final Pharmacie pharmacie = null;
         final DetailStockage detailStockage = new DetailStockage();
         detailStockage.setId(id++);
         detailStockage.setPharmacie(pharmacie);
         final boolean expected = false;
-        Assert.assertEquals(expected,
-                            this.validator.validate(detailStockage,
-                                                    new ArrayList<DetailStockage>()));
-        Mockito.verify(this.mockedFacesUtils).addMessage(FacesMessage.SEVERITY_ERROR,
-                                                         "produit.stockage.pharmacie.notEmpty");
+        Assert.assertEquals(expected, this.validator.validate(detailStockage, new ArrayList<DetailStockage>()));
+        Mockito.verify(this.mockedFacesUtils).addMessage(FacesMessage.SEVERITY_ERROR, "produit.stockage.pharmacie.notEmpty");
         Mockito.verify(this.mockedFacesUtils).putCallbackValidityParam(expected);
     }
 
@@ -108,8 +95,7 @@ public class DetailStockageValidatorTest
      * Test de la méthode validate - ko à cause de l'unicité.
      */
     @Test
-    public void testValidateKoUnicity()
-    {
+    public void testValidateKoUnicity() {
         long id = 1;
         final Pharmacie pharmacie = Mockito.mock(Pharmacie.class);
         final DetailStockage detailStockage = new DetailStockage();
@@ -117,11 +103,8 @@ public class DetailStockageValidatorTest
         detailStockage.setStockage(Mockito.mock(Stockage.class));
         detailStockage.setPharmacie(pharmacie);
         final boolean expected = false;
-        Assert.assertEquals(expected,
-                            this.validator.validate(detailStockage,
-                                                    Arrays.asList(detailStockage)));
-        Mockito.verify(this.mockedFacesUtils).addMessage(FacesMessage.SEVERITY_ERROR,
-                                                         "produit.stockage.unique");
+        Assert.assertEquals(expected, this.validator.validate(detailStockage, Arrays.asList(detailStockage)));
+        Mockito.verify(this.mockedFacesUtils).addMessage(FacesMessage.SEVERITY_ERROR, "produit.stockage.unique");
         Mockito.verify(this.mockedFacesUtils).putCallbackValidityParam(expected);
     }
 

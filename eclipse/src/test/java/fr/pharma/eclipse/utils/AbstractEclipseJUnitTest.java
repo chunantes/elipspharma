@@ -6,11 +6,10 @@ import org.junit.Test;
 
 /**
  * Interface des tests unitaires Eclipse.
- 
+ * @author Netapsys
  * @version $Revision$ $Date$
  */
-public abstract class AbstractEclipseJUnitTest
-{
+public abstract class AbstractEclipseJUnitTest {
     /**
      * Méthode d'initialisation.
      */

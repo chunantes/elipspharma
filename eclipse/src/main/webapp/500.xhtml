@@ -1,0 +1,124 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns:c="http://java.sun.com/jsp/jstl/core"
+	xmlns:fn="http://java.sun.com/jsp/jstl/functions"
+	xmlns:fmt="http://java.sun.com/jsp/jstl/fmt"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:elips="http://www.elipspharma.fr/jsp/jstl/functions"
+	xmlns:util="urn:jsptagdir:/WEB-INF/tags/util"
+	xmlns:spring="http://www.springframework.org/tags"
+	xmlns:jsp="http://java.sun.com/JSP/Page"
+        xmlns:p="http://primefaces.prime.com.tr/ui" version="2.0">
+
+<jsp:directive.page contentType="text/html;charset=UTF-8" />
+<jsp:output omit-xml-declaration="yes" />
+
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+<title>ELIPS'PHARMA - Page inconnue</title>
+<link type="text/css" rel="stylesheet" href="#{facesContext.externalContext.requestContextPath}/resources/css/eclipse.css" /> 
+
+<style type="text/css">
+html {
+	overflow: auto;
+}
+
+body {
+	font-family: Arial, Helvetica, sans-serif;
+}
+
+h1 {
+	background-image: url("#{facesContext.externalContext.requestContextPath}/resources/images/titre_h1.jpg");
+	background-repeat: no-repeat;
+	color: #5DB677;
+	font-size: 22px;
+	height: 29px;
+	margin: 20px 0 0;
+	padding: 2px 0 0 20px;
+	text-transform: uppercase;
+	text-align: center;
+}
+
+.exceptionMessage {
+	white-space: pre-wrap; /* css-3 */
+	white-space: -moz-pre-wrap; /* Mozilla, since 1999 */
+	white-space: -pre-wrap; /* Opera 4-6 */
+	white-space: -o-pre-wrap; /* Opera 7 */
+	word-wrap: break-word; /* Internet Explorer 5.5+ */
+}
+</style>
+</head>
+
+<body>
+    	<div class="header">	
+	    <h:panelGroup layout="block" styleClass="#{applicationController.environnement eq 'test' ? 'banner-test' : 'banner'}">
+			<h:form prependId="false">
+			
+				<!-- Logo Eclipse -->
+		    	<div class="logo">
+		    		<div style="float: left;">
+			    		<a href="#{facesContext.externalContext.requestContextPath}/">
+			    			<h:graphicImage library="images" name="#{applicationController.environnement eq 'test' ? 'testlogo.jpg' : 'logo.jpg'}" width="102" height="80" 
+			    				alt="#{resourceBundle['eclipse.accueil']}" title="#{resourceBundle['eclipse.accueil']}" />
+			    		</a>
+		    		</div>
+			    	<!-- Deconnexion -->
+			    	<div class="deconnexion">
+						<p:commandLink action="launchModeAdmin" ajax="false" title="#{resourceBundle['menu.administration']}" 
+					rendered="#{currentUser.principal.isAdmin and currentUser.principal.role != 'ADMIN'}">			    		
+				    		<h:graphicImage library="images" name="admin.png" />
+			    		</p:commandLink>	
+			    		<a href="#{facesContext.externalContext.requestContextPath}/j_spring_security_logout">
+			    		<h:graphicImage library="images" name="deconnexion.png"  
+			    				alt="#{resourceBundle['eclipse.deconnexion']}" title="#{resourceBundle['eclipse.deconnexion']}" />
+			    			
+			    		</a>
+			    	</div>	 
+		    	</div> 
+	    	
+    		</h:form>
+	    </h:panelGroup>
+    </div>
+	<div class="main">
+		<h1>Erreur serveur (code 500)</h1>
+
+		<div
+			style="text-align: center; color: #D6710B; font-size: 14px; font-weight: bold; padding: 10px; margin-top: 10px">
+			<div>
+				Une erreur s'est produite sur le serveur (
+				<h:outputText value="#{session.lastAccessedTime}">
+					<f:convertDateTime pattern="yyyy-MM-dd HH:mm:ss" type="date" />
+				</h:outputText>
+				).<br />
+			</div>
+			<br />
+			<div>Merci de contacter votre administrateur.</div>
+                        <c:if test="${not empty requestScope['javax.servlet.error.exception']}">
+                        <br/>
+                        <div>
+                            <h:outputLink value="mailto:${applicationController.erreurMailto}">
+                                <f:param name="subject" value="ELIPS'PHARMA - Erreur technique" />
+                                <f:param name="body" value="Une erreur technique est survenue le + ${session.lastAccessedTime}%20${requestScope['javax.servlet.error.exception'].message}%20${elips:getFullStackTrace(requestScope['javax.servlet.error.exception'])}" />
+                                <h:outputText value="Cliquez-ici pour envoyer l'erreur par mail" />
+                            </h:outputLink>
+
+                        </div>
+                        </c:if>
+                        <br />
+			<div>
+				<h:outputLink value="#{request.contextPath}">Retour à la page d'accueil</h:outputLink>
+			</div>
+		</div>
+
+		<c:if
+			test="${applicationController.environnement eq 'test' and (not empty requestScope['javax.servlet.error.exception'])}">
+			<div>
+				<pre class="exceptionMessage">${requestScope['javax.servlet.error.exception'].message}</pre>
+				<pre>#{elips:getFullStackTrace(requestScope['javax.servlet.error.exception'])}</pre>
+			</div>
+		</c:if>
+	</div>
+</body>
+</html>
+
+

@@ -30,11 +30,10 @@ import fr.pharma.eclipse.utils.FacesUtils;
 
 /**
  * Classe en charge de tester le manager de DemandeDotation.
- 
+ * @author Netapsys
  * @version $Revision$ $Date$
  */
-public class DemandeDotationManagerTest
-{
+public class DemandeDotationManagerTest {
     /**
      * DemandeDotationManager à tester.
      */
@@ -60,8 +59,7 @@ public class DemandeDotationManagerTest
      */
     @Before
     @SuppressWarnings("unchecked")
-    public void init()
-    {
+    public void init() {
         this.manager = new DemandeDotationManager();
         this.mockProduitService = Mockito.mock(ProduitService.class);
         this.manager.setProduitService(this.mockProduitService);
@@ -75,8 +73,7 @@ public class DemandeDotationManagerTest
      * Méthode en charge de purger les données de test.
      */
     @After
-    public void end()
-    {
+    public void end() {
         this.manager = null;
         this.mockProduitService = null;
         this.mockDotationFactory = null;
@@ -87,8 +84,7 @@ public class DemandeDotationManagerTest
      * Méthode en charge de tester l'initialisation des données de test.
      */
     @Test
-    public void testInitData()
-    {
+    public void testInitData() {
         Assert.assertNotNull(this.manager);
         Assert.assertNotNull(this.mockProduitService);
         Assert.assertNotNull(this.mockDotationFactory);
@@ -99,8 +95,7 @@ public class DemandeDotationManagerTest
      * Méthode en charge de tester la méthode d'initialisation.
      */
     @Test
-    public void testInit()
-    {
+    public void testInit() {
         this.manager.init();
         Assert.assertNull(this.manager.getEssaiSelected());
         Assert.assertNull(this.manager.getServices());
@@ -108,24 +103,22 @@ public class DemandeDotationManagerTest
         Assert.assertNull(this.manager.getServiceSelected());
         Assert.assertNull(this.manager.getDotationCurrent());
         Assert.assertNull(this.manager.getConditionnements());
-        Assert.assertEquals(0,
-                            this.manager.getDotations().size());
+        Assert.assertEquals(0, this.manager.getDotations().size());
     }
 
     /**
-     * Méthode en charge de tester la méthode appelée via l'IHM suite à la sélection d'un essai.
+     * Méthode en charge de tester la méthode appelée via l'IHM suite à la
+     * sélection d'un essai.
      */
     @Test
-    public void testHandleSelectEssai()
-    {
+    public void testHandleSelectEssai() {
         final SelectEvent mockSelectEvent = Mockito.mock(SelectEvent.class);
         final Essai essai = Mockito.mock(Essai.class);
         final Pharmacie pharmacie = Mockito.mock(Pharmacie.class);
         Mockito.when(essai.getPharmaciePrincipale()).thenReturn(pharmacie);
         Mockito.when(mockSelectEvent.getObject()).thenReturn(essai);
         this.manager.handleSelectEssai(mockSelectEvent);
-        Mockito.verify(this.mockProduitService).getProduits(essai,
-                                                            pharmacie);
+        Mockito.verify(this.mockProduitService).getProduits(essai, pharmacie);
         Assert.assertNull(this.manager.getServiceSelected());
     }
 
@@ -133,54 +126,49 @@ public class DemandeDotationManagerTest
      * Méthode en charge de tester la méthode d'ajout de dotation.
      */
     @Test
-    public void testAddDotation()
-    {
+    public void testAddDotation() {
         final Essai essai = Mockito.mock(Essai.class);
         final Service service = Mockito.mock(Service.class);
         this.manager.setEssaiSelected(essai);
         this.manager.setServiceSelected(service);
         final Dotation dotation = new Dotation();
-        Mockito.when(this.mockDotationFactory.getInitializedObject(essai,
-                                                                   service)).thenReturn(dotation);
+        Mockito.when(this.mockDotationFactory.getInitializedObject(essai, service)).thenReturn(dotation);
         this.manager.addDotation();
         Assert.assertNotNull(this.manager.getDotationCurrent());
-        Assert.assertEquals("ADD",
-                            this.manager.getActionDotationCurrent());
+        Assert.assertEquals("ADD", this.manager.getActionDotationCurrent());
     }
 
     /**
-     * Méthode en charge de tester l'ajout de dotation dans la liste des dotations.
+     * Méthode en charge de tester l'ajout de dotation dans la liste des
+     * dotations.
      */
     @Test
-    public void testAddDotationToDotationsKO()
-    {
+    public void testAddDotationToDotationsKO() {
         this.manager.setActionDotationCurrent("EDIT");
         this.manager.addDotationToDotations();
         Assert.assertNull(this.manager.getDotations());
     }
 
     /**
-     * Méthode en charge de tester l'ajout de dotation dans la liste des dotations.
+     * Méthode en charge de tester l'ajout de dotation dans la liste des
+     * dotations.
      */
     @Test
-    public void testAddDotationToDotations()
-    {
+    public void testAddDotationToDotations() {
         this.manager.setActionDotationCurrent("ADD");
         this.manager.init();
         this.manager.addDotationToDotations();
-        Assert.assertEquals(1,
-                            this.manager.getDotations().size());
+        Assert.assertEquals(1, this.manager.getDotations().size());
     }
 
     /**
-     * Méthode en charge de tester la méthode appelée via l'IHM suite à la sélection d'un produit.
+     * Méthode en charge de tester la méthode appelée via l'IHM suite à la
+     * sélection d'un produit.
      */
     @Test
-    public void testHandleSelectProduitNotNull()
-    {
+    public void testHandleSelectProduitNotNull() {
         final Produit produit = Mockito.mock(Produit.class);
-        final SortedSet<Conditionnement> conditionnements =
-            new TreeSet<Conditionnement>(new EclipseListComparator());
+        final SortedSet<Conditionnement> conditionnements = new TreeSet<Conditionnement>(new EclipseListComparator());
         produit.getConditionnements().addAll(conditionnements);
         final AjaxBehaviorEvent event = Mockito.mock(AjaxBehaviorEvent.class);
         final HtmlSelectOneMenu select = Mockito.mock(HtmlSelectOneMenu.class);
@@ -199,14 +187,13 @@ public class DemandeDotationManagerTest
     }
 
     /**
-     * Méthode en charge de tester la méthode appelée via l'IHM suite à la sélection d'un produit.
+     * Méthode en charge de tester la méthode appelée via l'IHM suite à la
+     * sélection d'un produit.
      */
     @Test
-    public void testHandleSelectProduitNull()
-    {
+    public void testHandleSelectProduitNull() {
         final Produit produit = Mockito.mock(Produit.class);
-        final SortedSet<Conditionnement> conditionnements =
-            new TreeSet<Conditionnement>(new EclipseListComparator());
+        final SortedSet<Conditionnement> conditionnements = new TreeSet<Conditionnement>(new EclipseListComparator());
         produit.getConditionnements().addAll(conditionnements);
         final AjaxBehaviorEvent event = Mockito.mock(AjaxBehaviorEvent.class);
         final HtmlSelectOneMenu select = Mockito.mock(HtmlSelectOneMenu.class);
@@ -219,8 +206,7 @@ public class DemandeDotationManagerTest
 
         this.manager.handleSelectProduit(event);
 
-        Assert.assertEquals(0,
-                            this.manager.getConditionnements().size());
+        Assert.assertEquals(0, this.manager.getConditionnements().size());
         Assert.assertNull(this.manager.getDotationCurrent().getConditionnement());
 
     }
@@ -229,35 +215,30 @@ public class DemandeDotationManagerTest
      * Méthode en charge de tester la modification de dotation.
      */
     @Test
-    public void testModifyDotation()
-    {
+    public void testModifyDotation() {
         this.manager.modifyDotation();
-        Assert.assertEquals("EDIT",
-                            this.manager.getActionDotationCurrent());
+        Assert.assertEquals("EDIT", this.manager.getActionDotationCurrent());
     }
 
     /**
      * Méthode en charge de tester la suppression de dotation.
      */
     @Test
-    public void testDelDotationOK()
-    {
+    public void testDelDotationOK() {
         this.manager.init();
         final Dotation dotation = new Dotation();
         this.manager.setDotationToDelete(dotation);
         this.manager.getDotations().add(dotation);
 
         this.manager.delDotation();
-        Assert.assertEquals(0,
-                            this.manager.getDotations().size());
+        Assert.assertEquals(0, this.manager.getDotations().size());
     }
 
     /**
      * Méthode en charge de tester la suppression de dotation.
      */
     @Test
-    public void testDelDotation()
-    {
+    public void testDelDotation() {
         this.manager.init();
         final Dotation dotation = new Dotation();
         this.manager.setDotationToDelete(dotation);
@@ -266,16 +247,14 @@ public class DemandeDotationManagerTest
         this.manager.getDotations().add(dotationOther);
 
         this.manager.delDotation();
-        Assert.assertEquals(1,
-                            this.manager.getDotations().size());
+        Assert.assertEquals(1, this.manager.getDotations().size());
     }
 
     /**
      * Méthode en charge de tester la méthode de validation d'une dotation.
      */
     @Test
-    public void testValidateQteAutoriseeEnDotationNull()
-    {
+    public void testValidateQteAutoriseeEnDotationNull() {
         final Dotation dotation = new Dotation();
         final Produit produit = new Medicament();
         final DetailLogistique detailLogistique = new DetailLogistique();
@@ -284,13 +263,10 @@ public class DemandeDotationManagerTest
 
         dotation.setQuantite(2);
 
-        try
-        {
+        try {
             this.manager.setDotationCurrent(dotation);
             this.manager.validate();
-        }
-        catch (final ValidationException e)
-        {
+        } catch (final ValidationException e) {
             Assert.fail("Exception not expected");
         }
     }
@@ -299,8 +275,7 @@ public class DemandeDotationManagerTest
      * Méthode en charge de tester la méthode de validation d'une dotation.
      */
     @Test
-    public void testValidateQteAutoriseeOK()
-    {
+    public void testValidateQteAutoriseeOK() {
         final Dotation dotation = new Dotation();
         final Produit produit = new Medicament();
         final DetailLogistique detailLogistique = new DetailLogistique();
@@ -310,13 +285,10 @@ public class DemandeDotationManagerTest
 
         dotation.setQuantite(2);
 
-        try
-        {
+        try {
             this.manager.setDotationCurrent(dotation);
             this.manager.validate();
-        }
-        catch (final ValidationException e)
-        {
+        } catch (final ValidationException e) {
             Assert.fail("Exception not expected");
         }
     }
@@ -325,8 +297,7 @@ public class DemandeDotationManagerTest
      * Méthode en charge de tester la méthode de validation d'une dotation.
      */
     @Test(expected = ValidationException.class)
-    public void testValidateQteAutoriseeKO()
-    {
+    public void testValidateQteAutoriseeKO() {
         final Dotation dotation = new Dotation();
         final Produit produit = new Medicament();
         final DetailLogistique detailLogistique = new DetailLogistique();
@@ -340,14 +311,13 @@ public class DemandeDotationManagerTest
     }
 
     /**
-     * Méthode en charge de tester la méthode d'ajout d'un message de confirmation.
+     * Méthode en charge de tester la méthode d'ajout d'un message de
+     * confirmation.
      */
     @Test
-    public void testAddMessageConfirm()
-    {
+    public void testAddMessageConfirm() {
         this.manager.addMessageConfirm();
-        Mockito.verify(this.mockFacesUtils).addMessage(FacesMessage.SEVERITY_INFO,
-                                                       "demandeDotation.confirmMsg");
+        Mockito.verify(this.mockFacesUtils).addMessage(FacesMessage.SEVERITY_INFO, "demandeDotation.confirmMsg");
     }
 
 }

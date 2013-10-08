@@ -17,9 +17,9 @@
 			value="#{preparationManager.getList('conditionnements', false)}"
 			var="conditionnement"
 			emptyMessage="#{resourceBundle['results.none']}"
-			selection="#{conditionnementsManager.beanSelected}"
+			selection="#{conditionnementListManager.beanSelected}"
 			selectionMode="single" 
-			rowSelectListener="#{conditionnementManager.editConditionnement(conditionnementsManager.beanSelected)}"
+			rowSelectListener="#{conditionnementManager.editConditionnement(conditionnementListManager.beanSelected)}"
 			onRowSelectComplete="javascript:popupEditionPreparation.show(); disableConditionnementSelectionStyle();"
 			update="formConditionnement">
 
@@ -68,13 +68,13 @@
 		<div class="actionButton">
 			<p:commandButton
 				id="addConditionnement" 
-				actionListener="#{conditionnementsManager.initAjout(conditionnementFactory.getInitializedObject(preparationManager.bean))}" ajax="true"
+				actionListener="#{conditionnementListManager.initAjout(conditionnementFactory.getInitializedObject(preparationManager.bean))}" ajax="true"
 				immediate="true" update="formConditionnement err" oncomplete="popupEditionPreparation.show();"
 				value="#{resourceBundle['btn.ajouter']}"
 				title="#{resourceBundle['btn.ajouter']}">
 			</p:commandButton>
 			<p:commandButton id="deleteConditionnement" 
-				actionListener="#{conditionnementsManager.remove(preparationManager.bean)}" ajax="true"
+				actionListener="#{conditionnementListManager.remove(preparationManager.bean)}" ajax="true"
 				value="#{resourceBundle['btn.supprimer']}" update="conditionnements common_outp_msgs" oncomplete="scrollToErrorIfExist()"
 				title="#{resourceBundle['btn.supprimer']}">
 			</p:commandButton>

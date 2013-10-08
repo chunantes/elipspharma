@@ -18,12 +18,10 @@ import fr.pharma.eclipse.utils.EssaiUtils;
 
 /**
  * Test de la classe {@link JasperReportDownloadController}.
- 
+ * @author Netapsys
  * @version $Revision$ $Date$
  */
-public class JasperReportDownloadControllerTest
-    extends AbstractEclipseJUnitTest
-{
+public class JasperReportDownloadControllerTest extends AbstractEclipseJUnitTest {
     /**
      * Classe testée.
      */
@@ -48,24 +46,20 @@ public class JasperReportDownloadControllerTest
      * {@inheritDoc}
      */
     @Override
-    public void setUp()
-    {
+    public void setUp() {
         this.mockedStreamedContentFactory = Mockito.mock(DefaultStreamedContentFactory.class);
         this.mockedBuildManager = Mockito.mock(JasperReportBuildManager.class);
         this.controller = new JasperReportDownloadController();
         this.controller.setStreamedContentFactory(this.mockedStreamedContentFactory);
         this.controller.setBuildManagers(new HashMap<String, JasperReportBuildManager>());
-        this.controller.getBuildManagers().put(JasperReportDownloadControllerTest.TYPE_RAPPORT
-                                                       .name(),
-                                               this.mockedBuildManager);
+        this.controller.getBuildManagers().put(JasperReportDownloadControllerTest.TYPE_RAPPORT.name(), this.mockedBuildManager);
     }
 
     /**
      * {@inheritDoc}
      */
     @Override
-    public void tearDown()
-    {
+    public void tearDown() {
         this.controller = null;
         this.mockedStreamedContentFactory = null;
         this.mockedBuildManager = null;
@@ -75,89 +69,58 @@ public class JasperReportDownloadControllerTest
      * {@inheritDoc}
      */
     @Override
-    public void testInit()
-    {
+    public void testInit() {
         Assert.assertNotNull(this.controller);
-        Assert.assertEquals(this.mockedStreamedContentFactory,
-                            this.controller.getStreamedContentFactory());
-        Assert.assertEquals(this.mockedBuildManager,
-                            this.controller
-                                    .getBuildManagers()
-                                    .get(JasperReportDownloadControllerTest.TYPE_RAPPORT.name()));
+        Assert.assertEquals(this.mockedStreamedContentFactory, this.controller.getStreamedContentFactory());
+        Assert.assertEquals(this.mockedBuildManager, this.controller.getBuildManagers().get(JasperReportDownloadControllerTest.TYPE_RAPPORT.name()));
     }
 
     /**
      * Test de la méthode
-     * downloadRapport(fr.pharma.eclipse.domain.enums.jasper.TypeRapportJasper). .
+     * downloadRapport(fr.pharma.eclipse.domain.enums.jasper.TypeRapportJasper).
+     * .
      */
     @Test
-    public void testDownloadRapportTypeRapportJasperOk()
-    {
+    public void testDownloadRapportTypeRapportJasperOk() {
         final String expectedFileName =
-            JasperReportDownloadControllerTest.TYPE_RAPPORT.getReportName()
-                    + JasperReportDownloadControllerTest.TYPE_RAPPORT
-                            .getTypeExport()
-                            .getExtension();
+            JasperReportDownloadControllerTest.TYPE_RAPPORT.getReportName() + JasperReportDownloadControllerTest.TYPE_RAPPORT.getTypeExport().getExtension();
         final Essai source = EssaiUtils.makeEssaiTest(1);
-        try
-        {
-            final byte[] expectedBytes = new byte[]
-            {1, 5, 3 };
+        try {
+            final byte[] expectedBytes = new byte[]{1, 5, 3 };
             final DefaultStreamedContent expectedRes = Mockito.mock(DefaultStreamedContent.class);
             Mockito.when(this.mockedBuildManager.build(source)).thenReturn(expectedBytes);
-            Mockito
-                    .when(this.mockedBuildManager.buildFileName(source))
-                    .thenReturn(expectedFileName);
-            Mockito
-                    .when(this.mockedStreamedContentFactory
-                            .getInitializedObject(expectedBytes,
-                                                  expectedFileName))
-                    .thenReturn(expectedRes);
-            final StreamedContent actualRes =
-                this.controller.downloadRapport(source,
-                                                JasperReportDownloadControllerTest.TYPE_RAPPORT);
+            Mockito.when(this.mockedBuildManager.buildFileName(source)).thenReturn(expectedFileName);
+            Mockito.when(this.mockedStreamedContentFactory.getInitializedObject(expectedBytes, expectedFileName)).thenReturn(expectedRes);
+            final StreamedContent actualRes = this.controller.downloadRapport(source, JasperReportDownloadControllerTest.TYPE_RAPPORT);
             Mockito.verify(this.mockedBuildManager).build(source);
             Mockito.verify(this.mockedBuildManager).buildFileName(source);
-            Mockito
-                    .verify(this.mockedStreamedContentFactory)
-                    .getInitializedObject(expectedBytes,
-                                          expectedFileName);
-            Assert.assertEquals(expectedRes,
-                                actualRes);
-        }
-        catch (final JasperReportBuildException e)
-        {
+            Mockito.verify(this.mockedStreamedContentFactory).getInitializedObject(expectedBytes, expectedFileName);
+            Assert.assertEquals(expectedRes, actualRes);
+        } catch (final JasperReportBuildException e) {
             Assert.fail("Erreur de paramétrage des mocks");
         }
     }
 
     /**
-     * Test de la méthode downloadRapport(fr.pharma.eclipse.domain.enums.jasper.TypeRapportJasper)
+     * Test de la méthode
+     * downloadRapport(fr.pharma.eclipse.domain.enums.jasper.TypeRapportJasper)
      * - exception levée.
      */
     @Test
-    public void testDownloadRapportTypeRapportJasperKo()
-    {
+    public void testDownloadRapportTypeRapportJasperKo() {
         final Essai source = EssaiUtils.makeEssaiTest(1);
-        try
-        {
+        try {
             final DefaultStreamedContent expectedRes = Mockito.mock(DefaultStreamedContent.class);
             final Throwable expectedException = Mockito.mock(JasperReportBuildException.class);
             Mockito.when(this.mockedBuildManager.build(source)).thenThrow(expectedException);
-            Mockito
-                    .when(this.mockedStreamedContentFactory.getInitializedObjectInError())
-                    .thenReturn(expectedRes);
-            final StreamedContent actualRes =
-                this.controller.downloadRapport(source,
-                                                JasperReportDownloadControllerTest.TYPE_RAPPORT);
+            Mockito.when(this.mockedStreamedContentFactory.getInitializedObjectInError()).thenReturn(expectedRes);
+            final StreamedContent actualRes = this.controller.downloadRapport(source, JasperReportDownloadControllerTest.TYPE_RAPPORT);
             Mockito.verify(this.mockedBuildManager).build(source);
             Mockito.verify(this.mockedStreamedContentFactory).getInitializedObjectInError();
-            Assert.assertEquals(expectedRes,
-                                actualRes);
-        }
-        catch (final JasperReportBuildException e)
-        {
-            Assert.fail("Erreur de paramétrage des mocks");
+            Assert.assertEquals(expectedRes, actualRes);
+            Assert.fail("JasperReportBuildException is expected");
+        } catch (final JasperReportBuildException e) {
+            // JasperReportBuildException is expected
         }
     }
 }

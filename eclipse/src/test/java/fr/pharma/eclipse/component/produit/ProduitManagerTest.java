@@ -18,11 +18,10 @@ import fr.pharma.eclipse.service.common.GenericService;
 
 /**
  * Classe en charge de tester le manager de produit.
- 
+ * @author Netapsys
  * @version $Revision$ $Date$
  */
-public class ProduitManagerTest
-{
+public class ProduitManagerTest {
     /**
      * ProduitManager à tester.
      */
@@ -43,24 +42,19 @@ public class ProduitManagerTest
      */
     @Before
     @SuppressWarnings("unchecked")
-    public void init()
-    {
+    public void init() {
         this.mockProduitService = Mockito.mock(GenericService.class);
         this.documentManager = Mockito.mock(GenericDocumentManager.class);
         this.produitManager = new ProduitManager(this.mockProduitService);
         this.produitManager.setDocumentsManagers(new TreeMap<String, GenericDocumentManager>());
-        this.produitManager
-                .getDocumentsManagers()
-                .put(TypeDocumentProduit.CONDITIONNEMENT.name(),
-                     this.documentManager);
+        this.produitManager.getDocumentsManagers().put(TypeDocumentProduit.CONDITIONNEMENT.name(), this.documentManager);
     }
 
     /**
      * Méthode en charge de purger les données de test.
      */
     @After
-    public void end()
-    {
+    public void end() {
         this.mockProduitService = null;
         this.produitManager = null;
     }
@@ -69,8 +63,7 @@ public class ProduitManagerTest
      * Méthode en charge de tester l'initialisation des données de test.
      */
     @Test
-    public void testInit()
-    {
+    public void testInit() {
         Assert.assertNotNull(this.produitManager);
         Assert.assertNotNull(this.mockProduitService);
     }
@@ -79,8 +72,7 @@ public class ProduitManagerTest
      * Méthode en charge de tester le changement d'onglet.
      */
     @Test
-    public void testOnOngletChangeWithException()
-    {
+    public void testOnOngletChangeWithException() {
         final TabChangeEvent mockEvent = Mockito.mock(TabChangeEvent.class);
         final Tab tab = Mockito.mock(Tab.class);
         Mockito.when(mockEvent.getTab()).thenReturn(tab);
@@ -93,8 +85,7 @@ public class ProduitManagerTest
      * Méthode en charge de tester le changement d'onglet.
      */
     @Test
-    public void testOnOngletChange()
-    {
+    public void testOnOngletChange() {
         final TabChangeEvent mockEvent = Mockito.mock(TabChangeEvent.class);
         final Tab tab = Mockito.mock(Tab.class);
         Mockito.when(mockEvent.getTab()).thenReturn(tab);
@@ -107,11 +98,9 @@ public class ProduitManagerTest
      * Test de la méthode getDocmentManager.
      */
     @Test
-    public void testGetDocumentManager()
-    {
+    public void testGetDocumentManager() {
         Assert.assertNull(this.produitManager.getDocumentManager(TypeDocumentProduit.ETIQUETAGE));
-        Assert.assertNotNull(this.produitManager
-                .getDocumentManager(TypeDocumentProduit.CONDITIONNEMENT));
+        Assert.assertNotNull(this.produitManager.getDocumentManager(TypeDocumentProduit.CONDITIONNEMENT));
     }
 
 }

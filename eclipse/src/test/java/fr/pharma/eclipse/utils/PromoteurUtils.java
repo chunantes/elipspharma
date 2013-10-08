@@ -5,16 +5,14 @@ import fr.pharma.eclipse.domain.model.acteur.Promoteur;
 
 /**
  * Classe utilitaire pour le traitement des promoteurs dans les tests.
- 
+ * @author Netapsys
  * @version $Revision$ $Date$
  */
-public final class PromoteurUtils
-{
+public final class PromoteurUtils {
     /**
      * Constructeur privé.
      */
-    private PromoteurUtils()
-    {
+    private PromoteurUtils() {
         super();
     }
 
@@ -25,8 +23,7 @@ public final class PromoteurUtils
      * @return Un promoteur initialisé pour les tests.
      */
     public static Promoteur makePromoteurTest(final Long id,
-                                          final TypePromoteur typePromoteur)
-    {
+                                              final TypePromoteur typePromoteur) {
         final Promoteur promoteur = new Promoteur();
         promoteur.setId(id);
         promoteur.setType(typePromoteur);

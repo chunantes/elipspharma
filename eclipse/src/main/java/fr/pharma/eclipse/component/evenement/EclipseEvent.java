@@ -8,12 +8,10 @@ import fr.pharma.eclipse.domain.model.evenement.Evenement;
 
 /**
  * Description de la classe.
- 
+ * @author Netapsys
  * @version $Revision$ $Date$
  */
-public class EclipseEvent
-    extends DefaultScheduleEvent
-{
+public class EclipseEvent extends DefaultScheduleEvent {
 
     /**
      * SerialVersionUID.
@@ -32,12 +30,8 @@ public class EclipseEvent
      * @param isForDay Pour la journée.
      * @param evenement Evenement.
      */
-    public EclipseEvent(final Evenement evenement)
-    {
-        super(evenement.getLibelle(),
-              evenement.getDateDebut().getTime(),
-              evenement.getDateFin().getTime(),
-              BooleanUtils.isTrue(evenement.getJournee()));
+    public EclipseEvent(final Evenement evenement) {
+        super(evenement.getLibelle(), evenement.getDateDebut().getTime(), evenement.getDateFin().getTime(), BooleanUtils.isTrue(evenement.getJournee()));
         this.setStyleClass(StringUtils.lowerCase(evenement.getTypeEvenement().getClasseCSS()));
         this.evenement = evenement;
     }
@@ -46,8 +40,7 @@ public class EclipseEvent
      * Getter sur evenement.
      * @return Retourne le evenement.
      */
-    public Evenement getEvenement()
-    {
+    public Evenement getEvenement() {
         return this.evenement;
     }
 
@@ -55,8 +48,7 @@ public class EclipseEvent
      * Setter pour evenement.
      * @param evenement le evenement à écrire.
      */
-    public void setEvenement(final Evenement evenement)
-    {
+    public void setEvenement(final Evenement evenement) {
         this.evenement = evenement;
     }
 

@@ -1,0 +1,194 @@
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+     xmlns:ui="http://java.sun.com/jsf/facelets"
+     xmlns:h="http://java.sun.com/jsf/html"
+     xmlns:f="http://java.sun.com/jsf/core"
+	 xmlns:p="http://primefaces.prime.com.tr/ui"
+	 xmlns:c="http://java.sun.com/jsp/jstl/core"
+     template="/WEB-INF/pages/template/template.xhtml">
+     
+     <ui:define name="title">
+		<h:outputFormat value="#{resourceBundle['ordonnancierReprisePassif.title']}"/>
+     </ui:define>
+     
+     <ui:define name="body"> 
+     	
+		<!-- Bouton imprimer ordonnancier -->
+	   	<div class="actionButton" style="margin-bottom:6px;margin-top:1px;">
+	   		<h:outputLink id="print" value="#" rendered="#{not empty reprisePassifManager.ordonnancier}">  
+				<p:printer target="formImpressionReprisePassif" />  
+		    	<h:graphicImage library="images" name="imprimer.gif" title="#{resourceBundle['btn.imprimer']}"/>
+		 	</h:outputLink>
+	 	</div>
+     	
+     	<h:form id="formImpressionReprisePassif" prependId="false">
+     		
+     		<fieldset style="width:960px;">
+     			<p:messages />
+     		</fieldset>
+     		
+   			<h:panelGroup id="tableSaisieCriteres" rendered="#{empty reprisePassifManager.ordonnancier}">
+     		<fieldset>
+				<table class="stock large" cellpadding="0" cellspacing="0" border="0" width="100%">
+			 		<tr>
+						<td>
+							<h:outputLabel value="#{resourceBundle['ordonnancierReprisePassif.essai']}"/> 
+	    					<h:outputLabel value="#{resourceBundle['ordonnancierReprisePassif.promoteur']}"/>
+							<h:inputText value="#{reprisePassifManager.criteria.essaiPromoteur}"/>
+						</td>
+						<td>
+							<h:outputLabel value="#{resourceBundle['ordonnancierReprisePassif.initiales']}"/> 
+							<h:outputLabel value="#{resourceBundle['ordonnancierReprisePassif.patient']}"/>
+							<h:inputText class="smallInput" value="#{reprisePassifManager.criteria.initialesPatient}"/>
+						</td>
+						<!-- A partir du -->
+						<td><h:outputLabel value="#{resourceBundle['ordonnancierReprisePassif.du']}"/>
+			           	<p:calendar id="dateDebut" value="#{reprisePassifManager.criteria.dateDebut}" 
+   								effect="#{resourceBundle['effect.calendar']}" locale="#{resourceBundle['date.locale']}" showButtonPanel="true" navigator="true" 
+   								converter="#{calendarConverter}" />			           		
+			            </td>           	
+			           	<td>
+			           	<!-- Jusquau -->
+			           	<h:outputLabel value="#{resourceBundle['ordonnancierReprisePassif.au']}"/>
+   							<p:calendar id="dateFin" value="#{reprisePassifManager.criteria.dateFin}" 
+   								effect="#{resourceBundle['effect.calendar']}" locale="#{resourceBundle['date.locale']}" showButtonPanel="true" navigator="true" 
+   								converter="#{calendarConverter}" />	
+			           	</td>			
+					</tr>				
+				</table>
+				
+		   		<div style="width:960px;">
+					<!-- Bouton generation ordonnancier -->
+				   	<div class="actionButton" style="margin-bottom:6px;margin-top:1px;">
+						<p:commandButton id="calculerOrdonnancierReprisePassifButton" action="calculerOrdonnancierReprisePassif" ajax="false" 
+							value="#{resourceBundle['btn.genererOrdonnancier']}" title="#{resourceBundle['btn.genererOrdonnancier']}" />
+				 	</div>
+			 	</div>				
+				
+			</fieldset>
+			</h:panelGroup>
+				
+			<!-- titre des résultats -->	
+			<h:panelGroup id="titreImpression" rendered="#{not empty reprisePassifManager.ordonnancier}">				
+				<div class="editionOrdonnancier">
+					<h:outputFormat value="#{resourceBundle['ordonnancierReprisePassif.edition.title0']}">
+					</h:outputFormat>
+					
+					<c:if test="#{reprisePassifManager.criteria.essaiPromoteur != ''}">
+							<h:outputText value="#{resourceBundle['ordonnancierReprisePassif.edition.title1']}"/>
+							<h:outputFormat value="#{resourceBundle['ordonnancierReprisePassif.edition.title1b']}">
+								<f:param value="#{reprisePassifManager.criteria.essaiPromoteur}" />
+							</h:outputFormat>	
+					</c:if>
+					<br />
+					<c:if test="#{reprisePassifManager.criteria.dateDebut.time != null}">
+						<c:if test="#{reprisePassifManager.criteria.dateFin.time != null}">
+							<h:outputFormat
+								value="#{resourceBundle['ordonnancierReprisePassif.edition.title2']}">
+								<f:param
+									value="#{facesUtils.formatDate(reprisePassifManager.criteria.dateDebut)}" />
+								<f:param
+									value="#{facesUtils.formatDate(reprisePassifManager.criteria.dateFin)}" />
+							</h:outputFormat>
+						</c:if>
+				    </c:if>
+				</div>	
+			</h:panelGroup>	
+			
+			<!-- Affichage de "Aucun Résultat" seulement après qu'une recherche ait été réalisée -->
+			<c:if test="#{reprisePassifManager.criteria.dateDebut.time != null || reprisePassifManager.criteria.dateFin.time != null
+				|| reprisePassifManager.criteria.essaiPromoteur != null || reprisePassifManager.criteria.initialesPatient != null}">
+					<h:panelGroup id="titreNoResult" rendered="#{empty reprisePassifManager.ordonnancier}">				
+						<div class="editionOrdonnancier">
+							<h:outputFormat value="#{resourceBundle['results.none']}">
+							</h:outputFormat>
+						</div>	
+					</h:panelGroup>	
+			</c:if>		
+				
+			<!-- resultats -->	
+			<h:panelGroup id="resultsReprisePassif" >
+			
+				<p:panel style="width:955px;" rendered="#{not empty reprisePassifManager.ordonnancier}">
+				<p:dataTable id="dispensations" value="#{reprisePassifManager.ordonnancier}" var="reprisePassif" emptyMessage="#{resourceBundle['results.none']}">
+	    			
+	    			<!-- Numero ordonnancier -->
+	    			<p:column id="numOrdonnancier" styleClass="panelCol_5" >
+	    				<f:facet name="header">
+	    					<h:outputText value="#{resourceBundle['ordonnancierReprisePassif.numero']}"/>
+	    					<br />
+	    					<h:outputText value="#{resourceBundle['ordonnancierReprisePassif.ordonnancier']}"/>
+	    				</f:facet>
+	    				<div align="center">
+	    					<h:outputText value="#{reprisePassif.numeroOrdonnancier}"/>
+	    				</div>
+	    			</p:column>
+
+					<!-- Date dispensation -->		    			
+	    			<p:column id="dateDispensation" styleClass="panelCol_10">
+	    				<f:facet name="header">
+	    					<h:outputText value="#{resourceBundle['ordonnancierReprisePassif.date']}"/>
+	    					<br />
+	    					<h:outputText value="#{resourceBundle['ordonnancierReprisePassif.dispensation']}"/>
+	    				</f:facet>
+	    				<div align="center">
+		    				<h:outputText value="#{reprisePassif.dateDispensation.time}">
+		    					<f:convertDateTime pattern="#{resourceBundle['date.pattern.default']}" />
+		    				</h:outputText>
+	    				</div>
+	    			</p:column>
+	    			
+	    			<!-- Initiales patient -->
+	    			<p:column id="initialesPatient" styleClass="panelCol_10">
+	    				<f:facet name="header">
+	    					<h:outputText value="#{resourceBundle['ordonnancierReprisePassif.initiales']}"/>
+	    					<br />
+	    					<h:outputText value="#{resourceBundle['ordonnancierReprisePassif.patient']}"/>
+	    				</f:facet>
+	    				<div align="center">
+	    					<h:outputText value="#{reprisePassif.initialesPatient}"/>
+	    				</div>
+	    			</p:column>
+	    			
+	    			<!-- Essai -->
+	    			<p:column id="essai" styleClass="panelCol_20">
+	    				<f:facet name="header">
+	    					<h:outputText value="#{resourceBundle['ordonnancierReprisePassif.essai']}"/>
+	    					<br />
+	    					<h:outputText value="#{resourceBundle['ordonnancierReprisePassif.promoteur']}"/>
+	    				</f:facet>
+	    				<h:outputText value="#{reprisePassif.essaiPromoteur}"/>
+	    			</p:column>
+	    			
+	    			<!-- Num lot/Traitement -->
+	    			<p:column id="numLotTraitement" styleClass="panelCol_20">
+	    				<f:facet name="header">
+	    					<h:outputText value="#{resourceBundle['ordonnancierReprisePassif.numLotTraitement']}"/>
+	    				</f:facet>
+	    				<h:outputText value="#{reprisePassif.numLotTraitement}"/>
+	    			</p:column>
+	    			
+	    			<!-- Produits -->
+	    			<p:column id="produits" styleClass="panelCol_45">
+	    				<f:facet name="header">
+	    					<h:outputText value="#{resourceBundle['ordonnancierReprisePassif.produits']}"/>
+	    				</f:facet>
+	    				<h:outputText value="#{reprisePassif.produits}"/>
+	    			</p:column>
+	    			
+	    			<!-- Dispense par -->    			
+	    			<p:column id="dispensePar" styleClass="panelCol_10">
+	    				<f:facet name="header">
+	    					<h:outputText value="#{resourceBundle['ordonnancierReprisePassif.dispensePar']}"/>
+	    				</f:facet>
+	    				<h:outputText value="#{reprisePassif.dispensePar}"/>
+	    			</p:column>		    			
+	    			
+	    		</p:dataTable>		
+	    		</p:panel>			
+			</h:panelGroup>
+				
+		</h:form>     	
+     	
+     </ui:define>
+     
+</ui:composition>

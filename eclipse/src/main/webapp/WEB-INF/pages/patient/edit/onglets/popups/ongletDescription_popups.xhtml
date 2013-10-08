@@ -12,7 +12,7 @@
 		<h:form id="formHistorique">
 			<!-- Historique des changement des donnees poid taille sf -->
 			<p:dataTable id="historiques"
-				value="#{patientManager.getList('historiquePatient', true)}"
+				value="#{patientManager.listeHistoriquePatient}"
 				var="historique" emptyMessage="#{resourceBundle['results.none']}">
 
 				<!-- Date -->

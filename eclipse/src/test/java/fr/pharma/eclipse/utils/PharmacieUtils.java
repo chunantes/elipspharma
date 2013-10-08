@@ -4,16 +4,14 @@ import fr.pharma.eclipse.domain.model.stockage.Pharmacie;
 
 /**
  * Classe utilitaire pour les jeux de tests de type Pharmacie.
- 
+ * @author Netapsys
  * @version $Revision$ $Date$
  */
-public final class PharmacieUtils
-{
+public final class PharmacieUtils {
     /**
      * Constructeur.
      */
-    private PharmacieUtils()
-    {
+    private PharmacieUtils() {
         super();
     }
 
@@ -22,11 +20,8 @@ public final class PharmacieUtils
      * @param id Identifiant technique.
      * @return Un objet Pharmacie.
      */
-    public static Pharmacie makePharmacieTest(final long id)
-    {
-        return PharmacieUtils.makePharmacieTest(id,
-                                                "nom_"
-                                                        + id);
+    public static Pharmacie makePharmacieTest(final long id) {
+        return PharmacieUtils.makePharmacieTest(id, "nom_" + id);
     }
 
     /**
@@ -36,8 +31,7 @@ public final class PharmacieUtils
      * @return Un objet Pharmacie.
      */
     public static Pharmacie makePharmacieTest(final long id,
-                                              final String nom)
-    {
+                                              final String nom) {
         final Pharmacie pharmacie = new Pharmacie();
         pharmacie.setId(id);
         pharmacie.setNom(nom);

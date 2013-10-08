@@ -23,7 +23,7 @@
 					<!-- Numero ipp -->
 					<h:outputLabel styleClass="mandatory" id="numIppLabel"
 						for="num_ipp" value="#{resourceBundle['gestionPatient.ipp']}" />
-					<h:inputText maxlength="9" id="num_ipp"
+					<h:inputText id="num_ipp"
 						value="#{patientManager.bean.numeroIpp}" required="true"
 						requiredMessage="#{resourceBundle['patient.ipp.notEmpty']}" />
 					<h:panelGroup />
@@ -48,8 +48,7 @@
 					</h:selectOneRadio>
 
 					<h:panelGroup />
-					<panelGroup />
-
+					<h:panelGroup />
 
 					<!-- nom et prenom -->
 					<h:outputLabel styleClass="mandatory" id="nomLabel" for="nom"
@@ -85,7 +84,7 @@
 					<!-- Date de naissance -->
 					<h:outputLabel id="labelDateNaissance" for="date_naissance" styleClass="mandatory"
 						value="#{resourceBundle['gestionPatient.dateNaissance']}" />
-					<p:calendar id="date_naissance" required="true"  requiredMessage="#{resourceBundle['patient.dateNaissance.notEmpty']}"
+					<p:calendar yearRange="1900" id="date_naissance" required="true"  requiredMessage="#{resourceBundle['patient.dateNaissance.notEmpty']}"
 						onSelectUpdate="@this" selectListener="#{patientManager.reinit()}"
 						value="#{patientManager.bean.dateNaissance}"
 						effect="#{resourceBundle['effect.calendar']}"
@@ -121,7 +120,7 @@
 				header="#{resourceBundle['gestionPatient.donnees']}">
 
 				<p:dataTable id="donneesPhysio"
-					value="#{patientManager.getList('historiquePatient', true)}"
+					value="#{patientManager.listeHistoriquePatient}"
 					rows="1" var="historique"
 					emptyMessage="#{resourceBundle['results.none']}">
 

@@ -5,10 +5,14 @@ import java.util.SortedSet;
 import javax.annotation.Resource;
 import javax.faces.event.ActionEvent;
 import javax.faces.event.AjaxBehaviorEvent;
+import javax.faces.event.ValueChangeEvent;
 
 import org.apache.commons.collections.CollectionUtils;
+import org.primefaces.event.DateSelectEvent;
 
 import fr.pharma.eclipse.component.BeanManager;
+import fr.pharma.eclipse.component.surcout.validator.CategorieValidator;
+import fr.pharma.eclipse.component.surcout.validator.GrilleValidator;
 import fr.pharma.eclipse.component.surcout.validator.RegleValidator;
 import fr.pharma.eclipse.domain.model.surcout.Categorie;
 import fr.pharma.eclipse.domain.model.surcout.GrilleModele;
@@ -20,12 +24,10 @@ import fr.pharma.eclipse.service.common.GenericService;
 
 /**
  * Description de la classe.
- 
+ * @author Netapsys
  * @version $Revision$ $Date$
  */
-public class GrilleModeleManager
-    extends BeanManager<GrilleModele>
-{
+public class GrilleModeleManager extends BeanManager<GrilleModele> {
 
     /**
      * .SerialVersionUID.
@@ -57,10 +59,23 @@ public class GrilleModeleManager
     /**
      * Validateur de regle.
      */
-    @Resource(name = "regleValidator")
+    @Resource
     private RegleValidator regleValidator;
-
     /**
+     * Validateur de regle.
+     */
+    @Resource
+    private GrilleValidator grilleValidator;
+    
+    /**
+     * Validateur de categorie
+     */
+    @Resource
+    private CategorieValidator categorieValidator;
+
+   
+
+	/**
      * Regle.
      */
     private Regle regle;
@@ -74,8 +89,7 @@ public class GrilleModeleManager
      * Constructeur.
      * @param service Service.
      */
-    public GrilleModeleManager(final GenericService<GrilleModele> service)
-    {
+    public GrilleModeleManager(final GenericService<GrilleModele> service) {
         super(service);
     }
 
@@ -83,16 +97,12 @@ public class GrilleModeleManager
      * Méthode en charge d'initialiser un thème.
      * @param event Envenement.
      */
-    public void initTheme(final ActionEvent event)
-    {
+    public void initTheme(final ActionEvent event) {
         final Theme t = (Theme) event.getComponent().getAttributes().get("theme");
-        if (t == null)
-        {
+        if (t == null) {
             this.theme = this.themeFactory.getInitializedObject();
             this.theme.setGrilleModele(this.getBean());
-        }
-        else
-        {
+        } else {
             this.setTheme(t);
         }
     }
@@ -100,21 +110,17 @@ public class GrilleModeleManager
     /**
      * Calcul si la grille est éditable.
      */
-    public void processEditable()
-    {
+    public void processEditable() {
         this.reattach();
-        this.editable = this.getBean().getId() == null
-                        || this.getBean().getGrilles().isEmpty();
+        this.editable = (this.getBean().getId() == null) || this.getBean().getGrilles().isEmpty();
     }
 
     /**
      * Méthode en charge de mettre à jour et d'ajouter le thème en cours.
      */
-    public void addTheme()
-    {
+    public void addTheme() {
         final SortedSet<Theme> themes = this.getBean().getThemes();
-        if (!themes.contains(this.theme))
-        {
+        if (!themes.contains(this.theme)) {
             themes.add(this.theme);
         }
         this.theme = null;
@@ -124,18 +130,14 @@ public class GrilleModeleManager
      * Méthode en charge d'initialiser une catégorie.
      * @param event Envenement.
      */
-    public void initCategorie(final ActionEvent event)
-    {
+    public void initCategorie(final ActionEvent event) {
         final Categorie c = (Categorie) event.getComponent().getAttributes().get("categorie");
         final Theme theme = (Theme) event.getComponent().getAttributes().get("theme");
-        if (c == null)
-        {
+        if (c == null) {
             this.categorie = this.categorieFactory.getInitializedObject();
             this.categorie.setTheme(theme);
             this.setTheme(theme);
-        }
-        else
-        {
+        } else {
             this.setCategorie(c);
             this.setTheme(theme);
         }
@@ -144,23 +146,33 @@ public class GrilleModeleManager
     /**
      * Méthode en charge de mettre à jour ou ajouter la catégorie en cours.
      */
-    public void addCategorie()
-    {
-        final SortedSet<Categorie> categories = this.theme.getCategories();
-        if (!categories.contains(this.categorie))
-        {
-            categories.add(this.categorie);
+    public void addCategorie() {
+    	
+    	if (!this.categorieValidator.validate(this.categorie)) {
+            return;
         }
-        this.theme = null;
-        this.categorie = null;
+    	
+        final SortedSet<Categorie> categories = this.theme.getCategories();
+        //Si une catégorie ayant le même libellé n'est pas déjà présente dans ce theme
+        if (!categories.contains(this.categorie)) {
+            categories.add(this.categorie);
+            SortedSet<Theme> themes = this.getBean().getThemes();
+            Object theme = CollectionUtils.find(themes, new GenericPredicate("libelle", this.categorie.getTheme().getLibelle()));
+            ((Theme)theme).getCategories().add(this.categorie);        
+            this.categorie.setTheme(((Theme)theme));
+        }else{
+        	//TODO : afficher un message?
+        }
+             
+        this.getService().save(this.getBean());
+        
     }
 
     /**
      * Méthode en charge de supprimer une catégorie.
      * @param event L'évènement.
      */
-    public void removeCategorie(final ActionEvent event)
-    {
+    public void removeCategorie(final ActionEvent event) {
         final Categorie c = (Categorie) event.getComponent().getAttributes().get("categorie");
         c.getTheme().getCategories().remove(c);
     }
@@ -169,8 +181,7 @@ public class GrilleModeleManager
      * Méthode en charge de supprimer un thème.
      * @param event L'évènement.
      */
-    public void removeTheme(final ActionEvent event)
-    {
+    public void removeTheme(final ActionEvent event) {
         final Theme t = (Theme) event.getComponent().getAttributes().get("theme");
         this.getBean().getThemes().remove(t);
     }
@@ -179,55 +190,55 @@ public class GrilleModeleManager
      * Méthode en charge d'initialiser une règle.
      * @param categorie La catégorie.
      */
-    public void initRegle(final Categorie categorie)
-    {
+    public void initRegle(final Categorie categorie) {
         this.regle = new Regle();
         this.regle.setCategorie(categorie);
     }
 
     /**
-     * Listener vide (obligatoire car sinon le tag <f:ajax ..> ne fonctionne pas.
+     * Listener vide (obligatoire car sinon le tag <f:ajax ..> ne fonctionne
+     * pas.
      * @param event Evenement.
      */
-    public void nothing(final AjaxBehaviorEvent event)
-    {
+    public void nothing(final AjaxBehaviorEvent event) {
+        event.getComponent();
+    }
+
+    public void handleDateSelect(final DateSelectEvent event) {
+        event.getComponent();
+    }
+
+    public void handleDateSelect(final ValueChangeEvent event) {
         event.getComponent();
     }
 
     /**
      * Méthode en charge d'ajouter une regle.
      */
-    public void addRegle()
-    {
-        // Validation du stockage
-        final boolean valid = this.regleValidator.validate(this.regle);
-        if (valid)
-        {
-            final SortedSet<Categorie> categories =
-                ((Theme) CollectionUtils.find(this.getBean().getThemes(),
-                                              new GenericPredicate("libelle",
-                                                                   this.getRegle()
-                                                                           .getCategorie()
-                                                                           .getTheme()
-                                                                           .getLibelle())))
-                        .getCategories();
-            final Categorie c =
-                (Categorie) CollectionUtils.find(categories,
-                                                 new GenericPredicate("libelle",
-                                                                      this.getRegle()
-                                                                              .getCategorie()
-                                                                              .getLibelle()));
-            this.getRegle().setCategorie(c);
-            c.getRegles().add(this.getRegle());
-            this.getService().save(this.getBean());
+    public void addRegle() {
+        if (!this.regleValidator.validate(this.regle)) {
+            return;
         }
+
+        final SortedSet<Categorie> categories =
+            ((Theme) CollectionUtils.find(this.getBean().getThemes(), new GenericPredicate("libelle", this.getRegle().getCategorie().getTheme().getLibelle()))).getCategories();
+        final Categorie c = (Categorie) CollectionUtils.find(categories, new GenericPredicate("libelle", this.getRegle().getCategorie().getLibelle()));
+
+        this.getRegle().setCategorie(c);
+        c.getRegles().add(this.getRegle());
+
+        if (!this.grilleValidator.validate(c)) {
+            c.getRegles().remove(this.getRegle());
+            return;
+        }
+
+        this.getService().save(this.getBean());
     }
     /**
      * Retourne <true> si la grille courante est éditable.
      * @return <true> si la grille courante est éditable.
      */
-    public boolean isEditable()
-    {
+    public boolean isEditable() {
         return this.editable;
     }
 
@@ -235,8 +246,7 @@ public class GrilleModeleManager
      * Méthode en charge de supprimer une règle.
      * @param r La règle à supprimer.
      */
-    public void removeRegle(final Regle r)
-    {
+    public void removeRegle(final Regle r) {
         r.getCategorie().getRegles().remove(r);
     }
 
@@ -244,8 +254,7 @@ public class GrilleModeleManager
      * Setter pour themeFactory.
      * @param themeFactory le themeFactory à écrire.
      */
-    public void setThemeFactory(final BeanObjectFactory<Theme> themeFactory)
-    {
+    public void setThemeFactory(final BeanObjectFactory<Theme> themeFactory) {
         this.themeFactory = themeFactory;
     }
 
@@ -253,8 +262,7 @@ public class GrilleModeleManager
      * Setter pour categorieFactory.
      * @param categorieFactory le categorieFactory à écrire.
      */
-    public void setCategorieFactory(final BeanObjectFactory<Categorie> categorieFactory)
-    {
+    public void setCategorieFactory(final BeanObjectFactory<Categorie> categorieFactory) {
         this.categorieFactory = categorieFactory;
     }
 
@@ -262,8 +270,7 @@ public class GrilleModeleManager
      * Getter sur theme.
      * @return Retourne le theme.
      */
-    public Theme getTheme()
-    {
+    public Theme getTheme() {
         return this.theme;
     }
 
@@ -271,8 +278,7 @@ public class GrilleModeleManager
      * Setter pour theme.
      * @param theme le theme à écrire.
      */
-    public void setTheme(final Theme theme)
-    {
+    public void setTheme(final Theme theme) {
         this.theme = theme;
     }
 
@@ -280,8 +286,7 @@ public class GrilleModeleManager
      * Getter sur categorie.
      * @return Retourne le categorie.
      */
-    public Categorie getCategorie()
-    {
+    public Categorie getCategorie() {
         return this.categorie;
     }
 
@@ -289,8 +294,7 @@ public class GrilleModeleManager
      * Setter pour categorie.
      * @param categorie le categorie à écrire.
      */
-    public void setCategorie(final Categorie categorie)
-    {
+    public void setCategorie(final Categorie categorie) {
         this.categorie = categorie;
     }
 
@@ -298,8 +302,7 @@ public class GrilleModeleManager
      * Getter sur regle.
      * @return Retourne le regle.
      */
-    public Regle getRegle()
-    {
+    public Regle getRegle() {
         return this.regle;
     }
 
@@ -307,8 +310,7 @@ public class GrilleModeleManager
      * Setter pour regle.
      * @param regle le regle à écrire.
      */
-    public void setRegle(final Regle regle)
-    {
+    public void setRegle(final Regle regle) {
         this.regle = regle;
     }
 
@@ -316,8 +318,7 @@ public class GrilleModeleManager
      * Setter pour regleValidator.
      * @param regleValidator le regleValidator à écrire.
      */
-    public void setRegleValidator(final RegleValidator regleValidator)
-    {
+    public void setRegleValidator(final RegleValidator regleValidator) {
         this.regleValidator = regleValidator;
     }
 
@@ -325,8 +326,21 @@ public class GrilleModeleManager
      * Setter pour editable.
      * @param editable le editable à écrire.
      */
-    public void setEditable(final boolean editable)
-    {
+    public void setEditable(final boolean editable) {
         this.editable = editable;
     }
+    
+    /**
+   	 * @return the categorieValidator
+   	 */
+   	public CategorieValidator getCategorieValidator() {
+   		return categorieValidator;
+   	}
+
+   	/**
+   	 * @param categorieValidator the categorieValidator to set
+   	 */
+   	public void setCategorieValidator(CategorieValidator categorieValidator) {
+   		this.categorieValidator = categorieValidator;
+   	}
 }

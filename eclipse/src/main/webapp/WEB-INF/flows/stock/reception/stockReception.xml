@@ -1,7 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<flow xmlns="http://www.springframework.org/schema/webflow"
-	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-	xsi:schemaLocation="http://www.springframework.org/schema/webflow
+<flow xmlns="http://www.springframework.org/schema/webflow" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.springframework.org/schema/webflow
     http://www.springframework.org/schema/webflow/spring-webflow-2.0.xsd"
 	parent="main">
 
@@ -11,10 +9,8 @@
 	<on-start>
 		<evaluate expression="essaiSearchCriteria.clear()" />
 		<!-- Initialisation complétion automatique des essais -->
-		<evaluate expression="'numInterne'"
-			result="autoCompleteEssaiManager.searchCriteria.activeOrder" />
-		<evaluate expression="'numInterneOrNomOrPromoteur'"
-			result="autoCompleteEssaiManager.searchCriteriaProperty" />
+		<evaluate expression="'numInterne'" result="autoCompleteEssaiManager.searchCriteria.activeOrder" />
+		<evaluate expression="'numInterneOrNomOrPromoteur'" result="autoCompleteEssaiManager.searchCriteriaProperty" />
 		<evaluate expression="approvisionnementManager.init()" />
 		<evaluate expression="TYPE_MOUVEMENT_APPROVISIONNEMENT" result="approvisionnementManager.typeAppro" />
 	</on-start>
@@ -24,16 +20,14 @@
 	</decision-state>
 
 	<action-state id="initEssai">
-		<evaluate expression="essaiService.get(idEssai)"
-			result="approvisionnementManager.essaiSelected" />
-		<transition to="stockReception" >
-			<evaluate expression="approvisionnementManager.handleSelectEssai(null)"/>
+		<evaluate expression="essaiService.get(idEssai)" result="approvisionnementManager.essaiSelected" />
+		<transition to="stockReception">
+			<evaluate expression="approvisionnementManager.handleSelectEssai(null)" />
 		</transition>
 	</action-state>
 
 	<!-- Page principale -->
-	<view-state id="stockReception"
-		view="../../../pages/stock/reception/stockReception.xhtml">
+	<view-state id="stockReception" view="../../../pages/stock/reception/stockReception.xhtml">
 		<transition on="addReceptionLot" to="editReceptionLot">
 			<evaluate expression="approvisionnementManager.addReceptionLot()" />
 		</transition>
@@ -45,16 +39,14 @@
 		</transition>
 		<transition on="cancel" to="viewStockReception" />
 		<transition on="save" to="recapStockReception">
-			<evaluate
-				expression="approvisionnementService.save(approvisionnementManager.receptionLots)"
-				result="approvisionnementManager.result" />
+			<evaluate expression="approvisionnementService.save(approvisionnementManager.receptionLots)" result="approvisionnementManager.result" />
 		</transition>
 		<transition on="error" to="stockReception" />
-		
+
 		<transition on="goStockConsultationFluxForEssai" to="consulterFluxForEssai" />
 		<transition on="goStockConsultationForEssai" to="consulterStockForEssai" />
 		<transition on="goStockExtensionPeremptionForEssai" to="extensionPeremptionForEssai" />
-		<transition on="goStockSortieForEssai" to="sortieForEssai" /> 
+		<transition on="goStockSortieForEssai" to="sortieForEssai" />
 	</view-state>
 
 	<!-- Edition de réception de lot -->
@@ -63,8 +55,7 @@
 	</subflow-state>
 
 	<!-- Page récapitulative de réception de stock -->
-	<view-state id="recapStockReception"
-		view="../../../pages/stock/reception/recapStockReception.xhtml">
+	<view-state id="recapStockReception" view="../../../pages/stock/reception/recapStockReception.xhtml">
 	</view-state>
 
 </flow>

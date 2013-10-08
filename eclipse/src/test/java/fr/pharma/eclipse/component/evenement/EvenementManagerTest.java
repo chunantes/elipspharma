@@ -16,11 +16,10 @@ import fr.pharma.eclipse.service.evenement.EvenementService;
 
 /**
  * Classe en charge de tester le manager de gestion d'un événement.
- 
+ * @author Netapsys
  * @version $Revision$ $Date$
  */
-public class EvenementManagerTest
-{
+public class EvenementManagerTest {
     /**
      * EvenementManager à tester.
      */
@@ -35,8 +34,7 @@ public class EvenementManagerTest
      * Méthode en charge d'initialiser les données de test.
      */
     @Before
-    public void init()
-    {
+    public void init() {
         this.mockEvenementService = Mockito.mock(EvenementService.class);
         this.manager = new EvenementManager(this.mockEvenementService);
     }
@@ -45,8 +43,7 @@ public class EvenementManagerTest
      * Méthode en charge de purger les données de test.
      */
     @After
-    public void end()
-    {
+    public void end() {
         this.manager = null;
         this.mockEvenementService = null;
     }
@@ -55,19 +52,17 @@ public class EvenementManagerTest
      * Méthode en charge de tester l'initialisation des données de test.
      */
     @Test
-    public void testInitData()
-    {
+    public void testInitData() {
         Assert.assertNotNull(this.manager);
         Assert.assertNotNull(this.mockEvenementService);
     }
 
     /**
-     * Méthode en charge de tester la méthode appelée via l'IHM lors de la sélection du type
-     * d'événement.
+     * Méthode en charge de tester la méthode appelée via l'IHM lors de la
+     * sélection du type d'événement.
      */
     @Test
-    public void testHandleSelectTypeEvenementVisite()
-    {
+    public void testHandleSelectTypeEvenementVisite() {
         final ValueChangeEvent event = Mockito.mock(ValueChangeEvent.class);
         final TypeEvenement typeEvenement = TypeEvenement.VISITE;
         Mockito.when(event.getNewValue()).thenReturn(typeEvenement);
@@ -79,19 +74,16 @@ public class EvenementManagerTest
         this.manager.getBean().setResultatVisite(ResultatVisite.EFFECTUE);
 
         this.manager.handleSelectTypeEvenement(event);
-        Assert.assertEquals(TypeVisite.AUDIT_EXTERNE,
-                            this.manager.getBean().getTypeVisite());
-        Assert.assertEquals(ResultatVisite.EFFECTUE,
-                            this.manager.getBean().getResultatVisite());
+        Assert.assertEquals(TypeVisite.AUDIT_EXTERNE, this.manager.getBean().getTypeVisite());
+        Assert.assertEquals(ResultatVisite.EFFECTUE, this.manager.getBean().getResultatVisite());
     }
 
     /**
-     * Méthode en charge de tester la méthode appelée via l'IHM lors de la sélection du type
-     * d'événement.
+     * Méthode en charge de tester la méthode appelée via l'IHM lors de la
+     * sélection du type d'événement.
      */
     @Test
-    public void testHandleSelectTypeEvenementNotVisite()
-    {
+    public void testHandleSelectTypeEvenementNotVisite() {
         final ValueChangeEvent event = Mockito.mock(ValueChangeEvent.class);
         final TypeEvenement typeEvenement = TypeEvenement.TACHE;
         Mockito.when(event.getNewValue()).thenReturn(typeEvenement);
@@ -111,8 +103,7 @@ public class EvenementManagerTest
      * Test de la méthode handleCheckJournee.
      */
     @Test
-    public void testHandleCheckJournee()
-    {
+    public void testHandleCheckJournee() {
         final ValueChangeEvent event = Mockito.mock(ValueChangeEvent.class);
         Mockito.when(event.getNewValue()).thenReturn(false);
         this.manager.setBean(new Evenement());

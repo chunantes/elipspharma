@@ -1,78 +1,85 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<flow xmlns="http://www.springframework.org/schema/webflow"
-	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-	xsi:schemaLocation="http://www.springframework.org/schema/webflow
-    http://www.springframework.org/schema/webflow/spring-webflow-2.0.xsd" parent="main">
+<flow xmlns="http://www.springframework.org/schema/webflow" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.springframework.org/schema/webflow
+    http://www.springframework.org/schema/webflow/spring-webflow-2.0.xsd"
+	parent="main">
 
 	<!-- Démarrage -->
 	<on-start>
-		<evaluate expression="essaiSearchCriteria.clear()"/>
-		<evaluate expression="patientSearchCriteria.clear()"/>
+		<evaluate expression="essaiSearchCriteria.clear()" />
+		<evaluate expression="patientSearchCriteria.clear()" />
 		<!-- Initialisation complétion automatique des essais -->
 		<evaluate expression="'numInterne'" result="autoCompleteEssaiManager.searchCriteria.activeOrder" />
-		<evaluate expression="'numInterneOrNomOrPromoteur'" result="autoCompleteEssaiManager.searchCriteriaProperty" />		
+		<evaluate expression="'numInterneOrNomOrPromoteur'" result="autoCompleteEssaiManager.searchCriteriaProperty" />
 		<evaluate expression="'numeroIpp'" result="autoCompletePatientManager.searchCriteria.activeOrder" />
-		<evaluate expression="'numeroIppOrNomOrPrenom'" result="autoCompletePatientManager.searchCriteriaProperty" />		
-		
-		<set name="prescriptionsManager.beans" value="null"/>
-		<evaluate expression="prescriptionSearchCriteria.clear()"/>
+		<evaluate expression="'numeroIppOrNomOrPrenom'" result="autoCompletePatientManager.searchCriteriaProperty" />
+
+		<set name="prescriptionDTOManager.beans" value="null" />
+		<evaluate expression="prescriptionSearchCriteria.clear()" />
 	</on-start>
 
 	<!-- Page principale -->
 	<view-state id="gestionPrescription" view="../../../pages/prescription/gestion/gestionPrescription.xhtml">
-		<transition on="search" to="search"/>
-		<transition on="addPrescription" to="editPrescription"/>
-		
+		<transition on="search" to="search" />
+		<transition on="addPrescription" to="editPrescription" />
+
 		<transition on="editPrescription" to="editPrescription">
-			<set name="flashScope.idPrescription" value="prescriptionsManager.beanSelected.id" type="java.lang.Long" />
-			<evaluate expression="null" result="prescriptionsManager.beanSelected"/>		
+			<set name="flashScope.idPrescription" value="prescriptionDTOManager.beanSelected.id" type="java.lang.Long" />
+			<evaluate expression="null" result="prescriptionDTOManager.beanSelected" />
 		</transition>
-		
+
 		<transition on="delete" to="search">
 			<set name="flashScope.idPrescription" value="requestParameters.id" type="java.lang.Long" />
-			<evaluate expression="prescriptionService.remove(prescriptionService.get(flashScope.idPrescription))"/>		
+			<evaluate expression="prescriptionService.remove(prescriptionService.get(flashScope.idPrescription))" />
 		</transition>
-		
-		<!-- Accès au récapitulatif d'une prescription en cliquant sur la loupe d'une ligne de l'écran "liste des prescription" -->
-		<transition on="recap" to="recap">
-			<set name="flashScope.idPrescription" value="requestParameters.id" type="java.lang.Long" />
-			<set name="prescriptionManager.bean" value="prescriptionService.get(flashScope.idPrescription)"/>
+
+		<!-- Accès au récapitulatif d'une prescription en cliquant sur l'icone "liste des prescription" -->
+		<transition on="recapFromClicSurImg" to="goRecap">
+			<set name="flashScope.idPrescription" value="requestParameters.idPrescription" type="java.lang.Long" />
 		</transition>
 
 		<!-- Accès au récapitulatif d'une prescription en cliquant sur une ligne de l'écran "liste des prescription" -->
-		<transition on="recapFromClicSurLigne" to="recap">
-			<set name="flashScope.idPrescription" value="prescriptionsManager.beanSelected.id" type="java.lang.Long" />
-			<set name="prescriptionManager.bean" value="prescriptionService.get(flashScope.idPrescription)"/>
-			<evaluate expression="null" result="prescriptionsManager.beanSelected"/>
+		<transition on="recapFromClicSurLigne" to="goRecap">
+			<set name="flashScope.idPrescription" value="prescriptionDTOManager.beanSelected.id" type="java.lang.Long" />
 		</transition>
-		
-		<transition on="comeback" to="comeback"/>
-		<transition on="error" to="gestionPrescription"/>
+
+		<transition on="comeback" to="comeback" />
+		<transition on="error" to="gestionPrescription" />
 	</view-state>
+
+	<decision-state id="goRecap">
+		<if test="flashScope.idPrescription != null" then="prerecap1" else="comeback"/>
+	</decision-state>
 	
-	<!-- Page récapitulative -->
-	<view-state id="recap"
-		view="../../../pages/prescription/edit/recapPrescription.xhtml">
-		
-		<on-render>
-			<evaluate expression="prescriptionService.reattach(prescriptionManager.bean)" result="prescriptionManager.bean"/>
-		</on-render>
-		
-		<transition on="cancel" to="search"/>
-	</view-state>
-	
-	<!-- Recherche -->
-	<action-state id="search">
-		<evaluate expression="prescriptionService.getAll(prescriptionSearchCriteria)" result="prescriptionsManager.beans"/>
-		<transition to="gestionPrescription"/>
+	<action-state id="prerecap1">
+		<evaluate expression="prescriptionService.get(flashScope.idPrescription)" result="prescriptionManager.bean"/>
+		<transition to="prerecap2"/>	
 	</action-state>
 	
+	<action-state id="prerecap2">
+		<evaluate expression="prescriptionDTOManager.setBeanSelected(null)"/>
+		<transition to="recap"/>	
+	</action-state>
+
+	<!-- Page récapitulative -->
+	<view-state id="recap" view="../../../pages/prescription/edit/recapPrescription.xhtml">
+		<on-render>
+			<evaluate expression="prescriptionService.reattach(prescriptionManager.bean)" result="prescriptionManager.bean" />
+		</on-render>
+		<transition on="cancel" to="search" />
+	</view-state>
+
+	<!-- Recherche -->
+	<action-state id="search">
+		<evaluate expression="prescriptionService.retrieveResults(prescriptionSearchCriteria)" result="prescriptionDTOManager.beans" />
+		<transition to="gestionPrescription" />
+	</action-state>
+
 	<!-- Ajout -->
 	<subflow-state id="editPrescription" subflow="prescription/edit">
-		<input name="idPrescription" value="flashScope.idPrescription"/>
-		<transition to="search"/>
+		<input name="idPrescription" value="flashScope.idPrescription" />
+		<transition to="search" />
 	</subflow-state>
-	
-	<end-state id="comeback"/>
-	
+
+	<end-state id="comeback" />
+
 </flow>

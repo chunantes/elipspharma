@@ -136,25 +136,25 @@
 					</tr>
 			 	</table>
 		   	<div style="width:960px;">
-		   			<c:if test="#{approvisionnementManager.essaiSelected!=null and essaiManager.bean != null and approvisionnementManager.essaiSelected.id == essaiManager.bean.id}">
-				<div style="float:left;">
-			   		<div class="retourButton">
-			   		<security:authorize
-						ifAnyGranted="ROLE_PHARMACIEN_INTERNE,ROLE_PHARMACIEN_INTERNE_GARDE,ROLE_PHARMACIEN_EXTERNE,ROLE_PHARMACIEN_PREPARATEUR,ROLE_PHARMACIEN_TITULAIRE,ROLE_PHARMACIEN_ASSISTANT,ROLE_PHARMACIEN_ATTACHE,ROLE_ADMIN">				
-						<p:menuButton  value="#{resourceBundle['btn.stock']}" >
-							 <p:menuitem value="#{resourceBundle['btn.consultationFlux']}"   
-					           action="goStockConsultationFluxForEssai" ajax="false"/>
-							 <p:menuitem value="#{resourceBundle['btn.consultationStock']}"   
-					           action="goStockConsultationStockForEssai" ajax="false"/>
-					        <p:menuitem value="#{resourceBundle['btn.extensionPeremption']}"   
-					            action="goStockExtensionPeremptionForEssai" ajax="false"/>
-					        <p:menuitem value="#{resourceBundle['btn.sortie']}"   
-					            action="goStockSortieForEssai" ajax="false"/>
-						</p:menuButton>
-					</security:authorize>	
-					</div>	
-				</div>
-			</c:if>
+		   		<c:if test="#{approvisionnementManager.essaiSelected!=null and essaiManager.bean != null and approvisionnementManager.essaiSelected.id == essaiManager.bean.id and empty approvisionnementManager.receptionLots}">
+					<div style="float:left;">
+				   		<div class="retourButton">
+				   		<security:authorize
+							ifAnyGranted="ROLE_PHARMACIEN_INTERNE,ROLE_PHARMACIEN_INTERNE_GARDE,ROLE_PHARMACIEN_EXTERNE,ROLE_PHARMACIEN_PREPARATEUR,ROLE_PHARMACIEN_TITULAIRE,ROLE_PHARMACIEN_ASSISTANT,ROLE_PHARMACIEN_ATTACHE,ROLE_ADMIN">				
+							<p:menuButton  value="#{resourceBundle['btn.stock']}" >
+								 <p:menuitem value="#{resourceBundle['btn.consultationFlux']}"   
+						           action="goStockConsultationFluxForEssai" ajax="false"/>
+								 <p:menuitem value="#{resourceBundle['btn.consultationStock']}"   
+						           action="goStockConsultationForEssai" ajax="false"/>
+						        <p:menuitem value="#{resourceBundle['btn.extensionPeremption']}"   
+						            action="goStockExtensionPeremptionForEssai" ajax="false"/>
+						        <p:menuitem value="#{resourceBundle['btn.sortie']}"   
+						            action="goStockSortieForEssai" ajax="false"/>
+							</p:menuButton>
+						</security:authorize>	
+						</div>	
+					</div>
+				</c:if>
 		   	
 			   	<div class="actionButton" style="margin-bottom:6px;margin-top:1px;">
 					<!-- Bouton ajout d'une reception de lot -->

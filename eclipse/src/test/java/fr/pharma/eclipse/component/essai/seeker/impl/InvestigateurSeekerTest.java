@@ -24,12 +24,10 @@ import fr.pharma.eclipse.utils.ServiceUtils;
 
 /**
  * Test de la classe InvestigateurSeeker.
- 
+ * @author Netapsys
  * @version $Revision$ $Date$
  */
-public class InvestigateurSeekerTest
-    extends AbstractEclipseJUnitTest
-{
+public class InvestigateurSeekerTest extends AbstractEclipseJUnitTest {
     /**
      * Elément testé.
      */
@@ -50,8 +48,7 @@ public class InvestigateurSeekerTest
      */
     @SuppressWarnings("unchecked")
     @Override
-    public void setUp()
-    {
+    public void setUp() {
         this.mockedBeanFactory = Mockito.mock(BeanFactory.class);
         this.mockedService = Mockito.mock(GenericService.class);
         this.seeker = new InvestigateurSeeker();
@@ -63,8 +60,7 @@ public class InvestigateurSeekerTest
      * {@inheritDoc}
      */
     @Override
-    public void tearDown()
-    {
+    public void tearDown() {
         this.seeker = null;
         this.mockedBeanFactory = null;
         this.mockedService = null;
@@ -74,20 +70,16 @@ public class InvestigateurSeekerTest
      * {@inheritDoc}
      */
     @Override
-    public void testInit()
-    {
+    public void testInit() {
         Assert.assertNotNull(this.seeker);
-        Assert.assertEquals(this.mockedBeanFactory,
-                            this.seeker.getBeanFactory());
-        Assert.assertEquals(this.mockedService,
-                            this.seeker.getService());
+        Assert.assertEquals(this.mockedBeanFactory, this.seeker.getBeanFactory());
+        Assert.assertEquals(this.mockedService, this.seeker.getService());
     }
     /**
      * Test de la méthode supports.
      */
     @Test
-    public void testSupports()
-    {
+    public void testSupports() {
         this.verifySupports(Arrays.asList(TypeContact.INVESTIGATEUR));
     }
 
@@ -95,12 +87,9 @@ public class InvestigateurSeekerTest
      * Méthode de vérification du support.
      * @param expectedSupports Liste des supports attendus.
      */
-    private void verifySupports(final List<TypeContact> expectedSupports)
-    {
-        for (final TypeContact typeContact : TypeContact.values())
-        {
-            Assert.assertEquals(expectedSupports.contains(typeContact),
-                                this.seeker.supports(typeContact));
+    private void verifySupports(final List<TypeContact> expectedSupports) {
+        for (final TypeContact typeContact : TypeContact.values()) {
+            Assert.assertEquals(expectedSupports.contains(typeContact), this.seeker.supports(typeContact));
         }
     }
 
@@ -108,37 +97,29 @@ public class InvestigateurSeekerTest
      * Test de la méthode getContacts.
      */
     @Test
-    public void testGetContacts()
-    {
+    public void testGetContacts() {
         long id = 1;
         final Essai essai = EssaiUtils.makeEssaiTest(id++);
         final String expectedBeanName = "investigateurCriteria";
 
         final Investigateur personne1 = Mockito.mock(Investigateur.class);
         final Investigateur personne2 = Mockito.mock(Investigateur.class);
-        final List<Investigateur> expectedList = Arrays.asList(personne1,
-                                                               personne2);
+        final List<Investigateur> expectedList = Arrays.asList(personne1, personne2);
 
         final Service service1 = ServiceUtils.makeServiceTest(id++);
         final Service service2 = ServiceUtils.makeServiceTest(id++);
         essai.getServices().add(service1);
         essai.getServices().add(service2);
 
-        final InvestigateurSearchCriteria expectedCriteria =
-            Mockito.mock(InvestigateurSearchCriteria.class);
-        Mockito
-                .when(this.mockedBeanFactory.getBean(expectedBeanName))
-                .thenReturn(expectedCriteria);
+        final InvestigateurSearchCriteria expectedCriteria = Mockito.mock(InvestigateurSearchCriteria.class);
+        Mockito.when(this.mockedBeanFactory.getBean(expectedBeanName)).thenReturn(expectedCriteria);
         Mockito.doAnswer(new Answer<Object>() {
 
             @SuppressWarnings("unchecked")
             @Override
-            public Object answer(final InvocationOnMock invocation)
-                throws Throwable
-            {
+            public Object answer(final InvocationOnMock invocation) throws Throwable {
                 final List<Service> argServices = (List<Service>) invocation.getArguments()[0];
-                Assert.assertEquals(2,
-                                    argServices.size());
+                Assert.assertEquals(2, argServices.size());
                 Assert.assertTrue(argServices.contains(service1));
                 Assert.assertTrue(argServices.contains(service2));
                 return null;
@@ -150,10 +131,8 @@ public class InvestigateurSeekerTest
         Mockito.verify(this.mockedBeanFactory).getBean(expectedBeanName);
         Mockito.verify(expectedCriteria).setServices(Matchers.anyListOf(Service.class));
         Mockito.verify(this.mockedService).getAll(expectedCriteria);
-        Assert.assertEquals(expectedList.size(),
-                            res.size());
-        for (final Personne expectedPersonne : expectedList)
-        {
+        Assert.assertEquals(expectedList.size(), res.size());
+        for (final Personne expectedPersonne : expectedList) {
             Assert.assertTrue(res.contains(expectedPersonne));
         }
 

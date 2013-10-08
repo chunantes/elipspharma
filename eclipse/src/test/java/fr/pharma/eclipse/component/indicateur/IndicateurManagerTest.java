@@ -12,12 +12,10 @@ import fr.pharma.eclipse.utils.AbstractEclipseJUnitTest;
 
 /**
  * Description de la classe.
- 
+ * @author Netapsys
  * @version $Revision$ $Date$
  */
-public class IndicateurManagerTest
-    extends AbstractEclipseJUnitTest
-{
+public class IndicateurManagerTest extends AbstractEclipseJUnitTest {
 
     /**
      * Manager.
@@ -28,8 +26,7 @@ public class IndicateurManagerTest
      * {@inheritDoc}
      */
     @Override
-    public void setUp()
-    {
+    public void setUp() {
         this.manager = new IndicateurManager();
     }
 
@@ -37,8 +34,7 @@ public class IndicateurManagerTest
      * {@inheritDoc}
      */
     @Override
-    public void tearDown()
-    {
+    public void tearDown() {
         this.manager = null;
     }
 
@@ -47,8 +43,7 @@ public class IndicateurManagerTest
      */
     @Override
     @Test
-    public void testInit()
-    {
+    public void testInit() {
         Assert.assertNotNull(this.manager);
     }
 
@@ -56,8 +51,7 @@ public class IndicateurManagerTest
      * Test de la méthode init().
      */
     @Test
-    public void testInitMethod()
-    {
+    public void testInitMethod() {
         this.manager.setIndicateurs(new ArrayList<Indicateur>());
         this.manager.setDateDebut(Calendar.getInstance());
         this.manager.setDateFin(Calendar.getInstance());

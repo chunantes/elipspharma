@@ -13,12 +13,10 @@ import fr.pharma.eclipse.domain.model.sir.PersonneSir;
 
 /**
  * Manager sur les beans de gestion de Personne SIR.
- 
+ * @author Netapsys
  * @version $Revision$ $Date$
  */
-public class PersonnesSirManager
-    implements Serializable
-{
+public class PersonnesSirManager implements Serializable {
     /**
      * Serial ID.
      */
@@ -33,8 +31,7 @@ public class PersonnesSirManager
      * Constructeur.
      * @param searchCriteria Critère de recherche.
      */
-    public PersonnesSirManager(final SearchCriteria searchCriteria)
-    {
+    public PersonnesSirManager(final SearchCriteria searchCriteria) {
         this.searchCriteria = searchCriteria;
     }
 
@@ -53,8 +50,7 @@ public class PersonnesSirManager
      * @return DataModel
      */
     @SuppressWarnings("unchecked")
-    public DataModel<PersonneSir> getModel()
-    {
+    public DataModel<PersonneSir> getModel() {
         return new SerializableListDataModel(this.getBeans());
     }
 
@@ -62,8 +58,7 @@ public class PersonnesSirManager
      * Getter pour beans.
      * @return Le beans
      */
-    public List<PersonneSir> getBeans()
-    {
+    public List<PersonneSir> getBeans() {
         return this.beans;
     }
 
@@ -71,8 +66,7 @@ public class PersonnesSirManager
      * Setter pour beans.
      * @param beans Le beans à écrire.
      */
-    public void setBeans(final List<PersonneSir> beans)
-    {
+    public void setBeans(final List<PersonneSir> beans) {
         this.beans = beans;
     }
 
@@ -80,8 +74,7 @@ public class PersonnesSirManager
      * Getter pour searchCriteria.
      * @return Le searchCriteria
      */
-    public SearchCriteria getSearchCriteria()
-    {
+    public SearchCriteria getSearchCriteria() {
         return this.searchCriteria;
     }
 
@@ -89,8 +82,7 @@ public class PersonnesSirManager
      * Getter pour beanSelected.
      * @return Le beanSelected
      */
-    public PersonneSir getBeanSelected()
-    {
+    public PersonneSir getBeanSelected() {
         return this.beanSelected;
     }
 
@@ -98,8 +90,7 @@ public class PersonnesSirManager
      * Setter pour beanSelected.
      * @param beanSelected Le beanSelected à écrire.
      */
-    public void setBeanSelected(final PersonneSir beanSelected)
-    {
+    public void setBeanSelected(final PersonneSir beanSelected) {
         this.beanSelected = beanSelected;
     }
 

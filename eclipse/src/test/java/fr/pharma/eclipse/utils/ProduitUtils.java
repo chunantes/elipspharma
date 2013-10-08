@@ -13,16 +13,14 @@ import fr.pharma.eclipse.domain.model.produit.detail.DetailLogistique;
 
 /**
  * Classe utilitaire pour les jeux de tests de type Produit.
- 
+ * @author Netapsys
  * @version $Revision$ $Date$
  */
-public final class ProduitUtils
-{
+public final class ProduitUtils {
     /**
      * Constructeur.
      */
-    private ProduitUtils()
-    {
+    private ProduitUtils() {
         super();
     }
 
@@ -31,11 +29,9 @@ public final class ProduitUtils
      * @param id Identifiant.
      * @return Un nouveau bean Medicament.
      */
-    public static Medicament makeMedicamentTest(final long id)
-    {
+    public static Medicament makeMedicamentTest(final long id) {
         final Medicament medicament = new Medicament();
-        ProduitUtils.fill(medicament,
-                          id);
+        ProduitUtils.fill(medicament, id);
         return medicament;
     }
 
@@ -44,11 +40,9 @@ public final class ProduitUtils
      * @param id Identifiant.
      * @return Un nouveau bean DispositifMedical.
      */
-    public static DispositifMedical makeDispMedicalTest(final long id)
-    {
+    public static DispositifMedical makeDispMedicalTest(final long id) {
         final DispositifMedical dispMedical = new DispositifMedical();
-        ProduitUtils.fill(dispMedical,
-                          id);
+        ProduitUtils.fill(dispMedical, id);
         return dispMedical;
     }
     /**
@@ -56,11 +50,9 @@ public final class ProduitUtils
      * @param id Identifiant.
      * @return Un nouveau bean ProduitTherapeutique.
      */
-    public static ProduitTherapeutique makePduitTherapeutiqueTest(final long id)
-    {
+    public static ProduitTherapeutique makePduitTherapeutiqueTest(final long id) {
         final ProduitTherapeutique pduitTherapeutique = new ProduitTherapeutique();
-        ProduitUtils.fill(pduitTherapeutique,
-                          id);
+        ProduitUtils.fill(pduitTherapeutique, id);
         return pduitTherapeutique;
     }
 
@@ -75,8 +67,7 @@ public final class ProduitUtils
     public static Conditionnement makeConditionnementTest(final long id,
                                                           final UniteGestion uniteGestion,
                                                           final Integer dosage,
-                                                          final String uniteDosage)
-    {
+                                                          final String uniteDosage) {
         final Conditionnement cond = new Conditionnement();
         cond.setId(id);
         cond.setUniteGestion(uniteGestion);
@@ -86,13 +77,13 @@ public final class ProduitUtils
     }
 
     /**
-     * Méthode en charge de valoriser les informations communes à tous les produits.
+     * Méthode en charge de valoriser les informations communes à tous les
+     * produits.
      * @param produit Produit.
      * @param id Identifiant du produit.
      */
     private static void fill(final Produit produit,
-                             final long id)
-    {
+                             final long id) {
         produit.setId(id);
         final DetailLogistique detailLogistique = new DetailLogistique();
         detailLogistique.setId(id);

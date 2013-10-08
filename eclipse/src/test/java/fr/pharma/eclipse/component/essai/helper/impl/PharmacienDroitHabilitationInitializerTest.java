@@ -12,12 +12,10 @@ import fr.pharma.eclipse.utils.PersonneUtils;
 
 /**
  * Test de la classe PharmacienDroitHabilitationInitializer.
- 
+ * @author Netapsys
  * @version $Revision$ $Date$
  */
-public class PharmacienDroitHabilitationInitializerTest
-    extends AbstractEclipseJUnitTest
-{
+public class PharmacienDroitHabilitationInitializerTest extends AbstractEclipseJUnitTest {
     /**
      * Initialiseur.
      */
@@ -27,8 +25,7 @@ public class PharmacienDroitHabilitationInitializerTest
      * {@inheritDoc}
      */
     @Override
-    public void setUp()
-    {
+    public void setUp() {
         this.initializer = new PharmacienDroitHabilitationInitializer();
     }
 
@@ -36,8 +33,7 @@ public class PharmacienDroitHabilitationInitializerTest
      * {@inheritDoc}
      */
     @Override
-    public void tearDown()
-    {
+    public void tearDown() {
         this.initializer = null;
     }
 
@@ -45,8 +41,7 @@ public class PharmacienDroitHabilitationInitializerTest
      * {@inheritDoc}
      */
     @Override
-    public void testInit()
-    {
+    public void testInit() {
         Assert.assertNotNull(this.initializer);
     }
 
@@ -54,16 +49,13 @@ public class PharmacienDroitHabilitationInitializerTest
      * Test de la méthode initialize.
      */
     @Test
-    public void testInitialize()
-    {
+    public void testInitialize() {
         final TypePharmacien type = TypePharmacien.PREPARATEUR;
-        final Pharmacien pharmacien = PersonneUtils.makePharmacien(1,
-                                                                   type);
+        final Pharmacien pharmacien = PersonneUtils.makePharmacien(1, type);
         final Habilitation habilitation = EssaiUtils.makeHabilitationTest(1L);
         habilitation.setPersonne(pharmacien);
         Assert.assertNull(habilitation.getDroit());
         this.initializer.initialize(habilitation);
-        Assert.assertEquals(type.getDroit(),
-                            habilitation.getDroit());
+        Assert.assertEquals(type.getDroit(), habilitation.getDroit());
     }
 }

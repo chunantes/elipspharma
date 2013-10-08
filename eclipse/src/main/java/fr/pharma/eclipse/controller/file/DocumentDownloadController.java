@@ -4,10 +4,10 @@ import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.Serializable;
 
-import org.eclipse.jdt.internal.core.Assert;
 import org.primefaces.model.StreamedContent;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.util.Assert;
 
 import fr.pharma.eclipse.domain.enums.document.TypeDocumentStatique;
 import fr.pharma.eclipse.domain.model.common.BeanParentDocument;
@@ -18,13 +18,12 @@ import fr.pharma.eclipse.service.document.DocumentService;
 import fr.pharma.eclipse.utils.Utils;
 
 /**
- * Classe de contrôleur pour la gestion du download de documents Eclipse depuis le serveur.
- 
+ * Classe de contrôleur pour la gestion du download de documents Eclipse depuis
+ * le serveur.
+ * @author Netapsys
  * @version $Revision$ $Date$
  */
-public class DocumentDownloadController
-    implements Serializable
-{
+public class DocumentDownloadController implements Serializable {
 
     /**
      * Serial ID.
@@ -60,56 +59,41 @@ public class DocumentDownloadController
      * Méthode en charge de préparer le téléchargement d'un document Eclipse.
      * @param bean Bean porteur du document.
      * @param doc Document à télécharger.
-     * @return Le StreamedContent nécessaire au composant fileDownload de PrimeFaces.
+     * @return Le StreamedContent nécessaire au composant fileDownload de
+     * PrimeFaces.
      */
     public StreamedContent downloadDocument(final BeanParentDocument bean,
-                                            final DocumentEclipse doc)
-    {
-        final File file = this.docService.getFile(bean,
-                                                  doc);
-        Assert.isNotNull(file);
-        try
-        {
-            return this.streamedContentFactory
-                    .getInitializedObject(this.fileInStreamFactory
-                                                  .getInitializedInputStream(file),
-                                          doc.getNomUtilisateur());
-        }
-        catch (final FileNotFoundException e)
-        {
-            return this.handleException(bean,
-                                        doc,
-                                        e);
+                                            final DocumentEclipse doc) {
+        Assert.notNull(bean);
+        final File file = this.docService.getFile(bean, doc);
+
+        try {
+            return this.streamedContentFactory.getInitializedObject(this.fileInStreamFactory.getInitializedInputStream(file), doc.getNomUtilisateur());
+        } catch (final FileNotFoundException e) {
+            return this.handleException(bean, doc, e);
         }
     }
 
     /**
      * Méthode en charge de préparer le téléchargement d'un fichier.
      * @param type Type du document à télécharger.
-     * @return Le StreamedContent nécessaire au composant fileDownload de PrimeFaces.
+     * @return Le StreamedContent nécessaire au composant fileDownload de
+     * PrimeFaces.
      */
-    public StreamedContent downloadDocument(final TypeDocumentStatique type)
-    {
-        Assert.isNotNull(type);
-        try
-        {
-            return this.streamedContentFactory
-                    .getInitializedObject(this.fileInStreamFactory
-                                                  .getInitializedInputStream(new File(this.library
-                                                          .getPathToDocument(type))),
-                                          type.getNom());
-        }
-        catch (final FileNotFoundException e)
-        {
-            DocumentDownloadController.LOG
-                    .error(new StringBuilder("Erreur de download du document ").append(type
-                            .getLibelle()).toString());
+    public StreamedContent downloadDocument(final TypeDocumentStatique type) {
+        Assert.notNull(type);
+        try {
+            return this.streamedContentFactory.getInitializedObject(this.fileInStreamFactory.getInitializedInputStream(new File(this.library.getPathToDocument(type))),
+                                                                    type.getNom());
+        } catch (final FileNotFoundException e) {
+            DocumentDownloadController.LOG.error(new StringBuilder("Erreur de download du document ").append(type.getLibelle()).toString());
             return this.streamedContentFactory.getInitializedObjectInError();
         }
     }
 
     /**
-     * Méthode en charge de traiter les exception levées lors de la tentative de download.
+     * Méthode en charge de traiter les exception levées lors de la tentative de
+     * download.
      * @param bean Bean porteur du document.
      * @param doc Document à télécharger.
      * @param exc Exception.
@@ -117,20 +101,9 @@ public class DocumentDownloadController
      */
     private StreamedContent handleException(final BeanParentDocument bean,
                                             final DocumentEclipse doc,
-                                            final Exception exc)
-    {
-        DocumentDownloadController.LOG
-                .error(new StringBuilder("Erreur de download du document de type ")
-                        .append(doc.getTypeDocument())
-                        .append(" n° ")
-                        .append(doc.getId())
-                        .append(" à partir du bean métier ")
-                        .append(bean)
-                        .append(" d'id ")
-                        .append(bean.getId())
-                        .append(" : ")
-                        .append(Utils.getStringStack(exc))
-                        .toString());
+                                            final Exception exc) {
+        DocumentDownloadController.LOG.error(new StringBuilder("Erreur de download du document de type ").append(doc.getTypeDocument()).append(" n° ").append(doc.getId())
+                .append(" à partir du bean métier ").append(bean).append(" d'id ").append(bean.getId()).append(" : ").append(Utils.getStringStack(exc)).toString());
         return this.streamedContentFactory.getInitializedObjectInError();
     }
 
@@ -138,8 +111,7 @@ public class DocumentDownloadController
      * Setter pour streamedContentFactory.
      * @param streamedContentFactory le streamedContentFactory à écrire.
      */
-    public void setStreamedContentFactory(final DefaultStreamedContentFactory streamedContentFactory)
-    {
+    public void setStreamedContentFactory(final DefaultStreamedContentFactory streamedContentFactory) {
         this.streamedContentFactory = streamedContentFactory;
     }
 
@@ -147,8 +119,7 @@ public class DocumentDownloadController
      * Getter sur streamedContentFactory.
      * @return Retourne le streamedContentFactory.
      */
-    DefaultStreamedContentFactory getStreamedContentFactory()
-    {
+    DefaultStreamedContentFactory getStreamedContentFactory() {
         return this.streamedContentFactory;
     }
 
@@ -156,8 +127,7 @@ public class DocumentDownloadController
      * Setter pour fileInStreamFactory.
      * @param fileInStreamFactory le fileInStreamFactory à écrire.
      */
-    public void setFileInStreamFactory(final IOStreamsFactory fileInStreamFactory)
-    {
+    public void setFileInStreamFactory(final IOStreamsFactory fileInStreamFactory) {
         this.fileInStreamFactory = fileInStreamFactory;
     }
 
@@ -165,8 +135,7 @@ public class DocumentDownloadController
      * Getter sur fileInStreamFactory.
      * @return Retourne le fileInStreamFactory.
      */
-    IOStreamsFactory getFileInStreamFactory()
-    {
+    IOStreamsFactory getFileInStreamFactory() {
         return this.fileInStreamFactory;
     }
 
@@ -174,8 +143,7 @@ public class DocumentDownloadController
      * Getter sur docService.
      * @return Retourne le docService.
      */
-    DocumentService getDocService()
-    {
+    DocumentService getDocService() {
         return this.docService;
     }
 
@@ -183,8 +151,7 @@ public class DocumentDownloadController
      * Setter pour docService.
      * @param docService le docService à écrire.
      */
-    public void setDocService(final DocumentService docService)
-    {
+    public void setDocService(final DocumentService docService) {
         this.docService = docService;
     }
 
@@ -192,8 +159,7 @@ public class DocumentDownloadController
      * Getter pour library.
      * @return Le library
      */
-    public DocumentLibrary getLibrary()
-    {
+    public DocumentLibrary getLibrary() {
         return this.library;
     }
 
@@ -201,8 +167,7 @@ public class DocumentDownloadController
      * Setter pour library.
      * @param library Le library à écrire.
      */
-    public void setLibrary(final DocumentLibrary library)
-    {
+    public void setLibrary(final DocumentLibrary library) {
         this.library = library;
     }
 

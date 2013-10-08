@@ -10,12 +10,10 @@ import fr.pharma.eclipse.domain.model.habilitation.Habilitation;
 
 /**
  * Classe en charge d'initialiser le droit d'une habilitation de pharmacien.
- 
+ * @author Netapsys
  * @version $Revision$ $Date$
  */
-public class PharmacienDroitHabilitationInitializer
-    implements DroitHabilitationInitializer
-{
+public class PharmacienDroitHabilitationInitializer implements DroitHabilitationInitializer {
 
     /**
      * Serial ID.
@@ -26,13 +24,10 @@ public class PharmacienDroitHabilitationInitializer
      * {@inheritDoc}
      */
     @Override
-    public void initialize(final Habilitation habilitation)
-    {
+    public void initialize(final Habilitation habilitation) {
         final Personne personne = habilitation.getPersonne();
-        Assert.isTrue(personne != null,
-                      "Aucune personne n'est associée à l'habilitation.");
-        Assert.isTrue(TypePersonne.PHARMACIEN.equals(personne.getType()),
-                      "La personne n'est pas un pharmacien!");
+        Assert.isTrue(personne != null, "Aucune personne n'est associée à l'habilitation.");
+        Assert.isTrue(TypePersonne.PHARMACIEN.equals(personne.getType()), "La personne n'est pas un pharmacien!");
         final Pharmacien pharmacien = (Pharmacien) personne;
         habilitation.setDroit(pharmacien.getTypePharmacien().getDroit());
     }

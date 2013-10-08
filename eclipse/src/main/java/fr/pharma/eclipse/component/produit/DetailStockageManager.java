@@ -12,12 +12,10 @@ import fr.pharma.eclipse.service.common.GenericService;
 
 /**
  * Manager de DetailStockage.
- 
+ * @author Netapsys
  * @version $Revision$ $Date$
  */
-public class DetailStockageManager
-    extends BeanManager<DetailStockage>
-{
+public class DetailStockageManager extends BeanManager<DetailStockage> {
 
     /**
      * SerialVersionUID.
@@ -44,16 +42,14 @@ public class DetailStockageManager
      * Constructeur.
      * @param service Service DetailStockage.
      */
-    public DetailStockageManager(final GenericService<DetailStockage> service)
-    {
+    public DetailStockageManager(final GenericService<DetailStockage> service) {
         super(service);
     }
 
     /**
      * Méthode en charge de purger le stockage.
      */
-    public void majPharmacie()
-    {
+    public void majPharmacie() {
         // Changement de pharmacie => purge du stockage associé
         this.getBean().setStockage(null);
         this.setNodeSelected(null);
@@ -62,10 +58,8 @@ public class DetailStockageManager
     /**
      * Méthode en charge de mettre à jour le stockage.
      */
-    public void updateStockage()
-    {
-        if (this.getNodeSelected() != null)
-        {
+    public void updateStockage() {
+        if (this.getNodeSelected() != null) {
             final Stockage stockage = (Stockage) this.getNodeSelected().getData();
             this.getBean().setStockage(stockage);
         }
@@ -75,18 +69,13 @@ public class DetailStockageManager
      * Getter pour stockagesSelectable.
      * @return Le stockagesSelectable
      */
-    public TreeNode getStockagesSelectable()
-    {
+    public TreeNode getStockagesSelectable() {
         // Récupération de la pharmacie sélectionnée
-        if (this.getBean() != null
-            && this.getBean().getPharmacie() != null)
-        {
-            this.stockagesSelectable =
-                this.treeStockageHelper.buildTree(this.getBean().getPharmacie());
+        if (this.getBean() != null && this.getBean().getPharmacie() != null) {
+            this.stockagesSelectable = this.treeStockageHelper.buildTree(this.getBean().getPharmacie());
+
             return this.stockagesSelectable;
-        }
-        else
-        {
+        } else {
             return null;
         }
     }
@@ -95,8 +84,7 @@ public class DetailStockageManager
      * Getter sur nodeSelected.
      * @return Retourne le nodeSelected.
      */
-    public TreeNode getNodeSelected()
-    {
+    public TreeNode getNodeSelected() {
         return this.nodeSelected;
     }
 
@@ -104,8 +92,7 @@ public class DetailStockageManager
      * Setter pour nodeSelected.
      * @param nodeSelected le nodeSelected à écrire.
      */
-    public void setNodeSelected(final TreeNode nodeSelected)
-    {
+    public void setNodeSelected(final TreeNode nodeSelected) {
         this.nodeSelected = nodeSelected;
     }
 
@@ -113,8 +100,7 @@ public class DetailStockageManager
      * Getter sur treeStockageHelper.
      * @return Retourne le treeStockageHelper.
      */
-    public TreeStockageHelper getTreeStockageHelper()
-    {
+    public TreeStockageHelper getTreeStockageHelper() {
         return this.treeStockageHelper;
     }
 
@@ -122,8 +108,7 @@ public class DetailStockageManager
      * Setter pour treeStockageHelper.
      * @param treeStockageHelper le treeStockageHelper à écrire.
      */
-    public void setTreeStockageHelper(final TreeStockageHelper treeStockageHelper)
-    {
+    public void setTreeStockageHelper(final TreeStockageHelper treeStockageHelper) {
         this.treeStockageHelper = treeStockageHelper;
     }
 
@@ -131,8 +116,7 @@ public class DetailStockageManager
      * Setter pour stockagesSelectable.
      * @param stockagesSelectable le stockagesSelectable à écrire.
      */
-    public void setStockagesSelectable(final TreeNode stockagesSelectable)
-    {
+    public void setStockagesSelectable(final TreeNode stockagesSelectable) {
         this.stockagesSelectable = stockagesSelectable;
     }
 

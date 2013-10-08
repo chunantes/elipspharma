@@ -13,12 +13,12 @@ import fr.pharma.eclipse.domain.model.design.Sequence;
 import fr.pharma.eclipse.exception.common.CommonException;
 
 /**
- * Classe en charge de convertir un bras en JSON pour la chronologie des designs.
- 
+ * Classe en charge de convertir un bras en JSON pour la chronologie des
+ * designs.
+ * @author Netapsys
  * @version $Revision$ $Date$
  */
-public class BrasToJSONConverter
-{
+public class BrasToJSONConverter {
 
     /**
      * Converter de Sequence => JSON.
@@ -33,116 +33,88 @@ public class BrasToJSONConverter
      * @return Le JSONArray contenant les objets à affcher.
      */
     public JSONArray convert(final Bras bras,
-                             final Calendar date)
-    {
+                             final Calendar date) {
         final JSONArray array = new JSONArray();
 
         // création de l'obejt correspondant au bras.
         final JSONObject brasJSON = new JSONObject();
 
-        try
-        {
+        try {
             // propriétés simple.
-            brasJSON.put("id",
-                         bras.getId());
-            brasJSON.put("itemName",
-                         bras.getNom());
-            brasJSON.put("niveau",
-                         this.getNiveau(bras,
-                                        0));
+            brasJSON.put("id", bras.getId());
+            brasJSON.put("itemName", bras.getNom());
+            brasJSON.put("niveau", this.getNiveau(bras, 0));
 
             // traitement des séquences
             final JSONArray sequences = new JSONArray();
-            for (final Sequence sequence : bras.getSequences())
-            {
-                if (this.sequenceConverter.support(sequence))
-                {
-                    sequences.put(this.sequenceConverter.convert(sequence,
-                                                                 date));
+            for (final Sequence sequence : bras.getSequences()) {
+                if (this.sequenceConverter.support(sequence)) {
+                    sequences.put(this.sequenceConverter.convert(sequence, date));
                 }
             }
-            brasJSON.put("series",
-                         sequences);
+            brasJSON.put("series", sequences);
 
             // ajout à la liste.
             array.put(brasJSON);
             // traitement des sous bras.
-            for (final Bras ssBras : bras.getSousBras())
-            {
-                if (this.support(ssBras))
-                {
-                    this.addToArray(array,
-                                    this.convert(ssBras,
-                                                 date));
+            for (final Bras ssBras : bras.getSousBras()) {
+                if (this.support(ssBras)) {
+                    this.addToArray(array, this.convert(ssBras, date));
                 }
             }
 
-        }
-        catch (final JSONException e)
-        {
-            throw new CommonException("Impossible de convertir le design en JSON.",
-                                      e);
+        } catch (final JSONException e) {
+            throw new CommonException("Impossible de convertir le design en JSON.", e);
         }
         return array;
     }
 
     /**
-     * Méthode récursive en charge de déterminer le niveau du bras dans la hiérarchie à partir du
-     * bras et du niveau d'origine.
+     * Méthode récursive en charge de déterminer le niveau du bras dans la
+     * hiérarchie à partir du bras et du niveau d'origine.
      * @param bras Le bras.
      * @param niveau Le niveau d'origine.
      * @return Le niveau.
      */
     private int getNiveau(final Bras bras,
-                          final int niveau)
-    {
+                          final int niveau) {
         int newNiveau = niveau;
-        if (bras.getParent() != null)
-        {
+        if (bras.getParent() != null) {
             final int n = niveau + 1;
-            newNiveau = this.getNiveau(bras.getParent(),
-                                       n);
+            newNiveau = this.getNiveau(bras.getParent(), n);
         }
         return newNiveau;
     }
 
     /**
-     * Méthode en charge d'ajouter tous les Objets contenu dans le arrayToAdd dans le array.
+     * Méthode en charge d'ajouter tous les Objets contenu dans le arrayToAdd
+     * dans le array.
      * @param array Tableau destination.
      * @param arrayToAdd Tableau source.
      */
     private void addToArray(final JSONArray array,
-                            final JSONArray arrayToAdd)
-    {
-        try
-        {
-            for (int i = 0; i < arrayToAdd.length(); i++)
-            {
+                            final JSONArray arrayToAdd) {
+        try {
+            for (int i = 0; i < arrayToAdd.length(); i++) {
                 array.put(arrayToAdd.get(i));
             }
-        }
-        catch (final JSONException e)
-        {
-            throw new CommonException("Impossible de convertir le bras.",
-                                      e);
+        } catch (final JSONException e) {
+            throw new CommonException("Impossible de convertir le bras.", e);
         }
     }
 
     /**
      * {@inheritDoc}
      */
-    public boolean support(final Bras bras)
-    {
-        return bras.getDebut() != null
-               && bras.getFin() != null;
+    public boolean support(final Bras bras) {
+        return (bras.getDebut() != null) && (bras.getFin() != null);
     }
 
     /**
      * Setter pour sequenceConverter.
      * @param sequenceConverter le sequenceConverter à écrire.
      */
-    public void setSequenceConverter(final SequenceToJSONConverter sequenceConverter)
-    {
+    public void setSequenceConverter(final SequenceToJSONConverter sequenceConverter) {
         this.sequenceConverter = sequenceConverter;
     }
 }

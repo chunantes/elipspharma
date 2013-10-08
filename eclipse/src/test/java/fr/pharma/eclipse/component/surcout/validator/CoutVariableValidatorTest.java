@@ -15,12 +15,10 @@ import fr.pharma.eclipse.utils.FacesUtils;
 
 /**
  * Test de la classe CoutVariableValidator.
- 
+ * @author Netapsys
  * @version $Revision$ $Date$
  */
-public class CoutVariableValidatorTest
-    extends AbstractEclipseJUnitTest
-{
+public class CoutVariableValidatorTest extends AbstractEclipseJUnitTest {
 
     /**
      * Validateur.
@@ -36,8 +34,7 @@ public class CoutVariableValidatorTest
      * {@inheritDoc}
      */
     @Override
-    public void setUp()
-    {
+    public void setUp() {
         this.facesUtils = Mockito.mock(FacesUtils.class);
         this.validator = new CoutVariableValidator();
         this.validator.setFacesUtils(this.facesUtils);
@@ -47,8 +44,7 @@ public class CoutVariableValidatorTest
      * {@inheritDoc}
      */
     @Override
-    public void tearDown()
-    {
+    public void tearDown() {
         this.facesUtils = null;
         this.validator = null;
     }
@@ -58,8 +54,7 @@ public class CoutVariableValidatorTest
      */
     @Override
     @Test
-    public void testInit()
-    {
+    public void testInit() {
         Assert.assertNotNull(this.validator);
         Assert.assertNotNull(this.facesUtils);
     }
@@ -68,53 +63,45 @@ public class CoutVariableValidatorTest
      * TEst de la méthode validate.
      */
     @Test
-    public void testValidateModeFail()
-    {
+    public void testValidateModeFail() {
         final Regle regle = new Regle();
 
         Assert.assertFalse(this.validator.validate(regle));
-        Mockito.verify(this.facesUtils).addMessage(FacesMessage.SEVERITY_ERROR,
-                                                   "regle.mode.notEmpty");
+        Mockito.verify(this.facesUtils).addMessage(FacesMessage.SEVERITY_ERROR, "regle.mode.notEmpty");
     }
 
     /**
      * TEst de la méthode validate.
      */
     @Test
-    public void testValidateUniteFail1()
-    {
+    public void testValidateUniteFail1() {
         final Regle regle = new Regle();
         regle.setMode(ModeCalcul.UNITE);
 
         Assert.assertFalse(this.validator.validate(regle));
 
-        Mockito.verify(this.facesUtils).addMessage(FacesMessage.SEVERITY_ERROR,
-                                                   "regle.borne.notEmpty");;
-        Mockito.verify(this.facesUtils).addMessage(FacesMessage.SEVERITY_ERROR,
-                                                   "regle.montant.notEmpty");
+        Mockito.verify(this.facesUtils).addMessage(FacesMessage.SEVERITY_ERROR, "regle.borne.notEmpty");;
+        Mockito.verify(this.facesUtils).addMessage(FacesMessage.SEVERITY_ERROR, "regle.montant.notEmpty");
     }
 
     /**
      * TEst de la méthode validate.
      */
     @Test
-    public void testValidateUniteFail2()
-    {
+    public void testValidateUniteFail2() {
         final Regle regle = new Regle();
         regle.setMode(ModeCalcul.UNITE);
         regle.setMontant(new BigDecimal(2));
         Assert.assertFalse(this.validator.validate(regle));
 
-        Mockito.verify(this.facesUtils).addMessage(FacesMessage.SEVERITY_ERROR,
-                                                   "regle.borne.notEmpty");;
+        Mockito.verify(this.facesUtils).addMessage(FacesMessage.SEVERITY_ERROR, "regle.borne.notEmpty");;
     }
 
     /**
      * TEst de la méthode validate.
      */
     @Test
-    public void testValidateUniteFail3()
-    {
+    public void testValidateUniteFail3() {
         final Regle regle = new Regle();
         regle.setMode(ModeCalcul.UNITE);
         regle.setMontant(new BigDecimal(2));
@@ -122,16 +109,14 @@ public class CoutVariableValidatorTest
         regle.setMin(10);
         Assert.assertFalse(this.validator.validate(regle));
 
-        Mockito.verify(this.facesUtils).addMessage(FacesMessage.SEVERITY_ERROR,
-                                                   "regle.borne.incoherent");
+        Mockito.verify(this.facesUtils).addMessage(FacesMessage.SEVERITY_ERROR, "regle.borne.incoherent");
     }
 
     /**
      * TEst de la méthode validate.
      */
     @Test
-    public void testValidateUniteOK()
-    {
+    public void testValidateUniteOK() {
         final Regle regle = new Regle();
         regle.setMode(ModeCalcul.UNITE);
         regle.setMontant(new BigDecimal(2));
@@ -145,40 +130,34 @@ public class CoutVariableValidatorTest
      * TEst de la méthode validate.
      */
     @Test
-    public void testValidateForfaitFail1()
-    {
+    public void testValidateForfaitFail1() {
         final Regle regle = new Regle();
         regle.setMode(ModeCalcul.LOT_FORFAITAIRE);
 
         Assert.assertFalse(this.validator.validate(regle));
 
-        Mockito.verify(this.facesUtils).addMessage(FacesMessage.SEVERITY_ERROR,
-                                                   "regle.borne.notEmpty");;
-        Mockito.verify(this.facesUtils).addMessage(FacesMessage.SEVERITY_ERROR,
-                                                   "regle.montant.notEmpty");
+        Mockito.verify(this.facesUtils).addMessage(FacesMessage.SEVERITY_ERROR, "regle.borne.notEmpty");;
+        Mockito.verify(this.facesUtils).addMessage(FacesMessage.SEVERITY_ERROR, "regle.montant.notEmpty");
     }
 
     /**
      * TEst de la méthode validate.
      */
     @Test
-    public void testValidateForfaitFail2()
-    {
+    public void testValidateForfaitFail2() {
         final Regle regle = new Regle();
         regle.setMode(ModeCalcul.LOT_FORFAITAIRE);
         regle.setMontant(new BigDecimal(2));
         Assert.assertFalse(this.validator.validate(regle));
 
-        Mockito.verify(this.facesUtils).addMessage(FacesMessage.SEVERITY_ERROR,
-                                                   "regle.borne.notEmpty");;
+        Mockito.verify(this.facesUtils).addMessage(FacesMessage.SEVERITY_ERROR, "regle.borne.notEmpty");;
     }
 
     /**
      * TEst de la méthode validate.
      */
     @Test
-    public void testValidateForfaitFail3()
-    {
+    public void testValidateForfaitFail3() {
         final Regle regle = new Regle();
         regle.setMode(ModeCalcul.LOT_FORFAITAIRE);
         regle.setMontant(new BigDecimal(2));
@@ -186,16 +165,14 @@ public class CoutVariableValidatorTest
         regle.setMin(100);
         Assert.assertFalse(this.validator.validate(regle));
 
-        Mockito.verify(this.facesUtils).addMessage(FacesMessage.SEVERITY_ERROR,
-                                                   "regle.borne.incoherent");
+        Mockito.verify(this.facesUtils).addMessage(FacesMessage.SEVERITY_ERROR, "regle.borne.incoherent");
     }
 
     /**
      * TEst de la méthode validate.
      */
     @Test
-    public void testValidateForfaitOK()
-    {
+    public void testValidateForfaitOK() {
         final Regle regle = new Regle();
         regle.setMode(ModeCalcul.LOT_FORFAITAIRE);
         regle.setMontant(new BigDecimal(2));

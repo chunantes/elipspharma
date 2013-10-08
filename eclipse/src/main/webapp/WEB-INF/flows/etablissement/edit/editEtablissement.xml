@@ -1,52 +1,51 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<flow xmlns="http://www.springframework.org/schema/webflow"
-	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-	xsi:schemaLocation="http://www.springframework.org/schema/webflow
-    http://www.springframework.org/schema/webflow/spring-webflow-2.0.xsd" parent="main">
+<flow xmlns="http://www.springframework.org/schema/webflow" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.springframework.org/schema/webflow
+    http://www.springframework.org/schema/webflow/spring-webflow-2.0.xsd"
+	parent="main">
 
 	<!-- Variable d'entrée -->
 	<input name="idEtablissement" />
 
 	<decision-state id="createOrEdit">
-		<if test="idEtablissement==null" then="create" else="edit"/>
+		<if test="idEtablissement==null" then="create" else="edit" />
 	</decision-state>
-	
+
 	<!-- Création -->
 	<action-state id="create">
-		<evaluate expression="etablissementManager.setBean(etablissementFactory.getInitializedObject())"/>
-		<transition to="editEtablissement"/>
+		<evaluate expression="etablissementManager.setBean(etablissementFactory.getInitializedObject())" />
+		<transition to="editEtablissement" />
 	</action-state>
-	
+
 	<!-- Modification -->
 	<action-state id="edit">
-		<evaluate expression="etablissementManager.setBean(etablissementService.get(idEtablissement))"/>
-		<transition to="editEtablissement"/>
+		<evaluate expression="etablissementManager.setBean(etablissementService.get(idEtablissement))" />
+		<transition to="editEtablissement" />
 	</action-state>
 
 	<!-- Page principale -->
 	<view-state id="editEtablissement" view="../../../pages/etablissement/edit/editEtablissement.xhtml">
-		<transition on="cancel" to="createOrEdit"/>
+		<transition on="cancel" to="createOrEdit" />
 		<transition on="save" to="comeback">
-			<evaluate expression="etablissementService.save(etablissementManager.bean)"/>
+			<evaluate expression="etablissementService.save(etablissementManager.bean)" />
 		</transition>
-				
-			<!--  Edition d'une pharmacie -->
+
+		<!-- Edition d'une pharmacie -->
 		<transition on="editPharmacie" to="editPharmacie">
 			<set name="flashScope.idPharmacie" value="pharmaciesManager.beanSelected.id" type="java.lang.Long" />
-			<evaluate expression="null" result="pharmaciesManager.beanSelected"/>	
+			<evaluate expression="null" result="pharmaciesManager.beanSelected" />
 		</transition>
-		
-		<transition on="error" to="editEtablissement"/>
-		<transition on="comeback" to="comeback"/>
+
+		<transition on="error" to="editEtablissement" />
+		<transition on="comeback" to="comeback" />
 	</view-state>
-	
-	<!-- Edition d'une pharamcie-->
+
+	<!-- Edition d'une pharamcie -->
 	<subflow-state id="editPharmacie" subflow="pharmacie/edit">
-		<attribute name="idPharmacie" value="flashScope.idPharmacie"/>
-		<transition to="editEtablissement"/>
-	</subflow-state>	
-	
+		<attribute name="idPharmacie" value="flashScope.idPharmacie" />
+		<transition to="edit" />
+	</subflow-state>
+
 	<!-- Etat final -->
-	<end-state id="comeback"/>
-	
+	<end-state id="comeback" />
+
 </flow>

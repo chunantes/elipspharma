@@ -10,12 +10,10 @@ import fr.pharma.eclipse.utils.AbstractEclipseJUnitTest;
 
 /**
  * Test du helper DroitAccesHelper.
- 
+ * @author Netapsys
  * @version $Revision$ $Date$
  */
-public class DroitAccesHelperTest
-    extends AbstractEclipseJUnitTest
-{
+public class DroitAccesHelperTest extends AbstractEclipseJUnitTest {
 
     /**
      * Helper.
@@ -31,8 +29,7 @@ public class DroitAccesHelperTest
      * {@inheritDoc}
      */
     @Override
-    public void setUp()
-    {
+    public void setUp() {
         this.userService = Mockito.mock(UserService.class);
         this.helper = new DroitAccesHelper();
         this.helper.setUserService(this.userService);
@@ -43,8 +40,7 @@ public class DroitAccesHelperTest
      * {@inheritDoc}
      */
     @Override
-    public void tearDown()
-    {
+    public void tearDown() {
         this.userService = null;
         this.helper = null;
     }
@@ -54,8 +50,7 @@ public class DroitAccesHelperTest
      */
     @Override
     @Test
-    public void testInit()
-    {
+    public void testInit() {
         Assert.assertNotNull(this.userService);
         Assert.assertNotNull(this.helper);
     }

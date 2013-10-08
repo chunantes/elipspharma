@@ -19,13 +19,13 @@ function clearMenuButton(){
  * en fin.
  */
 function prepareMandatory() {
-	jQuery('.mandatory').each(
-			function() {
-				jQuery(this)
-						.html(
-								jQuery(this).attr("innerHTML")
-										+ "<span>&nbsp;*</span>");
-			});
+	jQuery('.mandatory').each(function() {
+		var $mandatoryItem = jQuery(this);
+		if(!$mandatoryItem.hasClass('mandatory-decorated')) {
+			$mandatoryItem.html($mandatoryItem.attr("innerHTML") + "<span>&nbsp;*</span>");
+			$mandatoryItem.addClass('mandatory-decorated');
+		}
+	});
 }
 
 function expand(){
@@ -267,10 +267,10 @@ function resizeMenuButton(){
 	
 }
 
-function showWait(){
+function showWait(){	
 	jQuery('html').css('overflow-y', 'hidden');
 	jQuery('.popWait').show();
-	window.scrollTo(0,0);
+	window.scrollTo(0,0);	
 }
 
 function hideWait(){
@@ -291,3 +291,19 @@ function clickOnMenu(id){
 	var sousMenu = jQuery(id_string);
 	jQuery('.wijmo-wijmenu-parent:eq('+sousMenu.parent().parent().parent().parent().index()+')').find('ul li:eq('+sousMenu.index()+') a').click();
 }
+
+/**
+ * Gestion des appels ajax
+ * pour chaque appel ajax envoyé, on affiche la popup loading
+ * des que la requete ajax est passé on ferme la popup loading
+ * la function inline permet d'eviter les conflits avec printfaces car on change de scope
+ */
+(function(){
+	jQuery(document).ajaxSend(function() {
+		jQuery("*").addClass("cursor-progress");
+	});
+	
+	jQuery(document).ajaxComplete(function() {
+		jQuery("*").removeClass("cursor-progress");	
+	});
+})();

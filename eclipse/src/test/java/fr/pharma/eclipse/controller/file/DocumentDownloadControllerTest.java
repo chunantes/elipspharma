@@ -22,11 +22,10 @@ import fr.pharma.eclipse.service.document.DocumentServiceImpl;
 
 /**
  * Test de la classe DocumentDownloadController.
- 
+ * @author Netapsys
  * @version $Revision$ $Date$
  */
-public class DocumentDownloadControllerTest
-{
+public class DocumentDownloadControllerTest {
     /**
      * Classe testée.
      */
@@ -66,8 +65,7 @@ public class DocumentDownloadControllerTest
      * Méthode d'initialisation.
      */
     @Before
-    public void setUp()
-    {
+    public void setUp() {
         this.mockedPrimefacesFactory = Mockito.mock(DefaultStreamedContentFactory.class);
         this.mockedFileInFactory = Mockito.mock(IOStreamsFactory.class);
         this.mockedDocService = Mockito.mock(DocumentServiceImpl.class);
@@ -85,8 +83,7 @@ public class DocumentDownloadControllerTest
      * Méthode de finalisation.
      */
     @After
-    public void tearDown()
-    {
+    public void tearDown() {
         this.controller = null;
         this.mockedDocService = null;
         this.mockedPrimefacesFactory = null;
@@ -99,23 +96,12 @@ public class DocumentDownloadControllerTest
     /**
      * Méthode d'initialisation des fabriques.
      */
-    private void initMockedFactories()
-    {
-        Mockito
-                .when(this.mockedPrimefacesFactory
-                        .getInitializedObject(Matchers.any(InputStream.class),
-                                              Matchers.anyString()))
-                .thenReturn(this.expectedNominalResult);
-        Mockito
-                .when(this.mockedPrimefacesFactory.getInitializedObjectInError())
-                .thenReturn(this.expectedErrorResult);
-        try
-        {
-            Mockito.when(this.mockedFileInFactory.getInitializedInputStream(Matchers
-                    .any(File.class))).thenReturn(this.expectedStream);
-        }
-        catch (final FileNotFoundException e)
-        {
+    private void initMockedFactories() {
+        Mockito.when(this.mockedPrimefacesFactory.getInitializedObject(Matchers.any(InputStream.class), Matchers.anyString())).thenReturn(this.expectedNominalResult);
+        Mockito.when(this.mockedPrimefacesFactory.getInitializedObjectInError()).thenReturn(this.expectedErrorResult);
+        try {
+            Mockito.when(this.mockedFileInFactory.getInitializedInputStream(Matchers.any(File.class))).thenReturn(this.expectedStream);
+        } catch (final FileNotFoundException e) {
             Assert.fail("Erreur d'initialisation des données.");
         }
     }
@@ -123,23 +109,18 @@ public class DocumentDownloadControllerTest
      * Test de l'initialisation du test.
      */
     @Test
-    public void testInit()
-    {
+    public void testInit() {
         Assert.assertNotNull(this.controller);
-        Assert.assertEquals(this.mockedDocService,
-                            this.controller.getDocService());
-        Assert.assertEquals(this.mockedFileInFactory,
-                            this.controller.getFileInStreamFactory());
-        Assert.assertEquals(this.mockedPrimefacesFactory,
-                            this.controller.getStreamedContentFactory());
+        Assert.assertEquals(this.mockedDocService, this.controller.getDocService());
+        Assert.assertEquals(this.mockedFileInFactory, this.controller.getFileInStreamFactory());
+        Assert.assertEquals(this.mockedPrimefacesFactory, this.controller.getStreamedContentFactory());
     }
 
     /**
      * Test de la méthode downloadDocument - fichier inexistant.
      */
     @Test
-    public void testDownloadDocumentFileNotFound()
-    {
+    public void testDownloadDocumentFileNotFound() {
         this.initMockedFactories();
         final Essai essai = Mockito.mock(Essai.class);
         final DocumentEssai doc = Mockito.mock(DocumentEssai.class);
@@ -147,36 +128,22 @@ public class DocumentDownloadControllerTest
         final File expectedFile = Mockito.mock(File.class);
         final Throwable expectedExc = Mockito.mock(FileNotFoundException.class);
 
-        Mockito.when(this.mockedDocService.getFile(essai,
-                                                   doc)).thenReturn(expectedFile);
+        Mockito.when(this.mockedDocService.getFile(essai, doc)).thenReturn(expectedFile);
         Mockito.when(expectedFile.getName()).thenReturn(expectedFilename);
-        try
-        {
-            Mockito
-                    .when(this.mockedFileInFactory.getInitializedInputStream(expectedFile))
-                    .thenThrow(expectedExc);
-        }
-        catch (final FileNotFoundException e)
-        {
+        try {
+            Mockito.when(this.mockedFileInFactory.getInitializedInputStream(expectedFile)).thenThrow(expectedExc);
+        } catch (final FileNotFoundException e) {
             Assert.fail("Erreur de paramétrage des données de test.");
         }
 
-        final StreamedContent actualStream = this.controller.downloadDocument(essai,
-                                                                              doc);
-        try
-        {
-            Mockito.verify(this.mockedDocService).getFile(essai,
-                                                          doc);
+        final StreamedContent actualStream = this.controller.downloadDocument(essai, doc);
+        try {
+            Mockito.verify(this.mockedDocService).getFile(essai, doc);
             Mockito.verify(this.mockedFileInFactory).getInitializedInputStream(expectedFile);
-            Mockito.verify(this.mockedPrimefacesFactory,
-                           Mockito.never()).getInitializedObject(Matchers.any(InputStream.class),
-                                                                 Matchers.anyString());
+            Mockito.verify(this.mockedPrimefacesFactory, Mockito.never()).getInitializedObject(Matchers.any(InputStream.class), Matchers.anyString());
             Mockito.verify(this.mockedPrimefacesFactory).getInitializedObjectInError();
-            Assert.assertEquals(this.expectedErrorResult,
-                                actualStream);
-        }
-        catch (final FileNotFoundException e)
-        {
+            Assert.assertEquals(this.expectedErrorResult, actualStream);
+        } catch (final FileNotFoundException e) {
             Assert.fail("Erreur de paramétrage des données de test.");
         }
     }
@@ -184,37 +151,25 @@ public class DocumentDownloadControllerTest
      * Test de la méthode downloadDocument.
      */
     @Test
-    public void testDownloadDocumentFileOk()
-    {
+    public void testDownloadDocumentFileOk() {
         this.initMockedFactories();
         final Essai essai = Mockito.mock(Essai.class);
         final DocumentEssai doc = Mockito.mock(DocumentEssai.class);
         final String expectedFilename = "fichier.txt";
         final File expectedFile = Mockito.mock(File.class);
 
-        Mockito.when(this.mockedDocService.getFile(essai,
-                                                   doc)).thenReturn(expectedFile);
+        Mockito.when(this.mockedDocService.getFile(essai, doc)).thenReturn(expectedFile);
         Mockito.when(doc.getNomUtilisateur()).thenReturn(expectedFilename);
 
-        final StreamedContent actualStream = this.controller.downloadDocument(essai,
-                                                                              doc);
-        try
-        {
-            Mockito.verify(this.mockedDocService).getFile(essai,
-                                                          doc);
+        final StreamedContent actualStream = this.controller.downloadDocument(essai, doc);
+        try {
+            Mockito.verify(this.mockedDocService).getFile(essai, doc);
             Mockito.verify(this.mockedFileInFactory).getInitializedInputStream(expectedFile);
             Mockito.verify(doc).getNomUtilisateur();
-            Mockito
-                    .verify(this.mockedPrimefacesFactory)
-                    .getInitializedObject(this.expectedStream,
-                                          expectedFilename);
-            Mockito.verify(this.mockedPrimefacesFactory,
-                           Mockito.never()).getInitializedObjectInError();
-            Assert.assertEquals(this.expectedNominalResult,
-                                actualStream);
-        }
-        catch (final FileNotFoundException e)
-        {
+            Mockito.verify(this.mockedPrimefacesFactory).getInitializedObject(this.expectedStream, expectedFilename);
+            Mockito.verify(this.mockedPrimefacesFactory, Mockito.never()).getInitializedObjectInError();
+            Assert.assertEquals(this.expectedNominalResult, actualStream);
+        } catch (final FileNotFoundException e) {
             Assert.fail("Erreur de paramétrage des données de test.");
         }
     }
