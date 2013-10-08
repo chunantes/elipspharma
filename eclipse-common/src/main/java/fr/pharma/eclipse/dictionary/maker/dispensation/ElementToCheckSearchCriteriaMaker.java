@@ -13,12 +13,10 @@ import fr.pharma.eclipse.utils.constants.EclipseConstants;
 
 /**
  * Artisan de recherche pour les ElementToCheck.
- 
+ * @author Netapsys
  * @version $Revision$ $Date$
  */
-public class ElementToCheckSearchCriteriaMaker
-    extends AbstractCriteriaMaker
-{
+public class ElementToCheckSearchCriteriaMaker extends AbstractCriteriaMaker {
 
     /**
      * SerialVersionUID.
@@ -28,8 +26,7 @@ public class ElementToCheckSearchCriteriaMaker
     /**
      * Constructeur par défaut.
      */
-    public ElementToCheckSearchCriteriaMaker()
-    {
+    public ElementToCheckSearchCriteriaMaker() {
         super(ElementToCheckSearchCriteria.class);
     }
 
@@ -38,8 +35,7 @@ public class ElementToCheckSearchCriteriaMaker
      */
     @Override
     public void transform(final Criteria criteria,
-                          final SearchCriteria searchCrit)
-    {
+                          final SearchCriteria searchCrit) {
         final ElementToCheckSearchCriteria crit = (ElementToCheckSearchCriteria) searchCrit;
 
         final Criteria critDispensation = criteria.createCriteria("dispensation");
@@ -47,54 +43,37 @@ public class ElementToCheckSearchCriteriaMaker
         final Criteria critInclusion = critPrescription.createCriteria("inclusion");
 
         // Type
-        if (crit.getType() != null)
-        {
-            CriteriaMakerUtils.addCritere(criteria,
-                                          "type",
-                                          crit.getType());
+        if (crit.getType() != null) {
+            CriteriaMakerUtils.addCritere(criteria, "type", crit.getType());
         }
 
         // Essai
-        if (crit.getEssai() != null)
-        {
-            CriteriaMakerUtils.addCritere(critInclusion,
-                                          "essai",
-                                          crit.getEssai());
+        if (crit.getEssai() != null) {
+            CriteriaMakerUtils.addCritere(critInclusion, "essai", crit.getEssai());
         }
 
         // Patient
-        if (crit.getPatient() != null)
-        {
-            CriteriaMakerUtils.addCritere(critInclusion,
-                                          "patient",
-                                          crit.getPatient());
+        if (crit.getPatient() != null) {
+            CriteriaMakerUtils.addCritere(critInclusion, "patient", crit.getPatient());
         }
 
         // Pharmacie
-        if (crit.getPharmacie() != null)
-        {
-            CriteriaMakerUtils.addCritere(critDispensation,
-                                          "pharmacie",
-                                          crit.getPharmacie());
+        if (crit.getPharmacie() != null) {
+            CriteriaMakerUtils.addCritere(critDispensation, "pharmacie", crit.getPharmacie());
         }
 
         // Date de début
-        if (crit.getDateDebut() != null)
-        {
-            critDispensation.add(Restrictions.ge("dateDispensation",
-                                                 crit.getDateDebut()));
+        if (crit.getDateDebut() != null) {
+            critDispensation.add(Restrictions.ge("dateDispensation", crit.getDateDebut()));
         }
 
         // Date de fin
-        if (crit.getDateFin() != null)
-        {
+        if (crit.getDateFin() != null) {
             final Calendar fin = Calendar.getInstance(EclipseConstants.LOCALE);
             fin.setTime(crit.getDateFin().getTime());
             // Ajout d'un jour
-            fin.add(Calendar.DAY_OF_MONTH,
-                    1);
-            critDispensation.add(Restrictions.le("dateDispensation",
-                                                 fin));
+            fin.add(Calendar.DAY_OF_MONTH, 1);
+            critDispensation.add(Restrictions.le("dateDispensation", fin));
         }
 
     }

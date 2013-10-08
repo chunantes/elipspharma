@@ -11,12 +11,10 @@ import fr.pharma.eclipse.validator.remove.RemoveValidator;
 
 /**
  * Validateur de suppression d'une Séquence.
- 
+ * @author Netapsys
  * @version $Revision$ $Date$
  */
-public class SequenceRemoveValidator
-    implements RemoveValidator<Sequence>, Serializable
-{
+public class SequenceRemoveValidator implements RemoveValidator<Sequence>, Serializable {
 
     /**
      * SerialVersionUID.
@@ -33,24 +31,17 @@ public class SequenceRemoveValidator
      * {@inheritDoc}
      */
     @Override
-    public void validate(final Sequence sequence)
-    {
+    public void validate(final Sequence sequence) {
 
-        if (sequence.getId() != null
-            && this.service.isSequenceUsedInPrescriptions(sequence))
-        {
-            throw new ValidationException("remove",
-                                          new String[]
-                                          {"impossible" },
-                                          sequence);
+        if ((sequence.getId() != null) && this.service.isSequenceUsedInPrescriptions(sequence)) {
+            throw new ValidationException("remove", new String[]{"impossible" }, sequence);
         }
     }
     /**
      * Setter pour service.
      * @param service le service à écrire.
      */
-    public void setService(final PrescriptionService service)
-    {
+    public void setService(final PrescriptionService service) {
         this.service = service;
     }
 

@@ -10,12 +10,10 @@ import fr.pharma.eclipse.domain.criteria.sir.PersonneSirSearchCriteria;
 
 /**
  * Artisan de recherche pour les personnes SIR.
- 
+ * @author Netapsys
  * @version $Revision$ $Date$
  */
-public class PersonneSirSearchCriteriaMaker
-    extends AbstractCriteriaMaker
-{
+public class PersonneSirSearchCriteriaMaker extends AbstractCriteriaMaker {
     /**
      * Serial ID.
      */
@@ -24,8 +22,7 @@ public class PersonneSirSearchCriteriaMaker
     /**
      * Constructeur par défaut.
      */
-    public PersonneSirSearchCriteriaMaker()
-    {
+    public PersonneSirSearchCriteriaMaker() {
         super(PersonneSirSearchCriteria.class);
     }
 
@@ -34,40 +31,24 @@ public class PersonneSirSearchCriteriaMaker
      */
     @Override
     public void transform(final Criteria criteria,
-                          final SearchCriteria searchCrit)
-    {
+                          final SearchCriteria searchCrit) {
         final PersonneSirSearchCriteria crit = (PersonneSirSearchCriteria) searchCrit;
         // Login
-        if (StringUtils.isNotEmpty(crit.getLogin()))
-        {
+        if (StringUtils.isNotEmpty(crit.getLogin())) {
             // Recherche stricte sur le login (cas de l'authentification)
-            if ((crit.getStrictSearchLogin() != null)
-                && (crit.getStrictSearchLogin()))
-            {
-                CriteriaMakerUtils.addCritere(criteria,
-                                              "login",
-                                              crit.getLogin());
-            }
-            else
-            {
-                CriteriaMakerUtils.addSqlCritere(criteria,
-                                                 "this_.per_login",
-                                                 crit.getLogin());
+            if ((crit.getStrictSearchLogin() != null) && (crit.getStrictSearchLogin())) {
+                CriteriaMakerUtils.addCritere(criteria, "login", crit.getLogin());
+            } else {
+                CriteriaMakerUtils.addSqlCritere(criteria, "this_.per_login", crit.getLogin());
             }
         }
         // Nom
-        if (StringUtils.isNotEmpty(crit.getNom()))
-        {
-            CriteriaMakerUtils.addSqlCritere(criteria,
-                                             "this_.per_nom",
-                                             crit.getNom());
+        if (StringUtils.isNotEmpty(crit.getNom())) {
+            CriteriaMakerUtils.addSqlCritere(criteria, "this_.per_nom", crit.getNom());
         }
         // Prénom
-        if (StringUtils.isNotEmpty(crit.getPrenom()))
-        {
-            CriteriaMakerUtils.addSqlCritere(criteria,
-                                             "this_.per_prenom",
-                                             crit.getPrenom());
+        if (StringUtils.isNotEmpty(crit.getPrenom())) {
+            CriteriaMakerUtils.addSqlCritere(criteria, "this_.per_prenom", crit.getPrenom());
         }
     }
 }

@@ -12,13 +12,11 @@ import fr.pharma.eclipse.domain.model.suivi.common.Suivi;
 
 /**
  * Bean métier représentant les suivis de modifications sur le bean Pole.
- 
+ * @author Netapsys
  * @version $Revision$ $Date$
  */
 @Entity(name = "pole_suivi")
-public class PoleSuivi
-    extends Suivi
-{
+public class PoleSuivi extends Suivi {
     /**
      * Serial ID.
      */
@@ -36,8 +34,7 @@ public class PoleSuivi
      * Getter sur pole.
      * @return Retourne le pole.
      */
-    public Pole getPole()
-    {
+    public Pole getPole() {
         return this.pole;
     }
 
@@ -45,8 +42,7 @@ public class PoleSuivi
      * Setter pour pole.
      * @param pole le pole à écrire.
      */
-    public void setPole(final Pole pole)
-    {
+    public void setPole(final Pole pole) {
         this.pole = pole;
     }
 

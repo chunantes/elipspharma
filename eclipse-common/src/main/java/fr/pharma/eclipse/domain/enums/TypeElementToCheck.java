@@ -2,11 +2,10 @@ package fr.pharma.eclipse.domain.enums;
 
 /**
  * Enumération représentant les types ElementToCheck.
- 
+ * @author Netapsys
  * @version $Revision$ $Date$
  */
-public enum TypeElementToCheck
-{
+public enum TypeElementToCheck {
     /**
      * Reconstitution simple.
      */
@@ -52,8 +51,7 @@ public enum TypeElementToCheck
      * @param libelle Le libellé du type d'élément.
      * @param libelleDisplay Le libellé du type d'élément pour l'affichage.
      */
-    TypeElementToCheck(final String libelle, final String libelleDisplay)
-    {
+    TypeElementToCheck(final String libelle, final String libelleDisplay) {
         this.libelle = libelle;
         this.libelleDisplay = libelleDisplay;
     }
@@ -62,8 +60,7 @@ public enum TypeElementToCheck
      * Getter pour libelle.
      * @return Retourne le libelle.
      */
-    public String getLibelle()
-    {
+    public String getLibelle() {
         return this.libelle;
     }
 
@@ -71,8 +68,7 @@ public enum TypeElementToCheck
      * {@inheritDoc}
      */
     @Override
-    public String toString()
-    {
+    public String toString() {
         return this.getLibelle();
     }
 
@@ -80,8 +76,7 @@ public enum TypeElementToCheck
      * Getter pour libelleDisplay.
      * @return Le libelleDisplay
      */
-    public String getLibelleDisplay()
-    {
+    public String getLibelleDisplay() {
         return this.libelleDisplay;
     }
 

@@ -21,12 +21,10 @@ import fr.pharma.eclipse.domain.model.essai.detail.administratif.document.Docume
 /**
  * Informations relatives à la convention et ses avenants sur le détail
  * Administratif/Réglementaire d'un essai clinique.
- 
+ * @author Netapsys
  * @version $Revision$ $Date$
  */
-public class InfosConvention
-    implements Serializable
-{
+public class InfosConvention implements Serializable {
 
     /**
      * Serial ID.
@@ -46,8 +44,7 @@ public class InfosConvention
     @Where(clause = "type='CONVENTION'")
     @LazyCollection(LazyCollectionOption.FALSE)
     @Sort(type = SortType.COMPARATOR, comparator = SuiviComparator.class)
-    private SortedSet<DocumentAdministratif> documents =
-        new TreeSet<DocumentAdministratif>(new SuiviComparator());
+    private SortedSet<DocumentAdministratif> documents = new TreeSet<DocumentAdministratif>(new SuiviComparator());
 
     /**
      * Booléen indiquant qu'il faut se référer au dossier papier<br>
@@ -61,8 +58,7 @@ public class InfosConvention
      * Getter sur convSignee.
      * @return Retourne le convSignee.
      */
-    public Boolean getConvSignee()
-    {
+    public Boolean getConvSignee() {
         return this.convSignee;
     }
 
@@ -70,8 +66,7 @@ public class InfosConvention
      * Setter pour convSignee.
      * @param convSignee le convSignee à écrire.
      */
-    public void setConvSignee(final Boolean convSignee)
-    {
+    public void setConvSignee(final Boolean convSignee) {
         this.convSignee = convSignee;
     }
 
@@ -79,8 +74,7 @@ public class InfosConvention
      * Getter sur documents.
      * @return Retourne le documents.
      */
-    public SortedSet<DocumentAdministratif> getDocuments()
-    {
+    public SortedSet<DocumentAdministratif> getDocuments() {
         return this.documents;
     }
 
@@ -88,8 +82,7 @@ public class InfosConvention
      * Setter pour documents.
      * @param documents le documents à écrire.
      */
-    public void setDocuments(final SortedSet<DocumentAdministratif> documents)
-    {
+    public void setDocuments(final SortedSet<DocumentAdministratif> documents) {
         this.documents = documents;
     }
 
@@ -97,8 +90,7 @@ public class InfosConvention
      * Getter sur docsDossierPapier.
      * @return Retourne le docsDossierPapier.
      */
-    public boolean isDocsDossierPapier()
-    {
+    public boolean isDocsDossierPapier() {
         return this.docsDossierPapier;
     }
 
@@ -106,8 +98,7 @@ public class InfosConvention
      * Setter pour docsDossierPapier.
      * @param docsDossierPapier le docsDossierPapier à écrire.
      */
-    public void setDocsDossierPapier(final boolean docsDossierPapier)
-    {
+    public void setDocsDossierPapier(final boolean docsDossierPapier) {
         this.docsDossierPapier = docsDossierPapier;
     }
 

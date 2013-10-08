@@ -5,11 +5,9 @@ import fr.pharma.eclipse.service.common.GenericService;
 
 /**
  * Interface de service de gestion de service.
- 
+ * @author Netapsys
  * @version $Revision$ $Date$
  */
-public interface ServiceService
-    extends GenericService<Service>
-{
+public interface ServiceService extends GenericService<Service> {
 
 }

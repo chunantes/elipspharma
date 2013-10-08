@@ -2,11 +2,10 @@ package fr.pharma.eclipse.domain.enums.alerte;
 
 /**
  * Enumération représentant le type d'alerte.
- 
+ * @author Netapsys
  * @version $Revision$ $Date$
  */
-public enum TypeAlerte
-{
+public enum TypeAlerte {
     /**
      * Date de péremption du produit atteinte.
      */
@@ -51,8 +50,7 @@ public enum TypeAlerte
      * Constructeur.
      * @param libelle Le libellé.
      */
-    TypeAlerte(final String libelle)
-    {
+    TypeAlerte(final String libelle) {
         this.libelle = libelle;
     }
 
@@ -60,8 +58,7 @@ public enum TypeAlerte
      * Getter pour libelle.
      * @return Retourne le libelle.
      */
-    public String getLibelle()
-    {
+    public String getLibelle() {
         return this.libelle;
     }
 
@@ -69,8 +66,7 @@ public enum TypeAlerte
      * {@inheritDoc}
      */
     @Override
-    public String toString()
-    {
+    public String toString() {
         return this.getLibelle();
     }
 

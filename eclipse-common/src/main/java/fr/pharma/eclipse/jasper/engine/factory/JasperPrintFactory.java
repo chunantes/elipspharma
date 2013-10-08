@@ -16,12 +16,10 @@ import fr.pharma.eclipse.jasper.exception.JasperReportBuildException;
 
 /**
  * Fabrique d'objets JasperPrint pour la génération de rapports Jasper.
- 
+ * @author Netapsys
  * @version $Revision$ $Date$
  */
-public class JasperPrintFactory
-    implements Serializable
-{
+public class JasperPrintFactory implements Serializable {
     /**
      * Serial ID.
      */
@@ -41,22 +39,20 @@ public class JasperPrintFactory
      * Constructeur.
      * @param template Template du rapport Jasper.
      */
-    public JasperPrintFactory(final Resource template)
-    {
+    public JasperPrintFactory(final Resource template) {
         this.template = template;
     }
 
     /**
-     * Méthode de création d'un objet JasperPrint à partir d'une map de paramètres.
+     * Méthode de création d'un objet JasperPrint à partir d'une map de
+     * paramètres.
      * @param mapParameters Map des paramètres du rapport.
      * @return Un nouvel objet JasperPrint.
-     * @throws JasperReportBuildException En cas d'erreur de lecture du template.
+     * @throws JasperReportBuildException En cas d'erreur de lecture du
+     * template.
      */
-    public JasperPrint getInitializedObject(final Map<String, ? extends Object> mapParameters)
-        throws JasperReportBuildException
-    {
-        return this.getInitializedObject(null,
-                                         mapParameters);
+    public JasperPrint getInitializedObject(final Map<String, ? extends Object> mapParameters) throws JasperReportBuildException {
+        return this.getInitializedObject(null, mapParameters);
     }
 
     /**
@@ -65,46 +61,29 @@ public class JasperPrintFactory
      * @param datasource Source de données du rapport.
      * @param mapParameters Map des paramètres du rapport.
      * @return Un nouvel objet JasperPrint.
-     * @throws JasperReportBuildException En cas d'erreur de lecture du template.
+     * @throws JasperReportBuildException En cas d'erreur de lecture du
+     * template.
      */
     public JasperPrint getInitializedObject(final JRDataSource datasource,
-                                            final Map<String, ? extends Object> mapParameters)
-        throws JasperReportBuildException
-    {
+                                            final Map<String, ? extends Object> mapParameters) throws JasperReportBuildException {
         // Chargement du report
         final JasperPrint jspPrint;
         JasperReport jasperReport;
-        try
-        {
+        try {
             jasperReport = this.helper.loadObject(this.getTemplate().getInputStream());
-            if (datasource != null)
-            {
+            if (datasource != null) {
                 // Cas où on passe une datasource
-                jspPrint = this.helper.fillReport(jasperReport,
-                                                  mapParameters,
-                                                  datasource);
-            }
-            else
-            {
+                jspPrint = this.helper.fillReport(jasperReport, mapParameters, datasource);
+            } else {
                 // Pas de source de données
-                jspPrint = this.helper.fillReport(jasperReport,
-                                                  mapParameters);
+                jspPrint = this.helper.fillReport(jasperReport, mapParameters);
             }
 
-        }
-        catch (final JRException e)
-        {
-            throw new JasperReportBuildException("Erreur lors du chargement du rapport : ",
-                                                 e);
-        }
-        catch (final IOException e)
-        {
-            final StringBuilder message =
-                new StringBuilder("Erreur de fichier. Le rapport ").append(this
-                        .getTemplate()
-                        .getFilename()).append(" n'a pas été trouvé.");
-            throw new JasperReportBuildException(message.toString(),
-                                                 e);
+        } catch (final JRException e) {
+            throw new JasperReportBuildException("Erreur lors du chargement du rapport : ", e);
+        } catch (final IOException e) {
+            final StringBuilder message = new StringBuilder("Erreur de fichier. Le rapport ").append(this.getTemplate().getFilename()).append(" n'a pas été trouvé.");
+            throw new JasperReportBuildException(message.toString(), e);
         }
         return jspPrint;
     }
@@ -112,8 +91,7 @@ public class JasperPrintFactory
      * Récupération de template.
      * @return Retourne le template.
      */
-    Resource getTemplate()
-    {
+    Resource getTemplate() {
         return this.template;
     }
 
@@ -121,8 +99,7 @@ public class JasperPrintFactory
      * Getter sur helper.
      * @return Retourne le helper.
      */
-    JasperPrintHelper getHelper()
-    {
+    JasperPrintHelper getHelper() {
         return this.helper;
     }
 
@@ -130,8 +107,7 @@ public class JasperPrintFactory
      * Setter pour helper.
      * @param helper le helper à écrire.
      */
-    public void setHelper(final JasperPrintHelper helper)
-    {
+    public void setHelper(final JasperPrintHelper helper) {
         this.helper = helper;
     }
 }

@@ -6,16 +6,14 @@ import javax.persistence.Entity;
 import fr.pharma.eclipse.domain.enums.document.TypeDocumentEssai;
 
 /**
- * Bean métier représentant un document relatif à l'autorisation de distribution de l'essai
- * clinique.
- 
+ * Bean métier représentant un document relatif à l'autorisation de distribution
+ * de l'essai clinique.
+ * @author Netapsys
  * @version $Revision$ $Date$
  */
 @Entity
 @DiscriminatorValue("AUTORISATION_DISTRIBUTION")
-public class DocumentAutorisationDistribution
-    extends DocumentAdministratif
-{
+public class DocumentAutorisationDistribution extends DocumentAdministratif {
 
     /**
      * Serial ID.
@@ -25,8 +23,7 @@ public class DocumentAutorisationDistribution
     /**
      * Constructeur par défaut.
      */
-    public DocumentAutorisationDistribution()
-    {
+    public DocumentAutorisationDistribution() {
         this.setType(TypeDocumentEssai.AUTORISATION_DISTRIBUTION);
     }
 

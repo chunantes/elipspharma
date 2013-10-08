@@ -11,13 +11,11 @@ import fr.pharma.eclipse.domain.model.suivi.common.Suivi;
 
 /**
  * Bean métier représentant les suivis de modifications sur le bean Produit.
- 
+ * @author Netapsys
  * @version $Revision$ $Date$
  */
 @Entity(name = "produit_suivi")
-public class ProduitSuivi
-    extends Suivi
-{
+public class ProduitSuivi extends Suivi {
     /**
      * Serial ID.
      */
@@ -35,8 +33,7 @@ public class ProduitSuivi
      * Getter sur produit.
      * @return Retourne le produit.
      */
-    public Produit getProduit()
-    {
+    public Produit getProduit() {
         return this.produit;
     }
 
@@ -44,8 +41,7 @@ public class ProduitSuivi
      * Setter pour produit.
      * @param produit le produit à écrire.
      */
-    public void setProduit(final Produit produit)
-    {
+    public void setProduit(final Produit produit) {
         this.produit = produit;
     }
 

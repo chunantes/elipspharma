@@ -24,14 +24,13 @@ import fr.pharma.eclipse.domain.model.essai.detail.faisabilite.embedded.InfosEtu
 import fr.pharma.eclipse.domain.model.suivi.essai.detail.DetailFaisabiliteSuivi;
 
 /**
- * Classe métier représentant les informations de détail de faisabilité d'un essai clinique.
- 
+ * Classe métier représentant les informations de détail de faisabilité d'un
+ * essai clinique.
+ * @author Netapsys
  * @version $Revision$ $Date$
  */
 @Entity(name = "essai_detail_faisabilite")
-public class DetailFaisabilite
-    extends BeanObjectSuivi
-{
+public class DetailFaisabilite extends BeanObjectSuivi {
 
     /**
      * Serial ID.
@@ -63,16 +62,14 @@ public class DetailFaisabilite
     @OneToMany(mappedBy = "detailFaisabilite", cascade = CascadeType.ALL)
     @LazyCollection(LazyCollectionOption.TRUE)
     @Sort(type = SortType.COMPARATOR, comparator = SuiviComparator.class)
-    private SortedSet<DetailFaisabiliteSuivi> modifs =
-        new TreeSet<DetailFaisabiliteSuivi>(new SuiviComparator());
+    private SortedSet<DetailFaisabiliteSuivi> modifs = new TreeSet<DetailFaisabiliteSuivi>(new SuiviComparator());
 
     /**
      * Getter sur modifs.
      * @return Retourne le modifs.
      */
     @Override
-    public SortedSet<DetailFaisabiliteSuivi> getModifs()
-    {
+    public SortedSet<DetailFaisabiliteSuivi> getModifs() {
         return this.modifs;
     }
 
@@ -80,8 +77,7 @@ public class DetailFaisabilite
      * Setter pour modifs.
      * @param modifs le modifs à écrire.
      */
-    public void setModifs(final SortedSet<DetailFaisabiliteSuivi> modifs)
-    {
+    public void setModifs(final SortedSet<DetailFaisabiliteSuivi> modifs) {
         this.modifs = modifs;
     }
 
@@ -89,8 +85,7 @@ public class DetailFaisabilite
      * Getter sur infosEtude.
      * @return Retourne le infosEtude.
      */
-    public InfosEtudeFaisabilite getInfosEtude()
-    {
+    public InfosEtudeFaisabilite getInfosEtude() {
         return this.infosEtude;
     }
 
@@ -98,8 +93,7 @@ public class DetailFaisabilite
      * Setter pour infosEtude.
      * @param infosEtude le infosEtude à écrire.
      */
-    public void setInfosEtude(final InfosEtudeFaisabilite infosEtude)
-    {
+    public void setInfosEtude(final InfosEtudeFaisabilite infosEtude) {
         this.infosEtude = infosEtude;
     }
 
@@ -107,8 +101,7 @@ public class DetailFaisabilite
      * Getter sur infosConclusion.
      * @return Retourne le infosConclusion.
      */
-    public InfosConclusionFaisabilite getInfosConclusion()
-    {
+    public InfosConclusionFaisabilite getInfosConclusion() {
         return this.infosConclusion;
     }
 
@@ -116,8 +109,7 @@ public class DetailFaisabilite
      * Setter pour infosConclusion.
      * @param infosConclusion le infosConclusion à écrire.
      */
-    public void setInfosConclusion(final InfosConclusionFaisabilite infosConclusion)
-    {
+    public void setInfosConclusion(final InfosConclusionFaisabilite infosConclusion) {
         this.infosConclusion = infosConclusion;
     }
 
@@ -125,8 +117,7 @@ public class DetailFaisabilite
      * Getter sur essai.
      * @return Retourne le essai.
      */
-    public Essai getEssai()
-    {
+    public Essai getEssai() {
         return this.essai;
     }
 
@@ -134,8 +125,7 @@ public class DetailFaisabilite
      * Setter pour essai.
      * @param essai le essai à écrire.
      */
-    public void setEssai(final Essai essai)
-    {
+    public void setEssai(final Essai essai) {
         this.essai = essai;
     }
 

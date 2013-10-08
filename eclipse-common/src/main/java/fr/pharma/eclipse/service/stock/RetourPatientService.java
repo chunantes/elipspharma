@@ -7,12 +7,10 @@ import fr.pharma.eclipse.service.common.GenericService;
 
 /**
  * Service de gestion des retours patients.
- 
+ * @author Netapsys
  * @version $Revision$ $Date$
  */
-public interface RetourPatientService
-    extends GenericService<RetourPatient>
-{
+public interface RetourPatientService extends GenericService<RetourPatient> {
     /**
      * Méthode en charge de sauvegarder uine liste de retours patient.
      * @param retours La liste de retours.

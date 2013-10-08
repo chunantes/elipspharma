@@ -4,13 +4,11 @@ import javax.persistence.Entity;
 
 /**
  * Classe métier représentant une Préparation.
- 
+ * @author Netapsys
  * @version $Revision$ $Date$
  */
 @Entity(name = "preparation")
-public class Preparation
-    extends Produit
-{
+public class Preparation extends Produit {
 
     /**
      * SerialVersionUID.
@@ -21,8 +19,7 @@ public class Preparation
      * {@inheritDoc}
      */
     @Override
-    public Produit cloneMe()
-    {
+    public Produit cloneMe() {
         final Preparation preparation = new Preparation();
 
         // Clonage de la super classe.

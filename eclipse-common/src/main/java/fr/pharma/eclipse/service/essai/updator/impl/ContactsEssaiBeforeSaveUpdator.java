@@ -18,14 +18,12 @@ import fr.pharma.eclipse.service.essai.EssaiService;
 import fr.pharma.eclipse.service.essai.updator.EssaiBeforeSaveUpdator;
 
 /**
- * Classe en charge d'ajouter, lors de la première sauvegarde d'un essai, les pharmaciens
- * titulaires de la pharmacie principale.
- 
+ * Classe en charge d'ajouter, lors de la première sauvegarde d'un essai, les
+ * pharmaciens titulaires de la pharmacie principale.
+ * @author Netapsys
  * @version $Revision$ $Date$
  */
-public class ContactsEssaiBeforeSaveUpdator
-    implements EssaiBeforeSaveUpdator, BeanFactoryAware
-{
+public class ContactsEssaiBeforeSaveUpdator implements EssaiBeforeSaveUpdator, BeanFactoryAware {
 
     /**
      * Serial ID.
@@ -52,24 +50,20 @@ public class ContactsEssaiBeforeSaveUpdator
      */
     @Override
     public void update(final Essai essai,
-                       final EssaiService service)
-    {
+                       final EssaiService service) {
         // Ne fait rien si l'essai existe déjà en base.
-        if (essai.getId() != null)
-        {
+        if (essai.getId() != null) {
             return;
         }
 
         // Récupération des pharmaciens de la pharmacie principale.
-        final PharmacienSearchCriteria criteria =
-            (PharmacienSearchCriteria) this.beanFactory.getBean("pharmacienCriteria");
+        final PharmacienSearchCriteria criteria = (PharmacienSearchCriteria) this.beanFactory.getBean("pharmacienCriteria");
         criteria.setTypePharmacien(TypePharmacien.TITULAIRE);
         criteria.setPharmacie(essai.getPharmaciePrincipale());
         final List<Pharmacien> pharmaciens = this.pharmacienService.getAll(criteria);
 
         // Création d'une habilitation pour chaque pharmacien.
-        for (final Pharmacien pharmacien : pharmaciens)
-        {
+        for (final Pharmacien pharmacien : pharmaciens) {
             final Habilitation habilitation = this.habilitationFactory.getInitializedObject();
             habilitation.setDesactivable(false);
             habilitation.setPersonne(pharmacien);
@@ -83,9 +77,7 @@ public class ContactsEssaiBeforeSaveUpdator
      * {@inheritDoc}
      */
     @Override
-    public void setBeanFactory(final BeanFactory beanFactory)
-        throws BeansException
-    {
+    public void setBeanFactory(final BeanFactory beanFactory) throws BeansException {
         this.beanFactory = beanFactory;
     }
 
@@ -93,8 +85,7 @@ public class ContactsEssaiBeforeSaveUpdator
      * Getter sur beanFactory.
      * @return Retourne le beanFactory.
      */
-    BeanFactory getBeanFactory()
-    {
+    BeanFactory getBeanFactory() {
         return this.beanFactory;
     }
 
@@ -102,8 +93,7 @@ public class ContactsEssaiBeforeSaveUpdator
      * Getter sur habilitationFactory.
      * @return Retourne le habilitationFactory.
      */
-    HabilitationFactory getHabilitationFactory()
-    {
+    HabilitationFactory getHabilitationFactory() {
         return this.habilitationFactory;
     }
 
@@ -111,8 +101,7 @@ public class ContactsEssaiBeforeSaveUpdator
      * Setter pour habilitationFactory.
      * @param habilitationFactory le habilitationFactory à écrire.
      */
-    public void setHabilitationFactory(final HabilitationFactory habilitationFactory)
-    {
+    public void setHabilitationFactory(final HabilitationFactory habilitationFactory) {
         this.habilitationFactory = habilitationFactory;
     }
 
@@ -120,8 +109,7 @@ public class ContactsEssaiBeforeSaveUpdator
      * Getter sur pharmacienService.
      * @return Retourne le pharmacienService.
      */
-    GenericService<Pharmacien> getPharmacienService()
-    {
+    GenericService<Pharmacien> getPharmacienService() {
         return this.pharmacienService;
     }
 
@@ -129,8 +117,7 @@ public class ContactsEssaiBeforeSaveUpdator
      * Setter pour pharmacienService.
      * @param pharmacienService le pharmacienService à écrire.
      */
-    public void setPharmacienService(final GenericService<Pharmacien> pharmacienService)
-    {
+    public void setPharmacienService(final GenericService<Pharmacien> pharmacienService) {
         this.pharmacienService = pharmacienService;
     }
 

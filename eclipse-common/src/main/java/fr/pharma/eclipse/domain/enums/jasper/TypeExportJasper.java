@@ -2,11 +2,10 @@ package fr.pharma.eclipse.domain.enums.jasper;
 
 /**
  * Enumération des différents types de sorties de rapports Jasper.
- 
+ * @author Netapsys
  * @version $Revision$ $Date$
  */
-public enum TypeExportJasper
-{
+public enum TypeExportJasper {
     /**
      * Export DOC.
      */
@@ -26,8 +25,7 @@ public enum TypeExportJasper
      * Constructeur privé.
      * @param extension Extension des fichiers de ce type (avec le point).
      */
-    private TypeExportJasper(final String extension)
-    {
+    private TypeExportJasper(final String extension) {
         this.extension = extension;
     }
 
@@ -35,8 +33,7 @@ public enum TypeExportJasper
      * Getter sur extension.
      * @return Retourne le extension.
      */
-    public String getExtension()
-    {
+    public String getExtension() {
         return this.extension;
     }
 }

@@ -1,13 +1,12 @@
 package fr.pharma.eclipse.domain.enums;
 
 /**
- * Enumération représentant la responsabilité de la randomisation, de la levée d'insu et de la
- * commande de produit.
- 
+ * Enumération représentant la responsabilité de la randomisation, de la levée
+ * d'insu et de la commande de produit.
+ * @author Netapsys
  * @version $Revision$ $Date$
  */
-public enum Responsabilite
-{
+public enum Responsabilite {
     /**
      * Pharmacie.
      */
@@ -37,8 +36,7 @@ public enum Responsabilite
      * Constructeur.
      * @param libelle Le libellé de la qualité de l'insu.
      */
-    Responsabilite(final String libelle)
-    {
+    Responsabilite(final String libelle) {
         this.setLibelle(libelle);
     }
 
@@ -46,8 +44,7 @@ public enum Responsabilite
      * Setter pour libelle.
      * @param libelle le libelle à écrire.
      */
-    public void setLibelle(final String libelle)
-    {
+    public void setLibelle(final String libelle) {
         this.libelle = libelle;
     }
 
@@ -55,8 +52,7 @@ public enum Responsabilite
      * Getter pour libelle.
      * @return Retourne le libelle.
      */
-    public String getLibelle()
-    {
+    public String getLibelle() {
         return this.libelle;
     }
 
@@ -64,8 +60,7 @@ public enum Responsabilite
      * {@inheritDoc}
      */
     @Override
-    public String toString()
-    {
+    public String toString() {
         return this.getLibelle();
     }
 

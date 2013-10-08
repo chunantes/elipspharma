@@ -12,12 +12,10 @@ import fr.pharma.eclipse.utils.constants.EclipseConstants;
 
 /**
  * Helper en charge de transformer les traitements en JRBean correspondants.
- 
+ * @author Netapsys
  * @version $Revision$ $Date$
  */
-public class TraitementFillerHelper
-    implements Serializable
-{
+public class TraitementFillerHelper implements Serializable {
     /**
      * SerialVersionUID.
      */
@@ -26,27 +24,22 @@ public class TraitementFillerHelper
     /**
      * {@inheritDoc}
      */
-    public Collection<JRBeanTraitement> transform(final List<? extends MvtStock> mvts)
-    {
+    public Collection<JRBeanTraitement> transform(final List<? extends MvtStock> mvts) {
         final Collection<JRBeanTraitement> beanProduits = new ArrayList<JRBeanTraitement>();
 
-        for (final MvtStock mvt : mvts)
-        {
+        for (final MvtStock mvt : mvts) {
 
             final JRBeanTraitement jrProduit = new JRBeanTraitement();
 
             // si la date de péremption est setté on l'utilise.
-            if (mvt.getDatePeremption() != null)
-            {
-                jrProduit.setDatePeremption(Utils.formatDate(mvt.getDatePeremption().getTime(),
-                                                             EclipseConstants.PATTERN_SIMPLE));
+            if (mvt.getDatePeremption() != null) {
+                jrProduit.setDatePeremption(Utils.formatDate(mvt.getDatePeremption().getTime(), EclipseConstants.PATTERN_SIMPLE));
             }
 
             // les autres valeurs
             jrProduit.setDescriptif(mvt.getProduit().getNom());
             jrProduit.setNumLot(mvt.getNumLot());
-            if (mvt.getNumTraitement() != null)
-            {
+            if (mvt.getNumTraitement() != null) {
                 jrProduit.setNumTraitement(mvt.getNumTraitement());
             }
             jrProduit.setQuantite(mvt.getQuantite().toString());

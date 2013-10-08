@@ -10,12 +10,10 @@ import fr.pharma.eclipse.jasper.engine.filler.JasperReportBeanFiller;
 /**
  * Filler en charge de valoriser l'attribut respCommande de
  * {@link JRBeanFicheAideDispensationPart5}.
- 
+ * @author Netapsys
  * @version $Revision$ $Date$
  */
-public class AideDispensationPart5InitCommandeFiller
-    implements JasperReportBeanFiller
-{
+public class AideDispensationPart5InitCommandeFiller implements JasperReportBeanFiller {
     /**
      * Serial ID.
      */
@@ -26,14 +24,11 @@ public class AideDispensationPart5InitCommandeFiller
      */
     @Override
     public void fill(final Essai essai,
-                     final JasperReportBean bean)
-    {
+                     final JasperReportBean bean) {
         final JRBeanFicheAideDispensationPart5 partie5 = (JRBeanFicheAideDispensationPart5) bean;
-        final InfosComplementaires infosComplementaires =
-            essai.getDetailDonneesPharma().getInfosComplementaires();
+        final InfosComplementaires infosComplementaires = essai.getDetailDonneesPharma().getInfosComplementaires();
         final Responsabilite resp = infosComplementaires.getResponsabiliteCommande();
-        if (resp != null)
-        {
+        if (resp != null) {
             partie5.setRespCommande(resp.getLibelle());
         }
     }

@@ -9,13 +9,11 @@ import fr.pharma.eclipse.domain.model.common.DocumentEclipse;
 
 /**
  * Classe abstraite représentant un document attaché (indirectement) à un essai.
- 
+ * @author Netapsys
  * @version $Revision$ $Date$
  */
 @MappedSuperclass
-public abstract class DocumentEssai
-    extends DocumentEclipse
-{
+public abstract class DocumentEssai extends DocumentEclipse {
 
     /**
      * Serial ID.
@@ -32,8 +30,7 @@ public abstract class DocumentEssai
      * Getter sur commentaire.
      * @return Retourne le commentaire.
      */
-    public String getCommentaire()
-    {
+    public String getCommentaire() {
         return this.commentaire;
     }
 
@@ -41,8 +38,7 @@ public abstract class DocumentEssai
      * Setter pour commentaire.
      * @param commentaire le commentaire à écrire.
      */
-    public void setCommentaire(final String commentaire)
-    {
+    public void setCommentaire(final String commentaire) {
         this.commentaire = commentaire;
     }
 
@@ -50,8 +46,7 @@ public abstract class DocumentEssai
      * {@inheritDoc}
      */
     @Override
-    public EnumTypeDocument getTypeDocument()
-    {
+    public EnumTypeDocument getTypeDocument() {
         return this.getType();
     }
 

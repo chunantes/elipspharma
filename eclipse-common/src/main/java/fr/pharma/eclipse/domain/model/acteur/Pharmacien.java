@@ -33,15 +33,12 @@ import fr.pharma.eclipse.domain.model.stockage.Pharmacie;
 
 /**
  * Classe métier représentant un Pharmacien.
- 
+ * @author Netapsys
  * @version $Revision$ $Date$
  */
 @Entity
 @DiscriminatorValue("PHARMACIEN")
-public class Pharmacien
-    extends Personne
-    implements BeanParentDocument
-{
+public class Pharmacien extends Personne implements BeanParentDocument {
     /**
      * Serial ID.
      */
@@ -105,8 +102,7 @@ public class Pharmacien
      * Getter pour pharmacies.
      * @return Le pharmacies
      */
-    public SortedSet<Pharmacie> getPharmacies()
-    {
+    public SortedSet<Pharmacie> getPharmacies() {
         return this.pharmacies;
     }
 
@@ -114,8 +110,7 @@ public class Pharmacien
      * Setter pour pharmacies.
      * @param pharmacies Le pharmacies à écrire.
      */
-    public void setPharmacies(final SortedSet<Pharmacie> pharmacies)
-    {
+    public void setPharmacies(final SortedSet<Pharmacie> pharmacies) {
         this.pharmacies = pharmacies;
     }
 
@@ -123,8 +118,7 @@ public class Pharmacien
      * Getter pour typePharmacien.
      * @return Le typePharmacien
      */
-    public TypePharmacien getTypePharmacien()
-    {
+    public TypePharmacien getTypePharmacien() {
         return this.typePharmacien;
     }
 
@@ -132,8 +126,7 @@ public class Pharmacien
      * Setter pour typePharmacien.
      * @param typePharmacien Le typePharmacien à écrire.
      */
-    public void setTypePharmacien(final TypePharmacien typePharmacien)
-    {
+    public void setTypePharmacien(final TypePharmacien typePharmacien) {
         this.typePharmacien = typePharmacien;
     }
 
@@ -141,8 +134,7 @@ public class Pharmacien
      * Getter pour documentCV.
      * @return Le documentCV
      */
-    public DocumentCV getDocumentCV()
-    {
+    public DocumentCV getDocumentCV() {
         return this.documentCV;
     }
 
@@ -150,8 +142,7 @@ public class Pharmacien
      * Setter pour documentCV.
      * @param documentCV Le documentCV à écrire.
      */
-    public void setDocumentCV(final DocumentCV documentCV)
-    {
+    public void setDocumentCV(final DocumentCV documentCV) {
         this.documentCV = documentCV;
     }
 
@@ -159,17 +150,16 @@ public class Pharmacien
      * Getter pour documentValidationFormation.
      * @return Le documentValidationFormation
      */
-    public DocumentValidationFormation getDocumentValidationFormation()
-    {
+    public DocumentValidationFormation getDocumentValidationFormation() {
         return this.documentValidationFormation;
     }
 
     /**
      * Setter pour documentValidationFormation.
-     * @param documentValidationFormation Le documentValidationFormation à écrire.
+     * @param documentValidationFormation Le documentValidationFormation à
+     * écrire.
      */
-    public void setDocumentValidationFormation(final DocumentValidationFormation documentValidationFormation)
-    {
+    public void setDocumentValidationFormation(final DocumentValidationFormation documentValidationFormation) {
         this.documentValidationFormation = documentValidationFormation;
     }
 
@@ -177,8 +167,7 @@ public class Pharmacien
      * Getter pour dateArriveeService.
      * @return Le dateArriveeService
      */
-    public Calendar getDateArriveeService()
-    {
+    public Calendar getDateArriveeService() {
         return this.dateArriveeService;
     }
 
@@ -186,8 +175,7 @@ public class Pharmacien
      * Setter pour dateArriveeService.
      * @param dateArriveeService Le dateArriveeService à écrire.
      */
-    public void setDateArriveeService(final Calendar dateArriveeService)
-    {
+    public void setDateArriveeService(final Calendar dateArriveeService) {
         this.dateArriveeService = dateArriveeService;
     }
 
@@ -195,8 +183,7 @@ public class Pharmacien
      * Getter pour dateDepartService.
      * @return Le dateDepartService
      */
-    public Calendar getDateDepartService()
-    {
+    public Calendar getDateDepartService() {
         return this.dateDepartService;
     }
 
@@ -204,8 +191,7 @@ public class Pharmacien
      * Setter pour dateDepartService.
      * @param dateDepartService Le dateDepartService à écrire.
      */
-    public void setDateDepartService(final Calendar dateDepartService)
-    {
+    public void setDateDepartService(final Calendar dateDepartService) {
         this.dateDepartService = dateDepartService;
     }
 
@@ -213,8 +199,7 @@ public class Pharmacien
      * Getter pour dateValidationFormation.
      * @return Le dateValidationFormation
      */
-    public Calendar getDateValidationFormation()
-    {
+    public Calendar getDateValidationFormation() {
         return this.dateValidationFormation;
     }
 
@@ -222,8 +207,7 @@ public class Pharmacien
      * Setter pour dateValidationFormation.
      * @param dateValidationFormation Le dateValidationFormation à écrire.
      */
-    public void setDateValidationFormation(final Calendar dateValidationFormation)
-    {
+    public void setDateValidationFormation(final Calendar dateValidationFormation) {
         this.dateValidationFormation = dateValidationFormation;
     }
 

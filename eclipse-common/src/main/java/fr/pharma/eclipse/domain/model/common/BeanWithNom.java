@@ -4,12 +4,10 @@ import java.io.Serializable;
 
 /**
  * Objet avec une propriété nom.
- 
+ * @author Netapsys
  * @version $Revision$ $Date$
  */
-public interface BeanWithNom
-    extends Serializable
-{
+public interface BeanWithNom extends Serializable {
     /**
      * Accesseur en lecture sur le nom du bean.
      * @return Le nom du bean.

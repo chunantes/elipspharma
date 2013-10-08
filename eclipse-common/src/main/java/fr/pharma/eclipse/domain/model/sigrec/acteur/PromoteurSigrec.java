@@ -22,14 +22,11 @@ import fr.pharma.eclipse.domain.model.sigrec.essai.EssaiSigrec;
 
 /**
  * Classe métier représentant un Promoteur importé de SIGREC.
- 
+ * @author Netapsys
  * @version $Revision$ $Date$
  */
 @Entity(name = "promoteur_sigrec")
-public class PromoteurSigrec
-    extends BeanObject
-    implements Contactable
-{
+public class PromoteurSigrec extends BeanObject implements Contactable {
 
     /**
      * SerialVersionUID.
@@ -75,8 +72,7 @@ public class PromoteurSigrec
      * Getter sur identifiant.
      * @return Retourne le identifiant.
      */
-    public String getIdentifiant()
-    {
+    public String getIdentifiant() {
         return this.identifiant;
     }
 
@@ -84,8 +80,7 @@ public class PromoteurSigrec
      * Setter pour identifiant.
      * @param identifiant le identifiant à écrire.
      */
-    public void setIdentifiant(final String identifiant)
-    {
+    public void setIdentifiant(final String identifiant) {
         this.identifiant = identifiant;
     }
 
@@ -93,8 +88,7 @@ public class PromoteurSigrec
      * Getter sur type.
      * @return Retourne le type.
      */
-    public TypePromoteur getType()
-    {
+    public TypePromoteur getType() {
         return this.type;
     }
 
@@ -102,8 +96,7 @@ public class PromoteurSigrec
      * Setter pour type.
      * @param type le type à écrire.
      */
-    public void setType(final TypePromoteur type)
-    {
+    public void setType(final TypePromoteur type) {
         this.type = type;
     }
 
@@ -111,8 +104,8 @@ public class PromoteurSigrec
      * Getter sur contact.
      * @return Retourne le contact.
      */
-    public ContactSigrec getContact()
-    {
+    @Override
+    public ContactSigrec getContact() {
         return this.contact;
     }
 
@@ -120,8 +113,8 @@ public class PromoteurSigrec
      * Setter pour contact.
      * @param contact le contact à écrire.
      */
-    public void setContact(final ContactSigrec contact)
-    {
+    @Override
+    public void setContact(final ContactSigrec contact) {
         this.contact = contact;
     }
 
@@ -129,8 +122,7 @@ public class PromoteurSigrec
      * Getter sur arcs.
      * @return Retourne le arcs.
      */
-    public List<ARCPromoteurSigrec> getArcs()
-    {
+    public List<ARCPromoteurSigrec> getArcs() {
         return this.arcs;
     }
 
@@ -138,8 +130,7 @@ public class PromoteurSigrec
      * Setter pour arcs.
      * @param arcs le arcs à écrire.
      */
-    public void setArcs(final List<ARCPromoteurSigrec> arcs)
-    {
+    public void setArcs(final List<ARCPromoteurSigrec> arcs) {
         this.arcs = arcs;
     }
 
@@ -147,8 +138,7 @@ public class PromoteurSigrec
      * Getter sur essais.
      * @return Retourne le essais.
      */
-    public List<EssaiSigrec> getEssais()
-    {
+    public List<EssaiSigrec> getEssais() {
         return this.essais;
     }
 

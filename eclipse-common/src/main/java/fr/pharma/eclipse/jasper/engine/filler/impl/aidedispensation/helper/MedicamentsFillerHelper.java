@@ -6,12 +6,10 @@ import fr.pharma.eclipse.domain.model.produit.Produit;
 
 /**
  * Helper pour la création des beans de médicaments.
- 
+ * @author Netapsys
  * @version $Revision$ $Date$
  */
-public class MedicamentsFillerHelper
-    extends AbstractProduitsFillerHelper
-{
+public class MedicamentsFillerHelper extends AbstractProduitsFillerHelper {
 
     /**
      * Serial ID.
@@ -23,8 +21,7 @@ public class MedicamentsFillerHelper
      */
     @Override
     protected void fill(final Produit source,
-                        final JRBeanProduit dest)
-    {
+                        final JRBeanProduit dest) {
         final Medicament medicament = (Medicament) source;
         dest.setDci(medicament.getDci());
         dest.setClasseTherapeuthique(medicament.getClasseTherapeutique());

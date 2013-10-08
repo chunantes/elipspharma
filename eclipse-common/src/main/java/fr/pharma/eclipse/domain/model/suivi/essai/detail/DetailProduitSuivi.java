@@ -11,14 +11,13 @@ import fr.pharma.eclipse.domain.model.essai.detail.produit.DetailProduit;
 import fr.pharma.eclipse.domain.model.suivi.common.Suivi;
 
 /**
- * Bean métier représentant les suivis de modifications sur le bean {@link DetailProduit}.
- 
+ * Bean métier représentant les suivis de modifications sur le bean
+ * {@link DetailProduit}.
+ * @author Netapsys
  * @version $Revision$ $Date$
  */
 @Entity(name = "essai_detail_produit_suivi")
-public class DetailProduitSuivi
-    extends Suivi
-{
+public class DetailProduitSuivi extends Suivi {
 
     /**
      * Serial ID.
@@ -37,8 +36,7 @@ public class DetailProduitSuivi
      * Getter sur detailProduit.
      * @return Retourne le detailProduit.
      */
-    public DetailProduit getDetailProduit()
-    {
+    public DetailProduit getDetailProduit() {
         return this.detailProduit;
     }
 
@@ -46,8 +44,7 @@ public class DetailProduitSuivi
      * Setter pour detailProduit.
      * @param detailProduit le detailProduit à écrire.
      */
-    public void setDetailProduit(final DetailProduit detailProduit)
-    {
+    public void setDetailProduit(final DetailProduit detailProduit) {
         this.detailProduit = detailProduit;
     }
 

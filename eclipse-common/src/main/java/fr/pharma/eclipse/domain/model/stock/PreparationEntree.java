@@ -15,13 +15,11 @@ import fr.pharma.eclipse.domain.model.ordonnancier.OrdonnancierFabReconst;
 
 /**
  * Bean métier représentant une entrée en preparation.
- 
+ * @author Netapsys
  * @version $Revision$ $Date$
  */
 @Entity(name = "mvt_preparationEntree")
-public class PreparationEntree
-    extends Approvisionnement
-{
+public class PreparationEntree extends Approvisionnement {
     /**
      * Serial ID.
      */
@@ -64,8 +62,7 @@ public class PreparationEntree
      * Getter pour composition.
      * @return Le composition
      */
-    public String getComposition()
-    {
+    public String getComposition() {
         return this.composition;
     }
 
@@ -73,8 +70,7 @@ public class PreparationEntree
      * Setter pour composition.
      * @param composition Le composition à écrire.
      */
-    public void setComposition(final String composition)
-    {
+    public void setComposition(final String composition) {
         this.composition = composition;
     }
 
@@ -82,8 +78,7 @@ public class PreparationEntree
      * Getter pour dateFabrication.
      * @return Le dateFabrication
      */
-    public Calendar getDateFabrication()
-    {
+    public Calendar getDateFabrication() {
         return this.dateFabrication;
     }
 
@@ -91,8 +86,7 @@ public class PreparationEntree
      * Setter pour dateFabrication.
      * @param dateFabrication Le dateFabrication à écrire.
      */
-    public void setDateFabrication(final Calendar dateFabrication)
-    {
+    public void setDateFabrication(final Calendar dateFabrication) {
         this.dateFabrication = dateFabrication;
     }
 
@@ -100,8 +94,7 @@ public class PreparationEntree
      * Getter pour numOrdonnancier.
      * @return Le numOrdonnancier
      */
-    public Integer getNumOrdonnancier()
-    {
+    public Integer getNumOrdonnancier() {
         return this.numOrdonnancier;
     }
 
@@ -109,8 +102,7 @@ public class PreparationEntree
      * Setter pour numOrdonnancier.
      * @param numOrdonnancier Le numOrdonnancier à écrire.
      */
-    public void setNumOrdonnancier(final Integer numOrdonnancier)
-    {
+    public void setNumOrdonnancier(final Integer numOrdonnancier) {
         this.numOrdonnancier = numOrdonnancier;
     }
 
@@ -118,8 +110,7 @@ public class PreparationEntree
      * Getter pour ordonnancier.
      * @return Le ordonnancier
      */
-    public OrdonnancierFabReconst getOrdonnancier()
-    {
+    public OrdonnancierFabReconst getOrdonnancier() {
         return this.ordonnancier;
     }
 
@@ -127,8 +118,7 @@ public class PreparationEntree
      * Setter pour ordonnancier.
      * @param ordonnancier Le ordonnancier à écrire.
      */
-    public void setOrdonnancier(final OrdonnancierFabReconst ordonnancier)
-    {
+    public void setOrdonnancier(final OrdonnancierFabReconst ordonnancier) {
         this.ordonnancier = ordonnancier;
     }
 
@@ -136,8 +126,7 @@ public class PreparationEntree
      * Getter pour sterile.
      * @return Le sterile
      */
-    public Boolean getSterile()
-    {
+    public Boolean getSterile() {
         return this.sterile;
     }
 
@@ -145,8 +134,7 @@ public class PreparationEntree
      * Setter pour sterile.
      * @param sterile Le sterile à écrire.
      */
-    public void setSterile(final Boolean sterile)
-    {
+    public void setSterile(final Boolean sterile) {
         this.sterile = sterile;
     }
 

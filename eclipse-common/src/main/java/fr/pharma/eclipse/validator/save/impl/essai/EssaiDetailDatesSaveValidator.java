@@ -10,12 +10,10 @@ import fr.pharma.eclipse.validator.save.SaveValidator;
 
 /**
  * Validateur de sauvegarde d'essai : détail dates.
- 
+ * @author Netapsys
  * @version $Revision$ $Date$
  */
-public class EssaiDetailDatesSaveValidator
-    implements SaveValidator<Essai>
-{
+public class EssaiDetailDatesSaveValidator implements SaveValidator<Essai> {
 
     /**
      * Serial ID.
@@ -37,34 +35,18 @@ public class EssaiDetailDatesSaveValidator
      */
     @Override
     public void validate(final Essai essai,
-                         final GenericService<Essai> essaiService)
-    {
+                         final GenericService<Essai> essaiService) {
         final DetailDates detailDates = essai.getDetailDates();
         // début/fin prévisionnelles de l'étude
-        this.validateDates(detailDates.getDebutEtudePrev(),
-                           detailDates.getFinEtudePrev(),
-                           "etude_prev",
-                           essai);
+        this.validateDates(detailDates.getDebutEtudePrev(), detailDates.getFinEtudePrev(), "etude_prev", essai);
         // début/fin prévisionnelles de l'inclusion
-        this.validateDates(detailDates.getDebutInclusionPrev(),
-                           detailDates.getFinInclusionPrev(),
-                           "inclusion_prev",
-                           essai);
+        this.validateDates(detailDates.getDebutInclusionPrev(), detailDates.getFinInclusionPrev(), "inclusion_prev", essai);
         // début/fin rééelles de l'étude
-        this.validateDates(detailDates.getDebutEtude(),
-                           detailDates.getFinEtude(),
-                           "etude_reel",
-                           essai);
+        this.validateDates(detailDates.getDebutEtude(), detailDates.getFinEtude(), "etude_reel", essai);
         // début/fin réelles de l'inclusion
-        this.validateDates(detailDates.getDebutInclusion(),
-                           detailDates.getFinInclusion(),
-                           "inclusion_reel",
-                           essai);
+        this.validateDates(detailDates.getDebutInclusion(), detailDates.getFinInclusion(), "inclusion_reel", essai);
         // pré-clôture/clôture
-        this.validateDates(detailDates.getPreCloture(),
-                           detailDates.getCloture(),
-                           "cloture",
-                           essai);
+        this.validateDates(detailDates.getPreCloture(), detailDates.getCloture(), "cloture", essai);
     }
 
     /**
@@ -78,20 +60,10 @@ public class EssaiDetailDatesSaveValidator
     private void validateDates(final Calendar dateDebut,
                                final Calendar dateFin,
                                final String specificErrCodePart,
-                               final Essai essai)
-    {
-        if (dateDebut != null
-            && dateFin != null
-            && dateDebut.after(dateFin))
-        {
-            final String errorCode =
-                new StringBuilder(EssaiDetailDatesSaveValidator.ERRCODE_COMMON_PART)
-                        .append(specificErrCodePart)
-                        .toString();
-            throw new ValidationException(errorCode,
-                                          new String[]
-                                          {EssaiDetailDatesSaveValidator.ERRVALUE, },
-                                          essai);
+                               final Essai essai) {
+        if ((dateDebut != null) && (dateFin != null) && dateDebut.after(dateFin)) {
+            final String errorCode = new StringBuilder(EssaiDetailDatesSaveValidator.ERRCODE_COMMON_PART).append(specificErrCodePart).toString();
+            throw new ValidationException(errorCode, new String[]{EssaiDetailDatesSaveValidator.ERRVALUE, }, essai);
         }
 
     }

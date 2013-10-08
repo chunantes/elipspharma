@@ -6,13 +6,11 @@ import fr.pharma.eclipse.factory.common.BeanObjectFactory;
 
 /**
  * Factory de Bean MvtStock.
- 
+ * @author Netapsys
  * @version $Revision$ $Date$
  * @param <MVT> Bean Objet MvtStock.
  */
-public class MvtStockFactory<MVT extends MvtStock>
-    extends BeanObjectFactory<MVT>
-{
+public class MvtStockFactory<MVT extends MvtStock> extends BeanObjectFactory<MVT> {
     /**
      * Serial ID.
      */
@@ -28,8 +26,7 @@ public class MvtStockFactory<MVT extends MvtStock>
      * @param bean Classe.
      * @param typeMouvement Type du mouvement de stock.
      */
-    public MvtStockFactory(final Class<MVT> bean, final TypeMvtStock typeMouvement)
-    {
+    public MvtStockFactory(final Class<MVT> bean, final TypeMvtStock typeMouvement) {
         super(bean);
         this.typeMouvement = typeMouvement;
     }
@@ -38,8 +35,7 @@ public class MvtStockFactory<MVT extends MvtStock>
      * {@inheritDoc}
      */
     @Override
-    public MVT getInitializedObject()
-    {
+    public MVT getInitializedObject() {
         final MVT mouvementStock = super.getInitializedObject();
         mouvementStock.setType(this.typeMouvement);
         return mouvementStock;

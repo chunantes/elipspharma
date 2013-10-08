@@ -9,12 +9,10 @@ import fr.pharma.eclipse.domain.model.acteur.Personne;
 
 /**
  * Classe de helper pour l'encodage de mot de passe.
- 
+ * @author Netapsys
  * @version $Revision$ $Date$
  */
-public class PasswordEncoderHelper
-    implements Serializable
-{
+public class PasswordEncoderHelper implements Serializable {
     /**
      * Serial ID.
      */
@@ -34,13 +32,9 @@ public class PasswordEncoderHelper
      * Méthode en charge d'encoder le mot de passe d'une Personne.
      * @param personne Personne.
      */
-    public void encodePassword(final Personne personne)
-    {
-        if ((StringUtils.isNotEmpty(personne.getPassword()))
-            && (personne.getPassword().length() < PasswordEncoderHelper.SIZE_DETECT_PASSWORD_ENCOD))
-        {
-            personne.setPassword(this.passwordEncoder.encodePassword(personne.getPassword(),
-                                                                     null));
+    public void encodePassword(final Personne personne) {
+        if ((StringUtils.isNotEmpty(personne.getPassword())) && (personne.getPassword().length() < PasswordEncoderHelper.SIZE_DETECT_PASSWORD_ENCOD)) {
+            personne.setPassword(this.passwordEncoder.encodePassword(personne.getPassword(), null));
         }
     }
 
@@ -48,8 +42,7 @@ public class PasswordEncoderHelper
      * Setter pour passwordEncoder.
      * @param passwordEncoder le passwordEncoder à écrire.
      */
-    public void setPasswordEncoder(final Md5PasswordEncoder passwordEncoder)
-    {
+    public void setPasswordEncoder(final Md5PasswordEncoder passwordEncoder) {
         this.passwordEncoder = passwordEncoder;
     }
 

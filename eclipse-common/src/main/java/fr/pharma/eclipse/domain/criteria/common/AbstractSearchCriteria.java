@@ -2,12 +2,10 @@ package fr.pharma.eclipse.domain.criteria.common;
 
 /**
  * Classe de gestion des critères de recherche.
- 
+ * @author NETAPSYS
  * @version $Revision$ $Date$
  */
-public abstract class AbstractSearchCriteria
-    implements SearchCriteria
-{
+public abstract class AbstractSearchCriteria implements SearchCriteria {
     /**
      * Serial ID.
      */
@@ -31,48 +29,48 @@ public abstract class AbstractSearchCriteria
     /**
      * {@inheritDoc}
      */
-    public String getActiveOrder()
-    {
+    @Override
+    public String getActiveOrder() {
         return this.activeOrder;
     }
 
     /**
      * {@inheritDoc}
      */
-    public void setActiveOrder(final String activeOrder)
-    {
+    @Override
+    public void setActiveOrder(final String activeOrder) {
         this.activeOrder = activeOrder;
     }
 
     /**
      * {@inheritDoc}
      */
-    public boolean isAscending()
-    {
+    @Override
+    public boolean isAscending() {
         return this.ascending;
     }
 
     /**
      * {@inheritDoc}
      */
-    public void setAscending(final boolean ascending)
-    {
+    @Override
+    public void setAscending(final boolean ascending) {
         this.ascending = ascending;
     }
 
     /**
      * {@inheritDoc}
      */
-    public boolean isCaseSensitiveOrder()
-    {
+    @Override
+    public boolean isCaseSensitiveOrder() {
         return this.caseSensitiveOrder;
     }
 
     /**
      * {@inheritDoc}
      */
-    public void setCaseSensitiveOrder(final boolean caseSensitiveOrder)
-    {
+    @Override
+    public void setCaseSensitiveOrder(final boolean caseSensitiveOrder) {
         this.caseSensitiveOrder = caseSensitiveOrder;
     }
 

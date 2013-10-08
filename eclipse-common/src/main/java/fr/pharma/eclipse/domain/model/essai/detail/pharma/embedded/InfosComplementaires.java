@@ -20,13 +20,12 @@ import fr.pharma.eclipse.domain.model.essai.detail.pharma.document.DocumentRespI
 import fr.pharma.eclipse.domain.model.essai.detail.pharma.document.DocumentRespRandomisation;
 
 /**
- * Informations complementaires relatives aux donnees pharma d'un essai clinique.
- 
+ * Informations complementaires relatives aux donnees pharma d'un essai
+ * clinique.
+ * @author Netapsys
  * @version $Revision$ $Date$
  */
-public class InfosComplementaires
-    implements Serializable
-{
+public class InfosComplementaires implements Serializable {
 
     /**
      * SerialVersionUID.
@@ -125,17 +124,16 @@ public class InfosComplementaires
      * Getter sur responsabiliteRandomisation.
      * @return Retourne le responsabiliteRandomisation.
      */
-    public Responsabilite getResponsabiliteRandomisation()
-    {
+    public Responsabilite getResponsabiliteRandomisation() {
         return this.responsabiliteRandomisation;
     }
 
     /**
      * Setter pour responsabiliteRandomisation.
-     * @param responsabiliteRandomisation le responsabiliteRandomisation à écrire.
+     * @param responsabiliteRandomisation le responsabiliteRandomisation à
+     * écrire.
      */
-    public void setResponsabiliteRandomisation(final Responsabilite responsabiliteRandomisation)
-    {
+    public void setResponsabiliteRandomisation(final Responsabilite responsabiliteRandomisation) {
         this.responsabiliteRandomisation = responsabiliteRandomisation;
     }
 
@@ -143,8 +141,7 @@ public class InfosComplementaires
      * Getter sur responsabiliteInsu.
      * @return Retourne le responsabiliteInsu.
      */
-    public Responsabilite getResponsabiliteInsu()
-    {
+    public Responsabilite getResponsabiliteInsu() {
         return this.responsabiliteInsu;
     }
 
@@ -152,8 +149,7 @@ public class InfosComplementaires
      * Setter pour responsabiliteInsu.
      * @param responsabiliteInsu le responsabiliteInsu à écrire.
      */
-    public void setResponsabiliteInsu(final Responsabilite responsabiliteInsu)
-    {
+    public void setResponsabiliteInsu(final Responsabilite responsabiliteInsu) {
         this.responsabiliteInsu = responsabiliteInsu;
     }
 
@@ -161,8 +157,7 @@ public class InfosComplementaires
      * Getter sur modaliteReception.
      * @return Retourne le modaliteReception.
      */
-    public String getModaliteReception()
-    {
+    public String getModaliteReception() {
         return this.modaliteReception;
     }
 
@@ -170,8 +165,7 @@ public class InfosComplementaires
      * Setter pour modaliteReception.
      * @param modaliteReception le modaliteReception à écrire.
      */
-    public void setModaliteReception(final String modaliteReception)
-    {
+    public void setModaliteReception(final String modaliteReception) {
         this.modaliteReception = modaliteReception;
     }
 
@@ -179,8 +173,7 @@ public class InfosComplementaires
      * Getter sur gestionRetour.
      * @return Retourne le gestionRetour.
      */
-    public Responsabilite getGestionRetour()
-    {
+    public Responsabilite getGestionRetour() {
         return this.gestionRetour;
     }
 
@@ -188,8 +181,7 @@ public class InfosComplementaires
      * Setter pour gestionRetour.
      * @param gestionRetour le gestionRetour à écrire.
      */
-    public void setGestionRetour(final Responsabilite gestionRetour)
-    {
+    public void setGestionRetour(final Responsabilite gestionRetour) {
         this.gestionRetour = gestionRetour;
     }
 
@@ -197,8 +189,7 @@ public class InfosComplementaires
      * Getter sur typeRetour.
      * @return Retourne le typeRetour.
      */
-    public TypeMvtStock getTypeRetour()
-    {
+    public TypeMvtStock getTypeRetour() {
         return this.typeRetour;
     }
 
@@ -206,8 +197,7 @@ public class InfosComplementaires
      * Setter pour typeRetour.
      * @param typeRetour le typeRetour à écrire.
      */
-    public void setTypeRetour(final TypeMvtStock typeRetour)
-    {
+    public void setTypeRetour(final TypeMvtStock typeRetour) {
         this.typeRetour = typeRetour;
     }
 
@@ -215,8 +205,7 @@ public class InfosComplementaires
      * Getter sur envoisTraitement.
      * @return Retourne le envoisTraitement.
      */
-    public Boolean getEnvoisTraitement()
-    {
+    public Boolean getEnvoisTraitement() {
         return this.envoisTraitement;
     }
 
@@ -224,8 +213,7 @@ public class InfosComplementaires
      * Setter pour envoisTraitement.
      * @param envoisTraitement le envoisTraitement à écrire.
      */
-    public void setEnvoisTraitement(final Boolean envoisTraitement)
-    {
+    public void setEnvoisTraitement(final Boolean envoisTraitement) {
         this.envoisTraitement = envoisTraitement;
     }
 
@@ -233,8 +221,7 @@ public class InfosComplementaires
      * Getter sur responsabiliteCommande.
      * @return Retourne le responsabiliteCommande.
      */
-    public Responsabilite getResponsabiliteCommande()
-    {
+    public Responsabilite getResponsabiliteCommande() {
         return this.responsabiliteCommande;
     }
 
@@ -242,8 +229,7 @@ public class InfosComplementaires
      * Setter pour responsabiliteCommande.
      * @param responsabiliteCommande le responsabiliteCommande à écrire.
      */
-    public void setResponsabiliteCommande(final Responsabilite responsabiliteCommande)
-    {
+    public void setResponsabiliteCommande(final Responsabilite responsabiliteCommande) {
         this.responsabiliteCommande = responsabiliteCommande;
     }
 
@@ -251,17 +237,16 @@ public class InfosComplementaires
      * Getter sur documentResponsabiliteRandomisation.
      * @return Retourne le documentResponsabiliteRandomisation.
      */
-    public DocumentRespRandomisation getDocumentResponsabiliteRandomisation()
-    {
+    public DocumentRespRandomisation getDocumentResponsabiliteRandomisation() {
         return this.documentResponsabiliteRandomisation;
     }
 
     /**
      * Setter pour documentResponsabiliteRandomisation.
-     * @param documentResponsabiliteRandomisation le documentResponsabiliteRandomisation à écrire.
+     * @param documentResponsabiliteRandomisation le
+     * documentResponsabiliteRandomisation à écrire.
      */
-    public void setDocumentResponsabiliteRandomisation(final DocumentRespRandomisation documentResponsabiliteRandomisation)
-    {
+    public void setDocumentResponsabiliteRandomisation(final DocumentRespRandomisation documentResponsabiliteRandomisation) {
         this.documentResponsabiliteRandomisation = documentResponsabiliteRandomisation;
     }
 
@@ -269,8 +254,7 @@ public class InfosComplementaires
      * Getter sur documentResponsabiliteInsu.
      * @return Retourne le documentResponsabiliteInsu.
      */
-    public DocumentRespInsu getDocumentResponsabiliteInsu()
-    {
+    public DocumentRespInsu getDocumentResponsabiliteInsu() {
         return this.documentResponsabiliteInsu;
     }
 
@@ -278,8 +262,7 @@ public class InfosComplementaires
      * Setter pour documentResponsabiliteInsu.
      * @param documentResponsabiliteInsu le documentResponsabiliteInsu à écrire.
      */
-    public void setDocumentResponsabiliteInsu(final DocumentRespInsu documentResponsabiliteInsu)
-    {
+    public void setDocumentResponsabiliteInsu(final DocumentRespInsu documentResponsabiliteInsu) {
         this.documentResponsabiliteInsu = documentResponsabiliteInsu;
     }
 
@@ -287,17 +270,16 @@ public class InfosComplementaires
      * Getter sur documentResponsabiliteCommande.
      * @return Retourne le documentResponsabiliteCommande.
      */
-    public DocumentRespCommande getDocumentResponsabiliteCommande()
-    {
+    public DocumentRespCommande getDocumentResponsabiliteCommande() {
         return this.documentResponsabiliteCommande;
     }
 
     /**
      * Setter pour documentResponsabiliteCommande.
-     * @param documentResponsabiliteCommande le documentResponsabiliteCommande à écrire.
+     * @param documentResponsabiliteCommande le documentResponsabiliteCommande à
+     * écrire.
      */
-    public void setDocumentResponsabiliteCommande(final DocumentRespCommande documentResponsabiliteCommande)
-    {
+    public void setDocumentResponsabiliteCommande(final DocumentRespCommande documentResponsabiliteCommande) {
         this.documentResponsabiliteCommande = documentResponsabiliteCommande;
     }
 
@@ -305,8 +287,7 @@ public class InfosComplementaires
      * Getter sur documentModaliteReception.
      * @return Retourne le documentModaliteReception.
      */
-    public DocumentModaliteReception getDocumentModaliteReception()
-    {
+    public DocumentModaliteReception getDocumentModaliteReception() {
         return this.documentModaliteReception;
     }
 
@@ -314,8 +295,7 @@ public class InfosComplementaires
      * Setter pour documentModaliteReception.
      * @param documentModaliteReception le documentModaliteReception à écrire.
      */
-    public void setDocumentModaliteReception(final DocumentModaliteReception documentModaliteReception)
-    {
+    public void setDocumentModaliteReception(final DocumentModaliteReception documentModaliteReception) {
         this.documentModaliteReception = documentModaliteReception;
     }
 
@@ -323,8 +303,7 @@ public class InfosComplementaires
      * Getter sur modaliteDestruction.
      * @return Retourne le modaliteDestruction.
      */
-    public String getModaliteDestruction()
-    {
+    public String getModaliteDestruction() {
         return this.modaliteDestruction;
     }
 
@@ -332,8 +311,7 @@ public class InfosComplementaires
      * Setter pour modaliteDestruction.
      * @param modaliteDestruction le modaliteDestruction à écrire.
      */
-    public void setModaliteDestruction(final String modaliteDestruction)
-    {
+    public void setModaliteDestruction(final String modaliteDestruction) {
         this.modaliteDestruction = modaliteDestruction;
     }
 
@@ -341,17 +319,16 @@ public class InfosComplementaires
      * Getter sur documentModaliteDestruction.
      * @return Retourne le documentModaliteDestruction.
      */
-    public DocumentModaliteDestruction getDocumentModaliteDestruction()
-    {
+    public DocumentModaliteDestruction getDocumentModaliteDestruction() {
         return this.documentModaliteDestruction;
     }
 
     /**
      * Setter pour documentModaliteDestruction.
-     * @param documentModaliteDestruction le documentModaliteDestruction à écrire.
+     * @param documentModaliteDestruction le documentModaliteDestruction à
+     * écrire.
      */
-    public void setDocumentModaliteDestruction(final DocumentModaliteDestruction documentModaliteDestruction)
-    {
+    public void setDocumentModaliteDestruction(final DocumentModaliteDestruction documentModaliteDestruction) {
         this.documentModaliteDestruction = documentModaliteDestruction;
     }
 

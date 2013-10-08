@@ -13,14 +13,12 @@ import fr.pharma.eclipse.service.dispensation.ElementToCheckService;
 import fr.pharma.eclipse.service.surcout.counter.ActeCounter;
 
 /**
- * Classe en charge de compter le nombre d'actes pharmaceutiques pour un essai ou un patient dans
- * un essai.
- 
+ * Classe en charge de compter le nombre d'actes pharmaceutiques pour un essai
+ * ou un patient dans un essai.
+ * @author Netapsys
  * @version $Revision$ $Date$
  */
-public abstract class ElementToCheckCounter
-    implements ActeCounter, Serializable
-{
+public abstract class ElementToCheckCounter implements ActeCounter, Serializable {
 
     /**
      * Serial UID.
@@ -40,12 +38,10 @@ public abstract class ElementToCheckCounter
                           final Essai essai,
                           final Patient patient,
                           final Calendar dateDebut,
-                          final Calendar dateFin)
-    {
+                          final Calendar dateFin) {
         final ElementToCheckSearchCriteria crit = new ElementToCheckSearchCriteria();
         crit.setType(type);
-        if (patient != null)
-        {
+        if (patient != null) {
             crit.setPatient(patient);
         }
         crit.setDateDebut(dateDebut);
@@ -58,8 +54,7 @@ public abstract class ElementToCheckCounter
      * Setter pour elementToCheckService.
      * @param elementToCheckService le elementToCheckService à écrire.
      */
-    public void setElementToCheckService(final ElementToCheckService elementToCheckService)
-    {
+    public void setElementToCheckService(final ElementToCheckService elementToCheckService) {
         this.elementToCheckService = elementToCheckService;
     }
 

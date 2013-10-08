@@ -22,13 +22,11 @@ import fr.pharma.eclipse.domain.model.produit.document.DocumentReconstitutionSim
 
 /**
  * Classe métier représentant un produit therapeutique.
- 
+ * @author Netapsys
  * @version $Revision$ $Date$
  */
 @Entity(name = "produit_therapeutique")
-public class ProduitTherapeutique
-    extends Produit
-{
+public class ProduitTherapeutique extends Produit {
 
     /**
      * SerialVersionUID.
@@ -134,8 +132,7 @@ public class ProduitTherapeutique
      * {@inheritDoc}
      */
     @Override
-    public Produit cloneMe()
-    {
+    public Produit cloneMe() {
         final ProduitTherapeutique produit = new ProduitTherapeutique();
 
         // Clonage de la super classe.
@@ -159,8 +156,10 @@ public class ProduitTherapeutique
      * Getter sur stupefiant.
      * @return Retourne le stupefiant.
      */
-    public Boolean getStupefiant()
-    {
+    public Boolean getStupefiant() {
+        if (this.stupefiant == null) {
+            return false;
+        }        
         return this.stupefiant;
     }
 
@@ -168,8 +167,7 @@ public class ProduitTherapeutique
      * Setter pour stupefiant.
      * @param stupefiant le stupefiant à écrire.
      */
-    public void setStupefiant(final Boolean stupefiant)
-    {
+    public void setStupefiant(final Boolean stupefiant) {
         this.stupefiant = stupefiant;
     }
 
@@ -177,8 +175,10 @@ public class ProduitTherapeutique
      * Getter sur mds.
      * @return Retourne le mds.
      */
-    public Boolean getMds()
-    {
+    public Boolean getMds() {
+        if (this.mds == null) {
+            return false;
+        }        
         return this.mds;
     }
 
@@ -186,8 +186,7 @@ public class ProduitTherapeutique
      * Setter pour mds.
      * @param mds le mds à écrire.
      */
-    public void setMds(final Boolean mds)
-    {
+    public void setMds(final Boolean mds) {
         this.mds = mds;
     }
 
@@ -195,8 +194,7 @@ public class ProduitTherapeutique
      * Getter sur nature.
      * @return Retourne le nature.
      */
-    public NatureProduit getNature()
-    {
+    public NatureProduit getNature() {
         return this.nature;
     }
 
@@ -204,8 +202,7 @@ public class ProduitTherapeutique
      * Setter pour nature.
      * @param nature le nature à écrire.
      */
-    public void setNature(final NatureProduit nature)
-    {
+    public void setNature(final NatureProduit nature) {
         this.nature = nature;
     }
 
@@ -213,8 +210,7 @@ public class ProduitTherapeutique
      * Getter sur reconstitutionSimple.
      * @return Retourne le reconstitutionSimple.
      */
-    public Boolean getReconstitutionSimple()
-    {
+    public Boolean getReconstitutionSimple() {
         return this.reconstitutionSimple;
     }
 
@@ -222,8 +218,7 @@ public class ProduitTherapeutique
      * Setter pour reconstitutionSimple.
      * @param reconstitutionSimple le reconstitutionSimple à écrire.
      */
-    public void setReconstitutionSimple(final Boolean reconstitutionSimple)
-    {
+    public void setReconstitutionSimple(final Boolean reconstitutionSimple) {
         this.reconstitutionSimple = reconstitutionSimple;
     }
 
@@ -231,8 +226,7 @@ public class ProduitTherapeutique
      * Getter sur reconstitutionPSM.
      * @return Retourne le reconstitutionPSM.
      */
-    public Boolean getReconstitutionPSM()
-    {
+    public Boolean getReconstitutionPSM() {
         return this.reconstitutionPSM;
     }
 
@@ -240,8 +234,7 @@ public class ProduitTherapeutique
      * Setter pour reconstitutionPSM.
      * @param reconstitutionPSM le reconstitutionPSM à écrire.
      */
-    public void setReconstitutionPSM(final Boolean reconstitutionPSM)
-    {
+    public void setReconstitutionPSM(final Boolean reconstitutionPSM) {
         this.reconstitutionPSM = reconstitutionPSM;
     }
 
@@ -249,8 +242,7 @@ public class ProduitTherapeutique
      * Getter sur fabrication.
      * @return Retourne le fabrication.
      */
-    public Boolean getFabrication()
-    {
+    public Boolean getFabrication() {
         return this.fabrication;
     }
 
@@ -258,8 +250,7 @@ public class ProduitTherapeutique
      * Setter pour fabrication.
      * @param fabrication le fabrication à écrire.
      */
-    public void setFabrication(final Boolean fabrication)
-    {
+    public void setFabrication(final Boolean fabrication) {
         this.fabrication = fabrication;
     }
 
@@ -267,8 +258,7 @@ public class ProduitTherapeutique
      * Getter sur conditionnement.
      * @return Retourne le conditionnement.
      */
-    public Boolean getConditionnement()
-    {
+    public Boolean getConditionnement() {
         return this.conditionnement;
     }
 
@@ -276,8 +266,7 @@ public class ProduitTherapeutique
      * Setter pour conditionnement.
      * @param conditionnement le conditionnement à écrire.
      */
-    public void setConditionnement(final Boolean conditionnement)
-    {
+    public void setConditionnement(final Boolean conditionnement) {
         this.conditionnement = conditionnement;
     }
 
@@ -285,8 +274,7 @@ public class ProduitTherapeutique
      * Getter sur etiquetage.
      * @return Retourne le etiquetage.
      */
-    public Boolean getEtiquetage()
-    {
+    public Boolean getEtiquetage() {
         return this.etiquetage;
     }
 
@@ -294,8 +282,7 @@ public class ProduitTherapeutique
      * Setter pour etiquetage.
      * @param etiquetage le etiquetage à écrire.
      */
-    public void setEtiquetage(final Boolean etiquetage)
-    {
+    public void setEtiquetage(final Boolean etiquetage) {
         this.etiquetage = etiquetage;
     }
 
@@ -303,8 +290,7 @@ public class ProduitTherapeutique
      * Getter sur typeProduitTherapeutique.
      * @return Retourne le typeProduitTherapeutique.
      */
-    public TypeProduitTherapeutique getTypeProduitTherapeutique()
-    {
+    public TypeProduitTherapeutique getTypeProduitTherapeutique() {
         return this.typeProduitTherapeutique;
     }
 
@@ -312,8 +298,7 @@ public class ProduitTherapeutique
      * Setter pour typeProduitTherapeutique.
      * @param typeProduitTherapeutique le typeProduitTherapeutique à écrire.
      */
-    public void setTypeProduitTherapeutique(final TypeProduitTherapeutique typeProduitTherapeutique)
-    {
+    public void setTypeProduitTherapeutique(final TypeProduitTherapeutique typeProduitTherapeutique) {
         this.typeProduitTherapeutique = typeProduitTherapeutique;
     }
 
@@ -321,17 +306,16 @@ public class ProduitTherapeutique
      * Getter sur documentReconstitutionSimple.
      * @return Retourne le documentReconstitutionSimple.
      */
-    public DocumentReconstitutionSimple getDocumentReconstitutionSimple()
-    {
+    public DocumentReconstitutionSimple getDocumentReconstitutionSimple() {
         return this.documentReconstitutionSimple;
     }
 
     /**
      * Setter pour documentReconstitutionSimple.
-     * @param documentReconstitutionSimple le documentReconstitutionSimple à écrire.
+     * @param documentReconstitutionSimple le documentReconstitutionSimple à
+     * écrire.
      */
-    public void setDocumentReconstitutionSimple(final DocumentReconstitutionSimple documentReconstitutionSimple)
-    {
+    public void setDocumentReconstitutionSimple(final DocumentReconstitutionSimple documentReconstitutionSimple) {
         this.documentReconstitutionSimple = documentReconstitutionSimple;
     }
 
@@ -339,8 +323,7 @@ public class ProduitTherapeutique
      * Getter sur documentReconstitutionPSM.
      * @return Retourne le documentReconstitutionPSM.
      */
-    public DocumentReconstitutionPSM getDocumentReconstitutionPSM()
-    {
+    public DocumentReconstitutionPSM getDocumentReconstitutionPSM() {
         return this.documentReconstitutionPSM;
     }
 
@@ -348,8 +331,7 @@ public class ProduitTherapeutique
      * Setter pour documentReconstitutionPSM.
      * @param documentReconstitutionPSM le documentReconstitutionPSM à écrire.
      */
-    public void setDocumentReconstitutionPSM(final DocumentReconstitutionPSM documentReconstitutionPSM)
-    {
+    public void setDocumentReconstitutionPSM(final DocumentReconstitutionPSM documentReconstitutionPSM) {
         this.documentReconstitutionPSM = documentReconstitutionPSM;
     }
 
@@ -357,8 +339,7 @@ public class ProduitTherapeutique
      * Getter sur documentFabrication.
      * @return Retourne le documentFabrication.
      */
-    public DocumentFabrication getDocumentFabrication()
-    {
+    public DocumentFabrication getDocumentFabrication() {
         return this.documentFabrication;
     }
 
@@ -366,8 +347,7 @@ public class ProduitTherapeutique
      * Setter pour documentFabrication.
      * @param documentFabrication le documentFabrication à écrire.
      */
-    public void setDocumentFabrication(final DocumentFabrication documentFabrication)
-    {
+    public void setDocumentFabrication(final DocumentFabrication documentFabrication) {
         this.documentFabrication = documentFabrication;
     }
 
@@ -375,8 +355,7 @@ public class ProduitTherapeutique
      * Getter sur documentConditionnement.
      * @return Retourne le documentConditionnement.
      */
-    public DocumentConditionnement getDocumentConditionnement()
-    {
+    public DocumentConditionnement getDocumentConditionnement() {
         return this.documentConditionnement;
     }
 
@@ -384,8 +363,7 @@ public class ProduitTherapeutique
      * Setter pour documentConditionnement.
      * @param documentConditionnement le documentConditionnement à écrire.
      */
-    public void setDocumentConditionnement(final DocumentConditionnement documentConditionnement)
-    {
+    public void setDocumentConditionnement(final DocumentConditionnement documentConditionnement) {
         this.documentConditionnement = documentConditionnement;
     }
 
@@ -393,8 +371,7 @@ public class ProduitTherapeutique
      * Getter sur documentEtiquetage.
      * @return Retourne le documentEtiquetage.
      */
-    public DocumentEtiquetage getDocumentEtiquetage()
-    {
+    public DocumentEtiquetage getDocumentEtiquetage() {
         return this.documentEtiquetage;
     }
 
@@ -402,8 +379,7 @@ public class ProduitTherapeutique
      * Setter pour documentEtiquetage.
      * @param documentEtiquetage le documentEtiquetage à écrire.
      */
-    public void setDocumentEtiquetage(final DocumentEtiquetage documentEtiquetage)
-    {
+    public void setDocumentEtiquetage(final DocumentEtiquetage documentEtiquetage) {
         this.documentEtiquetage = documentEtiquetage;
     }
 

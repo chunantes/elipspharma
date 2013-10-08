@@ -6,12 +6,10 @@ import fr.pharma.eclipse.domain.model.stock.DocumentStock;
 
 /**
  * Classe de résolveur de filename de document Appro.
- 
+ * @author Netapsys
  * @version $Revision$ $Date$
  */
-public class DocStockFileNameResolver
-    extends AbstractDocEclipseFileNameResolver
-{
+public class DocStockFileNameResolver extends AbstractDocEclipseFileNameResolver {
     /**
      * Serial ID.
      */
@@ -21,8 +19,7 @@ public class DocStockFileNameResolver
      * Constructeur.
      * @param documentsDirectory Chemin de stockage des documents sur le disque.
      */
-    public DocStockFileNameResolver(final String documentsDirectory)
-    {
+    public DocStockFileNameResolver(final String documentsDirectory) {
         super(documentsDirectory);
     }
 
@@ -30,10 +27,8 @@ public class DocStockFileNameResolver
      * {@inheritDoc}
      */
     @Override
-    public boolean supports(final DocumentEclipse doc)
-    {
-        return super.supports(doc)
-               && TypeDocumentEclipse.MVT_STOCK.equals(doc.getTypeDocument().getTypeEclipse());
+    public boolean supports(final DocumentEclipse doc) {
+        return super.supports(doc) && TypeDocumentEclipse.MVT_STOCK.equals(doc.getTypeDocument().getTypeEclipse());
     }
 
     /**
@@ -41,10 +36,8 @@ public class DocStockFileNameResolver
      */
     @Override
     protected void fillDynamicDocPart(final StringBuilder builder,
-                                      final DocumentEclipse doc)
-    {
-        super.fillDynamicDocPart(builder,
-                                 doc);
+                                      final DocumentEclipse doc) {
+        super.fillDynamicDocPart(builder, doc);
         super.appendSeparator(builder);
         final DocumentStock docStock = (DocumentStock) doc; // car supports
         builder.append(docStock.getType().getRepertoire());

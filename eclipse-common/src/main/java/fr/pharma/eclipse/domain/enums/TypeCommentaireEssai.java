@@ -2,11 +2,10 @@ package fr.pharma.eclipse.domain.enums;
 
 /**
  * Enumération des différents types de commentaires d'un essai.
- 
+ * @author Netapsys
  * @version $Revision$ $Date$
  */
-public enum TypeCommentaireEssai
-{
+public enum TypeCommentaireEssai {
     /**
      * Commentaire du détail recherche.
      */
@@ -20,15 +19,13 @@ public enum TypeCommentaireEssai
     /**
      * Commentaire relatif aux achats produits de l'étude de faisabilité.
      */
-    FAISABILITE_ACHAT_PROD("detailFaisabilite.infosEtude.commentairesAchatsPUI",
-            "detailFaisabilite"),
+    FAISABILITE_ACHAT_PROD("detailFaisabilite.infosEtude.commentairesAchatsPUI", "detailFaisabilite"),
 
     /**
-     * Commentaire relatif à la distribution possible à d'autres pharmacies de l'étude de
-     * faisabilité.
+     * Commentaire relatif à la distribution possible à d'autres pharmacies de
+     * l'étude de faisabilité.
      */
-    FAISABILITE_DISTRIB_PHARMA("detailFaisabilite.infosEtude.commentairesDistribAutresPharma",
-            "detailFaisabilite"),
+    FAISABILITE_DISTRIB_PHARMA("detailFaisabilite.infosEtude.commentairesDistribAutresPharma", "detailFaisabilite"),
 
     /**
      * Commentaire global sur l'étude de faisabilité de l'essai.
@@ -36,7 +33,8 @@ public enum TypeCommentaireEssai
     FAISABILITE_ETUDE("detailFaisabilite.infosEtude.commentaires", "detailFaisabilite"),
 
     /**
-     * Commentaire concernant l'archivage sur le détail administratif/réglementaire.
+     * Commentaire concernant l'archivage sur le détail
+     * administratif/réglementaire.
      */
     ADMINREG_ARCHIVAGE("detailAdministratif.infosArchivage.commentaires", "detailAdministratif");
 
@@ -52,14 +50,12 @@ public enum TypeCommentaireEssai
 
     /**
      * Constructeur.
-     * @param commentairesPropertyFromEssai Propriété pour accéder à la liste des commentaires
-     * @param commentairesParentPropertyFromEssai Propriété pour accéder au parent des
-     * commentaires depuis le bean Essai. depuis le bean Essai.
+     * @param commentairesPropertyFromEssai Propriété pour accéder à la liste
+     * des commentaires
+     * @param commentairesParentPropertyFromEssai Propriété pour accéder au
+     * parent des commentaires depuis le bean Essai. depuis le bean Essai.
      */
-    private TypeCommentaireEssai(
-                                 final String commentairesPropertyFromEssai,
-                                 final String commentairesParentPropertyFromEssai)
-    {
+    private TypeCommentaireEssai(final String commentairesPropertyFromEssai, final String commentairesParentPropertyFromEssai) {
         this.commentairesPropertyFromEssai = commentairesPropertyFromEssai;
         this.commentairesParentPropertyFromEssai = commentairesParentPropertyFromEssai;
     }
@@ -68,8 +64,7 @@ public enum TypeCommentaireEssai
      * Getter sur commentairesPropertyFromEssai.
      * @return Retourne le commentairesPropertyFromEssai.
      */
-    public String getCommentairesPropertyFromEssai()
-    {
+    public String getCommentairesPropertyFromEssai() {
         return this.commentairesPropertyFromEssai;
     }
 
@@ -77,8 +72,7 @@ public enum TypeCommentaireEssai
      * Getter sur commentairesParentPropertyFromEssai.
      * @return Retourne le commentairesParentPropertyFromEssai.
      */
-    public String getCommentairesParentPropertyFromEssai()
-    {
+    public String getCommentairesParentPropertyFromEssai() {
         return this.commentairesParentPropertyFromEssai;
     }
 }

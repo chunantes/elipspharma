@@ -2,11 +2,10 @@ package fr.pharma.eclipse.domain.enums;
 
 /**
  * Enumération représentant le droit d'une personne sur un essai.
- 
+ * @author Netapsys
  * @version $Revision$ $Date$
  */
-public enum Droit
-{
+public enum Droit {
     /**
      * Arc Investigateur.
      */
@@ -91,8 +90,7 @@ public enum Droit
      * Constructeur privé.
      * @param libelle Libellé de la valeur de l'énumération.
      */
-    private Droit(final String libelle)
-    {
+    private Droit(final String libelle) {
         this.libelle = libelle;
     }
 
@@ -100,8 +98,7 @@ public enum Droit
      * Getter sur libelle.
      * @return Retourne le libelle.
      */
-    public String getLibelle()
-    {
+    public String getLibelle() {
         return this.libelle;
     }
 
@@ -109,8 +106,7 @@ public enum Droit
      * {@inheritDoc}
      */
     @Override
-    public String toString()
-    {
+    public String toString() {
         return this.getLibelle();
     }
 

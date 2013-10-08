@@ -16,13 +16,11 @@ import fr.pharma.eclipse.domain.model.stock.document.DocumentDestruction;
 
 /**
  * Bean métier représentant un mouvement de stock de destruction.
- 
+ * @author Netapsys
  * @version $Revision$ $Date$
  */
 @Entity(name = "mvt_destruction")
-public class Destruction
-    extends MvtStock
-{
+public class Destruction extends MvtStock {
     /**
      * Serial ID.
      */
@@ -59,8 +57,7 @@ public class Destruction
      * Getter pour commentaire.
      * @return Le commentaire
      */
-    public String getCommentaire()
-    {
+    public String getCommentaire() {
         return this.commentaire;
     }
 
@@ -68,8 +65,7 @@ public class Destruction
      * Setter pour commentaire.
      * @param commentaire Le commentaire à écrire.
      */
-    public void setCommentaire(final String commentaire)
-    {
+    public void setCommentaire(final String commentaire) {
         this.commentaire = commentaire;
     }
 
@@ -77,8 +73,7 @@ public class Destruction
      * Getter pour documentDestruction.
      * @return Le documentDestruction
      */
-    public DocumentDestruction getDocumentDestruction()
-    {
+    public DocumentDestruction getDocumentDestruction() {
         return this.documentDestruction;
     }
 
@@ -86,8 +81,7 @@ public class Destruction
      * Setter pour documentDestruction.
      * @param documentDestruction Le documentDestruction à écrire.
      */
-    public void setDocumentDestruction(final DocumentDestruction documentDestruction)
-    {
+    public void setDocumentDestruction(final DocumentDestruction documentDestruction) {
         this.documentDestruction = documentDestruction;
     }
 
@@ -95,8 +89,7 @@ public class Destruction
      * Getter pour raisonSortie.
      * @return Le raisonSortie
      */
-    public RaisonSortie getRaisonSortie()
-    {
+    public RaisonSortie getRaisonSortie() {
         return this.raisonSortie;
     }
 
@@ -104,8 +97,7 @@ public class Destruction
      * Setter pour raisonSortie.
      * @param raisonSortie Le raisonSortie à écrire.
      */
-    public void setRaisonSortie(final RaisonSortie raisonSortie)
-    {
+    public void setRaisonSortie(final RaisonSortie raisonSortie) {
         this.raisonSortie = raisonSortie;
     }
 
@@ -113,8 +105,7 @@ public class Destruction
      * Getter pour commentaireRaison.
      * @return Le commentaireRaison
      */
-    public String getCommentaireRaison()
-    {
+    public String getCommentaireRaison() {
         return this.commentaireRaison;
     }
 
@@ -122,8 +113,7 @@ public class Destruction
      * Setter pour commentaireRaison.
      * @param commentaireRaison Le commentaireRaison à écrire.
      */
-    public void setCommentaireRaison(final String commentaireRaison)
-    {
+    public void setCommentaireRaison(final String commentaireRaison) {
         this.commentaireRaison = commentaireRaison;
     }
 

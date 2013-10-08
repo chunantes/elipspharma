@@ -11,14 +11,13 @@ import fr.pharma.eclipse.domain.model.essai.detail.autresdocs.DetailAutresDocume
 import fr.pharma.eclipse.domain.model.suivi.common.Suivi;
 
 /**
- * Bean métier représentant les suivis de modifications sur le bean {@link DetailAutresDocuments}.
- 
+ * Bean métier représentant les suivis de modifications sur le bean
+ * {@link DetailAutresDocuments}.
+ * @author Netapsys
  * @version $Revision$ $Date$
  */
 @Entity(name = "essai_detail_autres_documents_suivi")
-public class DetailAutresDocumentsSuivi
-    extends Suivi
-{
+public class DetailAutresDocumentsSuivi extends Suivi {
     /**
      * Serial ID.
      */
@@ -36,8 +35,7 @@ public class DetailAutresDocumentsSuivi
      * Getter sur detailAutresDocuments.
      * @return Retourne le detailAutresDocuments.
      */
-    public DetailAutresDocuments getDetailAutresDocuments()
-    {
+    public DetailAutresDocuments getDetailAutresDocuments() {
         return this.detailAutresDocuments;
     }
 
@@ -45,8 +43,7 @@ public class DetailAutresDocumentsSuivi
      * Setter pour detailAutresDocuments.
      * @param detailAutresDocuments le detailAutresDocuments à écrire.
      */
-    public void setDetailAutresDocuments(final DetailAutresDocuments detailAutresDocuments)
-    {
+    public void setDetailAutresDocuments(final DetailAutresDocuments detailAutresDocuments) {
         this.detailAutresDocuments = detailAutresDocuments;
     }
 

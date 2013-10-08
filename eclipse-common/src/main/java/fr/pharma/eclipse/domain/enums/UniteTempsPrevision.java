@@ -2,11 +2,10 @@ package fr.pharma.eclipse.domain.enums;
 
 /**
  * Enumération représentant la civilite.
- 
+ * @author Netapsys
  * @version $Revision$ $Date$
  */
-public enum UniteTempsPrevision
-{
+public enum UniteTempsPrevision {
     /**
      * Jours.
      */
@@ -36,8 +35,7 @@ public enum UniteTempsPrevision
      * Constructeur.
      * @param libelle Le libellé.
      */
-    UniteTempsPrevision(final String libelle)
-    {
+    UniteTempsPrevision(final String libelle) {
         this.libelle = libelle;
     }
 
@@ -45,8 +43,7 @@ public enum UniteTempsPrevision
      * Getter pour libelle.
      * @return Retourne le libelle.
      */
-    public String getLibelle()
-    {
+    public String getLibelle() {
         return this.libelle;
     }
 
@@ -54,8 +51,7 @@ public enum UniteTempsPrevision
      * {@inheritDoc}
      */
     @Override
-    public String toString()
-    {
+    public String toString() {
         return this.getLibelle();
     }
 

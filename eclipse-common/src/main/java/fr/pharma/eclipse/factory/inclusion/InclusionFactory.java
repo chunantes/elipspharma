@@ -8,12 +8,10 @@ import fr.pharma.eclipse.utils.constants.EclipseConstants;
 
 /**
  * Factory de Inclusion.
- 
+ * @author Netapsys
  * @version $Revision$ $Date$
  */
-public class InclusionFactory
-    extends BeanObjectFactory<Inclusion>
-{
+public class InclusionFactory extends BeanObjectFactory<Inclusion> {
 
     /**
      * SerialVersionUID.
@@ -24,8 +22,7 @@ public class InclusionFactory
      * Constructeur.
      * @param bean Classe.
      */
-    public InclusionFactory(final Class<Inclusion> bean)
-    {
+    public InclusionFactory(final Class<Inclusion> bean) {
         super(bean);
     }
 
@@ -34,8 +31,7 @@ public class InclusionFactory
      * @return L'objet Inclusion.
      */
     @Override
-    public Inclusion getInitializedObject()
-    {
+    public Inclusion getInitializedObject() {
         final Inclusion inclusion = super.getInitializedObject();
         inclusion.setActif(true);
         inclusion.setDateInclusion(Calendar.getInstance(EclipseConstants.LOCALE));

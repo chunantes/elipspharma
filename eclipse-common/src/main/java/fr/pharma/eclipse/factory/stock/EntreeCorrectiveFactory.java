@@ -5,11 +5,10 @@ import fr.pharma.eclipse.domain.model.stock.Approvisionnement;
 
 /**
  * Factory de Bean Entree Corrective.
- 
+ * @author Netapsys
  * @version $Revision$ $Date$
  */
-public class EntreeCorrectiveFactory
-    extends ApprovisionnementFactory
+public class EntreeCorrectiveFactory extends ApprovisionnementFactory
 
 {
 
@@ -22,10 +21,8 @@ public class EntreeCorrectiveFactory
      * Constructeur.
      * @param bean Classe.
      */
-    public EntreeCorrectiveFactory(final Class<Approvisionnement> bean)
-    {
-        super(bean,
-              TypeMvtStock.ENTREE_CORRECTIVE);
+    public EntreeCorrectiveFactory(final Class<Approvisionnement> bean) {
+        super(bean, TypeMvtStock.ENTREE_CORRECTIVE);
     }
 
 }

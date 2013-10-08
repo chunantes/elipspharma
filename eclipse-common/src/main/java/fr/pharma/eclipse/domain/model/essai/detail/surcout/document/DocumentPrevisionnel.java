@@ -7,14 +7,12 @@ import fr.pharma.eclipse.domain.enums.document.TypeDocumentEssai;
 
 /**
  * Bean métier représentant un document relatif à aux surcouts prévisionnels.
- 
+ * @author Netapsys
  * @version $Revision$ $Date$
  */
 @Entity
 @DiscriminatorValue("PREVISIONNEL")
-public class DocumentPrevisionnel
-    extends DocumentSurcouts
-{
+public class DocumentPrevisionnel extends DocumentSurcouts {
 
     /**
      * Serial ID.
@@ -24,8 +22,7 @@ public class DocumentPrevisionnel
     /**
      * Constructeur par défaut.
      */
-    public DocumentPrevisionnel()
-    {
+    public DocumentPrevisionnel() {
         this.setType(TypeDocumentEssai.PREVISIONNEL);
     }
 

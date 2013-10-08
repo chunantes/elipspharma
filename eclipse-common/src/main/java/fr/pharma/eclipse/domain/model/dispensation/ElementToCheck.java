@@ -22,16 +22,14 @@ import fr.pharma.eclipse.domain.model.ordonnancier.OrdonnancierFabReconst;
 import fr.pharma.eclipse.domain.model.prescription.ProduitPrescrit;
 
 /**
- * Classe du modèle représentant un élément à vérifier lors de la phase de dispensation. Ces
- * éléments sont définis dans les onglets "actes pharma" de chaque produit.
- 
+ * Classe du modèle représentant un élément à vérifier lors de la phase de
+ * dispensation. Ces éléments sont définis dans les onglets "actes pharma" de
+ * chaque produit.
+ * @author Netapsys
  * @version $Revision$ $Date$
  */
 @Entity(name = "element_to_check")
-public class ElementToCheck
-    extends BeanObject
-    implements BeanWithNom
-{
+public class ElementToCheck extends BeanObject implements BeanWithNom {
 
     /**
      * SerialVersionUID.
@@ -60,7 +58,8 @@ public class ElementToCheck
     private Boolean checked;
 
     /**
-     * Date de vérification de l'élément (date où l'utilisateur a coché la case).
+     * Date de vérification de l'élément (date où l'utilisateur a coché la
+     * case).
      */
     @Column(name = "dateChecked")
     @Temporal(TemporalType.TIMESTAMP)
@@ -114,8 +113,7 @@ public class ElementToCheck
      * Getter sur nomChamps.
      * @return Retourne le nomChamps.
      */
-    public String getNomChamps()
-    {
+    public String getNomChamps() {
         return this.nomChamps;
     }
 
@@ -123,8 +121,7 @@ public class ElementToCheck
      * Setter pour nomChamps.
      * @param nomChamps le nomChamps à écrire.
      */
-    public void setNomChamps(final String nomChamps)
-    {
+    public void setNomChamps(final String nomChamps) {
         this.nomChamps = nomChamps;
     }
 
@@ -132,8 +129,7 @@ public class ElementToCheck
      * Getter sur checked.
      * @return Retourne le checked.
      */
-    public Boolean getChecked()
-    {
+    public Boolean getChecked() {
         return this.checked;
     }
 
@@ -141,8 +137,7 @@ public class ElementToCheck
      * Setter pour checked.
      * @param checked le checked à écrire.
      */
-    public void setChecked(final Boolean checked)
-    {
+    public void setChecked(final Boolean checked) {
         this.checked = checked;
     }
 
@@ -150,8 +145,7 @@ public class ElementToCheck
      * Getter sur dispensation.
      * @return Retourne le dispensation.
      */
-    public Dispensation getDispensation()
-    {
+    public Dispensation getDispensation() {
         return this.dispensation;
     }
 
@@ -159,8 +153,7 @@ public class ElementToCheck
      * Setter pour dispensation.
      * @param dispensation le dispensation à écrire.
      */
-    public void setDispensation(final Dispensation dispensation)
-    {
+    public void setDispensation(final Dispensation dispensation) {
         this.dispensation = dispensation;
     }
 
@@ -168,8 +161,7 @@ public class ElementToCheck
      * {@inheritDoc}
      */
     @Override
-    public String getNom()
-    {
+    public String getNom() {
         return this.getNomChamps();
     }
 
@@ -177,8 +169,7 @@ public class ElementToCheck
      * Getter sur produitPrescrit.
      * @return Retourne le produitPrescrit.
      */
-    public ProduitPrescrit getProduitPrescrit()
-    {
+    public ProduitPrescrit getProduitPrescrit() {
         return this.produitPrescrit;
     }
 
@@ -186,8 +177,7 @@ public class ElementToCheck
      * Setter pour produitPrescrit.
      * @param produitPrescrit le produitPrescrit à écrire.
      */
-    public void setProduitPrescrit(final ProduitPrescrit produitPrescrit)
-    {
+    public void setProduitPrescrit(final ProduitPrescrit produitPrescrit) {
         this.produitPrescrit = produitPrescrit;
     }
 
@@ -195,8 +185,7 @@ public class ElementToCheck
      * Getter sur commentaire.
      * @return Retourne le commentaire.
      */
-    public String getCommentaire()
-    {
+    public String getCommentaire() {
         return this.commentaire;
     }
 
@@ -204,8 +193,7 @@ public class ElementToCheck
      * Setter pour commentaire.
      * @param commentaire le commentaire à écrire.
      */
-    public void setCommentaire(final String commentaire)
-    {
+    public void setCommentaire(final String commentaire) {
         this.commentaire = commentaire;
     }
 
@@ -213,8 +201,7 @@ public class ElementToCheck
      * Getter sur type.
      * @return Retourne le type.
      */
-    public TypeElementToCheck getType()
-    {
+    public TypeElementToCheck getType() {
         return this.type;
     }
 
@@ -222,8 +209,7 @@ public class ElementToCheck
      * Setter pour type.
      * @param type le type à écrire.
      */
-    public void setType(final TypeElementToCheck type)
-    {
+    public void setType(final TypeElementToCheck type) {
         this.type = type;
     }
 
@@ -231,8 +217,7 @@ public class ElementToCheck
      * Getter pour dateChecked.
      * @return Le dateChecked
      */
-    public Calendar getDateChecked()
-    {
+    public Calendar getDateChecked() {
         return this.dateChecked;
     }
 
@@ -240,8 +225,7 @@ public class ElementToCheck
      * Setter pour dateChecked.
      * @param dateChecked Le dateChecked à écrire.
      */
-    public void setDateChecked(final Calendar dateChecked)
-    {
+    public void setDateChecked(final Calendar dateChecked) {
         this.dateChecked = dateChecked;
     }
 
@@ -249,8 +233,7 @@ public class ElementToCheck
      * Getter pour checkedBy.
      * @return Le checkedBy
      */
-    public Personne getCheckedBy()
-    {
+    public Personne getCheckedBy() {
         return this.checkedBy;
     }
 
@@ -258,8 +241,7 @@ public class ElementToCheck
      * Setter pour checkedBy.
      * @param checkedBy Le checkedBy à écrire.
      */
-    public void setCheckedBy(final Personne checkedBy)
-    {
+    public void setCheckedBy(final Personne checkedBy) {
         this.checkedBy = checkedBy;
     }
 
@@ -267,8 +249,7 @@ public class ElementToCheck
      * Getter pour numOrdonnancier.
      * @return Le numOrdonnancier
      */
-    public Integer getNumOrdonnancier()
-    {
+    public Integer getNumOrdonnancier() {
         return this.numOrdonnancier;
     }
 
@@ -276,8 +257,7 @@ public class ElementToCheck
      * Setter pour numOrdonnancier.
      * @param numOrdonnancier Le numOrdonnancier à écrire.
      */
-    public void setNumOrdonnancier(final Integer numOrdonnancier)
-    {
+    public void setNumOrdonnancier(final Integer numOrdonnancier) {
         this.numOrdonnancier = numOrdonnancier;
     }
 
@@ -285,8 +265,7 @@ public class ElementToCheck
      * Getter pour ordonnancier.
      * @return Le ordonnancier
      */
-    public OrdonnancierFabReconst getOrdonnancier()
-    {
+    public OrdonnancierFabReconst getOrdonnancier() {
         return this.ordonnancier;
     }
 
@@ -294,8 +273,7 @@ public class ElementToCheck
      * Setter pour ordonnancier.
      * @param ordonnancier Le ordonnancier à écrire.
      */
-    public void setOrdonnancier(final OrdonnancierFabReconst ordonnancier)
-    {
+    public void setOrdonnancier(final OrdonnancierFabReconst ordonnancier) {
         this.ordonnancier = ordonnancier;
     }
 

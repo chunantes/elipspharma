@@ -8,12 +8,10 @@ import fr.pharma.eclipse.domain.model.produit.ProduitTherapeutique;
 
 /**
  * Helper pour la création des beans de produits thérapeutiques.
- 
+ * @author Netapsys
  * @version $Revision$ $Date$
  */
-public class ProduitsTherapFillerHelper
-    extends AbstractProduitsFillerHelper
-{
+public class ProduitsTherapFillerHelper extends AbstractProduitsFillerHelper {
 
     /**
      * Serial ID.
@@ -25,12 +23,10 @@ public class ProduitsTherapFillerHelper
      */
     @Override
     protected void fill(final Produit source,
-                        final JRBeanProduit dest)
-    {
+                        final JRBeanProduit dest) {
         final ProduitTherapeutique pduitTherapeutique = (ProduitTherapeutique) source;
         final String classeTherapeutique = pduitTherapeutique.getClasseTherapeutique();
-        if (StringUtils.hasText(classeTherapeutique))
-        {
+        if (StringUtils.hasText(classeTherapeutique)) {
             dest.setClasseTherapeuthique(classeTherapeutique);
         }
     }

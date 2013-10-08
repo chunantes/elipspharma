@@ -18,17 +18,10 @@ import fr.pharma.eclipse.service.stock.ApprovisionnementService;
 
 /**
  * Builder en charge de calculer le nombre de préparations stériles.
- 
+ * @author Netapsys
  * @version $Revision$ $Date$
  */
-public class PreparationBuilder
-    implements IndicateurBuilder
-{
-
-    /**
-     * SerialVersionUID.
-     */
-    private static final long serialVersionUID = 1L;
+public class PreparationBuilder implements IndicateurBuilder {
 
     /**
      * Service approvisionnement.
@@ -52,8 +45,7 @@ public class PreparationBuilder
     @Override
     public Indicateur build(final Pharmacie pharmacie,
                             final Calendar dateDebut,
-                            final Calendar dateFin)
-    {
+                            final Calendar dateFin) {
         final MvtStockSearchCriteria criteria = new MvtStockSearchCriteria();
         criteria.setPharmacie(pharmacie);
         criteria.setDateDebut(dateDebut);
@@ -61,20 +53,17 @@ public class PreparationBuilder
         criteria.setTypeMouvement(TypeMvtStock.PREPARATION_ENTREE);
         criteria.setSterile(this.sterile);
 
-        final SortedSet<PreparationEntree> set =
-            new TreeSet<PreparationEntree>(new GenericComparator<PreparationEntree>("numOrdonnancier"));
+        final SortedSet<PreparationEntree> set = new TreeSet<PreparationEntree>(new GenericComparator<PreparationEntree>("numOrdonnancier"));
 
         set.addAll(this.approService.getAll(criteria));
-        return new Indicateur(this.libelle,
-                              new BigDecimal(set.size()));
+        return new Indicateur(this.libelle, new BigDecimal(set.size()));
     }
 
     /**
      * Getter pour approService.
      * @return Le approService
      */
-    public ApprovisionnementService<PreparationEntree> getApproService()
-    {
+    public ApprovisionnementService<PreparationEntree> getApproService() {
         return this.approService;
     }
 
@@ -82,8 +71,7 @@ public class PreparationBuilder
      * Setter pour approService.
      * @param approService Le approService à écrire.
      */
-    public void setApproService(final ApprovisionnementService<PreparationEntree> approService)
-    {
+    public void setApproService(final ApprovisionnementService<PreparationEntree> approService) {
         this.approService = approService;
     }
 
@@ -91,8 +79,7 @@ public class PreparationBuilder
      * Getter pour libelle.
      * @return Le libelle
      */
-    public String getLibelle()
-    {
+    public String getLibelle() {
         return this.libelle;
     }
 
@@ -100,8 +87,7 @@ public class PreparationBuilder
      * Setter pour libelle.
      * @param libelle Le libelle à écrire.
      */
-    public void setLibelle(final String libelle)
-    {
+    public void setLibelle(final String libelle) {
         this.libelle = libelle;
     }
 
@@ -109,8 +95,7 @@ public class PreparationBuilder
      * Getter pour sterile.
      * @return Le sterile
      */
-    public Boolean getSterile()
-    {
+    public Boolean getSterile() {
         return this.sterile;
     }
 
@@ -118,8 +103,7 @@ public class PreparationBuilder
      * Setter pour sterile.
      * @param sterile Le sterile à écrire.
      */
-    public void setSterile(final Boolean sterile)
-    {
+    public void setSterile(final Boolean sterile) {
         this.sterile = sterile;
     }
 

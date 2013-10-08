@@ -25,14 +25,11 @@ import fr.pharma.eclipse.domain.model.suivi.essai.detail.DetailContactsSuivi;
 
 /**
  * Classe métier représentant les informations des contacts d'un essai clinique.
- 
+ * @author Netapsys
  * @version $Revision$ $Date$
  */
 @Entity(name = "essai_detail_contacts")
-public class DetailContacts
-    extends BeanObjectSuivi
-    implements Serializable
-{
+public class DetailContacts extends BeanObjectSuivi implements Serializable {
 
     /**
      * Serial ID.
@@ -52,8 +49,7 @@ public class DetailContacts
     @OneToMany(mappedBy = "detailContacts", cascade = CascadeType.ALL)
     @LazyCollection(LazyCollectionOption.FALSE)
     @Sort(type = SortType.COMPARATOR, comparator = HabilitationComparator.class)
-    private SortedSet<Habilitation> habilitations =
-        new TreeSet<Habilitation>(new HabilitationComparator());
+    private SortedSet<Habilitation> habilitations = new TreeSet<Habilitation>(new HabilitationComparator());
 
     /**
      * Liste des modifications du détail.
@@ -61,15 +57,13 @@ public class DetailContacts
     @OneToMany(mappedBy = "detailContacts", cascade = CascadeType.ALL)
     @LazyCollection(LazyCollectionOption.TRUE)
     @Sort(type = SortType.COMPARATOR, comparator = SuiviComparator.class)
-    private SortedSet<DetailContactsSuivi> modifs =
-        new TreeSet<DetailContactsSuivi>(new SuiviComparator());
+    private SortedSet<DetailContactsSuivi> modifs = new TreeSet<DetailContactsSuivi>(new SuiviComparator());
 
     /**
      * {@inheritDoc}
      */
     @Override
-    public SortedSet<DetailContactsSuivi> getModifs()
-    {
+    public SortedSet<DetailContactsSuivi> getModifs() {
         return this.modifs;
     }
 
@@ -77,8 +71,7 @@ public class DetailContacts
      * Getter sur essai.
      * @return Retourne le essai.
      */
-    public Essai getEssai()
-    {
+    public Essai getEssai() {
         return this.essai;
     }
 
@@ -86,8 +79,7 @@ public class DetailContacts
      * Setter pour essai.
      * @param essai le essai à écrire.
      */
-    public void setEssai(final Essai essai)
-    {
+    public void setEssai(final Essai essai) {
         this.essai = essai;
     }
 
@@ -95,8 +87,7 @@ public class DetailContacts
      * Setter pour modifs.
      * @param modifs le modifs à écrire.
      */
-    public void setModifs(final SortedSet<DetailContactsSuivi> modifs)
-    {
+    public void setModifs(final SortedSet<DetailContactsSuivi> modifs) {
         this.modifs = modifs;
     }
 
@@ -104,8 +95,7 @@ public class DetailContacts
      * Getter sur habilitations.
      * @return Retourne le habilitations.
      */
-    public SortedSet<Habilitation> getHabilitations()
-    {
+    public SortedSet<Habilitation> getHabilitations() {
         return this.habilitations;
     }
 
@@ -113,8 +103,7 @@ public class DetailContacts
      * Setter pour habilitations.
      * @param habilitations le habilitations à écrire.
      */
-    public void setHabilitations(final SortedSet<Habilitation> habilitations)
-    {
+    public void setHabilitations(final SortedSet<Habilitation> habilitations) {
         this.habilitations = habilitations;
     }
 

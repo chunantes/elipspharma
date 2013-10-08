@@ -7,12 +7,10 @@ import fr.pharma.eclipse.domain.model.essai.Essai;
 
 /**
  * Critère de recherche sur Habilitation.
- 
+ * @author Netapsys
  * @version $Revision$ $Date$
  */
-public class HabilitationSearchCriteria
-    extends AbstractSearchCriteria
-{
+public class HabilitationSearchCriteria extends AbstractSearchCriteria {
     /**
      * Serial ID.
      */
@@ -42,8 +40,7 @@ public class HabilitationSearchCriteria
      * {@inheritDoc}
      */
     @Override
-    public void clear()
-    {
+    public void clear() {
         this.setEssai(null);
         this.setDroit(null);
         this.setPersonne(null);
@@ -54,8 +51,7 @@ public class HabilitationSearchCriteria
      * Getter pour essai.
      * @return Le essai
      */
-    public Essai getEssai()
-    {
+    public Essai getEssai() {
         return this.essai;
     }
 
@@ -63,8 +59,7 @@ public class HabilitationSearchCriteria
      * Setter pour essai.
      * @param essai Le essai à écrire.
      */
-    public void setEssai(final Essai essai)
-    {
+    public void setEssai(final Essai essai) {
         this.essai = essai;
     }
 
@@ -72,8 +67,7 @@ public class HabilitationSearchCriteria
      * Getter pour personne.
      * @return Le personne
      */
-    public Personne getPersonne()
-    {
+    public Personne getPersonne() {
         return this.personne;
     }
 
@@ -81,8 +75,7 @@ public class HabilitationSearchCriteria
      * Setter pour personne.
      * @param personne Le personne à écrire.
      */
-    public void setPersonne(final Personne personne)
-    {
+    public void setPersonne(final Personne personne) {
         this.personne = personne;
     }
 
@@ -90,8 +83,7 @@ public class HabilitationSearchCriteria
      * Getter pour droit.
      * @return Le droit
      */
-    public Droit getDroit()
-    {
+    public Droit getDroit() {
         return this.droit;
     }
 
@@ -99,8 +91,7 @@ public class HabilitationSearchCriteria
      * Setter pour droit.
      * @param droit Le droit à écrire.
      */
-    public void setDroit(final Droit droit)
-    {
+    public void setDroit(final Droit droit) {
         this.droit = droit;
     }
 
@@ -108,8 +99,7 @@ public class HabilitationSearchCriteria
      * Getter sur active.
      * @return Retourne le active.
      */
-    public Boolean getActive()
-    {
+    public Boolean getActive() {
         return this.active;
     }
 
@@ -117,8 +107,7 @@ public class HabilitationSearchCriteria
      * Setter pour active.
      * @param active le active à écrire.
      */
-    public void setActive(final Boolean active)
-    {
+    public void setActive(final Boolean active) {
         this.active = active;
     }
 

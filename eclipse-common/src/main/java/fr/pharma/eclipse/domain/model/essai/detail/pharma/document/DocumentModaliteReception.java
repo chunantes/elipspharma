@@ -6,15 +6,14 @@ import javax.persistence.Entity;
 import fr.pharma.eclipse.domain.enums.document.TypeDocumentEssai;
 
 /**
- * Bean métier représentant un document relatif à modalite de reception de l'essai clinique.
- 
+ * Bean métier représentant un document relatif à modalite de reception de
+ * l'essai clinique.
+ * @author Netapsys
  * @version $Revision$ $Date$
  */
 @Entity
 @DiscriminatorValue("MODALITE_RECEPTION")
-public class DocumentModaliteReception
-    extends DocumentDonneesPharma
-{
+public class DocumentModaliteReception extends DocumentDonneesPharma {
 
     /**
      * SerialVersionUID.
@@ -24,8 +23,7 @@ public class DocumentModaliteReception
     /**
      * Constructeur par défaut.
      */
-    public DocumentModaliteReception()
-    {
+    public DocumentModaliteReception() {
         this.setType(TypeDocumentEssai.MODALITE_RECEPTION);
     }
 }

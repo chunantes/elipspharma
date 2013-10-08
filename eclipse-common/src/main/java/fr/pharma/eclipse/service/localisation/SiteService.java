@@ -5,11 +5,9 @@ import fr.pharma.eclipse.service.common.GenericService;
 
 /**
  * Interface de service de gestion de site.
- 
+ * @author Netapsys
  * @version $Revision$ $Date$
  */
-public interface SiteService
-    extends GenericService<Site>
-{
+public interface SiteService extends GenericService<Site> {
 
 }

@@ -10,15 +10,14 @@ import fr.pharma.eclipse.domain.enums.document.TypeDocumentEssai;
 import fr.pharma.eclipse.domain.enums.document.TypeDocumentProtocole;
 
 /**
- * Bean métier représentant un document relatif au protocole de l'essai clinique.
- 
+ * Bean métier représentant un document relatif au protocole de l'essai
+ * clinique.
+ * @author Netapsys
  * @version $Revision$ $Date$
  */
 @Entity
 @DiscriminatorValue("PROTOCOLE")
-public class DocumentProtocole
-    extends DocumentAdministratif
-{
+public class DocumentProtocole extends DocumentAdministratif {
 
     /**
      * Serial ID.
@@ -28,8 +27,8 @@ public class DocumentProtocole
     /**
      * Version.
      */
-    @Column(name = "version")
-    private String version;
+    @Column(name = "version_doc")
+    private String versionDoc;
 
     /**
      * Type de document protocole (Protocole ou amendement).
@@ -41,35 +40,31 @@ public class DocumentProtocole
     /**
      * Constructeur par défaut.
      */
-    public DocumentProtocole()
-    {
+    public DocumentProtocole() {
         this.setType(TypeDocumentEssai.PROTOCOLE);
     }
 
     /**
-     * Getter pour version.
-     * @return Le version
+     * Getter pour versionDoc.
+     * @return Le versionDoc
      */
-    public String getVersion()
-    {
-        return this.version;
+    public String getVersionDoc() {
+        return this.versionDoc;
     }
 
     /**
-     * Setter pour version.
-     * @param version Le version à écrire.
+     * Setter pour versionDoc.
+     * @param versionDoc Le version à écrire.
      */
-    public void setVersion(final String version)
-    {
-        this.version = version;
+    public void setVersion(final String versionDoc) {
+        this.versionDoc = versionDoc;
     }
 
     /**
      * Getter pour typeDocumentProtocole.
      * @return Le typeDocumentProtocole
      */
-    public TypeDocumentProtocole getTypeDocumentProtocole()
-    {
+    public TypeDocumentProtocole getTypeDocumentProtocole() {
         return this.typeDocumentProtocole;
     }
 
@@ -77,8 +72,7 @@ public class DocumentProtocole
      * Setter pour typeDocumentProtocole.
      * @param typeDocumentProtocole Le typeDocumentProtocole à écrire.
      */
-    public void setTypeDocumentProtocole(final TypeDocumentProtocole typeDocumentProtocole)
-    {
+    public void setTypeDocumentProtocole(final TypeDocumentProtocole typeDocumentProtocole) {
         this.typeDocumentProtocole = typeDocumentProtocole;
     }
 

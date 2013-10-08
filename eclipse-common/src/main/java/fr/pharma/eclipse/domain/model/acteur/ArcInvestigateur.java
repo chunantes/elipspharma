@@ -19,14 +19,12 @@ import fr.pharma.eclipse.domain.model.localisation.Service;
 
 /**
  * Classe métier représentant un ARC Investigateur.
- 
+ * @author Netapsys
  * @version $Revision$ $Date$
  */
 @Entity
 @DiscriminatorValue("ARC_INVESTIGATEUR")
-public class ArcInvestigateur
-    extends Personne
-{
+public class ArcInvestigateur extends Personne {
     /**
      * Serial ID.
      */
@@ -45,8 +43,7 @@ public class ArcInvestigateur
      * Getter pour services.
      * @return Le services
      */
-    public SortedSet<Service> getServices()
-    {
+    public SortedSet<Service> getServices() {
         return this.services;
     }
 
@@ -54,8 +51,7 @@ public class ArcInvestigateur
      * Setter pour services.
      * @param services Le services à écrire.
      */
-    public void setServices(final SortedSet<Service> services)
-    {
+    public void setServices(final SortedSet<Service> services) {
         this.services = services;
     }
 

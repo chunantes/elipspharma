@@ -10,12 +10,10 @@ import fr.pharma.eclipse.domain.model.stock.Sortie;
 /**
  * Predicat sur les beans de sortie. <br />
  * Travaille sur le produit et le conditionnement.
- 
+ * @author Netapsys
  * @version $Revision$ $Date$
  */
-public class SortiePredicate
-    implements Predicate, Serializable
-{
+public class SortiePredicate implements Predicate, Serializable {
     /**
      * Serial ID.
      */
@@ -30,8 +28,7 @@ public class SortiePredicate
      * Constructeur.
      * @param sortie Sortie.
      */
-    public SortiePredicate(final Sortie sortie)
-    {
+    public SortiePredicate(final Sortie sortie) {
         this.sortie = sortie;
     }
 
@@ -39,12 +36,10 @@ public class SortiePredicate
      * {@inheritDoc}
      */
     @Override
-    public boolean evaluate(final Object object)
-    {
+    public boolean evaluate(final Object object) {
         final MvtStock mvtSortie = this.sortie.getMvtSortie();
         final Sortie s = (Sortie) object;
         final MvtStock mvt = s.getMvtSortie();
-        return mvt.getProduit().equals(mvtSortie.getProduit())
-               && mvt.getConditionnement().equals(mvtSortie.getConditionnement());
+        return mvt.getProduit().equals(mvtSortie.getProduit()) && mvt.getConditionnement().equals(mvtSortie.getConditionnement());
     }
 }

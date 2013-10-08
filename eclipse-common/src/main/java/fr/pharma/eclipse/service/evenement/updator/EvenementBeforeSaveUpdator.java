@@ -6,13 +6,12 @@ import fr.pharma.eclipse.domain.model.evenement.Evenement;
 import fr.pharma.eclipse.service.evenement.impl.EvenementServiceImpl;
 
 /**
- * Interface des updators en charge de la mise à jour d'un bean Evenement avant sa sauvegarde.
- 
+ * Interface des updators en charge de la mise à jour d'un bean Evenement avant
+ * sa sauvegarde.
+ * @author Netapsys
  * @version $Revision$ $Date$
  */
-public interface EvenementBeforeSaveUpdator
-    extends Serializable
-{
+public interface EvenementBeforeSaveUpdator extends Serializable {
     /**
      * Met à jour l'evenement avant sa sauvegarde.
      * @param essai Essai.

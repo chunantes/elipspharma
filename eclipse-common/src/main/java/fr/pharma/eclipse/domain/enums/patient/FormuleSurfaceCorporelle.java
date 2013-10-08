@@ -2,11 +2,10 @@ package fr.pharma.eclipse.domain.enums.patient;
 
 /**
  * Enumération pour les algorithme de calcul de la surface corporelle.
- 
+ * @author Netapsys
  * @version $Revision$ $Date$
  */
-public enum FormuleSurfaceCorporelle
-{
+public enum FormuleSurfaceCorporelle {
     /**
      * Interne (présent dans SIR).
      */
@@ -26,8 +25,7 @@ public enum FormuleSurfaceCorporelle
      * Constructeur privé.
      * @param libelle Libellé de la valeur de l'énumération.
      */
-    private FormuleSurfaceCorporelle(final String libelle)
-    {
+    private FormuleSurfaceCorporelle(final String libelle) {
         this.libelle = libelle;
     }
 
@@ -35,8 +33,7 @@ public enum FormuleSurfaceCorporelle
      * Getter sur libelle.
      * @return Retourne le libelle.
      */
-    public String getLibelle()
-    {
+    public String getLibelle() {
         return this.libelle;
     }
 
@@ -44,8 +41,7 @@ public enum FormuleSurfaceCorporelle
      * {@inheritDoc}
      */
     @Override
-    public String toString()
-    {
+    public String toString() {
         return this.getLibelle();
     }
 }

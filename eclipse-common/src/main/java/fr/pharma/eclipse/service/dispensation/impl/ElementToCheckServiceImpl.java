@@ -7,13 +7,10 @@ import fr.pharma.eclipse.service.dispensation.ElementToCheckService;
 
 /**
  * Implémentation des services liés aux actes pharma à vérifier.
- 
+ * @author Netapsys
  * @version $Revision$ $Date$
  */
-public class ElementToCheckServiceImpl
-    extends GenericServiceImpl<ElementToCheck>
-    implements ElementToCheckService
-{
+public class ElementToCheckServiceImpl extends GenericServiceImpl<ElementToCheck> implements ElementToCheckService {
 
     /**
      * SerialVersionUID.
@@ -24,8 +21,7 @@ public class ElementToCheckServiceImpl
      * Constructeur.
      * @param genericDao Dao.
      */
-    public ElementToCheckServiceImpl(final GenericDao<ElementToCheck> genericDao)
-    {
+    public ElementToCheckServiceImpl(final GenericDao<ElementToCheck> genericDao) {
         super(genericDao);
     }
 

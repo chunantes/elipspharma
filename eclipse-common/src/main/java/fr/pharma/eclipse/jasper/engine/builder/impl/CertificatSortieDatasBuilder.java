@@ -24,13 +24,12 @@ import fr.pharma.eclipse.jasper.exception.JasperReportBuildException;
 
 /**
  * Classe en charge de constuire les données pour le rapport Jasper de type
- * TypeRapportJasper.CERTIFICAT_DESTRUCTION ou TypeRapportJasper.CERTIFICAT_RETOUR.
- 
+ * TypeRapportJasper.CERTIFICAT_DESTRUCTION ou
+ * TypeRapportJasper.CERTIFICAT_RETOUR.
+ * @author Netapsys
  * @version $Revision$ $Date$
  */
-public class CertificatSortieDatasBuilder
-    implements JasperReportDatasBuilder
-{
+public class CertificatSortieDatasBuilder implements JasperReportDatasBuilder {
 
     /**
      * Serial ID.
@@ -48,7 +47,8 @@ public class CertificatSortieDatasBuilder
     private JRDataSourceFactory jrDataSourceFactory;
 
     /**
-     * Helper pour la levée d'exception JasperReportBuildException sur condition.
+     * Helper pour la levée d'exception JasperReportBuildException sur
+     * condition.
      */
     private SourceCheckingHandler checkHandler;
 
@@ -72,30 +72,25 @@ public class CertificatSortieDatasBuilder
      * {@inheritDoc}
      */
     @Override
-    public JRDataSource buildDataSource(final Object source)
-    {
+    public JRDataSource buildDataSource(final Object source) {
         final ResultSortie result = (ResultSortie) source;
 
         // Conctruction du bean.
         final JRBeanModeleCertificat dataSource = new JRBeanModeleCertificat();
         dataSource.setPromoteur(result.getEssai().getPromoteur().getRaisonSociale());
         dataSource.setCodeProtocole(result.getEssai().getNumInterne());
-        dataSource.setMotif(result.getRaisonSortie().name());
-
+        if (result.getRaisonSortie() != null) {
+            dataSource.setMotif(result.getRaisonSortie().name());
+        }
         // Beans produits.
-        final Collection<JRBeanProduitSorti> beansProduit =
-            this.helper.transform(result.getMvts());
+        final Collection<JRBeanProduitSorti> beansProduit = this.helper.transform(result.getMvts());
 
         // Création de la source de données.
-        final JRDataSource dtProduits =
-            this.jrDataSourceFactory.getInitializedObject(beansProduit);
+        final JRDataSource dtProduits = this.jrDataSourceFactory.getInitializedObject(beansProduit);
         dataSource.setProduits(dtProduits);
 
         // Construction de l'en-tête.
-        final JRBeanHeader dataHeader = this.headerBuilder.build(this.sousTitre,
-                                                                 "",
-                                                                 "Essais cliniques",
-                                                                 "Pharmacie");
+        final JRBeanHeader dataHeader = this.headerBuilder.build(this.sousTitre, "", "Essais cliniques", "Pharmacie");
         dataSource.setHeader(dataHeader);
 
         // Retour
@@ -105,8 +100,7 @@ public class CertificatSortieDatasBuilder
      * {@inheritDoc}
      */
     @Override
-    public Map<String, Object> buildParameters(final Object source)
-    {
+    public Map<String, Object> buildParameters(final Object source) {
         return new HashMap<String, Object>();
     }
 
@@ -115,25 +109,18 @@ public class CertificatSortieDatasBuilder
      */
     @Override
     public String buildReportName(final Object source,
-                                  final TypeRapportJasper typeRapport)
-    {
+                                  final TypeRapportJasper typeRapport) {
         Essai essai = null;
-        if (source instanceof Essai)
-        {
+        if (source instanceof Essai) {
             essai = (Essai) source;
-        }
-        else
-        {
+        } else {
             essai = ((Prescription) source).getInclusion().getEssai();
         }
         final StringBuilder builder = new StringBuilder();
-        this.reportNameHelper.addCommonNamePart(builder,
-                                                typeRapport);
-        this.reportNameHelper.addIdEssaiPart(builder,
-                                             essai);
+        this.reportNameHelper.addCommonNamePart(builder, typeRapport);
+        this.reportNameHelper.addIdEssaiPart(builder, essai);
         this.reportNameHelper.addDatePart(builder);
-        this.reportNameHelper.addCommonExtensionPart(builder,
-                                                     typeRapport);
+        this.reportNameHelper.addCommonExtensionPart(builder, typeRapport);
         return builder.toString();
     }
 
@@ -141,20 +128,10 @@ public class CertificatSortieDatasBuilder
      * {@inheritDoc}
      */
     @Override
-    public void checkSource(final Object source)
-        throws JasperReportBuildException
-    {
-        this.checkHandler.handleCheck(source != null,
-                                      new StringBuilder("[CertificatSortiDatasBuilder] ")
-                                              .append("La source est nulle.")
-                                              .toString());
-        this.checkHandler
-                .handleCheck(source instanceof ResultSortie,
-                             new StringBuilder("[CertificatSortiDatasBuilder] ")
-                                     .append("Le type attendu de la source est Result(source: ")
-                                     .append(source)
-                                     .append(").")
-                                     .toString());
+    public void checkSource(final Object source) throws JasperReportBuildException {
+        this.checkHandler.handleCheck(source != null, new StringBuilder("[CertificatSortiDatasBuilder] ").append("La source est nulle.").toString());
+        this.checkHandler.handleCheck(source instanceof ResultSortie, new StringBuilder("[CertificatSortiDatasBuilder] ")
+                .append("Le type attendu de la source est Result(source: ").append(source).append(").").toString());
 
     }
 
@@ -162,8 +139,7 @@ public class CertificatSortieDatasBuilder
      * Getter sur reportNameHelper.
      * @return Retourne le reportNameHelper.
      */
-    ReportNameBuildHelper getReportNameHelper()
-    {
+    ReportNameBuildHelper getReportNameHelper() {
         return this.reportNameHelper;
     }
 
@@ -171,8 +147,7 @@ public class CertificatSortieDatasBuilder
      * Setter pour reportNameHelper.
      * @param reportNameHelper le reportNameHelper à écrire.
      */
-    public void setReportNameHelper(final ReportNameBuildHelper reportNameHelper)
-    {
+    public void setReportNameHelper(final ReportNameBuildHelper reportNameHelper) {
         this.reportNameHelper = reportNameHelper;
     }
 
@@ -180,8 +155,7 @@ public class CertificatSortieDatasBuilder
      * Getter sur jrDataSourceFactory.
      * @return Retourne le jrDataSourceFactory.
      */
-    JRDataSourceFactory getJrDataSourceFactory()
-    {
+    JRDataSourceFactory getJrDataSourceFactory() {
         return this.jrDataSourceFactory;
     }
 
@@ -189,8 +163,7 @@ public class CertificatSortieDatasBuilder
      * Setter pour jrDataSourceFactory.
      * @param jrDataSourceFactory le jrDataSourceFactory à écrire.
      */
-    public void setJrDataSourceFactory(final JRDataSourceFactory jrDataSourceFactory)
-    {
+    public void setJrDataSourceFactory(final JRDataSourceFactory jrDataSourceFactory) {
         this.jrDataSourceFactory = jrDataSourceFactory;
     }
 
@@ -198,8 +171,7 @@ public class CertificatSortieDatasBuilder
      * Getter sur checkHandler.
      * @return Retourne le checkHandler.
      */
-    SourceCheckingHandler getCheckHandler()
-    {
+    SourceCheckingHandler getCheckHandler() {
         return this.checkHandler;
     }
 
@@ -207,8 +179,7 @@ public class CertificatSortieDatasBuilder
      * Setter pour checkHandler.
      * @param checkHandler le checkHandler à écrire.
      */
-    public void setCheckHandler(final SourceCheckingHandler checkHandler)
-    {
+    public void setCheckHandler(final SourceCheckingHandler checkHandler) {
         this.checkHandler = checkHandler;
     }
 
@@ -216,8 +187,7 @@ public class CertificatSortieDatasBuilder
      * Getter sur headerBuilder.
      * @return Retourne le headerBuilder.
      */
-    JRBeanHeaderBuilder getHeaderBuilder()
-    {
+    JRBeanHeaderBuilder getHeaderBuilder() {
         return this.headerBuilder;
     }
 
@@ -225,32 +195,28 @@ public class CertificatSortieDatasBuilder
      * Setter pour headerBuilder.
      * @param headerBuilder le headerBuilder à écrire.
      */
-    public void setHeaderBuilder(final JRBeanHeaderBuilder headerBuilder)
-    {
+    public void setHeaderBuilder(final JRBeanHeaderBuilder headerBuilder) {
         this.headerBuilder = headerBuilder;
     }
     /**
      * Setter pour helper.
      * @param helper Le helper à écrire.
      */
-    public void setHelper(final ProduitSortiFillerHelper helper)
-    {
+    public void setHelper(final ProduitSortiFillerHelper helper) {
         this.helper = helper;
     }
     /**
      * Getter pour sousTitre.
      * @return Le sousTitre
      */
-    public String getSousTitre()
-    {
+    public String getSousTitre() {
         return this.sousTitre;
     }
     /**
      * Setter pour sousTitre.
      * @param sousTitre Le sousTitre à écrire.
      */
-    public void setSousTitre(final String sousTitre)
-    {
+    public void setSousTitre(final String sousTitre) {
         this.sousTitre = sousTitre;
     }
 

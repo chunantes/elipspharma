@@ -11,12 +11,10 @@ import fr.pharma.eclipse.service.dispensation.processor.helper.FrequenceHelper;
 
 /**
  * Description de la classe.
- 
+ * @author Netapsys
  * @version $Revision$ $Date$
  */
-public abstract class GenericConseilDispensationProcessor
-    implements ConseilDispensationProcessor, Serializable
-{
+public abstract class GenericConseilDispensationProcessor implements ConseilDispensationProcessor, Serializable {
     /**
      * SerialVersionUID.
      */
@@ -28,17 +26,14 @@ public abstract class GenericConseilDispensationProcessor
     @Resource(name = "frequenceHelper")
     protected FrequenceHelper frequenceHelper;
 
-    public ConseilDispensation process(final ProduitPrescrit produitPrescrit)
-    {
+    @Override
+    public ConseilDispensation process(final ProduitPrescrit produitPrescrit) {
         final ConseilDispensation conseil = new ConseilDispensation();
         conseil.setProduitPrescrit(produitPrescrit);
         final Integer nbASortir = this.processNbASortir(produitPrescrit);
-        if (nbASortir == null)
-        {
+        if (nbASortir == null) {
             return null;
-        }
-        else
-        {
+        } else {
             conseil.setNbASortir(nbASortir);
         }
         return conseil;
@@ -55,8 +50,7 @@ public abstract class GenericConseilDispensationProcessor
      * Setter pour frequenceHelper.
      * @param frequenceHelper le frequenceHelper à écrire.
      */
-    public void setFrequenceHelper(final FrequenceHelper frequenceHelper)
-    {
+    public void setFrequenceHelper(final FrequenceHelper frequenceHelper) {
         this.frequenceHelper = frequenceHelper;
     }
 

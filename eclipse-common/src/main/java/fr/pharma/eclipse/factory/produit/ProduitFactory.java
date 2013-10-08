@@ -18,13 +18,11 @@ import fr.pharma.eclipse.utils.introspection.BeanTool;
 
 /**
  * Factory de Bean Produit.
- 
+ * @author Netapsys
  * @version $Revision$ $Date$
  * @param <PRODUIT> Bean Objet Produit.
  */
-public class ProduitFactory<PRODUIT extends Produit>
-    extends BeanObjectComplexFactory<PRODUIT>
-{
+public class ProduitFactory<PRODUIT extends Produit> extends BeanObjectComplexFactory<PRODUIT> {
     /**
      * Serial ID.
      */
@@ -36,8 +34,8 @@ public class ProduitFactory<PRODUIT extends Produit>
     private final TypeProduit typeProduit;
 
     /**
-     * Dictionnaire permettant de faire le lien entre le type de produit et la collection de
-     * DetailProduit concernée.
+     * Dictionnaire permettant de faire le lien entre le type de produit et la
+     * collection de DetailProduit concernée.
      */
     private Map<TypeProduit, String> typeDictionary;
 
@@ -52,8 +50,7 @@ public class ProduitFactory<PRODUIT extends Produit>
      * @param bean Classe.
      * @param typeProduit Type du produit.
      */
-    public ProduitFactory(final Class<PRODUIT> bean, final TypeProduit typeProduit)
-    {
+    public ProduitFactory(final Class<PRODUIT> bean, final TypeProduit typeProduit) {
         super(bean);
         this.typeProduit = typeProduit;
     }
@@ -62,8 +59,7 @@ public class ProduitFactory<PRODUIT extends Produit>
      * {@inheritDoc}
      */
     @Override
-    public PRODUIT getInitializedObject()
-    {
+    public PRODUIT getInitializedObject() {
         final PRODUIT produit = super.getInitializedObject();
         final ProduitSuivi suivi = this.produitSuiviFactory.getInitializedObject();
         suivi.setProduit(produit);
@@ -78,8 +74,7 @@ public class ProduitFactory<PRODUIT extends Produit>
      * {@inheritDoc}
      */
     @SuppressWarnings("all")
-    public PRODUIT getInitializedObject(final Essai essai)
-    {
+    public PRODUIT getInitializedObject(final Essai essai) {
         final PRODUIT p = this.getInitializedObject();
         p.setDetailProduit(essai.getDetailProduit());
 
@@ -91,34 +86,27 @@ public class ProduitFactory<PRODUIT extends Produit>
      */
     @SuppressWarnings("all")
     public PRODUIT getInitializedObjectFromEssai(final Essai essai,
-                                                 final Long idProduit)
-    {
-        final PRODUIT result =
-            (PRODUIT) CollectionUtils.select(this.getCollectionByType(essai),
-                                             new GenericPredicate("id",
-                                                                  idProduit)).iterator().next();
+                                                 final Long idProduit) {
+        final PRODUIT result = (PRODUIT) CollectionUtils.select(this.getCollectionByType(essai), new GenericPredicate("id", idProduit)).iterator().next();
         return result;
     }
 
     /**
-     * Méthode en charge de retourner la collection correspondante au type de produit.
+     * Méthode en charge de retourner la collection correspondante au type de
+     * produit.
      * @param essai L'essai
      * @return la collection correspondante au type de produit.
      */
     @SuppressWarnings("all")
-    private SortedSet<Produit> getCollectionByType(final Essai essai)
-    {
-        return (SortedSet<Produit>) BeanTool.getPropriete(essai.getDetailProduit(),
-                                                          this.typeDictionary
-                                                                  .get(this.typeProduit));
+    private SortedSet<Produit> getCollectionByType(final Essai essai) {
+        return (SortedSet<Produit>) BeanTool.getPropriete(essai.getDetailProduit(), this.typeDictionary.get(this.typeProduit));
     }
 
     /**
      * Setter pour typeDictionary.
      * @param typeDictionary le typeDictionary à écrire.
      */
-    public void setTypeDictionary(final Map<TypeProduit, String> typeDictionary)
-    {
+    public void setTypeDictionary(final Map<TypeProduit, String> typeDictionary) {
         this.typeDictionary = typeDictionary;
     }
 
@@ -126,8 +114,7 @@ public class ProduitFactory<PRODUIT extends Produit>
      * Setter pour produitSuiviFactory.
      * @param produitSuiviFactory le produitSuiviFactory à écrire.
      */
-    public void setProduitSuiviFactory(final SuiviFactory<ProduitSuivi> produitSuiviFactory)
-    {
+    public void setProduitSuiviFactory(final SuiviFactory<ProduitSuivi> produitSuiviFactory) {
         this.produitSuiviFactory = produitSuiviFactory;
     }
 

@@ -15,12 +15,10 @@ import fr.pharma.eclipse.service.indicateur.builder.IndicateurBuilder;
 
 /**
  * Description de la classe.
- 
+ * @author Netapsys
  * @version $Revision$ $Date$
  */
-public abstract class AbstractDispensationBuilder
-    implements IndicateurBuilder, Serializable
-{
+public abstract class AbstractDispensationBuilder implements IndicateurBuilder, Serializable {
 
     /**
      * SerialVersionUID.
@@ -52,15 +50,14 @@ public abstract class AbstractDispensationBuilder
     protected List<Dispensation> loadDispensations(final Pharmacie pharmacie,
                                                    final Calendar dateDebut,
                                                    final Calendar dateFin,
-                                                   final Boolean dispense)
-    {
+                                                   final Boolean dispense) {
         final DispensationSearchCriteria criteria = new DispensationSearchCriteria();
         criteria.setDateDebut(dateDebut);
         criteria.setDateFin(dateFin);
         criteria.setPharmacie(pharmacie);
         criteria.setDispense(dispense);
 
-        return this.dispensationService.getAllWithoutPurge(criteria);
+        return this.dispensationService.getAll(criteria);
 
     }
 
@@ -68,8 +65,7 @@ public abstract class AbstractDispensationBuilder
      * Setter pour dispensationService.
      * @param dispensationService Le dispensationService à écrire.
      */
-    public void setDispensationService(final DispensationService dispensationService)
-    {
+    public void setDispensationService(final DispensationService dispensationService) {
         this.dispensationService = dispensationService;
     }
 }

@@ -1,12 +1,12 @@
 package fr.pharma.eclipse.domain.enums.surcout;
 
 /**
- * Enumération des différentes règles de gestion possible concernant la grille de surcouts.
- 
+ * Enumération des différentes règles de gestion possible concernant la grille
+ * de surcouts.
+ * @author Netapsys
  * @version $Revision$ $Date$
  */
-public enum TypeRegle
-{
+public enum TypeRegle {
     /**
      * Première année.
      */
@@ -41,8 +41,7 @@ public enum TypeRegle
      * Constructeur privé.
      * @param libelle Libellé de la valeur de l'énumération.
      */
-    private TypeRegle(final String libelle)
-    {
+    private TypeRegle(final String libelle) {
         this.libelle = libelle;
     }
 
@@ -50,8 +49,7 @@ public enum TypeRegle
      * Getter sur libelle.
      * @return Retourne le libelle.
      */
-    public String getLibelle()
-    {
+    public String getLibelle() {
         return this.libelle;
     }
 
@@ -59,8 +57,7 @@ public enum TypeRegle
      * {@inheritDoc}
      */
     @Override
-    public String toString()
-    {
+    public String toString() {
         return this.getLibelle();
     }
 }

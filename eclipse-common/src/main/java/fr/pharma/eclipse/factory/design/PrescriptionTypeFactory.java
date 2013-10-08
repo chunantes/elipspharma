@@ -6,12 +6,10 @@ import fr.pharma.eclipse.factory.common.BeanObjectFactory;
 
 /**
  * Factory de Bean PrescriptionType.
- 
+ * @author Netapsys
  * @version $Revision$ $Date$
  */
-public class PrescriptionTypeFactory
-    extends BeanObjectFactory<PrescriptionType>
-{
+public class PrescriptionTypeFactory extends BeanObjectFactory<PrescriptionType> {
     /**
      * Serial ID.
      */
@@ -21,8 +19,7 @@ public class PrescriptionTypeFactory
      * Constructeur.
      * @param bean Classe.
      */
-    public PrescriptionTypeFactory(final Class<PrescriptionType> bean)
-    {
+    public PrescriptionTypeFactory(final Class<PrescriptionType> bean) {
         super(bean);
     }
 
@@ -31,8 +28,7 @@ public class PrescriptionTypeFactory
      * @param sequence La sequence.
      * @return La PrescriptionType
      */
-    public PrescriptionType getInitializedObject(final Sequence sequence)
-    {
+    public PrescriptionType getInitializedObject(final Sequence sequence) {
         final PrescriptionType prescription = super.getInitializedObject();
         prescription.setSequence(sequence);
         return prescription;

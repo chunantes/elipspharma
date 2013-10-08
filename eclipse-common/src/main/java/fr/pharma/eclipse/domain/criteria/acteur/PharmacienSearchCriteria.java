@@ -8,12 +8,10 @@ import fr.pharma.eclipse.domain.model.stockage.Pharmacie;
 
 /**
  * Critère de recherche de pharmaciens.
- 
+ * @author Netapsys
  * @version $Revision$ $Date$
  */
-public class PharmacienSearchCriteria
-    extends PersonneSearchCriteria
-{
+public class PharmacienSearchCriteria extends PersonneSearchCriteria {
 
     /**
      * Serial ID.
@@ -34,8 +32,7 @@ public class PharmacienSearchCriteria
      * Getter sur typePharmacien.
      * @return Retourne le typePharmacien.
      */
-    public TypePharmacien getTypePharmacien()
-    {
+    public TypePharmacien getTypePharmacien() {
         return this.typePharmacien;
     }
 
@@ -43,8 +40,7 @@ public class PharmacienSearchCriteria
      * Setter pour typePharmacien.
      * @param typePharmacien le typePharmacien à écrire.
      */
-    public void setTypePharmacien(final TypePharmacien typePharmacien)
-    {
+    public void setTypePharmacien(final TypePharmacien typePharmacien) {
         this.typePharmacien = typePharmacien;
     }
 
@@ -52,8 +48,7 @@ public class PharmacienSearchCriteria
      * Getter sur pharmacies.
      * @return Retourne le pharmacies.
      */
-    public List<Pharmacie> getPharmacies()
-    {
+    public List<Pharmacie> getPharmacies() {
         return this.pharmacies;
     }
 
@@ -61,20 +56,18 @@ public class PharmacienSearchCriteria
      * Setter pour pharmacies.
      * @param pharmacies le pharmacies à écrire.
      */
-    public void setPharmacies(final List<Pharmacie> pharmacies)
-    {
+    public void setPharmacies(final List<Pharmacie> pharmacies) {
         this.pharmacies = pharmacies;
     }
 
     /**
-     * Initialise la liste des pharmacies avec la pharmacie passée en paramètres.
+     * Initialise la liste des pharmacies avec la pharmacie passée en
+     * paramètres.
      * @param pharmacie Pharmacie.
      */
-    public void setPharmacie(final Pharmacie pharmacie)
-    {
+    public void setPharmacie(final Pharmacie pharmacie) {
         this.pharmacies = new ArrayList<Pharmacie>();
-        if (pharmacie != null)
-        {
+        if (pharmacie != null) {
             this.pharmacies.add(pharmacie);
         }
     }

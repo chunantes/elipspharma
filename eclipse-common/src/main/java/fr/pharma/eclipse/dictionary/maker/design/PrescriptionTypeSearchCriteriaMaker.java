@@ -9,12 +9,10 @@ import fr.pharma.eclipse.domain.criteria.design.PrescriptionTypeSearchCriteria;
 
 /**
  * Artisan de recherche pour les prescription type.
- 
+ * @author Netapsys
  * @version $Revision$ $Date$
  */
-public class PrescriptionTypeSearchCriteriaMaker
-    extends AbstractCriteriaMaker
-{
+public class PrescriptionTypeSearchCriteriaMaker extends AbstractCriteriaMaker {
     /**
      * Serial ID.
      */
@@ -23,8 +21,7 @@ public class PrescriptionTypeSearchCriteriaMaker
     /**
      * Constructeur par défaut.
      */
-    public PrescriptionTypeSearchCriteriaMaker()
-    {
+    public PrescriptionTypeSearchCriteriaMaker() {
         super(PrescriptionTypeSearchCriteria.class);
     }
 
@@ -33,16 +30,12 @@ public class PrescriptionTypeSearchCriteriaMaker
      */
     @Override
     public void transform(final Criteria criteria,
-                          final SearchCriteria searchCrit)
-    {
+                          final SearchCriteria searchCrit) {
         final PrescriptionTypeSearchCriteria crit = (PrescriptionTypeSearchCriteria) searchCrit;
 
         // Essai
-        if (null != (crit.getConditionnement()))
-        {
-            CriteriaMakerUtils.addCritere(criteria,
-                                          "conditionnement",
-                                          crit.getConditionnement());
+        if (null != (crit.getConditionnement())) {
+            CriteriaMakerUtils.addCritere(criteria, "conditionnement", crit.getConditionnement());
         }
     }
 }

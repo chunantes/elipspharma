@@ -10,12 +10,10 @@ import fr.pharma.eclipse.domain.model.stock.document.DocumentRetourPromoteur;
 
 /**
  * Description de la classe.
- 
+ * @author Netapsys
  * @version $Revision$ $Date$
  */
-public class CertificatRetourPromoteurMaker
-    extends GenericCertificatMaker
-{
+public class CertificatRetourPromoteurMaker extends GenericCertificatMaker {
 
     /**
      * SerialVersionUID.
@@ -27,20 +25,14 @@ public class CertificatRetourPromoteurMaker
      */
     @Override
     protected DocumentEclipse makeForMvt(final List<? extends MvtStock> mvts,
-                                         final Fichier fichier)
-    {
+                                         final Fichier fichier) {
         DocumentEclipse result = null;
-        for (final MvtStock mvt : mvts)
-        {
+        for (final MvtStock mvt : mvts) {
             final RetourPromoteur retour = (RetourPromoteur) mvt;
-            final DocumentRetourPromoteur doc =
-                (DocumentRetourPromoteur) this.getDocumentFactory().getInitializedObject(fichier,
-                                                                                         mvt);
+            final DocumentRetourPromoteur doc = (DocumentRetourPromoteur) this.getDocumentFactory().getInitializedObject(fichier, mvt);
             ((RetourPromoteur) mvt).setDocumentRetourPromoteur(doc);
             this.getService().save(retour);
-            this.getDocService().saveOnDisk(mvt,
-                                            doc,
-                                            fichier);
+            this.getDocService().saveOnDisk(mvt, doc, fichier);
             result = doc;
         }
         return result;

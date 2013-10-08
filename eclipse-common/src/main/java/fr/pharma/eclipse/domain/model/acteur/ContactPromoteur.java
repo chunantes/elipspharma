@@ -11,14 +11,12 @@ import org.hibernate.annotations.Index;
 
 /**
  * Classe métier représentant un Contact Promoteur.
- 
+ * @author Netapsys
  * @version $Revision$ $Date$
  */
 @Entity
 @DiscriminatorValue("PROMOTEUR")
-public class ContactPromoteur
-    extends Personne
-{
+public class ContactPromoteur extends Personne {
     /**
      * Serial ID.
      */
@@ -37,8 +35,7 @@ public class ContactPromoteur
      * Getter sur promoteur.
      * @return Retourne le promoteur.
      */
-    public Promoteur getPromoteur()
-    {
+    public Promoteur getPromoteur() {
         return this.promoteur;
     }
 
@@ -46,8 +43,7 @@ public class ContactPromoteur
      * Setter pour promoteur.
      * @param promoteur le promoteur à écrire.
      */
-    public void setPromoteur(final Promoteur promoteur)
-    {
+    public void setPromoteur(final Promoteur promoteur) {
         this.promoteur = promoteur;
     }
 

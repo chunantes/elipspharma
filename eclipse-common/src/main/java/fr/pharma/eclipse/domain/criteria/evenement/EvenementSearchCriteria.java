@@ -4,6 +4,7 @@ import java.util.Calendar;
 import java.util.List;
 
 import fr.pharma.eclipse.domain.criteria.common.AbstractSearchCriteria;
+import fr.pharma.eclipse.domain.dto.EssaiDTO;
 import fr.pharma.eclipse.domain.enums.evenement.ResultatVisite;
 import fr.pharma.eclipse.domain.enums.evenement.TypeEvenement;
 import fr.pharma.eclipse.domain.enums.evenement.TypeVisite;
@@ -11,12 +12,10 @@ import fr.pharma.eclipse.domain.model.essai.Essai;
 
 /**
  * Critère de recherche sur Evenement.
- 
+ * @author Netapsys
  * @version $Revision$ $Date$
  */
-public class EvenementSearchCriteria
-    extends AbstractSearchCriteria
-{
+public class EvenementSearchCriteria extends AbstractSearchCriteria {
     /**
      * Serial ID.
      */
@@ -33,9 +32,9 @@ public class EvenementSearchCriteria
     private Essai essai;
 
     /**
-     * Liste d'essais.
+     * Essai DTO.
      */
-    private List<Essai> essais;
+    private EssaiDTO essaiDTO;
 
     /**
      * Type de visite.
@@ -68,18 +67,21 @@ public class EvenementSearchCriteria
     private Boolean dateReceptionVide;
 
     /**
+     * Liste d'identifiants d'essais.
+     */
+    private List<Long> idsEssais;
+
+    /**
      * {@inheritDoc}
      */
     @Override
-    public void clear()
-    {
+    public void clear() {
         this.setEssai(null);
         this.setTypeEvenement(null);
         this.setTypeVisite(null);
         this.setResultatVisite(null);
         this.setDateDebut(null);
         this.setDateFin(null);
-        this.setEssais(null);
         this.setResultVisiteVide(null);
         this.setDateReceptionVide(null);
     }
@@ -88,8 +90,7 @@ public class EvenementSearchCriteria
      * Getter pour typeEvenement.
      * @return Le typeEvenement
      */
-    public TypeEvenement getTypeEvenement()
-    {
+    public TypeEvenement getTypeEvenement() {
         return this.typeEvenement;
     }
 
@@ -97,8 +98,7 @@ public class EvenementSearchCriteria
      * Setter pour typeEvenement.
      * @param typeEvenement Le typeEvenement à écrire.
      */
-    public void setTypeEvenement(final TypeEvenement typeEvenement)
-    {
+    public void setTypeEvenement(final TypeEvenement typeEvenement) {
         this.typeEvenement = typeEvenement;
     }
 
@@ -106,8 +106,7 @@ public class EvenementSearchCriteria
      * Getter pour essai.
      * @return Le essai
      */
-    public Essai getEssai()
-    {
+    public Essai getEssai() {
         return this.essai;
     }
 
@@ -115,8 +114,7 @@ public class EvenementSearchCriteria
      * Setter pour essai.
      * @param essai Le essai à écrire.
      */
-    public void setEssai(final Essai essai)
-    {
+    public void setEssai(final Essai essai) {
         this.essai = essai;
     }
 
@@ -124,8 +122,7 @@ public class EvenementSearchCriteria
      * Getter pour typeVisite.
      * @return Le typeVisite
      */
-    public TypeVisite getTypeVisite()
-    {
+    public TypeVisite getTypeVisite() {
         return this.typeVisite;
     }
 
@@ -133,8 +130,7 @@ public class EvenementSearchCriteria
      * Setter pour typeVisite.
      * @param typeVisite Le typeVisite à écrire.
      */
-    public void setTypeVisite(final TypeVisite typeVisite)
-    {
+    public void setTypeVisite(final TypeVisite typeVisite) {
         this.typeVisite = typeVisite;
     }
 
@@ -142,8 +138,7 @@ public class EvenementSearchCriteria
      * Getter pour resultatVisite.
      * @return Le resultatVisite
      */
-    public ResultatVisite getResultatVisite()
-    {
+    public ResultatVisite getResultatVisite() {
         return this.resultatVisite;
     }
 
@@ -151,8 +146,7 @@ public class EvenementSearchCriteria
      * Setter pour resultatVisite.
      * @param resultatVisite Le resultatVisite à écrire.
      */
-    public void setResultatVisite(final ResultatVisite resultatVisite)
-    {
+    public void setResultatVisite(final ResultatVisite resultatVisite) {
         this.resultatVisite = resultatVisite;
     }
 
@@ -160,8 +154,7 @@ public class EvenementSearchCriteria
      * Getter pour dateDebut.
      * @return Le dateDebut
      */
-    public Calendar getDateDebut()
-    {
+    public Calendar getDateDebut() {
         return this.dateDebut;
     }
 
@@ -169,8 +162,7 @@ public class EvenementSearchCriteria
      * Setter pour dateDebut.
      * @param dateDebut Le dateDebut à écrire.
      */
-    public void setDateDebut(final Calendar dateDebut)
-    {
+    public void setDateDebut(final Calendar dateDebut) {
         this.dateDebut = dateDebut;
     }
 
@@ -178,8 +170,7 @@ public class EvenementSearchCriteria
      * Getter pour dateFin.
      * @return Le dateFin
      */
-    public Calendar getDateFin()
-    {
+    public Calendar getDateFin() {
         return this.dateFin;
     }
 
@@ -187,35 +178,15 @@ public class EvenementSearchCriteria
      * Setter pour dateFin.
      * @param dateFin Le dateFin à écrire.
      */
-    public void setDateFin(final Calendar dateFin)
-    {
+    public void setDateFin(final Calendar dateFin) {
         this.dateFin = dateFin;
-    }
-
-    /**
-     * Getter pour essais.
-     * @return Le essais
-     */
-    public List<Essai> getEssais()
-    {
-        return this.essais;
-    }
-
-    /**
-     * Setter pour essais.
-     * @param essais Le essais à écrire.
-     */
-    public void setEssais(final List<Essai> essais)
-    {
-        this.essais = essais;
     }
 
     /**
      * Getter pour resultVisiteVide.
      * @return Le resultVisiteVide
      */
-    public Boolean getResultVisiteVide()
-    {
+    public Boolean getResultVisiteVide() {
         return this.resultVisiteVide;
     }
 
@@ -223,8 +194,7 @@ public class EvenementSearchCriteria
      * Setter pour resultVisiteVide.
      * @param resultVisiteVide Le resultVisiteVide à écrire.
      */
-    public void setResultVisiteVide(final Boolean resultVisiteVide)
-    {
+    public void setResultVisiteVide(final Boolean resultVisiteVide) {
         this.resultVisiteVide = resultVisiteVide;
     }
 
@@ -232,8 +202,7 @@ public class EvenementSearchCriteria
      * Getter pour dateReceptionVide.
      * @return Le dateReceptionVide
      */
-    public Boolean getDateReceptionVide()
-    {
+    public Boolean getDateReceptionVide() {
         return this.dateReceptionVide;
     }
 
@@ -241,8 +210,40 @@ public class EvenementSearchCriteria
      * Setter pour dateReceptionVide.
      * @param dateReceptionVide Le dateReceptionVide à écrire.
      */
-    public void setDateReceptionVide(final Boolean dateReceptionVide)
-    {
+    public void setDateReceptionVide(final Boolean dateReceptionVide) {
         this.dateReceptionVide = dateReceptionVide;
     }
+
+    /**
+     * Getter pour idsEssais.
+     * @return Le idsEssais
+     */
+    public List<Long> getIdsEssais() {
+        return this.idsEssais;
+    }
+
+    /**
+     * Setter pour idsEssais.
+     * @param idsEssais Le idsEssais à écrire.
+     */
+    public void setIdsEssais(final List<Long> idsEssais) {
+        this.idsEssais = idsEssais;
+    }
+
+    /**
+     * Getter pour essaiDTO.
+     * @return Le essaiDTO
+     */
+    public EssaiDTO getEssaiDTO() {
+        return this.essaiDTO;
+    }
+
+    /**
+     * Setter pour essaiDTO.
+     * @param essaiDTO Le essaiDTO à écrire.
+     */
+    public void setEssaiDTO(final EssaiDTO essaiDTO) {
+        this.essaiDTO = essaiDTO;
+    }
+
 }

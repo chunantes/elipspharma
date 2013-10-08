@@ -10,12 +10,10 @@ import fr.pharma.eclipse.validator.remove.RemoveValidator;
 
 /**
  * Validateur de suppression d'un bras.
- 
+ * @author Netapsys
  * @version $Revision$ $Date$
  */
-public class BrasRemoveValidator
-    implements RemoveValidator<Bras>, Serializable
-{
+public class BrasRemoveValidator implements RemoveValidator<Bras>, Serializable {
 
     /**
      * SerialVersionUID.
@@ -31,15 +29,12 @@ public class BrasRemoveValidator
      * {@inheritDoc}
      */
     @Override
-    public void validate(final Bras bean)
-    {
-        for (final Bras b : bean.getSousBras())
-        {
+    public void validate(final Bras bean) {
+        for (final Bras b : bean.getSousBras()) {
             this.validate(b);
         }
 
-        for (final Sequence sequence : bean.getSequences())
-        {
+        for (final Sequence sequence : bean.getSequences()) {
             this.sequenceRemoveValidator.validate(sequence);
         }
     }
@@ -47,8 +42,7 @@ public class BrasRemoveValidator
      * Setter pour sequenceRemoveValidator.
      * @param sequenceRemoveValidator le sequenceRemoveValidator à écrire.
      */
-    public void setSequenceRemoveValidator(final RemoveValidator<Sequence> sequenceRemoveValidator)
-    {
+    public void setSequenceRemoveValidator(final RemoveValidator<Sequence> sequenceRemoveValidator) {
         this.sequenceRemoveValidator = sequenceRemoveValidator;
     }
 

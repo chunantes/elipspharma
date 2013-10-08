@@ -16,13 +16,11 @@ import fr.pharma.eclipse.domain.model.stock.document.DocumentRetourPromoteur;
 
 /**
  * Bean métier représentant un mouvement de stock de retour promoteur.
- 
+ * @author Netapsys
  * @version $Revision$ $Date$
  */
 @Entity(name = "mvt_retour_promoteur")
-public class RetourPromoteur
-    extends MvtStock
-{
+public class RetourPromoteur extends MvtStock {
     /**
      * Serial ID.
      */
@@ -71,8 +69,7 @@ public class RetourPromoteur
      * Getter pour commentaire.
      * @return Le commentaire
      */
-    public String getCommentaire()
-    {
+    public String getCommentaire() {
         return this.commentaire;
     }
 
@@ -80,8 +77,7 @@ public class RetourPromoteur
      * Setter pour commentaire.
      * @param commentaire Le commentaire à écrire.
      */
-    public void setCommentaire(final String commentaire)
-    {
+    public void setCommentaire(final String commentaire) {
         this.commentaire = commentaire;
     }
 
@@ -89,8 +85,7 @@ public class RetourPromoteur
      * Getter pour nomSocieteTransport.
      * @return Le nomSocieteTransport
      */
-    public String getNomSocieteTransport()
-    {
+    public String getNomSocieteTransport() {
         return this.nomSocieteTransport;
     }
 
@@ -98,8 +93,7 @@ public class RetourPromoteur
      * Setter pour nomSocieteTransport.
      * @param nomSocieteTransport Le nomSocieteTransport à écrire.
      */
-    public void setNomSocieteTransport(final String nomSocieteTransport)
-    {
+    public void setNomSocieteTransport(final String nomSocieteTransport) {
         this.nomSocieteTransport = nomSocieteTransport;
     }
 
@@ -107,8 +101,7 @@ public class RetourPromoteur
      * Getter pour referenceEnvoi.
      * @return Le referenceEnvoi
      */
-    public String getReferenceEnvoi()
-    {
+    public String getReferenceEnvoi() {
         return this.referenceEnvoi;
     }
 
@@ -116,8 +109,7 @@ public class RetourPromoteur
      * Setter pour referenceEnvoi.
      * @param referenceEnvoi Le referenceEnvoi à écrire.
      */
-    public void setReferenceEnvoi(final String referenceEnvoi)
-    {
+    public void setReferenceEnvoi(final String referenceEnvoi) {
         this.referenceEnvoi = referenceEnvoi;
     }
 
@@ -125,8 +117,7 @@ public class RetourPromoteur
      * Getter pour documentRetourPromoteur.
      * @return Le documentRetourPromoteur
      */
-    public DocumentRetourPromoteur getDocumentRetourPromoteur()
-    {
+    public DocumentRetourPromoteur getDocumentRetourPromoteur() {
         return this.documentRetourPromoteur;
     }
 
@@ -134,8 +125,7 @@ public class RetourPromoteur
      * Setter pour documentRetourPromoteur.
      * @param documentRetourPromoteur Le documentRetourPromoteur à écrire.
      */
-    public void setDocumentRetourPromoteur(final DocumentRetourPromoteur documentRetourPromoteur)
-    {
+    public void setDocumentRetourPromoteur(final DocumentRetourPromoteur documentRetourPromoteur) {
         this.documentRetourPromoteur = documentRetourPromoteur;
     }
 
@@ -143,8 +133,7 @@ public class RetourPromoteur
      * Getter pour raisonSortie.
      * @return Le raisonSortie
      */
-    public RaisonSortie getRaisonSortie()
-    {
+    public RaisonSortie getRaisonSortie() {
         return this.raisonSortie;
     }
 
@@ -152,8 +141,7 @@ public class RetourPromoteur
      * Setter pour raisonSortie.
      * @param raisonSortie Le raisonSortie à écrire.
      */
-    public void setRaisonSortie(final RaisonSortie raisonSortie)
-    {
+    public void setRaisonSortie(final RaisonSortie raisonSortie) {
         this.raisonSortie = raisonSortie;
     }
 
@@ -161,8 +149,7 @@ public class RetourPromoteur
      * Getter pour commentaireRaison.
      * @return Le commentaireRaison
      */
-    public String getCommentaireRaison()
-    {
+    public String getCommentaireRaison() {
         return this.commentaireRaison;
     }
 
@@ -170,8 +157,7 @@ public class RetourPromoteur
      * Setter pour commentaireRaison.
      * @param commentaireRaison Le commentaireRaison à écrire.
      */
-    public void setCommentaireRaison(final String commentaireRaison)
-    {
+    public void setCommentaireRaison(final String commentaireRaison) {
         this.commentaireRaison = commentaireRaison;
     }
 

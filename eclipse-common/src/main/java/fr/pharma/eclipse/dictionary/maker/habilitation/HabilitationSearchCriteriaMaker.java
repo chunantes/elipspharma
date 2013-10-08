@@ -9,12 +9,10 @@ import fr.pharma.eclipse.domain.criteria.habilitation.HabilitationSearchCriteria
 
 /**
  * Artisan de recherche pour les habilitations.
- 
+ * @author Netapsys
  * @version $Revision$ $Date$
  */
-public class HabilitationSearchCriteriaMaker
-    extends AbstractCriteriaMaker
-{
+public class HabilitationSearchCriteriaMaker extends AbstractCriteriaMaker {
     /**
      * Serial ID.
      */
@@ -23,8 +21,7 @@ public class HabilitationSearchCriteriaMaker
     /**
      * Constructeur par défaut.
      */
-    public HabilitationSearchCriteriaMaker()
-    {
+    public HabilitationSearchCriteriaMaker() {
         super(HabilitationSearchCriteria.class);
     }
 
@@ -33,30 +30,20 @@ public class HabilitationSearchCriteriaMaker
      */
     @Override
     public void transform(final Criteria criteria,
-                          final SearchCriteria searchCrit)
-    {
+                          final SearchCriteria searchCrit) {
         final HabilitationSearchCriteria crit = (HabilitationSearchCriteria) searchCrit;
 
         // Droit
-        if (crit.getDroit() != null)
-        {
-            CriteriaMakerUtils.addCritere(criteria,
-                                          "droit",
-                                          crit.getDroit());
+        if (crit.getDroit() != null) {
+            CriteriaMakerUtils.addCritere(criteria, "droit", crit.getDroit());
         }
         // Essai
-        if (crit.getEssai() != null)
-        {
-            CriteriaMakerUtils.addCritere(criteria,
-                                          "detailContacts",
-                                          crit.getEssai().getDetailContacts());
+        if (crit.getEssai() != null) {
+            CriteriaMakerUtils.addCritere(criteria, "detailContacts", crit.getEssai().getDetailContacts());
         }
         // Personne
-        if (crit.getPersonne() != null)
-        {
-            CriteriaMakerUtils.addCritere(criteria,
-                                          "personne",
-                                          crit.getPersonne());
+        if (crit.getPersonne() != null) {
+            CriteriaMakerUtils.addCritere(criteria, "personne", crit.getPersonne());
         }
     }
 

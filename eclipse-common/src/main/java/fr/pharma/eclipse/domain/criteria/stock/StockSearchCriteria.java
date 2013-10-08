@@ -1,23 +1,22 @@
 package fr.pharma.eclipse.domain.criteria.stock;
 
 import java.util.Calendar;
-import java.util.List;
 
 import fr.pharma.eclipse.domain.criteria.common.AbstractSearchCriteria;
+import fr.pharma.eclipse.domain.dto.EssaiDTO;
 import fr.pharma.eclipse.domain.enums.produit.ModePrescription;
 import fr.pharma.eclipse.domain.model.essai.Essai;
 import fr.pharma.eclipse.domain.model.produit.Conditionnement;
+import fr.pharma.eclipse.domain.model.produit.Produit;
 import fr.pharma.eclipse.domain.model.stockage.Pharmacie;
 import fr.pharma.eclipse.domain.model.stockage.Stockage;
 
 /**
  * Critère de recherche sur Stock.
- 
+ * @author Netapsys
  * @version $Revision$ $Date$
  */
-public class StockSearchCriteria
-    extends AbstractSearchCriteria
-{
+public class StockSearchCriteria extends AbstractSearchCriteria {
     /**
      * Serial ID.
      */
@@ -29,19 +28,9 @@ public class StockSearchCriteria
     private Essai essai;
 
     /**
-     * Liste des essais.
-     */
-    private List<Essai> essais;
-
-    /**
      * Pharmacie.
      */
     private Pharmacie pharmacie;
-
-    /**
-     * Liste des pharmacies.
-     */
-    private List<Pharmacie> pharmacies;
 
     /**
      * Stockage.
@@ -54,9 +43,21 @@ public class StockSearchCriteria
     private String numLot;
 
     /**
+     * Numéro de lot.
+     */
+    private String numLotStrict;
+
+    /**
+     * Numéro de traitement.
+     */
+    private String numTraitement;
+
+    /**
      * Dénomination du produit.
      */
     private String denominationProduit;
+
+    private Produit produit;
 
     /**
      * Date de bornage pour la récupération des mouvements.
@@ -64,7 +65,8 @@ public class StockSearchCriteria
     private Calendar date;
 
     /**
-     * String contenant les heures/minutes pour la date de bornage de récupération des mouvements.
+     * String contenant les heures/minutes pour la date de bornage de
+     * récupération des mouvements.
      */
     private String heuresMinutes;
 
@@ -79,12 +81,23 @@ public class StockSearchCriteria
     private ModePrescription modePrescription;
 
     /**
+     * Vrai si l'on veut des stocks dont la quantité en dispensation globale est
+     * non null et supérieur à 0.
+     */
+    private Boolean notNullQteDispensationGlobal;
+
+    /**
+     * Essai.
+     */
+    private EssaiDTO essaiDTO;
+
+    /**
      * {@inheritDoc}
      */
     @Override
-    public void clear()
-    {
+    public void clear() {
         this.setEssai(null);
+        this.setEssaiDTO(null);
         this.setPharmacie(null);
         this.setStockage(null);
         this.setNumLot(null);
@@ -93,16 +106,16 @@ public class StockSearchCriteria
         this.setHeuresMinutes(null);
         this.setConditionnement(null);
         this.setModePrescription(null);
-        this.setEssais(null);
-        this.setPharmacies(null);
+        this.setProduit(null);
+        this.setNumLotStrict(null);
+        this.setNumTraitement(null);
     }
 
     /**
      * Getter pour essai.
      * @return Le essai
      */
-    public Essai getEssai()
-    {
+    public Essai getEssai() {
         return this.essai;
     }
 
@@ -110,8 +123,7 @@ public class StockSearchCriteria
      * Setter pour essai.
      * @param essai Le essai à écrire.
      */
-    public void setEssai(final Essai essai)
-    {
+    public void setEssai(final Essai essai) {
         this.essai = essai;
     }
 
@@ -119,8 +131,7 @@ public class StockSearchCriteria
      * Getter pour pharmacie.
      * @return Le pharmacie
      */
-    public Pharmacie getPharmacie()
-    {
+    public Pharmacie getPharmacie() {
         return this.pharmacie;
     }
 
@@ -128,8 +139,7 @@ public class StockSearchCriteria
      * Setter pour pharmacie.
      * @param pharmacie Le pharmacie à écrire.
      */
-    public void setPharmacie(final Pharmacie pharmacie)
-    {
+    public void setPharmacie(final Pharmacie pharmacie) {
         this.pharmacie = pharmacie;
     }
 
@@ -137,8 +147,7 @@ public class StockSearchCriteria
      * Getter pour stockage.
      * @return Le stockage
      */
-    public Stockage getStockage()
-    {
+    public Stockage getStockage() {
         return this.stockage;
     }
 
@@ -146,8 +155,7 @@ public class StockSearchCriteria
      * Setter pour stockage.
      * @param stockage Le stockage à écrire.
      */
-    public void setStockage(final Stockage stockage)
-    {
+    public void setStockage(final Stockage stockage) {
         this.stockage = stockage;
     }
 
@@ -155,8 +163,7 @@ public class StockSearchCriteria
      * Getter pour numLot.
      * @return Le numLot
      */
-    public String getNumLot()
-    {
+    public String getNumLot() {
         return this.numLot;
     }
 
@@ -164,8 +171,7 @@ public class StockSearchCriteria
      * Setter pour numLot.
      * @param numLot Le numLot à écrire.
      */
-    public void setNumLot(final String numLot)
-    {
+    public void setNumLot(final String numLot) {
         this.numLot = numLot;
     }
 
@@ -173,8 +179,7 @@ public class StockSearchCriteria
      * Getter pour denominationProduit.
      * @return Le denominationProduit
      */
-    public String getDenominationProduit()
-    {
+    public String getDenominationProduit() {
         return this.denominationProduit;
     }
 
@@ -182,8 +187,7 @@ public class StockSearchCriteria
      * Setter pour denominationProduit.
      * @param denominationProduit Le denominationProduit à écrire.
      */
-    public void setDenominationProduit(final String denominationProduit)
-    {
+    public void setDenominationProduit(final String denominationProduit) {
         this.denominationProduit = denominationProduit;
     }
 
@@ -191,8 +195,7 @@ public class StockSearchCriteria
      * Getter pour date.
      * @return Le date
      */
-    public Calendar getDate()
-    {
+    public Calendar getDate() {
         return this.date;
     }
 
@@ -200,8 +203,7 @@ public class StockSearchCriteria
      * Setter pour date.
      * @param date Le date à écrire.
      */
-    public void setDate(final Calendar date)
-    {
+    public void setDate(final Calendar date) {
         this.date = date;
     }
 
@@ -209,8 +211,7 @@ public class StockSearchCriteria
      * Getter pour heuresMinutes.
      * @return Le heuresMinutes
      */
-    public String getHeuresMinutes()
-    {
+    public String getHeuresMinutes() {
         return this.heuresMinutes;
     }
 
@@ -218,8 +219,7 @@ public class StockSearchCriteria
      * Setter pour heuresMinutes.
      * @param heuresMinutes Le heuresMinutes à écrire.
      */
-    public void setHeuresMinutes(final String heuresMinutes)
-    {
+    public void setHeuresMinutes(final String heuresMinutes) {
         this.heuresMinutes = heuresMinutes;
     }
 
@@ -227,8 +227,7 @@ public class StockSearchCriteria
      * Getter sur conditionnement.
      * @return Retourne le conditionnement.
      */
-    public Conditionnement getConditionnement()
-    {
+    public Conditionnement getConditionnement() {
         return this.conditionnement;
     }
 
@@ -236,8 +235,7 @@ public class StockSearchCriteria
      * Setter pour conditionnement.
      * @param conditionnement le conditionnement à écrire.
      */
-    public void setConditionnement(final Conditionnement conditionnement)
-    {
+    public void setConditionnement(final Conditionnement conditionnement) {
         this.conditionnement = conditionnement;
     }
 
@@ -245,8 +243,7 @@ public class StockSearchCriteria
      * Getter sur modePrescription.
      * @return Retourne le modePrescription.
      */
-    public ModePrescription getModePrescription()
-    {
+    public ModePrescription getModePrescription() {
         return this.modePrescription;
     }
 
@@ -254,45 +251,90 @@ public class StockSearchCriteria
      * Setter pour modePrescription.
      * @param modePrescription le modePrescription à écrire.
      */
-    public void setModePrescription(final ModePrescription modePrescription)
-    {
+    public void setModePrescription(final ModePrescription modePrescription) {
         this.modePrescription = modePrescription;
     }
 
     /**
-     * Getter pour essais.
-     * @return Le essais
+     * Getter pour produit.
+     * @return Le produit
      */
-    public List<Essai> getEssais()
-    {
-        return this.essais;
+    public Produit getProduit() {
+        return this.produit;
     }
 
     /**
-     * Setter pour essais.
-     * @param essais Le essais à écrire.
+     * Setter pour produit.
+     * @param produit Le produit à écrire.
      */
-    public void setEssais(final List<Essai> essais)
-    {
-        this.essais = essais;
+    public void setProduit(final Produit produit) {
+        this.produit = produit;
     }
 
     /**
-     * Getter pour pharmacies.
-     * @return Le pharmacies
+     * Getter pour notNullQteDispensationGlobal.
+     * @return Vrai si l'on veut des stocks ayant une quantité en dispensation
+     * globale non null et supérieur à 0;
      */
-    public List<Pharmacie> getPharmacies()
-    {
-        return this.pharmacies;
+    public Boolean getNotNullQteDispensationGlobal() {
+        return this.notNullQteDispensationGlobal;
     }
 
     /**
-     * Setter pour pharmacies.
-     * @param pharmacies Le pharmacies à écrire.
+     * Setter pour notNullQteDispensationGlobal
+     * @param notNullQteDispensationGlobal Vrai si l'on veut des stocks ayant
+     * une quantité en dispensation globale non null et supérieur à 0
      */
-    public void setPharmacies(final List<Pharmacie> pharmacies)
-    {
-        this.pharmacies = pharmacies;
+    public void setNotNullQteDispensationGlobal(final Boolean notNullQteDispensationGlobal) {
+        this.notNullQteDispensationGlobal = notNullQteDispensationGlobal;
+    }
+
+    /**
+     * Getter pour numTraitement.
+     * @return Le numTraitement
+     */
+    public String getNumTraitement() {
+        return this.numTraitement;
+    }
+
+    /**
+     * Setter pour numTraitement.
+     * @param numTraitement Le numTraitement à écrire.
+     */
+    public void setNumTraitement(final String numTraitement) {
+        this.numTraitement = numTraitement;
+    }
+
+    /**
+     * Getter pour numLotStrict.
+     * @return Le numLotStrict
+     */
+    public String getNumLotStrict() {
+        return this.numLotStrict;
+    }
+
+    /**
+     * Setter pour numLotStrict.
+     * @param numLotStrict Le numLotStrict à écrire.
+     */
+    public void setNumLotStrict(final String numLotStrict) {
+        this.numLotStrict = numLotStrict;
+    }
+
+    /**
+     * Getter pour essaiDTO.
+     * @return Le essaiDTO
+     */
+    public EssaiDTO getEssaiDTO() {
+        return this.essaiDTO;
+    }
+
+    /**
+     * Setter pour essaiDTO.
+     * @param essaiDTO Le essaiDTO à écrire.
+     */
+    public void setEssaiDTO(final EssaiDTO essaiDTO) {
+        this.essaiDTO = essaiDTO;
     }
 
 }

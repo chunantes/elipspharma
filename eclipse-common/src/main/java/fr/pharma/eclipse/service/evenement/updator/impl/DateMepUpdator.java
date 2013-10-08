@@ -13,12 +13,10 @@ import fr.pharma.eclipse.service.evenement.updator.EvenementBeforeSaveUpdator;
 
 /**
  * Updator de la date de mise en place de l'essai correspondant.
- 
+ * @author Netapsys
  * @version $Revision$ $Date$
  */
-public class DateMepUpdator
-    implements EvenementBeforeSaveUpdator
-{
+public class DateMepUpdator implements EvenementBeforeSaveUpdator {
 
     /**
      * SerialVersionUID.
@@ -36,8 +34,7 @@ public class DateMepUpdator
      */
     @Override
     public void update(final Evenement evenement,
-                       final EvenementServiceImpl service)
-    {
+                       final EvenementServiceImpl service) {
         final Essai essai = this.serviceEssai.get(evenement.getEssai().getId());
         essai.getDetailDates().setDebutEtude(evenement.getDateDebut());
 
@@ -48,21 +45,16 @@ public class DateMepUpdator
      * {@inheritDoc}
      */
     @Override
-    public boolean support(final Evenement evenement)
-    {
-        return evenement.getTypeEvenement().equals(TypeEvenement.VISITE)
-               && evenement.getResultatVisite() != null
-               && evenement.getResultatVisite().equals(ResultatVisite.EFFECTUE)
-               && evenement.getTypeVisite().equals(TypeVisite.MISE_EN_PLACE)
-               && evenement.getEssai() != null;
+    public boolean support(final Evenement evenement) {
+        return evenement.getTypeEvenement().equals(TypeEvenement.VISITE) && (evenement.getResultatVisite() != null) && evenement.getResultatVisite().equals(ResultatVisite.EFFECTUE)
+               && evenement.getTypeVisite().equals(TypeVisite.MISE_EN_PLACE) && (evenement.getEssai() != null);
     }
 
     /**
      * Setter pour serviceEssai.
      * @param serviceEssai Le serviceEssai à écrire.
      */
-    public void setServiceEssai(final EssaiService serviceEssai)
-    {
+    public void setServiceEssai(final EssaiService serviceEssai) {
         this.serviceEssai = serviceEssai;
     }
 
@@ -70,8 +62,7 @@ public class DateMepUpdator
      * Getter pour serviceEssai.
      * @return Le serviceEssai
      */
-    public EssaiService getServiceEssai()
-    {
+    public EssaiService getServiceEssai() {
         return this.serviceEssai;
     }
 }

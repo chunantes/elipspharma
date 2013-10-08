@@ -6,15 +6,14 @@ import javax.persistence.Entity;
 import fr.pharma.eclipse.domain.enums.document.TypeDocumentProduit;
 
 /**
- * Bean métier représentant un document relatif à la reconstitution simple d'un médicament.
- 
+ * Bean métier représentant un document relatif à la reconstitution simple d'un
+ * médicament.
+ * @author Netapsys
  * @version $Revision$ $Date$
  */
 @Entity
 @DiscriminatorValue("RECONSTITUTION_SIMPLE")
-public class DocumentReconstitutionSimple
-    extends DocumentActesPharma
-{
+public class DocumentReconstitutionSimple extends DocumentActesPharma {
 
     /**
      * Serial ID.
@@ -24,8 +23,7 @@ public class DocumentReconstitutionSimple
     /**
      * Constructeur par défaut.
      */
-    public DocumentReconstitutionSimple()
-    {
+    public DocumentReconstitutionSimple() {
         this.setType(TypeDocumentProduit.RECONSTITUTION_SIMPLE);
     }
 

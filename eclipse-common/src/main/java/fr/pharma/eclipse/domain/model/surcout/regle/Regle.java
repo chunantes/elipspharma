@@ -33,14 +33,11 @@ import fr.pharma.eclipse.utils.constants.EclipseConstants;
 
 /**
  * Interface décrivant le comportement des règles de calculs pour les surcouts.
- 
+ * @author Netapsys
  * @version $Revision$ $Date$
  */
 @Entity(name = "regle_surcout")
-public class Regle
-    extends BeanObject
-    implements Serializable, Clonable<Regle>
-{
+public class Regle extends BeanObject implements Serializable, Clonable<Regle> {
     /**
      * SerialVersionUID.
      */
@@ -125,8 +122,7 @@ public class Regle
      * Getter sur type.
      * @return Retourne le type.
      */
-    public TypeCout getType()
-    {
+    public TypeCout getType() {
         return this.type;
     }
 
@@ -134,8 +130,7 @@ public class Regle
      * Setter pour type.
      * @param type le type à écrire.
      */
-    public void setType(final TypeCout type)
-    {
+    public void setType(final TypeCout type) {
         this.type = type;
     }
 
@@ -143,8 +138,7 @@ public class Regle
      * Getter sur items.
      * @return Retourne le items.
      */
-    public SortedSet<Item> getItems()
-    {
+    public SortedSet<Item> getItems() {
         return this.items;
     }
 
@@ -152,8 +146,7 @@ public class Regle
      * Setter pour items.
      * @param items le items à écrire.
      */
-    public void setItems(final SortedSet<Item> items)
-    {
+    public void setItems(final SortedSet<Item> items) {
         this.items = items;
     }
 
@@ -161,8 +154,7 @@ public class Regle
      * Getter sur perimetre.
      * @return Retourne le perimetre.
      */
-    public PerimetreCout getPerimetre()
-    {
+    public PerimetreCout getPerimetre() {
         return this.perimetre;
     }
 
@@ -170,8 +162,7 @@ public class Regle
      * Setter pour perimetre.
      * @param perimetre le perimetre à écrire.
      */
-    public void setPerimetre(final PerimetreCout perimetre)
-    {
+    public void setPerimetre(final PerimetreCout perimetre) {
         this.perimetre = perimetre;
     }
 
@@ -179,8 +170,7 @@ public class Regle
      * Getter sur premiereAnnee.
      * @return Retourne le premiereAnnee.
      */
-    public BigDecimal getPremiereAnnee()
-    {
+    public BigDecimal getPremiereAnnee() {
         return this.premiereAnnee;
     }
 
@@ -188,8 +178,7 @@ public class Regle
      * Getter sur anneesSuivantes.
      * @return Retourne le anneesSuivantes.
      */
-    public BigDecimal getAnneesSuivantes()
-    {
+    public BigDecimal getAnneesSuivantes() {
         return this.anneesSuivantes;
     }
 
@@ -197,8 +186,7 @@ public class Regle
      * Setter pour premiereAnnee.
      * @param premiereAnnee le premiereAnnee à écrire.
      */
-    public void setPremiereAnnee(final BigDecimal premiereAnnee)
-    {
+    public void setPremiereAnnee(final BigDecimal premiereAnnee) {
         this.premiereAnnee = premiereAnnee;
     }
 
@@ -206,8 +194,7 @@ public class Regle
      * Setter pour anneesSuivantes.
      * @param anneesSuivantes le anneesSuivantes à écrire.
      */
-    public void setAnneesSuivantes(final BigDecimal anneesSuivantes)
-    {
+    public void setAnneesSuivantes(final BigDecimal anneesSuivantes) {
         this.anneesSuivantes = anneesSuivantes;
     }
 
@@ -215,8 +202,7 @@ public class Regle
      * Getter sur min.
      * @return Retourne le min.
      */
-    public Integer getMin()
-    {
+    public Integer getMin() {
         return this.min;
     }
 
@@ -224,8 +210,7 @@ public class Regle
      * Getter sur max.
      * @return Retourne le max.
      */
-    public Integer getMax()
-    {
+    public Integer getMax() {
         return this.max;
     }
 
@@ -233,8 +218,7 @@ public class Regle
      * Setter pour min.
      * @param min le min à écrire.
      */
-    public void setMin(final Integer min)
-    {
+    public void setMin(final Integer min) {
         this.min = min;
     }
 
@@ -242,8 +226,7 @@ public class Regle
      * Setter pour max.
      * @param max le max à écrire.
      */
-    public void setMax(final Integer max)
-    {
+    public void setMax(final Integer max) {
         this.max = max;
     }
 
@@ -251,8 +234,7 @@ public class Regle
      * Getter sur montant.
      * @return Retourne le montant.
      */
-    public BigDecimal getMontant()
-    {
+    public BigDecimal getMontant() {
         return this.montant;
     }
 
@@ -260,8 +242,7 @@ public class Regle
      * Setter pour montant.
      * @param montant le montant à écrire.
      */
-    public void setMontant(final BigDecimal montant)
-    {
+    public void setMontant(final BigDecimal montant) {
         this.montant = montant;
     }
 
@@ -269,8 +250,7 @@ public class Regle
      * Getter sur mode.
      * @return Retourne le mode.
      */
-    public ModeCalcul getMode()
-    {
+    public ModeCalcul getMode() {
         return this.mode;
     }
 
@@ -278,8 +258,7 @@ public class Regle
      * Setter pour mode.
      * @param mode le mode à écrire.
      */
-    public void setMode(final ModeCalcul mode)
-    {
+    public void setMode(final ModeCalcul mode) {
         this.mode = mode;
     }
 
@@ -287,57 +266,30 @@ public class Regle
      * {@inheritDoc}
      */
     @Override
-    public String toString()
-    {
+    public String toString() {
         final StringBuffer buff = new StringBuffer();
-        buff.append("Cout ")
-                .append(this.getType().getLibelle())
-                .append(EclipseConstants.SPACE)
-                .append(EclipseConstants.DASH)
-                .append(EclipseConstants.SPACE)
-                .append(this.getPerimetre().getLibelle())
-                .append(EclipseConstants.SPACE)
-                .append(EclipseConstants.DASH)
-                .append(EclipseConstants.SPACE);
+        buff.append("Cout ").append(this.getType().getLibelle()).append(EclipseConstants.SPACE).append(EclipseConstants.DASH).append(EclipseConstants.SPACE)
+                .append(this.getPerimetre().getLibelle()).append(EclipseConstants.SPACE).append(EclipseConstants.DASH).append(EclipseConstants.SPACE);
 
-        if (this.type.equals(TypeCout.FIXE))
-        {
-            buff.append("1ere année : ")
-                    .append(this.getPremiereAnnee())
-                    .append(EclipseConstants.EURO)
-                    .append("/")
-                    .append(" Autres : ")
-                    .append(this.getAnneesSuivantes())
+        if (this.type.equals(TypeCout.FIXE)) {
+            buff.append("1ere année : ").append(this.getPremiereAnnee()).append(EclipseConstants.EURO).append("/").append(" Autres : ").append(this.getAnneesSuivantes())
                     .append(EclipseConstants.EURO);
-        }
-        else if (this.type.equals(TypeCout.VARIABLE))
-        {
-            buff.append(this.getMode())
-                    .append(EclipseConstants.SPACE)
-                    .append(EclipseConstants.DASH)
-                    .append(EclipseConstants.SPACE);
+        } else if (this.type.equals(TypeCout.VARIABLE)) {
+            buff.append(this.getMode()).append(EclipseConstants.SPACE).append(EclipseConstants.DASH).append(EclipseConstants.SPACE);
 
-            if (this.getMin() == null)
-            {
+            if (this.getMin() == null) {
                 buff.append("0");
-            }
-            else
-            {
+            } else {
                 buff.append(this.getMin());
             }
             buff.append("/");
 
-            if (this.getMax() == null)
-            {
+            if (this.getMax() == null) {
                 buff.append("-");
-            }
-            else
-            {
+            } else {
                 buff.append(this.getMax());
             }
-            buff.append(EclipseConstants.DASH)
-                    .append(this.getMontant())
-                    .append(EclipseConstants.EURO);
+            buff.append(EclipseConstants.DASH).append(this.getMontant()).append(EclipseConstants.EURO);
 
         }
 
@@ -348,8 +300,7 @@ public class Regle
      * Getter sur theme.
      * @return Retourne le theme.
      */
-    public Theme getTheme()
-    {
+    public Theme getTheme() {
         return this.theme;
     }
 
@@ -357,8 +308,7 @@ public class Regle
      * Getter sur categorie.
      * @return Retourne le categorie.
      */
-    public Categorie getCategorie()
-    {
+    public Categorie getCategorie() {
         return this.categorie;
     }
 
@@ -366,8 +316,7 @@ public class Regle
      * Setter pour theme.
      * @param theme le theme à écrire.
      */
-    public void setTheme(final Theme theme)
-    {
+    public void setTheme(final Theme theme) {
         this.theme = theme;
     }
 
@@ -375,16 +324,15 @@ public class Regle
      * Setter pour categorie.
      * @param categorie le categorie à écrire.
      */
-    public void setCategorie(final Categorie categorie)
-    {
+    public void setCategorie(final Categorie categorie) {
         this.categorie = categorie;
     }
 
     /**
      * {@inheritDoc}
      */
-    public Regle cloneMe()
-    {
+    @Override
+    public Regle cloneMe() {
         final Regle regle = new Regle();
         regle.setAnneesSuivantes(this.getAnneesSuivantes());
         regle.setPerimetre(this.getPerimetre());

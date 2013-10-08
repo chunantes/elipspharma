@@ -13,7 +13,6 @@ import org.hibernate.annotations.Index;
 import fr.pharma.eclipse.domain.model.acteur.Personne;
 import fr.pharma.eclipse.domain.model.common.BeanObject;
 import fr.pharma.eclipse.domain.model.essai.Essai;
-import fr.pharma.eclipse.domain.model.essai.EssaiElement;
 import fr.pharma.eclipse.domain.model.localisation.Service;
 import fr.pharma.eclipse.domain.model.produit.Conditionnement;
 import fr.pharma.eclipse.domain.model.produit.Produit;
@@ -21,14 +20,11 @@ import fr.pharma.eclipse.domain.model.stockage.Pharmacie;
 
 /**
  * Bean métier représentant une demande de dotation.
- 
+ * @author Netapsys
  * @version $Revision$ $Date$
  */
 @Entity(name = "dotation")
-public class Dotation
-    extends BeanObject
-    implements EssaiElement
-{
+public class Dotation extends BeanObject {
     /**
      * Serial ID.
      */
@@ -119,8 +115,7 @@ public class Dotation
      * Getter pour service.
      * @return Le service
      */
-    public Service getService()
-    {
+    public Service getService() {
         return this.service;
     }
 
@@ -128,8 +123,7 @@ public class Dotation
      * Setter pour service.
      * @param service Le service à écrire.
      */
-    public void setService(final Service service)
-    {
+    public void setService(final Service service) {
         this.service = service;
     }
 
@@ -137,8 +131,7 @@ public class Dotation
      * Getter pour produit.
      * @return Le produit
      */
-    public Produit getProduit()
-    {
+    public Produit getProduit() {
         return this.produit;
     }
 
@@ -146,8 +139,7 @@ public class Dotation
      * Setter pour produit.
      * @param produit Le produit à écrire.
      */
-    public void setProduit(final Produit produit)
-    {
+    public void setProduit(final Produit produit) {
         this.produit = produit;
     }
 
@@ -155,8 +147,7 @@ public class Dotation
      * Getter pour conditionnement.
      * @return Le conditionnement
      */
-    public Conditionnement getConditionnement()
-    {
+    public Conditionnement getConditionnement() {
         return this.conditionnement;
     }
 
@@ -164,8 +155,7 @@ public class Dotation
      * Setter pour conditionnement.
      * @param conditionnement Le conditionnement à écrire.
      */
-    public void setConditionnement(final Conditionnement conditionnement)
-    {
+    public void setConditionnement(final Conditionnement conditionnement) {
         this.conditionnement = conditionnement;
     }
 
@@ -173,8 +163,7 @@ public class Dotation
      * Getter pour quantite.
      * @return Le quantite
      */
-    public Integer getQuantite()
-    {
+    public Integer getQuantite() {
         return this.quantite;
     }
 
@@ -182,8 +171,7 @@ public class Dotation
      * Setter pour quantite.
      * @param quantite Le quantite à écrire.
      */
-    public void setQuantite(final Integer quantite)
-    {
+    public void setQuantite(final Integer quantite) {
         this.quantite = quantite;
     }
 
@@ -191,8 +179,7 @@ public class Dotation
      * Getter pour personne.
      * @return Le personne
      */
-    public Personne getPersonne()
-    {
+    public Personne getPersonne() {
         return this.personne;
     }
 
@@ -200,8 +187,7 @@ public class Dotation
      * Setter pour personne.
      * @param personne Le personne à écrire.
      */
-    public void setPersonne(final Personne personne)
-    {
+    public void setPersonne(final Personne personne) {
         this.personne = personne;
     }
 
@@ -209,8 +195,7 @@ public class Dotation
      * Getter pour dateDemande.
      * @return Le dateDemande
      */
-    public Calendar getDateDemande()
-    {
+    public Calendar getDateDemande() {
         return this.dateDemande;
     }
 
@@ -218,8 +203,7 @@ public class Dotation
      * Setter pour dateDemande.
      * @param dateDemande Le dateDemande à écrire.
      */
-    public void setDateDemande(final Calendar dateDemande)
-    {
+    public void setDateDemande(final Calendar dateDemande) {
         this.dateDemande = dateDemande;
     }
 
@@ -227,8 +211,7 @@ public class Dotation
      * Getter pour traitee.
      * @return Le traitee
      */
-    public Boolean getTraitee()
-    {
+    public Boolean getTraitee() {
         return this.traitee;
     }
 
@@ -236,8 +219,7 @@ public class Dotation
      * Setter pour traitee.
      * @param traitee Le traitee à écrire.
      */
-    public void setTraitee(final Boolean traitee)
-    {
+    public void setTraitee(final Boolean traitee) {
         this.traitee = traitee;
     }
 
@@ -245,8 +227,7 @@ public class Dotation
      * Getter pour commentaire.
      * @return Le commentaire
      */
-    public String getCommentaire()
-    {
+    public String getCommentaire() {
         return this.commentaire;
     }
 
@@ -254,8 +235,7 @@ public class Dotation
      * Setter pour commentaire.
      * @param commentaire Le commentaire à écrire.
      */
-    public void setCommentaire(final String commentaire)
-    {
+    public void setCommentaire(final String commentaire) {
         this.commentaire = commentaire;
     }
 
@@ -263,8 +243,7 @@ public class Dotation
      * Getter pour essai.
      * @return Le essai
      */
-    public Essai getEssai()
-    {
+    public Essai getEssai() {
         return this.essai;
     }
 
@@ -272,8 +251,7 @@ public class Dotation
      * Setter pour essai.
      * @param essai Le essai à écrire.
      */
-    public void setEssai(final Essai essai)
-    {
+    public void setEssai(final Essai essai) {
         this.essai = essai;
     }
 
@@ -281,8 +259,7 @@ public class Dotation
      * Getter pour pharmacie.
      * @return Le pharmacie
      */
-    public Pharmacie getPharmacie()
-    {
+    public Pharmacie getPharmacie() {
         return this.pharmacie;
     }
 
@@ -290,8 +267,7 @@ public class Dotation
      * Setter pour pharmacie.
      * @param pharmacie Le pharmacie à écrire.
      */
-    public void setPharmacie(final Pharmacie pharmacie)
-    {
+    public void setPharmacie(final Pharmacie pharmacie) {
         this.pharmacie = pharmacie;
     }
 

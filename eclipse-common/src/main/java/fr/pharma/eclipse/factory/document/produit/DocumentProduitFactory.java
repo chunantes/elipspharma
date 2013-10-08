@@ -9,12 +9,10 @@ import fr.pharma.eclipse.domain.model.produit.Produit;
 /**
  * Interface des fabriques de documents Produit.
  * @param <DOC> Type de document de produit créé.
- 
+ * @author Netapsys
  * @version $Revision$ $Date$
  */
-public interface DocumentProduitFactory<DOC extends DocumentProduit>
-    extends Serializable
-{
+public interface DocumentProduitFactory<DOC extends DocumentProduit> extends Serializable {
     /**
      * Méthode de création d'un nouveau document de Produit.
      * @param fichier Fichier importé par l'utilisateur.

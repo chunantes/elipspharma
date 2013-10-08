@@ -4,15 +4,13 @@ import java.io.Serializable;
 
 /**
  * Interface des algorithmes de calcul de la surface corporelle d'un patient.
- 
+ * @author Netapsys
  * @version $Revision$ $Date$
  */
-public interface SurfaceCorporelleProcessor
-    extends Serializable
-{
+public interface SurfaceCorporelleProcessor extends Serializable {
     /**
-     * Méthode en charge de calculer la surface corporelle d'un patient en fonction de son poid et
-     * de sa taille.
+     * Méthode en charge de calculer la surface corporelle d'un patient en
+     * fonction de son poid et de sa taille.
      * @param taille Taille.
      * @param poids Poids.
      * @return la surface corporelle.

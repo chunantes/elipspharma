@@ -7,12 +7,10 @@ import fr.pharma.eclipse.jasper.constants.JasperConstants;
 
 /**
  * Helper pour la gestion des paramètres communs aux rapports Jasper.
- 
+ * @author Netapsys
  * @version $Revision$ $Date$
  */
-public class CommonParametersHelper
-    implements Serializable
-{
+public class CommonParametersHelper implements Serializable {
 
     /**
      * Serial ID.
@@ -33,8 +31,7 @@ public class CommonParametersHelper
      * Constructeur.
      * @param reportsDirectory Répertoire des contenant les rapports Jasper.
      */
-    public CommonParametersHelper(final String reportsDirectory, final String checkboxDirectory)
-    {
+    public CommonParametersHelper(final String reportsDirectory, final String checkboxDirectory) {
         this.reportsDirectory = reportsDirectory;
         this.checkboxDirectory = checkboxDirectory;
     }
@@ -43,34 +40,26 @@ public class CommonParametersHelper
      * Méthode en charge d'ajouter les paramètres communs de tous les rapports.
      * @param mapParameters Map des paramètres pour le rapport.
      */
-    public void addCommonParameters(final Map<String, Object> mapParameters)
-    {
+    public void addCommonParameters(final Map<String, Object> mapParameters) {
         // Répertoire des rapports.
-        this.addIfNotExist(mapParameters,
-                           JasperConstants.SUBREPORT_DIRECTORY,
-                           this.reportsDirectory);
+        this.addIfNotExist(mapParameters, JasperConstants.SUBREPORT_DIRECTORY, this.reportsDirectory);
         // Répertoire des rapports.
-        this.addIfNotExist(mapParameters,
-                           JasperConstants.CHECKBOX_DIRECTORY,
-                           this.checkboxDirectory);
+        this.addIfNotExist(mapParameters, JasperConstants.CHECKBOX_DIRECTORY, this.checkboxDirectory);
 
     }
 
     /**
-     * Méthode qui ajoute une paire clé/valeur dans la map, seulement si la clé n'est pas
-     * présente.
+     * Méthode qui ajoute une paire clé/valeur dans la map, seulement si la clé
+     * n'est pas présente.
      * @param mapParameters Map dans laquelle ajouter la paire.
      * @param key Clé.
      * @param value Valeur.
      */
     private void addIfNotExist(final Map<String, Object> mapParameters,
                                final String key,
-                               final Object value)
-    {
-        if (!mapParameters.containsKey(key))
-        {
-            mapParameters.put(key,
-                              value);
+                               final Object value) {
+        if (!mapParameters.containsKey(key)) {
+            mapParameters.put(key, value);
         }
     }
 
@@ -78,8 +67,7 @@ public class CommonParametersHelper
      * Getter sur reportsDirectory.
      * @return Retourne le reportsDirectory.
      */
-    String getReportsDirectory()
-    {
+    String getReportsDirectory() {
         return this.reportsDirectory;
     }
 
@@ -87,8 +75,7 @@ public class CommonParametersHelper
      * Getter pour checkboxDirectory.
      * @return Le checkboxDirectory
      */
-    public String getCheckboxDirectory()
-    {
+    public String getCheckboxDirectory() {
         return this.checkboxDirectory;
     }
 

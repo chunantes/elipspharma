@@ -17,13 +17,10 @@ import fr.pharma.eclipse.service.surcout.counter.ActeCounter;
 
 /**
  * Processor en charge de compter le nombre de ré-étiquetages.
- 
+ * @author Netapsys
  * @version $Revision$ $Date$
  */
-public class ReetiquetageCounter
-    extends EvenementCounter
-    implements ActeCounter, Serializable
-{
+public class ReetiquetageCounter extends EvenementCounter implements ActeCounter, Serializable {
 
     /**
      * SerialVersionUID.
@@ -33,25 +30,17 @@ public class ReetiquetageCounter
     /**
      * {@inheritDoc}
      */
+    @Override
     public int process(final Essai essai,
                        final Patient patient,
                        final Calendar dateDebut,
-                       final Calendar dateFin)
-    {
+                       final Calendar dateFin) {
         int size = 0;
 
-        final List<Evenement> reetiquetages = super.process(TypeEvenement.REETIQUETAGE,
-                                                            null,
-                                                            essai,
-                                                            patient,
-                                                            dateDebut,
-                                                            dateFin);
-        CollectionUtils.filter(reetiquetages,
-                               new GenericPredicate("realisePar",
-                                                    RealisePar.PHARMACIE));
+        final List<Evenement> reetiquetages = super.process(TypeEvenement.REETIQUETAGE, null, essai, patient, dateDebut, dateFin);
+        CollectionUtils.filter(reetiquetages, new GenericPredicate("realisePar", RealisePar.PHARMACIE));
 
-        for (final Evenement e : reetiquetages)
-        {
+        for (final Evenement e : reetiquetages) {
             size += e.getNombre();
         }
         return size;
@@ -60,10 +49,10 @@ public class ReetiquetageCounter
     /**
      * {@inheritDoc}
      */
+    @Override
     public int process(final Essai essai,
                        final Patient patient,
-                       final DonneesPrevision prevision)
-    {
+                       final DonneesPrevision prevision) {
         this.checkPatient(patient);
         return prevision.getNbReetiquetages();
     }

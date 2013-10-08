@@ -13,14 +13,12 @@ import fr.pharma.eclipse.service.indicateur.builder.IndicateurBuilder;
 import fr.pharma.eclipse.transformer.dispensation.LigneDispensationTransformer;
 
 /**
- * Builder en charge de construire l'indicateur Nombre de ligne de dispensations.
- 
+ * Builder en charge de construire l'indicateur Nombre de ligne de
+ * dispensations.
+ * @author Netapsys
  * @version $Revision$ $Date$
  */
-public class LigneDispensationBuilder
-    extends AbstractDispensationBuilder
-    implements Serializable, IndicateurBuilder
-{
+public class LigneDispensationBuilder extends AbstractDispensationBuilder implements Serializable, IndicateurBuilder {
 
     /**
      * SerialVersionUID.
@@ -38,23 +36,16 @@ public class LigneDispensationBuilder
     @Override
     public Indicateur build(final Pharmacie pharmacie,
                             final Calendar dateDebut,
-                            final Calendar dateFin)
-    {
-        final List dispensations = this.loadDispensations(pharmacie,
-                                                          dateDebut,
-                                                          dateFin,
-                                                          true);
-        CollectionUtils.transform(dispensations,
-                                  new LigneDispensationTransformer());
-        return new Indicateur(this.libelle,
-                              new BigDecimal(LigneDispensationTransformer.getTotal(dispensations)));
+                            final Calendar dateFin) {
+        final List dispensations = this.loadDispensations(pharmacie, dateDebut, dateFin, true);
+        CollectionUtils.transform(dispensations, new LigneDispensationTransformer());
+        return new Indicateur(this.libelle, new BigDecimal(LigneDispensationTransformer.getTotal(dispensations)));
     }
     /**
      * Setter pour libelle.
      * @param libelle Le libelle à écrire.
      */
-    public void setLibelle(final String libelle)
-    {
+    public void setLibelle(final String libelle) {
         this.libelle = libelle;
     }
 

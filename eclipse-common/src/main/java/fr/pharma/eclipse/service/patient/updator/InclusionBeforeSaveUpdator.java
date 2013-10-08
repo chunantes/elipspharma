@@ -6,13 +6,12 @@ import fr.pharma.eclipse.domain.model.patient.Inclusion;
 import fr.pharma.eclipse.service.patient.InclusionService;
 
 /**
- * Interface des updators en charge de la mise à jour d'un bean Inclusion avant sa sauvegarde.
- 
+ * Interface des updators en charge de la mise à jour d'un bean Inclusion avant
+ * sa sauvegarde.
+ * @author Netapsys
  * @version $Revision$ $Date$
  */
-public interface InclusionBeforeSaveUpdator
-    extends Serializable
-{
+public interface InclusionBeforeSaveUpdator extends Serializable {
     /**
      * Met à jour l'inclusion avant sa sauvegarde.
      * @param inclusion Inclusion.

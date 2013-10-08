@@ -12,12 +12,10 @@ import fr.pharma.eclipse.validator.remove.RemoveValidator;
 
 /**
  * Classe de validation de suppression d'un objet Promoteur.
- 
+ * @author Netapsys
  * @version $Revision$ $Date$
  */
-public class PromoteurRemoveValidator
-    implements RemoveValidator<Promoteur>, Serializable
-{
+public class PromoteurRemoveValidator implements RemoveValidator<Promoteur>, Serializable {
     /**
      * Serial ID.
      */
@@ -33,35 +31,22 @@ public class PromoteurRemoveValidator
      * {@inheritDoc}
      */
     @Override
-    public void validate(final Promoteur promoteur)
-    {
+    public void validate(final Promoteur promoteur) {
         // Vérification Relation Promoteur-Essai
         final EssaiSearchCriteria essaiCriteria = new EssaiSearchCriteria();
         essaiCriteria.setPromoteur(promoteur);
-        if (this.essaiService.hasResult(essaiCriteria))
-        {
-            throw new ValidationException("remove",
-                                          new String[]
-                                          {"impossible" },
-                                          promoteur);
+        if (this.essaiService.hasResult(essaiCriteria)) {
+            throw new ValidationException("remove", new String[]{"impossible" }, promoteur);
         }
 
         // Vérification Relation Promoteur-ArcPromoteur
-        if (!promoteur.getArcPromoteurs().isEmpty())
-        {
-            throw new ValidationException("remove",
-                                          new String[]
-                                          {"impossible" },
-                                          promoteur);
+        if (!promoteur.getArcPromoteurs().isEmpty()) {
+            throw new ValidationException("remove", new String[]{"impossible" }, promoteur);
         }
 
         // Vérification Relation Promoteur-ContactPromoteur
-        if (!promoteur.getContactPromoteurs().isEmpty())
-        {
-            throw new ValidationException("remove",
-                                          new String[]
-                                          {"impossible" },
-                                          promoteur);
+        if (!promoteur.getContactPromoteurs().isEmpty()) {
+            throw new ValidationException("remove", new String[]{"impossible" }, promoteur);
         }
     }
 
@@ -69,8 +54,7 @@ public class PromoteurRemoveValidator
      * Setter pour essaiService.
      * @param essaiService Le essaiService à écrire.
      */
-    public void setEssaiService(final EssaiService essaiService)
-    {
+    public void setEssaiService(final EssaiService essaiService) {
         this.essaiService = essaiService;
     }
 

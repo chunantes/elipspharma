@@ -13,14 +13,12 @@ import fr.pharma.eclipse.service.common.GenericService;
 import fr.pharma.eclipse.validator.save.SaveValidator;
 
 /**
- * Validateur appelé, lors de la sauvegarde d'un essai, pour vérifier l'unicité de son numéro
- * interne dans le système.
- 
+ * Validateur appelé, lors de la sauvegarde d'un essai, pour vérifier l'unicité
+ * de son numéro interne dans le système.
+ * @author Netapsys
  * @version $Revision$ $Date$
  */
-public class UniciteNumeroInterneSaveValidator
-    implements SaveValidator<Essai>, BeanFactoryAware
-{
+public class UniciteNumeroInterneSaveValidator implements SaveValidator<Essai>, BeanFactoryAware {
 
     /**
      * Serial ID.
@@ -37,23 +35,16 @@ public class UniciteNumeroInterneSaveValidator
      */
     @Override
     public void validate(final Essai essai,
-                         final GenericService<Essai> essaiService)
-    {
+                         final GenericService<Essai> essaiService) {
         // Récupération du critère de recherche sur les essais.
-        final EssaiSearchCriteria searchCrit =
-            (EssaiSearchCriteria) this.beanFactory.getBean("essaiCriteria");
-        searchCrit.setNumInterne(essai.getNumInterne());
+        final EssaiSearchCriteria searchCrit = (EssaiSearchCriteria) this.beanFactory.getBean("essaiCriteria");
+        searchCrit.setNumInterneStrict(essai.getNumInterne());
 
-        // Aucun autre essai en base, autre que moi, ne doit avoir ce numéro interne.
+        // Aucun autre essai en base, autre que moi, ne doit avoir ce numéro
+        // interne.
         final List<Essai> essaisWithNumInterne = essaiService.getAll(searchCrit);
-        if (!essaisWithNumInterne.isEmpty()
-            && essaisWithNumInterne.size() == 1
-            && !essaisWithNumInterne.get(0).getId().equals(essai.getId()))
-        {
-            throw new ValidationException("essai.numInterne",
-                                          new String[]
-                                          {"unique", },
-                                          essai);
+        if (!essaisWithNumInterne.isEmpty() && essaisWithNumInterne.size() == 1 && !essaisWithNumInterne.get(0).getId().equals(essai.getId())) {
+            throw new ValidationException("essai.numInterne", new String[]{"unique", }, essai);
         }
     }
 
@@ -61,9 +52,7 @@ public class UniciteNumeroInterneSaveValidator
      * {@inheritDoc}
      */
     @Override
-    public void setBeanFactory(final BeanFactory beanFactory)
-        throws BeansException
-    {
+    public void setBeanFactory(final BeanFactory beanFactory) throws BeansException {
         this.beanFactory = beanFactory;
     }
 

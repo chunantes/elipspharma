@@ -22,12 +22,10 @@ import fr.pharma.eclipse.service.stock.MvtStockService;
 
 /**
  * Clase en charge de générer un document eclipse pour les certificats.
- 
+ * @author Netapsys
  * @version $Revision$ $Date$
  */
-public abstract class GenericCertificatMaker
-    implements DocumentMaker, Serializable
-{
+public abstract class GenericCertificatMaker implements DocumentMaker, Serializable {
 
     /**
      * SerialVersionUID.
@@ -78,17 +76,14 @@ public abstract class GenericCertificatMaker
      */
     @Override
     public void make(final TypeRapportJasper type,
-                     final Object source)
-        throws JasperReportBuildException
-    {
+                     final Object source) throws JasperReportBuildException {
         final byte[] bytes = this.buildManagers.get(type.name()).build(source);
         final Fichier fichier = this.fichierFactory.getInitializedObject();
         fichier.setContenu(bytes);
         fichier.setNom(this.nom);
         fichier.setTypeFichier(this.typeFichier);
 
-        final DocumentEclipse doc = this.makeForMvt(((ResultSortie) source).getMvts(),
-                                                    fichier);
+        final DocumentEclipse doc = this.makeForMvt(((ResultSortie) source).getMvts(), fichier);
 
         ((ResultSortie) source).setDocument(doc);
 
@@ -105,8 +100,7 @@ public abstract class GenericCertificatMaker
      * Setter pour buildManagers.
      * @param buildManagers Le buildManagers à écrire.
      */
-    public void setBuildManagers(final Map<String, JasperReportBuildManager> buildManagers)
-    {
+    public void setBuildManagers(final Map<String, JasperReportBuildManager> buildManagers) {
         this.buildManagers = buildManagers;
     }
 
@@ -114,8 +108,7 @@ public abstract class GenericCertificatMaker
      * Setter pour fichierFactory.
      * @param fichierFactory Le fichierFactory à écrire.
      */
-    public void setFichierFactory(final FichierFactory fichierFactory)
-    {
+    public void setFichierFactory(final FichierFactory fichierFactory) {
         this.fichierFactory = fichierFactory;
     }
 
@@ -123,8 +116,7 @@ public abstract class GenericCertificatMaker
      * Setter pour nom.
      * @param nom Le nom à écrire.
      */
-    public void setNom(final String nom)
-    {
+    public void setNom(final String nom) {
         this.nom = nom;
     }
 
@@ -132,8 +124,7 @@ public abstract class GenericCertificatMaker
      * Setter pour typeFichier.
      * @param typeFichier Le typeFichier à écrire.
      */
-    public void setTypeFichier(final String typeFichier)
-    {
+    public void setTypeFichier(final String typeFichier) {
         this.typeFichier = typeFichier;
     }
 
@@ -141,8 +132,7 @@ public abstract class GenericCertificatMaker
      * Setter pour documentFactory.
      * @param documentFactory Le documentFactory à écrire.
      */
-    public void setDocumentFactory(final DocumentStockFactory<DocumentStock> documentFactory)
-    {
+    public void setDocumentFactory(final DocumentStockFactory<DocumentStock> documentFactory) {
         this.documentFactory = documentFactory;
     }
 
@@ -150,8 +140,7 @@ public abstract class GenericCertificatMaker
      * Setter pour service.
      * @param service Le service à écrire.
      */
-    public void setService(final MvtStockService<MvtStock> service)
-    {
+    public void setService(final MvtStockService<MvtStock> service) {
         this.service = service;
     }
 
@@ -159,8 +148,7 @@ public abstract class GenericCertificatMaker
      * Getter pour fichierFactory.
      * @return Le fichierFactory
      */
-    public FichierFactory getFichierFactory()
-    {
+    public FichierFactory getFichierFactory() {
         return this.fichierFactory;
     }
 
@@ -168,8 +156,7 @@ public abstract class GenericCertificatMaker
      * Getter pour documentFactory.
      * @return Le documentFactory
      */
-    public DocumentStockFactory<DocumentStock> getDocumentFactory()
-    {
+    public DocumentStockFactory<DocumentStock> getDocumentFactory() {
         return this.documentFactory;
     }
 
@@ -177,8 +164,7 @@ public abstract class GenericCertificatMaker
      * Getter pour service.
      * @return Le service
      */
-    public MvtStockService<MvtStock> getService()
-    {
+    public MvtStockService<MvtStock> getService() {
         return this.service;
     }
 
@@ -186,8 +172,7 @@ public abstract class GenericCertificatMaker
      * Getter pour docService.
      * @return Le docService
      */
-    public DocumentService getDocService()
-    {
+    public DocumentService getDocService() {
         return this.docService;
     }
 
@@ -195,8 +180,7 @@ public abstract class GenericCertificatMaker
      * Setter pour docService.
      * @param docService Le docService à écrire.
      */
-    public void setDocService(final DocumentService docService)
-    {
+    public void setDocService(final DocumentService docService) {
         this.docService = docService;
     }
 

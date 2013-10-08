@@ -10,27 +10,22 @@ import fr.pharma.eclipse.predicate.prescription.ProduitPrescritPredicate;
 import fr.pharma.eclipse.validator.prescription.ProduitPrescritValidator;
 
 /**
- * Validateur en charge de vérifier qu'un produit prescrit n'est pas prescrit plusieurs fois.
- 
+ * Validateur en charge de vérifier qu'un produit prescrit n'est pas prescrit
+ * plusieurs fois.
+ * @author Netapsys
  * @version $Revision$ $Date$
  */
-public class ProduitPrescritValidatorImpl
-    implements ProduitPrescritValidator
-{
+public class ProduitPrescritValidatorImpl implements ProduitPrescritValidator {
 
     /**
      * {@inheritDoc}
      */
+    @Override
     public void validateAjoutProduitPrescrit(final ProduitPrescrit produitPrescrit,
-                                             final Collection<ProduitPrescrit> produitsPrescrits)
-    {
-        if (CollectionUtils.find(produitsPrescrits,
-                                 new ProduitPrescritPredicate(produitPrescrit)) != null)
-        {
+                                             final Collection<ProduitPrescrit> produitsPrescrits) {
+        if (CollectionUtils.find(produitsPrescrits, new ProduitPrescritPredicate(produitPrescrit)) != null) {
 
-            throw new ValidationException("produitPrescrit.enregistrement",
-                                          new String[]
-                                          {"alreadyExists" });
+            throw new ValidationException("produitPrescrit.enregistrement", new String[]{"alreadyExists" });
         }
     }
 }

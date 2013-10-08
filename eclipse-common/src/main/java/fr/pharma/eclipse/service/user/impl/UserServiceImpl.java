@@ -17,12 +17,10 @@ import fr.pharma.eclipse.service.user.UserService;
 
 /**
  * Classe d'implémentation du service de gestion des utilisateurs.
- 
+ * @author Netapsys
  * @version $Revision$ $Date$
  */
-public class UserServiceImpl
-    implements UserService, Serializable
-{
+public class UserServiceImpl implements UserService, Serializable {
     /**
      * Serial ID.
      */
@@ -38,8 +36,7 @@ public class UserServiceImpl
      * {@inheritDoc}
      */
     @Override
-    public Personne getPersonne()
-    {
+    public Personne getPersonne() {
         final UserSecurity user = this.getUser();
         return this.personneService.get(user.getIdPersonne());
     }
@@ -48,8 +45,7 @@ public class UserServiceImpl
      * {@inheritDoc}
      */
     @Override
-    public void setAdministrateur()
-    {
+    public void setAdministrateur() {
         final UserSecurity user = this.getUser();
         user.setRole(RolePersonne.ADMIN);
     }
@@ -58,21 +54,15 @@ public class UserServiceImpl
      * {@inheritDoc}
      */
     @Override
-    public UserSecurity getUser()
-    {
-        return (UserSecurity) SecurityContextHolder
-                .getContext()
-                .getAuthentication()
-                .getPrincipal();
+    public UserSecurity getUser() {
+        return (UserSecurity) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
     }
 
-    public Boolean hasRole(final String[] roles)
-    {
+    @Override
+    public Boolean hasRole(final String[] roles) {
         final List<String> rolesAsList = Arrays.asList(roles);
-        for (final GrantedAuthority auth : this.getUser().getAuthorities())
-        {
-            if (rolesAsList.contains(auth.getAuthority()))
-            {
+        for (final GrantedAuthority auth : this.getUser().getAuthorities()) {
+            if (rolesAsList.contains(auth.getAuthority())) {
                 return true;
             }
         }
@@ -82,8 +72,7 @@ public class UserServiceImpl
      * Setter pour personneService.
      * @param personneService Le personneService à écrire.
      */
-    public void setPersonneService(final PersonneService<Personne> personneService)
-    {
+    public void setPersonneService(final PersonneService<Personne> personneService) {
         this.personneService = personneService;
     }
 }

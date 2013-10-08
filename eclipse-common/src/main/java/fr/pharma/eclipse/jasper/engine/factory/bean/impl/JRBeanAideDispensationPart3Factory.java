@@ -6,12 +6,10 @@ import fr.pharma.eclipse.jasper.engine.factory.bean.JasperReportBeanFactory;
 
 /**
  * Fabrique d'objets {@link JRBeanFicheAideDispensationPart3}.
- 
+ * @author Netapsys
  * @version $Revision$ $Date$
  */
-public class JRBeanAideDispensationPart3Factory
-    implements JasperReportBeanFactory
-{
+public class JRBeanAideDispensationPart3Factory implements JasperReportBeanFactory {
 
     /**
      * Serial ID.
@@ -22,8 +20,7 @@ public class JRBeanAideDispensationPart3Factory
      * {@inheritDoc}
      */
     @Override
-    public JasperReportBean getInitializedObject()
-    {
+    public JasperReportBean getInitializedObject() {
         return new JRBeanFicheAideDispensationPart3();
     }
 

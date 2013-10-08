@@ -29,14 +29,11 @@ import fr.pharma.eclipse.domain.model.surcout.regle.Regle;
 
 /**
  * Catégorie.
- 
+ * @author Netapsys
  * @version $Revision$ $Date$
  */
 @Entity(name = "categorie")
-public class Categorie
-    extends BeanObject
-    implements BeanWithNom, Clonable<Categorie>
-{
+public class Categorie extends BeanObject implements BeanWithNom, Clonable<Categorie> {
 
     /**
      * SerialVersionUID.
@@ -77,8 +74,7 @@ public class Categorie
      * Getter sur theme.
      * @return Retourne le theme.
      */
-    public Theme getTheme()
-    {
+    public Theme getTheme() {
         return this.theme;
     }
 
@@ -86,8 +82,7 @@ public class Categorie
      * Setter pour theme.
      * @param theme le theme à écrire.
      */
-    public void setTheme(final Theme theme)
-    {
+    public void setTheme(final Theme theme) {
         this.theme = theme;
     }
 
@@ -95,8 +90,7 @@ public class Categorie
      * Getter sur libelle.
      * @return Retourne le libelle.
      */
-    public String getLibelle()
-    {
+    public String getLibelle() {
         return this.libelle;
     }
 
@@ -104,8 +98,7 @@ public class Categorie
      * Setter pour libelle.
      * @param libelle le libelle à écrire.
      */
-    public void setLibelle(final String libelle)
-    {
+    public void setLibelle(final String libelle) {
         this.libelle = libelle;
     }
 
@@ -113,8 +106,7 @@ public class Categorie
      * {@inheritDoc}
      */
     @Override
-    public String getNom()
-    {
+    public String getNom() {
         return this.getLibelle();
     }
 
@@ -122,13 +114,11 @@ public class Categorie
      * {@inheritDoc}
      */
     @Override
-    public Categorie cloneMe()
-    {
+    public Categorie cloneMe() {
         final Categorie categorie = new Categorie();
         categorie.setLibelle(this.getLibelle());
         categorie.setActe(this.getActe());
-        for (final Regle regle : this.regles)
-        {
+        for (final Regle regle : this.regles) {
             final Regle r = regle.cloneMe();
             r.setCategorie(categorie);
             categorie.getRegles().add(r);
@@ -140,8 +130,7 @@ public class Categorie
      * Getter sur acte.
      * @return Retourne le acte.
      */
-    public Acte getActe()
-    {
+    public Acte getActe() {
         return this.acte;
     }
 
@@ -149,8 +138,7 @@ public class Categorie
      * Setter pour acte.
      * @param acte le acte à écrire.
      */
-    public void setActe(final Acte acte)
-    {
+    public void setActe(final Acte acte) {
         this.acte = acte;
     }
 
@@ -158,8 +146,7 @@ public class Categorie
      * Getter sur regles.
      * @return Retourne le regles.
      */
-    public SortedSet<Regle> getRegles()
-    {
+    public SortedSet<Regle> getRegles() {
         return this.regles;
     }
 
@@ -167,8 +154,7 @@ public class Categorie
      * Setter pour regles.
      * @param regles le regles à écrire.
      */
-    public void setRegles(final SortedSet<Regle> regles)
-    {
+    public void setRegles(final SortedSet<Regle> regles) {
         this.regles = regles;
     }
 

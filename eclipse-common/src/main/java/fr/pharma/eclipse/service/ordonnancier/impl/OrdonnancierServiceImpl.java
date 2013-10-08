@@ -13,13 +13,10 @@ import fr.pharma.eclipse.utils.constants.EclipseConstants;
 
 /**
  * Classe d'implémentation commune du service de gestion des ordonnanciers.
- 
+ * @author Netapsys
  * @version $Revision$ $Date$
  */
-public abstract class OrdonnancierServiceImpl<BEAN extends Ordonnancier>
-    extends GenericServiceImpl<BEAN>
-    implements OrdonnancierService<BEAN>
-{
+public abstract class OrdonnancierServiceImpl<BEAN extends Ordonnancier> extends GenericServiceImpl<BEAN> implements OrdonnancierService<BEAN> {
     /**
      * Serial ID.
      */
@@ -34,8 +31,7 @@ public abstract class OrdonnancierServiceImpl<BEAN extends Ordonnancier>
      * Constructeur.
      * @param genericDao DAO.
      */
-    public OrdonnancierServiceImpl(final GenericDao<BEAN> genericDao)
-    {
+    public OrdonnancierServiceImpl(final GenericDao<BEAN> genericDao) {
         super(genericDao);
     }
 
@@ -43,8 +39,7 @@ public abstract class OrdonnancierServiceImpl<BEAN extends Ordonnancier>
      * {@inheritDoc}
      */
     @Override
-    public Calendar getDateDebut(final Pharmacie pharmacie)
-    {
+    public Calendar getDateDebut(final Pharmacie pharmacie) {
         // Récupération du dernier ordonnancier de la pharmacie
         final OrdonnancierSearchCriteria criteria = new OrdonnancierSearchCriteria();
         criteria.setPharmacie(pharmacie);
@@ -55,24 +50,16 @@ public abstract class OrdonnancierServiceImpl<BEAN extends Ordonnancier>
 
         final List<BEAN> results = this.getAll(criteria);
         // Il existe au moins un ordonnancier pour cette pharmacie
-        if (results.size() > 0)
-        {
+        if (results.size() > 0) {
             final BEAN lastOrdonnancier = results.get(0);
             dateFin.setTime(lastOrdonnancier.getDateFin().getTime());
-            dateFin.add(Calendar.DAY_OF_MONTH,
-                        1);
+            dateFin.add(Calendar.DAY_OF_MONTH, 1);
         }
-        // Aucun ordonnancier pour cette pharmacie => init par défaut au 01/01/2011
-        else
-        {
-            dateFin.set(OrdonnancierServiceImpl.AN_2011,
-                        Calendar.JANUARY,
-                        1,
-                        0,
-                        0,
-                        0);
-            dateFin.set(Calendar.MILLISECOND,
-                        0);
+        // Aucun ordonnancier pour cette pharmacie => init par défaut au
+        // 01/01/2011
+        else {
+            dateFin.set(OrdonnancierServiceImpl.AN_2011, Calendar.JANUARY, 1, 0, 0, 0);
+            dateFin.set(Calendar.MILLISECOND, 0);
         }
 
         return dateFin;
@@ -82,19 +69,13 @@ public abstract class OrdonnancierServiceImpl<BEAN extends Ordonnancier>
      * {@inheritDoc}
      */
     @Override
-    public Calendar getDateFin()
-    {
+    public Calendar getDateFin() {
         final Calendar dateFin = Calendar.getInstance(EclipseConstants.LOCALE);
-        dateFin.set(Calendar.HOUR_OF_DAY,
-                    0);
-        dateFin.set(Calendar.MINUTE,
-                    0);
-        dateFin.set(Calendar.SECOND,
-                    0);
-        dateFin.set(Calendar.MILLISECOND,
-                    0);
-        dateFin.add(Calendar.DAY_OF_MONTH,
-                    -1);
+        dateFin.set(Calendar.HOUR_OF_DAY, 0);
+        dateFin.set(Calendar.MINUTE, 0);
+        dateFin.set(Calendar.SECOND, 0);
+        dateFin.set(Calendar.MILLISECOND, 0);
+        dateFin.add(Calendar.DAY_OF_MONTH, -1);
         return dateFin;
     }
 

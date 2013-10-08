@@ -11,13 +11,13 @@ import fr.pharma.eclipse.domain.model.stockage.Pharmacie;
 
 /**
  * Interface de service des sorties de stock.
- 
+ * @author Netapsys
  * @version $Revision$ $Date$
  */
-public interface SortieService
-{
+public interface SortieService {
     /**
-     * Méthode en charge de créer les mouvements de sortie de stock relatif à une sortie.
+     * Méthode en charge de créer les mouvements de sortie de stock relatif à
+     * une sortie.
      * @param raisonSortie Raison de la sortie.
      * @param commentaireRaison COmmentaire sur la raison de la sortie.
      * @param type Type de mouvement de sortie.

@@ -6,12 +6,10 @@ import fr.pharma.eclipse.jasper.engine.factory.exporter.JRExporterFactory;
 
 /**
  * Fabrique d'exporteur RTF de rapport Jasper.
- 
+ * @author Netapsys
  * @version $Revision$ $Date$
  */
-public class JRExporterRTFFactory
-    implements JRExporterFactory
-{
+public class JRExporterRTFFactory implements JRExporterFactory {
 
     /**
      * Serial ID.
@@ -22,8 +20,7 @@ public class JRExporterRTFFactory
      * {@inheritDoc}
      */
     @Override
-    public JRAbstractExporter getInitializedObject()
-    {
+    public JRAbstractExporter getInitializedObject() {
         return new JRRtfExporter();
     }
 

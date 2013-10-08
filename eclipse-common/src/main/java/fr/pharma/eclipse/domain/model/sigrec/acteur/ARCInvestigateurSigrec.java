@@ -11,14 +11,11 @@ import fr.pharma.eclipse.domain.model.sigrec.essai.EssaiSigrec;
 
 /**
  * Classe du modèle d'import SIGREC représentant un ARC Investigateur.
- 
+ * @author Netapsys
  * @version $Revision$ $Date$
  */
 @Entity(name = "arc_investigateur_sigrec")
-public class ARCInvestigateurSigrec
-    extends IntervenantSigrec
-    implements Contactable
-{
+public class ARCInvestigateurSigrec extends IntervenantSigrec implements Contactable {
 
     /**
      * SerialVersionUID.
@@ -44,8 +41,7 @@ public class ARCInvestigateurSigrec
      * Getter sur centre.
      * @return Retourne le centre.
      */
-    public CentreSigrec getCentre()
-    {
+    public CentreSigrec getCentre() {
         return this.centre;
     }
 
@@ -53,8 +49,7 @@ public class ARCInvestigateurSigrec
      * Setter pour centre.
      * @param centre le centre à écrire.
      */
-    public void setCentre(final CentreSigrec centre)
-    {
+    public void setCentre(final CentreSigrec centre) {
         this.centre = centre;
     }
 
@@ -62,8 +57,7 @@ public class ARCInvestigateurSigrec
      * Getter sur essai.
      * @return Retourne le essai.
      */
-    public EssaiSigrec getEssai()
-    {
+    public EssaiSigrec getEssai() {
         return this.essai;
     }
 
@@ -71,8 +65,7 @@ public class ARCInvestigateurSigrec
      * Setter pour essai.
      * @param essai le essai à écrire.
      */
-    public void setEssai(final EssaiSigrec essai)
-    {
+    public void setEssai(final EssaiSigrec essai) {
         this.essai = essai;
     }
 

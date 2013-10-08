@@ -2,11 +2,10 @@ package fr.pharma.eclipse.domain.enums.evenement;
 
 /**
  * Enumération représentant le type de visite.
- 
+ * @author Netapsys
  * @version $Revision$ $Date$
  */
-public enum TypeVisite
-{
+public enum TypeVisite {
     /**
      * Visite Audit interne.
      */
@@ -51,8 +50,7 @@ public enum TypeVisite
      * Constructeur.
      * @param libelle Le libellé du type de visite.
      */
-    TypeVisite(final String libelle)
-    {
+    TypeVisite(final String libelle) {
         this.libelle = libelle;
     }
 
@@ -60,8 +58,7 @@ public enum TypeVisite
      * Getter pour libelle.
      * @return Retourne le libelle.
      */
-    public String getLibelle()
-    {
+    public String getLibelle() {
         return this.libelle;
     }
 
@@ -69,8 +66,7 @@ public enum TypeVisite
      * {@inheritDoc}
      */
     @Override
-    public String toString()
-    {
+    public String toString() {
         return this.getLibelle();
     }
 

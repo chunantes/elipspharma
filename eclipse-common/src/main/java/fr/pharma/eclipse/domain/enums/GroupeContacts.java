@@ -6,11 +6,10 @@ import java.util.List;
 
 /**
  * Enumération des groupes d'habilitations affichées à l'écran.
- 
+ * @author Netapsys
  * @version $Revision$ $Date$
  */
-public enum GroupeContacts
-{
+public enum GroupeContacts {
     /**
      * Groupe promoteur.
      */
@@ -29,8 +28,7 @@ public enum GroupeContacts
     /**
      * Groupe pharmaciens.
      */
-    PHARMACIENS(Droit.PHARMACIEN_INTERNE, Droit.PHARMACIEN_EXTERNE, Droit.PHARMACIEN_PREPARATEUR,
-            Droit.PHARMACIEN_TITULAIRE, Droit.PHARMACIEN_ASSISTANT, Droit.PHARMACIEN_ATTACHE,
+    PHARMACIENS(Droit.PHARMACIEN_INTERNE, Droit.PHARMACIEN_EXTERNE, Droit.PHARMACIEN_PREPARATEUR, Droit.PHARMACIEN_TITULAIRE, Droit.PHARMACIEN_ASSISTANT, Droit.PHARMACIEN_ATTACHE,
             Droit.PHARMACIEN_INTERNE_GARDE);
 
     /**
@@ -42,8 +40,7 @@ public enum GroupeContacts
      * Constructeur.
      * @param droits Liste des droits des habilitations du groupe.
      */
-    private GroupeContacts(final Droit... droits)
-    {
+    private GroupeContacts(final Droit... droits) {
         this.droits = new ArrayList<Droit>(Arrays.asList(droits));
     }
 
@@ -51,8 +48,7 @@ public enum GroupeContacts
      * Getter sur droits.
      * @return Retourne le droits.
      */
-    public List<Droit> getDroits()
-    {
+    public List<Droit> getDroits() {
         return this.droits;
     }
 }

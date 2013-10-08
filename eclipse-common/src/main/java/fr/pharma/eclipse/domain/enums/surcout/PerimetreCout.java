@@ -2,11 +2,10 @@ package fr.pharma.eclipse.domain.enums.surcout;
 
 /**
  * Enumération des perimetres de couts.
- 
+ * @author Netapsys
  * @version $Revision$ $Date$
  */
-public enum PerimetreCout
-{
+public enum PerimetreCout {
     /**
      * Patient.
      */
@@ -26,8 +25,7 @@ public enum PerimetreCout
      * Constructeur privé.
      * @param libelle Libellé de la valeur de l'énumération.
      */
-    private PerimetreCout(final String libelle)
-    {
+    private PerimetreCout(final String libelle) {
         this.libelle = libelle;
     }
 
@@ -35,8 +33,7 @@ public enum PerimetreCout
      * Getter sur libelle.
      * @return Retourne le libelle.
      */
-    public String getLibelle()
-    {
+    public String getLibelle() {
         return this.libelle;
     }
 
@@ -44,8 +41,7 @@ public enum PerimetreCout
      * {@inheritDoc}
      */
     @Override
-    public String toString()
-    {
+    public String toString() {
         return this.getLibelle();
     }
 }

@@ -1,66 +1,69 @@
 package fr.pharma.eclipse.domain.enums.stock;
 
-import java.util.ArrayList;
-import java.util.List;
-
 /**
  * Enumération représentant le type de mouvement de stock.
- 
+ * @author Netapsys
  * @version $Revision$ $Date$
  */
-public enum TypeMvtStock
-{
+public enum TypeMvtStock {
     /**
      * Approvisionnement.
      */
-    APPROVISIONNEMENT("Approvisionnement", CategorieMouvement.ENTREE),
+    APPROVISIONNEMENT("Approvisionnement"),
 
     /**
-     * Entrée corrective : Mouvement d'entrée permettant de corriger des erreurs de stocks. Il n'y
-     * a pas de réception de produits, par conséquent la facturation et le calcul d'indicateurs ne
-     * sont pas impactés.
+     * Entrée corrective : Mouvement d'entrée permettant de corriger des erreurs
+     * de stocks. Il n'y a pas de réception de produits, par conséquent la
+     * facturation et le calcul d'indicateurs ne sont pas impactés.
      */
-    ENTREE_CORRECTIVE("Entrée Corrective", CategorieMouvement.ENTREE),
+    ENTREE_CORRECTIVE("Entrée Corrective"),
 
     /**
      * Cession PUI.
      */
-    CESSION_PUI("Cession PUI", CategorieMouvement.SORTIE),
+    CESSION_PUI("Cession PUI"),
 
     /**
      * Dispensation.
      */
-    DISPENSATION("Dispensation", CategorieMouvement.DISPENSATION),
+    DISPENSATION("Dispensation"),
 
     /**
      * Destruction.
      */
-    DESTRUCTION("Destruction", CategorieMouvement.SORTIE),
+    DESTRUCTION("Destruction"),
 
     /**
      * Dotation.
      */
-    DOTATION("Dotation", CategorieMouvement.DOTATION),
+    DOTATION("Dotation"),
 
     /**
      * Retour promoteur.
      */
-    RETOUR_PROMOTEUR("Retour Promoteur", CategorieMouvement.SORTIE),
+    RETOUR_PROMOTEUR("Retour Promoteur"),
 
     /**
      * Retour promoteur.
      */
-    PREPARATION_SORTIE("Sortie pour préparation", CategorieMouvement.SORTIE),
+    PREPARATION_SORTIE("Sortie pour préparation"),
 
     /**
      * Retour promoteur.
      */
-    PREPARATION_ENTREE("Entrée de préparation", CategorieMouvement.ENTREE),
+    PREPARATION_ENTREE("Entrée de préparation"),
 
     /**
      * Autre sortie.
      */
-    AUTRE_SORTIE("Autre Sortie", CategorieMouvement.SORTIE);
+    AUTRE_SORTIE("Autre Sortie");
+
+    // Les groupes de mouvement par type (les entrees de stock, les sorties de
+    // stock, ...)
+    public static final TypeMvtStock[] ENTREES = {APPROVISIONNEMENT, ENTREE_CORRECTIVE, PREPARATION_ENTREE };
+    public static final TypeMvtStock[] SORTIES = {CESSION_PUI, DESTRUCTION, RETOUR_PROMOTEUR, PREPARATION_SORTIE, AUTRE_SORTIE };
+    public static final TypeMvtStock[] SORTIES_SANS_PREPARATION = {CESSION_PUI, DESTRUCTION, RETOUR_PROMOTEUR, AUTRE_SORTIE };
+    public static final TypeMvtStock[] ALL_SORTIES = {DISPENSATION, DOTATION, CESSION_PUI, DESTRUCTION, RETOUR_PROMOTEUR, PREPARATION_SORTIE, AUTRE_SORTIE };
 
     /**
      * Libelle.
@@ -68,121 +71,26 @@ public enum TypeMvtStock
     private String libelle;
 
     /**
-     * Catégorie de mouvement.
-     */
-    private CategorieMouvement categorie;
-
-    /**
      * Constructeur.
      * @param libelle Le libellé du type de mouvement.
-     * @param categorie La catégorie du type de mouvement.
      */
-    TypeMvtStock(final String libelle, final CategorieMouvement categorie)
-    {
+    TypeMvtStock(final String libelle) {
         this.libelle = libelle;
-        this.categorie = categorie;
     }
 
     /**
      * Getter pour libelle.
      * @return Retourne le libelle.
      */
-    public String getLibelle()
-    {
+    public String getLibelle() {
         return this.libelle;
-    }
-
-    /**
-     * Getter pour categorie.
-     * @return Le categorie
-     */
-    public CategorieMouvement getCategorie()
-    {
-        return this.categorie;
     }
 
     /**
      * {@inheritDoc}
      */
     @Override
-    public String toString()
-    {
+    public String toString() {
         return this.getLibelle();
     }
-
-    /**
-     * Méthode en charge de retourner les types de mouvements de stock de type sortie.
-     * @return Type de mouvements de catégorie sortie.
-     */
-    public static TypeMvtStock[] valuesSortie()
-    {
-        final List<TypeMvtStock> result = new ArrayList<TypeMvtStock>();
-        final TypeMvtStock[] all = TypeMvtStock.values();
-        for (final TypeMvtStock typeMvtStock : all)
-        {
-            if (CategorieMouvement.SORTIE.equals(typeMvtStock.getCategorie()))
-            {
-                result.add(typeMvtStock);
-            }
-        }
-        return result.toArray(new TypeMvtStock[result.size()]);
-    }
-
-    /**
-     * Méthode en charge de retourner les types de mouvements de stock de type sortie sauf le type
-     * Préparation.
-     * @return Type de mouvements de catégorie sortie.
-     */
-    public static TypeMvtStock[] valuesSortieSaufPreparation()
-    {
-        final List<TypeMvtStock> result = new ArrayList<TypeMvtStock>();
-        final TypeMvtStock[] all = TypeMvtStock.values();
-        for (final TypeMvtStock typeMvtStock : all)
-        {
-            if (CategorieMouvement.SORTIE.equals(typeMvtStock.getCategorie())
-                && !TypeMvtStock.PREPARATION_SORTIE.equals(typeMvtStock))
-            {
-                result.add(typeMvtStock);
-            }
-        }
-        return result.toArray(new TypeMvtStock[result.size()]);
-    }
-
-    /**
-     * Méthode en charge de retourner les types de mouvements de stock de type sortie (tout ce qui
-     * n'est pas entrée : sortie + dispensation).
-     * @return Type de mouvements de catégorie sortie.
-     */
-    public static TypeMvtStock[] valuesAllSortie()
-    {
-        final List<TypeMvtStock> result = new ArrayList<TypeMvtStock>();
-        final TypeMvtStock[] all = TypeMvtStock.values();
-        for (final TypeMvtStock typeMvtStock : all)
-        {
-            if (!CategorieMouvement.ENTREE.equals(typeMvtStock.getCategorie()))
-            {
-                result.add(typeMvtStock);
-            }
-        }
-        return result.toArray(new TypeMvtStock[result.size()]);
-    }
-
-    /**
-     * Méthode en charge de retourner les types de mouvements de stock de type entrée.
-     * @return Type de mouvements de catégorie entree.
-     */
-    public static TypeMvtStock[] valuesEntree()
-    {
-        final List<TypeMvtStock> result = new ArrayList<TypeMvtStock>();
-        final TypeMvtStock[] all = TypeMvtStock.values();
-        for (final TypeMvtStock typeMvtStock : all)
-        {
-            if (CategorieMouvement.ENTREE.equals(typeMvtStock.getCategorie()))
-            {
-                result.add(typeMvtStock);
-            }
-        }
-        return result.toArray(new TypeMvtStock[result.size()]);
-    }
-
 }

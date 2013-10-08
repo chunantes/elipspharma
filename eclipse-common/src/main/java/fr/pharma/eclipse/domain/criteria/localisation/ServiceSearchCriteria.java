@@ -5,12 +5,10 @@ import fr.pharma.eclipse.domain.model.localisation.Pole;
 
 /**
  * Critère de recherche sur Service.
- 
+ * @author Netapsys
  * @version $Revision$ $Date$
  */
-public class ServiceSearchCriteria
-    extends AbstractSearchCriteria
-{
+public class ServiceSearchCriteria extends AbstractSearchCriteria {
     /**
      * Serial ID.
      */
@@ -30,8 +28,7 @@ public class ServiceSearchCriteria
      * Getter pour nom.
      * @return Retourne le nom.
      */
-    public String getNom()
-    {
+    public String getNom() {
         return this.nom;
     }
 
@@ -39,8 +36,7 @@ public class ServiceSearchCriteria
      * Setter pour nom.
      * @param nom le nom à écrire.
      */
-    public void setNom(final String nom)
-    {
+    public void setNom(final String nom) {
         this.nom = nom;
     }
 
@@ -48,8 +44,7 @@ public class ServiceSearchCriteria
      * Getter sur pole.
      * @return Retourne le pole.
      */
-    public Pole getPole()
-    {
+    public Pole getPole() {
         return this.pole;
     }
 
@@ -57,8 +52,7 @@ public class ServiceSearchCriteria
      * Setter pour pole.
      * @param pole le pole à écrire.
      */
-    public void setPole(final Pole pole)
-    {
+    public void setPole(final Pole pole) {
         this.pole = pole;
     }
 
@@ -66,8 +60,7 @@ public class ServiceSearchCriteria
      * {@inheritDoc}
      */
     @Override
-    public void clear()
-    {
+    public void clear() {
         this.setNom(null);
         this.setPole(null);
     }

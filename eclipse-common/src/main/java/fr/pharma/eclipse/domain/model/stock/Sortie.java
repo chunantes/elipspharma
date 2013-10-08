@@ -13,12 +13,10 @@ import fr.pharma.eclipse.predicate.stock.LigneStockCompletPredicate;
 
 /**
  * Bean représentant le détail d'une sortie.
- 
+ * @author Netapsys
  * @version $Revision$ $Date$
  */
-public class Sortie
-    implements Serializable
-{
+public class Sortie implements Serializable {
 
     /**
      * Serial ID.
@@ -53,8 +51,7 @@ public class Sortie
     /**
      * Méthode en charge d'annuler les informations de saisie d'un détail.
      */
-    public void reset()
-    {
+    public void reset() {
         this.mvtSortie.setProduit(null);
         this.mvtSortie.setConditionnement(null);
         this.setLignesStock(null);
@@ -64,8 +61,7 @@ public class Sortie
      * Getter pour mvtSortie.
      * @return Le mvtSortie
      */
-    public MvtStock getMvtSortie()
-    {
+    public MvtStock getMvtSortie() {
         return this.mvtSortie;
     }
 
@@ -73,8 +69,7 @@ public class Sortie
      * Setter pour mvtSortie.
      * @param mvtSortie Le mvtSortie à écrire.
      */
-    public void setMvtSortie(final MvtStock mvtSortie)
-    {
+    public void setMvtSortie(final MvtStock mvtSortie) {
         this.mvtSortie = mvtSortie;
     }
 
@@ -82,8 +77,7 @@ public class Sortie
      * Getter pour conditionnements.
      * @return Le conditionnements
      */
-    public List<Conditionnement> getConditionnements()
-    {
+    public List<Conditionnement> getConditionnements() {
         return this.conditionnements;
     }
 
@@ -91,8 +85,7 @@ public class Sortie
      * Setter pour conditionnements.
      * @param conditionnements Le conditionnements à écrire.
      */
-    public void setConditionnements(final List<Conditionnement> conditionnements)
-    {
+    public void setConditionnements(final List<Conditionnement> conditionnements) {
         this.conditionnements = conditionnements;
     }
 
@@ -100,8 +93,7 @@ public class Sortie
      * Getter pour lignesStock.
      * @return Le lignesStock
      */
-    public List<LigneStock> getLignesStock()
-    {
+    public List<LigneStock> getLignesStock() {
         return this.lignesStock;
     }
 
@@ -109,8 +101,7 @@ public class Sortie
      * Setter pour lignesStock.
      * @param lignesStock Le lignesStock à écrire.
      */
-    public void setLignesStock(final List<LigneStock> lignesStock)
-    {
+    public void setLignesStock(final List<LigneStock> lignesStock) {
         this.lignesStock = lignesStock;
     }
 
@@ -118,16 +109,12 @@ public class Sortie
      * Getter pour qteCumulSortie.
      * @return Le qteCumulSortie
      */
-    public Integer getQteCumulSortie()
-    {
+    public Integer getQteCumulSortie() {
         this.qteCumulSortie = Integer.valueOf(0);
 
         // Parcours des lignes de stock
-        for (final LigneStock ligne : this.getLignesStock())
-        {
-            if ((ligne.getQteASortir() != null)
-                && (ligne.getQteASortir() > 0))
-            {
+        for (final LigneStock ligne : this.getLignesStock()) {
+            if ((ligne.getQteASortir() != null) && (ligne.getQteASortir() > 0)) {
                 this.qteCumulSortie += ligne.getQteASortir();
             }
         }
@@ -138,41 +125,26 @@ public class Sortie
      * Getter pour lignesStockCompletees.
      * @return Le lignesStockCompletees
      */
-    public List<LigneStock> getLignesStockCompletees()
-    {
+    public List<LigneStock> getLignesStockCompletees() {
         this.lignesStockCompletees = new ArrayList<LigneStock>(this.getLignesStock());
 
-        CollectionUtils.filter(this.lignesStockCompletees,
-                               new LigneStockCompletPredicate());
+        CollectionUtils.filter(this.lignesStockCompletees, new LigneStockCompletPredicate());
         return this.lignesStockCompletees;
     }
 
     /**
      * Filtrer les lignes en stock par le numero de traitement
      */
-    public void filtrerLignesStockParNumeroTraitement(final String numeroTraitement)
-    {
-        if (!StringUtils.isEmpty(numeroTraitement))
-        {
+    public void filtrerLignesStockParNumeroTraitement(final String numeroTraitement) {
+        if (!StringUtils.isEmpty(numeroTraitement)) {
             // filtrage selon le numéro de traitement
-            CollectionUtils.filter(this.lignesStock,
-                                   new GenericPredicate("numTraitement",
-                                                        numeroTraitement));
+            CollectionUtils.filter(this.lignesStock, new GenericPredicate("numTraitement", numeroTraitement));
         }
     }
 
     @Override
-    public String toString()
-    {
-        return "Sortie:"
-               + this.mvtSortie
-               + ":conditionnements="
-               + (this.conditionnements != null
-                                               ? this.conditionnements.size()
-                                               : 0)
-               + ":lignes="
-               + (this.lignesStock != null
-                                          ? this.lignesStock.size()
-                                          : 0);
+    public String toString() {
+        return "Sortie:" + this.mvtSortie + ":conditionnements=" + (this.conditionnements != null ? this.conditionnements.size() : 0) + ":lignes="
+               + (this.lignesStock != null ? this.lignesStock.size() : 0);
     }
 }

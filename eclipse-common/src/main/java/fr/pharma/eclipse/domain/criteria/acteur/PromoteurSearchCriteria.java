@@ -5,12 +5,10 @@ import fr.pharma.eclipse.domain.enums.TypePromoteur;
 
 /**
  * Critère de recherche sur Promoteur.
- 
+ * @author Netapsys
  * @version $Revision$ $Date$
  */
-public class PromoteurSearchCriteria
-    extends AbstractSearchCriteria
-{
+public class PromoteurSearchCriteria extends AbstractSearchCriteria {
     /**
      * Serial ID.
      */
@@ -35,8 +33,7 @@ public class PromoteurSearchCriteria
      * Getter sur raisonSociale.
      * @return Retourne le raisonSociale.
      */
-    public String getRaisonSociale()
-    {
+    public String getRaisonSociale() {
         return this.raisonSociale;
     }
 
@@ -44,8 +41,7 @@ public class PromoteurSearchCriteria
      * Setter pour raisonSociale.
      * @param raisonSociale le raisonSociale à écrire.
      */
-    public void setRaisonSociale(final String raisonSociale)
-    {
+    public void setRaisonSociale(final String raisonSociale) {
         this.raisonSociale = raisonSociale;
     }
 
@@ -53,8 +49,7 @@ public class PromoteurSearchCriteria
      * Getter sur type.
      * @return Retourne le type.
      */
-    public TypePromoteur getType()
-    {
+    public TypePromoteur getType() {
         return this.type;
     }
 
@@ -62,8 +57,7 @@ public class PromoteurSearchCriteria
      * Setter pour type.
      * @param type le type à écrire.
      */
-    public void setType(final TypePromoteur type)
-    {
+    public void setType(final TypePromoteur type) {
         this.type = type;
     }
 
@@ -71,8 +65,7 @@ public class PromoteurSearchCriteria
      * {@inheritDoc}
      */
     @Override
-    public void clear()
-    {
+    public void clear() {
         this.setRaisonSociale(null);
         this.setType(null);
         this.setIdentifiant(null);
@@ -82,8 +75,7 @@ public class PromoteurSearchCriteria
      * Getter sur identifiant.
      * @return Retourne le identifiant.
      */
-    public String getIdentifiant()
-    {
+    public String getIdentifiant() {
         return this.identifiant;
     }
 
@@ -91,8 +83,7 @@ public class PromoteurSearchCriteria
      * Setter pour identifiant.
      * @param identifiant le identifiant à écrire.
      */
-    public void setIdentifiant(final String identifiant)
-    {
+    public void setIdentifiant(final String identifiant) {
         this.identifiant = identifiant;
     }
 

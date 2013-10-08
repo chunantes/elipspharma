@@ -8,13 +8,11 @@ import fr.pharma.eclipse.domain.model.sir.common.BeanSirObject;
 
 /**
  * Bean métier représentant une personne présente dans l'annuaire SIR.
- 
+ * @author Netapsys
  * @version $Revision$ $Date$
  */
 @Entity(name = "personne")
-public class PersonneSir
-    extends BeanSirObject
-{
+public class PersonneSir extends BeanSirObject {
     /**
      * Serial ID.
      */
@@ -68,8 +66,7 @@ public class PersonneSir
      * @return Le id
      */
     @Override
-    public Integer getId()
-    {
+    public Integer getId() {
         return this.id;
     }
 
@@ -78,8 +75,7 @@ public class PersonneSir
      * @param id Le id à écrire.
      */
     @Override
-    public void setId(final Integer id)
-    {
+    public void setId(final Integer id) {
         this.id = id;
     }
 
@@ -87,8 +83,7 @@ public class PersonneSir
      * Getter pour login.
      * @return Le login
      */
-    public String getLogin()
-    {
+    public String getLogin() {
         return this.login;
     }
 
@@ -96,8 +91,7 @@ public class PersonneSir
      * Setter pour login.
      * @param login Le login à écrire.
      */
-    public void setLogin(final String login)
-    {
+    public void setLogin(final String login) {
         this.login = login;
     }
 
@@ -105,8 +99,7 @@ public class PersonneSir
      * Getter pour nom.
      * @return Le nom
      */
-    public String getNom()
-    {
+    public String getNom() {
         return this.nom;
     }
 
@@ -114,8 +107,7 @@ public class PersonneSir
      * Setter pour nom.
      * @param nom Le nom à écrire.
      */
-    public void setNom(final String nom)
-    {
+    public void setNom(final String nom) {
         this.nom = nom;
     }
 
@@ -123,8 +115,7 @@ public class PersonneSir
      * Getter pour prenom.
      * @return Le prenom
      */
-    public String getPrenom()
-    {
+    public String getPrenom() {
         return this.prenom;
     }
 
@@ -132,8 +123,7 @@ public class PersonneSir
      * Setter pour prenom.
      * @param prenom Le prenom à écrire.
      */
-    public void setPrenom(final String prenom)
-    {
+    public void setPrenom(final String prenom) {
         this.prenom = prenom;
     }
 
@@ -141,8 +131,7 @@ public class PersonneSir
      * Getter pour mail.
      * @return Le mail
      */
-    public String getMail()
-    {
+    public String getMail() {
         return this.mail;
     }
 
@@ -150,8 +139,7 @@ public class PersonneSir
      * Setter pour mail.
      * @param mail Le mail à écrire.
      */
-    public void setMail(final String mail)
-    {
+    public void setMail(final String mail) {
         this.mail = mail;
     }
 
@@ -159,8 +147,7 @@ public class PersonneSir
      * Getter pour password.
      * @return Le password
      */
-    public String getPassword()
-    {
+    public String getPassword() {
         return this.password;
     }
 
@@ -168,8 +155,7 @@ public class PersonneSir
      * Setter pour password.
      * @param password Le password à écrire.
      */
-    public void setPassword(final String password)
-    {
+    public void setPassword(final String password) {
         this.password = password;
     }
 
@@ -177,8 +163,7 @@ public class PersonneSir
      * Getter pour salt.
      * @return Le salt
      */
-    public String getSalt()
-    {
+    public String getSalt() {
         return this.salt;
     }
 
@@ -186,8 +171,7 @@ public class PersonneSir
      * Setter pour salt.
      * @param salt Le salt à écrire.
      */
-    public void setSalt(final String salt)
-    {
+    public void setSalt(final String salt) {
         this.salt = salt;
     }
 

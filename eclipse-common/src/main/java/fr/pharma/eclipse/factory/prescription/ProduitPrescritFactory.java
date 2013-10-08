@@ -9,12 +9,10 @@ import fr.pharma.eclipse.factory.common.BeanObjectFactory;
 
 /**
  * Factory de ProduitPrescrit.
- 
+ * @author Netapsys
  * @version $Revision$ $Date$
  */
-public class ProduitPrescritFactory
-    extends BeanObjectFactory<ProduitPrescrit>
-{
+public class ProduitPrescritFactory extends BeanObjectFactory<ProduitPrescrit> {
 
     /**
      * SerialVersionUID.
@@ -25,38 +23,33 @@ public class ProduitPrescritFactory
      * Constructeur.
      * @param bean La classe.
      */
-    public ProduitPrescritFactory(final Class<ProduitPrescrit> bean)
-    {
+    public ProduitPrescritFactory(final Class<ProduitPrescrit> bean) {
         super(bean);
     }
 
     /**
-     * Méthode en charge d'initialiser un ProduitPrescript avec les informations de la
-     * PrescriptionType.
+     * Méthode en charge d'initialiser un ProduitPrescript avec les informations
+     * de la PrescriptionType.
      * @param prescriptionType La prescriptionType.
      * @param prescription L'objet Prescription.
      * @return Le ProduitPrescript initialisé.
      */
     public ProduitPrescrit getInitializedObject(final PrescriptionType prescriptionType,
-                                                final Prescription prescription)
-    {
+                                                final Prescription prescription) {
 
         final ProduitPrescrit produitPrescrit = this.getInitializedObject(prescription);
         produitPrescrit.setDebut(prescriptionType.getDebut());
-        if (prescriptionType.getDebut() == null)
-        {
+        if (prescriptionType.getDebut() == null) {
             produitPrescrit.setDebut(new TempsPrescription());
         }
         produitPrescrit.setDuree(prescriptionType.getDuree());
 
-        if (prescriptionType.getDuree() == null)
-        {
+        if (prescriptionType.getDuree() == null) {
             produitPrescrit.setDuree(new TempsPrescription());
         }
         produitPrescrit.setDescription(prescriptionType.getDescription());
         produitPrescrit.setFrequence(prescriptionType.getFrequence());
-        if (prescriptionType.getFrequence() == null)
-        {
+        if (prescriptionType.getFrequence() == null) {
             produitPrescrit.setFrequence(new Frequence());
         }
         produitPrescrit.setDosage(prescriptionType.getDosage());
@@ -67,13 +60,12 @@ public class ProduitPrescritFactory
     }
 
     /**
-     * Méthode en charge d'initialiser un ProduitPrescript avec les informations de la
-     * Prescription.
+     * Méthode en charge d'initialiser un ProduitPrescript avec les informations
+     * de la Prescription.
      * @param prescription L'objet Prescription.
      * @return Le ProduitPrescript initialisé.
      */
-    public ProduitPrescrit getInitializedObject(final Prescription prescription)
-    {
+    public ProduitPrescrit getInitializedObject(final Prescription prescription) {
         final ProduitPrescrit produitPrescrit = super.getInitializedObject();
         produitPrescrit.setPrescription(prescription);
         produitPrescrit.setADispenser(true);

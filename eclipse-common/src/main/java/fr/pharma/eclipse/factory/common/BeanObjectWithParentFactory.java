@@ -9,14 +9,12 @@ import fr.pharma.eclipse.utils.introspection.BeanTool;
 
 /**
  * Fabrique des objets métiers qui stockent leur créateur.
- 
+ * @author Netapsys
  * @version $Revision$ $Date$
  * @param <BEAN> Type de l'objet métier créé.
  * @param <PARENT> Type de l'objet métier parent.
  */
-public class BeanObjectWithParentFactory<BEAN extends BeanObject, PARENT extends BeanObject>
-    implements Serializable
-{
+public class BeanObjectWithParentFactory<BEAN extends BeanObject, PARENT extends BeanObject> implements Serializable {
 
     /**
      * Serial ID.
@@ -38,17 +36,13 @@ public class BeanObjectWithParentFactory<BEAN extends BeanObject, PARENT extends
      * @param parent Objet métier parent du bean créé.
      * @return Retourne un BeanObject initialisé.
      */
-    public BEAN getInitializedObject(final PARENT parent)
-    {
+    public BEAN getInitializedObject(final PARENT parent) {
         final BEAN bean = this.simpleFactory.getInitializedObject();
-        if (!StringUtils.hasText(this.propertyToStoreParent))
-        {
+        if (!StringUtils.hasText(this.propertyToStoreParent)) {
             return bean;
         }
         // Stockage du parent sur le bean.
-        BeanTool.setPropriete(bean,
-                              this.propertyToStoreParent,
-                              parent);
+        BeanTool.setPropriete(bean, this.propertyToStoreParent, parent);
         return bean;
     }
 
@@ -56,8 +50,7 @@ public class BeanObjectWithParentFactory<BEAN extends BeanObject, PARENT extends
      * Setter pour simpleFactory.
      * @param simpleFactory le simpleFactory à écrire.
      */
-    public void setSimpleFactory(final BeanObjectFactory<BEAN> simpleFactory)
-    {
+    public void setSimpleFactory(final BeanObjectFactory<BEAN> simpleFactory) {
         this.simpleFactory = simpleFactory;
     }
 
@@ -65,8 +58,7 @@ public class BeanObjectWithParentFactory<BEAN extends BeanObject, PARENT extends
      * Setter pour propertyToStoreParent.
      * @param propertyToStoreParent le propertyToStoreParent à écrire.
      */
-    public void setPropertyToStoreParent(final String propertyToStoreParent)
-    {
+    public void setPropertyToStoreParent(final String propertyToStoreParent) {
         this.propertyToStoreParent = propertyToStoreParent;
     }
 }

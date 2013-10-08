@@ -11,12 +11,10 @@ import fr.pharma.eclipse.predicate.GenericPredicate;
 
 /**
  * Factory de Bean Sequence.
- 
+ * @author Netapsys
  * @version $Revision$ $Date$
  */
-public class SequenceFactory
-    extends BeanObjectComplexFactory<Sequence>
-{
+public class SequenceFactory extends BeanObjectComplexFactory<Sequence> {
     /**
      * Serial ID.
      */
@@ -26,8 +24,7 @@ public class SequenceFactory
      * Constructeur.
      * @param bean Classe.
      */
-    public SequenceFactory(final Class<Sequence> bean)
-    {
+    public SequenceFactory(final Class<Sequence> bean) {
         super(bean);
     }
 
@@ -38,12 +35,9 @@ public class SequenceFactory
      * @return La séquence.
      */
     public Sequence getInitializedObject(final Essai essai,
-                                         final String nomCompletParent)
-    {
+                                         final String nomCompletParent) {
         final Sequence sequence = super.getInitializedObject();
-        final Bras bras = (Bras) CollectionUtils.find(essai.getDetailDesign().getBras(),
-                                                      new GenericPredicate("nomComplet",
-                                                                           nomCompletParent));
+        final Bras bras = (Bras) CollectionUtils.find(essai.getDetailDesign().getBras(), new GenericPredicate("nomComplet", nomCompletParent));
         sequence.setType(TypeDesignable.SEQUENCE);
         sequence.setParent(bras);
         return sequence;

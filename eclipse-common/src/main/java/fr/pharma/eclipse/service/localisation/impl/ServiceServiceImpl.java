@@ -11,13 +11,10 @@ import fr.pharma.eclipse.service.localisation.ServiceService;
 
 /**
  * Classe d'implémentation du service de gestion de service.
- 
+ * @author Netapsys
  * @version $Revision$ $Date$
  */
-public class ServiceServiceImpl
-    extends GenericServiceImpl<Service>
-    implements ServiceService
-{
+public class ServiceServiceImpl extends GenericServiceImpl<Service> implements ServiceService {
     /**
      * Serial ID.
      */
@@ -33,8 +30,7 @@ public class ServiceServiceImpl
      * Constructeur.
      * @param serviceDao Dao de gestion des services.
      */
-    public ServiceServiceImpl(final GenericDao<Service> serviceDao)
-    {
+    public ServiceServiceImpl(final GenericDao<Service> serviceDao) {
         super(serviceDao);
     }
 
@@ -42,8 +38,7 @@ public class ServiceServiceImpl
      * {@inheritDoc}
      */
     @Override
-    public Service save(final Service service)
-    {
+    public Service save(final Service service) {
         final Service serviceToSave = this.reattach(service);
         final ServiceSuivi serviceSuivi = this.serviceSuiviFactory.getInitializedObject();
         serviceSuivi.setService(serviceToSave);
@@ -55,8 +50,7 @@ public class ServiceServiceImpl
      * Setter pour serviceSuiviFactory.
      * @param serviceSuiviFactory le serviceSuiviFactory à écrire.
      */
-    public void setServiceSuiviFactory(final SuiviFactory<ServiceSuivi> serviceSuiviFactory)
-    {
+    public void setServiceSuiviFactory(final SuiviFactory<ServiceSuivi> serviceSuiviFactory) {
         this.serviceSuiviFactory = serviceSuiviFactory;
     }
 

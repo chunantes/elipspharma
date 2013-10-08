@@ -9,12 +9,10 @@ import fr.pharma.eclipse.domain.model.habilitation.Habilitation;
 
 /**
  * Classe en charge de retourner l'habilitation correspondant à un droit.
- 
+ * @author Netapsys
  * @version $Revision$ $Date$
  */
-public class HabilitationDroitPredicate
-    implements Predicate, Serializable
-{
+public class HabilitationDroitPredicate implements Predicate, Serializable {
     /**
      * Serial ID.
      */
@@ -29,8 +27,7 @@ public class HabilitationDroitPredicate
      * Constructeur prenant un Droit.
      * @param droit Droit.
      */
-    public HabilitationDroitPredicate(final Droit droit)
-    {
+    public HabilitationDroitPredicate(final Droit droit) {
         this.droit = droit;
     }
 
@@ -38,8 +35,7 @@ public class HabilitationDroitPredicate
      * {@inheritDoc}
      */
     @Override
-    public boolean evaluate(final Object object)
-    {
+    public boolean evaluate(final Object object) {
         final Habilitation habilitation = (Habilitation) object;
         return this.droit.equals(habilitation.getDroit());
     }

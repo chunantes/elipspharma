@@ -1,12 +1,12 @@
 package fr.pharma.eclipse.domain.enums;
 
 /**
- * Enumération représentant le type de recherche par essai pour le recherche de patient.
- 
+ * Enumération représentant le type de recherche par essai pour le recherche de
+ * patient.
+ * @author Netapsys
  * @version $Revision$ $Date$
  */
-public enum TypeRechercheParEssai
-{
+public enum TypeRechercheParEssai {
     /**
      * Inclu actuellement.
      */
@@ -26,8 +26,7 @@ public enum TypeRechercheParEssai
      * Constructeur.
      * @param libelle Le libellé.
      */
-    TypeRechercheParEssai(final String libelle)
-    {
+    TypeRechercheParEssai(final String libelle) {
         this.libelle = libelle;
     }
 
@@ -35,8 +34,7 @@ public enum TypeRechercheParEssai
      * Getter pour libelle.
      * @return Retourne le libelle.
      */
-    public String getLibelle()
-    {
+    public String getLibelle() {
         return this.libelle;
     }
 
@@ -44,8 +42,7 @@ public enum TypeRechercheParEssai
      * {@inheritDoc}
      */
     @Override
-    public String toString()
-    {
+    public String toString() {
         return this.getLibelle();
     }
 

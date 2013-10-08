@@ -25,14 +25,13 @@ import fr.pharma.eclipse.domain.model.surcout.DonneesPrevision;
 import fr.pharma.eclipse.domain.model.surcout.Grille;
 
 /**
- * Classe métier représentant les informations de détail des surcouts d'un essai clinique.
- 
+ * Classe métier représentant les informations de détail des surcouts d'un essai
+ * clinique.
+ * @author Netapsys
  * @version $Revision$ $Date$
  */
 @Entity(name = "essai_detail_surcout")
-public class DetailSurcout
-    extends BeanObjectSuivi
-{
+public class DetailSurcout extends BeanObjectSuivi {
 
     /**
      * SerialVersionUID.
@@ -65,8 +64,7 @@ public class DetailSurcout
     @Where(clause = "type='PREVISIONNEL'")
     @LazyCollection(LazyCollectionOption.FALSE)
     @Sort(type = SortType.COMPARATOR, comparator = SuiviComparator.class)
-    private SortedSet<DocumentSurcouts> documentsPrevisionnels =
-        new TreeSet<DocumentSurcouts>(new SuiviComparator());
+    private SortedSet<DocumentSurcouts> documentsPrevisionnels = new TreeSet<DocumentSurcouts>(new SuiviComparator());
 
     /**
      * Documents reels associés.
@@ -75,8 +73,7 @@ public class DetailSurcout
     @Where(clause = "type='REEL'")
     @LazyCollection(LazyCollectionOption.TRUE)
     @Sort(type = SortType.COMPARATOR, comparator = SuiviComparator.class)
-    private SortedSet<DocumentSurcouts> documentsReels =
-        new TreeSet<DocumentSurcouts>(new SuiviComparator());
+    private SortedSet<DocumentSurcouts> documentsReels = new TreeSet<DocumentSurcouts>(new SuiviComparator());
 
     /**
      * Liste des modifications du détail.
@@ -84,15 +81,13 @@ public class DetailSurcout
     @OneToMany(mappedBy = "detailSurcout", cascade = CascadeType.ALL)
     @LazyCollection(LazyCollectionOption.TRUE)
     @Sort(type = SortType.COMPARATOR, comparator = SuiviComparator.class)
-    private SortedSet<DetailSurcoutSuivi> modifs =
-        new TreeSet<DetailSurcoutSuivi>(new SuiviComparator());
+    private SortedSet<DetailSurcoutSuivi> modifs = new TreeSet<DetailSurcoutSuivi>(new SuiviComparator());
 
     /**
      * Getter sur essai.
      * @return Retourne le essai.
      */
-    public Essai getEssai()
-    {
+    public Essai getEssai() {
         return this.essai;
     }
 
@@ -100,8 +95,7 @@ public class DetailSurcout
      * Setter pour essai.
      * @param essai le essai à écrire.
      */
-    public void setEssai(final Essai essai)
-    {
+    public void setEssai(final Essai essai) {
         this.essai = essai;
     }
 
@@ -110,8 +104,7 @@ public class DetailSurcout
      * @return Retourne le modifs.
      */
     @Override
-    public SortedSet<DetailSurcoutSuivi> getModifs()
-    {
+    public SortedSet<DetailSurcoutSuivi> getModifs() {
         return this.modifs;
     }
 
@@ -119,8 +112,7 @@ public class DetailSurcout
      * Setter pour modifs.
      * @param modifs le modifs à écrire.
      */
-    public void setModifs(final SortedSet<DetailSurcoutSuivi> modifs)
-    {
+    public void setModifs(final SortedSet<DetailSurcoutSuivi> modifs) {
         this.modifs = modifs;
     }
 
@@ -128,8 +120,7 @@ public class DetailSurcout
      * Getter sur grille.
      * @return Retourne le grille.
      */
-    public Grille getGrille()
-    {
+    public Grille getGrille() {
         return this.grille;
     }
 
@@ -137,8 +128,7 @@ public class DetailSurcout
      * Getter sur donneesPrevision.
      * @return Retourne le donneesPrevision.
      */
-    public DonneesPrevision getDonneesPrevision()
-    {
+    public DonneesPrevision getDonneesPrevision() {
         return this.donneesPrevision;
     }
 
@@ -146,8 +136,7 @@ public class DetailSurcout
      * Setter pour donneesPrevision.
      * @param donneesPrevision le donneesPrevision à écrire.
      */
-    public void setDonneesPrevision(final DonneesPrevision donneesPrevision)
-    {
+    public void setDonneesPrevision(final DonneesPrevision donneesPrevision) {
         this.donneesPrevision = donneesPrevision;
     }
 
@@ -155,8 +144,7 @@ public class DetailSurcout
      * Setter pour grille.
      * @param grille le grille à écrire.
      */
-    public void setGrille(final Grille grille)
-    {
+    public void setGrille(final Grille grille) {
         this.grille = grille;
     }
 
@@ -164,8 +152,7 @@ public class DetailSurcout
      * Getter sur documentsPrevisionnels.
      * @return Retourne le documentsPrevisionnels.
      */
-    public SortedSet<DocumentSurcouts> getDocumentsPrevisionnels()
-    {
+    public SortedSet<DocumentSurcouts> getDocumentsPrevisionnels() {
         return this.documentsPrevisionnels;
     }
 
@@ -173,8 +160,7 @@ public class DetailSurcout
      * Setter pour documentsPrevisionnels.
      * @param documentsPrevisionnels le documentsPrevisionnels à écrire.
      */
-    public void setDocumentsPrevisionnels(final SortedSet<DocumentSurcouts> documentsPrevisionnels)
-    {
+    public void setDocumentsPrevisionnels(final SortedSet<DocumentSurcouts> documentsPrevisionnels) {
         this.documentsPrevisionnels = documentsPrevisionnels;
     }
 
@@ -182,8 +168,7 @@ public class DetailSurcout
      * Getter sur documentsReels.
      * @return Retourne le documentsReels.
      */
-    public SortedSet<DocumentSurcouts> getDocumentsReels()
-    {
+    public SortedSet<DocumentSurcouts> getDocumentsReels() {
         return this.documentsReels;
     }
 
@@ -191,8 +176,7 @@ public class DetailSurcout
      * Setter pour documentsReels.
      * @param documentsReels le documentsReels à écrire.
      */
-    public void setDocumentsReels(final SortedSet<DocumentSurcouts> documentsReels)
-    {
+    public void setDocumentsReels(final SortedSet<DocumentSurcouts> documentsReels) {
         this.documentsReels = documentsReels;
     }
 

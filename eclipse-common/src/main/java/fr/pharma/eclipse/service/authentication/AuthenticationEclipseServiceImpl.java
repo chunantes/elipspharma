@@ -18,14 +18,12 @@ import fr.pharma.eclipse.domain.model.user.UserSecurity;
 import fr.pharma.eclipse.service.authentication.helper.AuthenticationHelper;
 
 /**
- * Classe métier de gestion d'authentification (Gestion de l'authentification depuis SIR +
- * Eclipse).
- 
+ * Classe métier de gestion d'authentification (Gestion de l'authentification
+ * depuis SIR + Eclipse).
+ * @author Netapsys
  * @version $Revision$ $Date$
  */
-public class AuthenticationEclipseServiceImpl
-    implements UserDetailsService, Serializable
-{
+public class AuthenticationEclipseServiceImpl implements UserDetailsService, Serializable {
     /**
      * Serial ID.
      */
@@ -47,34 +45,20 @@ public class AuthenticationEclipseServiceImpl
      */
     @Override
     @Transactional(readOnly = true)
-    public UserDetails loadUserByUsername(final String login)
-        throws UsernameNotFoundException,
-            DataAccessException
-    {
-        this.log.debug("Authentification par Eclipse");
-        final Personne personneEclipse = this.helper.getPersonneEclipse(login);
+    public UserDetails loadUserByUsername(final String login) throws UsernameNotFoundException, DataAccessException {
+        this.log.debug("Authentification");
+        final Personne personne = this.helper.getPersonneEclipse(login);
 
-        this.log.debug("Personne Eclispe : "
-                       + personneEclipse);
+        this.log.debug("Personne : " + personne);
 
         // Personne présente dans Eclipse
-        if (personneEclipse != null
-            && StringUtils.isNotEmpty(personneEclipse.getLogin())
-            && StringUtils.isNotEmpty(personneEclipse.getPassword()))
-        {
-            this.log.debug("Authentification par Eclipse OK");
+        if (personne != null && StringUtils.isNotEmpty(personne.getLogin()) && StringUtils.isNotEmpty(personne.getPassword())) {
+            this.log.debug("Authentification OK");
 
-            return new UserSecurity(personneEclipse.getLogin(),
-                                    personneEclipse.getPassword(),
-                                    null,
-                                    this.helper.getAuthorities(personneEclipse),
-                                    personneEclipse.getId(),
-                                    personneEclipse.getType().getRolePersonne(),
-                                    personneEclipse.getIsAdmin());
-        }
-        else
-        {
-            this.log.debug("Authentification par Eclipse Echouée");
+            return new UserSecurity(personne.getLogin(), personne.getPassword(), null, this.helper.getAuthorities(personne), personne.getId(),
+                                    personne.getType().getRolePersonne(), personne.getIsAdmin());
+        } else {
+            this.log.debug("Authentification Echouée");
             return null;
         }
     }
@@ -83,8 +67,7 @@ public class AuthenticationEclipseServiceImpl
      * Setter pour helper.
      * @param helper Le helper à écrire.
      */
-    public void setHelper(final AuthenticationHelper helper)
-    {
+    public void setHelper(final AuthenticationHelper helper) {
         this.helper = helper;
     }
 

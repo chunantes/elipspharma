@@ -6,15 +6,14 @@ import javax.persistence.Entity;
 import fr.pharma.eclipse.domain.enums.document.TypeDocumentEssai;
 
 /**
- * Bean métier représentant un document relatif à modalite de destruction de l'essai clinique.
- 
+ * Bean métier représentant un document relatif à modalite de destruction de
+ * l'essai clinique.
+ * @author Netapsys
  * @version $Revision$ $Date$
  */
 @Entity
 @DiscriminatorValue("MODALITE_DESTRUCTION")
-public class DocumentModaliteDestruction
-    extends DocumentDonneesPharma
-{
+public class DocumentModaliteDestruction extends DocumentDonneesPharma {
 
     /**
      * SerialVersionUID.
@@ -24,8 +23,7 @@ public class DocumentModaliteDestruction
     /**
      * Constructeur par défaut.
      */
-    public DocumentModaliteDestruction()
-    {
+    public DocumentModaliteDestruction() {
         this.setType(TypeDocumentEssai.MODALITE_DESTRUCTION);
     }
 }

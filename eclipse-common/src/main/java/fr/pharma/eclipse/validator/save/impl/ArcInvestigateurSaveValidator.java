@@ -11,12 +11,10 @@ import fr.pharma.eclipse.validator.save.SaveValidator;
 
 /**
  * Classe en charge de valider la sauvegarde d'un bean ArcInvestigateur.
- 
+ * @author Netapsys
  * @version $Revision$ $Date$
  */
-public class ArcInvestigateurSaveValidator
-    implements SaveValidator<ArcInvestigateur>, Serializable
-{
+public class ArcInvestigateurSaveValidator implements SaveValidator<ArcInvestigateur>, Serializable {
 
     /**
      * Serial ID.
@@ -28,17 +26,12 @@ public class ArcInvestigateurSaveValidator
      */
     @Override
     public void validate(final ArcInvestigateur arcInvestigateur,
-                         final GenericService<ArcInvestigateur> beanService)
-    {
+                         final GenericService<ArcInvestigateur> beanService) {
         final SortedSet<Service> services = arcInvestigateur.getServices();
 
         // Vérification de la saisie d'au moins un service
-        if (services.isEmpty())
-        {
-            throw new ValidationException("arcInvestigateur.services",
-                                          new String[]
-                                          {"notEmpty" },
-                                          arcInvestigateur);
+        if (services.isEmpty()) {
+            throw new ValidationException("arcInvestigateur.services", new String[]{"notEmpty" }, arcInvestigateur);
         }
     }
 

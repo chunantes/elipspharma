@@ -6,16 +6,14 @@ import javax.persistence.Entity;
 import fr.pharma.eclipse.domain.enums.document.TypeDocumentEssai;
 
 /**
- * Bean métier représentant un document relatif à la responsabilité de randomisation de l'essai
- * clinique.
- 
+ * Bean métier représentant un document relatif à la responsabilité de
+ * randomisation de l'essai clinique.
+ * @author Netapsys
  * @version $Revision$ $Date$
  */
 @Entity
 @DiscriminatorValue("RESPONSABILITE_RANDOMISATION")
-public class DocumentRespRandomisation
-    extends DocumentDonneesPharma
-{
+public class DocumentRespRandomisation extends DocumentDonneesPharma {
 
     /**
      * SerialVersionUID.
@@ -25,8 +23,7 @@ public class DocumentRespRandomisation
     /**
      * Constructeur par défaut.
      */
-    public DocumentRespRandomisation()
-    {
+    public DocumentRespRandomisation() {
         this.setType(TypeDocumentEssai.RESPONSABILITE_RANDOMISATION);
     }
 }

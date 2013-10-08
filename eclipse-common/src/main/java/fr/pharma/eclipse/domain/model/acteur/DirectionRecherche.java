@@ -4,15 +4,14 @@ import javax.persistence.DiscriminatorValue;
 import javax.persistence.Entity;
 
 /**
- * Classe métier représentant une personne de la Direction de la recherche (DRC).
- 
+ * Classe métier représentant une personne de la Direction de la recherche
+ * (DRC).
+ * @author Netapsys
  * @version $Revision$ $Date$
  */
 @Entity
 @DiscriminatorValue("DIRECTION_RECHERCHE")
-public class DirectionRecherche
-    extends Personne
-{
+public class DirectionRecherche extends Personne {
     /**
      * Serial ID.
      */

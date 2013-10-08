@@ -5,12 +5,10 @@ import fr.pharma.eclipse.factory.common.BeanObjectFactory;
 
 /**
  * Factory de bean Pharmacie.
- 
+ * @author Netapsys
  * @version $Revision$ $Date$
  */
-public class PharmacieFactory
-    extends BeanObjectFactory<Pharmacie>
-{
+public class PharmacieFactory extends BeanObjectFactory<Pharmacie> {
     /**
      * Serial ID.
      */
@@ -20,8 +18,7 @@ public class PharmacieFactory
      * Constructeur.
      * @param bean Classe.
      */
-    public PharmacieFactory(final Class<Pharmacie> bean)
-    {
+    public PharmacieFactory(final Class<Pharmacie> bean) {
         super(bean);
     }
 
@@ -29,8 +26,7 @@ public class PharmacieFactory
      * {@inheritDoc}
      */
     @Override
-    public Pharmacie getInitializedObject()
-    {
+    public Pharmacie getInitializedObject() {
         final Pharmacie pharmacie = super.getInitializedObject();
         pharmacie.setNumOrdonnancierDisp(0);
         pharmacie.setNumOrdonnancierFab(0);

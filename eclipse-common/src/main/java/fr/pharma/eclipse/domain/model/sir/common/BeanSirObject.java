@@ -6,12 +6,10 @@ import fr.pharma.eclipse.domain.model.common.constants.BeanCstes;
 
 /**
  * Classe commune des objets métiers de SIR.
- 
+ * @author Netapsys
  * @version $Revision$ $Date$
  */
-public abstract class BeanSirObject
-    implements Serializable
-{
+public abstract class BeanSirObject implements Serializable {
     /**
      * Serial ID.
      */
@@ -33,32 +31,25 @@ public abstract class BeanSirObject
      * {@inheritDoc}
      */
     @Override
-    public boolean equals(final Object obj)
-    {
-        if (!(obj instanceof BeanSirObject))
-        {
+    public boolean equals(final Object obj) {
+        if (!(obj instanceof BeanSirObject)) {
             return false;
         }
 
         final BeanSirObject other = (BeanSirObject) obj;
 
-        if ((other == null)
-            || (this.getId() == null)
-            || (other.getId() == null))
-        {
+        if ((other == null) || (this.getId() == null) || (other.getId() == null)) {
             return false;
         }
 
-        if (other == this)
-        {
+        if (other == this) {
             return true;
         }
 
         final String otherCle = other.getId().toString();
         final String thisCle = this.getId().toString();
 
-        if (otherCle.equalsIgnoreCase(thisCle))
-        {
+        if (otherCle.equalsIgnoreCase(thisCle)) {
             return true;
         }
 
@@ -69,15 +60,10 @@ public abstract class BeanSirObject
      * {@inheritDoc}
      */
     @Override
-    public int hashCode()
-    {
-        if (this.getId() != null)
-        {
-            return (BeanCstes.NB_PREMIER + this.getId().hashCode())
-                   * BeanCstes.NB_PREMIER;
-        }
-        else
-        {
+    public int hashCode() {
+        if (this.getId() != null) {
+            return (BeanCstes.NB_PREMIER + this.getId().hashCode()) * BeanCstes.NB_PREMIER;
+        } else {
             return super.hashCode();
         }
     }

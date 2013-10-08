@@ -13,13 +13,11 @@ import fr.pharma.eclipse.domain.model.suivi.common.Suivi;
 
 /**
  * Bean métier représentant les suivis de modifications sur le bean Evenement.
- 
+ * @author Netapsys
  * @version $Revision$ $Date$
  */
 @Entity(name = "evenement_suivi")
-public class EvenementSuivi
-    extends Suivi
-{
+public class EvenementSuivi extends Suivi {
     /**
      * Serial ID.
      */
@@ -37,8 +35,7 @@ public class EvenementSuivi
      * Getter pour evenement.
      * @return Le evenement
      */
-    public Evenement getEvenement()
-    {
+    public Evenement getEvenement() {
         return this.evenement;
     }
 
@@ -46,8 +43,7 @@ public class EvenementSuivi
      * Setter pour evenement.
      * @param evenement Le evenement à écrire.
      */
-    public void setEvenement(final Evenement evenement)
-    {
+    public void setEvenement(final Evenement evenement) {
         this.evenement = evenement;
     }
 

@@ -6,13 +6,12 @@ import java.util.Map;
 import fr.pharma.eclipse.domain.enums.patient.FormuleSurfaceCorporelle;
 
 /**
- * Dictionnaire de stratégie contenant les algorithme de calcul de la surface corporelle.
- 
+ * Dictionnaire de stratégie contenant les algorithme de calcul de la surface
+ * corporelle.
+ * @author Netapsys
  * @version $Revision$ $Date$
  */
-public class SurfaceCorporelleDictionary
-    implements Serializable
-{
+public class SurfaceCorporelleDictionary implements Serializable {
     /**
      * SserialVersionUID.
      */
@@ -32,18 +31,15 @@ public class SurfaceCorporelleDictionary
      */
     public double process(final FormuleSurfaceCorporelle formule,
                           final double taille,
-                          final double poids)
-    {
-        return this.dictionary.get(formule).process(taille,
-                                                    poids);
+                          final double poids) {
+        return this.dictionary.get(formule).process(taille, poids);
     }
 
     /**
      * Getter sur dictionary.
      * @return Retourne le dictionary.
      */
-    public Map<FormuleSurfaceCorporelle, SurfaceCorporelleProcessor> getDictionary()
-    {
+    public Map<FormuleSurfaceCorporelle, SurfaceCorporelleProcessor> getDictionary() {
         return this.dictionary;
     }
 
@@ -51,8 +47,7 @@ public class SurfaceCorporelleDictionary
      * Setter pour dictionary.
      * @param dictionary le dictionary à écrire.
      */
-    public void setDictionary(final Map<FormuleSurfaceCorporelle, SurfaceCorporelleProcessor> dictionary)
-    {
+    public void setDictionary(final Map<FormuleSurfaceCorporelle, SurfaceCorporelleProcessor> dictionary) {
         this.dictionary = dictionary;
     }
 

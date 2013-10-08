@@ -1,0 +1,171 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE log4j:configuration SYSTEM "http://logging.apache.org/log4j/1.2/apidocs/org/apache/log4j/xml/doc-files/log4j.dtd">
+<log4j:configuration xmlns:log4j='http://jakarta.apache.org/log4j/' debug="false">
+	
+	<!-- -->
+	<!-- Declare a ConsoleAppender to stdout for INFO and lower log levels -->
+	<!-- -->
+	<appender name="STDOUT" class="org.apache.log4j.ConsoleAppender">
+		<param name="Target" value="System.err" />
+		<layout class="org.apache.log4j.PatternLayout">
+			<param name="ConversionPattern" value="%d [%t] %p [%x] %c %m%n" />
+		</layout>
+		<filter class="org.apache.log4j.varia.LevelRangeFilter">
+			<param name="LevelMin" value="DEBUG" />
+			<param name="LevelMax" value="DEBUG" />
+		</filter>
+	</appender>
+
+	
+	<!-- -->
+	<!-- Declare a ConsoleAppender to stderr or WARN and upper log levels -->
+	<!-- -->
+	<appender name="STDERR" class="org.apache.log4j.ConsoleAppender">
+		<param name="Target" value="System.err" />
+		<layout class="org.apache.log4j.PatternLayout">
+			<param name="ConversionPattern" value="%d [%t] %p [%x] %c %m%n" />
+		</layout>
+		<filter class="org.apache.log4j.varia.LevelRangeFilter">
+			<param name="LevelMin" value="INFO" />
+			<param name="LevelMax" value="FATAL" />
+		</filter>
+	</appender>
+	
+	<!-- Sortie console test -->
+	<appender name="CONSOLE_TEST" class="org.apache.log4j.ConsoleAppender">
+		<layout class="org.apache.log4j.PatternLayout">
+			<param name="ConversionPattern" value="%m %n"/>
+		</layout>
+	</appender>	
+	
+	<!-- Sortie fichier -->
+	<appender name="FILE" class="org.apache.log4j.DailyRollingFileAppender">
+		<param name="File" value="/var/log/eclipse/elips.log" />
+		<layout class="org.apache.log4j.PatternLayout">
+			<param name="ConversionPattern" value="%d [%t] %p [%x] %c %m%n" />
+		</layout>
+	</appender>
+	
+	<!-- ========= -->
+	<!-- Hibernate -->
+	<!-- ========= -->
+	<logger name="org.hibernate.SQL">
+		<level value="INFO" />
+	</logger>
+	
+	<logger name="org.hibernate.tool.hbm2ddl.TableMetadata">
+		<!-- level WARN pour ne pas cacher toutes les infos ddl hibernate au démarrage -->
+		<level value="WARN" />
+	</logger>
+	
+	
+	<logger name="org.hibernate.type">
+		<level value="DEBUG" />
+	</logger>
+	<logger name="org.hibernate.pretty.Printer">
+		<level value="ERROR" />
+	</logger>
+	<logger name="org.hibernate.engine.TwoPhaseLoad">
+		<level value="ERROR" />
+	</logger>
+	<logger name="org.hibernate.loader.Loader">
+		<level value="ERROR" />
+	</logger>
+	<logger name="org.hibernate.loader.entity">
+		<level value="ERROR" />
+	</logger>
+	<logger name="org.hibernate.persister.entity">
+		<level value="ERROR" />
+	</logger>
+	<logger name="org.hibernate.cfg">
+		<level value="ERROR" />
+	</logger>
+	<logger name="org.hibernate.util">
+		<level value="ERROR" />
+	</logger>
+	<logger name="org.hibernate.connection">
+		<level value="ERROR" />
+	</logger>
+	<logger name="org.hibernate.impl">
+		<level value="ERROR" />
+	</logger>
+	<logger name="org.hibernate.tool.hbm2ddl.SchemaExport">
+		<level value="ERROR" />
+	</logger>
+
+	<!-- ====== -->
+	<!-- Spring -->
+	<!-- ====== -->
+	<logger name="org.springframework.orm.hibernate3">
+		<level value="ERROR" />
+	</logger>
+	<logger name="org.springframework.beans.factory">
+		<level value="ERROR" />
+	</logger>
+	<logger name="org.springframework.context.support">
+		<level value="ERROR" />
+	</logger>
+
+	<!-- ====== -->
+	<!-- Apache -->
+	<!-- ====== -->
+	<logger name="org.apache.commons.digester.Digester">
+		<level value="ERROR" />
+	</logger>
+	<logger name="org.apache.commons.beanutils">
+		<level value="ERROR" />
+	</logger>
+	<logger name="org.apache.catalina.startup.TldConfig">
+		<level value="ERROR" />
+	</logger>
+	<logger name="org.apache.jasper.compiler">
+		<level value="ERROR" />
+	</logger>
+	<logger name="org.apache.catalina.session.ManagerBase">
+		<level value="ERROR" />
+	</logger>
+
+	<!-- ============ -->
+	<!-- Elips'Pharma -->
+	<!-- ============ -->
+	<logger name="fr.pharma.eclipse.service">
+		<level value="DEBUG" />
+	</logger>
+		<logger name="fr.pharma.eclipse.component.essai.EssaiManager">
+		<level value="DEBUG" />
+	</logger>
+	<logger name="fr.pharma.eclipse.component.design.DesignsManager">
+		<level value="DEBUG" />
+	</logger>
+	<logger name="fr.pharma.eclipse.component.design.helper.TreeDesignHelper">
+		<level value="DEBUG" />
+	</logger>
+
+	<!-- ====== -->
+	<!-- Autres -->
+	<!-- ====== -->
+	<logger name="net.sf.ehcache">
+		<level value="ERROR" />
+	</logger>
+	<logger name="com.sun.faces">
+		<level value="ERROR" />
+	</logger>
+	<logger name="org.apache.myfaces">
+		<level value="ERROR" />
+	</logger>
+	<logger name="org.dbunit.database">
+		<level value="ERROR" />
+	</logger>
+	<logger name="org.acegisecurity.intercept">
+		<level value="ERROR" />
+	</logger>
+
+	<!-- applique les sorties au root -->
+	<root>
+		<level value="INFO" />
+		<appender-ref ref="STDOUT" />
+		<appender-ref ref="STDERR" />
+		<appender-ref ref="FILE" />
+	</root>
+
+</log4j:configuration>

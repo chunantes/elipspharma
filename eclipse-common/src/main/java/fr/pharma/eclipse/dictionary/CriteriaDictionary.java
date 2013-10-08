@@ -6,11 +6,10 @@ import fr.pharma.eclipse.domain.criteria.common.SearchCriteria;
 
 /**
  * Interface de dictionnaire de critères de recherche.
- 
+ * @author NETAPSYS
  * @version $Revision$ $Date$
  */
-public interface CriteriaDictionary
-{
+public interface CriteriaDictionary {
     /**
      * Méthode d'application d'un critère de recherche.
      * @param criteria Le criteria de recherche.

@@ -22,13 +22,11 @@ import fr.pharma.eclipse.domain.model.essai.detail.surcout.DetailSurcout;
 
 /**
  * Classe du modèle représentant une grille réelle des surcouts.
- 
+ * @author Netapsys
  * @version $Revision$ $Date$
  */
 @Entity(name = "grille")
-public class Grille
-    extends BeanObject
-{
+public class Grille extends BeanObject {
     /**
      * SerialVersionUID.
      */
@@ -37,8 +35,7 @@ public class Grille
     /**
      * DetailSurcout de l'essai auquel est rattaché le bean DonneesPrevision.
      */
-    @OneToOne(cascade =
-    {CascadeType.MERGE, CascadeType.REFRESH })
+    @OneToOne(cascade = {CascadeType.MERGE, CascadeType.REFRESH })
     @JoinColumn(name = "id_detail_surcout")
     private DetailSurcout detailSurcout;
 
@@ -62,8 +59,7 @@ public class Grille
      * Getter sur grilleModele.
      * @return Retourne le grilleModele.
      */
-    public GrilleModele getGrilleModele()
-    {
+    public GrilleModele getGrilleModele() {
         return this.grilleModele;
     }
 
@@ -71,8 +67,7 @@ public class Grille
      * Setter pour grilleModele.
      * @param grilleModele le grilleModele à écrire.
      */
-    public void setGrilleModele(final GrilleModele grilleModele)
-    {
+    public void setGrilleModele(final GrilleModele grilleModele) {
         this.grilleModele = grilleModele;
     }
 
@@ -80,8 +75,7 @@ public class Grille
      * Getter sur items.
      * @return Retourne le items.
      */
-    public SortedSet<Item> getItems()
-    {
+    public SortedSet<Item> getItems() {
         return this.items;
     }
 
@@ -89,8 +83,7 @@ public class Grille
      * Setter pour items.
      * @param items le items à écrire.
      */
-    public void setItems(final SortedSet<Item> items)
-    {
+    public void setItems(final SortedSet<Item> items) {
         this.items = items;
     }
 
@@ -98,8 +91,7 @@ public class Grille
      * Getter sur detailSurcout.
      * @return Retourne le detailSurcout.
      */
-    public DetailSurcout getDetailSurcout()
-    {
+    public DetailSurcout getDetailSurcout() {
         return this.detailSurcout;
     }
 
@@ -107,8 +99,7 @@ public class Grille
      * Setter pour detailSurcout.
      * @param detailSurcout le detailSurcout à écrire.
      */
-    public void setDetailSurcout(final DetailSurcout detailSurcout)
-    {
+    public void setDetailSurcout(final DetailSurcout detailSurcout) {
         this.detailSurcout = detailSurcout;
     }
 

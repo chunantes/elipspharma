@@ -8,12 +8,10 @@ import fr.pharma.eclipse.utils.constants.EclipseConstants;
 
 /**
  * Classe de comparator sur Designable.
- 
+ * @author Netapsys
  * @version $Revision$ $Date$
  */
-public class DesignableComparator
-    implements Comparator<Designable>, Serializable
-{
+public class DesignableComparator implements Comparator<Designable>, Serializable {
     /**
      * Serial ID.
      */
@@ -24,8 +22,7 @@ public class DesignableComparator
      */
     @Override
     public int compare(final Designable p1,
-                       final Designable p2)
-    {
+                       final Designable p2) {
         final String key1 = this.buildKey(p1);
         final String key2 = this.buildKey(p2);
 
@@ -37,12 +34,10 @@ public class DesignableComparator
      * @param p Designable dont on veut construire la clé.
      * @return La clé du Designable.
      */
-    private String buildKey(final Designable p)
-    {
+    private String buildKey(final Designable p) {
         // Tri par date + nom du produit + dosage + mode de prescription
         final StringBuilder builder = new StringBuilder();
-        if (p.getDebut() != null)
-        {
+        if (p.getDebut() != null) {
             builder.append(String.valueOf(p.getDebut())).append(EclipseConstants.COMMA);
         }
         builder.append(p.getNomComplet()).append(EclipseConstants.COMMA);

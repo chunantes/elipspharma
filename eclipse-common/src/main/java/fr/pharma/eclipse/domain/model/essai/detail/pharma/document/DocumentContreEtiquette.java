@@ -6,15 +6,14 @@ import javax.persistence.Entity;
 import fr.pharma.eclipse.domain.enums.document.TypeDocumentEssai;
 
 /**
- * Bean métier représentant un document relatif aux contres etiquettes de l'essai clinique.
- 
+ * Bean métier représentant un document relatif aux contres etiquettes de
+ * l'essai clinique.
+ * @author Netapsys
  * @version $Revision$ $Date$
  */
 @Entity
 @DiscriminatorValue("CONTRE_ETIQUETTE")
-public class DocumentContreEtiquette
-    extends DocumentDonneesPharma
-{
+public class DocumentContreEtiquette extends DocumentDonneesPharma {
 
     /**
      * SerialVersionUID.
@@ -24,8 +23,7 @@ public class DocumentContreEtiquette
     /**
      * Constructeur par défaut.
      */
-    public DocumentContreEtiquette()
-    {
+    public DocumentContreEtiquette() {
         this.setType(TypeDocumentEssai.CONTRE_ETIQUETTE);
     }
 }

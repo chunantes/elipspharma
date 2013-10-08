@@ -2,11 +2,10 @@ package fr.pharma.eclipse.domain.enums;
 
 /**
  * Enumération représentant la civilite.
- 
+ * @author Netapsys
  * @version $Revision$ $Date$
  */
-public enum Civilite
-{
+public enum Civilite {
     /**
      * Monsieur.
      */
@@ -31,8 +30,7 @@ public enum Civilite
      * Constructeur.
      * @param libelle Le libellé.
      */
-    Civilite(final String libelle)
-    {
+    Civilite(final String libelle) {
         this.libelle = libelle;
     }
 
@@ -40,8 +38,7 @@ public enum Civilite
      * Getter pour libelle.
      * @return Retourne le libelle.
      */
-    public String getLibelle()
-    {
+    public String getLibelle() {
         return this.libelle;
     }
 
@@ -49,8 +46,7 @@ public enum Civilite
      * {@inheritDoc}
      */
     @Override
-    public String toString()
-    {
+    public String toString() {
         return this.getLibelle();
     }
 

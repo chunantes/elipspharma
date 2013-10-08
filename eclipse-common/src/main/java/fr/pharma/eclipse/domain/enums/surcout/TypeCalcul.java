@@ -2,11 +2,10 @@ package fr.pharma.eclipse.domain.enums.surcout;
 
 /**
  * Enumération des type de calculs.
- 
+ * @author Netapsys
  * @version $Revision$ $Date$
  */
-public enum TypeCalcul
-{
+public enum TypeCalcul {
     /**
      * Prévisionnel.
      */
@@ -31,8 +30,7 @@ public enum TypeCalcul
      * Constructeur privé.
      * @param libelle Libellé de la valeur de l'énumération.
      */
-    private TypeCalcul(final String libelle, final String repertoire)
-    {
+    private TypeCalcul(final String libelle, final String repertoire) {
         this.libelle = libelle;
         this.repertoire = repertoire;
     }
@@ -41,8 +39,7 @@ public enum TypeCalcul
      * Getter sur libelle.
      * @return Retourne le libelle.
      */
-    public String getLibelle()
-    {
+    public String getLibelle() {
         return this.libelle;
     }
 
@@ -50,8 +47,7 @@ public enum TypeCalcul
      * {@inheritDoc}
      */
     @Override
-    public String toString()
-    {
+    public String toString() {
         return this.getLibelle();
     }
 
@@ -59,8 +55,7 @@ public enum TypeCalcul
      * Getter sur repertoire.
      * @return Retourne le repertoire.
      */
-    public String getRepertoire()
-    {
+    public String getRepertoire() {
         return this.repertoire;
     }
 
@@ -68,8 +63,7 @@ public enum TypeCalcul
      * Setter pour repertoire.
      * @param repertoire le repertoire à écrire.
      */
-    public void setRepertoire(final String repertoire)
-    {
+    public void setRepertoire(final String repertoire) {
         this.repertoire = repertoire;
     }
 }

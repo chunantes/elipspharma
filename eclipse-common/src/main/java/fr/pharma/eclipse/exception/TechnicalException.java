@@ -4,12 +4,10 @@ import fr.pharma.eclipse.exception.common.CommonException;
 
 /**
  * Exception levée en cas d'erreur technique.
- 
+ * @author NETAPSYS
  * @version $Revision$ $Date$
  */
-public class TechnicalException
-    extends CommonException
-{
+public class TechnicalException extends CommonException {
     /**
      * Serial Id.
      */
@@ -19,8 +17,7 @@ public class TechnicalException
      * Constructeur principal.
      * @param errorMsg Le message de l'exception.
      */
-    public TechnicalException(final String errorMsg)
-    {
+    public TechnicalException(final String errorMsg) {
         super(errorMsg);
     }
 
@@ -29,18 +26,15 @@ public class TechnicalException
      * @param errorMsg Le message de l'exception.
      * @param errorThrow La source de l'exception.
      */
-    public TechnicalException(final String errorMsg, final Throwable errorThrow)
-    {
-        super(errorMsg,
-              errorThrow);
+    public TechnicalException(final String errorMsg, final Throwable errorThrow) {
+        super(errorMsg, errorThrow);
     }
 
     /**
      * Constructeur principal.
      * @param errorThrow La source de l'exception.
      */
-    public TechnicalException(final Throwable errorThrow)
-    {
+    public TechnicalException(final Throwable errorThrow) {
         super(errorThrow);
     }
 }

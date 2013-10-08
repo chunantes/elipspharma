@@ -15,14 +15,11 @@ import fr.pharma.eclipse.domain.model.common.BeanObject;
 
 /**
  * Classe abstraite représentant un suivi de modification.
- 
+ * @author Netapsys
  * @version $Revision$ $Date$
  */
 @MappedSuperclass
-public abstract class Suivi
-    extends BeanObject
-    implements Serializable
-{
+public abstract class Suivi extends BeanObject implements Serializable {
     /**
      * Serial ID.
      */
@@ -48,8 +45,7 @@ public abstract class Suivi
      * Getter sur dateMaj.
      * @return Retourne le dateMaj.
      */
-    public Calendar getDateMaj()
-    {
+    public Calendar getDateMaj() {
         return this.dateMaj;
     }
 
@@ -57,8 +53,7 @@ public abstract class Suivi
      * Setter pour dateMaj.
      * @param dateMaj le dateMaj à écrire.
      */
-    public void setDateMaj(final Calendar dateMaj)
-    {
+    public void setDateMaj(final Calendar dateMaj) {
         this.dateMaj = dateMaj;
     }
 
@@ -66,8 +61,7 @@ public abstract class Suivi
      * Getter sur majPar.
      * @return Retourne le majPar.
      */
-    public String getMajPar()
-    {
+    public String getMajPar() {
         return this.majPar;
     }
 
@@ -75,8 +69,7 @@ public abstract class Suivi
      * Setter pour majPar.
      * @param majPar le majPar à écrire.
      */
-    public void setMajPar(final String majPar)
-    {
+    public void setMajPar(final String majPar) {
         this.majPar = majPar;
     }
 

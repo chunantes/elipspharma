@@ -6,15 +6,14 @@ import javax.persistence.Entity;
 import fr.pharma.eclipse.domain.enums.document.TypeDocumentStock;
 
 /**
- * Bean métier représentant un document relatif à une sortie de stock de type RetourPromoteur.
- 
+ * Bean métier représentant un document relatif à une sortie de stock de type
+ * RetourPromoteur.
+ * @author Netapsys
  * @version $Revision$ $Date$
  */
 @Entity
 @DiscriminatorValue("RETOUR_PROMOTEUR")
-public class DocumentRetourPromoteur
-    extends DocumentMvtStock
-{
+public class DocumentRetourPromoteur extends DocumentMvtStock {
     /**
      * Serial ID.
      */
@@ -23,8 +22,7 @@ public class DocumentRetourPromoteur
     /**
      * Constructeur par défaut.
      */
-    public DocumentRetourPromoteur()
-    {
+    public DocumentRetourPromoteur() {
         this.setType(TypeDocumentStock.RETOUR_PROMOTEUR);
     }
 

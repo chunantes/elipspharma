@@ -4,6 +4,7 @@ import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.EnumType;
 import javax.persistence.Enumerated;
+import javax.persistence.FetchType;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 
@@ -17,14 +18,11 @@ import fr.pharma.eclipse.domain.model.stockage.Stockage;
 
 /**
  * Classe métier représentant le lien entre un produit et un stockage.
- 
+ * @author Netapsys
  * @version $Revision$ $Date$
  */
 @Entity(name = "produit_detail_stockage")
-public class DetailStockage
-    extends BeanObject
-    implements BeanWithNom
-{
+public class DetailStockage extends BeanObject implements BeanWithNom {
 
     /**
      * SerialVersionUID.
@@ -34,7 +32,7 @@ public class DetailStockage
     /**
      * Pharmacie.
      */
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "id_pharmacie")
     @Index(name = "idx_produit_pharmacie")
     private Pharmacie pharmacie;
@@ -42,7 +40,7 @@ public class DetailStockage
     /**
      * Stockage.
      */
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "id_stockage")
     @Index(name = "idx_produit_stockage")
     private Stockage stockage;
@@ -56,7 +54,7 @@ public class DetailStockage
     /**
      * Objet DetailLogistique.
      */
-    @ManyToOne()
+    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "id_detail_logistique")
     @Index(name = "idx_detail_stockage_detail_logistique")
     private DetailLogistique detailLogistique;
@@ -72,8 +70,7 @@ public class DetailStockage
      * Getter sur pharmacie.
      * @return Retourne le pharmacie.
      */
-    public Pharmacie getPharmacie()
-    {
+    public Pharmacie getPharmacie() {
         return this.pharmacie;
     }
 
@@ -81,8 +78,7 @@ public class DetailStockage
      * Setter pour pharmacie.
      * @param pharmacie le pharmacie à écrire.
      */
-    public void setPharmacie(final Pharmacie pharmacie)
-    {
+    public void setPharmacie(final Pharmacie pharmacie) {
         this.pharmacie = pharmacie;
     }
 
@@ -90,8 +86,7 @@ public class DetailStockage
      * Getter sur stockage.
      * @return Retourne le stockage.
      */
-    public Stockage getStockage()
-    {
+    public Stockage getStockage() {
         return this.stockage;
     }
 
@@ -99,8 +94,7 @@ public class DetailStockage
      * Setter pour stockage.
      * @param stockage le stockage à écrire.
      */
-    public void setStockage(final Stockage stockage)
-    {
+    public void setStockage(final Stockage stockage) {
         this.stockage = stockage;
     }
 
@@ -108,8 +102,7 @@ public class DetailStockage
      * Getter sur identifiantStockage.
      * @return Retourne le identifiantStockage.
      */
-    public String getIdentifiantStockage()
-    {
+    public String getIdentifiantStockage() {
         return this.identifiantStockage;
     }
 
@@ -117,8 +110,7 @@ public class DetailStockage
      * Setter pour identifiantStockage.
      * @param identifiantStockage le identifiantStockage à écrire.
      */
-    public void setIdentifiantStockage(final String identifiantStockage)
-    {
+    public void setIdentifiantStockage(final String identifiantStockage) {
         this.identifiantStockage = identifiantStockage;
     }
 
@@ -126,8 +118,7 @@ public class DetailStockage
      * Getter sur detailLogistique.
      * @return Retourne le detailLogistique.
      */
-    public DetailLogistique getDetailLogistique()
-    {
+    public DetailLogistique getDetailLogistique() {
         return this.detailLogistique;
     }
 
@@ -135,8 +126,7 @@ public class DetailStockage
      * Setter pour detailLogistique.
      * @param detailLogistique le detailLogistique à écrire.
      */
-    public void setDetailLogistique(final DetailLogistique detailLogistique)
-    {
+    public void setDetailLogistique(final DetailLogistique detailLogistique) {
         this.detailLogistique = detailLogistique;
     }
 
@@ -144,8 +134,7 @@ public class DetailStockage
      * Getter sur type.
      * @return Retourne le type.
      */
-    public TypeDetailStockage getType()
-    {
+    public TypeDetailStockage getType() {
         return this.type;
     }
 
@@ -153,8 +142,7 @@ public class DetailStockage
      * Setter pour type.
      * @param type le type à écrire.
      */
-    public void setType(final TypeDetailStockage type)
-    {
+    public void setType(final TypeDetailStockage type) {
         this.type = type;
     }
 
@@ -162,10 +150,7 @@ public class DetailStockage
      * {@inheritDoc}
      */
     @Override
-    public String getNom()
-    {
-        return this.getStockage().getNomComplet()
-               + " - "
-               + this.getIdentifiantStockage();
+    public String getNom() {
+        return this.getStockage().getNomComplet() + " - " + this.getIdentifiantStockage();
     }
 }

@@ -6,12 +6,10 @@ import fr.pharma.eclipse.domain.model.produit.Produit;
 
 /**
  * Critère de recherche sur ProduitPrescrit.
- 
+ * @author Netapsys
  * @version $Revision$ $Date$
  */
-public class ProduitPrescritSearchCriteria
-    extends AbstractSearchCriteria
-{
+public class ProduitPrescritSearchCriteria extends AbstractSearchCriteria {
 
     /**
      * SerialVersionUID.
@@ -32,8 +30,7 @@ public class ProduitPrescritSearchCriteria
      * {@inheritDoc}
      */
     @Override
-    public void clear()
-    {
+    public void clear() {
         this.conditionnement = null;
     }
 
@@ -41,8 +38,7 @@ public class ProduitPrescritSearchCriteria
      * Getter sur conditionnement.
      * @return Retourne le conditionnement.
      */
-    public Conditionnement getConditionnement()
-    {
+    public Conditionnement getConditionnement() {
         return this.conditionnement;
     }
 
@@ -50,18 +46,15 @@ public class ProduitPrescritSearchCriteria
      * Setter pour conditionnement.
      * @param conditionnement le conditionnement à écrire.
      */
-    public void setConditionnement(final Conditionnement conditionnement)
-    {
+    public void setConditionnement(final Conditionnement conditionnement) {
         this.conditionnement = conditionnement;
     }
 
-    public Produit getProduit()
-    {
+    public Produit getProduit() {
         return this.produit;
     }
 
-    public void setProduit(final Produit produit)
-    {
+    public void setProduit(final Produit produit) {
         this.produit = produit;
     }
 

@@ -23,12 +23,10 @@ import fr.pharma.eclipse.domain.model.essai.detail.administratif.document.Docume
 /**
  * Informations relatives au comité de protection des personnes sur le détail
  * Administratif/Réglementaire d'un essai clinique.
- 
+ * @author Netapsys
  * @version $Revision$ $Date$
  */
-public class InfosComiteProtection
-    implements Serializable
-{
+public class InfosComiteProtection implements Serializable {
 
     /**
      * Serial ID.
@@ -61,8 +59,7 @@ public class InfosComiteProtection
     @Where(clause = "type='COMITE_PROTEC_PERS'")
     @LazyCollection(LazyCollectionOption.FALSE)
     @Sort(type = SortType.COMPARATOR, comparator = SuiviComparator.class)
-    private SortedSet<DocumentAdministratif> documents =
-        new TreeSet<DocumentAdministratif>(new SuiviComparator());
+    private SortedSet<DocumentAdministratif> documents = new TreeSet<DocumentAdministratif>(new SuiviComparator());
 
     /**
      * Booléen indiquant qu'il faut se référer au dossier papier<br>
@@ -76,8 +73,7 @@ public class InfosComiteProtection
      * Getter sur accordCPP.
      * @return Retourne le accordCPP.
      */
-    public Boolean getAccordCPP()
-    {
+    public Boolean getAccordCPP() {
         return this.accordCPP;
     }
 
@@ -85,8 +81,7 @@ public class InfosComiteProtection
      * Setter pour accordCPP.
      * @param accordCPP le accordCPP à écrire.
      */
-    public void setAccordCPP(final Boolean accordCPP)
-    {
+    public void setAccordCPP(final Boolean accordCPP) {
         this.accordCPP = accordCPP;
     }
 
@@ -94,8 +89,7 @@ public class InfosComiteProtection
      * Getter sur nomCPP.
      * @return Retourne le nomCPP.
      */
-    public String getNomCPP()
-    {
+    public String getNomCPP() {
         return this.nomCPP;
     }
 
@@ -103,8 +97,7 @@ public class InfosComiteProtection
      * Setter pour nomCPP.
      * @param nomCPP le nomCPP à écrire.
      */
-    public void setNomCPP(final String nomCPP)
-    {
+    public void setNomCPP(final String nomCPP) {
         this.nomCPP = nomCPP;
     }
 
@@ -112,8 +105,7 @@ public class InfosComiteProtection
      * Getter sur dateCPP.
      * @return Retourne le dateCPP.
      */
-    public Calendar getDateCPP()
-    {
+    public Calendar getDateCPP() {
         return this.dateCPP;
     }
 
@@ -121,8 +113,7 @@ public class InfosComiteProtection
      * Setter pour dateCPP.
      * @param dateCPP le dateCPP à écrire.
      */
-    public void setDateCPP(final Calendar dateCPP)
-    {
+    public void setDateCPP(final Calendar dateCPP) {
         this.dateCPP = dateCPP;
     }
 
@@ -130,8 +121,7 @@ public class InfosComiteProtection
      * Getter sur documents.
      * @return Retourne le documents.
      */
-    public SortedSet<DocumentAdministratif> getDocuments()
-    {
+    public SortedSet<DocumentAdministratif> getDocuments() {
         return this.documents;
     }
 
@@ -139,8 +129,7 @@ public class InfosComiteProtection
      * Setter pour documents.
      * @param documents le documents à écrire.
      */
-    public void setDocuments(final SortedSet<DocumentAdministratif> documents)
-    {
+    public void setDocuments(final SortedSet<DocumentAdministratif> documents) {
         this.documents = documents;
     }
 
@@ -148,8 +137,7 @@ public class InfosComiteProtection
      * Getter sur docsDossierPapier.
      * @return Retourne le docsDossierPapier.
      */
-    public boolean isDocsDossierPapier()
-    {
+    public boolean isDocsDossierPapier() {
         return this.docsDossierPapier;
     }
 
@@ -157,8 +145,7 @@ public class InfosComiteProtection
      * Setter pour docsDossierPapier.
      * @param docsDossierPapier le docsDossierPapier à écrire.
      */
-    public void setDocsDossierPapier(final boolean docsDossierPapier)
-    {
+    public void setDocsDossierPapier(final boolean docsDossierPapier) {
         this.docsDossierPapier = docsDossierPapier;
     }
 }

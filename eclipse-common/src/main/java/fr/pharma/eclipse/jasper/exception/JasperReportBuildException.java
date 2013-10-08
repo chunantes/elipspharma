@@ -4,13 +4,10 @@ import java.io.Serializable;
 
 /**
  * Exception associée à un problème lors de la génération d'un rapport Jasper.
- 
+ * @author Netapsys
  * @version $Revision$ $Date$
  */
-public class JasperReportBuildException
-    extends Exception
-    implements Serializable
-{
+public class JasperReportBuildException extends Exception implements Serializable {
 
     /**
      * Serial ID.
@@ -21,8 +18,7 @@ public class JasperReportBuildException
      * Constructeur.
      * @param message Message.
      */
-    public JasperReportBuildException(final String message)
-    {
+    public JasperReportBuildException(final String message) {
         super(message);
     }
 
@@ -30,8 +26,7 @@ public class JasperReportBuildException
      * Constructeur.
      * @param cause Cause.
      */
-    public JasperReportBuildException(final Throwable cause)
-    {
+    public JasperReportBuildException(final Throwable cause) {
         super(cause);
     }
 
@@ -40,10 +35,8 @@ public class JasperReportBuildException
      * @param message Message.
      * @param cause Cause.
      */
-    public JasperReportBuildException(final String message, final Throwable cause)
-    {
-        super(message,
-              cause);
+    public JasperReportBuildException(final String message, final Throwable cause) {
+        super(message, cause);
     }
 
 }

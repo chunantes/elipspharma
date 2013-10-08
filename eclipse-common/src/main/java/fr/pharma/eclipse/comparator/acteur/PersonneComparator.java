@@ -7,12 +7,10 @@ import fr.pharma.eclipse.domain.model.acteur.Personne;
 
 /**
  * Comparateur de personne.
- 
+ * @author Netapsys
  * @version $Revision$ $Date$
  */
-public class PersonneComparator
-    implements Comparator<Personne>, Serializable
-{
+public class PersonneComparator implements Comparator<Personne>, Serializable {
 
     /**
      * SerialVersionUID.
@@ -24,8 +22,7 @@ public class PersonneComparator
      */
     @Override
     public int compare(final Personne o1,
-                       final Personne o2)
-    {
+                       final Personne o2) {
 
         return this.buildKey(o1).compareTo(this.buildKey(o2));
     }
@@ -35,15 +32,11 @@ public class PersonneComparator
      * @param p La personne.
      * @return La clé.
      */
-    private String buildKey(final Personne p)
-    {
+    private String buildKey(final Personne p) {
         final StringBuffer sb = new StringBuffer();
-        if (p.getType() != null)
-        {
+        if (p.getType() != null) {
             sb.append(0).append(p.getType().getLibelle());
-        }
-        else
-        {
+        } else {
             sb.append(1);
         }
         sb.append(p.getNom());

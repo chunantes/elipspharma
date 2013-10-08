@@ -11,16 +11,14 @@ import fr.pharma.eclipse.service.common.GenericService;
 
 /**
  * Interface de service de gestion de Patient.
- 
+ * @author Netapsys
  * @version $Revision$ $Date$
  */
-public interface PatientService
-    extends GenericService<Patient>
-{
+public interface PatientService extends GenericService<Patient> {
 
     /**
-     * Méthode en charge de mettre à jour la surface corporelle de l'objet HistoriquePatient en
-     * paramètre.
+     * Méthode en charge de mettre à jour la surface corporelle de l'objet
+     * HistoriquePatient en paramètre.
      * @param historique Objet HistoriquePatient.
      * @return la formule utilisée.
      */
@@ -40,7 +38,8 @@ public interface PatientService
     void desinclure(final Patient patient);
 
     /**
-     * Méthode en charge de retourner la liste des patients inclu dans un essai donné.
+     * Méthode en charge de retourner la liste des patients inclu dans un essai
+     * donné.
      * @param essai L'essai.
      * @return La liste des patients.
      */

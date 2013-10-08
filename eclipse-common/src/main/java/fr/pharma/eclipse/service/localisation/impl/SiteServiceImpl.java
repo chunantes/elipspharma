@@ -11,13 +11,10 @@ import fr.pharma.eclipse.service.localisation.SiteService;
 
 /**
  * Classe d'implémentation du service de gestion de site.
- 
+ * @author Netapsys
  * @version $Revision$ $Date$
  */
-public class SiteServiceImpl
-    extends GenericServiceImpl<Site>
-    implements SiteService
-{
+public class SiteServiceImpl extends GenericServiceImpl<Site> implements SiteService {
     /**
      * Serial ID.
      */
@@ -33,8 +30,7 @@ public class SiteServiceImpl
      * Constructeur.
      * @param siteDao Dao de gestion des sites.
      */
-    public SiteServiceImpl(final GenericDao<Site> siteDao)
-    {
+    public SiteServiceImpl(final GenericDao<Site> siteDao) {
         super(siteDao);
     }
 
@@ -42,8 +38,7 @@ public class SiteServiceImpl
      * {@inheritDoc}
      */
     @Override
-    public Site save(final Site site)
-    {
+    public Site save(final Site site) {
         final Site siteToSave = this.reattach(site);
         final SiteSuivi siteSuivi = this.siteSuiviFactory.getInitializedObject();
         siteSuivi.setSite(siteToSave);
@@ -55,8 +50,7 @@ public class SiteServiceImpl
      * Setter pour siteSuiviFactory.
      * @param siteSuiviFactory le siteSuiviFactory à écrire.
      */
-    public void setSiteSuiviFactory(final SuiviFactory<SiteSuivi> siteSuiviFactory)
-    {
+    public void setSiteSuiviFactory(final SuiviFactory<SiteSuivi> siteSuiviFactory) {
         this.siteSuiviFactory = siteSuiviFactory;
     }
 

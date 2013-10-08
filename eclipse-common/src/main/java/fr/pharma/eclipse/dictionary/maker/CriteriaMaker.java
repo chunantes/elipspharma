@@ -6,11 +6,10 @@ import fr.pharma.eclipse.domain.criteria.common.SearchCriteria;
 
 /**
  * Interface des artisans de recherche.
- 
+ * @author NETAPSYS
  * @version $Revision$ $Date$
  */
-public interface CriteriaMaker
-{
+public interface CriteriaMaker {
     /**
      * Méthode de transformation d'un critère de recherche.
      * @param criteria Le critéria de recherche.
@@ -22,7 +21,8 @@ public interface CriteriaMaker
     /**
      * Vérifie que le maker peut effectuer la transformation.
      * @param clazz La classe à vérifier.
-     * @return <code>true</code> si le maker est adapté, <code>false</code> sinon.
+     * @return <code>true</code> si le maker est adapté, <code>false</code>
+     * sinon.
      */
     @SuppressWarnings("unchecked")
     boolean supports(final Class clazz);

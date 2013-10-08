@@ -24,14 +24,11 @@ import fr.pharma.eclipse.domain.model.suivi.localisation.EtablissementSuivi;
 
 /**
  * Classe métier représentant un établissement.
- 
+ * @author Netapsys
  * @version $Revision$ $Date$
  */
 @Entity(name = "etablissement")
-public class Etablissement
-    extends BeanObjectSuivi
-    implements BeanWithNom
-{
+public class Etablissement extends BeanObjectSuivi implements BeanWithNom {
     /**
      * Serial ID.
      */
@@ -91,7 +88,7 @@ public class Etablissement
      * Liste des pharmacies.
      */
     @OneToMany(mappedBy = "etablissement", cascade = CascadeType.ALL)
-    @LazyCollection(LazyCollectionOption.FALSE)
+    @LazyCollection(LazyCollectionOption.TRUE)
     @Sort(type = SortType.COMPARATOR, comparator = BeanWithNomComparator.class)
     private SortedSet<Pharmacie> pharmacies = new TreeSet<Pharmacie>(new BeanWithNomComparator());
 
@@ -99,17 +96,15 @@ public class Etablissement
      * Liste des modifications.
      */
     @OneToMany(mappedBy = "etablissement", cascade = CascadeType.ALL)
-    @LazyCollection(LazyCollectionOption.TRUE)
     @Sort(type = SortType.COMPARATOR, comparator = SuiviComparator.class)
-    private final SortedSet<EtablissementSuivi> modifs =
-        new TreeSet<EtablissementSuivi>(new SuiviComparator());
+    private final SortedSet<EtablissementSuivi> modifs = new TreeSet<EtablissementSuivi>(new SuiviComparator());
 
     /**
      * Getter sur nom.
      * @return Retourne le nom.
      */
-    public String getNom()
-    {
+    @Override
+    public String getNom() {
         return this.nom;
     }
 
@@ -117,8 +112,7 @@ public class Etablissement
      * Setter pour nom.
      * @param nom le nom à écrire.
      */
-    public void setNom(final String nom)
-    {
+    public void setNom(final String nom) {
         this.nom = nom;
     }
 
@@ -126,8 +120,7 @@ public class Etablissement
      * Getter sur telephone.
      * @return Retourne le telephone.
      */
-    public String getTelephone()
-    {
+    public String getTelephone() {
         return this.telephone;
     }
 
@@ -135,8 +128,7 @@ public class Etablissement
      * Setter pour telephone.
      * @param telephone le telephone à écrire.
      */
-    public void setTelephone(final String telephone)
-    {
+    public void setTelephone(final String telephone) {
         this.telephone = telephone;
     }
 
@@ -144,8 +136,7 @@ public class Etablissement
      * Getter sur fax.
      * @return Retourne le fax.
      */
-    public String getFax()
-    {
+    public String getFax() {
         return this.fax;
     }
 
@@ -153,8 +144,7 @@ public class Etablissement
      * Setter pour fax.
      * @param fax le fax à écrire.
      */
-    public void setFax(final String fax)
-    {
+    public void setFax(final String fax) {
         this.fax = fax;
     }
 
@@ -162,8 +152,7 @@ public class Etablissement
      * Getter sur mail.
      * @return Retourne le mail.
      */
-    public String getMail()
-    {
+    public String getMail() {
         return this.mail;
     }
 
@@ -171,8 +160,7 @@ public class Etablissement
      * Setter pour mail.
      * @param mail le mail à écrire.
      */
-    public void setMail(final String mail)
-    {
+    public void setMail(final String mail) {
         this.mail = mail;
     }
 
@@ -180,8 +168,7 @@ public class Etablissement
      * Getter sur adresseDirection.
      * @return Retourne le adresseDirection.
      */
-    public String getAdresseDirection()
-    {
+    public String getAdresseDirection() {
         return this.adresseDirection;
     }
 
@@ -189,8 +176,7 @@ public class Etablissement
      * Setter pour adresseDirection.
      * @param adresseDirection le adresseDirection à écrire.
      */
-    public void setAdresseDirection(final String adresseDirection)
-    {
+    public void setAdresseDirection(final String adresseDirection) {
         this.adresseDirection = adresseDirection;
     }
 
@@ -198,8 +184,7 @@ public class Etablissement
      * Getter sur ville.
      * @return Retourne le ville.
      */
-    public String getVille()
-    {
+    public String getVille() {
         return this.ville;
     }
 
@@ -207,8 +192,7 @@ public class Etablissement
      * Setter pour ville.
      * @param ville le ville à écrire.
      */
-    public void setVille(final String ville)
-    {
+    public void setVille(final String ville) {
         this.ville = ville;
     }
 
@@ -216,8 +200,7 @@ public class Etablissement
      * Getter sur pays.
      * @return Retourne le pays.
      */
-    public String getPays()
-    {
+    public String getPays() {
         return this.pays;
     }
 
@@ -225,8 +208,7 @@ public class Etablissement
      * Setter pour pays.
      * @param pays le pays à écrire.
      */
-    public void setPays(final String pays)
-    {
+    public void setPays(final String pays) {
         this.pays = pays;
     }
 
@@ -235,8 +217,7 @@ public class Etablissement
      * @return Retourne le modifs.
      */
     @Override
-    public SortedSet<EtablissementSuivi> getModifs()
-    {
+    public SortedSet<EtablissementSuivi> getModifs() {
         return this.modifs;
     }
 
@@ -244,8 +225,7 @@ public class Etablissement
      * Getter pour codePostal.
      * @return Le codePostal
      */
-    public String getCodePostal()
-    {
+    public String getCodePostal() {
         return this.codePostal;
     }
 
@@ -253,8 +233,7 @@ public class Etablissement
      * Setter pour codePostal.
      * @param codePostal Le codePostal à écrire.
      */
-    public void setCodePostal(final String codePostal)
-    {
+    public void setCodePostal(final String codePostal) {
         this.codePostal = codePostal;
     }
 
@@ -262,8 +241,7 @@ public class Etablissement
      * Getter pour pharmacies.
      * @return Le pharmacies
      */
-    public SortedSet<Pharmacie> getPharmacies()
-    {
+    public SortedSet<Pharmacie> getPharmacies() {
         return this.pharmacies;
     }
 
@@ -271,8 +249,7 @@ public class Etablissement
      * Setter pour pharmacies.
      * @param pharmacies Le pharmacies à écrire.
      */
-    public void setPharmacies(final SortedSet<Pharmacie> pharmacies)
-    {
+    public void setPharmacies(final SortedSet<Pharmacie> pharmacies) {
         this.pharmacies = pharmacies;
     }
 

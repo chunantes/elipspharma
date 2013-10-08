@@ -2,11 +2,10 @@ package fr.pharma.eclipse.domain.enums;
 
 /**
  * Enumération représentant les types des éléments du design.
- 
+ * @author Netapsys
  * @version $Revision$ $Date$
  */
-public enum TypeDesignable
-{
+public enum TypeDesignable {
     /**
      * Bras.
      */
@@ -26,8 +25,7 @@ public enum TypeDesignable
      * Constructeur.
      * @param libelle Le libellé.
      */
-    TypeDesignable(final String libelle)
-    {
+    TypeDesignable(final String libelle) {
         this.libelle = libelle;
     }
 
@@ -35,8 +33,7 @@ public enum TypeDesignable
      * Getter pour libelle.
      * @return Retourne le libelle.
      */
-    public String getLibelle()
-    {
+    public String getLibelle() {
         return this.libelle;
     }
 
@@ -44,8 +41,7 @@ public enum TypeDesignable
      * {@inheritDoc}
      */
     @Override
-    public String toString()
-    {
+    public String toString() {
         return this.getLibelle();
     }
 

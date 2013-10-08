@@ -2,11 +2,10 @@ package fr.pharma.eclipse.domain.enums.design;
 
 /**
  * Enumération représentant le type de temps (utilisé dans les prescription).
- 
+ * @author Netapsys
  * @version $Revision$ $Date$
  */
-public enum TypeRegularite
-{
+public enum TypeRegularite {
     /**
      * Fois.
      */
@@ -31,8 +30,7 @@ public enum TypeRegularite
      * Constructeur.
      * @param libelle Le libellé.
      */
-    TypeRegularite(final String libelle)
-    {
+    TypeRegularite(final String libelle) {
         this.libelle = libelle;
     }
 
@@ -40,8 +38,7 @@ public enum TypeRegularite
      * Getter pour libelle.
      * @return Retourne le libelle.
      */
-    public String getLibelle()
-    {
+    public String getLibelle() {
         return this.libelle;
     }
 
@@ -49,8 +46,7 @@ public enum TypeRegularite
      * {@inheritDoc}
      */
     @Override
-    public String toString()
-    {
+    public String toString() {
         return this.getLibelle();
     }
 

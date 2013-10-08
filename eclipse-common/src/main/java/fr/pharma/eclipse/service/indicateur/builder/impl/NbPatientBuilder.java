@@ -19,13 +19,10 @@ import fr.pharma.eclipse.service.indicateur.builder.IndicateurBuilder;
 
 /**
  * Classe en charge de construire l'indicateur Nombre de patient.
- 
+ * @author Netapsys
  * @version $Revision$ $Date$
  */
-public class NbPatientBuilder
-    extends AbstractDispensationBuilder
-    implements Serializable, IndicateurBuilder
-{
+public class NbPatientBuilder extends AbstractDispensationBuilder implements Serializable, IndicateurBuilder {
 
     /**
      * SerialVersionUID.
@@ -43,39 +40,28 @@ public class NbPatientBuilder
     @Override
     public Indicateur build(final Pharmacie pharmacie,
                             final Calendar dateDebut,
-                            final Calendar dateFin)
-    {
+                            final Calendar dateFin) {
 
-        final List results = this.loadDispensations(pharmacie,
-                                                    dateDebut,
-                                                    dateFin,
-                                                    true);
+        final List results = this.loadDispensations(pharmacie, dateDebut, dateFin, true);
 
-        CollectionUtils.transform(results,
-                                  new Transformer() {
+        CollectionUtils.transform(results, new Transformer() {
 
-                                      @Override
-                                      public Object transform(final Object input)
-                                      {
-                                          return ((Dispensation) input)
-                                                  .getPrescription()
-                                                  .getInclusion()
-                                                  .getPatient();
-                                      }
-                                  });
+            @Override
+            public Object transform(final Object input) {
+                return ((Dispensation) input).getPrescription().getInclusion().getPatient();
+            }
+        });
 
         final SortedSet<Patient> patients = new TreeSet<Patient>(new EclipseListComparator());
         patients.addAll(results);
-        return new Indicateur(this.libelle,
-                              new BigDecimal(patients.size()));
+        return new Indicateur(this.libelle, new BigDecimal(patients.size()));
     }
 
     /**
      * Getter pour libelle.
      * @return Le libelle
      */
-    public String getLibelle()
-    {
+    public String getLibelle() {
         return this.libelle;
     }
 
@@ -83,8 +69,7 @@ public class NbPatientBuilder
      * Setter pour libelle.
      * @param libelle Le libelle à écrire.
      */
-    public void setLibelle(final String libelle)
-    {
+    public void setLibelle(final String libelle) {
         this.libelle = libelle;
     }
 }

@@ -5,11 +5,9 @@ import fr.pharma.eclipse.service.common.GenericService;
 
 /**
  * Interface des services de gestion des modèles de grilles.
- 
+ * @author Netapsys
  * @version $Revision$ $Date$
  */
-public interface GrilleModeleService
-    extends GenericService<GrilleModele>
-{
+public interface GrilleModeleService extends GenericService<GrilleModele> {
 
 }

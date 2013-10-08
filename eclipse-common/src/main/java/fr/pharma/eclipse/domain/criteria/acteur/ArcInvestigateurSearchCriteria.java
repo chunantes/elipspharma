@@ -6,12 +6,10 @@ import fr.pharma.eclipse.domain.model.localisation.Service;
 
 /**
  * Critère de recherche d'ARC investigateurs.
- 
+ * @author Netapsys
  * @version $Revision$ $Date$
  */
-public class ArcInvestigateurSearchCriteria
-    extends PersonneSearchCriteria
-{
+public class ArcInvestigateurSearchCriteria extends PersonneSearchCriteria {
 
     /**
      * Serial ID.
@@ -27,8 +25,7 @@ public class ArcInvestigateurSearchCriteria
      * Getter sur services.
      * @return Retourne le services.
      */
-    public List<Service> getServices()
-    {
+    public List<Service> getServices() {
         return this.services;
     }
 
@@ -36,8 +33,7 @@ public class ArcInvestigateurSearchCriteria
      * Setter pour services.
      * @param services le services à écrire.
      */
-    public void setServices(final List<Service> services)
-    {
+    public void setServices(final List<Service> services) {
         this.services = services;
     }
 }

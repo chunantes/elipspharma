@@ -2,11 +2,10 @@ package fr.pharma.eclipse.domain.enums.document;
 
 /**
  * Enumération représentant le type de design.
- 
+ * @author Netapsys
  * @version $Revision$ $Date$
  */
-public enum TypeDocumentProtocole
-{
+public enum TypeDocumentProtocole {
     /**
      * Protocole.
      */
@@ -26,8 +25,7 @@ public enum TypeDocumentProtocole
      * Constructeur.
      * @param libelle Le libellé.
      */
-    TypeDocumentProtocole(final String libelle)
-    {
+    TypeDocumentProtocole(final String libelle) {
         this.libelle = libelle;
     }
 
@@ -35,8 +33,7 @@ public enum TypeDocumentProtocole
      * Getter pour libelle.
      * @return Retourne le libelle.
      */
-    public String getLibelle()
-    {
+    public String getLibelle() {
         return this.libelle;
     }
 
@@ -44,8 +41,7 @@ public enum TypeDocumentProtocole
      * {@inheritDoc}
      */
     @Override
-    public String toString()
-    {
+    public String toString() {
         return this.getLibelle();
     }
 

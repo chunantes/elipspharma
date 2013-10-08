@@ -8,14 +8,11 @@ import fr.pharma.eclipse.domain.model.sigrec.common.IntervenantSigrec;
 
 /**
  * Classe du modèle d'import SIGREC représentant un Investigateur.
- 
+ * @author Netapsys
  * @version $Revision$ $Date$
  */
 @Entity(name = "investigateur_sigrec")
-public class InvestigateurSigrec
-    extends IntervenantSigrec
-    implements Contactable
-{
+public class InvestigateurSigrec extends IntervenantSigrec implements Contactable {
 
     /**
      * SerialVersionUID.
@@ -33,8 +30,7 @@ public class InvestigateurSigrec
      * Getter sur centre.
      * @return Retourne le centre.
      */
-    public CentreSigrec getCentre()
-    {
+    public CentreSigrec getCentre() {
         return this.centre;
     }
 
@@ -42,8 +38,7 @@ public class InvestigateurSigrec
      * Setter pour centre.
      * @param centre le centre à écrire.
      */
-    public void setCentre(final CentreSigrec centre)
-    {
+    public void setCentre(final CentreSigrec centre) {
         this.centre = centre;
     }
 

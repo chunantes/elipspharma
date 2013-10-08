@@ -10,12 +10,10 @@ import fr.pharma.eclipse.domain.criteria.surcout.GrilleModeleSearchCriteria;
 
 /**
  * Artisan de recherche pour les grilles Modèles.
- 
+ * @author Netapsys
  * @version $Revision$ $Date$
  */
-public class GrilleModeleSearchCriteriaMaker
-    extends AbstractCriteriaMaker
-{
+public class GrilleModeleSearchCriteriaMaker extends AbstractCriteriaMaker {
     /**
      * SerialVersionUID.
      */
@@ -24,8 +22,7 @@ public class GrilleModeleSearchCriteriaMaker
     /**
      * Constructeur.
      */
-    public GrilleModeleSearchCriteriaMaker()
-    {
+    public GrilleModeleSearchCriteriaMaker() {
         super(GrilleModeleSearchCriteria.class);
     }
 
@@ -34,16 +31,12 @@ public class GrilleModeleSearchCriteriaMaker
      */
     @Override
     public void transform(final Criteria criteria,
-                          final SearchCriteria searchCrit)
-    {
+                          final SearchCriteria searchCrit) {
         final GrilleModeleSearchCriteria crit = (GrilleModeleSearchCriteria) searchCrit;
 
         // Nom
-        if (StringUtils.isNotEmpty(crit.getNom()))
-        {
-            CriteriaMakerUtils.addSqlCritere(criteria,
-                                             "this_.nom",
-                                             crit.getNom());
+        if (StringUtils.isNotEmpty(crit.getNom())) {
+            CriteriaMakerUtils.addSqlCritere(criteria, "this_.nom", crit.getNom());
         }
     }
 }

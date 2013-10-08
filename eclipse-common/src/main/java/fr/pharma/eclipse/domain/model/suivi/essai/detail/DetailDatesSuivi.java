@@ -13,15 +13,13 @@ import fr.pharma.eclipse.domain.model.essai.detail.dates.DetailDates;
 import fr.pharma.eclipse.domain.model.suivi.common.Suivi;
 
 /**
- * Bean métier représentant les suivis de modifications sur le bean {@link DetailDates}.
- 
+ * Bean métier représentant les suivis de modifications sur le bean
+ * {@link DetailDates}.
+ * @author Netapsys
  * @version $Revision$ $Date$
  */
 @Entity(name = "essai_detail_dates_suivi")
-public class DetailDatesSuivi
-    extends Suivi
-    implements Serializable
-{
+public class DetailDatesSuivi extends Suivi implements Serializable {
 
     /**
      * Serial ID.
@@ -40,8 +38,7 @@ public class DetailDatesSuivi
      * Getter sur detailDates.
      * @return Retourne le detailDates.
      */
-    public DetailDates getDetailDates()
-    {
+    public DetailDates getDetailDates() {
         return this.detailDates;
     }
 
@@ -49,8 +46,7 @@ public class DetailDatesSuivi
      * Setter pour detailDates.
      * @param detailDates le detailDates à écrire.
      */
-    public void setDetailDates(final DetailDates detailDates)
-    {
+    public void setDetailDates(final DetailDates detailDates) {
         this.detailDates = detailDates;
     }
 

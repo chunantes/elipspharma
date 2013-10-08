@@ -5,12 +5,10 @@ import fr.pharma.eclipse.jasper.constants.JasperConstants;
 /**
  * Classe représentant la source de données <br>
  * pour l'en-tête commune des rapprts japser.
- 
+ * @author Netapsys
  * @version $Revision$ $Date$
  */
-public class JRBeanHeader
-    implements JasperReportBean
-{
+public class JRBeanHeader implements JasperReportBean {
 
     /**
      * Serial ID.
@@ -46,80 +44,70 @@ public class JRBeanHeader
      * Getter sur sousTitre.
      * @return Retourne le sousTitre.
      */
-    public String getSousTitre()
-    {
+    public String getSousTitre() {
         return this.sousTitre;
     }
     /**
      * Setter pour sousTitre.
      * @param sousTitre le sousTitre à écrire.
      */
-    public void setSousTitre(final String sousTitre)
-    {
+    public void setSousTitre(final String sousTitre) {
         this.sousTitre = sousTitre;
     }
     /**
      * Getter sur processus.
      * @return Retourne le processus.
      */
-    public String getProcessus()
-    {
+    public String getProcessus() {
         return this.processus;
     }
     /**
      * Setter pour processus.
      * @param processus le processus à écrire.
      */
-    public void setProcessus(final String processus)
-    {
+    public void setProcessus(final String processus) {
         this.processus = processus;
     }
     /**
      * Getter sur themes.
      * @return Retourne le themes.
      */
-    public String getThemes()
-    {
+    public String getThemes() {
         return this.themes;
     }
     /**
      * Setter pour themes.
      * @param themes le themes à écrire.
      */
-    public void setThemes(final String themes)
-    {
+    public void setThemes(final String themes) {
         this.themes = themes;
     }
     /**
      * Getter sur urlImage.
      * @return Retourne le urlImage.
      */
-    public String getUrlImage()
-    {
+    public String getUrlImage() {
         return this.urlImage;
     }
     /**
      * Setter pour urlImage.
      * @param urlImage le urlImage à écrire.
      */
-    public void setUrlImage(final String urlImage)
-    {
+    public void setUrlImage(final String urlImage) {
         this.urlImage = urlImage;
     }
     /**
      * Getter sur diffusionPar.
      * @return Retourne le diffusionPar.
      */
-    public String getDiffusionPar()
-    {
+    public String getDiffusionPar() {
         return this.diffusionPar;
     }
     /**
      * Setter pour diffusionPar.
      * @param diffusionPar le diffusionPar à écrire.
      */
-    public void setDiffusionPar(final String diffusionPar)
-    {
+    public void setDiffusionPar(final String diffusionPar) {
         this.diffusionPar = diffusionPar;
     }
 }

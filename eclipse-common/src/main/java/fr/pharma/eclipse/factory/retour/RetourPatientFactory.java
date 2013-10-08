@@ -9,12 +9,10 @@ import fr.pharma.eclipse.utils.constants.EclipseConstants;
 
 /**
  * Factory de Retour patient.
- 
+ * @author Netapsys
  * @version $Revision$ $Date$
  */
-public class RetourPatientFactory
-    extends BeanObjectFactory<RetourPatient>
-{
+public class RetourPatientFactory extends BeanObjectFactory<RetourPatient> {
 
     /**
      * SerialVersionUID.
@@ -25,8 +23,7 @@ public class RetourPatientFactory
      * Constructeur.
      * @param bean La classe.
      */
-    public RetourPatientFactory(final Class<RetourPatient> bean)
-    {
+    public RetourPatientFactory(final Class<RetourPatient> bean) {
         super(bean);
     }
 
@@ -35,8 +32,7 @@ public class RetourPatientFactory
      * @return Le retour patient initialisée.
      */
     @Override
-    public RetourPatient getInitializedObject()
-    {
+    public RetourPatient getInitializedObject() {
         final RetourPatient retour = super.getInitializedObject();
         retour.setEtat(EtatRetour.PRESENT);
         retour.setDateEtat(Calendar.getInstance(EclipseConstants.LOCALE));

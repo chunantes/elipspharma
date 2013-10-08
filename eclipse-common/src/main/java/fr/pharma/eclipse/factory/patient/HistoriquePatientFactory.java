@@ -9,12 +9,10 @@ import fr.pharma.eclipse.utils.constants.EclipseConstants;
 
 /**
  * Factory de HistoriquePatient
- 
+ * @author Netapsys
  * @version $Revision$ $Date$
  */
-public class HistoriquePatientFactory
-    extends BeanObjectFactory<HistoriquePatient>
-{
+public class HistoriquePatientFactory extends BeanObjectFactory<HistoriquePatient> {
 
     /**
      * SerialVersionUID.
@@ -25,8 +23,7 @@ public class HistoriquePatientFactory
      * Constructeur.
      * @param bean Classe.
      */
-    public HistoriquePatientFactory(final Class<HistoriquePatient> bean)
-    {
+    public HistoriquePatientFactory(final Class<HistoriquePatient> bean) {
         super(bean);
     }
 
@@ -35,8 +32,7 @@ public class HistoriquePatientFactory
      * @param patient Le patient.
      * @return L'objet HistoriquePatient.
      */
-    public HistoriquePatient getInitializedObject(final Patient patient)
-    {
+    public HistoriquePatient getInitializedObject(final Patient patient) {
         final HistoriquePatient historique = super.getInitializedObject();
         historique.setDate(Calendar.getInstance(EclipseConstants.LOCALE));
         historique.setPatient(patient);

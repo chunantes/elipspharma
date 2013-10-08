@@ -24,12 +24,10 @@ import fr.pharma.eclipse.service.helper.design.TimeHelper;
 
 /**
  * Helper pour la transformation des bras en beans Jasper.
- 
+ * @author Netapsys
  * @version $Revision$ $Date$
  */
-public class GroupesTraitFillerHelper
-    implements Serializable
-{
+public class GroupesTraitFillerHelper implements Serializable {
 
     /**
      * Serial ID.
@@ -47,57 +45,49 @@ public class GroupesTraitFillerHelper
     private TimeHelper timeHelper;
 
     /**
-     * Méthode en charge de transformer un bras en {@link JRBeanGroupeTraitement}.
+     * Méthode en charge de transformer un bras en
+     * {@link JRBeanGroupeTraitement}.
      * @param designable Bras.
      * @param nbAlineas Nombre d'alinéas dans le nom.
      * @return Le bean {@link JRBeanGroupeTraitement} correspondant.
      */
     public JRBeanGroupeTraitement transform(final Designable designable,
-                                            final int nbAlineas)
-    {
-        if (TypeDesignable.BRAS.equals(designable.getType()))
-        {
-            return this.transform((Bras) designable,
-                                  nbAlineas);
-        }
-        else
-        {
-            return this.transform((Sequence) designable,
-                                  nbAlineas);
+                                            final int nbAlineas) {
+        if (TypeDesignable.BRAS.equals(designable.getType())) {
+            return this.transform((Bras) designable, nbAlineas);
+        } else {
+            return this.transform((Sequence) designable, nbAlineas);
         }
     }
 
     /**
-     * Méthode en charge de transformer un bras en {@link JRBeanGroupeTraitement}.
+     * Méthode en charge de transformer un bras en
+     * {@link JRBeanGroupeTraitement}.
      * @param bras Bras.
      * @param nbAlineas Nombre d'alinéas dans le nom.
      * @return Le bean {@link JRBeanGroupeTraitement} correspondant.
      */
     private JRBeanGroupeTraitement transform(final Bras bras,
-                                             final int nbAlineas)
-    {
+                                             final int nbAlineas) {
         final JRBeanGroupeTraitement jrBean = new JRBeanGroupeTraitement();
-        jrBean.setDesign(this.addAlineas(bras.getNom(),
-                                         nbAlineas));
+        jrBean.setDesign(this.addAlineas(bras.getNom(), nbAlineas));
         return jrBean;
     }
 
     /**
-     * Méthode en charge de transformer une séquence en {@link JRBeanGroupeTraitement}.
+     * Méthode en charge de transformer une séquence en
+     * {@link JRBeanGroupeTraitement}.
      * @param sequence Séquence.
      * @param nbAlineas Nombre d'alinéas dans le nom.
      * @return Le bean {@link JRBeanGroupeTraitement} correspondant.
      */
     private JRBeanGroupeTraitement transform(final Sequence sequence,
-                                             final int nbAlineas)
-    {
+                                             final int nbAlineas) {
         final JRBeanGroupeTraitement jrBean = new JRBeanGroupeTraitement();
-        jrBean.setDesign(this.addAlineas(sequence.getNom(),
-                                         nbAlineas));
+        jrBean.setDesign(this.addAlineas(sequence.getNom(), nbAlineas));
         jrBean.setDebut(this.toString(this.timeHelper.getDebut(sequence.getPrescriptions())));
         jrBean.setFin(this.toString(this.timeHelper.getFin(sequence.getPrescriptions())));
-        jrBean.setProduits(JasperUtils.formatterListeStrings(this.toPduitsStrings(sequence
-                .getPrescriptions())));
+        jrBean.setProduits(JasperUtils.formatterListeStrings(this.toPduitsStrings(sequence.getPrescriptions())));
         return jrBean;
     }
 
@@ -108,37 +98,30 @@ public class GroupesTraitFillerHelper
      * @return Le nom, indenté.
      */
     private String addAlineas(final String nom,
-                              final int nbAlineas)
-    {
-        final String alineas = StringUtils.repeat(GroupesTraitFillerHelper.ALINEA,
-                                                  nbAlineas);
-        return alineas
-               + nom;
+                              final int nbAlineas) {
+        final String alineas = StringUtils.repeat(GroupesTraitFillerHelper.ALINEA, nbAlineas);
+        return alineas + nom;
     }
 
     /**
-     * Méthode en charge de transformer la collection de prescriptions en liste des noms de ses
-     * médicaments.
+     * Méthode en charge de transformer la collection de prescriptions en liste
+     * des noms de ses médicaments.
      * @param prescriptions Prescriptions.
      * @return Liste des noms de produits.
      */
     @SuppressWarnings("unchecked")
-    private Set<String> toPduitsStrings(final SortedSet<PrescriptionType> prescriptions)
-    {
+    private Set<String> toPduitsStrings(final SortedSet<PrescriptionType> prescriptions) {
         final Collection<? extends Object> collection = new ArrayList<Object>(prescriptions);
 
         // transformation en collection de noms de produits
-        CollectionUtils.transform(collection,
-                                  new Transformer() {
+        CollectionUtils.transform(collection, new Transformer() {
 
-                                      @Override
-                                      public Object transform(final Object input)
-                                      {
-                                          final PrescriptionType prescType =
-                                              (PrescriptionType) input;
-                                          return prescType.getProduit().getDenomination();
-                                      }
-                                  });
+            @Override
+            public Object transform(final Object input) {
+                final PrescriptionType prescType = (PrescriptionType) input;
+                return prescType.getProduit().getDenomination();
+            }
+        });
 
         // résultat
         return new HashSet<String>((Collection<String>) collection);
@@ -149,26 +132,18 @@ public class GroupesTraitFillerHelper
      * @param bean Bean à transformer.
      * @return La chaîne correspondante.
      */
-    private String toString(final TempsPrescription bean)
-    {
-        if (bean == null
-            || bean.getNb() == null
-            || bean.getUnite() == null)
-        {
+    private String toString(final TempsPrescription bean) {
+        if ((bean == null) || (bean.getNb() == null) || (bean.getUnite() == null)) {
             return JasperConstants.DEFAULT_FIELD_VALUE;
         }
-        return new StringBuilder()
-                .append(bean.getNb())
-                .append(bean.getUnite().getLibelleCourt())
-                .toString();
+        return new StringBuilder().append(bean.getNb()).append(bean.getUnite().getLibelleCourt()).toString();
     }
 
     /**
      * Getter sur timeHelper.
      * @return Retourne le timeHelper.
      */
-    TimeHelper getTimeHelper()
-    {
+    TimeHelper getTimeHelper() {
         return this.timeHelper;
     }
 
@@ -176,8 +151,7 @@ public class GroupesTraitFillerHelper
      * Setter pour timeHelper.
      * @param timeHelper le timeHelper à écrire.
      */
-    public void setTimeHelper(final TimeHelper timeHelper)
-    {
+    public void setTimeHelper(final TimeHelper timeHelper) {
         this.timeHelper = timeHelper;
     }
 
@@ -185,8 +159,7 @@ public class GroupesTraitFillerHelper
      * Getter sur alinea.
      * @return Retourne le alinea.
      */
-    static String getAlinea()
-    {
+    static String getAlinea() {
         return GroupesTraitFillerHelper.ALINEA;
     }
 

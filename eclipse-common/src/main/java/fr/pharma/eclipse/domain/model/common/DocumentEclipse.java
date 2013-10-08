@@ -10,13 +10,11 @@ import fr.pharma.eclipse.domain.model.suivi.common.Suivi;
 
 /**
  * Classe abstraite représentant un document de l'application Eclipse.
- 
+ * @author Netapsys
  * @version $Revision$ $Date$
  */
 @MappedSuperclass
-public abstract class DocumentEclipse
-    extends Suivi
-{
+public abstract class DocumentEclipse extends Suivi {
 
     /**
      * Serial ID.
@@ -45,21 +43,13 @@ public abstract class DocumentEclipse
      * Getter sur nomUtilisateur.
      * @return Retourne le nomUtilisateur.
      */
-    public String getNomUtilisateur()
-    {
+    public String getNomUtilisateur() {
         // Reformatage lié aux problèmes rencontrés en prod.
-        if (this.nomUtilisateur.contains("\\"))
-        {
-            return StringUtils.substringAfterLast(this.nomUtilisateur,
-                                                  "\\");
-        }
-        else if (this.nomUtilisateur.contains("/"))
-        {
-            return StringUtils.substringAfter(this.nomUtilisateur,
-                                              "/");
-        }
-        else
-        {
+        if (this.nomUtilisateur.contains("\\")) {
+            return StringUtils.substringAfterLast(this.nomUtilisateur, "\\");
+        } else if (this.nomUtilisateur.contains("/")) {
+            return StringUtils.substringAfter(this.nomUtilisateur, "/");
+        } else {
             return this.nomUtilisateur;
         }
     }
@@ -68,8 +58,7 @@ public abstract class DocumentEclipse
      * Setter pour nomUtilisateur.
      * @param nomUtilisateur le nomUtilisateur à écrire.
      */
-    public void setNomUtilisateur(final String nomUtilisateur)
-    {
+    public void setNomUtilisateur(final String nomUtilisateur) {
         this.nomUtilisateur = nomUtilisateur;
     }
 
@@ -77,8 +66,7 @@ public abstract class DocumentEclipse
      * Getter sur nomDisque.
      * @return Retourne le nomDisque.
      */
-    public String getNomDisque()
-    {
+    public String getNomDisque() {
         return this.nomDisque;
     }
 
@@ -86,8 +74,7 @@ public abstract class DocumentEclipse
      * Setter pour nomDisque.
      * @param nomDisque le nomDisque à écrire.
      */
-    public void setNomDisque(final String nomDisque)
-    {
+    public void setNomDisque(final String nomDisque) {
         this.nomDisque = nomDisque;
     }
 
@@ -95,14 +82,7 @@ public abstract class DocumentEclipse
      * {@inheritDoc}
      */
     @Override
-    public String toString()
-    {
-        return new StringBuilder("[DocumentEclipse] ")
-                .append(this.getId())
-                .append(",")
-                .append(this.getTypeDocument())
-                .append(",")
-                .append(this.nomUtilisateur)
-                .toString();
+    public String toString() {
+        return new StringBuilder("[DocumentEclipse] ").append(this.getId()).append(",").append(this.getTypeDocument()).append(",").append(this.nomUtilisateur).toString();
     }
 }

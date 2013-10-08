@@ -6,16 +6,14 @@ import javax.persistence.Entity;
 import fr.pharma.eclipse.domain.enums.document.TypeDocumentEssai;
 
 /**
- * Bean métier représentant un document rattaché au comité de protection des personnes de l'essai
- * clinique.
- 
+ * Bean métier représentant un document rattaché au comité de protection des
+ * personnes de l'essai clinique.
+ * @author Netapsys
  * @version $Revision$ $Date$
  */
 @Entity
 @DiscriminatorValue("COMITE_PROTEC_PERS")
-public class DocumentComiteProtectionPers
-    extends DocumentAdministratif
-{
+public class DocumentComiteProtectionPers extends DocumentAdministratif {
 
     /**
      * Serial ID.
@@ -25,8 +23,7 @@ public class DocumentComiteProtectionPers
     /**
      * Constructeur par défaut.
      */
-    public DocumentComiteProtectionPers()
-    {
+    public DocumentComiteProtectionPers() {
         this.setType(TypeDocumentEssai.COMITE_PROTEC_PERS);
     }
 

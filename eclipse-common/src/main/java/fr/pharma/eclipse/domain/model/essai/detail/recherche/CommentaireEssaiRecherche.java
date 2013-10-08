@@ -11,13 +11,11 @@ import fr.pharma.eclipse.domain.model.essai.CommentaireEssai;
 
 /**
  * Classe métier représentant un commentaire d'esssai clinique.
- 
+ * @author Netapsys
  * @version $Revision$ $Date$
  */
 @Entity(name = "essai_commentaire_detail_recherche")
-public class CommentaireEssaiRecherche
-    extends CommentaireEssai
-{
+public class CommentaireEssaiRecherche extends CommentaireEssai {
 
     /**
      * Serial ID.
@@ -36,8 +34,7 @@ public class CommentaireEssaiRecherche
      * Getter sur detailRecherche.
      * @return Retourne le detailRecherche.
      */
-    public DetailRecherche getDetailRecherche()
-    {
+    public DetailRecherche getDetailRecherche() {
         return this.detailRecherche;
     }
 
@@ -45,8 +42,7 @@ public class CommentaireEssaiRecherche
      * Setter pour detailRecherche.
      * @param detailRecherche le detailRecherche à écrire.
      */
-    public void setDetailRecherche(final DetailRecherche detailRecherche)
-    {
+    public void setDetailRecherche(final DetailRecherche detailRecherche) {
         this.detailRecherche = detailRecherche;
     }
 

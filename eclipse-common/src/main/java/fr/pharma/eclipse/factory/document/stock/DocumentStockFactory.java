@@ -9,12 +9,10 @@ import fr.pharma.eclipse.domain.model.stock.MvtStock;
 /**
  * Interface des fabriques de documents Stock.
  * @param <DOC> Type de document de produit créé.
- 
+ * @author Netapsys
  * @version $Revision$ $Date$
  */
-public interface DocumentStockFactory<DOC extends DocumentStock>
-    extends Serializable
-{
+public interface DocumentStockFactory<DOC extends DocumentStock> extends Serializable {
     /**
      * Méthode de création d'un nouveau document de Stock.
      * @param fichier Fichier importé par l'utilisateur.

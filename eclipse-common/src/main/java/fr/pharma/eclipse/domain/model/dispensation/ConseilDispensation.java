@@ -6,12 +6,10 @@ import fr.pharma.eclipse.domain.model.prescription.ProduitPrescrit;
 
 /**
  * Description de la classe.
- 
+ * @author Netapsys
  * @version $Revision$ $Date$
  */
-public class ConseilDispensation
-    implements Serializable
-{
+public class ConseilDispensation implements Serializable {
 
     /**
      * SerialVersionUID.
@@ -32,8 +30,7 @@ public class ConseilDispensation
      * Getter sur produitPrescrit.
      * @return Retourne le produitPrescrit.
      */
-    public ProduitPrescrit getProduitPrescrit()
-    {
+    public ProduitPrescrit getProduitPrescrit() {
         return this.produitPrescrit;
     }
 
@@ -41,8 +38,7 @@ public class ConseilDispensation
      * Setter pour produitPrescrit.
      * @param produitPrescrit le produitPrescrit à écrire.
      */
-    public void setProduitPrescrit(final ProduitPrescrit produitPrescrit)
-    {
+    public void setProduitPrescrit(final ProduitPrescrit produitPrescrit) {
         this.produitPrescrit = produitPrescrit;
     }
 
@@ -50,8 +46,7 @@ public class ConseilDispensation
      * Getter sur nbASortir.
      * @return Retourne le nbASortir.
      */
-    public Integer getNbASortir()
-    {
+    public Integer getNbASortir() {
         return this.nbASortir;
     }
 
@@ -59,8 +54,7 @@ public class ConseilDispensation
      * Setter pour nbASortir.
      * @param nbASortir le nbASortir à écrire.
      */
-    public void setNbASortir(final Integer nbASortir)
-    {
+    public void setNbASortir(final Integer nbASortir) {
         this.nbASortir = nbASortir;
     }
 

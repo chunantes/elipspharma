@@ -1,0 +1,106 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<beans 
+    xmlns="http://www.springframework.org/schema/beans" 
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xmlns:context="http://www.springframework.org/schema/context" 
+    xmlns:tx="http://www.springframework.org/schema/tx"
+	xmlns:jdbc="http://www.springframework.org/schema/jdbc"
+    xsi:schemaLocation="
+            http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd
+            http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context.xsd
+            http://www.springframework.org/schema/tx http://www.springframework.org/schema/tx/spring-tx.xsd
+            http://www.springframework.org/schema/jdbc http://www.springframework.org/schema/jdbc/spring-jdbc-3.0.xsd">
+			
+	<tx:annotation-driven/>
+    <context:component-scan base-package="fr.pharma.eclipse" />
+    
+    <bean id="inetAddress" class="java.net.InetAddress" factory-method="getLocalHost" />
+
+	<bean name="configPath" class="java.lang.String">
+		<constructor-arg value="#{systemProperties['elips-config-path']?:'classpath:META-INF/'+(inetAddress.hostName)}" />
+	</bean>
+	
+	<bean class="org.springframework.web.context.support.ServletContextPropertyPlaceholderConfigurer">
+		<property name="ignoreResourceNotFound" value="false" />
+		<property name="ignoreUnresolvablePlaceholders" value="false" />
+		<property name="locations">
+			<list>
+				<value>#{configPath}/project.properties</value>
+			</list>
+		</property>
+	</bean>
+	
+ 	<bean id="log4jInitialization"
+		class="org.springframework.beans.factory.config.MethodInvokingFactoryBean">
+		<property name="targetClass" value="org.springframework.util.Log4jConfigurer" />
+		<property name="targetMethod" value="initLogging" />
+		<property name="arguments">
+			<list>
+				<value>#{configPath}/log4j.xml</value>
+			</list>
+		</property>
+	</bean> 
+    
+    
+	<import resource="classpath:/config/messages-resources.xml" />
+	<import resource="classpath:/config/applicationContext-common.xml" />
+	<import resource="classpath:/config/applicationContext-common-sir.xml" />
+	
+	<!-- ===================================== -->
+	<!-- Redefinition des beans de persistence -->
+	<!-- ===================================== -->
+
+	<jdbc:embedded-database id="dataSource" type="H2" />
+	<jdbc:embedded-database id="dataSourceSir" type="H2" />
+
+	<bean id="entityManagerFactory" class="org.springframework.orm.jpa.LocalContainerEntityManagerFactoryBean">
+    	<property name="dataSource" ref="dataSource" />
+        <property name="persistenceUnitName" value="eclipse" />
+        <property name="jpaVendorAdapter">
+            <bean class="org.springframework.orm.jpa.vendor.HibernateJpaVendorAdapter">
+            	<property name="generateDdl" value="true" />
+                <property name="database" value="H2" />
+            </bean>
+        </property>
+        <property name="jpaProperties">
+            <props>
+            	<prop key="hibernate.connection.url">jdbc:h2:~/elips</prop>
+      			<prop key="hibernate.connection.username">app</prop>
+      			<prop key="hibernate.connection.password">app</prop>
+			    <prop key="hibernate.connection.driver_class">org.h2.Driver</prop>
+      			<prop key="hibernate.cache.provider_class">org.hibernate.cache.NoCacheProvider</prop>
+      			<prop key="hibernate.dialect">org.hibernate.dialect.H2Dialect</prop>
+      			<prop key="hibernate.hbm2ddl.auto">create</prop>
+      			<prop key="hibernate.hbm2ddl.import_files">test-data.sql</prop>           
+            </props>
+        </property>
+    </bean>
+    
+    <bean id="transactionManager" class="org.springframework.orm.jpa.JpaTransactionManager">
+        <property name="entityManagerFactory" ref="entityManagerFactory"/>
+    </bean>
+	 
+	<bean id="sirEntityManagerFactory" class="org.springframework.orm.jpa.LocalContainerEntityManagerFactoryBean">
+    	<property name="dataSource" ref="dataSourceSir" />
+        <property name="persistenceUnitName" value="sir" />
+        <property name="jpaVendorAdapter">
+            <bean class="org.springframework.orm.jpa.vendor.HibernateJpaVendorAdapter">
+            	<property name="generateDdl" value="true" />
+                <property name="database" value="H2" />
+            </bean>
+        </property>
+        <property name="jpaProperties">
+            <props>
+            	<prop key="hibernate.connection.url">jdbc:h2:elipsSir</prop>
+      			<prop key="hibernate.connection.username">app</prop>
+      			<prop key="hibernate.connection.password">app</prop>
+			    <prop key="hibernate.connection.driver_class">org.h2.Driver</prop>
+      			<prop key="hibernate.cache.provider_class">org.hibernate.cache.NoCacheProvider</prop>
+      			<!-- Laisser à auto pour empecher le chargement de 'import.sql' -->
+      			<prop key="hibernate.hbm2ddl.auto">auto</prop>
+            </props>
+        </property>
+    </bean>
+
+</beans>

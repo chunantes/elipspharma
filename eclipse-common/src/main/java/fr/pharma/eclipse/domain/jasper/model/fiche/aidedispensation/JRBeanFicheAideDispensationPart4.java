@@ -7,13 +7,12 @@ import fr.pharma.eclipse.jasper.constants.JasperConstants;
 /**
  * Classe représentant la source de données de la partie 4 (infos. dispensation)<br>
  * du rapport Jasper intitulé<br>
- * "Fiche de gestion et d'aide à la dispensation d'un médicament en essai clinique". *
- 
+ * "Fiche de gestion et d'aide à la dispensation d'un médicament en essai clinique"
+ * . *
+ * @author Netapsys
  * @version $Revision$ $Date$
  */
-public class JRBeanFicheAideDispensationPart4
-    implements JasperReportBean
-{
+public class JRBeanFicheAideDispensationPart4 implements JasperReportBean {
     /**
      * Serial ID.
      */
@@ -75,8 +74,7 @@ public class JRBeanFicheAideDispensationPart4
      * Getter sur investigateurPrincipal.
      * @return Retourne le investigateurPrincipal.
      */
-    public String getInvestigateurPrincipal()
-    {
+    public String getInvestigateurPrincipal() {
         return this.investigateurPrincipal;
     }
 
@@ -84,8 +82,7 @@ public class JRBeanFicheAideDispensationPart4
      * Setter pour investigateurPrincipal.
      * @param investigateurPrincipal le investigateurPrincipal à écrire.
      */
-    public void setInvestigateurPrincipal(final String investigateurPrincipal)
-    {
+    public void setInvestigateurPrincipal(final String investigateurPrincipal) {
         this.investigateurPrincipal = investigateurPrincipal;
     }
 
@@ -93,8 +90,7 @@ public class JRBeanFicheAideDispensationPart4
      * Getter sur coInvestigateurs.
      * @return Retourne le coInvestigateurs.
      */
-    public String getCoInvestigateurs()
-    {
+    public String getCoInvestigateurs() {
         return this.coInvestigateurs;
     }
 
@@ -102,8 +98,7 @@ public class JRBeanFicheAideDispensationPart4
      * Setter pour coInvestigateurs.
      * @param coInvestigateurs le coInvestigateurs à écrire.
      */
-    public void setCoInvestigateurs(final String coInvestigateurs)
-    {
+    public void setCoInvestigateurs(final String coInvestigateurs) {
         this.coInvestigateurs = coInvestigateurs;
     }
 
@@ -111,8 +106,7 @@ public class JRBeanFicheAideDispensationPart4
      * Getter sur typeDispensation.
      * @return Retourne le typeDispensation.
      */
-    public String getTypeDispensation()
-    {
+    public String getTypeDispensation() {
         return this.typeDispensation;
     }
 
@@ -120,8 +114,7 @@ public class JRBeanFicheAideDispensationPart4
      * Setter pour typeDispensation.
      * @param typeDispensation le typeDispensation à écrire.
      */
-    public void setTypeDispensation(final String typeDispensation)
-    {
+    public void setTypeDispensation(final String typeDispensation) {
         this.typeDispensation = typeDispensation;
     }
 
@@ -129,8 +122,7 @@ public class JRBeanFicheAideDispensationPart4
      * Getter sur hasTracabilite.
      * @return Retourne le hasTracabilite.
      */
-    public Boolean getHasTracabilite()
-    {
+    public Boolean getHasTracabilite() {
         return this.hasTracabilite;
     }
 
@@ -138,8 +130,7 @@ public class JRBeanFicheAideDispensationPart4
      * Setter pour hasTracabilite.
      * @param hasTracabilite le hasTracabilite à écrire.
      */
-    public void setHasTracabilite(final Boolean hasTracabilite)
-    {
+    public void setHasTracabilite(final Boolean hasTracabilite) {
         this.hasTracabilite = hasTracabilite;
     }
 
@@ -147,8 +138,7 @@ public class JRBeanFicheAideDispensationPart4
      * Getter sur tracabiliteObligatoire.
      * @return Retourne le tracabiliteObligatoire.
      */
-    public Boolean getTracabiliteObligatoire()
-    {
+    public Boolean getTracabiliteObligatoire() {
         return this.tracabiliteObligatoire;
     }
 
@@ -156,8 +146,7 @@ public class JRBeanFicheAideDispensationPart4
      * Setter pour tracabiliteObligatoire.
      * @param tracabiliteObligatoire le tracabiliteObligatoire à écrire.
      */
-    public void setTracabiliteObligatoire(final Boolean tracabiliteObligatoire)
-    {
+    public void setTracabiliteObligatoire(final Boolean tracabiliteObligatoire) {
         this.tracabiliteObligatoire = tracabiliteObligatoire;
     }
 
@@ -165,8 +154,7 @@ public class JRBeanFicheAideDispensationPart4
      * Getter sur destinatairesDispensation.
      * @return Retourne le destinatairesDispensation.
      */
-    public String getDestinatairesDispensation()
-    {
+    public String getDestinatairesDispensation() {
         return this.destinatairesDispensation;
     }
 
@@ -174,8 +162,7 @@ public class JRBeanFicheAideDispensationPart4
      * Setter pour destinatairesDispensation.
      * @param destinatairesDispensation le destinatairesDispensation à écrire.
      */
-    public void setDestinatairesDispensation(final String destinatairesDispensation)
-    {
+    public void setDestinatairesDispensation(final String destinatairesDispensation) {
         this.destinatairesDispensation = destinatairesDispensation;
     }
 
@@ -183,8 +170,7 @@ public class JRBeanFicheAideDispensationPart4
      * Getter sur hasNumeroTraitement.
      * @return Retourne le hasNumeroTraitement.
      */
-    public Boolean getHasNumeroTraitement()
-    {
+    public Boolean getHasNumeroTraitement() {
         return this.hasNumeroTraitement;
     }
 
@@ -192,8 +178,7 @@ public class JRBeanFicheAideDispensationPart4
      * Setter pour hasNumeroTraitement.
      * @param hasNumeroTraitement le hasNumeroTraitement à écrire.
      */
-    public void setHasNumeroTraitement(final Boolean hasNumeroTraitement)
-    {
+    public void setHasNumeroTraitement(final Boolean hasNumeroTraitement) {
         this.hasNumeroTraitement = hasNumeroTraitement;
     }
 
@@ -201,8 +186,7 @@ public class JRBeanFicheAideDispensationPart4
      * Getter sur infosPatient.
      * @return Retourne le infosPatient.
      */
-    public JRDataSource getInfosPatient()
-    {
+    public JRDataSource getInfosPatient() {
         return this.infosPatient;
     }
 
@@ -210,8 +194,7 @@ public class JRBeanFicheAideDispensationPart4
      * Setter pour infosPatient.
      * @param infosPatient le infosPatient à écrire.
      */
-    public void setInfosPatient(final JRDataSource infosPatient)
-    {
+    public void setInfosPatient(final JRDataSource infosPatient) {
         this.infosPatient = infosPatient;
     }
 
@@ -219,8 +202,7 @@ public class JRBeanFicheAideDispensationPart4
      * Getter sur hasGestionRetoursPharma.
      * @return Retourne le hasGestionRetoursPharma.
      */
-    public Boolean getHasGestionRetoursPharma()
-    {
+    public Boolean getHasGestionRetoursPharma() {
         return this.hasGestionRetoursPharma;
     }
 
@@ -228,8 +210,7 @@ public class JRBeanFicheAideDispensationPart4
      * Setter pour hasGestionRetoursPharma.
      * @param hasGestionRetoursPharma le hasGestionRetoursPharma à écrire.
      */
-    public void setHasGestionRetoursPharma(final Boolean hasGestionRetoursPharma)
-    {
+    public void setHasGestionRetoursPharma(final Boolean hasGestionRetoursPharma) {
         this.hasGestionRetoursPharma = hasGestionRetoursPharma;
     }
 
@@ -237,8 +218,7 @@ public class JRBeanFicheAideDispensationPart4
      * Getter sur aideDispensation.
      * @return Retourne le aideDispensation.
      */
-    public JRDataSource getAideDispensation()
-    {
+    public JRDataSource getAideDispensation() {
         return this.aideDispensation;
     }
 
@@ -246,8 +226,7 @@ public class JRBeanFicheAideDispensationPart4
      * Setter pour aideDispensation.
      * @param aideDispensation le aideDispensation à écrire.
      */
-    public void setAideDispensation(final JRDataSource aideDispensation)
-    {
+    public void setAideDispensation(final JRDataSource aideDispensation) {
         this.aideDispensation = aideDispensation;
     }
 

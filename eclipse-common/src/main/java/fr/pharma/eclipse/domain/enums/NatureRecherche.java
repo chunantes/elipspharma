@@ -2,11 +2,10 @@ package fr.pharma.eclipse.domain.enums;
 
 /**
  * Enumération pour les natures de recherche.
- 
+ * @author Netapsys
  * @version $Revision$ $Date$
  */
-public enum NatureRecherche
-{
+public enum NatureRecherche {
 
     /**
      * Dépistage.
@@ -72,8 +71,7 @@ public enum NatureRecherche
      * Constructeur privé.
      * @param libelle Libellé de la valeur de l'énumération.
      */
-    private NatureRecherche(final String libelle)
-    {
+    private NatureRecherche(final String libelle) {
         this.libelle = libelle;
     }
 
@@ -81,8 +79,7 @@ public enum NatureRecherche
      * Getter sur libelle.
      * @return Retourne le libelle.
      */
-    public String getLibelle()
-    {
+    public String getLibelle() {
         return this.libelle;
     }
 
@@ -90,8 +87,7 @@ public enum NatureRecherche
      * {@inheritDoc}
      */
     @Override
-    public String toString()
-    {
+    public String toString() {
         return this.getLibelle();
     }
 }

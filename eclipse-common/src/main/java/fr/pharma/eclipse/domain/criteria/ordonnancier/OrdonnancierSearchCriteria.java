@@ -7,12 +7,10 @@ import fr.pharma.eclipse.domain.model.stockage.Pharmacie;
 
 /**
  * Critère de recherche sur Ordonnancier.
- 
+ * @author Netapsys
  * @version $Revision$ $Date$
  */
-public class OrdonnancierSearchCriteria
-    extends AbstractSearchCriteria
-{
+public class OrdonnancierSearchCriteria extends AbstractSearchCriteria {
     /**
      * Serial ID.
      */
@@ -37,8 +35,7 @@ public class OrdonnancierSearchCriteria
      * {@inheritDoc}
      */
     @Override
-    public void clear()
-    {
+    public void clear() {
         this.setPharmacie(null);
         this.setDateDebut(null);
         this.setDateFin(null);
@@ -48,8 +45,7 @@ public class OrdonnancierSearchCriteria
      * Getter pour pharmacie.
      * @return Le pharmacie
      */
-    public Pharmacie getPharmacie()
-    {
+    public Pharmacie getPharmacie() {
         return this.pharmacie;
     }
 
@@ -57,8 +53,7 @@ public class OrdonnancierSearchCriteria
      * Setter pour pharmacie.
      * @param pharmacie Le pharmacie à écrire.
      */
-    public void setPharmacie(final Pharmacie pharmacie)
-    {
+    public void setPharmacie(final Pharmacie pharmacie) {
         this.pharmacie = pharmacie;
     }
 
@@ -66,8 +61,7 @@ public class OrdonnancierSearchCriteria
      * Getter pour dateDebut.
      * @return Le dateDebut
      */
-    public Calendar getDateDebut()
-    {
+    public Calendar getDateDebut() {
         return this.dateDebut;
     }
 
@@ -75,8 +69,7 @@ public class OrdonnancierSearchCriteria
      * Setter pour dateDebut.
      * @param dateDebut Le dateDebut à écrire.
      */
-    public void setDateDebut(final Calendar dateDebut)
-    {
+    public void setDateDebut(final Calendar dateDebut) {
         this.dateDebut = dateDebut;
     }
 
@@ -84,8 +77,7 @@ public class OrdonnancierSearchCriteria
      * Getter pour datefin.
      * @return Le datefin
      */
-    public Calendar getDateFin()
-    {
+    public Calendar getDateFin() {
         return this.dateFin;
     }
 
@@ -93,8 +85,7 @@ public class OrdonnancierSearchCriteria
      * Setter pour dateFin.
      * @param dateFin Le dateFin à écrire.
      */
-    public void setDateFin(final Calendar dateFin)
-    {
+    public void setDateFin(final Calendar dateFin) {
         this.dateFin = dateFin;
     }
 

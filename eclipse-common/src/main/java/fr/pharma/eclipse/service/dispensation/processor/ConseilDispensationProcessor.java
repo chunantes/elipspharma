@@ -4,17 +4,16 @@ import fr.pharma.eclipse.domain.model.dispensation.ConseilDispensation;
 import fr.pharma.eclipse.domain.model.prescription.ProduitPrescrit;
 
 /**
- * Interface définissant le comportement commun des processors en charge de caclculer les conseil
- * à la dispensation.
- 
+ * Interface définissant le comportement commun des processors en charge de
+ * caclculer les conseil à la dispensation.
+ * @author Netapsys
  * @version $Revision$ $Date$
  */
-public interface ConseilDispensationProcessor
-{
+public interface ConseilDispensationProcessor {
 
     /**
-     * Méthode en charge d'appliquer le traitement afin de calculer le conseil à la dispensation
-     * corresopndant au produit prescrit en paramètre.
+     * Méthode en charge d'appliquer le traitement afin de calculer le conseil à
+     * la dispensation corresopndant au produit prescrit en paramètre.
      * @param produitPrescrit Le produit prescrit.
      * @return Le conseil dispensation.
      */

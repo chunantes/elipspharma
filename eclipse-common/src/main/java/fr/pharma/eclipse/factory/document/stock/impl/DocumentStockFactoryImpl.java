@@ -11,13 +11,10 @@ import fr.pharma.eclipse.utils.file.FileHelper;
 /**
  * Fabrique de documents de Stock.
  * @param <DOC> Type de document de Stock.
- 
+ * @author Netapsys
  * @version $Revision$ $Date$
  */
-public class DocumentStockFactoryImpl<DOC extends DocumentStock>
-    extends AbstractDocumentEclipseFactory<DOC>
-    implements DocumentStockFactory<DOC>
-{
+public class DocumentStockFactoryImpl<DOC extends DocumentStock> extends AbstractDocumentEclipseFactory<DOC> implements DocumentStockFactory<DOC> {
     /**
      * SerialVersionUID.
      */
@@ -33,11 +30,9 @@ public class DocumentStockFactoryImpl<DOC extends DocumentStock>
      */
     @Override
     public DOC getInitializedObject(final Fichier fichier,
-                                    final MvtStock mvtStock)
-    {
+                                    final MvtStock mvtStock) {
         final DOC doc = this.factoryWithParent.getInitializedObject(mvtStock);
-        super.initializeObject(doc,
-                               fichier);
+        super.initializeObject(doc, fichier);
         return doc;
     }
 
@@ -45,8 +40,7 @@ public class DocumentStockFactoryImpl<DOC extends DocumentStock>
      * {@inheritDoc}
      */
     @Override
-    protected FileHelper getFileHelper()
-    {
+    protected FileHelper getFileHelper() {
         return super.getFileHelper();
     }
 
@@ -54,8 +48,7 @@ public class DocumentStockFactoryImpl<DOC extends DocumentStock>
      * Setter pour factoryWithParent.
      * @param factoryWithParent Le factoryWithParent à écrire.
      */
-    public void setFactoryWithParent(final BeanObjectWithParentFactory<DOC, MvtStock> factoryWithParent)
-    {
+    public void setFactoryWithParent(final BeanObjectWithParentFactory<DOC, MvtStock> factoryWithParent) {
         this.factoryWithParent = factoryWithParent;
     }
 

@@ -4,12 +4,10 @@ import fr.pharma.eclipse.exception.common.CommonException;
 
 /**
  * Exception levée en cas d'erreur de validation.
- 
+ * @author NETAPSYS
  * @version $Revision$ $Date$
  */
-public class ValidationException
-    extends CommonException
-{
+public class ValidationException extends CommonException {
 
     /**
      * Serial Id.
@@ -40,10 +38,8 @@ public class ValidationException
      * Constructeur principal.
      * @param errorCode Le code d'erreur de l'exception.
      */
-    public ValidationException(final String errorCode)
-    {
-        this(errorCode,
-             new String[0]);
+    public ValidationException(final String errorCode) {
+        this(errorCode, new String[0]);
     }
 
     /**
@@ -51,11 +47,8 @@ public class ValidationException
      * @param errorCode Le code d'erreur de l'exception.
      * @param value Valeur à définir dans le message d'erreur.
      */
-    public ValidationException(final String errorCode, final String value)
-    {
-        this(errorCode,
-             new String[]
-             {value });
+    public ValidationException(final String errorCode, final String value) {
+        this(errorCode, new String[]{value });
     }
 
     /**
@@ -63,11 +56,8 @@ public class ValidationException
      * @param errorCode Le code d'erreur de l'exception.
      * @param values Valeurs à définir dans le message d'erreur.
      */
-    public ValidationException(final String errorCode, final String[] values)
-    {
-        this(errorCode,
-             values,
-             null);
+    public ValidationException(final String errorCode, final String[] values) {
+        this(errorCode, values, null);
     }
 
     /**
@@ -76,8 +66,7 @@ public class ValidationException
      * @param values Valeurs a définir dans le message d'erreur.
      * @param source L'objet source de l'exception.
      */
-    public ValidationException(final String errorCode, final String[] values, final Object source)
-    {
+    public ValidationException(final String errorCode, final String[] values, final Object source) {
         super();
         this.setErrorCode(errorCode);
         this.setValues(values);
@@ -88,8 +77,7 @@ public class ValidationException
      * Getter pour errorCode.
      * @return Retourne le errorCode.
      */
-    public String getErrorCode()
-    {
+    public String getErrorCode() {
         return this.errorCode;
     }
 
@@ -97,8 +85,7 @@ public class ValidationException
      * Setter pour errorCode.
      * @param errorCode le errorCode à écrire.
      */
-    public void setErrorCode(final String errorCode)
-    {
+    public void setErrorCode(final String errorCode) {
         this.errorCode = errorCode;
     }
 
@@ -106,8 +93,7 @@ public class ValidationException
      * Getter pour values.
      * @return Retourne le values.
      */
-    public String[] getValues()
-    {
+    public String[] getValues() {
         return this.values;
     }
 
@@ -115,8 +101,7 @@ public class ValidationException
      * Setter pour values.
      * @param values le values à écrire.
      */
-    public void setValues(final String[] values)
-    {
+    public void setValues(final String[] values) {
         this.values = values;
     }
 
@@ -124,8 +109,7 @@ public class ValidationException
      * Getter pour source.
      * @return Retourne le source.
      */
-    public Object getSource()
-    {
+    public Object getSource() {
         return this.source;
     }
 
@@ -133,8 +117,7 @@ public class ValidationException
      * Setter pour source.
      * @param source le source à écrire.
      */
-    public void setSource(final Object source)
-    {
+    public void setSource(final Object source) {
         this.source = source;
     }
 }

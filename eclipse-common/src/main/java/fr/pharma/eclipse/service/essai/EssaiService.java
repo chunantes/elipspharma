@@ -3,7 +3,9 @@ package fr.pharma.eclipse.service.essai;
 import java.util.Calendar;
 import java.util.List;
 
+import fr.pharma.eclipse.domain.dto.EssaiDTO;
 import fr.pharma.eclipse.domain.enums.EtatEssai;
+import fr.pharma.eclipse.domain.model.acteur.Personne;
 import fr.pharma.eclipse.domain.model.essai.Essai;
 import fr.pharma.eclipse.domain.model.evenement.Evenement;
 import fr.pharma.eclipse.domain.model.stockage.Pharmacie;
@@ -11,38 +13,38 @@ import fr.pharma.eclipse.service.common.GenericService;
 
 /**
  * Interface de service de gestion de essai.
- 
+ * @author Netapsys
  * @version $Revision$ $Date$
  */
-public interface EssaiService
-    extends GenericService<Essai>
-{
+public interface EssaiService extends GenericService<Essai> {
     /**
      * Méthode de sauvegarde d'un essai.
-     * @param essai Essai à sauvegarder. séparés par des virgules. affiché lors de la demande de
-     * sauvegarde.
+     * @param essai Essai à sauvegarder. séparés par des virgules. affiché lors
+     * de la demande de sauvegarde.
      * @return L'essai enregistré.
      */
     Essai save(final Essai essai,
                final String idOngletsVisites);
 
     /**
-     * Méthode en charge d'initialiser le numéro d'enregistrement (ou numéro Sigrec) de l'essai
-     * par défaut.
-     * @param essai Essai dont on souhaite initialiser le numéro d'enregistrement.
+     * Méthode en charge d'initialiser le numéro d'enregistrement (ou numéro
+     * Sigrec) de l'essai par défaut.
+     * @param essai Essai dont on souhaite initialiser le numéro
+     * d'enregistrement.
      */
     void initNumEnregistrement(final Essai essai);
 
     /**
-     * Méthode en charge de retourner l'ensemble des pharmacies associées à un essai.
+     * Méthode en charge de retourner l'ensemble des pharmacies associées à un
+     * essai.
      * @param essai Essai.
      * @return Liste des pharmacies.
      */
     List<Pharmacie> getAllPharmacies(final Essai essai);
 
     /**
-     * Méthode en charge de retourner l'ensemble des pharmacies associées à un essai en prenant en
-     * compte les habilitations de l'utilisateur connecté.
+     * Méthode en charge de retourner l'ensemble des pharmacies associées à un
+     * essai en prenant en compte les habilitations de l'utilisateur connecté.
      * @param essai Essai.
      * @return Liste des pharmacies.
      */
@@ -88,4 +90,25 @@ public interface EssaiService
      */
     EtatEssai updateEtat(Essai essai);
 
+    /**
+     * Méthode en charge de récupérer les identifiants techniques des essais
+     * visibles de l'utilisateur.
+     * @param personne Objet Personne correspondant à l'utilisateur connecté.
+     * @return Liste des identifiants techniques des essais.
+     */
+    List<Long> getIdsEssaisOfUser(final Personne personne);
+
+    /**
+     * Méthode permettant d'autocompléter la recherche d'essai promoteur.
+     * @param requete Chaîne de caractères saisie par l'utilisateur.
+     * @return La liste résultat pour l'auto-complétion.
+     */
+    List<EssaiDTO> autoCompleteEssai(String requete);
+
+    /**
+     * Retourne un essaiDTO à partir d'un id technique d'essai
+     * @param id Id d'essai.
+     * @return Essai DTO
+     */
+    EssaiDTO getEssaiDTO(Long id);
 }

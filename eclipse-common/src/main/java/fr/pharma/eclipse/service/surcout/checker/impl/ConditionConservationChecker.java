@@ -8,14 +8,12 @@ import fr.pharma.eclipse.domain.model.produit.Produit;
 import fr.pharma.eclipse.service.surcout.checker.SurcoutChecker;
 
 /**
- * Classe en charge de déterminer si les conditions de conservations doiveent être chiffrés ou
- * non. essai.
- 
+ * Classe en charge de déterminer si les coûts de conditions de conservations
+ * doivent être calculés ou non.
+ * @author Netapsys
  * @version $Revision$ $Date$
  */
-public class ConditionConservationChecker
-    implements SurcoutChecker, Serializable
-{
+public class ConditionConservationChecker implements SurcoutChecker, Serializable {
     /**
      * Serial UID.
      */
@@ -24,17 +22,12 @@ public class ConditionConservationChecker
     /**
      * {@inheritDoc}
      */
-    public boolean check(final Essai essai)
-    {
+    @Override
+    public boolean check(final Essai essai) {
 
-        for (final Produit p : essai.getDetailProduit().getProduits())
-        {
+        for (final Produit p : essai.getDetailProduit().getProduits()) {
             final ConditionConservation c = p.getDetailLogistique().getConditionConservation();
-            if (c != null
-                && (c.equals(ConditionConservation.FROM_DEUX_TO_HUIT)
-                    || c.equals(ConditionConservation.MOINS_20) || c
-                        .equals(ConditionConservation.INF_30)))
-            {
+            if ((c != null) && (c.equals(ConditionConservation.FROM_DEUX_TO_HUIT) || c.equals(ConditionConservation.MOINS_20) || c.equals(ConditionConservation.MOINS_30) || c.equals(ConditionConservation.MOINS_80))) {
                 return true;
             }
         }

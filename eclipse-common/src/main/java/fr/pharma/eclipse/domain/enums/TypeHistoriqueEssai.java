@@ -2,11 +2,10 @@ package fr.pharma.eclipse.domain.enums;
 
 /**
  * Enumération des différents historiques d'un essai.
- 
+ * @author Netapsys
  * @version $Revision$ $Date$
  */
-public enum TypeHistoriqueEssai
-{
+public enum TypeHistoriqueEssai {
     /**
      * Historique général.
      */
@@ -73,30 +72,26 @@ public enum TypeHistoriqueEssai
     private int indexIHM;
 
     /**
-     * Propriété pour accéder à l'ensemble des modifications par introspection depuis un bean
-     * Essai.
+     * Propriété pour accéder à l'ensemble des modifications par introspection
+     * depuis un bean Essai.
      */
     private String modifsPropertyFromEssai;
 
     /**
-     * Propriété pour accéder au bean parent des modifications par introspection depuis un bean
-     * Essai.
+     * Propriété pour accéder au bean parent des modifications par introspection
+     * depuis un bean Essai.
      */
     private String modifsParentPropertyFromEssai;
 
     /**
      * Constructeur.
      * @param indexIHM Index de l'onglet correspondant dans l'IHM.
-     * @param modifsPropertyFromEssai Propriété pour accéder à l'ensemble des modifications par
-     * introspection depuis un bean Essai.
-     * @param modifsParentPropertyFromEssai Propriété pour accéder au bean parent des
+     * @param modifsPropertyFromEssai Propriété pour accéder à l'ensemble des
      * modifications par introspection depuis un bean Essai.
+     * @param modifsParentPropertyFromEssai Propriété pour accéder au bean
+     * parent des modifications par introspection depuis un bean Essai.
      */
-    private TypeHistoriqueEssai(
-                                final int indexIHM,
-                                final String modifsPropertyFromEssai,
-                                final String modifsParentPropertyFromEssai)
-    {
+    private TypeHistoriqueEssai(final int indexIHM, final String modifsPropertyFromEssai, final String modifsParentPropertyFromEssai) {
         this.indexIHM = indexIHM;
         this.modifsPropertyFromEssai = modifsPropertyFromEssai;
         this.modifsParentPropertyFromEssai = modifsParentPropertyFromEssai;
@@ -106,8 +101,7 @@ public enum TypeHistoriqueEssai
      * Getter sur modifsPropertyFromEssai.
      * @return Retourne le modifsPropertyFromEssai.
      */
-    public String getModifsPropertyFromEssai()
-    {
+    public String getModifsPropertyFromEssai() {
         return this.modifsPropertyFromEssai;
     }
 
@@ -115,8 +109,7 @@ public enum TypeHistoriqueEssai
      * Getter sur modifsParentPropertyFromEssai.
      * @return Retourne le modifsParentPropertyFromEssai.
      */
-    public String getModifsParentPropertyFromEssai()
-    {
+    public String getModifsParentPropertyFromEssai() {
         return this.modifsParentPropertyFromEssai;
     }
 
@@ -124,8 +117,7 @@ public enum TypeHistoriqueEssai
      * Getter sur indexIHM.
      * @return Retourne le indexIHM.
      */
-    public int getIndexIHM()
-    {
+    public int getIndexIHM() {
         return this.indexIHM;
     }
 }

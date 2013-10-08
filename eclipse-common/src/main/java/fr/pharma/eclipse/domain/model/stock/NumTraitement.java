@@ -4,12 +4,10 @@ import java.io.Serializable;
 
 /**
  * Bean représentant les informations de numéro de traitement.
- 
+ * @author Netapsys
  * @version $Revision$ $Date$
  */
-public class NumTraitement
-    implements Serializable
-{
+public class NumTraitement implements Serializable {
     /**
      * Serial ID.
      */
@@ -29,8 +27,7 @@ public class NumTraitement
      * Getter pour numTraitement.
      * @return Le numTraitement
      */
-    public String getNumTraitement()
-    {
+    public String getNumTraitement() {
         return this.numTraitement;
     }
 
@@ -38,8 +35,7 @@ public class NumTraitement
      * Setter pour numTraitement.
      * @param numTraitement Le numTraitement à écrire.
      */
-    public void setNumTraitement(final String numTraitement)
-    {
+    public void setNumTraitement(final String numTraitement) {
         this.numTraitement = numTraitement;
     }
 
@@ -47,8 +43,7 @@ public class NumTraitement
      * Getter pour quantite.
      * @return Le quantite
      */
-    public Integer getQuantite()
-    {
+    public Integer getQuantite() {
         return this.quantite;
     }
 
@@ -56,8 +51,7 @@ public class NumTraitement
      * Setter pour quantite.
      * @param quantite Le quantite à écrire.
      */
-    public void setQuantite(final Integer quantite)
-    {
+    public void setQuantite(final Integer quantite) {
         this.quantite = quantite;
     }
 

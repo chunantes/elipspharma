@@ -2,11 +2,10 @@ package fr.pharma.eclipse.domain.enums;
 
 /**
  * Enumération des différents phases de recherche.
- 
+ * @author Netapsys
  * @version $Revision$ $Date$
  */
-public enum PhaseRecherche
-{
+public enum PhaseRecherche {
     /**
      * Phase I.
      */
@@ -41,8 +40,7 @@ public enum PhaseRecherche
      * Constructeur privé.
      * @param libelle Libellé de la valeur de l'énumération.
      */
-    private PhaseRecherche(final String libelle)
-    {
+    private PhaseRecherche(final String libelle) {
         this.libelle = libelle;
     }
 
@@ -50,8 +48,7 @@ public enum PhaseRecherche
      * Getter sur libelle.
      * @return Retourne le libelle.
      */
-    public String getLibelle()
-    {
+    public String getLibelle() {
         return this.libelle;
     }
 
@@ -59,8 +56,7 @@ public enum PhaseRecherche
      * {@inheritDoc}
      */
     @Override
-    public String toString()
-    {
+    public String toString() {
         return this.getLibelle();
     }
 }

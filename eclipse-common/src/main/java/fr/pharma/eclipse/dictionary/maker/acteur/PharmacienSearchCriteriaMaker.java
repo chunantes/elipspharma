@@ -11,12 +11,10 @@ import fr.pharma.eclipse.domain.criteria.common.SearchCriteria;
 
 /**
  * Artisan de recherche pour les pharmaciens.
- 
+ * @author Netapsys
  * @version $Revision$ $Date$
  */
-public class PharmacienSearchCriteriaMaker
-    extends AbstractCriteriaMaker
-{
+public class PharmacienSearchCriteriaMaker extends AbstractCriteriaMaker {
 
     /**
      * Serial ID.
@@ -31,8 +29,7 @@ public class PharmacienSearchCriteriaMaker
     /**
      * Constructeur par défaut.
      */
-    public PharmacienSearchCriteriaMaker()
-    {
+    public PharmacienSearchCriteriaMaker() {
         super(PharmacienSearchCriteria.class);
     }
 
@@ -41,32 +38,21 @@ public class PharmacienSearchCriteriaMaker
      */
     @Override
     public void transform(final Criteria criteria,
-                          final SearchCriteria searchCrit)
-    {
-        this.personneCriteriaMaker.transform(criteria,
-                                             searchCrit);
+                          final SearchCriteria searchCrit) {
+        this.personneCriteriaMaker.transform(criteria, searchCrit);
 
         final PharmacienSearchCriteria crit = (PharmacienSearchCriteria) searchCrit;
 
         // Type de pharmacien
-        if (crit.getTypePharmacien() != null)
-        {
-            CriteriaMakerUtils.addCritere(criteria,
-                                          "typePharmacien",
-                                          crit.getTypePharmacien());
+        if (crit.getTypePharmacien() != null) {
+            CriteriaMakerUtils.addCritere(criteria, "typePharmacien", crit.getTypePharmacien());
         }
 
         // Pharmacie
-        if (crit.getPharmacies() != null
-            && !crit.getPharmacies().isEmpty())
-        {
-            final List<Integer> pharmacieIds =
-                CriteriaMakerUtils.prepareObjectIds(crit.getPharmacies());
-            final Criteria critPharmacies = criteria.createCriteria("pharmacies",
-                                                                    "pharmacies");
-            CriteriaMakerUtils.addInCritere(critPharmacies,
-                                            "pharmacies.id",
-                                            pharmacieIds.toArray());
+        if ((crit.getPharmacies() != null) && !crit.getPharmacies().isEmpty()) {
+            final List<Integer> pharmacieIds = CriteriaMakerUtils.prepareObjectIds(crit.getPharmacies());
+            final Criteria critPharmacies = criteria.createCriteria("pharmacies", "pharmacies");
+            CriteriaMakerUtils.addInCritere(critPharmacies, "pharmacies.id", pharmacieIds.toArray());
         }
     }
 
@@ -74,8 +60,7 @@ public class PharmacienSearchCriteriaMaker
      * Getter sur personneCriteriaMaker.
      * @return Retourne le personneCriteriaMaker.
      */
-    PersonneSearchCriteriaMaker getPersonneCriteriaMaker()
-    {
+    PersonneSearchCriteriaMaker getPersonneCriteriaMaker() {
         return this.personneCriteriaMaker;
     }
 
@@ -83,8 +68,7 @@ public class PharmacienSearchCriteriaMaker
      * Setter pour personneCriteriaMaker.
      * @param personneCriteriaMaker le personneCriteriaMaker à écrire.
      */
-    public void setPersonneCriteriaMaker(final PersonneSearchCriteriaMaker personneCriteriaMaker)
-    {
+    public void setPersonneCriteriaMaker(final PersonneSearchCriteriaMaker personneCriteriaMaker) {
         this.personneCriteriaMaker = personneCriteriaMaker;
     }
 

@@ -3,18 +3,17 @@ package fr.pharma.eclipse.jasper.constants;
 import org.apache.commons.lang.StringUtils;
 
 /**
- * Classe contenant les constantes utilisées pour la génération des rapports Jasper.
- 
+ * Classe contenant les constantes utilisées pour la génération des rapports
+ * Jasper.
+ * @author Netapsys
  * @version $Revision$ $Date$
  */
-public final class JasperConstants
-{
+public final class JasperConstants {
 
     /**
      * Constructeur privé.
      */
-    private JasperConstants()
-    {
+    private JasperConstants() {
         super();
     }
 
@@ -24,12 +23,14 @@ public final class JasperConstants
     public static final String JASPER_PREFIX = "jasper.";
 
     /**
-     * Clé du paramètre contenant le chemin vers le répertoire contenant les sous-rapports.
+     * Clé du paramètre contenant le chemin vers le répertoire contenant les
+     * sous-rapports.
      */
     public static final String SUBREPORT_DIRECTORY = "SUBREPORT_DIR";
 
     /**
-     * Clé du paramètre contenant le chemin vers le répertoire contenant la webapp.
+     * Clé du paramètre contenant le chemin vers le répertoire contenant la
+     * webapp.
      */
     public static final String CHECKBOX_DIRECTORY = "CHECKBOX_DIR";
 

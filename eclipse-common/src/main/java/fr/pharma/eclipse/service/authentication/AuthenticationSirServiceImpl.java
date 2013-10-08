@@ -23,12 +23,10 @@ import fr.pharma.eclipse.service.authentication.helper.AuthenticationHelper;
 
 /**
  * Classe métier de gestion d'authentification depuis SIR.
- 
+ * @author Netapsys
  * @version $Revision$ $Date$
  */
-public class AuthenticationSirServiceImpl
-    implements UserDetailsService, Serializable
-{
+public class AuthenticationSirServiceImpl implements UserDetailsService, Serializable {
     /**
      * Serial ID.
      */
@@ -56,38 +54,23 @@ public class AuthenticationSirServiceImpl
      */
     @Override
     @Transactional(readOnly = true)
-    public UserDetails loadUserByUsername(final String login)
-        throws UsernameNotFoundException,
-            DataAccessException
-    {
+    public UserDetails loadUserByUsername(final String login) throws UsernameNotFoundException, DataAccessException {
 
         this.log.debug("Authentification par SIR.");
         final PersonneSir personneSir = this.getPersonneSir(login);
         final Personne personneEclipse = this.helper.getPersonneEclipse(login);
 
-        this.log.debug("Personne SIR : "
-                       + personneSir);
-        this.log.debug("Personne Eclipse : "
-                       + personneEclipse);
+        this.log.debug("Personne SIR : " + personneSir);
+        this.log.debug("Personne Eclipse : " + personneEclipse);
 
         // Personne présente dans SIR + Eclipse
         // Login + password récupéré depuis SIR
         // Authorities récupérées depuis Eclipse
-        if (personneSir != null
-            && StringUtils.isNotEmpty(personneSir.getPassword())
-            && personneEclipse != null)
-        {
+        if ((personneSir != null) && StringUtils.isNotEmpty(personneSir.getPassword()) && (personneEclipse != null)) {
             this.log.debug("Authentification PAR SIR Ok ");
-            return new UserSecurity(personneSir.getLogin(),
-                                    personneSir.getPassword(),
-                                    personneSir.getSalt(),
-                                    this.helper.getAuthorities(personneEclipse),
-                                    personneEclipse.getId(),
-                                    personneEclipse.getType().getRolePersonne(),
-                                    personneEclipse.getIsAdmin());
-        }
-        else
-        {
+            return new UserSecurity(personneSir.getLogin(), personneSir.getPassword(), personneSir.getSalt(), this.helper.getAuthorities(personneEclipse), personneEclipse.getId(),
+                                    personneEclipse.getType().getRolePersonne(), personneEclipse.getIsAdmin());
+        } else {
             this.log.debug("Authentification PAR SIR Echouée ");
             return null;
         }
@@ -98,8 +81,7 @@ public class AuthenticationSirServiceImpl
      * @param login Login.
      * @return Personne SIR.
      */
-    protected PersonneSir getPersonneSir(final String login)
-    {
+    protected PersonneSir getPersonneSir(final String login) {
         final PersonneSirSearchCriteria criteria = new PersonneSirSearchCriteria();
         criteria.setLogin(login);
         criteria.setStrictSearchLogin(Boolean.TRUE);
@@ -107,12 +89,9 @@ public class AuthenticationSirServiceImpl
         final List<PersonneSir> personneSirs = this.personneSirDao.getAll(criteria);
 
         // Récupération OK dans SIR
-        if (personneSirs.size() == 1)
-        {
+        if (personneSirs.size() == 1) {
             return personneSirs.get(0);
-        }
-        else
-        {
+        } else {
             return null;
         }
     }
@@ -121,8 +100,7 @@ public class AuthenticationSirServiceImpl
      * Setter pour personneSirDao.
      * @param personneSirDao Le personneSirDao à écrire.
      */
-    public void setPersonneSirDao(final GenericSirDao<PersonneSir> personneSirDao)
-    {
+    public void setPersonneSirDao(final GenericSirDao<PersonneSir> personneSirDao) {
         this.personneSirDao = personneSirDao;
     }
 
@@ -130,8 +108,7 @@ public class AuthenticationSirServiceImpl
      * Setter pour helper.
      * @param helper Le helper à écrire.
      */
-    public void setHelper(final AuthenticationHelper helper)
-    {
+    public void setHelper(final AuthenticationHelper helper) {
         this.helper = helper;
     }
 

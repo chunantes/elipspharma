@@ -7,13 +7,12 @@ import fr.pharma.eclipse.jasper.constants.JasperConstants;
 /**
  * Classe représentant la source de données de la partie 1 (générale)<br>
  * du rapport Jasper intitulé<br>
- * "Fiche de gestion et d'aide à la dispensation d'un médicament en essai clinique".
- 
+ * "Fiche de gestion et d'aide à la dispensation d'un médicament en essai clinique"
+ * .
+ * @author Netapsys
  * @version $Revision$ $Date$
  */
-public class JRBeanFicheAideDispensationPart1
-    implements JasperReportBean
-{
+public class JRBeanFicheAideDispensationPart1 implements JasperReportBean {
 
     /**
      * Serial ID.
@@ -129,8 +128,7 @@ public class JRBeanFicheAideDispensationPart1
      * Getter sur promoteur.
      * @return Retourne le promoteur.
      */
-    public String getPromoteur()
-    {
+    public String getPromoteur() {
         return this.promoteur;
     }
 
@@ -138,8 +136,7 @@ public class JRBeanFicheAideDispensationPart1
      * Setter pour promoteur.
      * @param promoteur le promoteur à écrire.
      */
-    public void setPromoteur(final String promoteur)
-    {
+    public void setPromoteur(final String promoteur) {
         this.promoteur = promoteur;
     }
 
@@ -147,8 +144,7 @@ public class JRBeanFicheAideDispensationPart1
      * Getter sur codeProtocole.
      * @return Retourne le codeProtocole.
      */
-    public String getCodeProtocole()
-    {
+    public String getCodeProtocole() {
         return this.codeProtocole;
     }
 
@@ -156,8 +152,7 @@ public class JRBeanFicheAideDispensationPart1
      * Setter pour codeProtocole.
      * @param codeProtocole le codeProtocole à écrire.
      */
-    public void setCodeProtocole(final String codeProtocole)
-    {
+    public void setCodeProtocole(final String codeProtocole) {
         this.codeProtocole = codeProtocole;
     }
 
@@ -165,8 +160,7 @@ public class JRBeanFicheAideDispensationPart1
      * Getter sur nomUsuel.
      * @return Retourne le nomUsuel.
      */
-    public String getNomUsuel()
-    {
+    public String getNomUsuel() {
         return this.nomUsuel;
     }
 
@@ -174,8 +168,7 @@ public class JRBeanFicheAideDispensationPart1
      * Setter pour nomUsuel.
      * @param nomUsuel le nomUsuel à écrire.
      */
-    public void setNomUsuel(final String nomUsuel)
-    {
+    public void setNomUsuel(final String nomUsuel) {
         this.nomUsuel = nomUsuel;
     }
 
@@ -183,8 +176,7 @@ public class JRBeanFicheAideDispensationPart1
      * Getter sur titreProtocole.
      * @return Retourne le titreProtocole.
      */
-    public String getTitreProtocole()
-    {
+    public String getTitreProtocole() {
         return this.titreProtocole;
     }
 
@@ -192,8 +184,7 @@ public class JRBeanFicheAideDispensationPart1
      * Setter pour titreProtocole.
      * @param titreProtocole le titreProtocole à écrire.
      */
-    public void setTitreProtocole(final String titreProtocole)
-    {
+    public void setTitreProtocole(final String titreProtocole) {
         this.titreProtocole = titreProtocole;
     }
 
@@ -201,8 +192,7 @@ public class JRBeanFicheAideDispensationPart1
      * Getter sur investigateur.
      * @return Retourne le investigateur.
      */
-    public String getInvestigateur()
-    {
+    public String getInvestigateur() {
         return this.investigateur;
     }
 
@@ -210,8 +200,7 @@ public class JRBeanFicheAideDispensationPart1
      * Setter pour investigateur.
      * @param investigateur le investigateur à écrire.
      */
-    public void setInvestigateur(final String investigateur)
-    {
+    public void setInvestigateur(final String investigateur) {
         this.investigateur = investigateur;
     }
 
@@ -219,8 +208,7 @@ public class JRBeanFicheAideDispensationPart1
      * Getter sur serviceInvestigateur.
      * @return Retourne le serviceInvestigateur.
      */
-    public String getServiceInvestigateur()
-    {
+    public String getServiceInvestigateur() {
         return this.serviceInvestigateur;
     }
 
@@ -228,8 +216,7 @@ public class JRBeanFicheAideDispensationPart1
      * Setter pour serviceInvestigateur.
      * @param serviceInvestigateur le serviceInvestigateur à écrire.
      */
-    public void setServiceInvestigateur(final String serviceInvestigateur)
-    {
+    public void setServiceInvestigateur(final String serviceInvestigateur) {
         this.serviceInvestigateur = serviceInvestigateur;
     }
 
@@ -237,8 +224,7 @@ public class JRBeanFicheAideDispensationPart1
      * Getter sur phase.
      * @return Retourne le phase.
      */
-    public String getPhase()
-    {
+    public String getPhase() {
         return this.phase;
     }
 
@@ -246,8 +232,7 @@ public class JRBeanFicheAideDispensationPart1
      * Setter pour phase.
      * @param phase le phase à écrire.
      */
-    public void setPhase(final String phase)
-    {
+    public void setPhase(final String phase) {
         this.phase = phase;
     }
 
@@ -255,8 +240,7 @@ public class JRBeanFicheAideDispensationPart1
      * Getter sur multicentrique.
      * @return Retourne le multicentrique.
      */
-    public String getMulticentrique()
-    {
+    public String getMulticentrique() {
         return this.multicentrique;
     }
 
@@ -264,8 +248,7 @@ public class JRBeanFicheAideDispensationPart1
      * Setter pour multicentrique.
      * @param multicentrique le multicentrique à écrire.
      */
-    public void setMulticentrique(final String multicentrique)
-    {
+    public void setMulticentrique(final String multicentrique) {
         this.multicentrique = multicentrique;
     }
 
@@ -273,8 +256,7 @@ public class JRBeanFicheAideDispensationPart1
      * Getter sur nbCentres.
      * @return Retourne le nbCentres.
      */
-    public String getNbCentres()
-    {
+    public String getNbCentres() {
         return this.nbCentres;
     }
 
@@ -282,8 +264,7 @@ public class JRBeanFicheAideDispensationPart1
      * Setter pour nbCentres.
      * @param nbCentres le nbCentres à écrire.
      */
-    public void setNbCentres(final String nbCentres)
-    {
+    public void setNbCentres(final String nbCentres) {
         this.nbCentres = nbCentres;
     }
 
@@ -291,8 +272,7 @@ public class JRBeanFicheAideDispensationPart1
      * Getter sur nbPatients.
      * @return Retourne le nbPatients.
      */
-    public String getNbPatients()
-    {
+    public String getNbPatients() {
         return this.nbPatients;
     }
 
@@ -300,8 +280,7 @@ public class JRBeanFicheAideDispensationPart1
      * Setter pour nbPatients.
      * @param nbPatients le nbPatients à écrire.
      */
-    public void setNbPatients(final String nbPatients)
-    {
+    public void setNbPatients(final String nbPatients) {
         this.nbPatients = nbPatients;
     }
 
@@ -309,8 +288,7 @@ public class JRBeanFicheAideDispensationPart1
      * Getter sur nbGroupes.
      * @return Retourne le nbGroupes.
      */
-    public String getNbGroupes()
-    {
+    public String getNbGroupes() {
         return this.nbGroupes;
     }
 
@@ -318,8 +296,7 @@ public class JRBeanFicheAideDispensationPart1
      * Setter pour nbGroupes.
      * @param nbGroupes le nbGroupes à écrire.
      */
-    public void setNbGroupes(final String nbGroupes)
-    {
+    public void setNbGroupes(final String nbGroupes) {
         this.nbGroupes = nbGroupes;
     }
 
@@ -327,8 +304,7 @@ public class JRBeanFicheAideDispensationPart1
      * Getter sur dateMiseEnPlace.
      * @return Retourne le dateMiseEnPlace.
      */
-    public String getDateMiseEnPlace()
-    {
+    public String getDateMiseEnPlace() {
         return this.dateMiseEnPlace;
     }
 
@@ -336,8 +312,7 @@ public class JRBeanFicheAideDispensationPart1
      * Setter pour dateMiseEnPlace.
      * @param dateMiseEnPlace le dateMiseEnPlace à écrire.
      */
-    public void setDateMiseEnPlace(final String dateMiseEnPlace)
-    {
+    public void setDateMiseEnPlace(final String dateMiseEnPlace) {
         this.dateMiseEnPlace = dateMiseEnPlace;
     }
 
@@ -345,8 +320,7 @@ public class JRBeanFicheAideDispensationPart1
      * Getter sur dateActivation.
      * @return Retourne le dateActivation.
      */
-    public String getDateActivation()
-    {
+    public String getDateActivation() {
         return this.dateActivation;
     }
 
@@ -354,8 +328,7 @@ public class JRBeanFicheAideDispensationPart1
      * Setter pour dateActivation.
      * @param dateActivation le dateActivation à écrire.
      */
-    public void setDateActivation(final String dateActivation)
-    {
+    public void setDateActivation(final String dateActivation) {
         this.dateActivation = dateActivation;
     }
 
@@ -363,8 +336,7 @@ public class JRBeanFicheAideDispensationPart1
      * Getter sur datePrevueFinInclusions.
      * @return Retourne le datePrevueFinInclusions.
      */
-    public String getDatePrevueFinInclusions()
-    {
+    public String getDatePrevueFinInclusions() {
         return this.datePrevueFinInclusions;
     }
 
@@ -372,8 +344,7 @@ public class JRBeanFicheAideDispensationPart1
      * Setter pour datePrevueFinInclusions.
      * @param datePrevueFinInclusions le datePrevueFinInclusions à écrire.
      */
-    public void setDatePrevueFinInclusions(final String datePrevueFinInclusions)
-    {
+    public void setDatePrevueFinInclusions(final String datePrevueFinInclusions) {
         this.datePrevueFinInclusions = datePrevueFinInclusions;
     }
 
@@ -381,8 +352,7 @@ public class JRBeanFicheAideDispensationPart1
      * Getter sur datePrevueFinEssai.
      * @return Retourne le datePrevueFinEssai.
      */
-    public String getDatePrevueFinEssai()
-    {
+    public String getDatePrevueFinEssai() {
         return this.datePrevueFinEssai;
     }
 
@@ -390,8 +360,7 @@ public class JRBeanFicheAideDispensationPart1
      * Setter pour datePrevueFinEssai.
      * @param datePrevueFinEssai le datePrevueFinEssai à écrire.
      */
-    public void setDatePrevueFinEssai(final String datePrevueFinEssai)
-    {
+    public void setDatePrevueFinEssai(final String datePrevueFinEssai) {
         this.datePrevueFinEssai = datePrevueFinEssai;
     }
 
@@ -399,8 +368,7 @@ public class JRBeanFicheAideDispensationPart1
      * Getter sur qualiteInsu.
      * @return Retourne le qualiteInsu.
      */
-    public String getQualiteInsu()
-    {
+    public String getQualiteInsu() {
         return this.qualiteInsu;
     }
 
@@ -408,8 +376,7 @@ public class JRBeanFicheAideDispensationPart1
      * Setter pour qualiteInsu.
      * @param qualiteInsu le qualiteInsu à écrire.
      */
-    public void setQualiteInsu(final String qualiteInsu)
-    {
+    public void setQualiteInsu(final String qualiteInsu) {
         this.qualiteInsu = qualiteInsu;
     }
 
@@ -417,8 +384,7 @@ public class JRBeanFicheAideDispensationPart1
      * Getter sur contactsPromoteurs.
      * @return Retourne le contactsPromoteurs.
      */
-    public JRDataSource getContactsPromoteurs()
-    {
+    public JRDataSource getContactsPromoteurs() {
         return this.contactsPromoteurs;
     }
 
@@ -426,8 +392,7 @@ public class JRBeanFicheAideDispensationPart1
      * Setter pour contactsPromoteurs.
      * @param contactsPromoteurs le contactsPromoteurs à écrire.
      */
-    public void setContactsPromoteurs(final JRDataSource contactsPromoteurs)
-    {
+    public void setContactsPromoteurs(final JRDataSource contactsPromoteurs) {
         this.contactsPromoteurs = contactsPromoteurs;
     }
 
@@ -435,8 +400,7 @@ public class JRBeanFicheAideDispensationPart1
      * Getter sur contactsInvestigateurs.
      * @return Retourne le contactsInvestigateurs.
      */
-    public JRDataSource getContactsInvestigateurs()
-    {
+    public JRDataSource getContactsInvestigateurs() {
         return this.contactsInvestigateurs;
     }
 
@@ -444,8 +408,7 @@ public class JRBeanFicheAideDispensationPart1
      * Setter pour contactsInvestigateurs.
      * @param contactsInvestigateurs le contactsInvestigateurs à écrire.
      */
-    public void setContactsInvestigateurs(final JRDataSource contactsInvestigateurs)
-    {
+    public void setContactsInvestigateurs(final JRDataSource contactsInvestigateurs) {
         this.contactsInvestigateurs = contactsInvestigateurs;
     }
 
@@ -453,8 +416,7 @@ public class JRBeanFicheAideDispensationPart1
      * Getter sur contactsPharmacies.
      * @return Retourne le contactsPharmacies.
      */
-    public JRDataSource getContactsPharmacies()
-    {
+    public JRDataSource getContactsPharmacies() {
         return this.contactsPharmacies;
     }
 
@@ -462,8 +424,7 @@ public class JRBeanFicheAideDispensationPart1
      * Setter pour contactsPharmacies.
      * @param contactsPharmacies le contactsPharmacies à écrire.
      */
-    public void setContactsPharmacies(final JRDataSource contactsPharmacies)
-    {
+    public void setContactsPharmacies(final JRDataSource contactsPharmacies) {
         this.contactsPharmacies = contactsPharmacies;
     }
 
@@ -471,8 +432,7 @@ public class JRBeanFicheAideDispensationPart1
      * Getter sur groupesTraitement.
      * @return Retourne le groupesTraitement.
      */
-    public JRDataSource getGroupesTraitement()
-    {
+    public JRDataSource getGroupesTraitement() {
         return this.groupesTraitement;
     }
 
@@ -480,8 +440,7 @@ public class JRBeanFicheAideDispensationPart1
      * Setter pour groupesTraitement.
      * @param groupesTraitement le groupesTraitement à écrire.
      */
-    public void setGroupesTraitement(final JRDataSource groupesTraitement)
-    {
+    public void setGroupesTraitement(final JRDataSource groupesTraitement) {
         this.groupesTraitement = groupesTraitement;
     }
 
@@ -489,8 +448,7 @@ public class JRBeanFicheAideDispensationPart1
      * Getter pour numeroCentre.
      * @return Le numeroCentre
      */
-    public String getNumeroCentre()
-    {
+    public String getNumeroCentre() {
         return this.numeroCentre;
     }
 
@@ -498,8 +456,7 @@ public class JRBeanFicheAideDispensationPart1
      * Setter pour numeroCentre.
      * @param numeroCentre Le numeroCentre à écrire.
      */
-    public void setNumeroCentre(final String numeroCentre)
-    {
+    public void setNumeroCentre(final String numeroCentre) {
         this.numeroCentre = numeroCentre;
     }
 

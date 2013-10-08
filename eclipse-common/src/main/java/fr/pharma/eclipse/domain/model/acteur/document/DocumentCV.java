@@ -7,14 +7,12 @@ import fr.pharma.eclipse.domain.enums.document.TypeDocumentPharmacien;
 
 /**
  * Bean métier représentant un document CV d'un pharmacien.
- 
+ * @author Netapsys
  * @version $Revision$ $Date$
  */
 @Entity
 @DiscriminatorValue("CV")
-public class DocumentCV
-    extends DocumentPharmacien
-{
+public class DocumentCV extends DocumentPharmacien {
 
     /**
      * Serial ID.
@@ -24,8 +22,7 @@ public class DocumentCV
     /**
      * Constructeur par défaut.
      */
-    public DocumentCV()
-    {
+    public DocumentCV() {
         this.setType(TypeDocumentPharmacien.CV);
     }
 

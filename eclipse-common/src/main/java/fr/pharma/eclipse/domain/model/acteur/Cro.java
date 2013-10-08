@@ -6,14 +6,12 @@ import javax.persistence.Entity;
 
 /**
  * Classe métier représentant un CRO.
- 
+ * @author Netapsys
  * @version $Revision$ $Date$
  */
 @Entity
 @DiscriminatorValue("CRO")
-public class Cro
-    extends Personne
-{
+public class Cro extends Personne {
     /**
      * Serial ID.
      */
@@ -29,8 +27,7 @@ public class Cro
      * Getter pour nomSociete.
      * @return Le nomSociete
      */
-    public String getNomSociete()
-    {
+    public String getNomSociete() {
         return this.nomSociete;
     }
 
@@ -38,8 +35,7 @@ public class Cro
      * Setter pour nomSociete.
      * @param nomSociete Le nomSociete à écrire.
      */
-    public void setNomSociete(final String nomSociete)
-    {
+    public void setNomSociete(final String nomSociete) {
         this.nomSociete = nomSociete;
     }
 

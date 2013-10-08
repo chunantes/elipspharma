@@ -10,12 +10,10 @@ import fr.pharma.eclipse.domain.model.stockage.Pharmacie;
 
 /**
  * Critère de recherche pour le bean ElementToCheck.
- 
+ * @author Netapsys
  * @version $Revision$ $Date$
  */
-public class ElementToCheckSearchCriteria
-    extends AbstractSearchCriteria
-{
+public class ElementToCheckSearchCriteria extends AbstractSearchCriteria {
 
     /**
      * SerialVersionUID.
@@ -56,8 +54,7 @@ public class ElementToCheckSearchCriteria
      * {@inheritDoc}
      */
     @Override
-    public void clear()
-    {
+    public void clear() {
         this.dateDebut = null;
         this.pharmacie = null;
         this.dateFin = null;
@@ -69,8 +66,7 @@ public class ElementToCheckSearchCriteria
      * Getter sur type.
      * @return Retourne le type.
      */
-    public TypeElementToCheck getType()
-    {
+    public TypeElementToCheck getType() {
         return this.type;
     }
 
@@ -78,8 +74,7 @@ public class ElementToCheckSearchCriteria
      * Setter pour type.
      * @param type le type à écrire.
      */
-    public void setType(final TypeElementToCheck type)
-    {
+    public void setType(final TypeElementToCheck type) {
         this.type = type;
     }
 
@@ -87,8 +82,7 @@ public class ElementToCheckSearchCriteria
      * Getter sur dateDebut.
      * @return Retourne le dateDebut.
      */
-    public Calendar getDateDebut()
-    {
+    public Calendar getDateDebut() {
         return this.dateDebut;
     }
 
@@ -96,8 +90,7 @@ public class ElementToCheckSearchCriteria
      * Setter pour dateDebut.
      * @param dateDebut le dateDebut à écrire.
      */
-    public void setDateDebut(final Calendar dateDebut)
-    {
+    public void setDateDebut(final Calendar dateDebut) {
         this.dateDebut = dateDebut;
     }
 
@@ -105,8 +98,7 @@ public class ElementToCheckSearchCriteria
      * Getter sur dateFin.
      * @return Retourne le dateFin.
      */
-    public Calendar getDateFin()
-    {
+    public Calendar getDateFin() {
         return this.dateFin;
     }
 
@@ -114,8 +106,7 @@ public class ElementToCheckSearchCriteria
      * Setter pour dateFin.
      * @param dateFin le dateFin à écrire.
      */
-    public void setDateFin(final Calendar dateFin)
-    {
+    public void setDateFin(final Calendar dateFin) {
         this.dateFin = dateFin;
     }
 
@@ -123,8 +114,7 @@ public class ElementToCheckSearchCriteria
      * Getter sur essai.
      * @return Retourne le essai.
      */
-    public Essai getEssai()
-    {
+    public Essai getEssai() {
         return this.essai;
     }
 
@@ -132,8 +122,7 @@ public class ElementToCheckSearchCriteria
      * Setter pour essai.
      * @param essai le essai à écrire.
      */
-    public void setEssai(final Essai essai)
-    {
+    public void setEssai(final Essai essai) {
         this.essai = essai;
     }
 
@@ -141,8 +130,7 @@ public class ElementToCheckSearchCriteria
      * Getter sur patient.
      * @return Retourne le patient.
      */
-    public Patient getPatient()
-    {
+    public Patient getPatient() {
         return this.patient;
     }
 
@@ -150,8 +138,7 @@ public class ElementToCheckSearchCriteria
      * Setter pour patient.
      * @param patient le patient à écrire.
      */
-    public void setPatient(final Patient patient)
-    {
+    public void setPatient(final Patient patient) {
         this.patient = patient;
     }
 
@@ -159,8 +146,7 @@ public class ElementToCheckSearchCriteria
      * Getter pour pharmacie.
      * @return Le pharmacie
      */
-    public Pharmacie getPharmacie()
-    {
+    public Pharmacie getPharmacie() {
         return this.pharmacie;
     }
 
@@ -168,8 +154,7 @@ public class ElementToCheckSearchCriteria
      * Setter pour pharmacie.
      * @param pharmacie Le pharmacie à écrire.
      */
-    public void setPharmacie(final Pharmacie pharmacie)
-    {
+    public void setPharmacie(final Pharmacie pharmacie) {
         this.pharmacie = pharmacie;
     }
 

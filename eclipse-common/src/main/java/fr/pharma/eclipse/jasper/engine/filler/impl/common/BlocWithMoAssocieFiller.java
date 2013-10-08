@@ -15,12 +15,10 @@ import fr.pharma.eclipse.utils.introspection.BeanTool;
 /**
  * Filler en charge de construire une source de données<br>
  * pour un bloc décrit par le bean métier {@link JRBeanBlocWithMoAssocie}.
- 
+ * @author Netapsys
  * @version $Revision$ $Date$
  */
-public class BlocWithMoAssocieFiller
-    implements JasperReportBeanFiller
-{
+public class BlocWithMoAssocieFiller implements JasperReportBeanFiller {
 
     /**
      * Serial ID.
@@ -46,8 +44,7 @@ public class BlocWithMoAssocieFiller
      * Constructeur.
      * @param propertyToSet Propriété du bean Jasper que valorise ce filler.
      */
-    public BlocWithMoAssocieFiller(final String propertyToSet)
-    {
+    public BlocWithMoAssocieFiller(final String propertyToSet) {
         this.propertyToSet = propertyToSet;
     }
 
@@ -56,28 +53,23 @@ public class BlocWithMoAssocieFiller
      */
     @Override
     public void fill(final Essai essai,
-                     final JasperReportBean bean)
-    {
+                     final JasperReportBean bean) {
         // Collection de beans servant de source de données.
         final List<JRBeanBlocWithMoAssocie> sources = new ArrayList<JRBeanBlocWithMoAssocie>();
-        for (final JRBeanBlocWithMoAssocieBuilder helper : this.helpers)
-        {
+        for (final JRBeanBlocWithMoAssocieBuilder helper : this.helpers) {
             sources.add(helper.build(essai));
         }
 
         // Création de la source de données Jasper.
         final JRDataSource dataSource = this.jrDataSourceFactory.getInitializedObject(sources);
-        BeanTool.setPropriete(bean,
-                              this.propertyToSet,
-                              dataSource);
+        BeanTool.setPropriete(bean, this.propertyToSet, dataSource);
     }
 
     /**
      * Getter sur jrDataSourceFactory.
      * @return Retourne le jrDataSourceFactory.
      */
-    JRDataSourceFactory getJrDataSourceFactory()
-    {
+    JRDataSourceFactory getJrDataSourceFactory() {
         return this.jrDataSourceFactory;
     }
 
@@ -85,8 +77,7 @@ public class BlocWithMoAssocieFiller
      * Setter pour jrDataSourceFactory.
      * @param jrDataSourceFactory le jrDataSourceFactory à écrire.
      */
-    public void setJrDataSourceFactory(final JRDataSourceFactory jrDataSourceFactory)
-    {
+    public void setJrDataSourceFactory(final JRDataSourceFactory jrDataSourceFactory) {
         this.jrDataSourceFactory = jrDataSourceFactory;
     }
 
@@ -94,8 +85,7 @@ public class BlocWithMoAssocieFiller
      * Getter sur helpers.
      * @return Retourne le helpers.
      */
-    List<JRBeanBlocWithMoAssocieBuilder> getHelpers()
-    {
+    List<JRBeanBlocWithMoAssocieBuilder> getHelpers() {
         return this.helpers;
     }
 
@@ -103,8 +93,7 @@ public class BlocWithMoAssocieFiller
      * Setter pour helpers.
      * @param helpers le helpers à écrire.
      */
-    public void setHelpers(final List<JRBeanBlocWithMoAssocieBuilder> helpers)
-    {
+    public void setHelpers(final List<JRBeanBlocWithMoAssocieBuilder> helpers) {
         this.helpers = helpers;
     }
 
@@ -112,8 +101,7 @@ public class BlocWithMoAssocieFiller
      * Getter sur propertyToSet.
      * @return Retourne le propertyToSet.
      */
-    String getPropertyToSet()
-    {
+    String getPropertyToSet() {
         return this.propertyToSet;
     }
 

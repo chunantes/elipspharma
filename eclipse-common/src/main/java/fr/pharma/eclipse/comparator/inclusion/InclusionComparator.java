@@ -7,12 +7,10 @@ import fr.pharma.eclipse.domain.model.patient.Inclusion;
 
 /**
  * Comparateur d'historique d'inclusions.
- 
+ * @author Netapsys
  * @version $Revision$ $Date$
  */
-public class InclusionComparator
-    implements Comparator<Inclusion>, Serializable
-{
+public class InclusionComparator implements Comparator<Inclusion>, Serializable {
 
     /**
      * SerialVersionUID.
@@ -24,8 +22,7 @@ public class InclusionComparator
      */
     @Override
     public int compare(final Inclusion o1,
-                       final Inclusion o2)
-    {
+                       final Inclusion o2) {
         return o2.getDateInclusion().compareTo(o1.getDateInclusion());
     }
 

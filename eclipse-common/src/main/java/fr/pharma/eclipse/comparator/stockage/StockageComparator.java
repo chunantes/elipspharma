@@ -9,12 +9,10 @@ import fr.pharma.eclipse.domain.model.stockage.Stockage;
 
 /**
  * Classe de comparator sur Stockage.
- 
+ * @author Netapsys
  * @version $Revision$ $Date$
  */
-public class StockageComparator
-    implements Comparator<Stockage>, Serializable
-{
+public class StockageComparator implements Comparator<Stockage>, Serializable {
     /**
      * Serial ID.
      */
@@ -25,14 +23,9 @@ public class StockageComparator
      */
     @Override
     public int compare(final Stockage o1,
-                       final Stockage o2)
-    {
-        final String str1 = this.addNomStockage(o1,
-                                                StringUtils.EMPTY)
-                            + o1.getNom();
-        final String str2 = this.addNomStockage(o2,
-                                                StringUtils.EMPTY)
-                            + o2.getNom();
+                       final Stockage o2) {
+        final String str1 = this.addNomStockage(o1, StringUtils.EMPTY) + o1.getNom();
+        final String str2 = this.addNomStockage(o2, StringUtils.EMPTY) + o2.getNom();
 
         return str1.compareToIgnoreCase(str2);
     }
@@ -44,13 +37,10 @@ public class StockageComparator
      * @return Nom des parents.
      */
     protected String addNomStockage(final Stockage stockage,
-                                    final String str)
-    {
+                                    final String str) {
         final Stockage parent = stockage.getParent();
-        while (parent != null)
-        {
-            return this.addNomStockage(parent,
-                                       parent.getNom().concat(str));
+        while (parent != null) {
+            return this.addNomStockage(parent, parent.getNom().concat(str));
         }
         return str;
     }

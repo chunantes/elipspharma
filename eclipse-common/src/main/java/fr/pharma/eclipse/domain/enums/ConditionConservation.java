@@ -2,11 +2,10 @@ package fr.pharma.eclipse.domain.enums;
 
 /**
  * Enumération des différentes conditions de conservation (températures).
- 
+ * @author Netapsys
  * @version $Revision$ $Date$
  */
-public enum ConditionConservation
-{
+public enum ConditionConservation {
     /**
      * -80°C.
      */
@@ -17,6 +16,10 @@ public enum ConditionConservation
      */
     MOINS_20("-20°C"),
 
+    /**
+     * -20°C.
+     */
+    MOINS_30("-30°C"),
     /**
      * +2/+8°C.
      */
@@ -41,8 +44,7 @@ public enum ConditionConservation
      * Constructeur privé.
      * @param libelle Libellé de la valeur de l'énumération.
      */
-    private ConditionConservation(final String libelle)
-    {
+    private ConditionConservation(final String libelle) {
         this.libelle = libelle;
     }
 
@@ -50,8 +52,7 @@ public enum ConditionConservation
      * Getter sur libelle.
      * @return Retourne le libelle.
      */
-    public String getLibelle()
-    {
+    public String getLibelle() {
         return this.libelle;
     }
 
@@ -59,8 +60,7 @@ public enum ConditionConservation
      * {@inheritDoc}
      */
     @Override
-    public String toString()
-    {
+    public String toString() {
         return this.getLibelle();
     }
 }

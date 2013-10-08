@@ -10,12 +10,10 @@ import fr.pharma.eclipse.utils.constants.EclipseConstants;
 
 /**
  * Helper pour la génération des noms des rapports Jasper produits.
- 
+ * @author Netapsys
  * @version $Revision$ $Date$
  */
-public class ReportNameBuildHelper
-    implements Serializable
-{
+public class ReportNameBuildHelper implements Serializable {
 
     /**
      * Serial ID.
@@ -44,8 +42,7 @@ public class ReportNameBuildHelper
      * @param essai Essai servant de source au rapport.
      */
     public void addIdEssaiPart(final StringBuilder strBuilder,
-                               final Essai essai)
-    {
+                               final Essai essai) {
         this.appendSeparateur1(strBuilder);
         strBuilder.append(this.getChaineNormalisee(essai.getNumInterne()));
     }
@@ -55,13 +52,9 @@ public class ReportNameBuildHelper
      * la date de génération dans le nom du rapport produit.
      * @param strBuilder Builder pour le nom de rapport à produire.
      */
-    public void addDatePart(final StringBuilder strBuilder)
-    {
+    public void addDatePart(final StringBuilder strBuilder) {
         this.appendSeparateur1(strBuilder);
-        strBuilder.append(Utils.formatDate(Calendar
-                                                   .getInstance(EclipseConstants.LOCALE)
-                                                   .getTime(),
-                                           ReportNameBuildHelper.PATTERN));
+        strBuilder.append(Utils.formatDate(Calendar.getInstance(EclipseConstants.LOCALE).getTime(), ReportNameBuildHelper.PATTERN));
     }
 
     /**
@@ -71,8 +64,7 @@ public class ReportNameBuildHelper
      * @param typeRapport Type du rapport généré.
      */
     public void addCommonNamePart(final StringBuilder strBuilder,
-                                  final TypeRapportJasper typeRapport)
-    {
+                                  final TypeRapportJasper typeRapport) {
         strBuilder.append(typeRapport.getReportName());
     }
 
@@ -83,26 +75,22 @@ public class ReportNameBuildHelper
      * @param typeRapport Type du rapport généré.
      */
     public void addCommonExtensionPart(final StringBuilder strBuilder,
-                                       final TypeRapportJasper typeRapport)
-    {
+                                       final TypeRapportJasper typeRapport) {
         strBuilder.append(typeRapport.getTypeExport().getExtension());
     }
 
     /**
-     * Méthode en charge de normaliser une chaine de caractères pour l'utiliser dans le nom de
-     * fichier.
+     * Méthode en charge de normaliser une chaine de caractères pour l'utiliser
+     * dans le nom de fichier.
      * @param chaine Chaîne à normaliser.
      * @return Chaîne normalisée.
      */
-    private String getChaineNormalisee(final String chaine)
-    {
-        if (chaine == null)
-        {
+    private String getChaineNormalisee(final String chaine) {
+        if (chaine == null) {
             return chaine;
         }
         String res = chaine.trim();
-        res = res.replace(" ",
-                          ReportNameBuildHelper.SEPARATEUR_2);
+        res = res.replace(" ", ReportNameBuildHelper.SEPARATEUR_2);
         return res;
     }
 
@@ -110,8 +98,7 @@ public class ReportNameBuildHelper
      * Méthode en charge d'ajouter le séparateur 1 au builder.
      * @param strBuilder Builder pour le nom de rapport à produire.
      */
-    private void appendSeparateur1(final StringBuilder strBuilder)
-    {
+    private void appendSeparateur1(final StringBuilder strBuilder) {
         strBuilder.append(ReportNameBuildHelper.SEPARATEUR_1);
     }
 
@@ -119,8 +106,7 @@ public class ReportNameBuildHelper
      * Getter sur pattern.
      * @return Retourne le pattern.
      */
-    static String getPattern()
-    {
+    static String getPattern() {
         return ReportNameBuildHelper.PATTERN;
     }
 

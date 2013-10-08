@@ -7,13 +7,12 @@ import org.apache.commons.collections.Predicate;
 import fr.pharma.eclipse.domain.model.stock.LigneStock;
 
 /**
- * Prédicat sur les lignes de stock complète (c'est à dire avec une quantité positive définie).
- 
+ * Prédicat sur les lignes de stock complète (c'est à dire avec une quantité
+ * positive définie).
+ * @author Netapsys
  * @version $Revision$ $Date$
  */
-public class LigneStockCompletPredicate
-    implements Predicate, Serializable
-{
+public class LigneStockCompletPredicate implements Predicate, Serializable {
     /**
      * Serial ID.
      */
@@ -23,10 +22,8 @@ public class LigneStockCompletPredicate
      * {@inheritDoc}
      */
     @Override
-    public boolean evaluate(final Object object)
-    {
+    public boolean evaluate(final Object object) {
         final LigneStock ligne = (LigneStock) object;
-        return ligne.getQteASortir() != null
-               && ligne.getQteASortir() > 0;
+        return (ligne.getQteASortir() != null) && (ligne.getQteASortir() > 0);
     }
 }

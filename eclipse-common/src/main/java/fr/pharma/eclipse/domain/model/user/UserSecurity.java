@@ -8,13 +8,12 @@ import org.springframework.security.core.userdetails.User;
 import fr.pharma.eclipse.domain.enums.RolePersonne;
 
 /**
- * Bean représenant les informations de l'utilisateur courant (jeton de sécurité).
- 
+ * Bean représenant les informations de l'utilisateur courant (jeton de
+ * sécurité).
+ * @author Netapsys
  * @version $Revision$ $Date$
  */
-public class UserSecurity
-    extends User
-{
+public class UserSecurity extends User {
     /**
      * Serial ID.
      */
@@ -45,26 +44,14 @@ public class UserSecurity
      * @param username Login de l'utilisateur.
      * @param password Password de l'utilisateur.
      * @param authorities Autorités contenant le rôle de l'utilisateur.
-     * @param idPersonne Identifiant technique de la personne correspondant à l'utilisateur.
+     * @param idPersonne Identifiant technique de la personne correspondant à
+     * l'utilisateur.
      * @param role Role de l'utilisateur.
      * @param isAdmin Booléen indiquant si l'utilisateur est administrateur.
      */
-    public UserSecurity(
-                        final String username,
-                        final String password,
-                        final String salt,
-                        final Collection<? extends GrantedAuthority> authorities,
-                        final Long idPersonne,
-                        final RolePersonne role,
-                        final Boolean isAdmin)
-    {
-        super(username,
-              password,
-              true,
-              true,
-              true,
-              true,
-              authorities);
+    public UserSecurity(final String username, final String password, final String salt, final Collection<? extends GrantedAuthority> authorities, final Long idPersonne,
+                        final RolePersonne role, final Boolean isAdmin) {
+        super(username, password, true, true, true, true, authorities);
         this.setIdPersonne(idPersonne);
         this.setRole(role);
         this.setIsAdmin(isAdmin);
@@ -75,8 +62,7 @@ public class UserSecurity
      * Getter pour idPersonne.
      * @return Le idPersonne
      */
-    public Long getIdPersonne()
-    {
+    public Long getIdPersonne() {
         return this.idPersonne;
     }
 
@@ -84,8 +70,7 @@ public class UserSecurity
      * Setter pour idPersonne.
      * @param idPersonne Le idPersonne à écrire.
      */
-    public void setIdPersonne(final Long idPersonne)
-    {
+    public void setIdPersonne(final Long idPersonne) {
         this.idPersonne = idPersonne;
     }
 
@@ -93,8 +78,7 @@ public class UserSecurity
      * Getter pour role.
      * @return Le role
      */
-    public RolePersonne getRole()
-    {
+    public RolePersonne getRole() {
         return this.role;
     }
 
@@ -102,8 +86,7 @@ public class UserSecurity
      * Setter pour role.
      * @param role Le role à écrire.
      */
-    public void setRole(final RolePersonne role)
-    {
+    public void setRole(final RolePersonne role) {
         this.role = role;
     }
 
@@ -111,8 +94,7 @@ public class UserSecurity
      * Getter pour isAdmin.
      * @return Le isAdmin
      */
-    public Boolean getIsAdmin()
-    {
+    public Boolean getIsAdmin() {
         return this.isAdmin;
     }
 
@@ -120,8 +102,7 @@ public class UserSecurity
      * Setter pour isAdmin.
      * @param isAdmin Le isAdmin à écrire.
      */
-    public void setIsAdmin(final Boolean isAdmin)
-    {
+    public void setIsAdmin(final Boolean isAdmin) {
         this.isAdmin = isAdmin;
     }
 
@@ -129,8 +110,7 @@ public class UserSecurity
      * Getter pour salt.
      * @return Le salt
      */
-    public String getSalt()
-    {
+    public String getSalt() {
         return this.salt;
     }
 
@@ -138,8 +118,7 @@ public class UserSecurity
      * Setter pour salt.
      * @param salt Le salt à écrire.
      */
-    public void setSalt(final String salt)
-    {
+    public void setSalt(final String salt) {
         this.salt = salt;
     }
 

@@ -16,14 +16,13 @@ import fr.pharma.eclipse.comparator.ordonnancier.OrdonnancierFabReconstComparato
 import fr.pharma.eclipse.domain.model.stock.PreparationEntree;
 
 /**
- * Bean métier représentant des ordonnanciers de type Fabrication / Reconstitution.
- 
+ * Bean métier représentant des ordonnanciers de type Fabrication /
+ * Reconstitution.
+ * @author Netapsys
  * @version $Revision$ $Date$
  */
 @Entity(name = "ordonnancier_fab_reconst")
-public class OrdonnancierFabReconst
-    extends Ordonnancier
-{
+public class OrdonnancierFabReconst extends Ordonnancier {
     /**
      * Serial ID.
      */
@@ -35,15 +34,13 @@ public class OrdonnancierFabReconst
     @OneToMany(mappedBy = "ordonnancier", cascade = CascadeType.ALL, orphanRemoval = true)
     @LazyCollection(LazyCollectionOption.FALSE)
     @Sort(type = SortType.COMPARATOR, comparator = OrdonnancierFabReconstComparator.class)
-    private final SortedSet<PreparationEntree> elementsToCheck =
-        new TreeSet<PreparationEntree>(new OrdonnancierFabReconstComparator());
+    private final SortedSet<PreparationEntree> elementsToCheck = new TreeSet<PreparationEntree>(new OrdonnancierFabReconstComparator());
 
     /**
      * Getter pour elementsToCheck.
      * @return Le elementsToCheck
      */
-    public SortedSet<PreparationEntree> getElementsToCheck()
-    {
+    public SortedSet<PreparationEntree> getElementsToCheck() {
         return this.elementsToCheck;
     }
 

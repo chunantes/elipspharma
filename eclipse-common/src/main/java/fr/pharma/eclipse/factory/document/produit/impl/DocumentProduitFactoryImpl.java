@@ -11,13 +11,10 @@ import fr.pharma.eclipse.utils.file.FileHelper;
 /**
  * Fabrique de documents de Produit.
  * @param <DOC> Type de document de Produit créé.
- 
+ * @author Netapsys
  * @version $Revision$ $Date$
  */
-public class DocumentProduitFactoryImpl<DOC extends DocumentProduit>
-    extends AbstractDocumentEclipseFactory<DOC>
-    implements DocumentProduitFactory<DOC>
-{
+public class DocumentProduitFactoryImpl<DOC extends DocumentProduit> extends AbstractDocumentEclipseFactory<DOC> implements DocumentProduitFactory<DOC> {
 
     /**
      * SerialVersionUID.
@@ -34,11 +31,9 @@ public class DocumentProduitFactoryImpl<DOC extends DocumentProduit>
      */
     @Override
     public DOC getInitializedObject(final Fichier fichier,
-                                    final Produit produit)
-    {
+                                    final Produit produit) {
         final DOC doc = this.factoryWithParent.getInitializedObject(produit);
-        super.initializeObject(doc,
-                               fichier);
+        super.initializeObject(doc, fichier);
         return doc;
     }
 
@@ -46,8 +41,7 @@ public class DocumentProduitFactoryImpl<DOC extends DocumentProduit>
      * {@inheritDoc}
      */
     @Override
-    protected FileHelper getFileHelper()
-    {
+    protected FileHelper getFileHelper() {
         return super.getFileHelper();
     }
 
@@ -55,8 +49,7 @@ public class DocumentProduitFactoryImpl<DOC extends DocumentProduit>
      * Setter pour factoryWithParent.
      * @param factoryWithParent le factoryWithParent à écrire.
      */
-    public void setFactoryWithParent(final BeanObjectWithParentFactory<DOC, Produit> factoryWithParent)
-    {
+    public void setFactoryWithParent(final BeanObjectWithParentFactory<DOC, Produit> factoryWithParent) {
         this.factoryWithParent = factoryWithParent;
     }
 

@@ -7,12 +7,10 @@ import fr.pharma.eclipse.factory.common.BeanObjectComplexFactory;
 
 /**
  * Factory de Bean Bras.
- 
+ * @author Netapsys
  * @version $Revision$ $Date$
  */
-public class BrasFactory
-    extends BeanObjectComplexFactory<Bras>
-{
+public class BrasFactory extends BeanObjectComplexFactory<Bras> {
     /**
      * Serial ID.
      */
@@ -22,8 +20,7 @@ public class BrasFactory
      * Constructeur.
      * @param bean Classe.
      */
-    public BrasFactory(final Class<Bras> bean)
-    {
+    public BrasFactory(final Class<Bras> bean) {
         super(bean);
     }
 
@@ -32,8 +29,7 @@ public class BrasFactory
      * @param essai L'essai.
      * @return Le bras.
      */
-    public Bras getInitializedObject(final Essai essai)
-    {
+    public Bras getInitializedObject(final Essai essai) {
         final Bras bras = super.getInitializedObject();
         bras.setType(TypeDesignable.BRAS);
         bras.setDetailDesign(essai.getDetailDesign());

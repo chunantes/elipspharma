@@ -21,12 +21,10 @@ import fr.pharma.eclipse.validator.save.SaveValidator;
 
 /**
  * Validateur de la grille de surcouts saisie dans l'onglet de surcout.
- 
+ * @author Netapsys
  * @version $Revision$ $Date$
  */
-public class GrilleSaveValidator
-    implements SaveValidator<GrilleModele>
-{
+public class GrilleSaveValidator implements SaveValidator<GrilleModele> {
 
     /**
      * SerialVersionUID.
@@ -38,18 +36,14 @@ public class GrilleSaveValidator
      */
     @Override
     public void validate(final GrilleModele bean,
-                         final GenericService<GrilleModele> beanService)
-    {
+                         final GenericService<GrilleModele> beanService) {
 
         // si une grille est sasie on lance la validation.
-        if (bean != null)
-        {
+        if (bean != null) {
 
             // pour chaque Theme on valide les regles.
-            for (final Theme theme : bean.getThemes())
-            {
-                for (final Categorie categorie : theme.getCategories())
-                {
+            for (final Theme theme : bean.getThemes()) {
+                for (final Categorie categorie : theme.getCategories()) {
                     this.valideRegles(categorie.getRegles());
                 }
             }
@@ -58,72 +52,41 @@ public class GrilleSaveValidator
     }
 
     /**
-     * Méthode en charge de valider la liste des règles en vérifiant qu'il n'y ait pas de vide et
-     * aucune superposition dans les séquences (pour les variables : forfait / unite).
+     * Méthode en charge de valider la liste des règles en vérifiant qu'il n'y
+     * ait pas de vide et aucune superposition dans les séquences (pour les
+     * variables : forfait / unite).
      * @param regles Les règles.
      */
     @SuppressWarnings("unchecked")
-    private void valideRegles(final Collection<Regle> regles)
-    {
+    private void valideRegles(final Collection<Regle> regles) {
 
-        this.applyValidator(new ArrayList<Regle>(CollectionUtils
-                                    .select(regles,
-                                            new GenericPredicate("type",
-                                                                 TypeCout.VARIABLE))),
-                            "min",
-                            "max");
+        List<Regle> regles1 = new ArrayList<Regle>(CollectionUtils.select(regles, new GenericPredicate("type", TypeCout.VARIABLE)));
 
-    }
-
-    /**
-     * Méthode en charge d'appliquer les vérification sur les regles en paramètre pour les valeurs
-     * min en max en paramètre.
-     * @param regles Les règles.
-     * @param min Le champs min.
-     * @param max Le champs max.
-     */
-    private void applyValidator(final List<Regle> regles,
-                                final String min,
-                                final String max)
-    {
         // tri des règles par ordre de min.
-        Collections.sort(regles,
-                         new RegleBorneMinComparator(min,
-                                                     max));
+        Collections.sort(regles1, new RegleBorneMinComparator());
 
         Regle precedent = null;
 
-        for (final Regle regle : regles)
-        {
+        for (final Regle regle : regles1) {
 
-            final Integer minValue = (Integer) BeanTool.getPropriete(regle,
-                                                                     min);
-            // si c'est la première règle alors elle doit commencer à 0, 1 ou être à null.
-            if (precedent == null)
-            {
-                if (minValue != null
-                    && minValue > 1)
-                {
-                    throw new ValidationException("regle.premier",
-                                                  new String[]
-                                                  {"error" },
-                                                  regle);
+            final Integer minValue = (Integer) BeanTool.getPropriete(regle, "min");
+            // si c'est la première règle alors elle doit commencer à 0, 1 ou
+            // être à null.
+            if (precedent == null) {
+                if ((minValue != null) && (minValue > 1)) {
+                    throw new ValidationException("regle.premier", new String[]{"error" }, regle);
                 }
             }
-            // si ce n'est pas la première elle doit suivre directement la précédent.
-            else
-            {
-                if (!minValue.equals((Integer) BeanTool.getPropriete(precedent,
-                                                                     max) + 1))
-                {
-                    throw new ValidationException("regle.sequence",
-                                                  new String[]
-                                                  {"error" },
-                                                  regle);
+            // si ce n'est pas la première elle doit suivre directement la
+            // précédent.
+            else {
+                if (!minValue.equals((Integer) BeanTool.getPropriete(precedent, "max") + 1)) {
+                    throw new ValidationException("regle.sequence", new String[]{"error" }, regle);
                 }
             }
             precedent = regle;
         }
+
     }
 
 }

@@ -2,11 +2,10 @@ package fr.pharma.eclipse.domain.enums.design;
 
 /**
  * Enumération représentant le type de design.
- 
+ * @author Netapsys
  * @version $Revision$ $Date$
  */
-public enum TypeDesign
-{
+public enum TypeDesign {
     /**
      * Cross-over.
      */
@@ -26,8 +25,7 @@ public enum TypeDesign
      * Constructeur.
      * @param libelle Le libellé.
      */
-    TypeDesign(final String libelle)
-    {
+    TypeDesign(final String libelle) {
         this.libelle = libelle;
     }
 
@@ -35,8 +33,7 @@ public enum TypeDesign
      * Getter pour libelle.
      * @return Retourne le libelle.
      */
-    public String getLibelle()
-    {
+    public String getLibelle() {
         return this.libelle;
     }
 
@@ -44,8 +41,7 @@ public enum TypeDesign
      * {@inheritDoc}
      */
     @Override
-    public String toString()
-    {
+    public String toString() {
         return this.getLibelle();
     }
 

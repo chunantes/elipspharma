@@ -13,15 +13,13 @@ import fr.pharma.eclipse.domain.model.essai.detail.administratif.DetailAdministr
 import fr.pharma.eclipse.domain.model.suivi.common.Suivi;
 
 /**
- * Bean métier représentant les suivis de modifications sur le bean {@link DetailAdministratif}.
- 
+ * Bean métier représentant les suivis de modifications sur le bean
+ * {@link DetailAdministratif}.
+ * @author Netapsys
  * @version $Revision$ $Date$
  */
 @Entity(name = "essai_detail_administratif_suivi")
-public class DetailAdministratifSuivi
-    extends Suivi
-    implements Serializable
-{
+public class DetailAdministratifSuivi extends Suivi implements Serializable {
 
     /**
      * Serial ID.
@@ -40,8 +38,7 @@ public class DetailAdministratifSuivi
      * Getter sur detailAdministratif.
      * @return Retourne le detailAdministratif.
      */
-    public DetailAdministratif getDetailAdministratif()
-    {
+    public DetailAdministratif getDetailAdministratif() {
         return this.detailAdministratif;
     }
 
@@ -49,8 +46,7 @@ public class DetailAdministratifSuivi
      * Setter pour detailAdministratif.
      * @param detailAdministratif le detailAdministratif à écrire.
      */
-    public void setDetailAdministratif(final DetailAdministratif detailAdministratif)
-    {
+    public void setDetailAdministratif(final DetailAdministratif detailAdministratif) {
         this.detailAdministratif = detailAdministratif;
     }
 

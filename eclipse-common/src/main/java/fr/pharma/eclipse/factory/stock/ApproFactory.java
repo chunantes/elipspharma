@@ -8,11 +8,10 @@ import fr.pharma.eclipse.domain.model.stockage.Pharmacie;
 
 /**
  * Description de la classe.
- 
+ * @author Netapsys
  * @version $Revision$ $Date$
  */
-public interface ApproFactory<MVT extends Approvisionnement>
-{
+public interface ApproFactory<MVT extends Approvisionnement> {
     MVT getInitializedObject(final Essai essai,
                              final Pharmacie pharmacie,
                              final Calendar dateReception,

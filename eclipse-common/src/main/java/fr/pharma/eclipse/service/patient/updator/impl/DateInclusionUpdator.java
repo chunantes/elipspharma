@@ -11,12 +11,10 @@ import fr.pharma.eclipse.service.patient.updator.InclusionBeforeSaveUpdator;
 
 /**
  * Description de la classe.
- 
+ * @author Netapsys
  * @version $Revision$ $Date$
  */
-public class DateInclusionUpdator
-    implements InclusionBeforeSaveUpdator
-{
+public class DateInclusionUpdator implements InclusionBeforeSaveUpdator {
 
     /**
      * SerialVersionUID.
@@ -34,13 +32,11 @@ public class DateInclusionUpdator
      */
     @Override
     public void update(final Inclusion inclusion,
-                       final InclusionService service)
-    {
+                       final InclusionService service) {
         final Essai essai = this.essaiService.get(inclusion.getEssai().getId());
         final InclusionSearchCriteria crit = new InclusionSearchCriteria();
         crit.setEssai(essai);
-        if (service.getAll(crit).isEmpty())
-        {
+        if (service.getAll(crit).isEmpty()) {
             essai.getDetailDates().setDebutInclusion(inclusion.getDateInclusion());
             this.essaiService.save(essai);
         }
@@ -50,8 +46,7 @@ public class DateInclusionUpdator
      * Setter pour essaiService.
      * @param essaiService Le essaiService à écrire.
      */
-    public void setEssaiService(final EssaiService essaiService)
-    {
+    public void setEssaiService(final EssaiService essaiService) {
         this.essaiService = essaiService;
     }
 

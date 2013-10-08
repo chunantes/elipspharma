@@ -14,12 +14,10 @@ import fr.pharma.eclipse.validator.remove.RemoveValidator;
 
 /**
  * Classe de validation de suppression d'un objet Patient.
- 
+ * @author Netapsys
  * @version $Revision$ $Date$
  */
-public class PatientRemoveValidator
-    implements RemoveValidator<Patient>, Serializable
-{
+public class PatientRemoveValidator implements RemoveValidator<Patient>, Serializable {
     /**
      * Serial ID.
      */
@@ -41,28 +39,19 @@ public class PatientRemoveValidator
      * {@inheritDoc}
      */
     @Override
-    public void validate(final Patient patient)
-    {
+    public void validate(final Patient patient) {
         // Vérification Relation Patient-Inclusion
         final InclusionSearchCriteria crit = new InclusionSearchCriteria();
         crit.setPatient(patient);
-        if (this.inclusionService.hasResult(crit))
-        {
-            throw new ValidationException("remove",
-                                          new String[]
-                                          {"impossible" },
-                                          patient);
+        if (this.inclusionService.hasResult(crit)) {
+            throw new ValidationException("remove", new String[]{"impossible" }, patient);
         }
 
         // Vérification Relation Patient-Prescription
         final PrescriptionSearchCriteria critPre = new PrescriptionSearchCriteria();
         critPre.setPatient(patient);
-        if (this.prescriptionService.hasResult(critPre))
-        {
-            throw new ValidationException("remove",
-                                          new String[]
-                                          {"impossible" },
-                                          patient);
+        if (this.prescriptionService.hasResult(critPre)) {
+            throw new ValidationException("remove", new String[]{"impossible" }, patient);
         }
 
     }
@@ -71,8 +60,7 @@ public class PatientRemoveValidator
      * Setter pour prescriptionService.
      * @param prescriptionService Le prescriptionService à écrire.
      */
-    public void setPrescriptionService(final PrescriptionService prescriptionService)
-    {
+    public void setPrescriptionService(final PrescriptionService prescriptionService) {
         this.prescriptionService = prescriptionService;
     }
 
@@ -80,8 +68,7 @@ public class PatientRemoveValidator
      * Setter pour inclusionService.
      * @param inclusionService Le inclusionService à écrire.
      */
-    public void setInclusionService(final InclusionService inclusionService)
-    {
+    public void setInclusionService(final InclusionService inclusionService) {
         this.inclusionService = inclusionService;
     }
 

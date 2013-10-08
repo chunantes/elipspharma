@@ -11,13 +11,10 @@ import fr.pharma.eclipse.service.common.impl.GenericServiceImpl;
 
 /**
  * Classe d'implémentation du service de gestion de promoteur.
- 
+ * @author Netapsys
  * @version $Revision$ $Date$
  */
-public class PromoteurServiceImpl
-    extends GenericServiceImpl<Promoteur>
-    implements PromoteurService
-{
+public class PromoteurServiceImpl extends GenericServiceImpl<Promoteur> implements PromoteurService {
     /**
      * Serial ID.
      */
@@ -33,8 +30,7 @@ public class PromoteurServiceImpl
      * Constructeur.
      * @param promoteurDao Dao de gestion des promoteurs.
      */
-    public PromoteurServiceImpl(final GenericDao<Promoteur> promoteurDao)
-    {
+    public PromoteurServiceImpl(final GenericDao<Promoteur> promoteurDao) {
         super(promoteurDao);
     }
 
@@ -42,8 +38,7 @@ public class PromoteurServiceImpl
      * {@inheritDoc}
      */
     @Override
-    public Promoteur save(final Promoteur promoteur)
-    {
+    public Promoteur save(final Promoteur promoteur) {
         final Promoteur promoteurToSave = this.reattach(promoteur);
         final PromoteurSuivi promoteurSuivi = this.promoteurSuiviFactory.getInitializedObject();
         promoteurSuivi.setPromoteur(promoteurToSave);
@@ -55,8 +50,7 @@ public class PromoteurServiceImpl
      * Setter pour promoteurSuiviFactory.
      * @param promoteurSuiviFactory le promoteurSuiviFactory à écrire.
      */
-    public void setPromoteurSuiviFactory(final SuiviFactory<PromoteurSuivi> promoteurSuiviFactory)
-    {
+    public void setPromoteurSuiviFactory(final SuiviFactory<PromoteurSuivi> promoteurSuiviFactory) {
         this.promoteurSuiviFactory = promoteurSuiviFactory;
     }
 

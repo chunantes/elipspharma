@@ -11,13 +11,12 @@ import fr.pharma.eclipse.domain.model.essai.Essai;
 import fr.pharma.eclipse.domain.model.stockage.Pharmacie;
 
 /**
- * Bean métier représentant le résultat d'une réception de stock (approvisionnement).
- 
+ * Bean métier représentant le résultat d'une réception de stock
+ * (approvisionnement).
+ * @author Netapsys
  * @version $Revision$ $Date$
  */
-public class ResultApprovisionnement
-    implements Serializable
-{
+public class ResultApprovisionnement implements Serializable {
     /**
      * Serial ID.
      */
@@ -57,8 +56,7 @@ public class ResultApprovisionnement
      * Getter pour essai.
      * @return Le essai
      */
-    public Essai getEssai()
-    {
+    public Essai getEssai() {
         return this.essai;
     }
 
@@ -66,8 +64,7 @@ public class ResultApprovisionnement
      * Setter pour essai.
      * @param essai Le essai à écrire.
      */
-    public void setEssai(final Essai essai)
-    {
+    public void setEssai(final Essai essai) {
         this.essai = essai;
     }
 
@@ -75,8 +72,7 @@ public class ResultApprovisionnement
      * Getter pour pharmacie.
      * @return Le pharmacie
      */
-    public Pharmacie getPharmacie()
-    {
+    public Pharmacie getPharmacie() {
         return this.pharmacie;
     }
 
@@ -84,8 +80,7 @@ public class ResultApprovisionnement
      * Setter pour pharmacie.
      * @param pharmacie Le pharmacie à écrire.
      */
-    public void setPharmacie(final Pharmacie pharmacie)
-    {
+    public void setPharmacie(final Pharmacie pharmacie) {
         this.pharmacie = pharmacie;
     }
 
@@ -93,8 +88,7 @@ public class ResultApprovisionnement
      * Getter pour dateAppro.
      * @return Le dateAppro
      */
-    public Calendar getDateAppro()
-    {
+    public Calendar getDateAppro() {
         return this.dateAppro;
     }
 
@@ -102,8 +96,7 @@ public class ResultApprovisionnement
      * Setter pour dateAppro.
      * @param dateAppro Le dateAppro à écrire.
      */
-    public void setDateAppro(final Calendar dateAppro)
-    {
+    public void setDateAppro(final Calendar dateAppro) {
         this.dateAppro = dateAppro;
     }
 
@@ -111,8 +104,7 @@ public class ResultApprovisionnement
      * Getter pour personne.
      * @return Le personne
      */
-    public Personne getPersonne()
-    {
+    public Personne getPersonne() {
         return this.personne;
     }
 
@@ -120,8 +112,7 @@ public class ResultApprovisionnement
      * Setter pour personne.
      * @param personne Le personne à écrire.
      */
-    public void setPersonne(final Personne personne)
-    {
+    public void setPersonne(final Personne personne) {
         this.personne = personne;
     }
 
@@ -129,8 +120,7 @@ public class ResultApprovisionnement
      * Getter pour promoteur.
      * @return Le promoteur
      */
-    public Promoteur getPromoteur()
-    {
+    public Promoteur getPromoteur() {
         return this.promoteur;
     }
 
@@ -138,8 +128,7 @@ public class ResultApprovisionnement
      * Setter pour promoteur.
      * @param promoteur Le promoteur à écrire.
      */
-    public void setPromoteur(final Promoteur promoteur)
-    {
+    public void setPromoteur(final Promoteur promoteur) {
         this.promoteur = promoteur;
     }
 
@@ -147,8 +136,7 @@ public class ResultApprovisionnement
      * Getter pour receptionLots.
      * @return Le receptionLots
      */
-    public List<ReceptionLot> getReceptionLots()
-    {
+    public List<ReceptionLot> getReceptionLots() {
         return this.receptionLots;
     }
 

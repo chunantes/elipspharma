@@ -6,12 +6,10 @@ import fr.pharma.eclipse.domain.model.suivi.common.Suivi;
 
 /**
  * Classe commune des objets métier suivis.
- 
+ * @author Netapsys
  * @version $Revision$ $Date$
  */
-public abstract class BeanObjectSuivi
-    extends BeanObject
-{
+public abstract class BeanObjectSuivi extends BeanObject {
     /**
      * Serial ID.
      */

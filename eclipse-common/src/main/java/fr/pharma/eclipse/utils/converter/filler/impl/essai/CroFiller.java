@@ -17,13 +17,12 @@ import fr.pharma.eclipse.utils.converter.BeanConverter;
 import fr.pharma.eclipse.utils.converter.filler.Filler;
 
 /**
- * Filler en charge de populer les cros d'un Essai à partir des cros d'un Essai Sigrec.
- 
+ * Filler en charge de populer les cros d'un Essai à partir des cros d'un Essai
+ * Sigrec.
+ * @author Netapsys
  * @version $Revision$ $Date$
  */
-public class CroFiller
-    implements Filler<EssaiSigrec, Essai>
-{
+public class CroFiller implements Filler<EssaiSigrec, Essai> {
 
     /**
      * Converter CroSigrec => Cro.
@@ -48,23 +47,18 @@ public class CroFiller
      */
     @Override
     public void fill(final EssaiSigrec source,
-                     final Essai destination)
-    {
+                     final Essai destination) {
         final PersonneSearchCriteria criteria = new PersonneSearchCriteria();
         List<Cro> cros = null;
-        for (final CROSigrec c : source.getCros())
-        {
+        for (final CROSigrec c : source.getCros()) {
             criteria.setNomSociete(c.getContact().getRaisonSociale());
             cros = this.croService.getAll(criteria);
             Cro cro = null;
             // S'il existe, on l'affecte sinon on le créé et on l'enregistre.
-            if (cros.size() > 0)
-            {
+            if (cros.size() > 0) {
                 cro = cros.get(0);
 
-            }
-            else
-            {
+            } else {
                 cro = this.converter.convert(c);
                 cro = this.croService.save(cro);
             }
@@ -81,8 +75,7 @@ public class CroFiller
      * {@inheritDoc}
      */
     @Override
-    public boolean support(final EssaiSigrec source)
-    {
+    public boolean support(final EssaiSigrec source) {
         return source.getCros() != null;
     }
 
@@ -90,24 +83,21 @@ public class CroFiller
      * Setter pour converter.
      * @param converter le converter à écrire.
      */
-    public void setConverter(final BeanConverter<CROSigrec, Cro> converter)
-    {
+    public void setConverter(final BeanConverter<CROSigrec, Cro> converter) {
         this.converter = converter;
     }
     /**
      * Setter pour croService.
      * @param croService le croService à écrire.
      */
-    public void setCroService(final GenericService<Cro> croService)
-    {
+    public void setCroService(final GenericService<Cro> croService) {
         this.croService = croService;
     }
     /**
      * Setter pour habilitationFactory.
      * @param habilitationFactory le habilitationFactory à écrire.
      */
-    public void setHabilitationFactory(final HabilitationFactory habilitationFactory)
-    {
+    public void setHabilitationFactory(final HabilitationFactory habilitationFactory) {
         this.habilitationFactory = habilitationFactory;
     }
 

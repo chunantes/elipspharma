@@ -2,11 +2,10 @@ package fr.pharma.eclipse.domain.enums;
 
 /**
  * Enumération représentant la qualité de l'insu.
- 
+ * @author Netapsys
  * @version $Revision$ $Date$
  */
-public enum QualiteInsu
-{
+public enum QualiteInsu {
     /**
      * Ouvert.
      */
@@ -30,8 +29,7 @@ public enum QualiteInsu
      * Constructeur.
      * @param libelle Le libellé de la qualité de l'insu.
      */
-    QualiteInsu(final String libelle)
-    {
+    QualiteInsu(final String libelle) {
         this.setLibelle(libelle);
     }
 
@@ -39,8 +37,7 @@ public enum QualiteInsu
      * Setter pour libelle.
      * @param libelle le libelle à écrire.
      */
-    public void setLibelle(final String libelle)
-    {
+    public void setLibelle(final String libelle) {
         this.libelle = libelle;
     }
 
@@ -48,8 +45,7 @@ public enum QualiteInsu
      * Getter pour libelle.
      * @return Retourne le libelle.
      */
-    public String getLibelle()
-    {
+    public String getLibelle() {
         return this.libelle;
     }
 
@@ -57,8 +53,7 @@ public enum QualiteInsu
      * {@inheritDoc}
      */
     @Override
-    public String toString()
-    {
+    public String toString() {
         return this.getLibelle();
     }
 

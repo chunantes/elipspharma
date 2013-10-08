@@ -2,11 +2,10 @@ package fr.pharma.eclipse.domain.model.common;
 
 /**
  * Interface décrivant le comportement des beans clonables.
- 
+ * @author Netapsys
  * @version $Revision$ $Date$
  */
-public interface Clonable<BEAN extends BeanObject>
-{
+public interface Clonable<BEAN extends BeanObject> {
 
     /**
      * Méthode en charge de cloner l'objet en paramètre.

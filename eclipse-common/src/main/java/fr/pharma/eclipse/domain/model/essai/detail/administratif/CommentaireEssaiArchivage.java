@@ -10,15 +10,13 @@ import org.hibernate.annotations.Index;
 import fr.pharma.eclipse.domain.model.essai.CommentaireEssai;
 
 /**
- * Classe métier représentant un commentaire sur l'archivage de l'essai clinique (onglet
- * administratif/réglementaire).
- 
+ * Classe métier représentant un commentaire sur l'archivage de l'essai clinique
+ * (onglet administratif/réglementaire).
+ * @author Netapsys
  * @version $Revision$ $Date$
  */
 @Entity(name = "essai_commentaire_detail_administratif_archi")
-public class CommentaireEssaiArchivage
-    extends CommentaireEssai
-{
+public class CommentaireEssaiArchivage extends CommentaireEssai {
 
     /**
      * Serial ID.
@@ -37,8 +35,7 @@ public class CommentaireEssaiArchivage
      * Getter sur detailAdministratif.
      * @return Retourne le detailAdministratif.
      */
-    public DetailAdministratif getDetailAdministratif()
-    {
+    public DetailAdministratif getDetailAdministratif() {
         return this.detailAdministratif;
     }
 
@@ -46,8 +43,7 @@ public class CommentaireEssaiArchivage
      * Setter pour detailAdministratif.
      * @param detailAdministratif le detailAdministratif à écrire.
      */
-    public void setDetailAdministratif(final DetailAdministratif detailAdministratif)
-    {
+    public void setDetailAdministratif(final DetailAdministratif detailAdministratif) {
         this.detailAdministratif = detailAdministratif;
     }
 
