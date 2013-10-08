@@ -13,13 +13,12 @@ import fr.pharma.eclipse.file.FichierFiller;
 import fr.pharma.eclipse.service.document.DocumentService;
 
 /**
- * Classe générique en charge de gérer un type de documents sur un mouvement de stock de sortie.
- 
+ * Classe générique en charge de gérer un type de documents sur un mouvement de
+ * stock de sortie.
+ * @author Netapsys
  * @version $Revision$ $Date$
  */
-public class GenericStockManager<DOC extends DocumentStock>
-    implements Serializable
-{
+public class GenericStockManager<DOC extends DocumentStock> implements Serializable {
     /**
      * Serial ID.
      */
@@ -54,21 +53,19 @@ public class GenericStockManager<DOC extends DocumentStock>
     /**
      * Constructeur.
      * @param typeDocumentsName Nom du type des documents managés.
-     * @throws IllegalArgumentException Si typeDocumentsName ne correspond pas à une valeur de
-     * l'énumération {@link TypeDocumentStock}.
+     * @throws IllegalArgumentException Si typeDocumentsName ne correspond pas à
+     * une valeur de l'énumération {@link TypeDocumentStock}.
      */
-    public GenericStockManager(final String typeDocumentsName)
-    {
+    public GenericStockManager(final String typeDocumentsName) {
         this.typeDocuments = TypeDocumentStock.valueOf(typeDocumentsName);
     }
 
     /**
-     * Méthode qui indique si un document peut être créé à partir des informations (fichier)
-     * mémorisés.
+     * Méthode qui indique si un document peut être créé à partir des
+     * informations (fichier) mémorisés.
      * @return true ssi la méthode createDocument peut être appelée.
      */
-    public boolean canCreateDocument()
-    {
+    public boolean canCreateDocument() {
         return this.fichier.getContenu().length > 0;
     }
 
@@ -76,19 +73,17 @@ public class GenericStockManager<DOC extends DocumentStock>
      * Crée un objet document à partir du libellé et du fichier renseignés <br>
      * et remet à blanc ces informations. La méthode canCreateDocument <br>
      * doit avoir été appelée et son retour doit être true.
-     * @param mvtStock Mouvement de stock sur lequel on souhaite créer le document.
-     * @return Un nouveau DocumentStock. Le fichier physique est créé sur le disque.
+     * @param mvtStock Mouvement de stock sur lequel on souhaite créer le
+     * document.
+     * @return Un nouveau DocumentStock. Le fichier physique est créé sur le
+     * disque.
      */
-    public DocumentStock createDocument(final MvtStock mvtStock)
-    {
+    public DocumentStock createDocument(final MvtStock mvtStock) {
         // Document BDD.
-        final DocumentStock doc = this.factory.getInitializedObject(this.fichier,
-                                                                    mvtStock);
+        final DocumentStock doc = this.factory.getInitializedObject(this.fichier, mvtStock);
 
         // Document Physique.
-        this.docService.saveOnDisk(mvtStock,
-                                   doc,
-                                   this.fichier);
+        this.docService.saveOnDisk(mvtStock, doc, this.fichier);
 
         this.resetFormDatas();
         return doc;
@@ -97,16 +92,14 @@ public class GenericStockManager<DOC extends DocumentStock>
     /**
      * Méthode de réinitialisation des données du formulaire (fichier).
      */
-    public void resetFormDatas()
-    {
+    public void resetFormDatas() {
         this.resetFichier();
     }
 
     /**
      * Méthode de réinitialisation du fichier.
      */
-    private void resetFichier()
-    {
+    private void resetFichier() {
         this.fichier = new Fichier();
     }
 
@@ -114,8 +107,7 @@ public class GenericStockManager<DOC extends DocumentStock>
      * Getter sur fichier.
      * @return Retourne le fichier.
      */
-    public Fichier getFichier()
-    {
+    public Fichier getFichier() {
         return this.fichier;
     }
 
@@ -123,8 +115,7 @@ public class GenericStockManager<DOC extends DocumentStock>
      * Setter pour fichier.
      * @param fichier le fichier à écrire.
      */
-    public void setFichier(final Fichier fichier)
-    {
+    public void setFichier(final Fichier fichier) {
         this.fichier = fichier;
     }
 
@@ -132,8 +123,7 @@ public class GenericStockManager<DOC extends DocumentStock>
      * Getter sur docService.
      * @return Retourne le docService.
      */
-    DocumentService getDocService()
-    {
+    DocumentService getDocService() {
         return this.docService;
     }
 
@@ -141,8 +131,7 @@ public class GenericStockManager<DOC extends DocumentStock>
      * Setter pour docService.
      * @param docService le docService à écrire.
      */
-    public void setDocService(final DocumentService docService)
-    {
+    public void setDocService(final DocumentService docService) {
         this.docService = docService;
     }
 
@@ -150,8 +139,7 @@ public class GenericStockManager<DOC extends DocumentStock>
      * Getter sur file.
      * @return Retourne le file.
      */
-    public UploadedFile getFile()
-    {
+    public UploadedFile getFile() {
         return null;
     }
 
@@ -159,23 +147,19 @@ public class GenericStockManager<DOC extends DocumentStock>
      * Setter pour file.
      * @param file le file à écrire.
      */
-    public void setFile(final UploadedFile file)
-    {
+    public void setFile(final UploadedFile file) {
         this.resetFichier();
-        if (file == null)
-        {
+        if (file == null) {
             return;
         }
-        this.fichierFiller.fill(file,
-                                this.fichier);
+        this.fichierFiller.fill(file, this.fichier);
     }
 
     /**
      * Getter sur fichierFiller.
      * @return Retourne le fichierFiller.
      */
-    FichierFiller getFichierFiller()
-    {
+    FichierFiller getFichierFiller() {
         return this.fichierFiller;
     }
 
@@ -183,8 +167,7 @@ public class GenericStockManager<DOC extends DocumentStock>
      * Setter pour fichierFiller.
      * @param fichierFiller le fichierFiller à écrire.
      */
-    public void setFichierFiller(final FichierFiller fichierFiller)
-    {
+    public void setFichierFiller(final FichierFiller fichierFiller) {
         this.fichierFiller = fichierFiller;
     }
 
@@ -192,8 +175,7 @@ public class GenericStockManager<DOC extends DocumentStock>
      * Getter sur typeDocuments.
      * @return Retourne le typeDocuments.
      */
-    public TypeDocumentStock getTypeDocuments()
-    {
+    public TypeDocumentStock getTypeDocuments() {
         return this.typeDocuments;
     }
 
@@ -201,8 +183,7 @@ public class GenericStockManager<DOC extends DocumentStock>
      * Setter pour factory.
      * @param factory Le factory à écrire.
      */
-    public void setFactory(final DocumentStockFactory<DocumentStock> factory)
-    {
+    public void setFactory(final DocumentStockFactory<DocumentStock> factory) {
         this.factory = factory;
     };
 

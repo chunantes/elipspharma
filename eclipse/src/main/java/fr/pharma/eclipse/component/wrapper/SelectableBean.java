@@ -7,12 +7,10 @@ import fr.pharma.eclipse.domain.model.common.BeanObject;
 /**
  * Wrapper de BeanObject pour l'ajout de la sélection.
  * @param <BEAN> Type d'objet générique.
- 
+ * @author Netapsys
  * @version $Revision$ $Date$
  */
-public class SelectableBean<BEAN extends BeanObject>
-    implements Serializable
-{
+public class SelectableBean<BEAN extends BeanObject> implements Serializable {
 
     /**
      * Serial ID.
@@ -33,8 +31,7 @@ public class SelectableBean<BEAN extends BeanObject>
      * Constructeur.
      * @param bean Objet métier wrappé.
      */
-    public SelectableBean(final BEAN bean)
-    {
+    public SelectableBean(final BEAN bean) {
         this.bean = bean;
     }
 
@@ -42,8 +39,7 @@ public class SelectableBean<BEAN extends BeanObject>
      * Getter sur bean.
      * @return Retourne le bean.
      */
-    public BEAN getBean()
-    {
+    public BEAN getBean() {
         return this.bean;
     }
 
@@ -51,8 +47,7 @@ public class SelectableBean<BEAN extends BeanObject>
      * Getter sur selected.
      * @return Retourne le selected.
      */
-    public Boolean getSelected()
-    {
+    public Boolean getSelected() {
         return this.selected;
     }
 
@@ -60,8 +55,7 @@ public class SelectableBean<BEAN extends BeanObject>
      * Setter pour selected.
      * @param selected le selected à écrire.
      */
-    public void setSelected(final Boolean selected)
-    {
+    public void setSelected(final Boolean selected) {
         this.selected = selected;
     }
 

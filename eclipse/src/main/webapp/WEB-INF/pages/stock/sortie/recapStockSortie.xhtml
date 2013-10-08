@@ -237,7 +237,10 @@
 						<f:facet name="header">
 							<h:outputLabel value="#{resourceBundle['stockReception.stockage']}"/>
 						</f:facet>
-						<h:outputText value="#{sortie.lignesStockCompletees.get(0).stockage}"/>
+						<ui:repeat var="ligneStock" value="#{sortie.lignesStockCompletees}">
+							<br/>
+							<h:outputText value="#{ligneStock.stockage}"/>
+						</ui:repeat>
 					</p:column>					
 					
 				</p:dataTable>

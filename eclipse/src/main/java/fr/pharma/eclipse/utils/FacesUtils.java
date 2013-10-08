@@ -12,16 +12,14 @@ import javax.faces.context.FacesContext;
 import org.primefaces.context.RequestContext;
 
 import fr.pharma.eclipse.utils.constants.EclipseConstants;
-import fr.pharma.eclipse.utils.message.EclipseMessageBuilder;
+import fr.pharma.eclipse.utils.message.MessageBuilder;
 
 /**
  * Classe utilitaire pour la gestion du context de gestion JSF.
- 
+ * @author Netapsys
  * @version $Revision$ $Date$
  */
-public class FacesUtils
-    implements Serializable
-{
+public class FacesUtils implements Serializable {
     /**
      * Serial ID.
      */
@@ -30,23 +28,20 @@ public class FacesUtils
     /**
      * Message builder.
      */
-    @Resource(name = "eclipseMessageBuilder")
-    private EclipseMessageBuilder messageBuilder;
+    @Resource(name = "messageBuilder")
+    private MessageBuilder messageBuilder;
 
     /**
-     * Méthode en charge d'ajouter un message sur l'instance courante du FacesContext.
+     * Méthode en charge d'ajouter un message sur l'instance courante du
+     * FacesContext.
      * @param severity Sévérité du message.
      * @param codeMessage Code du message dans les fichiers properties.
      */
     public void addMessage(final Severity severity,
-                           final String codeMessage)
-    {
+                           final String codeMessage) {
         final String strMessage = this.messageBuilder.getMessage(codeMessage);
-        final FacesMessage message = new FacesMessage(severity,
-                                                      strMessage,
-                                                      null);
-        FacesContext.getCurrentInstance().addMessage(null,
-                                                     message);
+        final FacesMessage message = new FacesMessage(severity, strMessage, null);
+        FacesContext.getCurrentInstance().addMessage(null, message);
     }
 
     /**
@@ -55,22 +50,19 @@ public class FacesUtils
      * @param value Valeur.
      */
     public void putCallbackParam(final String param,
-                                 final Object value)
-    {
+                                 final Object value) {
         final RequestContext requestContext = RequestContext.getCurrentInstance();
-        requestContext.addCallbackParam(param,
-                                        value);
+        requestContext.addCallbackParam(param, value);
     }
 
     /**
-     * Méthode en charge d'ajouter le paramètre de validité dans le contexte de la requête.
+     * Méthode en charge d'ajouter le paramètre de validité dans le contexte de
+     * la requête.
      * @param isValid Valeur du paramètre de validité.
      */
-    public void putCallbackValidityParam(final boolean isValid)
-    {
+    public void putCallbackValidityParam(final boolean isValid) {
         final RequestContext requestContext = RequestContext.getCurrentInstance();
-        requestContext.addCallbackParam("isValid",
-                                        isValid);
+        requestContext.addCallbackParam("isValid", isValid);
     }
 
     /**
@@ -78,8 +70,7 @@ public class FacesUtils
      * @param calendar Calendar à formatter.
      * @return Calendar formatté.
      */
-    public String formatDate(final Calendar calendar)
-    {
+    public String formatDate(final Calendar calendar) {
         final SimpleDateFormat sdf = new SimpleDateFormat(EclipseConstants.PATTERN_SIMPLE);
         return sdf.format(calendar.getTime());
     }
@@ -88,8 +79,7 @@ public class FacesUtils
      * Setter pour messageBuilder.
      * @param messageBuilder Le messageBuilder à écrire.
      */
-    public void setMessageBuilder(final EclipseMessageBuilder messageBuilder)
-    {
+    public void setMessageBuilder(final MessageBuilder messageBuilder) {
         this.messageBuilder = messageBuilder;
     }
 

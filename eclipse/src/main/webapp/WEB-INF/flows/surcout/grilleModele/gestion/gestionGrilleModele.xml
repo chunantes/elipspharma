@@ -1,36 +1,35 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<flow xmlns="http://www.springframework.org/schema/webflow"
-	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-	xsi:schemaLocation="http://www.springframework.org/schema/webflow
-    http://www.springframework.org/schema/webflow/spring-webflow-2.0.xsd" parent="main">
+<flow xmlns="http://www.springframework.org/schema/webflow" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.springframework.org/schema/webflow
+    http://www.springframework.org/schema/webflow/spring-webflow-2.0.xsd"
+	parent="main">
 
 	<!-- Démarrage -->
 	<on-start>
-		<evaluate expression="grilleModeleSearchCriteria.clear()"/>
-		<evaluate expression="grilleModeleService.getAll(grilleModeleSearchCriteria)" result="grillesModeleManager.beans"/>
+		<evaluate expression="grilleModeleSearchCriteria.clear()" />
+		<evaluate expression="grilleModeleService.getAll(grilleModeleSearchCriteria)" result="grillesModeleManager.beans" />
 	</on-start>
 
 	<!-- Page principale -->
 	<view-state id="gestionGrilleModele" view="../../../../pages/surcout/grilleModele/gestion/gestionGrilleModele.xhtml">
-		<transition on="search" to="search"/>
+		<transition on="search" to="search" />
 		<transition on="edit" to="edit">
 			<set name="flashScope.idGrilleModele" value="grillesModeleManager.beanSelected.id" type="java.lang.Long" />
-			<evaluate expression="null" result="grillesModeleManager.beanSelected"/>
+			<evaluate expression="null" result="grillesModeleManager.beanSelected" />
 		</transition>
-		<transition on="add" to="edit"/>
-		<transition on="error" to="gestionGrilleModele"/>
+		<transition on="add" to="edit" />
+		<transition on="error" to="gestionGrilleModele" />
 	</view-state>
-	
+
 	<!-- Recherche -->
 	<action-state id="search">
-		<evaluate expression="grilleModeleService.getAll(grilleModeleSearchCriteria)" result="grillesModeleManager.beans"/>
-		<transition to="gestionGrilleModele"/>
+		<evaluate expression="grilleModeleService.getAll(grilleModeleSearchCriteria)" result="grillesModeleManager.beans" />
+		<transition to="gestionGrilleModele" />
 	</action-state>
-	
+
 	<!-- Edition -->
 	<subflow-state id="edit" subflow="surcout/grilleModele/edit">
-		<input name="idGrilleModele" value="flashScope.idGrilleModele"/>
-		<transition to="search"/>
+		<input name="idGrilleModele" value="flashScope.idGrilleModele" />
+		<transition to="search" />
 	</subflow-state>
-	
+
 </flow>

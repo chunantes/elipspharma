@@ -19,12 +19,10 @@ import fr.pharma.eclipse.utils.AbstractEclipseJUnitTest;
 
 /**
  * Test de la classe DispensationProduitManager.
- 
+ * @author Netapsys
  * @version $Revision$ $Date$
  */
-public class DispensationProduitManagerTest
-    extends AbstractEclipseJUnitTest
-{
+public class DispensationProduitManagerTest extends AbstractEclipseJUnitTest {
 
     /**
      * Manager à tester.
@@ -45,8 +43,7 @@ public class DispensationProduitManagerTest
      * {@inheritDoc}
      */
     @Override
-    public void setUp()
-    {
+    public void setUp() {
         this.service = Mockito.mock(GenericService.class);
         this.factory = Mockito.mock(DispensationProduitFactory.class);
         this.manager = new DispensationProduitManager(this.service);
@@ -57,8 +54,7 @@ public class DispensationProduitManagerTest
      * {@inheritDoc}
      */
     @Override
-    public void tearDown()
-    {
+    public void tearDown() {
         this.service = null;
         this.manager = null;
     }
@@ -68,8 +64,7 @@ public class DispensationProduitManagerTest
      */
     @Override
     @Test
-    public void testInit()
-    {
+    public void testInit() {
         Assert.assertNotNull(this.service);
         Assert.assertNotNull(this.manager);
     }
@@ -78,22 +73,18 @@ public class DispensationProduitManagerTest
      * Test de la méthode initDispensation.
      */
     @Test
-    public void testInitDispensation()
-    {
+    public void testInitDispensation() {
         final ProduitPrescrit produitPrescrit = Mockito.mock(ProduitPrescrit.class);
         final Dispensation dispensation = Mockito.mock(Dispensation.class);
         final ActionEvent event = Mockito.mock(ActionEvent.class);
         final UIComponent component = Mockito.mock(UIComponent.class);
         Mockito.when(event.getComponent()).thenReturn(component);
         final Map<String, Object> map = new HashMap<String, Object>();
-        map.put("produitCurrent",
-                produitPrescrit);
-        map.put("dispensation",
-                dispensation);
+        map.put("produitCurrent", produitPrescrit);
+        map.put("dispensation", dispensation);
         Mockito.when(component.getAttributes()).thenReturn(map);
         this.manager.initDispensation(event);
-        Mockito.verify(this.factory).getInitializedObject(produitPrescrit,
-                                                          dispensation);
+        Mockito.verify(this.factory).getInitializedObject(produitPrescrit, dispensation);
     }
 
 }

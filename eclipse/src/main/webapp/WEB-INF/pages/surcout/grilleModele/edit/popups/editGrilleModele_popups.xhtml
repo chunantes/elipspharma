@@ -31,6 +31,10 @@
 		widgetVar="popupEditCategorie" styleClass="essaiTabPopup"
 		resizable="true" modal="true" width="600" >
 		<h:form id="formCategorie">
+			
+			<p:focus />
+			<p:messages id="errors" />
+			
 			<h:panelGrid columns="2" style="width:100%"
 							cellpadding="0" cellspacing="0" border="0" 
 							columnClasses="panelCol_25,panelCol_75">
@@ -41,16 +45,16 @@
 				<h:outputLabel id="labelActe" for="acte" 
 					value="#{resourceBundle['gestionGrilleModele.categorie.acte']}" />
 				<h:selectOneMenu id="acte" value="#{grilleModeleManager.categorie.acte}" 
-		 			required="true" requiredMessage="#{resourceBundle['grilleModele.acte.notEmpty']}">
+		 			required="true" requiredMessage="#{resourceBundle['grilleModele.acte.notEmpty']}" >
 		 			<f:selectItem noSelectionOption="true"/>
 			     	<f:selectItems value="#{enumManager.getValues('Acte')}" />
 				</h:selectOneMenu>
 				
 			</h:panelGrid> 
-					<div class="popupButton"><p:commandButton ajax="false"
+					<div class="popupButton"><p:commandButton ajax="true"
 					value="#{resourceBundle['btn.valider']}"   
-					action="#{grilleModeleManager.addCategorie()}" update="themes"
-					process="@form" oncomplete="popupEditCategorie.hide();"> 
+					action="#{grilleModeleManager.addCategorie()}" update="errors,themes"
+					process="@form" oncomplete="hidePopupCat(xhr, status,args);"> 
 				</p:commandButton></div>
 		</h:form>
 	</p:dialog>
@@ -172,6 +176,7 @@
 			<div class="popupButton"><p:commandButton id="submitButton"
 				value="#{resourceBundle['btn.valider']}" process="@form"
 				actionListener="#{grilleModeleManager.addRegle()}"
+				ajax="true"
 				oncomplete="actionPopup(xhr, status,args);"
 				update="errors,themes" /></div>
 		</h:form>
@@ -184,6 +189,14 @@
 				var isValid = args.isValid;
 				if (isValid){
 					popupEditRegle.hide();
+				}
+				showIcons();
+	   	}
+		function hidePopupCat(xhr, status, args)
+		{
+				var isValid = args.isValid;
+				if (isValid){
+					popupEditCategorie.hide();
 				}
 				showIcons();
 	   	}

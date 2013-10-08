@@ -23,16 +23,14 @@ import fr.pharma.eclipse.domain.model.habilitation.Habilitation;
 
 /**
  * Classe utilitaire pour le traitement des essais dans les tests.
- 
+ * @author Netapsys
  * @version $Revision$ $Date$
  */
-public final class EssaiUtils
-{
+public final class EssaiUtils {
     /**
      * Constructeur privé.
      */
-    private EssaiUtils()
-    {
+    private EssaiUtils() {
         super();
     }
 
@@ -41,10 +39,8 @@ public final class EssaiUtils
      * @param id Identifiant de l'essai.
      * @return Un essai initialisé pour les tests.
      */
-    public static Essai makeEssaiTest(final long id)
-    {
-        return EssaiUtils.makeEssaiTest(id,
-                                        null);
+    public static Essai makeEssaiTest(final long id) {
+        return EssaiUtils.makeEssaiTest(id, null);
     }
 
     /**
@@ -54,8 +50,7 @@ public final class EssaiUtils
      * @return Un essai initialisé pour les tests.
      */
     public static Essai makeEssaiTest(final Long idEssai,
-                                      final TypePromoteur typePromoteur)
-    {
+                                      final TypePromoteur typePromoteur) {
         final Essai essai = EssaiUtils.makeEssai(idEssai);
         essai.setId(idEssai);
         essai.setTypePromoteur(typePromoteur);
@@ -67,8 +62,7 @@ public final class EssaiUtils
      * @param idDetail Identifiant du détail.
      * @return Un Essai.
      */
-    private static Essai makeEssai(final long idDetail)
-    {
+    private static Essai makeEssai(final long idDetail) {
         final Essai essai = new Essai();
         final DetailRecherche detailRecherche = new DetailRecherche();
         detailRecherche.setId(idDetail);
@@ -103,8 +97,7 @@ public final class EssaiUtils
      * @return Nouveau CommentaireEssaiRecherche.
      */
     public static CommentaireEssaiRecherche makeCommentaireTest(final Long id,
-                                                                final Calendar dMaj)
-    {
+                                                                final Calendar dMaj) {
         final CommentaireEssaiRecherche commentaire = new CommentaireEssaiRecherche();
         commentaire.setId(id);
         commentaire.setDateMaj(dMaj);
@@ -122,14 +115,11 @@ public final class EssaiUtils
     public static Habilitation makeHabilitationTest(final Long id,
                                                     final Droit droit,
                                                     final String nomPersonne,
-                                                    final TypePersonne typePersonne)
-    {
+                                                    final TypePersonne typePersonne) {
         final Personne personne = Mockito.mock(Personne.class);
         Mockito.when(personne.getNom()).thenReturn(nomPersonne);
         Mockito.when(personne.getType()).thenReturn(typePersonne);
-        return EssaiUtils.makeHabilitationTest(id,
-                                               droit,
-                                               personne);
+        return EssaiUtils.makeHabilitationTest(id, droit, personne);
     }
 
     /**
@@ -141,11 +131,8 @@ public final class EssaiUtils
      */
     public static Habilitation makeHabilitationTest(final Long id,
                                                     final Droit droit,
-                                                    final Personne personne)
-    {
-        final Habilitation hab = EssaiUtils.makeHabilitationTest(id,
-                                                                 false,
-                                                                 true);
+                                                    final Personne personne) {
+        final Habilitation hab = EssaiUtils.makeHabilitationTest(id, false, true);
         hab.setDroit(droit);
         hab.setPersonne(personne);
         return hab;
@@ -158,11 +145,8 @@ public final class EssaiUtils
      * @return Nouveau bean Habilitation.
      */
     public static Habilitation makeHabilitationTest(final Long id,
-                                                    final Droit droit)
-    {
-        final Habilitation hab = EssaiUtils.makeHabilitationTest(id,
-                                                                 false,
-                                                                 true);
+                                                    final Droit droit) {
+        final Habilitation hab = EssaiUtils.makeHabilitationTest(id, false, true);
         hab.setDroit(droit);
         return hab;
     }
@@ -172,24 +156,21 @@ public final class EssaiUtils
      * @param id Identifiant de l'habilitation.
      * @return Nouveau bean Habilitation.
      */
-    public static Habilitation makeHabilitationTest(final Long id)
-    {
-        return EssaiUtils.makeHabilitationTest(id,
-                                               false,
-                                               true);
+    public static Habilitation makeHabilitationTest(final Long id) {
+        return EssaiUtils.makeHabilitationTest(id, false, true);
     }
 
     /**
      * Méthode de création d'une habilitation vide.
      * @param id Identifiant de l'habilitation.
-     * @param selected Indique si l'habilitation doit être marquée comme sélectionnée.
+     * @param selected Indique si l'habilitation doit être marquée comme
+     * sélectionnée.
      * @param active Indique si l'habilitation est active.
      * @return Nouveau bean Habilitation.
      */
     public static Habilitation makeHabilitationTest(final Long id,
                                                     final boolean selected,
-                                                    final boolean active)
-    {
+                                                    final boolean active) {
         final Habilitation hab = new Habilitation();
         hab.setId(id);
         hab.setSelected(selected);

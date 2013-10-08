@@ -19,11 +19,10 @@ import fr.pharma.eclipse.redirect.RedirectHandler;
 
 /**
  * Test de la classe SelectableBeansManager.
- 
+ * @author Netapsys
  * @version $Revision$ $Date$
  */
-public class SelectableBeansManagerTest
-{
+public class SelectableBeansManagerTest {
     /**
      * BeansManager à tester.
      */
@@ -43,8 +42,7 @@ public class SelectableBeansManagerTest
      * Méthode en charge d'initialiser les données de test.
      */
     @Before
-    public void init()
-    {
+    public void init() {
         this.criteria = new PharmacieSearchCriteria();
         this.pharmaciesManager = new SelectableBeansManager<Pharmacie>(this.criteria);
         final Pharmacie pharmacie1 = new Pharmacie();
@@ -56,8 +54,7 @@ public class SelectableBeansManagerTest
         final SelectableBean<Pharmacie> wrapper1 = new SelectableBean<Pharmacie>(pharmacie1);
         final SelectableBean<Pharmacie> wrapper2 = new SelectableBean<Pharmacie>(pharmacie2);
         wrapper2.setSelected(Boolean.TRUE);
-        final List<SelectableBean<Pharmacie>> pharmacies =
-            new ArrayList<SelectableBean<Pharmacie>>();
+        final List<SelectableBean<Pharmacie>> pharmacies = new ArrayList<SelectableBean<Pharmacie>>();
         pharmacies.add(wrapper1);
         pharmacies.add(wrapper2);
         this.pharmaciesManager.setBeans(pharmacies);
@@ -69,8 +66,7 @@ public class SelectableBeansManagerTest
      * Méthode en charge de purger les données de test.
      */
     @After
-    public void end()
-    {
+    public void end() {
         this.criteria = null;
         this.pharmaciesManager = null;
         this.mockRedirect = null;
@@ -80,8 +76,7 @@ public class SelectableBeansManagerTest
      * Méthode en charge de tester l'initialisation des données de test.
      */
     @Test
-    public void testInit()
-    {
+    public void testInit() {
         Assert.assertNotNull(this.pharmaciesManager);
         Assert.assertNotNull(this.criteria);
         Assert.assertNotNull(this.pharmaciesManager.getSearchCriteria());
@@ -90,28 +85,24 @@ public class SelectableBeansManagerTest
     }
 
     /**
-     * Méthode en charge de tester la récupération des beans sous forme de Model.
+     * Méthode en charge de tester la récupération des beans sous forme de
+     * Model.
      */
     @Test
-    public void testGetModel()
-    {
+    public void testGetModel() {
         final DataModel<Pharmacie> result = this.pharmaciesManager.getModel();
-        Assert.assertEquals(result.getRowCount(),
-                            this.pharmaciesManager.getBeans().size());
+        Assert.assertEquals(result.getRowCount(), this.pharmaciesManager.getBeans().size());
     }
 
     /**
-     * Méthode en charge de tester la récupération des beans sélectionnés dans la liste (ceux dont
-     * le booléen checked est true).
+     * Méthode en charge de tester la récupération des beans sélectionnés dans
+     * la liste (ceux dont le booléen checked est true).
      */
     @Test
-    public void testGetBeansSelected()
-    {
-        final List<SelectableBean<Pharmacie>> beansSelected =
-            this.pharmaciesManager.getBeansSelected();
+    public void testGetBeansSelected() {
+        final List<SelectableBean<Pharmacie>> beansSelected = this.pharmaciesManager.getBeansSelected();
         Assert.assertNotNull(beansSelected);
-        Assert.assertEquals(1,
-                            beansSelected.size());
+        Assert.assertEquals(1, beansSelected.size());
     }
 
     /**
@@ -119,19 +110,13 @@ public class SelectableBeansManagerTest
      * @throws IOException Exception Input/Output.
      */
     @Test
-    public void testRedirectWithSelectedNotNull()
-        throws IOException
-    {
+    public void testRedirectWithSelectedNotNull() throws IOException {
         final String viewName = "editPharmacie";
         final String idName = "idPharmacie";
         this.pharmaciesManager.setBeanSelected(this.pharmaciesManager.getBeans().get(1));
         Assert.assertNotNull(this.pharmaciesManager.getBeanSelected());
-        this.pharmaciesManager.redirect(viewName,
-                                        idName);
-        final String urlRedirect = viewName
-                                   + "?"
-                                   + idName
-                                   + "=2";
+        this.pharmaciesManager.redirect(viewName, idName);
+        final String urlRedirect = viewName + "?" + idName + "=2";
         Mockito.verify(this.mockRedirect).redirect(urlRedirect);
         Assert.assertNull(this.pharmaciesManager.getBeanSelected());
     }
@@ -141,15 +126,12 @@ public class SelectableBeansManagerTest
      * @throws IOException Exception Input/Output.
      */
     @Test
-    public void testRedirectWithSelectedNull()
-        throws IOException
-    {
+    public void testRedirectWithSelectedNull() throws IOException {
         final String viewName = "editPharmacie";
         final String idName = "idPharmacie";
         this.pharmaciesManager.setBeanSelected(null);
         Assert.assertNull(this.pharmaciesManager.getBeanSelected());
-        this.pharmaciesManager.redirect(viewName,
-                                        idName);
+        this.pharmaciesManager.redirect(viewName, idName);
         final String urlRedirect = viewName;
         Mockito.verify(this.mockRedirect).redirect(urlRedirect);
         Assert.assertNull(this.pharmaciesManager.getBeanSelected());
@@ -159,10 +141,8 @@ public class SelectableBeansManagerTest
      * Test de la méthode resetBeanSelected.
      */
     @Test
-    public void testResetBeanSelected()
-    {
-        this.pharmaciesManager.setBeanSelected(new SelectableBean<Pharmacie>(Mockito
-                .mock(Pharmacie.class)));
+    public void testResetBeanSelected() {
+        this.pharmaciesManager.setBeanSelected(new SelectableBean<Pharmacie>(Mockito.mock(Pharmacie.class)));
         Assert.assertNotNull(this.pharmaciesManager.getBeanSelected());
         this.pharmaciesManager.resetBeanSelected();
         Assert.assertNull(this.pharmaciesManager.getBeanSelected());

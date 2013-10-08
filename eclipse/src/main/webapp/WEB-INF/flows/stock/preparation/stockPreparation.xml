@@ -1,7 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<flow xmlns="http://www.springframework.org/schema/webflow"
-	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-	xsi:schemaLocation="http://www.springframework.org/schema/webflow
+<flow xmlns="http://www.springframework.org/schema/webflow" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.springframework.org/schema/webflow
     http://www.springframework.org/schema/webflow/spring-webflow-2.0.xsd"
 	parent="main">
 
@@ -11,13 +9,10 @@
 	<on-start>
 		<evaluate expression="essaiSearchCriteria.clear()" />
 		<!-- Initialisation complétion automatique des essais -->
-		<evaluate expression="'numInterne'"
-			result="autoCompleteEssaiManager.searchCriteria.activeOrder" />
-		<evaluate expression="'numInterneOrNomOrPromoteur'"
-			result="autoCompleteEssaiManager.searchCriteriaProperty" />
+		<evaluate expression="'numInterne'" result="autoCompleteEssaiManager.searchCriteria.activeOrder" />
+		<evaluate expression="'numInterneOrNomOrPromoteur'" result="autoCompleteEssaiManager.searchCriteriaProperty" />
 		<evaluate expression="sortieManager.init()" />
-		<evaluate expression="TYPE_MOUVEMENT_PREPARATION_SORTIE"
-			result="sortieManager.typeSortie" />
+		<evaluate expression="TYPE_MOUVEMENT_PREPARATION_SORTIE" result="sortieManager.typeSortie" />
 	</on-start>
 
 	<decision-state id="isForEssai">
@@ -33,8 +28,7 @@
 	</action-state>
 
 	<!-- Page principale -->
-	<view-state id="stockSortie"
-		view="../../../pages/stock/sortie/stockSortie.xhtml">
+	<view-state id="stockSortie" view="../../../pages/stock/sortie/stockSortie.xhtml">
 		<transition on="addSortie" to="editSortie">
 			<evaluate expression="sortieManager.addSortie()" />
 		</transition>
@@ -68,21 +62,18 @@
 			<evaluate expression="approvisionnementManager.handleSelectEssai(null)" />
 			<set name="approvisionnementManager.pharmacieSelected" value="sortieManager.pharmacieSelected" />
 			<evaluate expression="TYPE_MOUVEMENT_PREPARATION_ENTREE" result="approvisionnementManager.typeAppro" />
-			<evaluate expression="sortieManager.buildComposition()" result="approvisionnementManager.composition"/>
+			<evaluate expression="sortieManager.buildComposition()" result="approvisionnementManager.composition" />
 		</on-entry>
-		<evaluate
-			expression="produitService.getPreparations(approvisionnementManager.essaiSelected,
-                                                         approvisionnementManager.pharmacieSelected)"
-			result="approvisionnementManager.produits" />
-			
-			
-		<transition to="stockReception" >
+		<evaluate expression="produitService.getPreparations(approvisionnementManager.essaiSelected,
+                                                         approvisionnementManager.pharmacieSelected)" result="approvisionnementManager.produits" />
+
+
+		<transition to="stockReception">
 		</transition>
 	</action-state>
 
 	<!-- Page principale -->
-	<view-state id="stockReception"
-		view="../../../pages/stock/reception/stockReception.xhtml">
+	<view-state id="stockReception" view="../../../pages/stock/reception/stockReception.xhtml">
 		<transition on="addReceptionLot" to="editReceptionLot">
 			<evaluate expression="approvisionnementManager.addReceptionLotPreparation()" />
 		</transition>
@@ -99,13 +90,10 @@
 				expression="sortieService.save(sortieManager.raisonSortie, sortieManager.commentaireRaison, sortieManager.typeSortie,sortieManager.nomSocieteTransport,sortieManager.referenceEnvoi,sortieManager.commentaire,sortieManager.pharmacieDest,sortieManager.sorties, null)"
 				result="sortieManager.result" />
 			<!-- Ajout des documents sur les sorties créées -->
-			<evaluate
-				expression="sortieFileHelper.addDocumentsSortie(sortieManager.typeSortie,sortieManager.result,sortieManager.fileDestruction,sortieManager.fileRetourPromoteur)" />
-			<evaluate
-				expression="approvisionnementService.save(approvisionnementManager.receptionLots)"
-				result="approvisionnementManager.result" />
-			<evaluate expression="approvisionnementManager.majNumOrdonnancier()"/>	
-				
+			<evaluate expression="sortieFileHelper.addDocumentsSortie(sortieManager.typeSortie,sortieManager.result,sortieManager.fileDestruction,sortieManager.fileRetourPromoteur)" />
+			<evaluate expression="approvisionnementService.save(approvisionnementManager.receptionLots)" result="approvisionnementManager.result" />
+			<evaluate expression="approvisionnementManager.majNumOrdonnancier()" />
+
 		</transition>
 		<transition on="error" to="stockReception" />
 
@@ -118,15 +106,14 @@
 	<!-- Edition de réception de lot -->
 	<subflow-state id="editReceptionLot" subflow="stock/reception/lot">
 		<on-entry>
-		
-			<evaluate expression="approvisionnementManager.composition" result="approvisionnementManager.receptionCurrent.appro.composition"/>
+
+			<evaluate expression="approvisionnementManager.composition" result="approvisionnementManager.receptionCurrent.appro.composition" />
 		</on-entry>
 		<transition on="comeback" to="stockReception" />
 	</subflow-state>
-	
+
 	<!-- Page récapitulative de réception de stock -->
-	<view-state id="recapStockReception"
-		view="../../../pages/stock/preparation/recapStockPreparation.xhtml">
+	<view-state id="recapStockReception" view="../../../pages/stock/preparation/recapStockPreparation.xhtml">
 	</view-state>
 
 </flow>

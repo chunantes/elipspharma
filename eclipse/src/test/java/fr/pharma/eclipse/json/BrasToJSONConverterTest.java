@@ -16,13 +16,11 @@ import fr.pharma.eclipse.domain.model.design.embedded.TempsPrescription;
 import fr.pharma.eclipse.utils.AbstractEclipseJUnitTest;
 
 /**
- *Test de la classe BrasToJSONConverter.
- 
+ * Test de la classe BrasToJSONConverter.
+ * @author Netapsys
  * @version $Revision$ $Date$
  */
-public class BrasToJSONConverterTest
-    extends AbstractEclipseJUnitTest
-{
+public class BrasToJSONConverterTest extends AbstractEclipseJUnitTest {
 
     /**
      * Converter à tester.
@@ -38,8 +36,7 @@ public class BrasToJSONConverterTest
      * {@inheritDoc}
      */
     @Override
-    public void setUp()
-    {
+    public void setUp() {
         this.sequenceConverter = Mockito.mock(SequenceToJSONConverter.class);
         this.converter = new BrasToJSONConverter();
         this.converter.setSequenceConverter(this.sequenceConverter);
@@ -49,8 +46,7 @@ public class BrasToJSONConverterTest
      * {@inheritDoc}
      */
     @Override
-    public void tearDown()
-    {
+    public void tearDown() {
         this.sequenceConverter = null;
         this.converter = null;
     }
@@ -60,8 +56,7 @@ public class BrasToJSONConverterTest
      */
     @Override
     @Test
-    public void testInit()
-    {
+    public void testInit() {
         Assert.assertNotNull(this.sequenceConverter);
         Assert.assertNotNull(this.converter);
     }
@@ -70,26 +65,16 @@ public class BrasToJSONConverterTest
      * Test de la méthode convert().
      */
     @Test
-    public void testConvertNothing()
-    {
+    public void testConvertNothing() {
         final Bras bras = new Bras();
         final Sequence seq1 = new Sequence();
         bras.getSequences().add(seq1);
         final Calendar cal = Calendar.getInstance();
-        Mockito
-                .when(this.sequenceConverter.support(Matchers.any(Sequence.class)))
-                .thenReturn(false);
-        Mockito
-                .when(this.sequenceConverter.convert(Matchers.any(Sequence.class),
-                                                     Matchers.any(Calendar.class)))
-                .thenReturn(new JSONObject());
-        final JSONArray array = this.converter.convert(bras,
-                                                       cal);
-        Mockito.verify(this.sequenceConverter,
-                       Mockito.never()).convert(Matchers.any(Sequence.class),
-                                                Matchers.any(Calendar.class));
-        Assert.assertEquals(1,
-                            array.length());
+        Mockito.when(this.sequenceConverter.support(Matchers.any(Sequence.class))).thenReturn(false);
+        Mockito.when(this.sequenceConverter.convert(Matchers.any(Sequence.class), Matchers.any(Calendar.class))).thenReturn(new JSONObject());
+        final JSONArray array = this.converter.convert(bras, cal);
+        Mockito.verify(this.sequenceConverter, Mockito.never()).convert(Matchers.any(Sequence.class), Matchers.any(Calendar.class));
+        Assert.assertEquals(1, array.length());
 
     }
 
@@ -97,41 +82,28 @@ public class BrasToJSONConverterTest
      * Test de la méthode convert().
      */
     @Test
-    public void testConvert()
-    {
+    public void testConvert() {
         final Bras bras = new Bras();
         bras.setNom("nom");
         bras.setId(2L);
         final Sequence seq1 = new Sequence();
         bras.getSequences().add(seq1);
         final Calendar cal = Calendar.getInstance();
-        Mockito
-                .when(this.sequenceConverter.support(Matchers.any(Sequence.class)))
-                .thenReturn(true);
-        Mockito
-                .when(this.sequenceConverter.convert(Matchers.any(Sequence.class),
-                                                     Matchers.any(Calendar.class)))
-                .thenReturn(new JSONObject());
-        final JSONArray array = this.converter.convert(bras,
-                                                       cal);
-        Mockito.verify(this.sequenceConverter).convert(Matchers.any(Sequence.class),
-                                                       Matchers.any(Calendar.class));
-        Assert.assertEquals(1,
-                            array.length());
-        try
-        {
+        Mockito.when(this.sequenceConverter.support(Matchers.any(Sequence.class))).thenReturn(true);
+        Mockito.when(this.sequenceConverter.convert(Matchers.any(Sequence.class), Matchers.any(Calendar.class))).thenReturn(new JSONObject());
+        final JSONArray array = this.converter.convert(bras, cal);
+        Mockito.verify(this.sequenceConverter).convert(Matchers.any(Sequence.class), Matchers.any(Calendar.class));
+        Assert.assertEquals(1, array.length());
+        try {
 
-            for (int i = 0; i < array.length(); i++)
-            {
+            for (int i = 0; i < array.length(); i++) {
                 Assert.assertNotNull(((JSONObject) array.get(i)).get("niveau"));
                 Assert.assertNotNull(((JSONObject) array.get(i)).get("series"));
                 Assert.assertNotNull(((JSONObject) array.get(i)).get("itemName"));
                 Assert.assertNotNull(((JSONObject) array.get(i)).get("id"));
             }
 
-        }
-        catch (final JSONException e)
-        {
+        } catch (final JSONException e) {
             Assert.fail("Aucune exception attendue");
         }
     }
@@ -140,8 +112,7 @@ public class BrasToJSONConverterTest
      * Test de la méthode convert() avec sous bras.
      */
     @Test
-    public void testConvertSousBras()
-    {
+    public void testConvertSousBras() {
         final Bras bras = new Bras();
         bras.setNom("nom");
         bras.setId(2L);
@@ -158,34 +129,21 @@ public class BrasToJSONConverterTest
         final Calendar cal = Calendar.getInstance();
         bras.getSousBras().add(ssBras);
 
-        Mockito
-                .when(this.sequenceConverter.support(Matchers.any(Sequence.class)))
-                .thenReturn(true);
-        Mockito
-                .when(this.sequenceConverter.convert(Matchers.any(Sequence.class),
-                                                     Matchers.any(Calendar.class)))
-                .thenReturn(new JSONObject());
-        final JSONArray array = this.converter.convert(bras,
-                                                       cal);
-        Mockito.verify(this.sequenceConverter,
-                       Mockito.times(2)).convert(Matchers.any(Sequence.class),
-                                                 Matchers.any(Calendar.class));
-        Assert.assertEquals(2,
-                            array.length());
-        try
-        {
+        Mockito.when(this.sequenceConverter.support(Matchers.any(Sequence.class))).thenReturn(true);
+        Mockito.when(this.sequenceConverter.convert(Matchers.any(Sequence.class), Matchers.any(Calendar.class))).thenReturn(new JSONObject());
+        final JSONArray array = this.converter.convert(bras, cal);
+        Mockito.verify(this.sequenceConverter, Mockito.times(2)).convert(Matchers.any(Sequence.class), Matchers.any(Calendar.class));
+        Assert.assertEquals(2, array.length());
+        try {
 
-            for (int i = 0; i < array.length(); i++)
-            {
+            for (int i = 0; i < array.length(); i++) {
                 Assert.assertNotNull(((JSONObject) array.get(i)).get("niveau"));
                 Assert.assertNotNull(((JSONObject) array.get(i)).get("series"));
                 Assert.assertNotNull(((JSONObject) array.get(i)).get("itemName"));
                 Assert.assertNotNull(((JSONObject) array.get(i)).get("id"));
             }
 
-        }
-        catch (final JSONException e)
-        {
+        } catch (final JSONException e) {
             Assert.fail("Aucune exception attendue");
         }
     }

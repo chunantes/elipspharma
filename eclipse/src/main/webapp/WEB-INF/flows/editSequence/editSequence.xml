@@ -1,7 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<flow xmlns="http://www.springframework.org/schema/webflow"
-	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-	xsi:schemaLocation="http://www.springframework.org/schema/webflow
+<flow xmlns="http://www.springframework.org/schema/webflow" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.springframework.org/schema/webflow
     http://www.springframework.org/schema/webflow/spring-webflow-2.0.xsd"
 	parent="main">
 
@@ -13,8 +11,7 @@
 
 	<!-- Création -->
 	<action-state id="create">
-		<evaluate
-			expression="sequenceManager.setBean(sequenceFactory.getInitializedObject(essaiManager.bean, designsManager.parent.nomComplet))" />
+		<evaluate expression="sequenceManager.setBean(sequenceFactory.getInitializedObject(essaiManager.bean, designsManager.parent.nomComplet))" />
 		<transition to="editSequence" />
 	</action-state>
 
@@ -24,34 +21,32 @@
 		<transition to="editSequence" />
 	</action-state>
 
-	<!--	 Page principale -->
+	<!-- Page principale -->
 	<view-state id="editSequence" view="../../pages/editSequence/editSequence.xhtml">
 
-		<!--  Ajout de la sequence au design -->
+		<!-- Ajout de la sequence au design -->
 		<transition on="save" to="editSequence">
-			<evaluate expression="timeHelper.buildFin(sequenceManager.bean)"/>
-			<evaluate expression="sequenceService.save(sequenceManager.bean)"
-				result="sequenceManager.bean" />
-			<set name="designsManager.designableDisplay"  value="sequenceManager.bean"/>
+			<evaluate expression="timeHelper.buildFin(sequenceManager.bean)" />
+			<evaluate expression="sequenceService.save(sequenceManager.bean)" result="sequenceManager.bean" />
+			<set name="designsManager.designableDisplay" value="sequenceManager.bean" />
 		</transition>
 
-		<!-- Ajout de la sequence au design et retour au design  -->
+		<!-- Ajout de la sequence au design et retour au design -->
 		<transition on="saveAndComeback" to="comeback">
-			<evaluate expression="timeHelper.buildFin(sequenceManager.bean)"/>
-			<evaluate expression="sequenceService.save(sequenceManager.bean)"
-				result="sequenceManager.bean" />
-			<evaluate expression="essaiManager.setBean(essaiService.get(essaiManager.bean.id))"/>
-			<set name="designsManager.designableDisplay"  value="sequenceManager.bean"/>
-			<evaluate expression="designsManager.buildRoot()"/>
+			<evaluate expression="timeHelper.buildFin(sequenceManager.bean)" />
+			<evaluate expression="sequenceService.save(sequenceManager.bean)" result="sequenceManager.bean" />
+			<evaluate expression="essaiManager.setBean(essaiService.get(essaiManager.bean.id))" />
+			<set name="designsManager.designableDisplay" value="sequenceManager.bean" />
+			<evaluate expression="designsManager.buildRoot()" />
 		</transition>
 
 		<transition on="cancel" to="createOrEdit">
 			<evaluate expression="sequenceService.dettach(sequenceManager.bean)" />
 		</transition>
-		<transition on="comeback" to="comeback" >
-			<evaluate expression="essaiManager.setBean(essaiService.get(essaiManager.bean.id))"/>
-			<evaluate expression="designsManager.buildRoot()"/>
-			</transition>
+		<transition on="comeback" to="comeback">
+			<evaluate expression="essaiManager.setBean(essaiService.get(essaiManager.bean.id))" />
+			<evaluate expression="designsManager.buildRoot()" />
+		</transition>
 		<transition on="error" to="editSequence" />
 	</view-state>
 

@@ -4,24 +4,19 @@ import org.springframework.webflow.engine.RequestControlContext;
 
 /**
  * Handler pour les TechnicalException.
- 
+ * @author Netapsys
  * @version $Revision$ $Date$
  */
-public class TechnicalExceptionHandler
-    implements ExceptionHandler
-{
+public class TechnicalExceptionHandler implements ExceptionHandler {
 
     /**
      * {@inheritDoc}
      */
     @Override
     public void handle(final Exception e,
-                       final RequestControlContext context)
-    {
-        context.getFlashScope().put("messageContextKey",
-                                    "globalError");
-        context.getFlashScope().put("messageContext",
-                                    context.getMessageContext());
+                       final RequestControlContext context) {
+        context.getFlashScope().put("messageContextKey", "globalError");
+        context.getFlashScope().put("messageContext", context.getMessageContext());
     }
 
 }

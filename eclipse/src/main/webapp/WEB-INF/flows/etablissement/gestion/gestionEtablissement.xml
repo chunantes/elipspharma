@@ -1,44 +1,43 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<flow xmlns="http://www.springframework.org/schema/webflow"
-	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-	xsi:schemaLocation="http://www.springframework.org/schema/webflow
-    http://www.springframework.org/schema/webflow/spring-webflow-2.0.xsd" parent="main">
+<flow xmlns="http://www.springframework.org/schema/webflow" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.springframework.org/schema/webflow
+    http://www.springframework.org/schema/webflow/spring-webflow-2.0.xsd"
+	parent="main">
 
 	<!-- Démarrage -->
 	<on-start>
-		<evaluate expression="etablissementSearchCriteria.clear()"/>
-		<evaluate expression="etablissementService.getAll(etablissementSearchCriteria)" result="etablissementsManager.beans"/>
+		<evaluate expression="etablissementSearchCriteria.clear()" />
+		<evaluate expression="etablissementService.getAll(etablissementSearchCriteria)" result="etablissementsManager.beans" />
 	</on-start>
 
 	<!-- Page principale -->
 	<view-state id="gestionEtablissement" view="../../../pages/etablissement/gestion/gestionEtablissement.xhtml">
-		<transition on="search" to="search"/>
-		<transition on="delete" to="delete"/>
+		<transition on="search" to="search" />
+		<transition on="delete" to="delete" />
 		<transition on="edit" to="edit">
 			<set name="flashScope.idEtablissement" value="etablissementsManager.beanSelected.id" type="java.lang.Long" />
-			<evaluate expression="null" result="etablissementsManager.beanSelected"/>
+			<evaluate expression="null" result="etablissementsManager.beanSelected" />
 		</transition>
-		<transition on="add" to="edit"/>
-		<transition on="error" to="gestionEtablissement"/>
+		<transition on="add" to="edit" />
+		<transition on="error" to="gestionEtablissement" />
 	</view-state>
-	
+
 	<!-- Recherche -->
 	<action-state id="search">
-		<evaluate expression="etablissementService.getAll(etablissementSearchCriteria)" result="etablissementsManager.beans"/>
-		<transition to="gestionEtablissement"/>
+		<evaluate expression="etablissementService.getAll(etablissementSearchCriteria)" result="etablissementsManager.beans" />
+		<transition to="gestionEtablissement" />
 	</action-state>
-	
+
 	<!-- Suppression -->
 	<action-state id="delete">
-		<evaluate expression="etablissementService.remove(etablissementsManager.beansSelected)"/>
-		<transition on="error" to="search"/>
-		<transition to="search"/>
+		<evaluate expression="etablissementService.remove(etablissementsManager.beansSelected)" />
+		<transition on="error" to="search" />
+		<transition to="search" />
 	</action-state>
-	
+
 	<!-- Edition -->
 	<subflow-state id="edit" subflow="etablissement/edit">
-		<input name="idEtablissement" value="flashScope.idEtablissement"/>
-		<transition to="search"/>
+		<input name="idEtablissement" value="flashScope.idEtablissement" />
+		<transition to="search" />
 	</subflow-state>
-	
+
 </flow>

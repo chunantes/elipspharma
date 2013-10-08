@@ -21,13 +21,12 @@ import fr.pharma.eclipse.domain.model.stockage.Pharmacie;
 import fr.pharma.eclipse.service.produit.ProduitService;
 
 /**
- * Méthode en charge de tester le manager de gestion des dispensations globales (traitement des
- * demandes de dotation).
- 
+ * Méthode en charge de tester le manager de gestion des dispensations globales
+ * (traitement des demandes de dotation).
+ * @author Netapsys
  * @version $Revision$ $Date$
  */
-public class DispensationGlobaleManagerTest
-{
+public class DispensationGlobaleManagerTest {
     /**
      * DispensationGlobaleManager à tester.
      */
@@ -48,8 +47,7 @@ public class DispensationGlobaleManagerTest
      */
     @Before
     @SuppressWarnings("unchecked")
-    public void init()
-    {
+    public void init() {
         this.criteria = new DotationSearchCriteria();
         this.manager = new DispensationGlobaleManager(this.criteria);
         this.mockProduitService = Mockito.mock(ProduitService.class);
@@ -60,8 +58,7 @@ public class DispensationGlobaleManagerTest
      * Méthode en charge de purger les données de test.
      */
     @After
-    public void end()
-    {
+    public void end() {
         this.manager = null;
         this.mockProduitService = null;
     }
@@ -70,8 +67,7 @@ public class DispensationGlobaleManagerTest
      * Méthode en charge de tester l'initialisation des données de test.
      */
     @Test
-    public void testInitData()
-    {
+    public void testInitData() {
         Assert.assertNotNull(this.manager);
         Assert.assertNotNull(this.mockProduitService);
     }
@@ -80,38 +76,34 @@ public class DispensationGlobaleManagerTest
      * Méthode en charge de tester la méthode d'initialisation.
      */
     @Test
-    public void testInit()
-    {
+    public void testInit() {
         this.manager.init();
         Assert.assertNull(this.manager.getBeanSelected());
         Assert.assertNull(this.manager.getProduits());
-        Assert.assertEquals(Boolean.FALSE,
-                            this.criteria.getTraitee());
+        Assert.assertEquals(Boolean.FALSE, this.criteria.getTraitee());
     }
 
     /**
-     * Méthode en charge de tester la méthode appelée via l'IHM suite à la sélection d'un essai.
+     * Méthode en charge de tester la méthode appelée via l'IHM suite à la
+     * sélection d'un essai.
      */
     @Test
-    public void testHandleSelectEssai()
-    {
+    public void testHandleSelectEssai() {
         final SelectEvent mockSelectEvent = Mockito.mock(SelectEvent.class);
         final Essai essai = Mockito.mock(Essai.class);
         Mockito.when(mockSelectEvent.getObject()).thenReturn(essai);
         final Pharmacie pharmacie = Mockito.mock(Pharmacie.class);
         this.criteria.setPharmacie(pharmacie);
         this.manager.handleSelectEssai(mockSelectEvent);
-        Mockito.verify(this.mockProduitService).getProduits(essai,
-                                                            pharmacie);
+        Mockito.verify(this.mockProduitService).getProduits(essai, pharmacie);
     }
 
     /**
-     * Méthode en charge de tester la méthode appelée via l'IHM suite à la sélection d'une
-     * pharmacie.
+     * Méthode en charge de tester la méthode appelée via l'IHM suite à la
+     * sélection d'une pharmacie.
      */
     @Test
-    public void testHandleSelectPharmacieWithEssaiNull()
-    {
+    public void testHandleSelectPharmacieWithEssaiNull() {
         final AjaxBehaviorEvent event = Mockito.mock(AjaxBehaviorEvent.class);
         final HtmlSelectOneMenu select = Mockito.mock(HtmlSelectOneMenu.class);
         Mockito.when(event.getSource()).thenReturn(select);
@@ -120,17 +112,15 @@ public class DispensationGlobaleManagerTest
         Mockito.when(select.getLocalValue()).thenReturn(pharmacie);
         this.criteria.setEssai(null);
         this.manager.handleSelectPharmacie(event);
-        Assert.assertEquals(0,
-                            this.manager.getProduits().size());
+        Assert.assertEquals(0, this.manager.getProduits().size());
     }
 
     /**
-     * Méthode en charge de tester la méthode appelée via l'IHM suite à la sélection d'une
-     * pharmacie.
+     * Méthode en charge de tester la méthode appelée via l'IHM suite à la
+     * sélection d'une pharmacie.
      */
     @Test
-    public void testHandleSelectPharmacieWithEssaiNotNull()
-    {
+    public void testHandleSelectPharmacieWithEssaiNotNull() {
         final AjaxBehaviorEvent event = Mockito.mock(AjaxBehaviorEvent.class);
         final HtmlSelectOneMenu select = Mockito.mock(HtmlSelectOneMenu.class);
         Mockito.when(event.getSource()).thenReturn(select);
@@ -139,17 +129,15 @@ public class DispensationGlobaleManagerTest
         final Essai essai = Mockito.mock(Essai.class);
         this.criteria.setEssai(essai);
         this.manager.handleSelectPharmacie(event);
-        Mockito.verify(this.mockProduitService).getProduits(essai,
-                                                            pharmacie);
+        Mockito.verify(this.mockProduitService).getProduits(essai, pharmacie);
     }
 
     /**
-     * Méthode en charge de tester l'affectation des lignes de stock pour un traitement de demande
-     * de dotation.
+     * Méthode en charge de tester l'affectation des lignes de stock pour un
+     * traitement de demande de dotation.
      */
     @Test
-    public void testSetLignesStockForDotation()
-    {
+    public void testSetLignesStockForDotation() {
         final List<LigneStock> lignesStock = new ArrayList<LigneStock>();
         this.manager.setLignesStockForDotation(lignesStock);
         Assert.assertNotNull(this.manager.getLignesStockForDotation());

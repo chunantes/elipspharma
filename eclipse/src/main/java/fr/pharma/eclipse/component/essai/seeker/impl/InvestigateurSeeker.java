@@ -18,13 +18,12 @@ import fr.pharma.eclipse.domain.model.localisation.Service;
 import fr.pharma.eclipse.service.common.GenericService;
 
 /**
- * Classe en charge de rechercher les investigateurs sélectionnables pour l'essai.
- 
+ * Classe en charge de rechercher les investigateurs sélectionnables pour
+ * l'essai.
+ * @author Netapsys
  * @version $Revision$ $Date$
  */
-public class InvestigateurSeeker
-    implements SelectableContactsSeeker, BeanFactoryAware
-{
+public class InvestigateurSeeker implements SelectableContactsSeeker, BeanFactoryAware {
 
     /**
      * Serial ID.
@@ -45,8 +44,7 @@ public class InvestigateurSeeker
      * {@inheritDoc}
      */
     @Override
-    public boolean supports(final TypeContact typeContact)
-    {
+    public boolean supports(final TypeContact typeContact) {
         return TypeContact.INVESTIGATEUR.equals(typeContact);
     }
 
@@ -54,8 +52,7 @@ public class InvestigateurSeeker
      * {@inheritDoc}
      */
     @Override
-    public List<Personne> getContacts(final Essai essai)
-    {
+    public List<Personne> getContacts(final Essai essai) {
         return new ArrayList<Personne>(this.service.getAll(this.getSearchCriteria(essai)));
     }
 
@@ -65,10 +62,8 @@ public class InvestigateurSeeker
      * @param essai Essai pour lequel on souhaite ajouter des contacts.
      * @return Le critère de recherche qui permet de récupérer les contacts.
      */
-    private PersonneSearchCriteria getSearchCriteria(final Essai essai)
-    {
-        final InvestigateurSearchCriteria criteria =
-            (InvestigateurSearchCriteria) this.beanFactory.getBean("investigateurCriteria");
+    private PersonneSearchCriteria getSearchCriteria(final Essai essai) {
+        final InvestigateurSearchCriteria criteria = (InvestigateurSearchCriteria) this.beanFactory.getBean("investigateurCriteria");
         final List<Service> services = new ArrayList<Service>();
         services.addAll(essai.getServices());
         criteria.setServices(services);
@@ -79,9 +74,7 @@ public class InvestigateurSeeker
      * {@inheritDoc}
      */
     @Override
-    public void setBeanFactory(final BeanFactory beanFactory)
-        throws BeansException
-    {
+    public void setBeanFactory(final BeanFactory beanFactory) throws BeansException {
         this.beanFactory = beanFactory;
     }
 
@@ -89,8 +82,7 @@ public class InvestigateurSeeker
      * Getter sur beanFactory.
      * @return Retourne le beanFactory.
      */
-    BeanFactory getBeanFactory()
-    {
+    BeanFactory getBeanFactory() {
         return this.beanFactory;
     }
 
@@ -98,8 +90,7 @@ public class InvestigateurSeeker
      * Getter sur service.
      * @return Retourne le service.
      */
-    GenericService<Investigateur> getService()
-    {
+    GenericService<Investigateur> getService() {
         return this.service;
     }
 
@@ -107,8 +98,7 @@ public class InvestigateurSeeker
      * Setter pour service.
      * @param service le service à écrire.
      */
-    public void setService(final GenericService<Investigateur> service)
-    {
+    public void setService(final GenericService<Investigateur> service) {
         this.service = service;
     }
 

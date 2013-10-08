@@ -18,13 +18,12 @@ import fr.pharma.eclipse.domain.model.stockage.Pharmacie;
 import fr.pharma.eclipse.domain.model.stockage.Stockage;
 
 /**
- * Wrapper de Mvt stock permettant de regrouper les mvt stock sur le meme numéro de lot.
- 
+ * Wrapper de Mvt stock permettant de regrouper les mvt stock sur le meme numéro
+ * de lot.
+ * @author Netapsys
  * @version $Revision$ $Date$
  */
-public class FluxStock
-    implements Serializable
-{
+public class FluxStock implements Serializable {
     /**
      * SerialVersionUID.
      */
@@ -99,8 +98,7 @@ public class FluxStock
      * Getter sur numLot.
      * @return Retourne le numLot.
      */
-    public String getNumLot()
-    {
+    public String getNumLot() {
         return this.numLot;
     }
 
@@ -108,8 +106,7 @@ public class FluxStock
      * Getter sur mvts.
      * @return Retourne le mvts.
      */
-    public List<MvtStock> getMvts()
-    {
+    public List<MvtStock> getMvts() {
         return this.mvts;
     }
 
@@ -117,8 +114,7 @@ public class FluxStock
      * Setter pour mvts.
      * @param mvts le mvts à écrire.
      */
-    public void setMvts(final List<MvtStock> mvts)
-    {
+    public void setMvts(final List<MvtStock> mvts) {
         this.mvts = mvts;
     }
 
@@ -126,8 +122,7 @@ public class FluxStock
      * Setter pour numLot.
      * @param numLot le numLot à écrire.
      */
-    public void setNumLot(final String numLot)
-    {
+    public void setNumLot(final String numLot) {
         this.numLot = numLot;
     }
 
@@ -135,8 +130,7 @@ public class FluxStock
      * Getter sur date.
      * @return Retourne le date.
      */
-    public Calendar getDate()
-    {
+    public Calendar getDate() {
         return this.date;
     }
 
@@ -144,8 +138,7 @@ public class FluxStock
      * Getter sur essai.
      * @return Retourne le essai.
      */
-    public Essai getEssai()
-    {
+    public Essai getEssai() {
         return this.essai;
     }
 
@@ -153,8 +146,7 @@ public class FluxStock
      * Getter sur produit.
      * @return Retourne le produit.
      */
-    public Produit getProduit()
-    {
+    public Produit getProduit() {
         return this.produit;
     }
 
@@ -162,8 +154,7 @@ public class FluxStock
      * Getter sur pharmacie.
      * @return Retourne le pharmacie.
      */
-    public Pharmacie getPharmacie()
-    {
+    public Pharmacie getPharmacie() {
         return this.pharmacie;
     }
 
@@ -171,8 +162,7 @@ public class FluxStock
      * Getter sur conditionnement.
      * @return Retourne le conditionnement.
      */
-    public Conditionnement getConditionnement()
-    {
+    public Conditionnement getConditionnement() {
         return this.conditionnement;
     }
 
@@ -180,8 +170,7 @@ public class FluxStock
      * Getter sur quantite.
      * @return Retourne le quantite.
      */
-    public Integer getQuantite()
-    {
+    public Integer getQuantite() {
         return this.quantite;
     }
 
@@ -189,8 +178,7 @@ public class FluxStock
      * Getter sur type.
      * @return Retourne le type.
      */
-    public TypeMvtStock getType()
-    {
+    public TypeMvtStock getType() {
         return this.type;
     }
 
@@ -198,8 +186,7 @@ public class FluxStock
      * Setter pour date.
      * @param date le date à écrire.
      */
-    public void setDate(final Calendar date)
-    {
+    public void setDate(final Calendar date) {
         this.date = date;
     }
 
@@ -207,8 +194,7 @@ public class FluxStock
      * Setter pour essai.
      * @param essai le essai à écrire.
      */
-    public void setEssai(final Essai essai)
-    {
+    public void setEssai(final Essai essai) {
         this.essai = essai;
     }
 
@@ -216,8 +202,7 @@ public class FluxStock
      * Setter pour produit.
      * @param produit le produit à écrire.
      */
-    public void setProduit(final Produit produit)
-    {
+    public void setProduit(final Produit produit) {
         this.produit = produit;
     }
 
@@ -225,8 +210,7 @@ public class FluxStock
      * Setter pour pharmacie.
      * @param pharmacie le pharmacie à écrire.
      */
-    public void setPharmacie(final Pharmacie pharmacie)
-    {
+    public void setPharmacie(final Pharmacie pharmacie) {
         this.pharmacie = pharmacie;
     }
 
@@ -234,8 +218,7 @@ public class FluxStock
      * Setter pour conditionnement.
      * @param conditionnement le conditionnement à écrire.
      */
-    public void setConditionnement(final Conditionnement conditionnement)
-    {
+    public void setConditionnement(final Conditionnement conditionnement) {
         this.conditionnement = conditionnement;
     }
 
@@ -243,8 +226,7 @@ public class FluxStock
      * Setter pour quantite.
      * @param quantite le quantite à écrire.
      */
-    public void setQuantite(final Integer quantite)
-    {
+    public void setQuantite(final Integer quantite) {
         this.quantite = quantite;
     }
 
@@ -252,8 +234,7 @@ public class FluxStock
      * Setter pour type.
      * @param type le type à écrire.
      */
-    public void setType(final TypeMvtStock type)
-    {
+    public void setType(final TypeMvtStock type) {
         this.type = type;
     }
 
@@ -261,8 +242,7 @@ public class FluxStock
      * Getter sur personne.
      * @return Retourne le personne.
      */
-    public Personne getPersonne()
-    {
+    public Personne getPersonne() {
         return this.personne;
     }
 
@@ -270,17 +250,17 @@ public class FluxStock
      * Setter pour personne.
      * @param personne le personne à écrire.
      */
-    public void setPersonne(final Personne personne)
-    {
+    public void setPersonne(final Personne personne) {
         this.personne = personne;
     }
 
     /**
-     * Retourne <true> si le flux de stock contient des mvts en numero de traitement.
-     * @return <true> si le flux de stock contient des mvts en numero de traitement.
+     * Retourne <true> si le flux de stock contient des mvts en numero de
+     * traitement.
+     * @return <true> si le flux de stock contient des mvts en numero de
+     * traitement.
      */
-    public boolean isNumeroTraitement()
-    {
+    public boolean isNumeroTraitement() {
         return !StringUtils.isEmpty(this.getMvts().get(0).getNumTraitement());
     }
 
@@ -288,8 +268,7 @@ public class FluxStock
      * Retourne le premier mouvement de stock.
      * @return Le premier mouvement de stock.
      */
-    public MvtStock getfirst()
-    {
+    public MvtStock getfirst() {
         return this.mvts.get(0);
     }
 
@@ -297,8 +276,7 @@ public class FluxStock
      * Getter pour patient.
      * @return Le patient
      */
-    public Patient getPatient()
-    {
+    public Patient getPatient() {
         return this.patient;
     }
 
@@ -306,8 +284,7 @@ public class FluxStock
      * Setter pour patient.
      * @param patient Le patient à écrire.
      */
-    public void setPatient(final Patient patient)
-    {
+    public void setPatient(final Patient patient) {
         this.patient = patient;
     }
 
@@ -315,8 +292,7 @@ public class FluxStock
      * Getter pour numOrdonnancier.
      * @return Le numOrdonnancier
      */
-    public Integer getNumOrdonnancier()
-    {
+    public Integer getNumOrdonnancier() {
         return this.numOrdonnancier;
     }
 
@@ -324,8 +300,7 @@ public class FluxStock
      * Setter pour numOrdonnancier.
      * @param numOrdonnancier Le numOrdonnancier à écrire.
      */
-    public void setNumOrdonnancier(final Integer numOrdonnancier)
-    {
+    public void setNumOrdonnancier(final Integer numOrdonnancier) {
         this.numOrdonnancier = numOrdonnancier;
     }
 
@@ -333,8 +308,7 @@ public class FluxStock
      * Getter pour stockage.
      * @return Le stockage
      */
-    public Stockage getStockage()
-    {
+    public Stockage getStockage() {
         return this.stockage;
     }
 
@@ -342,8 +316,7 @@ public class FluxStock
      * Setter pour stockage.
      * @param stockage Le stockage à écrire.
      */
-    public void setStockage(final Stockage stockage)
-    {
+    public void setStockage(final Stockage stockage) {
         this.stockage = stockage;
     }
 

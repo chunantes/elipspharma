@@ -6,7 +6,7 @@
 	xmlns:c="http://java.sun.com/jsp/jstl/core">
 
 			<p:dataTable id="retoursPatient"
-				value="#{beanManagerHelper.returnAsDataModel(patientManager.bean.retours)}" var="retourPatient"
+				value="#{retoursPatientManager.beans}" var="retourPatient"
 				emptyMessage="#{resourceBundle['results.none']}" style="width:100%;"
 				selection="#{retoursPatientManager.beanSelected}"
 				rowSelectListener="#{retourPatientManager.setAction('edit')}"

@@ -453,7 +453,7 @@
 						value="#{resourceBundle['btn.prescrire']}" 
 						title="#{resourceBundle['btn.prescrire']}" />
 						<security:authorize
-							ifAnyGranted="ROLE_PHARMACIEN,ROLE_PHARMACIEN_INTERNE,ROLE_PHARMACIEN_EXTERNE,ROLE_PHARMACIEN_PREPARATEUR,ROLE_PHARMACIEN_TITULAIRE,ROLE_ADMIN">
+							ifAnyGranted="ROLE_PHARMACIEN,ROLE_PHARMACIEN_INTERNE,ROLE_PHARMACIEN_EXTERNE,ROLE_PHARMACIEN_PREPARATEUR,ROLE_PHARMACIEN_TITULAIRE,ROLE_ADMIN,ROLE_PHARMACIEN_ASSISTANT">
 							<p:commandButton id="saveButtonAndDispense"
 							action="saveAndDispense" ajax="false" rendered="#{prescriptionManager.valid }" disabled="#{prescriptionManager.readOnly}"
 							value="#{resourceBundle['btn.prescrireAndDispense']}" 

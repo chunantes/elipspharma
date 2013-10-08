@@ -22,11 +22,10 @@ import fr.pharma.eclipse.service.acteur.PersonneService;
 
 /**
  * Classe en charge de tester le manager de Personne.
- 
+ * @author Netapsys
  * @version $Revision$ $Date$
  */
-public class PersonnesManagerTest
-{
+public class PersonnesManagerTest {
 
     /**
      * PersonnesManager à tester.
@@ -58,8 +57,7 @@ public class PersonnesManagerTest
      */
     @Before
     @SuppressWarnings("unchecked")
-    public void init()
-    {
+    public void init() {
         this.criteria = new PersonneSearchCriteria();
         this.personnesManager = new PersonnesManager(this.criteria);
         this.mockRedirect = Mockito.mock(RedirectHandler.class);
@@ -73,8 +71,7 @@ public class PersonnesManagerTest
      * Méthode en charge de purger les données de test.
      */
     @After
-    public void end()
-    {
+    public void end() {
         this.criteria = null;
         this.personnesManager = null;
         this.mockRedirect = null;
@@ -86,8 +83,7 @@ public class PersonnesManagerTest
      * Méthode en charge de tester l'initialisation des données de test.
      */
     @Test
-    public void testInit()
-    {
+    public void testInit() {
         Assert.assertNotNull(this.criteria);
         Assert.assertNotNull(this.personnesManager);
         Assert.assertNotNull(this.mockRedirect);
@@ -99,32 +95,28 @@ public class PersonnesManagerTest
      * Méthode en charge de tester le champ de stockage de profilAjout.
      */
     @Test
-    public void testProfilAjout()
-    {
+    public void testProfilAjout() {
         this.personnesManager.setProfilAjout(TypePersonne.PHARMACIEN);
-        Assert.assertEquals(TypePersonne.PHARMACIEN,
-                            this.personnesManager.getProfilAjout());
+        Assert.assertEquals(TypePersonne.PHARMACIEN, this.personnesManager.getProfilAjout());
     }
 
     /**
-     * Méthode en charge de tester la méthode isComplete sur les informations obligatoires d'une
-     * personne.
+     * Méthode en charge de tester la méthode isComplete sur les informations
+     * obligatoires d'une personne.
      */
     @Test
-    public void testIsCompletePharmacien()
-    {
+    public void testIsCompletePharmacien() {
         final Personne personne = new Pharmacien();
         personne.setType(TypePersonne.PHARMACIEN);
         Assert.assertTrue(this.personnesManager.isComplete(personne));
     }
 
     /**
-     * Méthode en charge de tester la méthode isComplete sur les informations obligatoires d'une
-     * personne.
+     * Méthode en charge de tester la méthode isComplete sur les informations
+     * obligatoires d'une personne.
      */
     @Test
-    public void testIsCompleteArcInvestigateurOK()
-    {
+    public void testIsCompleteArcInvestigateurOK() {
         final ArcInvestigateur personne = Mockito.mock(ArcInvestigateur.class);
         Mockito.when(personne.getType()).thenReturn(TypePersonne.ARC_INVESTIGATEUR);
         Mockito.when(personne.getNom()).thenReturn("nom");
@@ -138,12 +130,11 @@ public class PersonnesManagerTest
     }
 
     /**
-     * Méthode en charge de tester la méthode isComplete sur les informations obligatoires d'une
-     * personne.
+     * Méthode en charge de tester la méthode isComplete sur les informations
+     * obligatoires d'une personne.
      */
     @Test
-    public void testIsCompleteArcInvestigateurKONom()
-    {
+    public void testIsCompleteArcInvestigateurKONom() {
         final ArcInvestigateur personne = Mockito.mock(ArcInvestigateur.class);
         Mockito.when(personne.getType()).thenReturn(TypePersonne.ARC_INVESTIGATEUR);
         Mockito.when(personne.getNom()).thenReturn(null);
@@ -157,12 +148,11 @@ public class PersonnesManagerTest
     }
 
     /**
-     * Méthode en charge de tester la méthode isComplete sur les informations obligatoires d'une
-     * personne.
+     * Méthode en charge de tester la méthode isComplete sur les informations
+     * obligatoires d'une personne.
      */
     @Test
-    public void testIsCompleteArcInvestigateurKOServices()
-    {
+    public void testIsCompleteArcInvestigateurKOServices() {
         final ArcInvestigateur personne = Mockito.mock(ArcInvestigateur.class);
         Mockito.when(personne.getType()).thenReturn(TypePersonne.ARC_INVESTIGATEUR);
         Mockito.when(personne.getNom()).thenReturn("nom");
@@ -173,12 +163,11 @@ public class PersonnesManagerTest
     }
 
     /**
-     * Méthode en charge de tester la méthode isComplete sur les informations obligatoires d'une
-     * personne.
+     * Méthode en charge de tester la méthode isComplete sur les informations
+     * obligatoires d'une personne.
      */
     @Test
-    public void testIsCompleteArcInvestigateurKOAll()
-    {
+    public void testIsCompleteArcInvestigateurKOAll() {
         final ArcInvestigateur personne = Mockito.mock(ArcInvestigateur.class);
         Mockito.when(personne.getType()).thenReturn(TypePersonne.ARC_INVESTIGATEUR);
         Mockito.when(personne.getNom()).thenReturn(null);
@@ -189,12 +178,11 @@ public class PersonnesManagerTest
     }
 
     /**
-     * Méthode en charge de tester la méthode isComplete sur les informations obligatoires d'une
-     * personne.
+     * Méthode en charge de tester la méthode isComplete sur les informations
+     * obligatoires d'une personne.
      */
     @Test
-    public void testIsCompleteInvestigateurOK()
-    {
+    public void testIsCompleteInvestigateurOK() {
         final Investigateur personne = Mockito.mock(Investigateur.class);
         Mockito.when(personne.getType()).thenReturn(TypePersonne.INVESTIGATEUR);
         Mockito.when(personne.getNom()).thenReturn("nom");
@@ -208,12 +196,11 @@ public class PersonnesManagerTest
     }
 
     /**
-     * Méthode en charge de tester la méthode isComplete sur les informations obligatoires d'une
-     * personne.
+     * Méthode en charge de tester la méthode isComplete sur les informations
+     * obligatoires d'une personne.
      */
     @Test
-    public void testIsCompleteInvestigateurKONom()
-    {
+    public void testIsCompleteInvestigateurKONom() {
         final Investigateur personne = Mockito.mock(Investigateur.class);
         Mockito.when(personne.getType()).thenReturn(TypePersonne.INVESTIGATEUR);
         Mockito.when(personne.getNom()).thenReturn(null);
@@ -227,12 +214,11 @@ public class PersonnesManagerTest
     }
 
     /**
-     * Méthode en charge de tester la méthode isComplete sur les informations obligatoires d'une
-     * personne.
+     * Méthode en charge de tester la méthode isComplete sur les informations
+     * obligatoires d'une personne.
      */
     @Test
-    public void testIsCompleteInvestigateurKOServices()
-    {
+    public void testIsCompleteInvestigateurKOServices() {
         final Investigateur personne = Mockito.mock(Investigateur.class);
         Mockito.when(personne.getType()).thenReturn(TypePersonne.INVESTIGATEUR);
         Mockito.when(personne.getNom()).thenReturn("nom");
@@ -243,12 +229,11 @@ public class PersonnesManagerTest
     }
 
     /**
-     * Méthode en charge de tester la méthode isComplete sur les informations obligatoires d'une
-     * personne.
+     * Méthode en charge de tester la méthode isComplete sur les informations
+     * obligatoires d'une personne.
      */
     @Test
-    public void testIsCompleteInvestigateurKOAll()
-    {
+    public void testIsCompleteInvestigateurKOAll() {
         final Investigateur personne = Mockito.mock(Investigateur.class);
         Mockito.when(personne.getType()).thenReturn(TypePersonne.INVESTIGATEUR);
         Mockito.when(personne.getNom()).thenReturn(null);

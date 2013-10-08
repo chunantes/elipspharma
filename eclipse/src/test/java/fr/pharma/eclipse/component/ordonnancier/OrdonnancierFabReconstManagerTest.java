@@ -26,12 +26,12 @@ import fr.pharma.eclipse.service.ordonnancier.OrdonnancierService;
 import fr.pharma.eclipse.service.stockage.PharmacieService;
 
 /**
- * Classe en charge de tester le manager des ordonnanciers de fabrication/reconstitution.
- 
+ * Classe en charge de tester le manager des ordonnanciers de
+ * fabrication/reconstitution.
+ * @author Netapsys
  * @version $Revision$ $Date$
  */
-public class OrdonnancierFabReconstManagerTest
-{
+public class OrdonnancierFabReconstManagerTest {
 
     /**
      * OrdonnancierFabReconstManager à tester.
@@ -58,8 +58,7 @@ public class OrdonnancierFabReconstManagerTest
      */
     @Before
     @SuppressWarnings("unchecked")
-    public void init()
-    {
+    public void init() {
         this.criteria = Mockito.mock(OrdonnancierSearchCriteria.class);
         this.manager = new OrdonnancierFabReconstManager(this.criteria);
         this.mockPharmacieService = Mockito.mock(PharmacieService.class);
@@ -72,8 +71,7 @@ public class OrdonnancierFabReconstManagerTest
      * Méthode en charge de purger les données de test.
      */
     @After
-    public void end()
-    {
+    public void end() {
         this.criteria = null;
         this.manager = null;
         this.mockPharmacieService = null;
@@ -84,8 +82,7 @@ public class OrdonnancierFabReconstManagerTest
      * Méthode en charge de tester l'initialisation des données de test.
      */
     @Test
-    public void testInitData()
-    {
+    public void testInitData() {
         Assert.assertNotNull(this.criteria);
         Assert.assertNotNull(this.manager);
         Assert.assertNotNull(this.mockPharmacieService);
@@ -96,13 +93,11 @@ public class OrdonnancierFabReconstManagerTest
      * Méthode en charge de tester la méthode init.
      */
     @Test
-    public void testInitWithPharma()
-    {
+    public void testInitWithPharma() {
         final List<Pharmacie> pharmacies = new ArrayList<Pharmacie>();
         final Pharmacie pharmacie = Mockito.mock(Pharmacie.class);
         pharmacies.add(pharmacie);
-        Mockito.when(this.mockPharmacieService.getAll((SearchCriteria) Matchers.any()))
-                .thenReturn(pharmacies);
+        Mockito.when(this.mockPharmacieService.getAll((SearchCriteria) Matchers.any())).thenReturn(pharmacies);
 
         this.manager.init();
         Mockito.verify(this.mockOrdonnancierFabReconstService).getDateDebut(pharmacie);
@@ -114,26 +109,22 @@ public class OrdonnancierFabReconstManagerTest
      * Méthode en charge de tester la méthode init.
      */
     @Test
-    public void testInitWithEmptyPharma()
-    {
+    public void testInitWithEmptyPharma() {
         final List<Pharmacie> pharmacies = new ArrayList<Pharmacie>();
-        Mockito.when(this.mockPharmacieService.getAll((SearchCriteria) Matchers.any()))
-                .thenReturn(pharmacies);
+        Mockito.when(this.mockPharmacieService.getAll((SearchCriteria) Matchers.any())).thenReturn(pharmacies);
 
         this.manager.init();
-        Mockito.verify(this.mockOrdonnancierFabReconstService,
-                       Mockito.times(0)).getDateDebut((Pharmacie) Matchers.any());
+        Mockito.verify(this.mockOrdonnancierFabReconstService, Mockito.times(0)).getDateDebut((Pharmacie) Matchers.any());
         Mockito.verify(this.mockOrdonnancierFabReconstService).getDateFin();
         Assert.assertNull(this.manager.getOrdonnancier());
     }
 
     /**
-     * Méthode en charge de tester la méthode appelée via l'IHM suite à la sélection d'une
-     * pharmacie.
+     * Méthode en charge de tester la méthode appelée via l'IHM suite à la
+     * sélection d'une pharmacie.
      */
     @Test
-    public void testHandleSelectPharmacie()
-    {
+    public void testHandleSelectPharmacie() {
         final AjaxBehaviorEvent event = Mockito.mock(AjaxBehaviorEvent.class);
         final HtmlSelectOneMenu select = Mockito.mock(HtmlSelectOneMenu.class);
         Mockito.when(event.getSource()).thenReturn(select);
@@ -148,8 +139,7 @@ public class OrdonnancierFabReconstManagerTest
      * Méthode en charge de tester la récupération des initiales patient.
      */
     @Test
-    public void testGetInitialesPatient()
-    {
+    public void testGetInitialesPatient() {
         final ElementToCheck elementToCheck = new ElementToCheck();
         final Dispensation dispensation = new Dispensation();
         final Prescription prescription = new Prescription();
@@ -162,44 +152,39 @@ public class OrdonnancierFabReconstManagerTest
         dispensation.setPrescription(prescription);
         elementToCheck.setDispensation(dispensation);
         final String initiales = this.manager.getInitialesPatient(elementToCheck);
-        Assert.assertEquals("C G",
-                            initiales);
+        Assert.assertEquals("C G", initiales);
     }
 
     /**
      * Méthode en charge de tester le set sur Pharmacies.
      */
     @Test
-    public void testSetPharmacies()
-    {
+    public void testSetPharmacies() {
         final List<Pharmacie> pharmacies = new ArrayList<Pharmacie>();
         this.manager.setPharmacies(pharmacies);
         Assert.assertNotNull(this.manager.getPharmacies());
     }
 
     /**
-     * Méthode en charge de tester la récupération des elementsToCheck d'un ordonnancier.
+     * Méthode en charge de tester la récupération des elementsToCheck d'un
+     * ordonnancier.
      */
     @Test
-    public void testGetListElementsToCheckWithOrdoNull()
-    {
+    public void testGetListElementsToCheckWithOrdoNull() {
         this.manager.setOrdonnancier(null);
-        Assert.assertEquals(0,
-                            this.manager.getListElementsToCheck().size());
+        Assert.assertEquals(0, this.manager.getListElementsToCheck().size());
     }
 
     /**
-     * Méthode en charge de tester la récupération des elementsToCheck d'un ordonnancier.
+     * Méthode en charge de tester la récupération des elementsToCheck d'un
+     * ordonnancier.
      */
     @Test
-    public void testGetListDispensationsWithOrdo()
-    {
+    public void testGetListDispensationsWithOrdo() {
         final OrdonnancierFabReconst ordonnancier = new OrdonnancierFabReconst();
         this.manager.setOrdonnancier(ordonnancier);
-        Mockito.when(this.mockOrdonnancierFabReconstService.get(Matchers.anyLong()))
-                .thenReturn(ordonnancier);
-        Assert.assertEquals(0,
-                            this.manager.getListElementsToCheck().size());
+        Mockito.when(this.mockOrdonnancierFabReconstService.get(Matchers.anyLong())).thenReturn(ordonnancier);
+        Assert.assertEquals(0, this.manager.getListElementsToCheck().size());
     }
 
 }

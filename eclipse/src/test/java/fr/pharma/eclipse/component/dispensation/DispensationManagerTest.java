@@ -13,7 +13,6 @@ import org.junit.Test;
 import org.mockito.Matchers;
 import org.mockito.Mockito;
 
-import fr.pharma.eclipse.component.dispensation.helper.DispensationManagerHelper;
 import fr.pharma.eclipse.component.stock.SortieManager;
 import fr.pharma.eclipse.domain.enums.TypeElementToCheck;
 import fr.pharma.eclipse.domain.enums.produit.ModePrescription;
@@ -22,7 +21,6 @@ import fr.pharma.eclipse.domain.model.dispensation.Dispensation;
 import fr.pharma.eclipse.domain.model.dispensation.ElementToCheck;
 import fr.pharma.eclipse.domain.model.essai.Essai;
 import fr.pharma.eclipse.domain.model.patient.Inclusion;
-import fr.pharma.eclipse.domain.model.patient.Patient;
 import fr.pharma.eclipse.domain.model.prescription.Prescription;
 import fr.pharma.eclipse.domain.model.prescription.ProduitPrescrit;
 import fr.pharma.eclipse.domain.model.produit.Conditionnement;
@@ -39,12 +37,10 @@ import fr.pharma.eclipse.utils.AbstractEclipseJUnitTest;
 
 /**
  * Test du manager DispensationManager.
- 
+ * @author Netapsys
  * @version $Revision$ $Date$
  */
-public class DispensationManagerTest
-    extends AbstractEclipseJUnitTest
-{
+public class DispensationManagerTest extends AbstractEclipseJUnitTest {
 
     /**
      * Manager.
@@ -55,11 +51,6 @@ public class DispensationManagerTest
      * SortieManager mocké.
      */
     private SortieManager sortieManager;
-
-    /**
-     * Helper mocké.
-     */
-    private DispensationManagerHelper helper;
 
     /**
      * Service de gestion des essais mocké.
@@ -76,14 +67,11 @@ public class DispensationManagerTest
      */
     @Override
     @SuppressWarnings("unchecked")
-    public void setUp()
-    {
+    public void setUp() {
         this.sortieManager = Mockito.mock(SortieManager.class);
-        this.helper = Mockito.mock(DispensationManagerHelper.class);
         this.mockEssaiService = Mockito.mock(EssaiService.class);
         this.manager = new DispensationManager(Mockito.mock(GenericService.class));
         this.manager.setSortieManager(this.sortieManager);
-        this.manager.setDispensationManagerHelper(this.helper);
         this.manager.setEssaiService(this.mockEssaiService);
         this.mockUserService = Mockito.mock(UserService.class);
         this.manager.setUserService(this.mockUserService);
@@ -93,8 +81,7 @@ public class DispensationManagerTest
      * {@inheritDoc}
      */
     @Override
-    public void tearDown()
-    {
+    public void tearDown() {
         this.sortieManager = null;
         this.manager = null;
         this.mockEssaiService = null;
@@ -106,8 +93,7 @@ public class DispensationManagerTest
      */
     @Override
     @Test
-    public void testInit()
-    {
+    public void testInit() {
         Assert.assertNotNull(this.sortieManager);
         Assert.assertNotNull(this.manager);
         Assert.assertNotNull(this.mockEssaiService);
@@ -118,8 +104,7 @@ public class DispensationManagerTest
      * Test de la méthode init.
      */
     @Test
-    public void testInitMethod()
-    {
+    public void testInitMethod() {
         this.manager.setProduitPrescritCurrent(new ProduitPrescrit());
         this.manager.setBean(new Dispensation());
         this.manager.setReadOnly(true);
@@ -131,11 +116,11 @@ public class DispensationManagerTest
     }
 
     /**
-     * Méthode en charge de tester la méthode d'initialisation du calcul des pharmacies.
+     * Méthode en charge de tester la méthode d'initialisation du calcul des
+     * pharmacies.
      */
     @Test
-    public void testInitPharmacies()
-    {
+    public void testInitPharmacies() {
         final Dispensation dispensation = new Dispensation();
         final Prescription prescription = new Prescription();
         final Inclusion inclusion = new Inclusion();
@@ -150,11 +135,11 @@ public class DispensationManagerTest
     }
 
     /**
-     * Méthode en charge de tester la méthode d'initialisation du calcul des pharmacies.
+     * Méthode en charge de tester la méthode d'initialisation du calcul des
+     * pharmacies.
      */
     @Test
-    public void testInitPharmaciesWithSizeOne()
-    {
+    public void testInitPharmaciesWithSizeOne() {
         final Dispensation dispensation = new Dispensation();
         final Prescription prescription = new Prescription();
         final Inclusion inclusion = new Inclusion();
@@ -176,12 +161,11 @@ public class DispensationManagerTest
     }
 
     /**
-     * Méthode en charge de tester la méthode appelée via l'IHM lors de la sélection d'une
-     * pharmacie.
+     * Méthode en charge de tester la méthode appelée via l'IHM lors de la
+     * sélection d'une pharmacie.
      */
     @Test
-    public void testHandleSelectPharmacie()
-    {
+    public void testHandleSelectPharmacie() {
         final AjaxBehaviorEvent event = Mockito.mock(AjaxBehaviorEvent.class);
         final HtmlSelectOneMenu select = Mockito.mock(HtmlSelectOneMenu.class);
         Mockito.when(event.getSource()).thenReturn(select);
@@ -195,11 +179,9 @@ public class DispensationManagerTest
     }
 
     @Test
-    public void testSetSortieManagerBeforeSave()
-    {
+    public void testSetSortieManagerBeforeSave() {
         // Preparer
-        this.manager.getSortiesParProduit().put(1L,
-                                                new ArrayList<Sortie>());
+        this.manager.getSortiesParProduit().put(1L, new ArrayList<Sortie>());
         this.manager.getSortiesParProduit().get(1L).add(new Sortie());
 
         this.manager.setBean(Mockito.mock(Dispensation.class));
@@ -208,8 +190,7 @@ public class DispensationManagerTest
         this.manager.setSortieManagerBeforeSave();
 
         // Verifier
-        Mockito.verify(this.sortieManager,
-                       Mockito.times(2)).getSorties();
+        Mockito.verify(this.sortieManager, Mockito.times(2)).getSorties();
         Mockito.verify(this.manager.getBean()).setProduitDispense(1L);
     }
 
@@ -217,8 +198,7 @@ public class DispensationManagerTest
      * Test de la méthode handleSelectConditionnement.
      */
     @Test
-    public void testHandleSelectConditionnement()
-    {
+    public void testHandleSelectConditionnement() {
         final AjaxBehaviorEvent event = Mockito.mock(AjaxBehaviorEvent.class);
 
         final ProduitPrescrit p = new ProduitPrescrit();
@@ -238,8 +218,7 @@ public class DispensationManagerTest
      * Test de la méthode addSortieToSorties.
      */
     @Test
-    public void testAddSortieToSorties()
-    {
+    public void testAddSortieToSorties() {
         final Produit prod = new Medicament();
         prod.setDenomination("test");
         final ProduitPrescrit p1 = new ProduitPrescrit();
@@ -268,49 +247,10 @@ public class DispensationManagerTest
     }
 
     /**
-     * Test de la méthode initSortieManager.
-     */
-    @Test
-    public void testInitSortieManager()
-    {
-        final Dispensation dispensation = new Dispensation();
-        dispensation.setPrescription(new Prescription());
-        final Inclusion inclusion = new Inclusion();
-        inclusion.setEssai(new Essai());
-        inclusion.getEssai().setPharmaciePrincipale(new Pharmacie());
-        inclusion.setPatient(new Patient());
-        dispensation.getPrescription().setInclusion(inclusion);
-
-        final Sortie sortie = new Sortie();
-        sortie.setMvtSortie(new DispensationProduit());
-
-        final ProduitPrescrit produit = new ProduitPrescrit();
-        produit.setId(1L);
-        produit.setProduit(new Medicament());
-
-        this.manager.setBean(dispensation);
-        Mockito.when(this.sortieManager.getSortieCurrent()).thenReturn(sortie);
-
-        this.manager.initSortieManager(produit);
-
-        Assert.assertSame(produit,
-                          this.manager.getProduitPrescritCurrent());
-        Assert.assertSame(produit.getProduit(),
-                          sortie.getMvtSortie().getProduit());
-
-        Mockito.verify(this.sortieManager).setPharmacieSelected(Matchers.any(Pharmacie.class));
-        Mockito.verify(this.sortieManager).setEssaiSelected(Matchers.any(Essai.class));
-        Mockito.verify(this.sortieManager).addSortie();
-        Mockito.verify(this.helper).initConditionnements(Matchers.any(SortieManager.class),
-                                                         Matchers.any(ProduitPrescrit.class));
-    }
-
-    /**
      * Test de la méthode isProduitDispense.
      */
     @Test
-    public void testIsProduitDispenseNull()
-    {
+    public void testIsProduitDispenseNull() {
         final ProduitPrescrit produit = null;
         Assert.assertFalse(this.manager.isProduitDispense(produit));
     }
@@ -319,8 +259,7 @@ public class DispensationManagerTest
      * Test de la méthode isProduitDispense.
      */
     @Test
-    public void testIsProduitDispenseNotNull()
-    {
+    public void testIsProduitDispenseNotNull() {
         final ProduitPrescrit produit = new ProduitPrescrit();
         produit.setId(1L);
         Assert.assertFalse(this.manager.isProduitDispense(produit));
@@ -330,12 +269,10 @@ public class DispensationManagerTest
      * Test de la méthode isProduitDispense.
      */
     @Test
-    public void testIsProduitDispenseNotNullCreate()
-    {
+    public void testIsProduitDispenseNotNullCreate() {
         final ProduitPrescrit produit = new ProduitPrescrit();
         produit.setId(1L);
-        this.manager.getSortiesParProduit().put(1L,
-                                                new ArrayList<Sortie>());
+        this.manager.getSortiesParProduit().put(1L, new ArrayList<Sortie>());
         this.manager.getSortiesParProduit().get(1L).add(new Sortie());
 
         Assert.assertTrue(this.manager.isProduitDispense(produit));
@@ -345,53 +282,71 @@ public class DispensationManagerTest
      * Test de la méthode isProduitDispense.
      */
     @Test
-    public void testIsProduitDispenseNotNullEdit()
-    {
+    public void testIsProduitDispenseNotNullEdit() {
         final ProduitPrescrit produit = new ProduitPrescrit();
         produit.setId(1L);
-        this.manager.getSortiesParProduit().put(1L,
-                                                new ArrayList<Sortie>());
+        this.manager.getSortiesParProduit().put(1L, new ArrayList<Sortie>());
         this.manager.getSortiesParProduit().get(1L).add(new Sortie());
 
         Assert.assertTrue(this.manager.isProduitDispense(produit));
     }
 
     /**
-     * Test de la méthode initProduitDispenses.
+     * Test de la méthode initProduitsDispensesForConsult.
      */
     @Test
-    public void testInitProduitDispensesKo()
-    {
-        this.manager.setBean(new Dispensation());
-        this.manager.initProduitDispenses();
-        Mockito.verify(this.helper,
-                       Mockito.never())
-                .initProduitsDispensesForConsult(Matchers.any(Dispensation.class),
-                                                 Matchers.anyMap());
-    }
+    public void testInitProduitsDispensesForConsult() {
 
-    /**
-     * Test de la méthode initProduitDispenses.
-     */
-    @Test
-    public void testInitProduitDispensesOk()
-    {
+        final DispensationProduit d1 = new DispensationProduit();
+        d1.setId(1L);
+        d1.setNumLot("1");
+        final DispensationProduit d2 = new DispensationProduit();
+        d2.setId(2L);
+        d2.setNumLot("2");
+        final DispensationProduit d3 = new DispensationProduit();
+        d3.setId(3L);
+        d3.setNumLot("3");
+
+        final ProduitPrescrit p1 = new ProduitPrescrit();
+        p1.setId(1L);
+        final ProduitPrescrit p2 = new ProduitPrescrit();
+        p2.setId(2L);
+
+        d1.setProduitPrescrit(p1);
+        d2.setProduitPrescrit(p2);
+        d3.setProduitPrescrit(p2);
+
+        final Conditionnement c1 = new Conditionnement();
+        c1.setId(1L);
+        final Conditionnement c2 = new Conditionnement();
+        c2.setId(2L);
+        d1.setConditionnement(c1);
+        d2.setConditionnement(c2);
+        d3.setConditionnement(c2);
+
         final Dispensation dispensation = new Dispensation();
+        dispensation.getDispensationsProduit().add(d1);
+        dispensation.getDispensationsProduit().add(d2);
+        dispensation.getDispensationsProduit().add(d3);
+
+        this.manager.setBean(dispensation);
+
+        this.manager.initProduitDispenses();
+        Assert.assertEquals("Aucune sortie si la dispensation n'a pas d'id défini", 0, this.manager.getSortiesParProduit().size());
+
         dispensation.setId(1L);
-        this.manager.setBean(dispensation);
         this.manager.initProduitDispenses();
-        Mockito.verify(this.helper)
-                .initProduitsDispensesForConsult(Matchers.any(Dispensation.class),
-                                                 Matchers.anyMap());
+        Assert.assertEquals(2, this.manager.getSortiesParProduit().size());
+        Assert.assertEquals(1, this.manager.getSortiesParProduit().get(p1.getId()).size());
+        Assert.assertEquals(1, this.manager.getSortiesParProduit().get(p2.getId()).size());
+        Assert.assertEquals(2, this.manager.getSortiesParProduit().get(p2.getId()).get(0).getLignesStock().size());
     }
-
     /**
-     * Test de la méthode appelée depuis l'IHM lors de la sélection de la case à cocher
-     * reconstitution simple.
+     * Test de la méthode appelée depuis l'IHM lors de la sélection de la case à
+     * cocher reconstitution simple.
      */
     @Test
-    public void testHandleCaseCheckedReconstitutionSimpleFalse()
-    {
+    public void testHandleCaseCheckedReconstitutionSimpleFalse() {
         final ValueChangeEvent event = Mockito.mock(ValueChangeEvent.class);
         final HtmlSelectBooleanCheckbox select = Mockito.mock(HtmlSelectBooleanCheckbox.class);
         Mockito.when(event.getSource()).thenReturn(select);
@@ -416,12 +371,11 @@ public class DispensationManagerTest
     }
 
     /**
-     * Test de la méthode appelée depuis l'IHM lors de la sélection de la case à cocher
-     * reconstitution simple.
+     * Test de la méthode appelée depuis l'IHM lors de la sélection de la case à
+     * cocher reconstitution simple.
      */
     @Test
-    public void testHandleCaseCheckedReconstitutionSimpleTrue()
-    {
+    public void testHandleCaseCheckedReconstitutionSimpleTrue() {
         final ValueChangeEvent event = Mockito.mock(ValueChangeEvent.class);
         final HtmlSelectBooleanCheckbox select = Mockito.mock(HtmlSelectBooleanCheckbox.class);
         Mockito.when(event.getSource()).thenReturn(select);
@@ -449,12 +403,11 @@ public class DispensationManagerTest
     }
 
     /**
-     * Test de la méthode appelée depuis l'IHM lors de la sélection de la case à cocher
-     * reconstitution PSM.
+     * Test de la méthode appelée depuis l'IHM lors de la sélection de la case à
+     * cocher reconstitution PSM.
      */
     @Test
-    public void testHandleCaseCheckedReconstitutionPSMFalse()
-    {
+    public void testHandleCaseCheckedReconstitutionPSMFalse() {
         final ValueChangeEvent event = Mockito.mock(ValueChangeEvent.class);
         final HtmlSelectBooleanCheckbox select = Mockito.mock(HtmlSelectBooleanCheckbox.class);
         Mockito.when(event.getSource()).thenReturn(select);
@@ -479,12 +432,11 @@ public class DispensationManagerTest
     }
 
     /**
-     * Test de la méthode appelée depuis l'IHM lors de la sélection de la case à cocher
-     * reconstitution PSM.
+     * Test de la méthode appelée depuis l'IHM lors de la sélection de la case à
+     * cocher reconstitution PSM.
      */
     @Test
-    public void testHandleCaseCheckedReconstitutionPSMTrue()
-    {
+    public void testHandleCaseCheckedReconstitutionPSMTrue() {
         final ValueChangeEvent event = Mockito.mock(ValueChangeEvent.class);
         final HtmlSelectBooleanCheckbox select = Mockito.mock(HtmlSelectBooleanCheckbox.class);
         Mockito.when(event.getSource()).thenReturn(select);
@@ -512,12 +464,11 @@ public class DispensationManagerTest
     }
 
     /**
-     * Test de la méthode appelée depuis l'IHM lors de la sélection de la case à cocher
-     * Fabrication.
+     * Test de la méthode appelée depuis l'IHM lors de la sélection de la case à
+     * cocher Fabrication.
      */
     @Test
-    public void testHandleCaseCheckedFabricationFalse()
-    {
+    public void testHandleCaseCheckedFabricationFalse() {
         final ValueChangeEvent event = Mockito.mock(ValueChangeEvent.class);
         final HtmlSelectBooleanCheckbox select = Mockito.mock(HtmlSelectBooleanCheckbox.class);
         Mockito.when(event.getSource()).thenReturn(select);
@@ -542,12 +493,11 @@ public class DispensationManagerTest
     }
 
     /**
-     * Test de la méthode appelée depuis l'IHM lors de la sélection de la case à cocher
-     * Fabrication.
+     * Test de la méthode appelée depuis l'IHM lors de la sélection de la case à
+     * cocher Fabrication.
      */
     @Test
-    public void testHandleCaseCheckedFabricationTrue()
-    {
+    public void testHandleCaseCheckedFabricationTrue() {
         final ValueChangeEvent event = Mockito.mock(ValueChangeEvent.class);
         final HtmlSelectBooleanCheckbox select = Mockito.mock(HtmlSelectBooleanCheckbox.class);
         Mockito.when(event.getSource()).thenReturn(select);
@@ -574,8 +524,7 @@ public class DispensationManagerTest
         Mockito.verify(this.mockUserService).getPersonne();
     }
 
-    public void testGetSortiesParProduit()
-    {
+    public void testGetSortiesParProduit() {
 
     }
 

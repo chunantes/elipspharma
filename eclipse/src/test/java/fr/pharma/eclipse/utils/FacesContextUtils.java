@@ -14,19 +14,16 @@ import javax.faces.render.RenderKit;
 
 /**
  * Classe utilitaire pour mocker le Faces Context.
- 
+ * @author Netapsys
  * @version $Revision$ $Date$
  */
-public class FacesContextUtils
-    extends FacesContext
-{
+public class FacesContextUtils extends FacesContext {
 
     /**
      * Méthode en charge de setter l'instance courante du FacesContext.
      * @param context Contexte.
      */
-    protected void setFacesContext(final FacesContext context)
-    {
+    protected void setFacesContext(final FacesContext context) {
         super.setCurrentInstance(context);
     }
 
@@ -34,8 +31,7 @@ public class FacesContextUtils
      * {@inheritDoc}
      */
     @Override
-    public void setResponseWriter(final ResponseWriter responseWriter)
-    {
+    public void setResponseWriter(final ResponseWriter responseWriter) {
     }
 
     /**
@@ -43,16 +39,14 @@ public class FacesContextUtils
      */
     @Override
     public void addMessage(final String clientId,
-                           final FacesMessage message)
-    {
+                           final FacesMessage message) {
     }
 
     /**
      * {@inheritDoc}
      */
     @Override
-    public Application getApplication()
-    {
+    public Application getApplication() {
         return null;
     }
 
@@ -60,8 +54,7 @@ public class FacesContextUtils
      * {@inheritDoc}
      */
     @Override
-    public Iterator<String> getClientIdsWithMessages()
-    {
+    public Iterator<String> getClientIdsWithMessages() {
         return null;
     }
 
@@ -69,8 +62,7 @@ public class FacesContextUtils
      * {@inheritDoc}
      */
     @Override
-    public ExternalContext getExternalContext()
-    {
+    public ExternalContext getExternalContext() {
         return null;
     }
 
@@ -78,8 +70,7 @@ public class FacesContextUtils
      * {@inheritDoc}
      */
     @Override
-    public Severity getMaximumSeverity()
-    {
+    public Severity getMaximumSeverity() {
         return null;
     }
 
@@ -87,8 +78,7 @@ public class FacesContextUtils
      * {@inheritDoc}
      */
     @Override
-    public Iterator<FacesMessage> getMessages()
-    {
+    public Iterator<FacesMessage> getMessages() {
         return null;
     }
 
@@ -96,8 +86,7 @@ public class FacesContextUtils
      * {@inheritDoc}
      */
     @Override
-    public Iterator<FacesMessage> getMessages(final String clientId)
-    {
+    public Iterator<FacesMessage> getMessages(final String clientId) {
         return null;
     }
 
@@ -105,8 +94,7 @@ public class FacesContextUtils
      * {@inheritDoc}
      */
     @Override
-    public RenderKit getRenderKit()
-    {
+    public RenderKit getRenderKit() {
         return null;
     }
 
@@ -114,8 +102,7 @@ public class FacesContextUtils
      * {@inheritDoc}
      */
     @Override
-    public boolean getRenderResponse()
-    {
+    public boolean getRenderResponse() {
         return false;
     }
 
@@ -123,8 +110,7 @@ public class FacesContextUtils
      * {@inheritDoc}
      */
     @Override
-    public boolean getResponseComplete()
-    {
+    public boolean getResponseComplete() {
         return false;
     }
 
@@ -132,8 +118,7 @@ public class FacesContextUtils
      * {@inheritDoc}
      */
     @Override
-    public ResponseStream getResponseStream()
-    {
+    public ResponseStream getResponseStream() {
         return null;
     }
 
@@ -141,8 +126,7 @@ public class FacesContextUtils
      * {@inheritDoc}
      */
     @Override
-    public ResponseWriter getResponseWriter()
-    {
+    public ResponseWriter getResponseWriter() {
         return null;
     }
 
@@ -150,8 +134,7 @@ public class FacesContextUtils
      * {@inheritDoc}
      */
     @Override
-    public UIViewRoot getViewRoot()
-    {
+    public UIViewRoot getViewRoot() {
         return null;
     }
 
@@ -159,39 +142,34 @@ public class FacesContextUtils
      * {@inheritDoc}
      */
     @Override
-    public void release()
-    {
+    public void release() {
     }
 
     /**
      * {@inheritDoc}
      */
     @Override
-    public void renderResponse()
-    {
+    public void renderResponse() {
     }
 
     /**
      * {@inheritDoc}
      */
     @Override
-    public void responseComplete()
-    {
+    public void responseComplete() {
     }
 
     /**
      * {@inheritDoc}
      */
     @Override
-    public void setResponseStream(final ResponseStream responseStream)
-    {
+    public void setResponseStream(final ResponseStream responseStream) {
     }
 
     /**
      * {@inheritDoc}
      */
     @Override
-    public void setViewRoot(final UIViewRoot root)
-    {
+    public void setViewRoot(final UIViewRoot root) {
     }
 }

@@ -1,13 +1,13 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<flow xmlns="http://www.springframework.org/schema/webflow"
-	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-	xsi:schemaLocation="http://www.springframework.org/schema/webflow
-    http://www.springframework.org/schema/webflow/spring-webflow-2.0.xsd" parent="main">
+<flow xmlns="http://www.springframework.org/schema/webflow" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.springframework.org/schema/webflow
+    http://www.springframework.org/schema/webflow/spring-webflow-2.0.xsd"
+	parent="main">
 
 	<!-- Au démarrage -->
 	<on-start>
 		<!-- Calcul des lignes de stock disponibles pour la dotation -->
-		<evaluate expression="stockService.getLinesStock(dispensationGlobaleManager.beanSelected.essai,dispensationGlobaleManager.beanSelected.pharmacie,dispensationGlobaleManager.beanSelected.produit,dispensationGlobaleManager.beanSelected.conditionnement, true)" 
+		<evaluate
+			expression="stockService.getAllLignesStock(dispensationGlobaleManager.beanSelected.essai,dispensationGlobaleManager.beanSelected.pharmacie,dispensationGlobaleManager.beanSelected.produit,dispensationGlobaleManager.beanSelected.conditionnement, false)"
 			result="dispensationGlobaleManager.lignesStockForDotation" />
 	</on-start>
 
@@ -16,11 +16,11 @@
 		<transition on="save" to="comeback">
 			<evaluate expression="dotationService.saveTraitementDotation(dispensationGlobaleManager.beanSelected, dispensationGlobaleManager.lignesStockForDotation)" />
 		</transition>
-		<transition on="comeback" to="comeback"/>
-		<transition on="error" to="sortieDispensation"/>
+		<transition on="comeback" to="comeback" />
+		<transition on="error" to="sortieDispensation" />
 	</view-state>
-	
+
 	<!-- Etat final -->
-	<end-state id="comeback"/>
-	
+	<end-state id="comeback" />
+
 </flow>

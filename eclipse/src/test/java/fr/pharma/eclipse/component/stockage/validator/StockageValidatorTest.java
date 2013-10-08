@@ -18,11 +18,10 @@ import fr.pharma.eclipse.utils.FacesUtils;
 
 /**
  * Classe en charge de tester le validator de Stockage.
- 
+ * @author Netapsys
  * @version $Revision$ $Date$
  */
-public class StockageValidatorTest
-{
+public class StockageValidatorTest {
     /**
      * StockageValidator à tester.
      */
@@ -42,8 +41,7 @@ public class StockageValidatorTest
      * Méthode en charge d'initialiser les données de test.
      */
     @Before
-    public void init()
-    {
+    public void init() {
         this.validator = new StockageValidator();
         this.mockStockageService = Mockito.mock(StockageService.class);
         this.validator.setStockageService(this.mockStockageService);
@@ -55,8 +53,7 @@ public class StockageValidatorTest
      * Méthode en charge de purger les données de test.
      */
     @After
-    public void end()
-    {
+    public void end() {
         this.validator = null;
         this.mockStockageService = null;
         this.mockFacesUtils = null;
@@ -66,8 +63,7 @@ public class StockageValidatorTest
      * Méthode en charge de tester l'initialisation des données de test.
      */
     @Test
-    public void testInit()
-    {
+    public void testInit() {
         Assert.assertNotNull(this.validator);
         Assert.assertNotNull(this.mockStockageService);
         Assert.assertNotNull(this.mockFacesUtils);
@@ -77,15 +73,12 @@ public class StockageValidatorTest
      * Méthode en charge de tester la validation OK.
      */
     @Test
-    public void testValidateStockageOK()
-    {
+    public void testValidateStockageOK() {
         final Stockage stockage = new Stockage();
         stockage.setNom("nom");
         final SortedSet<Stockage> stockages = new TreeSet<Stockage>(new StockageComparator());
 
-        Mockito.when(this.mockStockageService.isStockageAlreadyPresent(stockage,
-                                                                       stockages))
-                .thenReturn(Boolean.FALSE);
+        Mockito.when(this.mockStockageService.isStockageAlreadyPresent(stockage, stockages)).thenReturn(Boolean.FALSE);
 
         Assert.assertTrue(this.validator.validateStockage(stockage));
 
@@ -96,14 +89,12 @@ public class StockageValidatorTest
      * Méthode en charge de tester la validation KO.
      */
     @Test
-    public void testValidateStockageKONom()
-    {
+    public void testValidateStockageKONom() {
         final Stockage stockage = new Stockage();
         final SortedSet<Stockage> stockages = new TreeSet<Stockage>(new StockageComparator());
 
         Assert.assertFalse(this.validator.validateStockage(stockage));
-        Mockito.verify(this.mockFacesUtils).addMessage(FacesMessage.SEVERITY_ERROR,
-                                                       "stockage.nom.notEmpty");
+        Mockito.verify(this.mockFacesUtils).addMessage(FacesMessage.SEVERITY_ERROR, "stockage.nom.notEmpty");
         Mockito.verify(this.mockFacesUtils).putCallbackValidityParam(false);
     }
 
@@ -111,18 +102,13 @@ public class StockageValidatorTest
      * Méthode en charge de tester la validation KO.
      */
     @Test
-    public void testValidateStockageKOUnicite()
-    {
+    public void testValidateStockageKOUnicite() {
         final Stockage stockage = Mockito.mock(Stockage.class);
         final SortedSet<Stockage> stockages = Mockito.mock(TreeSet.class);
         Mockito.when(stockage.getNom()).thenReturn("nom");
-        Mockito.when(this.mockStockageService.isNomStockageUtiliseParAutreStockageDeMemeNiveau(stockage,
-                                                                                               stockage
-                                                                                                       .getPharmacie()))
-                .thenReturn(Boolean.TRUE);
+        Mockito.when(this.mockStockageService.isNomStockageUtiliseParAutreStockageDeMemeNiveau(stockage, stockage.getPharmacie())).thenReturn(Boolean.TRUE);
         Assert.assertFalse(this.validator.validateStockage(stockage));
-        Mockito.verify(this.mockFacesUtils).addMessage(FacesMessage.SEVERITY_ERROR,
-                                                       "stockage.nom.notUnique");
+        Mockito.verify(this.mockFacesUtils).addMessage(FacesMessage.SEVERITY_ERROR, "stockage.nom.notUnique");
         Mockito.verify(this.mockFacesUtils).putCallbackValidityParam(false);
     }
 }

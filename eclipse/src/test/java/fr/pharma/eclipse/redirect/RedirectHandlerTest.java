@@ -15,12 +15,10 @@ import fr.pharma.eclipse.utils.FacesContextUtils;
 
 /**
  * Classe en charge de tester le gestionnaire de redirection.
- 
+ * @author Netapsys
  * @version $Revision$ $Date$
  */
-public class RedirectHandlerTest
-    extends FacesContextUtils
-{
+public class RedirectHandlerTest extends FacesContextUtils {
     /**
      * RedirectHandler à tester.
      */
@@ -30,8 +28,7 @@ public class RedirectHandlerTest
      * Méthode en charge d'initialiser les données de test.
      */
     @Before
-    public void init()
-    {
+    public void init() {
         this.redirectHandler = new RedirectHandler();
     }
 
@@ -39,8 +36,7 @@ public class RedirectHandlerTest
      * Méthode en charge de purger les données de test.
      */
     @After
-    public void end()
-    {
+    public void end() {
         this.redirectHandler = null;
     }
 
@@ -48,8 +44,7 @@ public class RedirectHandlerTest
      * Méthode en charge de tester l'initialisation des données de test.
      */
     @Test
-    public void testInit()
-    {
+    public void testInit() {
         Assert.assertNotNull(this.redirectHandler);
     }
 
@@ -58,9 +53,7 @@ public class RedirectHandlerTest
      * @throws IOException Exception Input/Output.
      */
     @Test
-    public void testRedirectOK()
-        throws IOException
-    {
+    public void testRedirectOK() throws IOException {
         final String urlRedirect = "urlRedirect";
         final FacesContext facesContext = Mockito.mock(FacesContext.class);
         super.setFacesContext(facesContext);
@@ -76,9 +69,7 @@ public class RedirectHandlerTest
      * @throws IOException Exception Input/Output.
      */
     @Test
-    public void testRedirectWithException()
-        throws IOException
-    {
+    public void testRedirectWithException() throws IOException {
         final String urlRedirect = "urlRedirect";
         final FacesContext facesContext = Mockito.mock(FacesContext.class);
         super.setFacesContext(facesContext);

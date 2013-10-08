@@ -15,12 +15,10 @@ import fr.pharma.eclipse.utils.FacesUtils;
 
 /**
  * Classe de validation de suppression d'un objet DetailStockage.
- 
+ * @author Netapsys
  * @version $Revision$ $Date$
  */
-public class DetailStockageRemoveValidator
-    implements Serializable
-{
+public class DetailStockageRemoveValidator implements Serializable {
     /**
      * Serial ID.
      */
@@ -47,27 +45,20 @@ public class DetailStockageRemoveValidator
     /**
      * {@inheritDoc}
      */
-    public boolean validate(final DetailStockage detail)
-    {
+    public boolean validate(final DetailStockage detail) {
         boolean valid = true;
-        if (detail.getId() != null)
-        {
+        if (detail.getId() != null) {
             final MvtStockSearchCriteria criteria = new MvtStockSearchCriteria();
             criteria.setStockage(detail);
-            if (!this.mvtService.getAll(criteria).isEmpty())
-            {
-                this.facesUtils.addMessage(FacesMessage.SEVERITY_ERROR,
-                                           "remove.impossible");
+            if (!this.mvtService.getAll(criteria).isEmpty()) {
+                this.facesUtils.addMessage(FacesMessage.SEVERITY_ERROR, "remove.impossible");
                 valid = false;
             }
 
             final RetourPatientSearchCriteria criteria2 = new RetourPatientSearchCriteria();
             criteria2.setStockage(detail);
-            if (!this.retourPatientService.getAll(criteria2).isEmpty()
-                && valid)
-            {
-                this.facesUtils.addMessage(FacesMessage.SEVERITY_ERROR,
-                                           "remove.impossible");
+            if (!this.retourPatientService.getAll(criteria2).isEmpty() && valid) {
+                this.facesUtils.addMessage(FacesMessage.SEVERITY_ERROR, "remove.impossible");
                 valid = false;
             }
         }
@@ -78,8 +69,7 @@ public class DetailStockageRemoveValidator
      * Setter pour mvtService.
      * @param mvtService Le mvtService à écrire.
      */
-    public void setMvtService(final MvtStockService<MvtStock> mvtService)
-    {
+    public void setMvtService(final MvtStockService<MvtStock> mvtService) {
         this.mvtService = mvtService;
     }
 
@@ -87,8 +77,7 @@ public class DetailStockageRemoveValidator
      * Setter pour retourPatientService.
      * @param retourPatientService Le retourPatientService à écrire.
      */
-    public void setRetourPatientService(final RetourPatientService retourPatientService)
-    {
+    public void setRetourPatientService(final RetourPatientService retourPatientService) {
         this.retourPatientService = retourPatientService;
     }
 
@@ -96,8 +85,7 @@ public class DetailStockageRemoveValidator
      * Setter pour facesUtils.
      * @param facesUtils Le facesUtils à écrire.
      */
-    public void setFacesUtils(final FacesUtils facesUtils)
-    {
+    public void setFacesUtils(final FacesUtils facesUtils) {
         this.facesUtils = facesUtils;
     }
 

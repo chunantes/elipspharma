@@ -32,7 +32,6 @@ import fr.pharma.eclipse.domain.model.design.embedded.TempsPrescription;
 import fr.pharma.eclipse.domain.model.essai.Essai;
 import fr.pharma.eclipse.domain.model.essai.detail.design.DetailDesign;
 import fr.pharma.eclipse.domain.model.produit.Produit;
-import fr.pharma.eclipse.exception.common.CommonException;
 import fr.pharma.eclipse.factory.common.BeanObjectFactory;
 import fr.pharma.eclipse.json.DesignConverter;
 import fr.pharma.eclipse.predicate.GenericPredicate;
@@ -42,12 +41,10 @@ import fr.pharma.eclipse.validator.remove.RemoveValidator;
 
 /**
  * Manager des designs de l'essai.
- 
+ * @author Netapsys
  * @version $Revision$ $Date$
  */
-public class DesignsManager
-    implements Serializable
-{
+public class DesignsManager implements Serializable {
 
     /**
      * SerialVersionUID.
@@ -176,87 +173,74 @@ public class DesignsManager
      */
     private SortedSet<Produit> produits = new TreeSet<Produit>(new ProduitComparator());
 
-    public DesignsManager()
-    {
-        this.log.debug("Construction de l'objet DesignsManager : "
-                       + this);
+    public DesignsManager() {
+        this.log.debug("Construction de l'objet DesignsManager : " + this);
     }
 
     /**
-     * Méthode en charge d'intialiser les valeurs pour le diagramme de design.
+     * Intialiser les valeurs pour le diagramme de design.
      */
-    public void initDesignChrono()
-    {
-        // si le design existe alors on génère les valeurs
-        if (!this.essaiManager.getBean().getDetailDesign().getBras().isEmpty())
-        {
-            this.json =
-                this.designConverter.convert(this.essaiManager.getBean().getDetailDesign(),
-                                             this.dateDebut);
-            try
-            {
-                this.processDateFin(this.dateDebut);
-                this.jsonDate = new JSONObject();
-                final JSONObject debut = new JSONObject();
-                debut.put("jours",
-                          this.getDateDebut().get(Calendar.DAY_OF_MONTH));
-                debut.put("mois",
-                          this.getDateDebut().get(Calendar.MONTH));
-                debut.put("annee",
-                          this.getDateDebut().get(Calendar.YEAR));
-                this.jsonDate.put("debut",
-                                  debut);
-                final JSONObject fin = new JSONObject();
-                fin.put("jours",
-                        this.getDateFin().get(Calendar.DAY_OF_MONTH));
-                fin.put("mois",
-                        this.getDateFin().get(Calendar.MONTH));
-                fin.put("annee",
-                        this.getDateFin().get(Calendar.YEAR));
-                this.jsonDate.put("fin",
-                                  fin);
+    public void initDesignChrono() {
+
+        if (this.validateInitDesignChrono()) {
+            this.json = this.designConverter.convert(this.essaiManager.getBean().getDetailDesign(), this.dateDebut);
+            this.processDateFin(this.dateDebut);
+            if (this.dateFin == null) {
+                this.facesUtils.addMessage(FacesMessage.SEVERITY_ERROR, "designs.data.invalid");
+            } else {
+                try {
+                    this.jsonDate = new JSONObject();
+                    final JSONObject debut = new JSONObject();
+                    debut.put("jours", this.getDateDebut().get(Calendar.DAY_OF_MONTH));
+                    debut.put("mois", this.getDateDebut().get(Calendar.MONTH));
+                    debut.put("annee", this.getDateDebut().get(Calendar.YEAR));
+                    this.jsonDate.put("debut", debut);
+                    final JSONObject fin = new JSONObject();
+                    fin.put("jours", this.getDateFin().get(Calendar.DAY_OF_MONTH));
+                    fin.put("mois", this.getDateFin().get(Calendar.MONTH));
+                    fin.put("annee", this.getDateFin().get(Calendar.YEAR));
+                    this.jsonDate.put("fin", fin);
+                } catch (final JSONException e) {
+                    this.facesUtils.addMessage(FacesMessage.SEVERITY_ERROR, "designs.data.invalid");
+                }
             }
-            catch (final JSONException e)
-            {
-                this.facesUtils.addMessage(FacesMessage.SEVERITY_ERROR,
-                                           "designs.data.invalid");
-            }
-            catch (final CommonException e)
-            {
-                this.facesUtils.addMessage(FacesMessage.SEVERITY_ERROR,
-                                           "designs.data.invalid");
-            }
-        }
-        // on affiche un message
-        else
-        {
-            this.facesUtils.addMessage(FacesMessage.SEVERITY_ERROR,
-                                       "designs.data.empty");
         }
     }
+
     /**
-     * Méthoe en charge de calculer la date de fin de la chronologie des designs en fonction de la
-     * date de début saisie par l'utilisateur.
+     * @return true si données nécessaire pour l'init existent
+     */
+    private boolean validateInitDesignChrono() {
+        if (this.essaiManager.getBean().getDetailDesign().getBras().isEmpty()) {
+            this.facesUtils.addMessage(FacesMessage.SEVERITY_ERROR, "designs.data.empty");
+            return false;
+        } else if (this.dateDebut == null) {
+            this.facesUtils.addMessage(FacesMessage.SEVERITY_ERROR, "designs.data.invalid");
+            return false;
+        }
+
+        return true;
+    }
+
+    /**
+     * Méthoe en charge de calculer la date de fin de la chronologie des designs
+     * en fonction de la date de début saisie par l'utilisateur.<br>
+     * dateFin sera null si le calcul ne marche pas
      * @param date Date de début.
      */
-    public void processDateFin(final Calendar date)
-    {
-        final TempsPrescription fin =
-            this.timeHelper.getDateFinForDesign(this.essaiManager.getBean().getDetailDesign());
-        if (fin == null)
-        {
-            throw new CommonException("Aucune date de fin définie.");
+    protected void processDateFin(final Calendar date) {
+        final TempsPrescription fin = this.timeHelper.getDateFinForDesign(this.essaiManager.getBean().getDetailDesign());
+        if (fin == null) {
+            this.dateFin = null;
+        } else {
+            this.dateFin = this.timeHelper.convertTime(this.dateDebut, fin);
         }
-        this.dateFin = this.timeHelper.convertTime(this.dateDebut,
-                                                   fin);
     }
-
     /**
      * Méthode en charge d'initialiser un bras.
      * @param event Envenement.
      */
-    public void initBras(final ActionEvent event)
-    {
+    public void initBras(final ActionEvent event) {
         this.parent = (Bras) event.getComponent().getAttributes().get("designableParent");
         this.bras = this.brasFactory.getInitializedObject();
         this.bras.setParent(this.parent);
@@ -270,41 +254,29 @@ public class DesignsManager
      * @return la séquence.
      */
     public Sequence initSequence(final String nomComplet,
-                                 final String nomCompletParent)
-    {
+                                 final String nomCompletParent) {
         this.actionCurrent = "EDIT";
         this.nomCompletSequence = nomComplet;
         final Bras bras = this.findBras(nomCompletParent);
-        final Sequence sequence =
-            (Sequence) CollectionUtils.find(bras.getSequences(),
-                                            new GenericPredicate("nomComplet",
-                                                                 nomComplet));
+        final Sequence sequence = (Sequence) CollectionUtils.find(bras.getSequences(), new GenericPredicate("nomComplet", nomComplet));
         return sequence;
 
     }
 
     /**
-     * Méthode appelée pour récupérer l'objet bras dans le detaildesign de l'essai à partir de son
-     * nom complet.
+     * Méthode appelée pour récupérer l'objet bras dans le detaildesign de
+     * l'essai à partir de son nom complet.
      * @param nomComplet Nom complet.
      * @return Le bras.
      */
-    public Bras findBras(final String nomComplet)
-    {
-        return (Bras) CollectionUtils.find(this.essaiManager
-                                                   .getBean()
-                                                   .getDetailDesign()
-                                                   .getBras(),
-                                           new GenericPredicate("nomComplet",
-                                                                nomComplet));
+    public Bras findBras(final String nomComplet) {
+        return (Bras) CollectionUtils.find(this.essaiManager.getBean().getDetailDesign().getBras(), new GenericPredicate("nomComplet", nomComplet));
     }
     /**
      * Méthode en charged e réinitialiser les informations du manager.
      */
-    public void init()
-    {
-        this.log.debug("[init] "
-                       + this);
+    public void init() {
+        this.log.debug("[init] " + this);
         this.root = this.buildRoot();
         this.initProduits();
         this.setBras(null);
@@ -319,8 +291,7 @@ public class DesignsManager
     /**
      * Méthode en charge d'initialiser la liste des produits.
      */
-    public void initProduits()
-    {
+    public void initProduits() {
         this.produits.clear();
         final Essai essai = this.essaiManager.getBean();
         this.produits.addAll(essai.getDetailProduit().getProduits());
@@ -329,10 +300,11 @@ public class DesignsManager
      * Méthode en charge d'éditer un bras.
      * @param event Evénement.
      */
-    public void editBras(final ActionEvent event)
-    {
+    public void editBras(final ActionEvent event) {
         final Bras b = (Bras) event.getComponent().getAttributes().get("brasCurrent");
-        this.setBras(b);
+        final DetailDesign detail = this.essaiManager.getBean().getDetailDesign();
+        final Bras p = (Bras) CollectionUtils.find(detail.getBras(), new GenericPredicate("nomComplet", b.getNomComplet()));
+        this.setBras(p);
         this.actionCurrent = "EDIT";
         this.setType(TypeDesignable.BRAS);
     }
@@ -340,29 +312,19 @@ public class DesignsManager
     /**
      * Méthode en charge de mettre à jour la liste des designs.
      */
-    public void updateDesigns()
-    {
-        this.log.debug("[updateDesigns] "
-                       + this);
+    public void updateDesigns() {
+        this.log.debug("[updateDesigns] " + this);
 
         final DetailDesign detail = this.essaiManager.getBean().getDetailDesign();
-        if ("ADD".equals(this.actionCurrent))
-        {
+        if ("ADD".equals(this.actionCurrent)) {
             this.bras.setType(TypeDesignable.BRAS);
-            if (this.bras.getParent() == null)
-            {
+            if (this.bras.getParent() == null) {
                 detail.getBras().add(this.bras);
                 this.bras.setDetailDesign(detail);
-            }
-            else
-            {
+            } else {
                 this.designableDisplay = this.bras;
                 final Bras designableParent = this.getParent();
-                final Bras p =
-                    (Bras) CollectionUtils.find(detail.getBras(),
-                                                new GenericPredicate("nomComplet",
-                                                                     designableParent
-                                                                             .getNomComplet()));
+                final Bras p = (Bras) CollectionUtils.find(detail.getBras(), new GenericPredicate("nomComplet", designableParent.getNomComplet()));
                 new ArrayList<Bras>(detail.getBras());
                 p.getSousBras().add(this.bras);
                 new ArrayList<Bras>(p.getSousBras());
@@ -371,26 +333,20 @@ public class DesignsManager
                 this.bras.setDetailDesign(detail);
 
             }
-            this.buildRoot();
+
         }
+        this.buildRoot();
         this.setType(null);
     }
     /**
      * Méthode en charge de supprimer une séquence.
      */
-    public void removeSequence()
-    {
-        this.log.debug("[removeSequence] "
-                       + this);
+    public void removeSequence() {
+        this.log.debug("[removeSequence] " + this);
 
         final Sequence sequence =
-            (Sequence) CollectionUtils.find(this.findBras(this
-                                                    .getCurrent()
-                                                    .getParent()
-                                                    .getNomComplet()).getSequences(),
-                                            new GenericPredicate("nomComplet",
-                                                                 this.getCurrent()
-                                                                         .getNomComplet()));
+            (Sequence) CollectionUtils.find(this.findBras(this.getCurrent().getParent().getNomComplet()).getSequences(), new GenericPredicate("nomComplet", this.getCurrent()
+                    .getNomComplet()));
         this.sequenceRemoveValidator.validate(sequence);
         final Bras p = this.findBras(sequence.getParent().getNomComplet());
         p.getSequences().remove(sequence);
@@ -399,38 +355,33 @@ public class DesignsManager
     /**
      * Méthode en charge de supprimer un bras.
      */
-    public void removeBras()
-    {
-        this.log.debug("[removeBras] "
-                       + this);
+    public void removeBras() {
+        this.log.debug("[removeBras] " + this);
 
         final Bras b = this.findBras(this.getCurrent().getNomComplet());
-        this.brasRemoveValidator.validate(b);
-        this.essaiManager.getBean().getDetailDesign().getBras().remove(b);
-        this.removeBras(b);
-        if (b.getParent() != null)
-        {
-            this.findBras(b.getParent().getNomComplet()).getSousBras().remove(b);
 
+        if (b != null) {
+            this.brasRemoveValidator.validate(b);
+            this.essaiManager.getBean().getDetailDesign().getBras().remove(b);
+            this.removeBras(b);
+            if (b.getParent() != null) {
+                this.findBras(b.getParent().getNomComplet()).getSousBras().remove(b);
+
+            }
         }
+
         this.buildRoot();
     }
     /**
      * Méthode en charge d'ajouter la sequence à son parent.
      * @param sequence La séquence.
      */
-    public void addSequence(final Sequence sequence)
-    {
-        this.log.debug("[addSequence] "
-                       + this);
+    public void addSequence(final Sequence sequence) {
+        this.log.debug("[addSequence] " + this);
 
         final Bras bras = this.findBras(sequence.getParent().getNomComplet());
-        if (this.actionCurrent.equals("EDIT"))
-        {
-            bras.getSequences()
-                    .remove(CollectionUtils.find(bras.getSequences(),
-                                                 new GenericPredicate("nomComplet",
-                                                                      this.nomCompletSequence)));
+        if (this.actionCurrent.equals("EDIT")) {
+            bras.getSequences().remove(CollectionUtils.find(bras.getSequences(), new GenericPredicate("nomComplet", this.nomCompletSequence)));
         }
 
         bras.getSequences().add(sequence);
@@ -439,14 +390,12 @@ public class DesignsManager
     }
 
     /**
-     * Méthode récursive supprimant le bras l'intégralité de ses décendant (bras) de la liste
-     * passée en paramètre.
+     * Méthode récursive supprimant le bras l'intégralité de ses décendant
+     * (bras) de la liste passée en paramètre.
      * @param b Le bras.
      */
-    private void removeBras(final Bras b)
-    {
-        for (final Bras sb : b.getSousBras())
-        {
+    private void removeBras(final Bras b) {
+        for (final Bras sb : b.getSousBras()) {
             this.removeBras(sb);
             this.essaiManager.getBean().getDetailDesign().getBras().remove(sb);
         }
@@ -456,49 +405,38 @@ public class DesignsManager
      * Getter pour root.
      * @return Le root
      */
-    public TreeNode buildRoot()
-    {
-        this.log.debug("[buildRoot] "
-                       + this
-                       + ", EssaiManager : "
-                       + this.essaiManager
-                       + ", Essai : "
-                       + this.essaiManager.getBean());
+    public TreeNode buildRoot() {
+        this.log.debug("[buildRoot] " + this + ", EssaiManager : " + this.essaiManager + ", Essai : " + this.essaiManager.getBean());
 
         // Construction des données de l'arbre
         this.root = this.treeDesignHelper.buildTree(this.essaiManager.getBean());
 
         // Construction de la liste des noeuds à expanded pour l'affichage
-        if (this.designableDisplay != null)
-        {
-            this.idsNodesToExpand =
-                this.treeDesignHelper.calculateNodesToExpand(this.root,
-                                                             this.designableDisplay);
-        }
-        else
-        {
+        if (this.designableDisplay != null) {
+            this.idsNodesToExpand = this.treeDesignHelper.calculateNodesToExpand(this.root, this.designableDisplay);
+        } else {
             this.idsNodesToExpand = null;
         }
 
         return this.root;
     }
     /**
-     * Méthode appelée par l'IHM lors de la sélection d'une date sur le calendar.
+     * Méthode appelée par l'IHM lors de la sélection d'une date sur le
+     * calendar.
      * @param event Evenemtn JSF.
      */
-    public void selectDateListener(final SelectEvent event)
-    {
+    public void selectDateListener(final SelectEvent event) {
         // Récupération de la date
         final Calendar cal = (Calendar) event.getObject();
         this.setDateDebut(cal);
     }
 
     /**
-     * Méthode appelée via la couche IHM lorsqu'un type de design est sélectionné.
+     * Méthode appelée via la couche IHM lorsqu'un type de design est
+     * sélectionné.
      * @param event Event.
      */
-    public void handleSelectType(final AjaxBehaviorEvent event)
-    {
+    public void handleSelectType(final AjaxBehaviorEvent event) {
         final HtmlSelectOneMenu select = (HtmlSelectOneMenu) event.getSource();
         final TypeDesignable d = (TypeDesignable) select.getLocalValue();
         this.setType(d);
@@ -509,8 +447,7 @@ public class DesignsManager
      * Getter sur root.
      * @return Retourne le root.
      */
-    public TreeNode getRoot()
-    {
+    public TreeNode getRoot() {
         return this.root;
     }
 
@@ -518,8 +455,7 @@ public class DesignsManager
      * Setter pour root.
      * @param root le root à écrire.
      */
-    public void setRoot(final TreeNode root)
-    {
+    public void setRoot(final TreeNode root) {
         this.root = root;
     }
 
@@ -527,8 +463,7 @@ public class DesignsManager
      * Getter sur idsNodesToExpand.
      * @return Retourne le idsNodesToExpand.
      */
-    public String getIdsNodesToExpand()
-    {
+    public String getIdsNodesToExpand() {
         return this.idsNodesToExpand;
     }
 
@@ -536,8 +471,7 @@ public class DesignsManager
      * Setter pour idsNodesToExpand.
      * @param idsNodesToExpand le idsNodesToExpand à écrire.
      */
-    public void setIdsNodesToExpand(final String idsNodesToExpand)
-    {
+    public void setIdsNodesToExpand(final String idsNodesToExpand) {
         //
     }
 
@@ -545,8 +479,7 @@ public class DesignsManager
      * Setter pour treeDesignHelper.
      * @param treeDesignHelper le treeDesignHelper à écrire.
      */
-    public void setTreeDesignHelper(final TreeDesignHelper treeDesignHelper)
-    {
+    public void setTreeDesignHelper(final TreeDesignHelper treeDesignHelper) {
         this.treeDesignHelper = treeDesignHelper;
     }
 
@@ -554,10 +487,8 @@ public class DesignsManager
      * Setter pour essaiManager.
      * @param essaiManager le essaiManager à écrire.
      */
-    public void setEssaiManager(final EssaiManager essaiManager)
-    {
-        this.log.debug("[setEssaiManager] "
-                       + essaiManager);
+    public void setEssaiManager(final EssaiManager essaiManager) {
+        this.log.debug("[setEssaiManager] " + essaiManager);
         this.essaiManager = essaiManager;
     }
 
@@ -565,8 +496,7 @@ public class DesignsManager
      * Getter sur designableDisplay.
      * @return Retourne le designableDisplay.
      */
-    public Designable getDesignableDisplay()
-    {
+    public Designable getDesignableDisplay() {
         return this.designableDisplay;
     }
 
@@ -574,8 +504,7 @@ public class DesignsManager
      * Setter pour designableDisplay.
      * @param designableDisplay le designableDisplay à écrire.
      */
-    public void setDesignableDisplay(final Designable designableDisplay)
-    {
+    public void setDesignableDisplay(final Designable designableDisplay) {
         this.designableDisplay = designableDisplay;
     }
 
@@ -583,8 +512,7 @@ public class DesignsManager
      * Getter sur brasFactory.
      * @return Retourne le brasFactory.
      */
-    public BeanObjectFactory<Bras> getBrasFactory()
-    {
+    public BeanObjectFactory<Bras> getBrasFactory() {
         return this.brasFactory;
     }
 
@@ -592,8 +520,7 @@ public class DesignsManager
      * Setter pour brasFactory.
      * @param brasFactory le brasFactory à écrire.
      */
-    public void setBrasFactory(final BeanObjectFactory<Bras> brasFactory)
-    {
+    public void setBrasFactory(final BeanObjectFactory<Bras> brasFactory) {
         this.brasFactory = brasFactory;
     }
 
@@ -601,8 +528,7 @@ public class DesignsManager
      * Getter sur bras.
      * @return Retourne le bras.
      */
-    public Bras getBras()
-    {
+    public Bras getBras() {
         return this.bras;
     }
 
@@ -610,8 +536,7 @@ public class DesignsManager
      * Setter pour bras.
      * @param bras le bras à écrire.
      */
-    public void setBras(final Bras bras)
-    {
+    public void setBras(final Bras bras) {
         this.bras = bras;
     }
 
@@ -619,8 +544,7 @@ public class DesignsManager
      * Getter sur type.
      * @return Retourne le type.
      */
-    public TypeDesignable getType()
-    {
+    public TypeDesignable getType() {
         return this.type;
     }
 
@@ -628,8 +552,7 @@ public class DesignsManager
      * Setter pour type.
      * @param type le type à écrire.
      */
-    public void setType(final TypeDesignable type)
-    {
+    public void setType(final TypeDesignable type) {
         this.type = type;
     }
 
@@ -637,8 +560,7 @@ public class DesignsManager
      * Getter sur actionCurrent.
      * @return Retourne le actionCurrent.
      */
-    public String getActionCurrent()
-    {
+    public String getActionCurrent() {
         return this.actionCurrent;
     }
 
@@ -646,8 +568,7 @@ public class DesignsManager
      * Setter pour actionCurrent.
      * @param actionCurrent le actionCurrent à écrire.
      */
-    public void setActionCurrent(final String actionCurrent)
-    {
+    public void setActionCurrent(final String actionCurrent) {
         this.actionCurrent = actionCurrent;
     }
 
@@ -655,8 +576,7 @@ public class DesignsManager
      * Getter sur parent.
      * @return Retourne le parent.
      */
-    public Bras getParent()
-    {
+    public Bras getParent() {
         return this.parent;
     }
 
@@ -664,8 +584,7 @@ public class DesignsManager
      * Setter pour parent.
      * @param parent le parent à écrire.
      */
-    public void setParent(final Bras parent)
-    {
+    public void setParent(final Bras parent) {
         this.parent = parent;
     }
 
@@ -673,8 +592,7 @@ public class DesignsManager
      * Setter pour brasRemoveValidator.
      * @param brasRemoveValidator le brasRemoveValidator à écrire.
      */
-    public void setBrasRemoveValidator(final RemoveValidator<Bras> brasRemoveValidator)
-    {
+    public void setBrasRemoveValidator(final RemoveValidator<Bras> brasRemoveValidator) {
         this.brasRemoveValidator = brasRemoveValidator;
     }
 
@@ -682,8 +600,7 @@ public class DesignsManager
      * Getter sur current.
      * @return Retourne le current.
      */
-    public Designable getCurrent()
-    {
+    public Designable getCurrent() {
         return this.current;
     }
 
@@ -691,8 +608,7 @@ public class DesignsManager
      * Setter pour current.
      * @param current le current à écrire.
      */
-    public void setCurrent(final Designable current)
-    {
+    public void setCurrent(final Designable current) {
         this.actionCurrent = "EDIT";
         this.current = current;
     }
@@ -701,8 +617,7 @@ public class DesignsManager
      * Setter pour sequenceRemoveValidator.
      * @param sequenceRemoveValidator le sequenceRemoveValidator à écrire.
      */
-    public void setSequenceRemoveValidator(final RemoveValidator<Sequence> sequenceRemoveValidator)
-    {
+    public void setSequenceRemoveValidator(final RemoveValidator<Sequence> sequenceRemoveValidator) {
         this.sequenceRemoveValidator = sequenceRemoveValidator;
     }
 
@@ -710,8 +625,7 @@ public class DesignsManager
      * Getter sur produits.
      * @return Retourne le produits.
      */
-    public SortedSet<Produit> getProduits()
-    {
+    public SortedSet<Produit> getProduits() {
         return this.produits;
     }
 
@@ -719,8 +633,7 @@ public class DesignsManager
      * Setter pour produits.
      * @param produits le produits à écrire.
      */
-    public void setProduits(final SortedSet<Produit> produits)
-    {
+    public void setProduits(final SortedSet<Produit> produits) {
         this.produits = produits;
     }
 
@@ -728,8 +641,7 @@ public class DesignsManager
      * Getter sur dateDebut.
      * @return Retourne le dateDebut.
      */
-    public Calendar getDateDebut()
-    {
+    public Calendar getDateDebut() {
         return this.dateDebut;
     }
 
@@ -737,8 +649,7 @@ public class DesignsManager
      * Setter pour dateDebut.
      * @param dateDebut le dateDebut à écrire.
      */
-    public void setDateDebut(final Calendar dateDebut)
-    {
+    public void setDateDebut(final Calendar dateDebut) {
         this.dateDebut = dateDebut;
     }
 
@@ -746,8 +657,7 @@ public class DesignsManager
      * Setter pour designConverter.
      * @param designConverter le designConverter à écrire.
      */
-    public void setDesignConverter(final DesignConverter designConverter)
-    {
+    public void setDesignConverter(final DesignConverter designConverter) {
         this.designConverter = designConverter;
     }
 
@@ -755,8 +665,7 @@ public class DesignsManager
      * Getter sur json.
      * @return Retourne le json.
      */
-    public JSONArray getJson()
-    {
+    public JSONArray getJson() {
         return this.json;
     }
 
@@ -764,8 +673,7 @@ public class DesignsManager
      * Setter pour json.
      * @param json le json à écrire.
      */
-    public void setJson(final JSONArray json)
-    {
+    public void setJson(final JSONArray json) {
         this.json = json;
     }
 
@@ -773,8 +681,7 @@ public class DesignsManager
      * Setter pour timeHelper.
      * @param timeHelper le timeHelper à écrire.
      */
-    public void setTimeHelper(final TimeHelper timeHelper)
-    {
+    public void setTimeHelper(final TimeHelper timeHelper) {
         this.timeHelper = timeHelper;
     }
 
@@ -782,8 +689,7 @@ public class DesignsManager
      * Getter sur dateFin.
      * @return Retourne le dateFin.
      */
-    public Calendar getDateFin()
-    {
+    public Calendar getDateFin() {
         return this.dateFin;
     }
 
@@ -791,8 +697,7 @@ public class DesignsManager
      * Setter pour dateFin.
      * @param dateFin le dateFin à écrire.
      */
-    public void setDateFin(final Calendar dateFin)
-    {
+    public void setDateFin(final Calendar dateFin) {
         this.dateFin = dateFin;
     }
 
@@ -800,8 +705,7 @@ public class DesignsManager
      * Getter sur jsonDate.
      * @return Retourne le jsonDate.
      */
-    public JSONObject getJsonDate()
-    {
+    public JSONObject getJsonDate() {
         return this.jsonDate;
     }
 
@@ -809,21 +713,17 @@ public class DesignsManager
      * Setter pour jsonDate.
      * @param jsonDate le jsonDate à écrire.
      */
-    public void setJsonDate(final JSONObject jsonDate)
-    {
+    public void setJsonDate(final JSONObject jsonDate) {
         this.jsonDate = jsonDate;
     }
 
-    public void setFacesUtils(final FacesUtils facesUtils)
-    {
+    public void setFacesUtils(final FacesUtils facesUtils) {
         this.facesUtils = facesUtils;
     }
-    public String getNomCompletSequence()
-    {
+    public String getNomCompletSequence() {
         return this.nomCompletSequence;
     }
-    public void setNomCompletSequence(final String nomCompletSequence)
-    {
+    public void setNomCompletSequence(final String nomCompletSequence) {
         this.nomCompletSequence = nomCompletSequence;
     }
 

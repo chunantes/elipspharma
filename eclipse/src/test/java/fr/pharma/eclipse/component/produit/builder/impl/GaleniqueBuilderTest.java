@@ -8,12 +8,10 @@ import fr.pharma.eclipse.utils.AbstractEclipseJUnitTest;
 
 /**
  * Test du builder GalelniqueBuilder.
- 
+ * @author Netapsys
  * @version $Revision$ $Date$
  */
-public class GaleniqueBuilderTest
-    extends AbstractEclipseJUnitTest
-{
+public class GaleniqueBuilderTest extends AbstractEclipseJUnitTest {
 
     /**
      * Builder.
@@ -24,8 +22,7 @@ public class GaleniqueBuilderTest
      * {@inheritDoc}
      */
     @Override
-    public void setUp()
-    {
+    public void setUp() {
         this.builder = new GaleniqueBuilder();
     }
 
@@ -33,8 +30,7 @@ public class GaleniqueBuilderTest
      * {@inheritDoc}
      */
     @Override
-    public void tearDown()
-    {
+    public void tearDown() {
         this.builder = null;
     }
 
@@ -43,8 +39,7 @@ public class GaleniqueBuilderTest
      */
     @Test
     @Override
-    public void testInit()
-    {
+    public void testInit() {
         Assert.assertNotNull(this.builder);
     }
 
@@ -52,12 +47,10 @@ public class GaleniqueBuilderTest
      * Test de la méthode build().
      */
     @Test
-    public void testBuild()
-    {
+    public void testBuild() {
         final Conditionnement conditionnement = new Conditionnement();
         this.builder.build(conditionnement);
-        Assert.assertEquals("Galénique",
-                            conditionnement.getUnitePrescription());
+        Assert.assertEquals("Galénique", conditionnement.getUnitePrescription());
     }
 
 }

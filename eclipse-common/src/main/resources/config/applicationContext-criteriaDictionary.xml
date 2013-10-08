@@ -113,6 +113,9 @@
 					key="fr.pharma.eclipse.domain.criteria.dispensation.ElementToCheckForOrdoSearchCriteria"
 					value-ref="elementToCheckForOrdoSearchCriteriaMaker" />
 				<entry
+					key="fr.pharma.eclipse.domain.criteria.reprisePassif.ReprisePassifSearchCriteria"
+					value-ref="reprisePassifSearchCriteriaMaker" />
+				<entry
 					key="fr.pharma.eclipse.domain.criteria.incident.IncidentSearchCriteria"
 					value-ref="incidentSearchCriteriaMaker" />
 				<entry
@@ -124,6 +127,9 @@
 				<entry
 					key="fr.pharma.eclipse.domain.criteria.prescription.ProduitPrescritSearchCriteria"
 					value-ref="produitPrescritSearchCriteriaMaker" />
+				<entry
+					key="fr.pharma.eclipse.domain.criteria.stock.LigneStockSearchCriteria"
+					value-ref="ligneStockSearchCriteriaMaker" />
 			</map>
 		</property>
 	</bean>

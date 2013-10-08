@@ -13,12 +13,10 @@ import fr.pharma.eclipse.utils.introspection.BeanTool;
 /**
  * Manager générique pour gérer l'aute-complétion.
  * @param <BEAN> Type d'objet métier.
- 
+ * @author Netapsys
  * @version $Revision$ $Date$
  */
-public class AutoCompleteBeansManager<BEAN extends BeanObject>
-    implements Serializable
-{
+public class AutoCompleteBeansManager<BEAN extends BeanObject> implements Serializable {
 
     /**
      * Serial ID.
@@ -31,7 +29,8 @@ public class AutoCompleteBeansManager<BEAN extends BeanObject>
     private SearchCriteria searchCriteria;
 
     /**
-     * Propriété du critère de recherche à valoriser lors de la saisie du champs dans l'IHM.
+     * Propriété du critère de recherche à valoriser lors de la saisie du champs
+     * dans l'IHM.
      */
     private String searchCriteriaProperty;
 
@@ -41,24 +40,18 @@ public class AutoCompleteBeansManager<BEAN extends BeanObject>
     private GenericService<BEAN> service;
 
     /**
-     * Méthode à appeler pour effectuer l'auto-complétion à partir des données saisies par
-     * l'utilisateur.
+     * Méthode à appeler pour effectuer l'auto-complétion à partir des données
+     * saisies par l'utilisateur.
      * @param requete Chaîne de caractères saisie par l'utilisateur.
      * @return La liste des objets métier pour l'auto-complétion.
      */
-    public List<BEAN> complete(final String requete)
-    {
-        Assert.notNull(this.searchCriteria,
-                       "Critère de recherche non valorisé.");
-        Assert.notNull(this.searchCriteriaProperty,
-                       "Propriété du critère de recherche non valorisée.");
-        Assert.notNull(this.service,
-                       "Service non valorisé.");
+    public List<BEAN> complete(final String requete) {
+        Assert.notNull(this.searchCriteria, "Critère de recherche non valorisé.");
+        Assert.notNull(this.searchCriteriaProperty, "Propriété du critère de recherche non valorisée.");
+        Assert.notNull(this.service, "Service non valorisé.");
 
         // Valorisation du critère.
-        BeanTool.setPropriete(this.searchCriteria,
-                              this.searchCriteriaProperty,
-                              requete);
+        BeanTool.setPropriete(this.searchCriteria, this.searchCriteriaProperty, requete);
 
         // Récupération des résultats.
         return this.service.getAll(this.searchCriteria);
@@ -68,8 +61,7 @@ public class AutoCompleteBeansManager<BEAN extends BeanObject>
      * Setter pour searchCriteria.
      * @param searchCriteria le searchCriteria à écrire.
      */
-    public void setSearchCriteria(final SearchCriteria searchCriteria)
-    {
+    public void setSearchCriteria(final SearchCriteria searchCriteria) {
         this.searchCriteria = searchCriteria;
     }
 
@@ -77,8 +69,7 @@ public class AutoCompleteBeansManager<BEAN extends BeanObject>
      * Setter pour searchCriteriaProperty.
      * @param searchCriteriaProperty le searchCriteriaProperty à écrire.
      */
-    public void setSearchCriteriaProperty(final String searchCriteriaProperty)
-    {
+    public void setSearchCriteriaProperty(final String searchCriteriaProperty) {
         this.searchCriteriaProperty = searchCriteriaProperty;
     }
 
@@ -86,8 +77,7 @@ public class AutoCompleteBeansManager<BEAN extends BeanObject>
      * Setter pour service.
      * @param service le service à écrire.
      */
-    public void setService(final GenericService<BEAN> service)
-    {
+    public void setService(final GenericService<BEAN> service) {
         this.service = service;
     }
 
@@ -95,8 +85,7 @@ public class AutoCompleteBeansManager<BEAN extends BeanObject>
      * Getter pour searchCriteria.
      * @return Le searchCriteria
      */
-    public SearchCriteria getSearchCriteria()
-    {
+    public SearchCriteria getSearchCriteria() {
         return this.searchCriteria;
     }
 

@@ -1,6 +1,5 @@
 package fr.pharma.eclipse.component.surcout;
 
-import java.math.BigDecimal;
 import java.util.Calendar;
 import java.util.Collection;
 import java.util.Map;
@@ -15,12 +14,11 @@ import org.apache.commons.collections.CollectionUtils;
 
 import fr.pharma.eclipse.component.BeanManager;
 import fr.pharma.eclipse.component.essai.EssaiManager;
-import fr.pharma.eclipse.component.surcout.validator.RegleValidator;
 import fr.pharma.eclipse.domain.model.essai.detail.surcout.DetailSurcout;
 import fr.pharma.eclipse.domain.model.surcout.Grille;
 import fr.pharma.eclipse.domain.model.surcout.GrilleModele;
 import fr.pharma.eclipse.domain.model.surcout.Item;
-import fr.pharma.eclipse.domain.model.surcout.regle.Regle;
+import fr.pharma.eclipse.domain.model.surcout.Resultat;
 import fr.pharma.eclipse.factory.surcout.GrilleFactory;
 import fr.pharma.eclipse.predicate.GenericPredicate;
 import fr.pharma.eclipse.service.common.GenericService;
@@ -28,12 +26,10 @@ import fr.pharma.eclipse.service.surcout.GrilleModeleService;
 
 /**
  * Manager de l'onglet surcout.
- 
+ * @author Netapsys
  * @version $Revision$ $Date$
  */
-public class GrilleManager
-    extends BeanManager<Grille>
-{
+public class GrilleManager extends BeanManager<Grille> {
     /**
      * SerialVersionUID.
      */
@@ -63,17 +59,6 @@ public class GrilleManager
     private GrilleModele grilleModeleSelected;
 
     /**
-     * Regle.
-     */
-    private Regle regle;
-
-    /**
-     * Validateur de regle.
-     */
-    @Resource(name = "regleValidator")
-    private RegleValidator regleValidator;
-
-    /**
      * Date de début.
      */
     private Calendar dateDebut;
@@ -86,36 +71,30 @@ public class GrilleManager
     /**
      * Resultat de la generation de la grille.
      */
-    private Map<Item, BigDecimal> resultPrevisionnel;
+    private Map<Item, Resultat> resultPrevisionnel;
 
     /**
      * Resultat de la generation de la grille.
      */
-    private Map<Item, BigDecimal> resultReel;
+    private Map<Item, Resultat> resultReel;
 
     /**
      * Constructeur.
      * @param service Service.
      */
-    public GrilleManager(final GenericService<Grille> service)
-    {
+    public GrilleManager(final GenericService<Grille> service) {
         super(service);
     }
 
     /**
      * Méthode en charge d'initialiser les valeurs du manager.
      */
-    public void init()
-    {
+    public void init() {
         final Grille grille = this.getBean();
-        if (grille != null
-            && grille.getId() != null)
-        {
+        if ((grille != null) && (grille.getId() != null)) {
             this.setBean(grille);
             this.setGrilleModeleSelected(grille.getGrilleModele());
-        }
-        else
-        {
+        } else {
             this.setBean(null);
             this.setGrilleModeleSelected(null);
         }
@@ -125,19 +104,15 @@ public class GrilleManager
      * Méthode en charge de charger la grille en fonction du model sélectionné.
      * @param event Evenement.
      */
-    public void handleSelectGrilleModele(final AjaxBehaviorEvent event)
-    {
+    public void handleSelectGrilleModele(final AjaxBehaviorEvent event) {
         final HtmlSelectOneMenu select = (HtmlSelectOneMenu) event.getSource();
         final GrilleModele model = (GrilleModele) select.getLocalValue();
-        if (model != null)
-        {
+        if (model != null) {
             this.setBean(this.grilleFactory.getInitializedObject(model));
             final DetailSurcout detailSurcout = this.essaiManager.getBean().getDetailSurcout();
             this.getBean().setDetailSurcout(detailSurcout);
             this.getService().save(this.getBean());
-        }
-        else
-        {
+        } else {
             this.setBean(null);
         }
     }
@@ -145,8 +120,7 @@ public class GrilleManager
     /**
      * Méthode en charge de supprimer la grille courante.
      */
-    public void removeGrille()
-    {
+    public void removeGrille() {
         final Grille grille = this.getBean();
         this.setBean(null);
         this.getService().remove(grille);
@@ -159,26 +133,21 @@ public class GrilleManager
      * @return La collection des items du theme en paramètre.
      */
     @SuppressWarnings("unchecked")
-    public Collection<Item> findItemForTheme(final String theme)
-    {
-        return CollectionUtils.select(this.getBean().getItems(),
-                                      new GenericPredicate("theme",
-                                                           theme));
+    public Collection<Item> findItemForTheme(final String theme) {
+        return CollectionUtils.select(this.getBean().getItems(), new GenericPredicate("theme", theme));
     }
 
     /**
-     * Méthode en charge de retourner la liste des thèmes présents dans la grille.
+     * Méthode en charge de retourner la liste des thèmes présents dans la
+     * grille.
      * @return la liste des thèmes présents dans la grille.
      */
-    public SortedSet<String> findThemes()
-    {
-        if (this.getBean() == null)
-        {
+    public SortedSet<String> findThemes() {
+        if (this.getBean() == null) {
             return null;
         }
         final SortedSet<String> themes = new TreeSet<String>();
-        for (final Item item : this.getBean().getItems())
-        {
+        for (final Item item : this.getBean().getItems()) {
             themes.add(item.getTheme());
         }
         return themes;
@@ -188,8 +157,7 @@ public class GrilleManager
      * Retourne la liste des grilles modèles.
      * @return La liste des grilles modèles.
      */
-    public Collection<GrilleModele> getGrillesModeles()
-    {
+    public Collection<GrilleModele> getGrillesModeles() {
         return this.grilleModeleService.getAll();
     }
 
@@ -197,8 +165,7 @@ public class GrilleManager
      * Setter pour grilleFactory.
      * @param grilleFactory le grilleFactory à écrire.
      */
-    public void setGrilleFactory(final GrilleFactory grilleFactory)
-    {
+    public void setGrilleFactory(final GrilleFactory grilleFactory) {
         this.grilleFactory = grilleFactory;
     }
 
@@ -206,8 +173,7 @@ public class GrilleManager
      * Setter pour grilleModeleService.
      * @param grilleModeleService le grilleModeleService à écrire.
      */
-    public void setGrilleModeleService(final GrilleModeleService grilleModeleService)
-    {
+    public void setGrilleModeleService(final GrilleModeleService grilleModeleService) {
         this.grilleModeleService = grilleModeleService;
     }
 
@@ -215,8 +181,7 @@ public class GrilleManager
      * Getter sur grilleModeleSelected.
      * @return Retourne le grilleModeleSelected.
      */
-    public GrilleModele getGrilleModeleSelected()
-    {
+    public GrilleModele getGrilleModeleSelected() {
         return this.grilleModeleSelected;
     }
 
@@ -224,8 +189,7 @@ public class GrilleManager
      * Setter pour grilleModeleSelected.
      * @param grilleModeleSelected le grilleModeleSelected à écrire.
      */
-    public void setGrilleModeleSelected(final GrilleModele grilleModeleSelected)
-    {
+    public void setGrilleModeleSelected(final GrilleModele grilleModeleSelected) {
         this.grilleModeleSelected = grilleModeleSelected;
     }
 
@@ -233,8 +197,7 @@ public class GrilleManager
      * Setter pour essaiManager.
      * @param essaiManager le essaiManager à écrire.
      */
-    public void setEssaiManager(final EssaiManager essaiManager)
-    {
+    public void setEssaiManager(final EssaiManager essaiManager) {
         this.essaiManager = essaiManager;
     }
 
@@ -242,8 +205,7 @@ public class GrilleManager
      * {@inheritDoc}
      */
     @Override
-    public Grille getBean()
-    {
+    public Grille getBean() {
         return this.essaiManager.getBean().getDetailSurcout().getGrille();
     }
 
@@ -251,26 +213,15 @@ public class GrilleManager
      * {@inheritDoc}
      */
     @Override
-    public void setBean(final Grille grille)
-    {
+    public void setBean(final Grille grille) {
         this.essaiManager.getBean().getDetailSurcout().setGrille(grille);
-    }
-
-    /**
-     * Setter pour regleValidator.
-     * @param regleValidator le regleValidator à écrire.
-     */
-    public void setRegleValidator(final RegleValidator regleValidator)
-    {
-        this.regleValidator = regleValidator;
     }
 
     /**
      * Getter sur dateDebut.
      * @return Retourne le dateDebut.
      */
-    public Calendar getDateDebut()
-    {
+    public Calendar getDateDebut() {
         return this.dateDebut;
     }
 
@@ -278,8 +229,7 @@ public class GrilleManager
      * Getter sur dateFin.
      * @return Retourne le dateFin.
      */
-    public Calendar getDateFin()
-    {
+    public Calendar getDateFin() {
         return this.dateFin;
     }
 
@@ -287,8 +237,7 @@ public class GrilleManager
      * Setter pour dateDebut.
      * @param dateDebut le dateDebut à écrire.
      */
-    public void setDateDebut(final Calendar dateDebut)
-    {
+    public void setDateDebut(final Calendar dateDebut) {
         this.dateDebut = dateDebut;
     }
 
@@ -296,8 +245,7 @@ public class GrilleManager
      * Setter pour dateFin.
      * @param dateFin le dateFin à écrire.
      */
-    public void setDateFin(final Calendar dateFin)
-    {
+    public void setDateFin(final Calendar dateFin) {
         this.dateFin = dateFin;
     }
 
@@ -305,8 +253,7 @@ public class GrilleManager
      * Getter sur resultPrevisionnel.
      * @return Retourne le resultPrevisionnel.
      */
-    public Map<Item, BigDecimal> getResultPrevisionnel()
-    {
+    public Map<Item, Resultat> getResultPrevisionnel() {
         return this.resultPrevisionnel;
     }
 
@@ -314,8 +261,7 @@ public class GrilleManager
      * Getter sur resultReel.
      * @return Retourne le resultReel.
      */
-    public Map<Item, BigDecimal> getResultReel()
-    {
+    public Map<Item, Resultat> getResultReel() {
         return this.resultReel;
     }
 
@@ -323,8 +269,7 @@ public class GrilleManager
      * Setter pour resultPrevisionnel.
      * @param resultPrevisionnel le resultPrevisionnel à écrire.
      */
-    public void setResultPrevisionnel(final Map<Item, BigDecimal> resultPrevisionnel)
-    {
+    public void setResultPrevisionnel(final Map<Item, Resultat> resultPrevisionnel) {
         this.resultPrevisionnel = resultPrevisionnel;
     }
 
@@ -332,8 +277,7 @@ public class GrilleManager
      * Setter pour resultReel.
      * @param resultReel le resultReel à écrire.
      */
-    public void setResultReel(final Map<Item, BigDecimal> resultReel)
-    {
+    public void setResultReel(final Map<Item, Resultat> resultReel) {
         this.resultReel = resultReel;
     }
 

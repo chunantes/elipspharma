@@ -20,14 +20,12 @@ import fr.pharma.eclipse.service.helper.design.TimeHelper;
 import fr.pharma.eclipse.utils.FacesUtils;
 
 /**
- * Classe de validation de saisie d'une sequence en fonction des prescriptions. Appellée lors de
- * l'ajout d'une PrescriptionType.
- 
+ * Classe de validation de saisie d'une sequence en fonction des prescriptions.
+ * Appellée lors de l'ajout d'une PrescriptionType.
+ * @author Netapsys
  * @version $Revision$ $Date$
  */
-public class SequenceValidator
-    implements Serializable
-{
+public class SequenceValidator implements Serializable {
 
     /**
      * SerialVersionUID.
@@ -47,31 +45,23 @@ public class SequenceValidator
     private TimeHelper timeHelper;
 
     /**
-     * Méthode en charge de valider la sequence en parametre en fonction de la prescription à
-     * ajouter.
-     * @param prescription La prescriptionType que l'on souhaite ajouter à la séquence.
+     * Méthode en charge de valider la sequence en parametre en fonction de la
+     * prescription à ajouter.
+     * @param prescription La prescriptionType que l'on souhaite ajouter à la
+     * séquence.
      * @param sequence La sequence.
      * @return <true> si la séquence est validée.
      */
     public boolean validateSequence(final PrescriptionType prescription,
-                                    final Sequence sequence)
-    {
+                                    final Sequence sequence) {
 
-        final Collection<Sequence> coll =
-            this.filtreSequences(sequence.getParent().getSequences(),
-                                 sequence);
+        final Collection<Sequence> coll = this.filtreSequences(sequence.getParent().getSequences(), sequence);
         final List<PrescriptionType> prescriptions = new ArrayList<PrescriptionType>();
         prescriptions.add(prescription);
         final TempsPrescriptionComparator comparator = new TempsPrescriptionComparator();
-        for (final Sequence s : coll)
-        {
-            if (comparator.compare(prescription.getDebut(),
-                                   s.getFin()) != 1
-                && comparator.compare(s.getDebut(),
-                                      this.timeHelper.getFin(prescriptions)) != 1)
-            {
-                this.facesUtils.addMessage(FacesMessage.SEVERITY_ERROR,
-                                           "sequence.chevauchement");
+        for (final Sequence s : coll) {
+            if ((comparator.compare(prescription.getDebut(), s.getFin()) != 1) && (comparator.compare(s.getDebut(), this.timeHelper.getFin(prescriptions)) != 1)) {
+                this.facesUtils.addMessage(FacesMessage.SEVERITY_ERROR, "sequence.chevauchement");
                 FacesContext.getCurrentInstance().validationFailed();
                 return false;
             }
@@ -79,28 +69,24 @@ public class SequenceValidator
         return true;
     }
     /**
-     * Méthode en charge de filtrer la liste de sequence en retirant la sequence en deuxième
-     * paramètre, et les sequences avec un identifiant à null.
+     * Méthode en charge de filtrer la liste de sequence en retirant la sequence
+     * en deuxième paramètre, et les sequences avec un identifiant à null.
      * @param sequences Liste de sequences.
      * @param sequence la sequence courante.
      * @return la collection de sequence filtrée.
      */
     @SuppressWarnings("all")
     private Collection<Sequence> filtreSequences(final SortedSet<Sequence> sequences,
-                                                 final Sequence sequence)
-    {
+                                                 final Sequence sequence) {
 
-        return CollectionUtils.selectRejected(sequences,
-                                              new Predicate() {
+        return CollectionUtils.selectRejected(sequences, new Predicate() {
 
-                                                  @Override
-                                                  public boolean evaluate(final Object object)
-                                                  {
-                                                      final Sequence seq = (Sequence) object;
-                                                      return seq.getId() == null
-                                                             || seq.getId() == sequence.getId();
-                                                  }
-                                              });
+            @Override
+            public boolean evaluate(final Object object) {
+                final Sequence seq = (Sequence) object;
+                return (seq.getId() == null) || (seq.getId() == sequence.getId());
+            }
+        });
 
     }
 
@@ -108,16 +94,14 @@ public class SequenceValidator
      * Setter pour facesUtils.
      * @param facesUtils le facesUtils à écrire.
      */
-    public void setFacesUtils(final FacesUtils facesUtils)
-    {
+    public void setFacesUtils(final FacesUtils facesUtils) {
         this.facesUtils = facesUtils;
     }
     /**
      * Setter pour timeHelper.
      * @param timeHelper le timeHelper à écrire.
      */
-    public void setTimeHelper(final TimeHelper timeHelper)
-    {
+    public void setTimeHelper(final TimeHelper timeHelper) {
         this.timeHelper = timeHelper;
     }
 

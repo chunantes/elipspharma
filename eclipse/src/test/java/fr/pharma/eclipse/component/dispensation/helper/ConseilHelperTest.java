@@ -12,12 +12,10 @@ import fr.pharma.eclipse.utils.AbstractEclipseJUnitTest;
 
 /**
  * Description de la classe.
- 
+ * @author Netapsys
  * @version $Revision$ $Date$
  */
-public class ConseilHelperTest
-    extends AbstractEclipseJUnitTest
-{
+public class ConseilHelperTest extends AbstractEclipseJUnitTest {
 
     /**
      * Helper.
@@ -33,8 +31,7 @@ public class ConseilHelperTest
      * {@inheritDoc}
      */
     @Override
-    public void setUp()
-    {
+    public void setUp() {
         this.builder = Mockito.mock(ConseilDispensationBuilder.class);
         this.helper = new ConseilHelper();
         this.helper.setBuilder(this.builder);
@@ -44,8 +41,7 @@ public class ConseilHelperTest
      * {@inheritDoc}
      */
     @Override
-    public void tearDown()
-    {
+    public void tearDown() {
         this.builder = null;
         this.helper = null;
     }
@@ -54,8 +50,7 @@ public class ConseilHelperTest
      * {@inheritDoc}
      */
     @Override
-    public void testInit()
-    {
+    public void testInit() {
         Assert.assertNotNull(this.builder);
         Assert.assertNotNull(this.helper);
     }
@@ -64,29 +59,24 @@ public class ConseilHelperTest
      * Test de la méthode buildConseil.
      */
     @Test
-    public void testBuildConseilSupportKo()
-    {
+    public void testBuildConseilSupportKo() {
         final ProduitPrescrit produitPrescrit = Mockito.mock(ProduitPrescrit.class);
         Mockito.when(this.builder.support(produitPrescrit)).thenReturn(false);
 
-        Assert.assertEquals("",
-                            this.helper.buildConseil(produitPrescrit));
+        Assert.assertEquals("", this.helper.buildConseil(produitPrescrit));
     }
 
     /**
      * Test de la méthode buildConseil.
      */
     @Test
-    public void testBuildConseilSupportOk()
-    {
+    public void testBuildConseilSupportOk() {
         final ProduitPrescrit produitPrescrit = Mockito.mock(ProduitPrescrit.class);
         Mockito.when(this.builder.support(produitPrescrit)).thenReturn(true);
         Mockito.when(this.builder.build(produitPrescrit)).thenReturn(new ConseilDispensation());
-        Mockito.when(this.builder.format(Matchers.any(ConseilDispensation.class)))
-                .thenReturn("ok");
+        Mockito.when(this.builder.format(Matchers.any(ConseilDispensation.class))).thenReturn("ok");
 
-        Assert.assertEquals("ok",
-                            this.helper.buildConseil(produitPrescrit));
+        Assert.assertEquals("ok", this.helper.buildConseil(produitPrescrit));
     }
 
 }

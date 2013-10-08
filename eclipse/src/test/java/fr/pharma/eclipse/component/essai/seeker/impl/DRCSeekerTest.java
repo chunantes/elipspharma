@@ -20,12 +20,10 @@ import fr.pharma.eclipse.utils.EssaiUtils;
 
 /**
  * Test de la classe DRCSeeker.
- 
+ * @author Netapsys
  * @version $Revision$ $Date$
  */
-public class DRCSeekerTest
-    extends AbstractEclipseJUnitTest
-{
+public class DRCSeekerTest extends AbstractEclipseJUnitTest {
     /**
      * Elément testé.
      */
@@ -46,8 +44,7 @@ public class DRCSeekerTest
      */
     @SuppressWarnings("unchecked")
     @Override
-    public void setUp()
-    {
+    public void setUp() {
         this.mockedBeanFactory = Mockito.mock(BeanFactory.class);
         this.mockedService = Mockito.mock(GenericService.class);
         this.seeker = new DRCSeeker();
@@ -59,8 +56,7 @@ public class DRCSeekerTest
      * {@inheritDoc}
      */
     @Override
-    public void tearDown()
-    {
+    public void tearDown() {
         this.seeker = null;
         this.mockedBeanFactory = null;
         this.mockedService = null;
@@ -70,35 +66,27 @@ public class DRCSeekerTest
      * {@inheritDoc}
      */
     @Override
-    public void testInit()
-    {
+    public void testInit() {
         Assert.assertNotNull(this.seeker);
-        Assert.assertEquals(this.mockedBeanFactory,
-                            this.seeker.getBeanFactory());
-        Assert.assertEquals(this.mockedService,
-                            this.seeker.getService());
+        Assert.assertEquals(this.mockedBeanFactory, this.seeker.getBeanFactory());
+        Assert.assertEquals(this.mockedService, this.seeker.getService());
     }
 
     /**
      * Test de la méthode supports.
      */
     @Test
-    public void testSupports()
-    {
-        this.verifySupports(Arrays.asList(TypeContact.DIRECTION_RECHERCHE_ADMINISTRATIF,
-                                          TypeContact.DIRECTION_RECHERCHE_PHARMACOVIGILANT));
+    public void testSupports() {
+        this.verifySupports(Arrays.asList(TypeContact.DIRECTION_RECHERCHE_ADMINISTRATIF, TypeContact.DIRECTION_RECHERCHE_PHARMACOVIGILANT));
     }
 
     /**
      * Méthode de vérification du support.
      * @param expectedSupports Liste des supports attendus.
      */
-    private void verifySupports(final List<TypeContact> expectedSupports)
-    {
-        for (final TypeContact typeContact : TypeContact.values())
-        {
-            Assert.assertEquals(expectedSupports.contains(typeContact),
-                                this.seeker.supports(typeContact));
+    private void verifySupports(final List<TypeContact> expectedSupports) {
+        for (final TypeContact typeContact : TypeContact.values()) {
+            Assert.assertEquals(expectedSupports.contains(typeContact), this.seeker.supports(typeContact));
         }
     }
 
@@ -106,32 +94,25 @@ public class DRCSeekerTest
      * Test de la méthode getSearchCriteria.
      */
     @Test
-    public void testGetSearchCriteria()
-    {
+    public void testGetSearchCriteria() {
         long id = 1;
         final Essai essai = EssaiUtils.makeEssaiTest(id++);
         final String expectedBeanName = "personneCriteria";
-        final PersonneSearchCriteria expectedCriteria =
-            Mockito.mock(PersonneSearchCriteria.class);
+        final PersonneSearchCriteria expectedCriteria = Mockito.mock(PersonneSearchCriteria.class);
 
         final DirectionRecherche personne1 = Mockito.mock(DirectionRecherche.class);
         final DirectionRecherche personne2 = Mockito.mock(DirectionRecherche.class);
-        final List<DirectionRecherche> expectedList = Arrays.asList(personne1,
-                                                                    personne2);
+        final List<DirectionRecherche> expectedList = Arrays.asList(personne1, personne2);
 
-        Mockito
-                .when(this.mockedBeanFactory.getBean(expectedBeanName))
-                .thenReturn(expectedCriteria);
+        Mockito.when(this.mockedBeanFactory.getBean(expectedBeanName)).thenReturn(expectedCriteria);
         Mockito.when(this.mockedService.getAll(expectedCriteria)).thenReturn(expectedList);
 
         final List<Personne> res = this.seeker.getContacts(essai);
         Mockito.verify(this.mockedBeanFactory).getBean(expectedBeanName);
         Mockito.verify(expectedCriteria).setTypePersonne(TypePersonne.DIRECTION_RECHERCHE);
         Mockito.verify(this.mockedService).getAll(expectedCriteria);
-        Assert.assertEquals(expectedList.size(),
-                            res.size());
-        for (final Personne expectedPersonne : expectedList)
-        {
+        Assert.assertEquals(expectedList.size(), res.size());
+        for (final Personne expectedPersonne : expectedList) {
             Assert.assertTrue(res.contains(expectedPersonne));
         }
     }

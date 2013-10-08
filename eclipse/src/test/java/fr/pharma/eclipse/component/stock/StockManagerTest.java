@@ -28,11 +28,10 @@ import fr.pharma.eclipse.domain.model.stockage.Stockage;
 
 /**
  * Classe en charge de tester le manager de stock.
- 
+ * @author Netapsys
  * @version $Revision$ $Date$
  */
-public class StockManagerTest
-{
+public class StockManagerTest {
     /**
      * Manager de stock à tester.
      */
@@ -52,8 +51,7 @@ public class StockManagerTest
      * Méthode en charge d'initialiser les données de test.
      */
     @Before
-    public void init()
-    {
+    public void init() {
         this.mockTreeStockageHelper = Mockito.mock(TreeStockageHelper.class);
         this.searchCriteria = new StockSearchCriteria();
         this.manager = new StockManager(this.searchCriteria);
@@ -64,8 +62,7 @@ public class StockManagerTest
      * Méthode en charge de purger les données de test.
      */
     @After
-    public void end()
-    {
+    public void end() {
         this.searchCriteria = null;
         this.manager = null;
         this.mockTreeStockageHelper = null;
@@ -75,35 +72,33 @@ public class StockManagerTest
      * Méthode en charge de tester l'initialisation des données de test.
      */
     @Test
-    public void testInit()
-    {
+    public void testInit() {
         Assert.assertNotNull(this.searchCriteria);
         Assert.assertNotNull(this.manager);
         Assert.assertNotNull(this.mockTreeStockageHelper);
     }
 
     /**
-     * Méthode en charge de tester la récupération des stockages sélectionnables .
+     * Méthode en charge de tester la récupération des stockages sélectionnables
+     * .
      */
     @Test
-    public void testGetStockagesSelectableWithPharmaNull()
-    {
+    public void testGetStockagesSelectableWithPharmaNull() {
         this.manager.getSearchCriteria().setPharmacie(null);
         Assert.assertNull(this.manager.getStockagesSelectable());
     }
 
     /**
-     * Méthode en charge de tester la récupération des stockages sélectionnables .
+     * Méthode en charge de tester la récupération des stockages sélectionnables
+     * .
      */
     @Test
-    public void testGetStockagesSelectableWithPharmaNotNull()
-    {
+    public void testGetStockagesSelectableWithPharmaNotNull() {
         final Pharmacie pharmacie = Mockito.mock(Pharmacie.class);
         this.manager.getSearchCriteria().setPharmacie(pharmacie);
         final TreeNode stockage = Mockito.mock(TreeNode.class);
         Mockito.when(this.mockTreeStockageHelper.buildTree(pharmacie)).thenReturn(stockage);
-        Assert.assertEquals(stockage,
-                            this.manager.getStockagesSelectable());
+        Assert.assertEquals(stockage, this.manager.getStockagesSelectable());
         Mockito.verify(this.mockTreeStockageHelper).buildTree(pharmacie);
     }
 
@@ -111,8 +106,7 @@ public class StockManagerTest
      * Méthode en charge de tester la mise à jour du stockage de recherche.
      */
     @Test
-    public void testUpdateStockage()
-    {
+    public void testUpdateStockage() {
         final Stockage stockage = new Stockage();
         stockage.setId(1L);
 
@@ -122,27 +116,24 @@ public class StockManagerTest
 
         this.manager.updateStockage();
 
-        Assert.assertEquals(stockage,
-                            this.manager.getSearchCriteria().getStockage());
+        Assert.assertEquals(stockage, this.manager.getSearchCriteria().getStockage());
     }
 
     /**
      * Méthode en charge de tester la suppression du stockage.
      */
     @Test
-    public void testDelStockage()
-    {
+    public void testDelStockage() {
         this.manager.delStockage();
         Assert.assertNull(this.manager.getSearchCriteria().getStockage());
     }
 
     /**
-     * Méthode en charge de tester la méthode appelée via l'IHM suite à la sélection d'une
-     * pharmacie.
+     * Méthode en charge de tester la méthode appelée via l'IHM suite à la
+     * sélection d'une pharmacie.
      */
     @Test
-    public void testHandleSelectPharmacie()
-    {
+    public void testHandleSelectPharmacie() {
         final AjaxBehaviorEvent event = Mockito.mock(AjaxBehaviorEvent.class);
         final HtmlSelectOneMenu select = Mockito.mock(HtmlSelectOneMenu.class);
         Mockito.when(event.getSource()).thenReturn(select);
@@ -152,8 +143,7 @@ public class StockManagerTest
 
         this.manager.handleSelectPharmacie(event);
 
-        Assert.assertEquals(pharmacie,
-                            this.manager.getSearchCriteria().getPharmacie());
+        Assert.assertEquals(pharmacie, this.manager.getSearchCriteria().getPharmacie());
         Assert.assertNull(this.manager.getSearchCriteria().getStockage());
     }
 
@@ -161,8 +151,7 @@ public class StockManagerTest
      * Méthode en charge de tester l'affectation de résultats.
      */
     @Test
-    public void testSetBeans()
-    {
+    public void testSetBeans() {
         final List<EtatStock> beans = new ArrayList<EtatStock>();
         this.manager.setBeans(beans);
         Assert.assertNotNull(this.manager.getBeans());
@@ -172,16 +161,11 @@ public class StockManagerTest
      * Méthode en charge de tester l'atteinte du seuil plancher.
      */
     @Test
-    public void testSeuilPlancherAtteintKOSeuilNull()
-    {
+    public void testSeuilPlancherAtteintKOSeuilNull() {
         final Produit produit = new Medicament();
         final DetailLogistique detailLogistique = new DetailLogistique();
         produit.setDetailLogistique(detailLogistique);
-        final EtatStock etatStock = new EtatStock(null,
-                                                  null,
-                                                  produit,
-                                                  null,
-                                                  true);
+        final EtatStock etatStock = new EtatStock(null, null, produit, null, true);
         Assert.assertFalse(this.manager.seuilPlancherAtteint(etatStock));
     }
 
@@ -189,17 +173,12 @@ public class StockManagerTest
      * Méthode en charge de tester l'atteinte du seuil plancher.
      */
     @Test
-    public void testSeuilPlancherAtteintKOSeuil()
-    {
+    public void testSeuilPlancherAtteintKOSeuil() {
         final Produit produit = new Medicament();
         final DetailLogistique detailLogistique = new DetailLogistique();
         detailLogistique.setStockSeuil(Integer.valueOf(2));
         produit.setDetailLogistique(detailLogistique);
-        final EtatStock etatStock = new EtatStock(null,
-                                                  null,
-                                                  produit,
-                                                  null,
-                                                  true);
+        final EtatStock etatStock = new EtatStock(null, null, produit, null, true);
         etatStock.setQteEnStock(Integer.valueOf(2));
         Assert.assertFalse(this.manager.seuilPlancherAtteint(etatStock));
     }
@@ -208,17 +187,12 @@ public class StockManagerTest
      * Méthode en charge de tester l'atteinte du seuil plancher.
      */
     @Test
-    public void testSeuilPlancherAtteintOK()
-    {
+    public void testSeuilPlancherAtteintOK() {
         final Produit produit = new Medicament();
         final DetailLogistique detailLogistique = new DetailLogistique();
         detailLogistique.setStockSeuil(Integer.valueOf(2));
         produit.setDetailLogistique(detailLogistique);
-        final EtatStock etatStock = new EtatStock(null,
-                                                  null,
-                                                  produit,
-                                                  null,
-                                                  true);
+        final EtatStock etatStock = new EtatStock(null, null, produit, null, true);
         etatStock.setQteEnStock(Integer.valueOf(1));
         Assert.assertTrue(this.manager.seuilPlancherAtteint(etatStock));
     }
@@ -227,25 +201,16 @@ public class StockManagerTest
      * Test getter setter ligne.
      */
     @Test
-    public void testGetSetBeanSelected()
-    {
-        this.manager.setBeanSelected(new EtatStock(new Essai(),
-                                                   new Pharmacie(),
-                                                   new Medicament(),
-                                                   new Conditionnement(),
-                                                   true));
+    public void testGetSetBeanSelected() {
+        this.manager.setBeanSelected(new EtatStock(new Essai(), new Pharmacie(), new Medicament(), new Conditionnement(), true));
         Assert.assertNotNull(this.manager.getBeanSelected());
     }
     /**
      * Test getter setter ligne.
      */
     @Test
-    public void testGetSetLigne()
-    {
-        this.manager.setLigne(new EtatLigneStock("",
-                                                 "",
-                                                 Calendar.getInstance(),
-                                                 2));
+    public void testGetSetLigne() {
+        this.manager.setLigne(new EtatLigneStock("", "", Calendar.getInstance(), 2));
         Assert.assertNotNull(this.manager.getLigne());
     }
 }

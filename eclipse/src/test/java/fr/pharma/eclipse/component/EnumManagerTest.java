@@ -29,11 +29,10 @@ import fr.pharma.eclipse.domain.enums.stock.TypeMvtStock;
 
 /**
  * Classe en charge de tester le manager d'enums de l'application.
- 
+ * @author Netapsys
  * @version $Revision$ $Date$
  */
-public class EnumManagerTest
-{
+public class EnumManagerTest {
     /**
      * EnumManager à tester.
      */
@@ -53,13 +52,10 @@ public class EnumManagerTest
      * Méthode en charge d'initialiser les données de test.
      */
     @Before
-    public void init()
-    {
+    public void init() {
         this.enumManager = new EnumManager();
         Assert.assertFalse(EnumManager.getEnums().isEmpty());
-        Assert.assertTrue(EnumManager
-                .getEnums()
-                .containsKey(EnumManagerTest.CLE_TYPE_COMMENTAIRE));
+        Assert.assertTrue(EnumManager.getEnums().containsKey(EnumManagerTest.CLE_TYPE_COMMENTAIRE));
         Assert.assertFalse(EnumManager.getEnums().containsKey(EnumManagerTest.CLE_ENUM_ABSENTE));
     }
 
@@ -67,8 +63,7 @@ public class EnumManagerTest
      * Méthode en charge de purger les données de test.
      */
     @After
-    public void end()
-    {
+    public void end() {
         this.enumManager = null;
     }
 
@@ -76,274 +71,235 @@ public class EnumManagerTest
      * Méthode en charge de tester l'initialisation des données de test.
      */
     @Test
-    public void testInit()
-    {
+    public void testInit() {
         Assert.assertNotNull(this.enumManager);
     }
 
     /**
-     * Méthode en charge de tester la méthode de récupération des valeurs de l'enum TypePromoteur.
+     * Méthode en charge de tester la méthode de récupération des valeurs de
+     * l'enum TypePromoteur.
      */
     @Test
-    public void testGetValuesTypePromoteur()
-    {
+    public void testGetValuesTypePromoteur() {
         final SelectItem[] items = this.enumManager.getValues("TypePromoteur");
-        Assert.assertEquals(items.length,
-                            TypePromoteur.values().length);
+        Assert.assertEquals(items.length, TypePromoteur.values().length);
     }
 
     /**
-     * Méthode en charge de tester la méthode de récupération des valeurs de l'enum EtatEssai.
+     * Méthode en charge de tester la méthode de récupération des valeurs de
+     * l'enum EtatEssai.
      */
     @Test
-    public void testGetValuesEtatEssai()
-    {
+    public void testGetValuesEtatEssai() {
         final SelectItem[] items = this.enumManager.getValues("EtatEssai");
-        Assert.assertEquals(items.length,
-                            EtatEssai.values().length);
+        Assert.assertEquals(items.length, EtatEssai.values().length);
     }
 
     /**
-     * Méthode en charge de tester la méthode de récupération des valeurs de l'enum TypeRecherche.
+     * Méthode en charge de tester la méthode de récupération des valeurs de
+     * l'enum TypeRecherche.
      */
     @Test
-    public void testGetValuesTypeRecherche()
-    {
+    public void testGetValuesTypeRecherche() {
         final SelectItem[] items = this.enumManager.getValues("TypeRecherche");
-        Assert.assertEquals(items.length,
-                            TypeRecherche.values().length);
+        Assert.assertEquals(items.length, TypeRecherche.values().length);
     }
 
     /**
-     * Méthode en charge de tester la méthode de récupération des valeurs de l'enum
-     * ObjetRecherche.
+     * Méthode en charge de tester la méthode de récupération des valeurs de
+     * l'enum ObjetRecherche.
      */
     @Test
-    public void testGetValuesObjetRecherche()
-    {
+    public void testGetValuesObjetRecherche() {
         final SelectItem[] items = this.enumManager.getValues("ObjetRecherche");
-        Assert.assertEquals(items.length,
-                            ObjetRecherche.values().length);
+        Assert.assertEquals(items.length, ObjetRecherche.values().length);
     }
 
     /**
-     * Méthode en charge de tester la méthode de récupération des valeurs de l'enum
-     * NatureRecherche.
+     * Méthode en charge de tester la méthode de récupération des valeurs de
+     * l'enum NatureRecherche.
      */
     @Test
-    public void testGetValuesNatureRecherche()
-    {
+    public void testGetValuesNatureRecherche() {
         final SelectItem[] items = this.enumManager.getValues("NatureRecherche");
-        Assert.assertEquals(items.length,
-                            NatureRecherche.values().length);
+        Assert.assertEquals(items.length, NatureRecherche.values().length);
     }
 
     /**
-     * Méthode en charge de tester la méthode de récupération des valeurs de l'enum
-     * PhaseRecherche.
+     * Méthode en charge de tester la méthode de récupération des valeurs de
+     * l'enum PhaseRecherche.
      */
     @Test
-    public void testGetValuesPhaseRecherche()
-    {
+    public void testGetValuesPhaseRecherche() {
         final SelectItem[] items = this.enumManager.getValues("PhaseRecherche");
-        Assert.assertEquals(items.length,
-                            PhaseRecherche.values().length);
+        Assert.assertEquals(items.length, PhaseRecherche.values().length);
     }
 
     /**
-     * Méthode en charge de tester la méthode de récupération des valeurs de l'enum Thematique.
+     * Méthode en charge de tester la méthode de récupération des valeurs de
+     * l'enum Thematique.
      */
     @Test
-    public void testGetValuesThematique()
-    {
+    public void testGetValuesThematique() {
         final SelectItem[] items = this.enumManager.getValues("Thematique");
-        Assert.assertEquals(items.length,
-                            Thematique.values().length);
+        Assert.assertEquals(items.length, Thematique.values().length);
     }
 
     /**
-     * Méthode en charge de tester la méthode de récupération des valeurs de l'enum
-     * TypePharmacien.
+     * Méthode en charge de tester la méthode de récupération des valeurs de
+     * l'enum TypePharmacien.
      */
     @Test
-    public void testGetValuesTypePharmacien()
-    {
+    public void testGetValuesTypePharmacien() {
         final SelectItem[] items = this.enumManager.getValues("TypePharmacien");
-        Assert.assertEquals(items.length,
-                            TypePharmacien.values().length);
+        Assert.assertEquals(items.length, TypePharmacien.values().length);
     }
 
     /**
-     * Méthode en charge de tester la méthode de récupération des valeurs de l'enum TypePersonne.
+     * Méthode en charge de tester la méthode de récupération des valeurs de
+     * l'enum TypePersonne.
      */
     @Test
-    public void testGetValuesTypePersonne()
-    {
+    public void testGetValuesTypePersonne() {
         final SelectItem[] items = this.enumManager.getValues("TypePersonne");
-        Assert.assertEquals(items.length,
-                            TypePersonne.values().length);
+        Assert.assertEquals(items.length, TypePersonne.values().length);
     }
 
     /**
-     * Méthode en charge de tester la méthode de récupération des valeurs de l'enum
-     * TypeCommentaireEssai.
+     * Méthode en charge de tester la méthode de récupération des valeurs de
+     * l'enum TypeCommentaireEssai.
      */
     @Test
-    public void testGetValuesTypeCommentaireEssai()
-    {
+    public void testGetValuesTypeCommentaireEssai() {
         final SelectItem[] items = this.enumManager.getValues("TypeCommentaireEssai");
-        Assert.assertEquals(items.length,
-                            TypeCommentaireEssai.values().length);
+        Assert.assertEquals(items.length, TypeCommentaireEssai.values().length);
     }
 
     /**
-     * Méthode en charge de tester la méthode de récupération des valeurs de l'enum TypeAC.
+     * Méthode en charge de tester la méthode de récupération des valeurs de
+     * l'enum TypeAC.
      */
     @Test
-    public void testGetValuesTypeAC()
-    {
+    public void testGetValuesTypeAC() {
         final SelectItem[] items = this.enumManager.getValues("TypeAC");
-        Assert.assertEquals(items.length,
-                            TypeAC.values().length);
+        Assert.assertEquals(items.length, TypeAC.values().length);
     }
 
     /**
-     * Méthode en charge de tester la méthode de récupération des valeurs de l'enum
-     * TypeDocumentEssai.
+     * Méthode en charge de tester la méthode de récupération des valeurs de
+     * l'enum TypeDocumentEssai.
      */
     @Test
-    public void testGetValuesTypeDocumentEssai()
-    {
+    public void testGetValuesTypeDocumentEssai() {
         final SelectItem[] items = this.enumManager.getValues("TypeDocumentEssai");
-        Assert.assertEquals(items.length,
-                            TypeDocumentEssai.values().length);
+        Assert.assertEquals(items.length, TypeDocumentEssai.values().length);
     }
 
     /**
-     * Méthode en charge de tester la méthode de récupération des valeurs de l'enum TypeContact.
+     * Méthode en charge de tester la méthode de récupération des valeurs de
+     * l'enum TypeContact.
      */
     @Test
-    public void testGetValuesTypeContact()
-    {
+    public void testGetValuesTypeContact() {
         final SelectItem[] items = this.enumManager.getValues("TypeContact");
-        Assert.assertEquals(items.length,
-                            TypeContact.values().length);
+        Assert.assertEquals(items.length, TypeContact.values().length);
     }
 
     /**
-     * Méthode en charge de tester la méthode de récupération des valeurs de l'enum
-     * TypeRapportJasper.
+     * Méthode en charge de tester la méthode de récupération des valeurs de
+     * l'enum TypeRapportJasper.
      */
     @Test
-    public void testGetValuesTypeRapportJasper()
-    {
+    public void testGetValuesTypeRapportJasper() {
         final SelectItem[] items = this.enumManager.getValues("TypeRapportJasper");
-        Assert.assertEquals(items.length,
-                            TypeRapportJasper.values().length);
+        Assert.assertEquals(items.length, TypeRapportJasper.values().length);
     }
 
     /**
-     * Méthode en charge de tester la méthode de récupération des valeurs de l'enum MotifRefus.
+     * Méthode en charge de tester la méthode de récupération des valeurs de
+     * l'enum MotifRefus.
      */
     @Test
-    public void testGetValuesMotifRefus()
-    {
+    public void testGetValuesMotifRefus() {
         final SelectItem[] items = this.enumManager.getValues("MotifRefus");
-        Assert.assertEquals(items.length,
-                            MotifRefus.values().length);
+        Assert.assertEquals(items.length, MotifRefus.values().length);
     }
 
     /**
-     * Méthode en charge de tester la méthode de récupération des valeurs de l'enum TypeMvtStock.
+     * Méthode en charge de tester la méthode de récupération des valeurs de
+     * l'enum TypeMvtStock.
      */
     @Test
-    public void testGetValuesTypeMvtStock()
-    {
+    public void testGetValuesTypeMvtStock() {
         final SelectItem[] items = this.enumManager.getValues("TypeMvtStock");
-        Assert.assertEquals(items.length,
-                            TypeMvtStock.values().length);
+        Assert.assertEquals(items.length, TypeMvtStock.values().length);
     }
 
     /**
-     * Méthode en charge de tester la méthode de récupération des valeurs de l'enum TypeMvtStock
-     * de type Sortie.
+     * Méthode en charge de tester la méthode de récupération des valeurs de
+     * l'enum TypeMvtStock de type Sortie.
      */
     @Test
-    public void testGetValuesTypeMvtStockSortie()
-    {
+    public void testGetValuesTypeMvtStockSortie() {
         final SelectItem[] items = this.enumManager.getValues("TypeMvtStockSortie");
-        Assert.assertEquals(items.length,
-                            TypeMvtStock.valuesSortie().length);
+        Assert.assertEquals(items.length, TypeMvtStock.SORTIES.length);
     }
 
     /**
      * Test de la méthode getEnumValue Ok.
      */
     @Test
-    public void testGetEnumValueOk()
-    {
+    public void testGetEnumValueOk() {
         final TypeCommentaireEssai expectedEnumValue = TypeCommentaireEssai.FAISABILITE_CONCL;
-        Assert.assertEquals(expectedEnumValue,
-                            this.enumManager.getEnumValue(EnumManagerTest.CLE_TYPE_COMMENTAIRE,
-                                                          expectedEnumValue.name()));
+        Assert.assertEquals(expectedEnumValue, this.enumManager.getEnumValue(EnumManagerTest.CLE_TYPE_COMMENTAIRE, expectedEnumValue.name()));
     }
 
     /**
      * Test de la méthode getEnumValue Ko : clé inexistante.
      */
     @Test
-    public void testGetEnumValueKoInvalidKey()
-    {
+    public void testGetEnumValueKoInvalidKey() {
         final TypeCommentaireEssai expectedEnumValue = TypeCommentaireEssai.FAISABILITE_CONCL;
-        Assert.assertNull(this.enumManager.getEnumValue(EnumManagerTest.CLE_ENUM_ABSENTE,
-                                                        expectedEnumValue.name()));
+        Assert.assertNull(this.enumManager.getEnumValue(EnumManagerTest.CLE_ENUM_ABSENTE, expectedEnumValue.name()));
     }
 
     /**
      * Test de la méthode getEnumValue Ko : valeur d'enum inexistante.
      */
     @Test
-    public void testGetEnumValueKoInvalidEnumValueName()
-    {
+    public void testGetEnumValueKoInvalidEnumValueName() {
         final TypeCommentaireEssai expectedEnumValue = TypeCommentaireEssai.FAISABILITE_CONCL;
-        Assert.assertNull(this.enumManager.getEnumValue(EnumManagerTest.CLE_TYPE_COMMENTAIRE,
-                                                        expectedEnumValue
-                                                                .name()
-                                                                .concat("_badPart")));
+        Assert.assertNull(this.enumManager.getEnumValue(EnumManagerTest.CLE_TYPE_COMMENTAIRE, expectedEnumValue.name().concat("_badPart")));
     }
 
     /**
-     * Méthode en charge de tester la méthode de récupération des valeurs de l'enum TypeEvenement.
+     * Méthode en charge de tester la méthode de récupération des valeurs de
+     * l'enum TypeEvenement.
      */
     @Test
-    public void testGetValuesTypeEvenement()
-    {
+    public void testGetValuesTypeEvenement() {
         final SelectItem[] items = this.enumManager.getValues("TypeEvenement");
-        Assert.assertEquals(items.length,
-                            TypeEvenement.values().length);
+        Assert.assertEquals(items.length, TypeEvenement.values().length);
     }
 
     /**
-     * Méthode en charge de tester la méthode de récupération des valeurs de l'enum TypeVisite.
+     * Méthode en charge de tester la méthode de récupération des valeurs de
+     * l'enum TypeVisite.
      */
     @Test
-    public void testGetValuesTypeVisite()
-    {
+    public void testGetValuesTypeVisite() {
         final SelectItem[] items = this.enumManager.getValues("TypeVisite");
-        Assert.assertEquals(items.length,
-                            TypeVisite.values().length);
+        Assert.assertEquals(items.length, TypeVisite.values().length);
     }
 
     /**
-     * Méthode en charge de tester la méthode de récupération des valeurs de l'enum
-     * ResultatVisite.
+     * Méthode en charge de tester la méthode de récupération des valeurs de
+     * l'enum ResultatVisite.
      */
     @Test
-    public void testGetValuesResultatVisite()
-    {
+    public void testGetValuesResultatVisite() {
         final SelectItem[] items = this.enumManager.getValues("ResultatVisite");
-        Assert.assertEquals(items.length,
-                            ResultatVisite.values().length);
+        Assert.assertEquals(items.length, ResultatVisite.values().length);
     }
 
 }

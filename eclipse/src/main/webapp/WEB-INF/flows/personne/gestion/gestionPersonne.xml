@@ -1,118 +1,114 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<flow xmlns="http://www.springframework.org/schema/webflow"
-	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-	xsi:schemaLocation="http://www.springframework.org/schema/webflow
-    http://www.springframework.org/schema/webflow/spring-webflow-2.0.xsd" parent="main">
+<flow xmlns="http://www.springframework.org/schema/webflow" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.springframework.org/schema/webflow
+    http://www.springframework.org/schema/webflow/spring-webflow-2.0.xsd"
+	parent="main">
 
 	<!-- Démarrage -->
 	<on-start>
-		<evaluate expression="personneSearchCriteria.clear()"/>
-		<evaluate expression="personneHelper.sortPersonnes(personneService.getAll(personneSearchCriteria))" result="personnesManager.beans"/>
-		
+		<evaluate expression="personneSearchCriteria.clear()" />
+		<evaluate expression="personneHelper.sortPersonnes(personneService.getAll(personneSearchCriteria))" result="personnesManager.beans" />
+
 		<evaluate expression="essaiSearchCriteria.clear()" />
 		<!-- Initialisation complétion automatique des essais -->
-		<evaluate expression="'numInterne'"
-			result="autoCompleteEssaiManager.searchCriteria.activeOrder" />
-		<evaluate expression="'numInterneOrNomOrPromoteur'"
-			result="autoCompleteEssaiManager.searchCriteriaProperty" />
-		<evaluate expression="'numeroIpp'"
-			result="autoCompletePatientManager.searchCriteria.activeOrder" />
+		<evaluate expression="'numInterne'" result="autoCompleteEssaiManager.searchCriteria.activeOrder" />
+		<evaluate expression="'numInterneOrNomOrPromoteur'" result="autoCompleteEssaiManager.searchCriteriaProperty" />
+		<evaluate expression="'numeroIpp'" result="autoCompletePatientManager.searchCriteria.activeOrder" />
 	</on-start>
 
 	<!-- Page principale -->
 	<view-state id="gestionPersonne" view="../../../pages/personne/gestion/gestionPersonne.xhtml">
 		<transition on="search" to="search">
-			<evaluate expression="personnesManager.validCriteria()"/>
+			<evaluate expression="personnesManager.validCriteria()" />
 		</transition>
 		<transition on="edit" to="edit">
-			<set name="flashScope.typePersonne" value="personnesManager.beanSelected.type"/>
-			<set name="flashScope.idPersonne" value="personnesManager.beanSelected.id"/>
-			<evaluate expression="null" result="personnesManager.beanSelected"/>
+			<set name="flashScope.typePersonne" value="personnesManager.beanSelected.type" />
+			<set name="flashScope.idPersonne" value="personnesManager.beanSelected.id" />
+			<evaluate expression="null" result="personnesManager.beanSelected" />
 		</transition>
 		<transition on="add" to="add">
-			<set name="flashScope.typePersonne" value="personnesManager.profilAjout"/>
-			<set name="flashScope.categoriePersonne" value="personnesManager.profilAjout.categorie"/>
+			<set name="flashScope.typePersonne" value="personnesManager.profilAjout" />
+			<set name="flashScope.categoriePersonne" value="personnesManager.profilAjout.categorie" />
 		</transition>
 		<transition on="delete" to="search">
-			<evaluate expression="personneService.remove(personnesManager.beansSelected)"/>
+			<evaluate expression="personneService.remove(personnesManager.beansSelected)" />
 		</transition>
-		<transition on="error" to="gestionPersonne"/>
+		<transition on="error" to="gestionPersonne" />
 	</view-state>
-	
+
 	<!-- Recherche -->
 	<action-state id="search">
-		<evaluate expression="personneService.getAll(personneSearchCriteria)" result="personnesManager.beans"/>
-		<transition to="gestionPersonne"/>
+		<evaluate expression="personneService.getAll(personneSearchCriteria)" result="personnesManager.beans" />
+		<transition to="gestionPersonne" />
 	</action-state>
-	
+
 	<!-- Suppression -->
 	<action-state id="delete">
-		<evaluate expression="personneService.remove(personnesManager.beansSelected)"/>
-		<transition on="error" to="search"/>
-		<transition to="search"/>
+		<evaluate expression="personneService.remove(personnesManager.beansSelected)" />
+		<transition on="error" to="search" />
+		<transition to="search" />
 	</action-state>
-	
+
 	<!-- Decision sur ajout en fonction de la categorie du profil ajout -->
 	<decision-state id="add">
-		<if test="flashScope.categoriePersonne.libelle == 'Interne'" then="gestionSir" else="edit"/>
+		<if test="flashScope.categoriePersonne.libelle == 'Interne'" then="gestionSir" else="edit" />
 	</decision-state>
-	
+
 	<!-- Decision sur edition en fonction du type de personne -->
 	<decision-state id="edit">
-		<if test="flashScope.typePersonne == TYPE_PERSONNE_ARC_INVESTIGATEUR" then="editArcInvestigateur"/>
-		<if test="flashScope.typePersonne == TYPE_PERSONNE_ARC_PROMOTEUR" then="editArcPromoteur"/>
-		<if test="flashScope.typePersonne == TYPE_PERSONNE_CRO" then="editCro"/>
-		<if test="flashScope.typePersonne == TYPE_PERSONNE_DIRECTION_RECHERCHE" then="editDirectionRecherche"/>
-		<if test="flashScope.typePersonne == TYPE_PERSONNE_INVESTIGATEUR" then="editInvestigateur"/>
-		<if test="flashScope.typePersonne == TYPE_PERSONNE_PHARMACIEN" then="editPharmacien"/>
-		<if test="flashScope.typePersonne == TYPE_PERSONNE_PROMOTEUR" then="editContactPromoteur"/>
+		<if test="flashScope.typePersonne == TYPE_PERSONNE_ARC_INVESTIGATEUR" then="editArcInvestigateur" />
+		<if test="flashScope.typePersonne == TYPE_PERSONNE_ARC_PROMOTEUR" then="editArcPromoteur" />
+		<if test="flashScope.typePersonne == TYPE_PERSONNE_CRO" then="editCro" />
+		<if test="flashScope.typePersonne == TYPE_PERSONNE_DIRECTION_RECHERCHE" then="editDirectionRecherche" />
+		<if test="flashScope.typePersonne == TYPE_PERSONNE_INVESTIGATEUR" then="editInvestigateur" />
+		<if test="flashScope.typePersonne == TYPE_PERSONNE_PHARMACIEN" then="editPharmacien" />
+		<if test="flashScope.typePersonne == TYPE_PERSONNE_PROMOTEUR" then="editContactPromoteur" />
 	</decision-state>
-	
+
 	<!-- Edition Arc Investigateur -->
 	<subflow-state id="editArcInvestigateur" subflow="personne/arcInvestigateur">
-		<input name="idArcInvestigateur" value="flashScope.idPersonne"/>
-		<transition to="search"/>
+		<input name="idArcInvestigateur" value="flashScope.idPersonne" />
+		<transition to="search" />
 	</subflow-state>
-	
+
 	<!-- Edition Arc Promoteur -->
 	<subflow-state id="editArcPromoteur" subflow="personne/arcPromoteur">
-		<input name="idArcPromoteur" value="flashScope.idPersonne"/>
-		<transition to="search"/>
+		<input name="idArcPromoteur" value="flashScope.idPersonne" />
+		<transition to="search" />
 	</subflow-state>
-	
+
 	<!-- Edition Cro -->
 	<subflow-state id="editCro" subflow="personne/cro">
-		<input name="idCro" value="flashScope.idPersonne"/>
-		<transition to="search"/>
+		<input name="idCro" value="flashScope.idPersonne" />
+		<transition to="search" />
 	</subflow-state>
-	
+
 	<!-- Edition Direction Recherche -->
 	<subflow-state id="editDirectionRecherche" subflow="personne/directionRecherche">
-		<input name="idDirectionRecherche" value="flashScope.idPersonne"/>
-		<transition to="search"/>
+		<input name="idDirectionRecherche" value="flashScope.idPersonne" />
+		<transition to="search" />
 	</subflow-state>
-	
+
 	<!-- Edition Investigateur -->
 	<subflow-state id="editInvestigateur" subflow="personne/investigateur">
-		<input name="idInvestigateur" value="flashScope.idPersonne"/>
-		<transition to="search"/>
+		<input name="idInvestigateur" value="flashScope.idPersonne" />
+		<transition to="search" />
 	</subflow-state>
-	
+
 	<!-- Edition Pharmacien -->
 	<subflow-state id="editPharmacien" subflow="personne/pharmacien">
-		<input name="idPharmacien" value="flashScope.idPersonne"/>
-		<transition to="search"/>
+		<input name="idPharmacien" value="flashScope.idPersonne" />
+		<transition to="search" />
 	</subflow-state>
-	
+
 	<!-- Edition Contact Promoteur -->
 	<subflow-state id="editContactPromoteur" subflow="personne/contactPromoteur">
-		<input name="idContactPromoteur" value="flashScope.idPersonne"/>
-		<transition to="search"/>
+		<input name="idContactPromoteur" value="flashScope.idPersonne" />
+		<transition to="search" />
 	</subflow-state>
-	
+
 	<!-- Gestion des personnes SIR -->
 	<subflow-state id="gestionSir" subflow="gestionSir">
-		<transition to="search"/>
+		<transition to="search" />
 	</subflow-state>
-	
+
 </flow>

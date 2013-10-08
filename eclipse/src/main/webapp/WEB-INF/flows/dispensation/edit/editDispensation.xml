@@ -1,134 +1,132 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<flow xmlns="http://www.springframework.org/schema/webflow"
-	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-	xsi:schemaLocation="http://www.springframework.org/schema/webflow
-    http://www.springframework.org/schema/webflow/spring-webflow-2.0.xsd" parent="main">
+<flow xmlns="http://www.springframework.org/schema/webflow" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.springframework.org/schema/webflow
+    http://www.springframework.org/schema/webflow/spring-webflow-2.0.xsd"
+	parent="main">
 
-	
+
 	<!-- Variable d'entrée -->
 	<input name="idPrescription" />
-	
-	<input name="idDispensation"/>
-	 
+
+	<input name="idDispensation" />
+
 	<on-start>
-		<evaluate expression="dispensationManager.init()"/>
-		<evaluate expression="sortieManager.init()"/>
-		<evaluate expression="dispensationManager.setIndexOngletCourant(0)"/>
-		<set name="sortieManager.typeSortie" value="'DISPENSATION'"/>
+		<evaluate expression="dispensationManager.init()" />
+		<evaluate expression="sortieManager.init()" />
+		<evaluate expression="dispensationManager.setIndexOngletCourant(0)" />
+		<set name="sortieManager.typeSortie" value="'DISPENSATION'" />
 	</on-start>
-	
+
 	<!-- Edition d'une dispensation ou Consultation en lecture seule ? -->
 	<decision-state id="readOrEdit">
-		<if test="idDispensation == null" then="edit" else="read"/>
+		<if test="idDispensation == null" then="edit" else="read" />
 	</decision-state>
-	
+
 	<!-- Consultation -->
 	<action-state id="read">
-		<evaluate expression="dispensationService.get(idDispensation)" result="dispensationManager.bean"/>
+		<evaluate expression="dispensationService.get(idDispensation)" result="dispensationManager.bean" />
 		<transition to="initPharmaciesForDispensation">
-			<evaluate expression="dispensationManager.initProduitDispenses()"/>
+			<evaluate expression="dispensationManager.initProduitDispenses()" />
 		</transition>
 	</action-state>
-	
+
 	<!-- Modification -->
 	<action-state id="edit">
 		<evaluate expression="dispensationManager.setBean(dispensationFactory.getInitializedObject(prescriptionService.get(idPrescription)))" />
 		<transition to="initPharmaciesForDispensation">
 		</transition>
 	</action-state>
-	
+
 	<!-- Initialisation des pharmacies -->
 	<action-state id="initPharmaciesForDispensation">
 		<evaluate expression="dispensationManager.initPharmacies()" />
-		<transition to="editDispensation"/>
+		<transition to="editDispensation" />
 	</action-state>
-	
+
 	<!-- Page principale -->
 	<view-state id="editDispensation" view="../../../pages/dispensation/edit/editDispensation.xhtml">
 		<on-render>
-			<evaluate expression="dispensationService.reattach(dispensationManager.bean)" result="dispensationManager.bean"/>
-			<evaluate expression="prescriptionService.reattach(dispensationManager.bean.prescription)" result="dispensationManager.bean.prescription"/>
-			<set name="prescriptionManager.bean" value="dispensationManager.bean.prescription"/>
+			<evaluate expression="dispensationService.reattach(dispensationManager.bean)" result="dispensationManager.bean" />
+			<evaluate expression="prescriptionService.reattach(dispensationManager.bean.prescription)" result="dispensationManager.bean.prescription" />
+			<set name="prescriptionManager.bean" value="dispensationManager.bean.prescription" />
 		</on-render>
-		
+
 		<!-- Dispenser -->
 		<transition on="save" to="editDispensation">
 			<set name="dispensationManager.bean.prescription.dispense" value="false" />
-			<evaluate expression="prescriptionService.save(dispensationManager.bean.prescription)"/>
-			<evaluate expression="dispensationManager.bean.dispensationsProduit.clear()"/>
-			<evaluate expression="dispensationService.save(dispensationManager.bean)"/>
-			<set name="prescriptionsManager.beans" value="null"/>
+			<evaluate expression="prescriptionService.save(dispensationManager.bean.prescription)" />
+			<evaluate expression="dispensationManager.bean.dispensationsProduit.clear()" />
+			<evaluate expression="dispensationService.save(dispensationManager.bean)" />
+			<set name="prescriptionsManager.beans" value="null" />
 		</transition>
-		
+
 		<!-- Dispenser -->
 		<transition on="dispense" to="genereNumOrdonnancier">
-			
+
 			<set name="dispensationManager.bean.prescription.dispense" value="true" />
-			<evaluate expression="prescriptionService.save(dispensationManager.bean.prescription)"/>
-			<evaluate expression="dispensationManager.bean.setDispense(true)" />
-			<evaluate expression="dispensationManager.setSortieManagerBeforeSave()"/>
-			<evaluate expression="sortieService.save(sortieManager.raisonSortie, sortieManager.commentaireRaison,sortieManager.typeSortie,sortieManager.nomSocieteTransport,sortieManager.referenceEnvoi,sortieManager.commentaire,sortieManager.pharmacieDest,sortieManager.sorties, dispensationManager.bean)" 
-				result="sortieManager.result"/>
-			<evaluate expression="dispensationService.save(dispensationManager.bean)" result="dispensationManager.bean"/>
+			<evaluate expression="dispensationManager.setSortieManagerBeforeSave()" />
+			<evaluate
+				expression="sortieService.save(sortieManager.raisonSortie, sortieManager.commentaireRaison,sortieManager.typeSortie,sortieManager.nomSocieteTransport,sortieManager.referenceEnvoi,sortieManager.commentaire,sortieManager.pharmacieDest,sortieManager.sorties, dispensationManager.bean)"
+				result="sortieManager.result" />
+			<evaluate expression="dispensationService.dispenser(dispensationManager.bean, sortieManager.sorties)" result="dispensationManager.bean" />
 			<evaluate expression="dispensationGlobaleHelper.updateDispensationsGlobales(sortieManager.sorties)" />
-			<set name="prescriptionsManager.beans" value="null"/>
+			<set name="prescriptionsManager.beans" value="null" />
 		</transition>
-		
+
 		<transition on="selectSequence" to="editDispensation">
-			<evaluate expression="dispensationManager.bean.prescription.produitsPrescrits.clear()"/>
-			<evaluate expression="prescriptionManager.updateDesign()"/>
-			<evaluate expression="prescriptionService.save(dispensationManager.bean.prescription)" result="dispensationManager.bean.prescription"/>
+			<evaluate expression="dispensationManager.bean.prescription.produitsPrescrits.clear()" />
+			<evaluate expression="prescriptionManager.updateDesign()" />
+			<evaluate expression="prescriptionService.save(dispensationManager.bean.prescription)" result="dispensationManager.bean.prescription" />
 		</transition>
-		
+
 		<transition on="addProduitPrescrit" to="editDispensation">
-			<evaluate expression="produitPrescritManager.addProduitPrescrit(dispensationManager.bean.prescription)"/>
-			<evaluate expression="produitPrescritManager.init()"/>
-			<evaluate expression="prescriptionService.save(dispensationManager.bean.prescription)" result="dispensationManager.bean.prescription"/>
+			<evaluate expression="produitPrescritManager.addProduitPrescrit(dispensationManager.bean.prescription)" />
+			<evaluate expression="produitPrescritManager.init()" />
+			<evaluate expression="prescriptionService.save(dispensationManager.bean.prescription)" result="dispensationManager.bean.prescription" />
 		</transition>
-		
+
 		<transition on="removeProduitPrescrit" to="editDispensation">
-			<evaluate expression="dispensationService.validRemoveProduitPrescrit(produitPrescritManager.bean)"/>
-			<evaluate expression="dispensationManager.bean.prescription.produitsPrescrits.remove(produitPrescritManager.bean)"/>
-			<evaluate expression="prescriptionService.save(dispensationManager.bean.prescription)" result="dispensationManager.bean.prescription"/>
+			<evaluate expression="dispensationService.validRemoveProduitPrescrit(produitPrescritManager.bean)" />
+			<evaluate expression="dispensationManager.bean.prescription.produitsPrescrits.remove(produitPrescritManager.bean)" />
+			<evaluate expression="prescriptionService.save(dispensationManager.bean.prescription)" result="dispensationManager.bean.prescription" />
 		</transition>
-		
+
 		<!-- addSortie -->
-		<transition on="addSortie" to="editDispensation" >
-			<evaluate expression="sortieManager.addSortie()"/>
+		<transition on="addSortie" to="editDispensation">
+			<evaluate expression="sortieManager.addSortie()" />
 		</transition>
-		
+
 		<!-- save sortie -->
 		<transition on="saveSortie" to="editDispensation">
-			<evaluate expression="stockValidator.validateLignesStockSortie(sortieManager.sorties,sortieManager.sortieCurrent)"/>
-			<evaluate expression="dispensationManager.addSortieToSorties()"/>
-			<evaluate expression="sortieManager.sorties.clear()"/>
+			<evaluate expression="stockValidator.validateLignesStockSortie(sortieManager.sorties,sortieManager.sortieCurrent)" />
+			<evaluate expression="dispensationManager.addSortieToSorties()" />
+			<evaluate expression="sortieManager.sorties.clear()" />
 		</transition>
-		
+
 		<!-- Erreur -->
-		<transition on="error" to="editDispensation"/>
-		
-		<!--  Suppression d'une sortie  -->
+		<transition on="error" to="editDispensation" />
+
+		<!-- Suppression d'une sortie -->
 		<transition on="delSortie">
-			<evaluate expression="dispensationManager.delSortie()"/>
+			<evaluate expression="dispensationManager.delSortie()" />
 		</transition>
-		
-		
-		<transition on="comeback" to="comeback"/>
+
+
+		<transition on="comeback" to="comeback" />
 	</view-state>
-	
+
 	<action-state id="genereNumOrdonnancier">
-		<evaluate expression="dispensationService.genererNumOrdonnancier(dispensationManager.bean)" result="dispensationManager.bean"/>
-		<transition to="prepareRecapStockSortie"/>
+		<evaluate expression="dispensationService.genererNumOrdonnancier(dispensationManager.bean)" result="dispensationManager.bean" />
+		<transition to="prepareRecapStockSortie" />
 	</action-state>
-	
+
 	<action-state id="prepareRecapStockSortie">
-		<evaluate expression="dispensationManager.prepareRecapFromDispensation()"/>
-		<transition to="recapStockSortie"/>
+		<evaluate expression="dispensationManager.prepareRecapFromDispensation()" />
+		<transition to="recapStockSortie" />
 	</action-state>
-	
+
 	<!-- Page récapitulative de sortie de stock -->
 	<view-state id="recapStockSortie" view="../../../pages/dispensation/recapStockSortie.xhtml">
 	</view-state>
-	
-	<end-state id="comeback"/>
+
+	<end-state id="comeback" />
 </flow>

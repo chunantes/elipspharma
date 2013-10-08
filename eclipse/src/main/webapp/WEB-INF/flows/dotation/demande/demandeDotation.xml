@@ -1,46 +1,45 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<flow xmlns="http://www.springframework.org/schema/webflow"
-	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-	xsi:schemaLocation="http://www.springframework.org/schema/webflow
-    http://www.springframework.org/schema/webflow/spring-webflow-2.0.xsd" parent="main">
-    
-    <!-- Démarrage -->
+<flow xmlns="http://www.springframework.org/schema/webflow" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.springframework.org/schema/webflow
+    http://www.springframework.org/schema/webflow/spring-webflow-2.0.xsd"
+	parent="main">
+
+	<!-- Démarrage -->
 	<on-start>
-		<evaluate expression="essaiSearchCriteria.clear()"/>
+		<evaluate expression="essaiSearchCriteria.clear()" />
 		<!-- Initialisation complétion automatique des essais -->
 		<evaluate expression="essaiSearchCriteria.setEssaisDispensationGlobale(true)" />
 		<evaluate expression="'numInterne'" result="autoCompleteEssaiManager.searchCriteria.activeOrder" />
-		<evaluate expression="'numInterneOrNomOrPromoteur'" result="autoCompleteEssaiManager.searchCriteriaProperty" />		
-		<evaluate expression="demandeDotationManager.init()"/>
+		<evaluate expression="'numInterneOrNomOrPromoteur'" result="autoCompleteEssaiManager.searchCriteriaProperty" />
+		<evaluate expression="demandeDotationManager.init()" />
 	</on-start>
-	
+
 	<!-- Page principale -->
 	<view-state id="demandeDotation" view="../../../pages/dotation/demande/demandeDotation.xhtml">
 		<transition on="addDotation" to="detailDotation">
-			<evaluate expression="demandeDotationManager.addDotation()"/>
+			<evaluate expression="demandeDotationManager.addDotation()" />
 		</transition>
 		<transition on="modifyDotation" to="detailDotation">
-			<evaluate expression="demandeDotationManager.modifyDotation()"/>
+			<evaluate expression="demandeDotationManager.modifyDotation()" />
 		</transition>
 		<transition on="delDotation">
-			<evaluate expression="demandeDotationManager.delDotation()"/>
+			<evaluate expression="demandeDotationManager.delDotation()" />
 		</transition>
-		<transition on="cancel" to="viewDemandeDotation"/>
+		<transition on="cancel" to="viewDemandeDotation" />
 		<transition on="save" to="recapDemandeDotation">
-			<evaluate expression="dotationService.saveAll(demandeDotationManager.dotations)"/>
+			<evaluate expression="dotationService.saveAll(demandeDotationManager.dotations)" />
 			<!-- Ajout d'un message de confirmation -->
 			<evaluate expression="demandeDotationManager.addMessageConfirm()" />
-		</transition>		
-		<transition on="error" to="demandeDotation"/>
-	</view-state>	
-    
+		</transition>
+		<transition on="error" to="demandeDotation" />
+	</view-state>
+
 	<!-- Edition de demande de dotation -->
 	<subflow-state id="detailDotation" subflow="dotation/demande/detail">
-		<transition on="comeback" to="demandeDotation"/>
+		<transition on="comeback" to="demandeDotation" />
 	</subflow-state>
-	
+
 	<!-- Page récapitulative de demande de dotation -->
 	<view-state id="recapDemandeDotation" view="../../../pages/dotation/demande/recapDemandeDotation.xhtml">
-	</view-state>	 
-    
+	</view-state>
+
 </flow>

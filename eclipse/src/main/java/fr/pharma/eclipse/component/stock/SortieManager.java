@@ -33,12 +33,10 @@ import fr.pharma.eclipse.utils.constants.EclipseConstants;
 
 /**
  * Manager de sortie de stock (mouvement de stock de type Sortie).
- 
+ * @author Netapsys
  * @version $Revision$ $Date$
  */
-public class SortieManager
-    implements Serializable
-{
+public class SortieManager implements Serializable {
     /**
      * Serial ID.
      */
@@ -182,8 +180,7 @@ public class SortieManager
     /**
      * Méthode d'initialisation.
      */
-    public void init()
-    {
+    public void init() {
         this.setProduits(null);
         this.pharmacieDest = null;
         this.setEssaiSelected(null);
@@ -209,107 +206,88 @@ public class SortieManager
      * Méthode appelée via la couche IHM lorsqu'un essai est sélectionné.
      * @param event Evénement remonté via la couche IHM.
      */
-    public void handleSelectEssai(final SelectEvent event)
-    {
+    public void handleSelectEssai(final SelectEvent event) {
         // Récupération de l'essai sélectionné
         // final Essai essai = (Essai) event.getObject();
 
-        final List<Pharmacie> pharmaciesDisplay =
-            this.essaiService.getAllPharmaciesOfUser(this.getEssaiSelected());
+        final List<Pharmacie> pharmaciesDisplay = this.essaiService.getAllPharmaciesOfUser(this.getEssaiSelected());
         this.setPharmacies(pharmaciesDisplay);
 
-        if (pharmaciesDisplay.size() == 1)
-        {
+        if (pharmaciesDisplay.size() == 1) {
             this.setPharmacieSelected(pharmaciesDisplay.get(0));
 
-        }
-        else
-        {
+        } else {
             this.setPharmacieSelected(null);
         }
 
         // Calcul des produits de l'essai + pharmacie
-        this.setProduits(this.produitService.getProduitsWithPreparations(this.getEssaiSelected(),
-                                                                         this.pharmacieSelected));
+        this.setProduits(this.produitService.getProduitsWithPreparations(this.getEssaiSelected(), this.pharmacieSelected));
     }
 
     /**
      * Méthode appelée via la couche IHM lorsqu'une pharmacie est sélectionnée.
      * @param event Evénement remonté via la couche IHM.
      */
-    public void handleSelectPharmacie(final AjaxBehaviorEvent event)
-    {
+    public void handleSelectPharmacie(final AjaxBehaviorEvent event) {
         // Récupération de la pharmacie sélectionnée
         final HtmlSelectOneMenu select = (HtmlSelectOneMenu) event.getSource();
         final Pharmacie pharmacie = (Pharmacie) select.getLocalValue();
         this.setPharmacieSelected(pharmacie);
 
         // Calcul des produits de l'essai + pharmacie
-        this.setProduits(this.produitService.getProduitsWithPreparations(this.essaiSelected,
-                                                                         this.pharmacieSelected));
+        this.setProduits(this.produitService.getProduitsWithPreparations(this.essaiSelected, this.pharmacieSelected));
     }
 
     /**
-     * Méthode appelée via la couche IHM lorsqu'un type de sortie est sélectionné.
+     * Méthode appelée via la couche IHM lorsqu'un type de sortie est
+     * sélectionné.
      * @param event Evénement remonté via la couche IHM.
      */
-    public void handleSelectTypeSortie(final AjaxBehaviorEvent event)
-    {
+    public void handleSelectTypeSortie(final AjaxBehaviorEvent event) {
         // Récupération du type de sortie
         final HtmlSelectOneMenu select = (HtmlSelectOneMenu) event.getSource();
         final TypeMvtStock type = (TypeMvtStock) select.getLocalValue();
         this.setTypeSortie(type);
-        if (!TypeMvtStock.RETOUR_PROMOTEUR.equals(type))
-        {
+        if (!TypeMvtStock.RETOUR_PROMOTEUR.equals(type)) {
             this.setReferenceEnvoi(null);
             this.setNomSocieteTransport(null);
             this.setFileRetourPromoteur(null);
         }
-        if (!TypeMvtStock.DESTRUCTION.equals(type))
-        {
+        if (!TypeMvtStock.DESTRUCTION.equals(type)) {
             this.setFileDestruction(null);
         }
-        if (!TypeMvtStock.CESSION_PUI.equals(type))
-        {
+        if (!TypeMvtStock.CESSION_PUI.equals(type)) {
             this.setPharmacieDest(null);
             this.setEtablissementDest(null);
             this.setPharmaciesDest(null);
             this.setEtablissementsDest(null);
-        }
-        else if (this.essaiSelected != null)
-        {
-            this.etablissementsDest =
-                new ArrayList<Etablissement>(this.essaiService
-                        .reattach(this.getEssaiSelected())
-                        .getDetailDonneesPharma()
-                        .getEtablissements());
+        } else if (this.essaiSelected != null) {
+            this.etablissementsDest = new ArrayList<Etablissement>(this.essaiService.reattach(this.getEssaiSelected()).getDetailDonneesPharma().getEtablissements());
         }
     }
 
     /**
-     * Méthode appelée via la couche IHM lorsqu'une raison de sortie est sélectionné.
+     * Méthode appelée via la couche IHM lorsqu'une raison de sortie est
+     * sélectionné.
      * @param event Evénement remonté via la couche IHM.
      */
-    public void handleSelectRaisonSortie(final AjaxBehaviorEvent event)
-    {
+    public void handleSelectRaisonSortie(final AjaxBehaviorEvent event) {
         // Récupération du type de sortie
         final HtmlSelectOneMenu select = (HtmlSelectOneMenu) event.getSource();
-        final RaisonSortie type = (RaisonSortie) select.getLocalValue();
+        select.getLocalValue();
     }
 
     /**
      * Méthode appelée via la couche IHM lorsqu'un produit est sélectionné.
      * @param event Event.
      */
-    public void handleSelectProduit(final AjaxBehaviorEvent event)
-    {
+    public void handleSelectProduit(final AjaxBehaviorEvent event) {
         final HtmlSelectOneMenu select = (HtmlSelectOneMenu) event.getSource();
         final Produit produit = this.produitService.reattach((Produit) select.getLocalValue());
 
         // Calcul des conditionnements sélectionnables
         final List<Conditionnement> listConditionnements = new ArrayList<Conditionnement>();
-        if (produit != null)
-        {
+        if (produit != null) {
             listConditionnements.addAll(produit.getConditionnements());
         }
         this.sortieCurrent.setConditionnements(listConditionnements);
@@ -319,50 +297,41 @@ public class SortieManager
     }
 
     /**
-     * Méthode appelée via la couche IHM lorsqu'un conditionnement est sélectionné.
+     * Méthode appelée via la couche IHM lorsqu'un conditionnement est
+     * sélectionné.
      * @param event Event.
      */
-    public void handleSelectConditionnement(final AjaxBehaviorEvent event)
-    {
+    public void handleSelectConditionnement(final AjaxBehaviorEvent event) {
         final HtmlSelectOneMenu select = (HtmlSelectOneMenu) event.getSource();
         final Conditionnement conditionnement = (Conditionnement) select.getLocalValue();
 
         final MvtStock mvt = this.sortieCurrent.getMvtSortie();
 
         // Valorisation des lignes de stock possibles pour une sortie
-        final List<LigneStock> lignesStock = this.stockService.getLinesStock(mvt.getEssai(),
-                                                                             mvt.getPharmacie(),
-                                                                             mvt.getProduit(),
-                                                                             conditionnement,
-                                                                             true);
+        final List<LigneStock> lignesStock = this.stockService.getAllLignesStock(mvt.getEssai(), mvt.getPharmacie(), mvt.getProduit(), conditionnement, false);
         this.sortieCurrent.setLignesStock(lignesStock);
     }
 
     /**
-     * Méthode appelée via la couche IHM lorsqu'un etablissement est sélectionné.
+     * Méthode appelée via la couche IHM lorsqu'un etablissement est
+     * sélectionné.
      * @param event Event.
      */
-    public void handleSelectEtablissement(final AjaxBehaviorEvent event)
-    {
+    public void handleSelectEtablissement(final AjaxBehaviorEvent event) {
         final HtmlSelectOneMenu select = (HtmlSelectOneMenu) event.getSource();
         final Etablissement etablissement = (Etablissement) select.getLocalValue();
 
-        if (etablissement == null)
-        {
+        if (etablissement == null) {
             this.pharmaciesDest.clear();
-        }
-        else
-        {
+        } else {
             this.pharmaciesDest = new ArrayList<Pharmacie>(etablissement.getPharmacies());
         }
     }
     /**
      * Méthode appelée pour ajouter une nouvelle sortie.
      */
-    public void addSortie()
-    {
-        if (this.getTypeSortie() != null)
-        {
+    public void addSortie() {
+        if (this.getTypeSortie() != null) {
             final Sortie sortie = new Sortie();
             // Création du bon mouvement par rapport au type de sortie
             final MvtStockFactory<MvtStock> factory = this.mapFactories.get(this.getTypeSortie());
@@ -379,35 +348,21 @@ public class SortieManager
      * Méthode en charge de construire la composition.
      * @return La composition.
      */
-    public String buildComposition()
-    {
+    public String buildComposition() {
         final StringBuffer sb = new StringBuffer();
 
         // pour chaque ligne.
-        for (final Sortie sortie : this.sorties)
-        {
-            for (final LigneStock ligne : sortie.getLignesStockCompletees())
-            {
+        for (final Sortie sortie : this.sorties) {
+            for (final LigneStock ligne : sortie.getLignesStockCompletees()) {
                 // nom du produit
-                sb.append(ligne.getProduit().getNom())
-                        .append(EclipseConstants.SPACE)
-                        .append(":")
-                        .append(EclipseConstants.SPACE);
+                sb.append(ligne.getProduit().getNom()).append(EclipseConstants.SPACE).append(":").append(EclipseConstants.SPACE);
                 sb.append(ligne.getNumLot());
-                if (ligne.getDatePeremption() != null)
-                {
-                    sb.append(EclipseConstants.SPACE)
-                            .append(EclipseConstants.DASH)
-                            .append(EclipseConstants.SPACE);
+                if (ligne.getDatePeremption() != null) {
+                    sb.append(EclipseConstants.SPACE).append(EclipseConstants.DASH).append(EclipseConstants.SPACE);
 
-                    sb.append(Utils.formatDate(ligne.getDatePeremption().getTime(),
-                                               EclipseConstants.PATTERN_SIMPLE));
+                    sb.append(Utils.formatDate(ligne.getDatePeremption().getTime(), EclipseConstants.PATTERN_SIMPLE));
                 }
-                sb.append(EclipseConstants.SPACE)
-                        .append(EclipseConstants.DASH)
-                        .append(EclipseConstants.SPACE)
-                        .append("Quantité : ")
-                        .append(ligne.getQteASortir());
+                sb.append(EclipseConstants.SPACE).append(EclipseConstants.DASH).append(EclipseConstants.SPACE).append("Quantité : ").append(ligne.getQteASortir());
 
                 // saut de ligne
                 sb.append(EclipseConstants.SAUT_LIGNE);
@@ -418,26 +373,22 @@ public class SortieManager
     /**
      * Méthode appelée lors de la modification d'une sortie.
      */
-    public void modifySortie()
-    {
+    public void modifySortie() {
         this.actionSortieCurrent = "EDIT";
     }
 
     /**
      * Méthode en charge de supprimer une sortie de la liste.
      */
-    public void delSortie()
-    {
+    public void delSortie() {
         this.getSorties().remove(this.getSortieToDelete());
     }
 
     /**
      * Méthode en charge d'ajouter dans la liste des sorties la sortie courante.
      */
-    public void addSortieToSorties()
-    {
-        if ("ADD".equals(this.actionSortieCurrent))
-        {
+    public void addSortieToSorties() {
+        if ("ADD".equals(this.actionSortieCurrent)) {
             this.sorties.add(this.sortieCurrent);
         }
     }
@@ -446,8 +397,7 @@ public class SortieManager
      * Getter pour essaiSelected.
      * @return Le essaiSelected
      */
-    public Essai getEssaiSelected()
-    {
+    public Essai getEssaiSelected() {
         return this.essaiSelected;
     }
 
@@ -455,8 +405,7 @@ public class SortieManager
      * Setter pour essaiSelected.
      * @param essaiSelected Le essaiSelected à écrire.
      */
-    public void setEssaiSelected(final Essai essaiSelected)
-    {
+    public void setEssaiSelected(final Essai essaiSelected) {
         this.essaiSelected = essaiSelected;
     }
 
@@ -464,8 +413,7 @@ public class SortieManager
      * Getter pour produits.
      * @return Le produits
      */
-    public List<Produit> getProduits()
-    {
+    public List<Produit> getProduits() {
         return this.produits;
     }
 
@@ -473,8 +421,7 @@ public class SortieManager
      * Setter pour produits.
      * @param produits Le produits à écrire.
      */
-    public void setProduits(final List<Produit> produits)
-    {
+    public void setProduits(final List<Produit> produits) {
         this.produits = produits;
     }
 
@@ -482,8 +429,7 @@ public class SortieManager
      * Getter pour pharmacies.
      * @return Le pharmacies
      */
-    public List<Pharmacie> getPharmacies()
-    {
+    public List<Pharmacie> getPharmacies() {
         return this.pharmacies;
     }
 
@@ -491,8 +437,7 @@ public class SortieManager
      * Setter pour pharmacies.
      * @param pharmacies Le pharmacies à écrire.
      */
-    public void setPharmacies(final List<Pharmacie> pharmacies)
-    {
+    public void setPharmacies(final List<Pharmacie> pharmacies) {
         this.pharmacies = pharmacies;
     }
 
@@ -500,8 +445,7 @@ public class SortieManager
      * Getter pour pharmacieSelected.
      * @return Le pharmacieSelected
      */
-    public Pharmacie getPharmacieSelected()
-    {
+    public Pharmacie getPharmacieSelected() {
         return this.pharmacieSelected;
     }
 
@@ -509,8 +453,7 @@ public class SortieManager
      * Setter pour pharmacieSelected.
      * @param pharmacieSelected Le pharmacieSelected à écrire.
      */
-    public void setPharmacieSelected(final Pharmacie pharmacieSelected)
-    {
+    public void setPharmacieSelected(final Pharmacie pharmacieSelected) {
         this.pharmacieSelected = pharmacieSelected;
     }
 
@@ -518,8 +461,7 @@ public class SortieManager
      * Setter pour essaiService.
      * @param essaiService Le essaiService à écrire.
      */
-    public void setEssaiService(final EssaiService essaiService)
-    {
+    public void setEssaiService(final EssaiService essaiService) {
         this.essaiService = essaiService;
     }
 
@@ -527,8 +469,7 @@ public class SortieManager
      * Setter pour produitService.
      * @param produitService Le produitService à écrire.
      */
-    public void setProduitService(final ProduitService<Produit> produitService)
-    {
+    public void setProduitService(final ProduitService<Produit> produitService) {
         this.produitService = produitService;
     }
 
@@ -536,8 +477,7 @@ public class SortieManager
      * Getter pour typeSortie.
      * @return Le typeSortie
      */
-    public TypeMvtStock getTypeSortie()
-    {
+    public TypeMvtStock getTypeSortie() {
         return this.typeSortie;
     }
 
@@ -545,8 +485,7 @@ public class SortieManager
      * Setter pour typeSortie.
      * @param typeSortie Le typeSortie à écrire.
      */
-    public void setTypeSortie(final TypeMvtStock typeSortie)
-    {
+    public void setTypeSortie(final TypeMvtStock typeSortie) {
         this.typeSortie = typeSortie;
     }
 
@@ -554,8 +493,7 @@ public class SortieManager
      * Getter pour sorties.
      * @return Le sorties
      */
-    public List<Sortie> getSorties()
-    {
+    public List<Sortie> getSorties() {
         return this.sorties;
     }
 
@@ -563,8 +501,7 @@ public class SortieManager
      * Setter pour sorties.
      * @param sorties Le sorties à écrire.
      */
-    public void setSorties(final List<Sortie> sorties)
-    {
+    public void setSorties(final List<Sortie> sorties) {
         this.sorties = sorties;
     }
 
@@ -572,8 +509,7 @@ public class SortieManager
      * Getter pour sortieCurrent.
      * @return Le sortieCurrent
      */
-    public Sortie getSortieCurrent()
-    {
+    public Sortie getSortieCurrent() {
         return this.sortieCurrent;
     }
 
@@ -581,8 +517,7 @@ public class SortieManager
      * Setter pour sortieCurrent.
      * @param sortieCurrent Le sortieCurrent à écrire.
      */
-    public void setSortieCurrent(final Sortie sortieCurrent)
-    {
+    public void setSortieCurrent(final Sortie sortieCurrent) {
         this.sortieCurrent = sortieCurrent;
     }
 
@@ -590,8 +525,7 @@ public class SortieManager
      * Getter pour commentaire.
      * @return Le commentaire
      */
-    public String getCommentaire()
-    {
+    public String getCommentaire() {
         return this.commentaire;
     }
 
@@ -599,8 +533,7 @@ public class SortieManager
      * Setter pour commentaire.
      * @param commentaire Le commentaire à écrire.
      */
-    public void setCommentaire(final String commentaire)
-    {
+    public void setCommentaire(final String commentaire) {
         this.commentaire = commentaire;
     }
 
@@ -608,8 +541,7 @@ public class SortieManager
      * Setter pour stockService.
      * @param stockService Le stockService à écrire.
      */
-    public void setStockService(final StockService stockService)
-    {
+    public void setStockService(final StockService stockService) {
         this.stockService = stockService;
     }
 
@@ -617,8 +549,7 @@ public class SortieManager
      * Getter pour sortieToDelete.
      * @return Le sortieToDelete
      */
-    public Sortie getSortieToDelete()
-    {
+    public Sortie getSortieToDelete() {
         return this.sortieToDelete;
     }
 
@@ -626,8 +557,7 @@ public class SortieManager
      * Setter pour sortieToDelete.
      * @param sortieToDelete Le sortieToDelete à écrire.
      */
-    public void setSortieToDelete(final Sortie sortieToDelete)
-    {
+    public void setSortieToDelete(final Sortie sortieToDelete) {
         this.sortieToDelete = sortieToDelete;
     }
 
@@ -635,8 +565,7 @@ public class SortieManager
      * Getter pour nomSocieteTransport.
      * @return Le nomSocieteTransport
      */
-    public String getNomSocieteTransport()
-    {
+    public String getNomSocieteTransport() {
         return this.nomSocieteTransport;
     }
 
@@ -644,8 +573,7 @@ public class SortieManager
      * Setter pour nomSocieteTransport.
      * @param nomSocieteTransport Le nomSocieteTransport à écrire.
      */
-    public void setNomSocieteTransport(final String nomSocieteTransport)
-    {
+    public void setNomSocieteTransport(final String nomSocieteTransport) {
         this.nomSocieteTransport = nomSocieteTransport;
     }
 
@@ -653,8 +581,7 @@ public class SortieManager
      * Getter pour referenceEnvoi.
      * @return Le referenceEnvoi
      */
-    public String getReferenceEnvoi()
-    {
+    public String getReferenceEnvoi() {
         return this.referenceEnvoi;
     }
 
@@ -662,8 +589,7 @@ public class SortieManager
      * Setter pour referenceEnvoi.
      * @param referenceEnvoi Le referenceEnvoi à écrire.
      */
-    public void setReferenceEnvoi(final String referenceEnvoi)
-    {
+    public void setReferenceEnvoi(final String referenceEnvoi) {
         this.referenceEnvoi = referenceEnvoi;
     }
 
@@ -671,8 +597,7 @@ public class SortieManager
      * Getter pour result.
      * @return Le result
      */
-    public ResultSortie getResult()
-    {
+    public ResultSortie getResult() {
         return this.result;
     }
 
@@ -680,8 +605,7 @@ public class SortieManager
      * Setter pour result.
      * @param result Le result à écrire.
      */
-    public void setResult(final ResultSortie result)
-    {
+    public void setResult(final ResultSortie result) {
         this.result = result;
     }
 
@@ -689,8 +613,7 @@ public class SortieManager
      * Setter pour mapFactories.
      * @param mapFactories Le mapFactories à écrire.
      */
-    public void setMapFactories(final Map<TypeMvtStock, MvtStockFactory<MvtStock>> mapFactories)
-    {
+    public void setMapFactories(final Map<TypeMvtStock, MvtStockFactory<MvtStock>> mapFactories) {
         this.mapFactories = mapFactories;
     }
 
@@ -698,8 +621,7 @@ public class SortieManager
      * Getter pour actionSortieCurrent.
      * @return Le actionSortieCurrent
      */
-    public String getActionSortieCurrent()
-    {
+    public String getActionSortieCurrent() {
         return this.actionSortieCurrent;
     }
 
@@ -707,8 +629,7 @@ public class SortieManager
      * Setter pour actionSortieCurrent.
      * @param actionSortieCurrent Le actionSortieCurrent à écrire.
      */
-    public void setActionSortieCurrent(final String actionSortieCurrent)
-    {
+    public void setActionSortieCurrent(final String actionSortieCurrent) {
         this.actionSortieCurrent = actionSortieCurrent;
     }
 
@@ -716,8 +637,7 @@ public class SortieManager
      * Getter sur produitService.
      * @return Retourne le produitService.
      */
-    public ProduitService<Produit> getProduitService()
-    {
+    public ProduitService<Produit> getProduitService() {
         return this.produitService;
     }
 
@@ -725,8 +645,7 @@ public class SortieManager
      * Getter sur stockService.
      * @return Retourne le stockService.
      */
-    public StockService getStockService()
-    {
+    public StockService getStockService() {
         return this.stockService;
     }
 
@@ -734,8 +653,7 @@ public class SortieManager
      * Getter pour fileDestruction.
      * @return Le fileDestruction
      */
-    public UploadedFile getFileDestruction()
-    {
+    public UploadedFile getFileDestruction() {
         return this.fileDestruction;
     }
 
@@ -743,8 +661,7 @@ public class SortieManager
      * Setter pour fileDestruction.
      * @param fileDestruction Le fileDestruction à écrire.
      */
-    public void setFileDestruction(final UploadedFile fileDestruction)
-    {
+    public void setFileDestruction(final UploadedFile fileDestruction) {
         this.fileDestruction = fileDestruction;
     }
 
@@ -752,8 +669,7 @@ public class SortieManager
      * Getter pour fileRetourPromoteur.
      * @return Le fileRetourPromoteur
      */
-    public UploadedFile getFileRetourPromoteur()
-    {
+    public UploadedFile getFileRetourPromoteur() {
         return this.fileRetourPromoteur;
     }
 
@@ -761,8 +677,7 @@ public class SortieManager
      * Setter pour fileRetourPromoteur.
      * @param fileRetourPromoteur Le fileRetourPromoteur à écrire.
      */
-    public void setFileRetourPromoteur(final UploadedFile fileRetourPromoteur)
-    {
+    public void setFileRetourPromoteur(final UploadedFile fileRetourPromoteur) {
         this.fileRetourPromoteur = fileRetourPromoteur;
     }
 
@@ -770,8 +685,7 @@ public class SortieManager
      * Getter pour pharmacieDest.
      * @return Le pharmacieDest
      */
-    public Pharmacie getPharmacieDest()
-    {
+    public Pharmacie getPharmacieDest() {
         return this.pharmacieDest;
     }
 
@@ -779,8 +693,7 @@ public class SortieManager
      * Setter pour pharmacieDest.
      * @param pharmacieDest Le pharmacieDest à écrire.
      */
-    public void setPharmacieDest(final Pharmacie pharmacieDest)
-    {
+    public void setPharmacieDest(final Pharmacie pharmacieDest) {
         this.pharmacieDest = pharmacieDest;
     }
 
@@ -788,8 +701,7 @@ public class SortieManager
      * Getter pour pharmaciesDest.
      * @return Le pharmaciesDest
      */
-    public List<Pharmacie> getPharmaciesDest()
-    {
+    public List<Pharmacie> getPharmaciesDest() {
         return this.pharmaciesDest;
     }
 
@@ -797,8 +709,7 @@ public class SortieManager
      * Setter pour pharmaciesDest.
      * @param pharmaciesDest Le pharmaciesDest à écrire.
      */
-    public void setPharmaciesDest(final List<Pharmacie> pharmaciesDest)
-    {
+    public void setPharmaciesDest(final List<Pharmacie> pharmaciesDest) {
         this.pharmaciesDest = pharmaciesDest;
     }
 
@@ -806,8 +717,7 @@ public class SortieManager
      * Getter pour raisonSortie.
      * @return Le raisonSortie
      */
-    public RaisonSortie getRaisonSortie()
-    {
+    public RaisonSortie getRaisonSortie() {
         return this.raisonSortie;
     }
 
@@ -815,8 +725,7 @@ public class SortieManager
      * Setter pour raisonSortie.
      * @param raisonSortie Le raisonSortie à écrire.
      */
-    public void setRaisonSortie(final RaisonSortie raisonSortie)
-    {
+    public void setRaisonSortie(final RaisonSortie raisonSortie) {
         this.raisonSortie = raisonSortie;
     }
 
@@ -824,8 +733,7 @@ public class SortieManager
      * Getter pour commentaireRaison.
      * @return Le commentaireRaison
      */
-    public String getCommentaireRaison()
-    {
+    public String getCommentaireRaison() {
         return this.commentaireRaison;
     }
 
@@ -833,8 +741,7 @@ public class SortieManager
      * Setter pour commentaireRaison.
      * @param commentaireRaison Le commentaireRaison à écrire.
      */
-    public void setCommentaireRaison(final String commentaireRaison)
-    {
+    public void setCommentaireRaison(final String commentaireRaison) {
         this.commentaireRaison = commentaireRaison;
     }
 
@@ -842,8 +749,7 @@ public class SortieManager
      * Getter pour etablissementsDest.
      * @return Le etablissementsDest
      */
-    public List<Etablissement> getEtablissementsDest()
-    {
+    public List<Etablissement> getEtablissementsDest() {
         return this.etablissementsDest;
     }
 
@@ -851,8 +757,7 @@ public class SortieManager
      * Setter pour etablissementsDest.
      * @param etablissementsDest Le etablissementsDest à écrire.
      */
-    public void setEtablissementsDest(final List<Etablissement> etablissementsDest)
-    {
+    public void setEtablissementsDest(final List<Etablissement> etablissementsDest) {
         this.etablissementsDest = etablissementsDest;
     }
 
@@ -860,8 +765,7 @@ public class SortieManager
      * Getter pour etablissementDest.
      * @return Le etablissementDest
      */
-    public Etablissement getEtablissementDest()
-    {
+    public Etablissement getEtablissementDest() {
         return this.etablissementDest;
     }
 
@@ -869,8 +773,7 @@ public class SortieManager
      * Setter pour etablissementDest.
      * @param etablissementDest Le etablissementDest à écrire.
      */
-    public void setEtablissementDest(final Etablissement etablissementDest)
-    {
+    public void setEtablissementDest(final Etablissement etablissementDest) {
         this.etablissementDest = etablissementDest;
     }
 
@@ -878,8 +781,7 @@ public class SortieManager
      * Getter pour etablissementService.
      * @return Le etablissementService
      */
-    public EtablissementService getEtablissementService()
-    {
+    public EtablissementService getEtablissementService() {
         return this.etablissementService;
     }
 
@@ -887,8 +789,7 @@ public class SortieManager
      * Setter pour etablissementService.
      * @param etablissementService Le etablissementService à écrire.
      */
-    public void setEtablissementService(final EtablissementService etablissementService)
-    {
+    public void setEtablissementService(final EtablissementService etablissementService) {
         this.etablissementService = etablissementService;
     }
 

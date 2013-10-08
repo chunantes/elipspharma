@@ -4,9 +4,8 @@ import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Map;
 
-import junit.framework.Assert;
-
 import org.junit.After;
+import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
 
@@ -15,11 +14,10 @@ import fr.pharma.eclipse.domain.model.produit.Medicament;
 
 /**
  * Test de la classe BeanWithNomHelper.
- 
+ * @author Netapsys
  * @version $Revision$ $Date$
  */
-public class BeanWithNomHelperTest
-{
+public class BeanWithNomHelperTest {
     /**
      * Helper testé.
      */
@@ -29,8 +27,7 @@ public class BeanWithNomHelperTest
      * Méthode d'initialisation.
      */
     @Before
-    public void setUp()
-    {
+    public void setUp() {
         this.helper = new BeanWithNomHelper();
     }
 
@@ -38,8 +35,7 @@ public class BeanWithNomHelperTest
      * Méthode de finalisation.
      */
     @After
-    public void tearDown()
-    {
+    public void tearDown() {
         this.helper = null;
     }
 
@@ -47,8 +43,7 @@ public class BeanWithNomHelperTest
      * Test de la méthode getListByName().
      */
     @Test
-    public void testGetListByName()
-    {
+    public void testGetListByName() {
         final Medicament m1 = new Medicament();
         final Medicament m2 = new Medicament();
         final Medicament m3 = new Medicament();
@@ -63,13 +58,9 @@ public class BeanWithNomHelperTest
         collection.add(m3);
 
         final Map<String, BeanWithNom> result = this.helper.getListByName(collection);
-        Assert.assertEquals(3,
-                            result.size());
-        Assert.assertEquals("m1",
-                            result.get("m1").getNom());
-        Assert.assertEquals("m2",
-                            result.get("m2").getNom());
-        Assert.assertEquals("m3",
-                            result.get("m3").getNom());
+        Assert.assertEquals(3, result.size());
+        Assert.assertEquals("m1", result.get("m1").getNom());
+        Assert.assertEquals("m2", result.get("m2").getNom());
+        Assert.assertEquals("m3", result.get("m3").getNom());
     }
 }

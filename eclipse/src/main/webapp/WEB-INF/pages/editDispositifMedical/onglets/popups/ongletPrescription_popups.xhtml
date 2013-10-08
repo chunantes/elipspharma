@@ -8,7 +8,7 @@
 	<!--  Pop-up d'edition -->
 	<p:dialog 
 		widgetVar="popupEdition"
-		id="idPopupEditionCondDm" closeListener="#{conditionnementsManager.reinit()}"
+		id="idPopupEditionCondDm" closeListener="#{conditionnementListManager.reinit()}"
 		header="#{resourceBundle['editProduit.conditionnement.edit']}"
 		onHide="javascript:forceScrollEditProduitImmediate();"
 		resizable="true" modal="true" width="800">
@@ -182,7 +182,7 @@
 
 
 			<div class="popupButton"><p:commandButton id="submitButton" 
-				value="#{resourceBundle['btn.valider']}" update="conditionnements errors" ajax="true" process="@form" actionListener="#{conditionnementsManager.add(dispositifMedicalManager.bean, conditionnementManager.bean)}"
+				value="#{resourceBundle['btn.valider']}" update="conditionnements errors" ajax="true" process="@form" actionListener="#{conditionnementListManager.add(dispositifMedicalManager.bean, conditionnementManager.bean)}"
 				oncomplete="closePopup(xhr, status, args, popupEdition);"/></div>
 			
 		</h:form>

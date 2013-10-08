@@ -1,24 +1,23 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<flow xmlns="http://www.springframework.org/schema/webflow"
-	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-	xsi:schemaLocation="http://www.springframework.org/schema/webflow
-    http://www.springframework.org/schema/webflow/spring-webflow-2.0.xsd" parent="main">
+<flow xmlns="http://www.springframework.org/schema/webflow" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.springframework.org/schema/webflow
+    http://www.springframework.org/schema/webflow/spring-webflow-2.0.xsd"
+	parent="main">
 
 	<!-- Page principale -->
 	<view-state id="editSortie" view="../../../../pages/stock/sortie/editSortie.xhtml">
 		<transition on="save" to="comeback">
 			<!-- Validation des quantités à sortir saisies -->
-			<evaluate expression="stockValidator.validateLignesStockSortie(sortieManager.sorties,sortieManager.sortieCurrent)"/>
-			<evaluate expression="sortieManager.addSortieToSorties()"/>
+			<evaluate expression="stockValidator.validateLignesStockSortie(sortieManager.sorties,sortieManager.sortieCurrent)" />
+			<evaluate expression="sortieManager.addSortieToSorties()" />
 		</transition>
 		<transition on="cancel">
-			<evaluate expression="sortieManager.sortieCurrent.reset()"/>
+			<evaluate expression="sortieManager.sortieCurrent.reset()" />
 		</transition>
-		<transition on="comeback" to="comeback"/>
-		<transition on="error" to="editSortie"/>
+		<transition on="comeback" to="comeback" />
+		<transition on="error" to="editSortie" />
 	</view-state>
-	
+
 	<!-- Etat final -->
-	<end-state id="comeback"/>
-	
+	<end-state id="comeback" />
+
 </flow>

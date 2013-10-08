@@ -1,0 +1,639 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans 
+    xmlns="http://www.springframework.org/schema/beans" 
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xmlns:util="http://www.springframework.org/schema/util"
+    xsi:schemaLocation="
+    	http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd
+    	http://www.springframework.org/schema/util http://www.springframework.org/schema/util/spring-util.xsd">
+
+	<!-- ============================= -->
+	<!-- HELPERS -->
+	<!-- ============================= -->
+	<bean id="jasperPrintHelper"
+		class="fr.pharma.eclipse.jasper.engine.helper.JasperPrintHelper" />
+	<bean id="jasperReportNameHelper"
+		class="fr.pharma.eclipse.jasper.engine.helper.ReportNameBuildHelper" />
+	<bean id="jasperDataSourceCheckHandler"
+		class="fr.pharma.eclipse.jasper.engine.helper.SourceCheckingHandler" />
+	<bean id="commonParamsHelper"
+		class="fr.pharma.eclipse.jasper.engine.helper.CommonParametersHelper">
+		<constructor-arg index="0" value="${jasper.reports.path}" />
+		<constructor-arg index="1" value="${checkbox.path}" />
+	</bean>
+	<bean id="commonHeaderBuilder"
+		class="fr.pharma.eclipse.jasper.engine.builder.helper.common.JRBeanHeaderBuilder">
+		<constructor-arg index="0" value="${jasper.logo.chu}" />
+	</bean>
+
+	<!-- ============================= -->
+	<!-- HELPERS : ProduitsFiller -->
+	<!-- ============================= -->
+	<bean id="medicamentsFillerHelper"
+		class="fr.pharma.eclipse.jasper.engine.filler.impl.aidedispensation.helper.MedicamentsFillerHelper" />
+	<bean id="dispMedicauxFillerHelper"
+		class="fr.pharma.eclipse.jasper.engine.filler.impl.aidedispensation.helper.DispMedicalFillerHelper" />
+	<bean id="pduitTherapFillerHelper"
+		class="fr.pharma.eclipse.jasper.engine.filler.impl.aidedispensation.helper.ProduitsTherapFillerHelper" />
+
+	<!-- ============================= -->
+	<!-- HELPERS : ProduitsPrescritFiller -->
+	<!-- ============================= -->
+	<bean id="produitPrescritFillerHelper"
+		class="fr.pharma.eclipse.jasper.engine.filler.impl.modelprescription.helper.ProduitPrescritFillerHelper" />
+
+	<!-- ============================= -->
+	<!-- HELPERS : ProduitsSortiFiller -->
+	<!-- ============================= -->
+	<bean id="produitSortiFillerHelper"
+		class="fr.pharma.eclipse.jasper.engine.filler.impl.certificat.helper.ProduitSortiFillerHelper" />
+
+	<!-- ============================= -->
+	<!-- HELPERS : TraitementFiller -->
+	<!-- ============================= -->
+	<bean id="traitementFillerHelper"
+		class="fr.pharma.eclipse.jasper.engine.filler.impl.accusereception.helper.TraitementFillerHelper" />
+
+	<!-- ============================= -->
+	<!-- FACTORY : JRDataSource -->
+	<!-- ============================= -->
+	<bean id="jrDataSourceFactory"
+		class="fr.pharma.eclipse.jasper.engine.factory.JRDataSourceFactory" />
+
+	<!-- =========================================== -->
+	<!-- FACTORY : JRBeanFicheAideDispensationPart2 -->
+	<!-- =========================================== -->
+	<bean id="jrBeanAideDispPart2Factory"
+		class="fr.pharma.eclipse.jasper.engine.factory.bean.impl.JRBeanAideDispensationPart2Factory" />
+
+	<!-- =========================================== -->
+	<!-- FACTORY : JRBeanFicheAideDispensationPart3 -->
+	<!-- =========================================== -->
+	<bean id="jrBeanAideDispPart3Factory"
+		class="fr.pharma.eclipse.jasper.engine.factory.bean.impl.JRBeanAideDispensationPart3Factory" />
+
+	<!-- =========================================== -->
+	<!-- FACTORY : JRBeanFicheAideDispensationPart4 -->
+	<!-- =========================================== -->
+	<bean id="jrBeanAideDispPart4Factory"
+		class="fr.pharma.eclipse.jasper.engine.factory.bean.impl.JRBeanAideDispensationPart4Factory" />
+
+	<!-- =========================================== -->
+	<!-- FACTORY : JRBeanFicheAideDispensationPart5 -->
+	<!-- =========================================== -->
+	<bean id="jrBeanAideDispPart5Factory"
+		class="fr.pharma.eclipse.jasper.engine.factory.bean.impl.JRBeanAideDispensationPart5Factory" />
+
+	<!-- =========================================== -->
+	<!-- FACTORY : JRBeanFicheAideDispensationPart6 -->
+	<!-- =========================================== -->
+	<bean id="jrBeanAideDispPart6Factory"
+		class="fr.pharma.eclipse.jasper.engine.factory.bean.impl.JRBeanAideDispensationPart6Factory" />
+
+	<!-- =========================================== -->
+	<!-- FACTORY : JRBeanFicheAideDispensationPart7 -->
+	<!-- =========================================== -->
+	<bean id="jrBeanAideDispPart7Factory"
+		class="fr.pharma.eclipse.jasper.engine.factory.bean.impl.JRBeanAideDispensationPart7Factory" />
+
+	<!-- ============================= -->
+	<!-- FACTORY : Exporteur RTF -->
+	<!-- ============================= -->
+	<bean id="jrRTFExporterFactory"
+		class="fr.pharma.eclipse.jasper.engine.factory.exporter.impl.JRExporterRTFFactory" />
+	<bean id="jrPDFExporterFactory"
+		class="fr.pharma.eclipse.jasper.engine.factory.exporter.impl.JRExporterPDFFactory" />
+
+	<!-- ============================= -->
+	<!-- FACTORY : JasperPrint -->
+	<!-- ============================= -->
+	<bean id="commonJapserPrintFactory" abstract="true"
+		class="fr.pharma.eclipse.jasper.engine.factory.JasperPrintFactory">
+		<property name="helper" ref="jasperPrintHelper" />
+	</bean>
+	<!-- FICHE_INFO_ESSAI -->
+	<bean id="ficheInfoEssaiJasperPrintFactory" parent="commonJapserPrintFactory">
+		<constructor-arg index="0">
+			<value>classpath:rapports/jasper/1_ficheInfoEssai.jasper</value>
+		</constructor-arg>
+	</bean>
+	<!-- MODELE_PRESCRIPTION_NOMINATIVE -->
+	<bean id="modelePrescNominativeJasperPrintFactory" parent="commonJapserPrintFactory">
+		<constructor-arg index="0">
+			<value>classpath:rapports/jasper/8_prescription.jasper</value>
+		</constructor-arg>
+	</bean>
+
+	<!-- ACCUSE RECEPTION -->
+	<bean id="accuseReceptionJasperPrintFactory" parent="commonJapserPrintFactory">
+		<constructor-arg index="0">
+			<value>classpath:rapports/jasper/2_accuseReception.jasper</value>
+		</constructor-arg>
+	</bean>
+
+	<!-- MODELE_PRESCRIPTION_NOMINATIVE -->
+	<bean id="certificatSortiJasperPrintFactory" parent="commonJapserPrintFactory">
+		<constructor-arg index="0">
+			<value>classpath:rapports/jasper/2_certificatSorti.jasper</value>
+		</constructor-arg>
+	</bean>
+
+	<!-- FICHE_AIDE_DISPENSATION -->
+	<bean id="ficheAideDispensationJasperPrintFactory" parent="commonJapserPrintFactory">
+		<constructor-arg index="0">
+			<value>classpath:rapports/jasper/7_ficheAideDispensation.jasper
+			</value>
+		</constructor-arg>
+	</bean>
+
+	<!-- ================================= -->
+	<!-- FILLERS -->
+	<!-- ================================= -->
+	<bean id="commonJRBeanFiller" abstract="true"
+		class="fr.pharma.eclipse.jasper.engine.filler.impl.common.CommonJasperReportBeanFiller">
+		<property name="jrDataSourceFactory" ref="jrDataSourceFactory" />
+	</bean>
+	<bean id="commonBlocWithMoAssocieFiller" abstract="true"
+		class="fr.pharma.eclipse.jasper.engine.filler.impl.common.BlocWithMoAssocieFiller">
+		<property name="jrDataSourceFactory" ref="jrDataSourceFactory" />
+	</bean>
+	<!-- ================================= -->
+	<!-- FILLERS : FICHE_AIDE_DISPENSATION -->
+	<!-- ================================= -->
+	<!-- PARTIE 1 -->
+	<!-- ... pour les contacts : -->
+	<bean id="contactsFicheAideDispPart1FillerHelper"
+		class="fr.pharma.eclipse.jasper.engine.filler.impl.aidedispensation.helper.ContactsFillerHelper" />
+	<bean id="contactsPromoteursFicheAideDispFiller"
+		class="fr.pharma.eclipse.jasper.engine.filler.impl.aidedispensation.AideDispensationPart1ContactsFiller">
+		<constructor-arg index="0" value="contactsPromoteurs" />
+		<constructor-arg index="1" value="PROMOTEURS" />
+		<property name="habilitationsHelper" ref="habilitationsHelper" />
+		<property name="jrDataSourceFactory" ref="jrDataSourceFactory" />
+		<property name="helper" ref="contactsFicheAideDispPart1FillerHelper" />
+	</bean>
+	<bean id="contactsInvestigateursFicheAideDispFiller"
+		class="fr.pharma.eclipse.jasper.engine.filler.impl.aidedispensation.AideDispensationPart1ContactsFiller">
+		<constructor-arg index="0" value="contactsInvestigateurs" />
+		<constructor-arg index="1" value="INVESTIGATEURS" />
+		<property name="habilitationsHelper" ref="habilitationsHelper" />
+		<property name="jrDataSourceFactory" ref="jrDataSourceFactory" />
+		<property name="helper" ref="contactsFicheAideDispPart1FillerHelper" />
+	</bean>
+	<bean id="contactsPharmaciesFicheAideDispFiller"
+		class="fr.pharma.eclipse.jasper.engine.filler.impl.aidedispensation.AideDispensationPart1ContactsFiller">
+		<constructor-arg index="0" value="contactsPharmacies" />
+		<constructor-arg index="1" value="PHARMACIENS" />
+		<property name="habilitationsHelper" ref="habilitationsHelper" />
+		<property name="jrDataSourceFactory" ref="jrDataSourceFactory" />
+		<property name="helper" ref="contactsFicheAideDispPart1FillerHelper" />
+	</bean>
+	<!-- .. pour les groupes de traitement : -->
+	<bean id="groupesTraitFicheAideDispFillerHelper"
+		class="fr.pharma.eclipse.jasper.engine.filler.impl.aidedispensation.helper.GroupesTraitFillerHelper">
+		<property name="timeHelper" ref="timeHelper" />
+	</bean>
+	<bean id="groupesTraitFicheAideDispFiller"
+		class="fr.pharma.eclipse.jasper.engine.filler.impl.aidedispensation.AideDispensationPart1GroupesTraitFiller">
+		<property name="jrDataSourceFactory" ref="jrDataSourceFactory" />
+		<property name="designHelper" ref="designHelper" />
+		<property name="helper" ref="groupesTraitFicheAideDispFillerHelper" />
+	</bean>
+	<!-- Global partie 1 -->
+	<bean id="ficheAideDispPart1Filler"
+		class="fr.pharma.eclipse.jasper.engine.filler.impl.aidedispensation.AideDispensationPart1Filler">
+		<property name="jrDataSourceFactory" ref="jrDataSourceFactory" />
+		<property name="habilitationsHelper" ref="habilitationsHelper" />
+		<property name="subFillers">
+			<list>
+				<ref bean="contactsPromoteursFicheAideDispFiller" />
+				<ref bean="contactsInvestigateursFicheAideDispFiller" />
+				<ref bean="contactsPharmaciesFicheAideDispFiller" />
+				<ref bean="groupesTraitFicheAideDispFiller" />
+			</list>
+		</property>
+	</bean>
+
+	<!-- PARTIE 2 -->
+	<!-- ... pour les produits -->
+	<bean id="commonAideDispPduitsFiller" abstract="true"
+		class="fr.pharma.eclipse.jasper.engine.filler.impl.aidedispensation.AideDispensationPart2ProduitsFiller">
+		<property name="jrDataSourceFactory" ref="jrDataSourceFactory" />
+	</bean>
+	<bean id="medicamentsAideDispFiller" parent="commonAideDispPduitsFiller">
+		<constructor-arg index="0" value="detailProduit.medicaments" />
+		<constructor-arg index="1" value="medicaments" />
+		<property name="helper" ref="medicamentsFillerHelper" />
+	</bean>
+	<bean id="dispMedicauxAideDispFiller" parent="commonAideDispPduitsFiller">
+		<constructor-arg index="0"
+			value="detailProduit.dispositifsMedicaux" />
+		<constructor-arg index="1" value="dispoMedicaux" />
+		<property name="helper" ref="dispMedicauxFillerHelper" />
+	</bean>
+	<bean id="pduitTherapAideDispFiller" parent="commonAideDispPduitsFiller">
+		<constructor-arg index="0"
+			value="detailProduit.produitsTherapeutiques" />
+		<constructor-arg index="1" value="pduitsTherapeutiques" />
+		<property name="helper" ref="pduitTherapFillerHelper" />
+	</bean>
+	<!-- ... pour les actes pharmaceutiques liés -->
+	<bean id="commonBlocWithMoAssocieBuilder" abstract="true"
+		class="fr.pharma.eclipse.jasper.engine.builder.helper.common.JRBeanBlocWithMoAssocieBuilder" />
+	<bean id="helperReconstitution" parent="commonBlocWithMoAssocieBuilder">
+		<constructor-arg index="0" value="RECONSTITUTION" /><!-- 
+			titre -->
+		<constructor-arg index="1"
+			value="detailFaisabilite.infosEtude.reconstitutions" /> <!-- propriété présence -->
+	</bean>
+	<bean id="helperPreparation" parent="commonBlocWithMoAssocieBuilder">
+		<constructor-arg index="0" value="PREPARATION" /><!-- titre -->
+		<constructor-arg index="1"
+			value="detailFaisabilite.infosEtude.preparations" /> <!-- propriété présence -->
+	</bean>
+	<bean id="helperConditionnement" parent="commonBlocWithMoAssocieBuilder">
+		<constructor-arg index="0"
+			value="CONDITIONNEMENT DU PRODUIT FINI" /><!-- titre -->
+		<constructor-arg index="1"
+			value="detailFaisabilite.infosEtude.conditionnementPduits" /> <!-- propriété présence -->
+		<constructor-arg index="2"
+			value="detailDonneesPharma.infosDispensations.informationConditionnement" /><!-- 
+			propriété commentaire -->
+		<constructor-arg index="3"
+			value="detailDonneesPharma.infosDispensations.documentInformationConditionnement" /><!-- 
+			propriété moAssocié -->
+	</bean>
+	<bean id="helperEtiquetage" parent="commonBlocWithMoAssocieBuilder">
+		<constructor-arg index="0" value="ETIQUETAGE DU PRODUIT FINI" /><!-- 
+			titre -->
+		<constructor-arg index="1"
+			value="detailFaisabilite.infosEtude.etiquetagesPduits" /> <!-- propriété présence -->
+		<constructor-arg index="2"
+			value="detailDonneesPharma.infosDispensations.contreEtiquette" /><!-- 
+			propriété commentaire -->
+		<constructor-arg index="3"
+			value="detailDonneesPharma.infosDispensations.documentContreEtiquette" /><!-- 
+			propriété moAssocié -->
+	</bean>
+	<bean id="actesPharmaAideDispFiller" parent="commonBlocWithMoAssocieFiller">
+		<constructor-arg index="0" value="actesPharmacies" />
+		<property name="helpers">
+			<list>
+				<ref bean="helperReconstitution" />
+				<ref bean="helperPreparation" />
+				<ref bean="helperConditionnement" />
+				<ref bean="helperEtiquetage" />
+			</list>
+		</property>
+	</bean>
+	<!-- Global part 2 -->
+	<bean id="ficheAideDispPart2Filler" parent="commonJRBeanFiller">
+		<constructor-arg index="0" value="partie2" />
+		<property name="jrBeanFactory" ref="jrBeanAideDispPart2Factory" />
+		<property name="subFillers">
+			<list>
+				<ref bean="medicamentsAideDispFiller" />
+				<ref bean="dispMedicauxAideDispFiller" />
+				<ref bean="pduitTherapAideDispFiller" />
+				<ref bean="actesPharmaAideDispFiller" />
+			</list>
+		</property>
+	</bean>
+
+	<!-- PARTIE 3 -->
+	<bean id="randomisationAideDispFiller"
+		class="fr.pharma.eclipse.jasper.engine.filler.impl.aidedispensation.AideDispensationPart3RandomisationFiller" />
+	<!-- Global part 3 -->
+	<bean id="ficheAideDispPart3Filler" parent="commonJRBeanFiller">
+		<constructor-arg index="0" value="partie3" />
+		<property name="jrBeanFactory" ref="jrBeanAideDispPart3Factory" />
+		<property name="subFillers">
+			<list>
+				<ref bean="randomisationAideDispFiller" />
+			</list>
+		</property>
+	</bean>
+
+	<!-- PARTIE 4 -->
+	<bean id="prescripteursAideDispPart4Filler"
+		class="fr.pharma.eclipse.jasper.engine.filler.impl.aidedispensation.AideDispensationPart4PrescripteursFiller">
+		<property name="habilitationsHelper" ref="habilitationsHelper" />
+	</bean>
+	<bean id="typeDispAideDispPart4Filler"
+		class="fr.pharma.eclipse.jasper.engine.filler.impl.aidedispensation.AideDispensationPart4TypeDispFiller" />
+	<bean id="destDispAideDispPart4Filler"
+		class="fr.pharma.eclipse.jasper.engine.filler.impl.aidedispensation.AideDispensationPart4DestDispFiller" />
+	<bean id="numConditionnementsAideDispPart4Filler"
+		class="fr.pharma.eclipse.jasper.engine.filler.impl.aidedispensation.AideDispensationPart4NumerodationCondFiller">
+		<constructor-arg index="0"
+			ref="essaiWithProduitNumTraitPredicate" />
+	</bean>
+	<bean id="helperInfosPatient" parent="commonBlocWithMoAssocieBuilder">
+		<constructor-arg index="0"
+			value="Informations à donner au destinataire de la dispensation (Consultation Pharmaceutique)" /><!-- 
+			titre -->
+		<constructor-arg index="1" value="" /> <!-- propriété présence -->
+		<constructor-arg index="2"
+			value="detailDonneesPharma.infosDispensations.conseilPatient" /><!-- propriété 
+			commentaire -->
+		<constructor-arg index="3"
+			value="detailDonneesPharma.infosDispensations.documentConseilPatient" /><!-- 
+			propriété moAssocié -->
+	</bean>
+	<bean id="infosPatientAideDispPart4Filler" parent="commonBlocWithMoAssocieFiller">
+		<constructor-arg index="0" value="infosPatient" />
+		<property name="helpers">
+			<list>
+				<ref bean="helperInfosPatient" />
+			</list>
+		</property>
+	</bean>
+	<bean id="helperAideDispensation" parent="commonBlocWithMoAssocieBuilder">
+		<constructor-arg index="0" value="Aide à la dispensation" /><!-- 
+			titre -->
+		<constructor-arg index="1" value="" /> <!-- propriété présence -->
+		<constructor-arg index="2"
+			value="detailDonneesPharma.infosDispensations.aideDispensation" /><!-- 
+			propriété commentaire -->
+		<constructor-arg index="3"
+			value="detailDonneesPharma.infosDispensations.documentAideDispensation" /><!-- 
+			propriété moAssocié -->
+	</bean>
+	<bean id="aideDispensationAideDispPart4Filler" parent="commonBlocWithMoAssocieFiller">
+		<constructor-arg index="0" value="aideDispensation" />
+		<property name="helpers">
+			<list>
+				<ref bean="helperAideDispensation" />
+			</list>
+		</property>
+	</bean>
+	<bean id="gestionRetoursPharmaDispAideDispPart4Filler"
+		class="fr.pharma.eclipse.jasper.engine.filler.impl.aidedispensation.AideDispensationPart4GestionRetourPharmaFiller" />
+	<!-- Global part 4 -->
+	<bean id="ficheAideDispPart4Filler" parent="commonJRBeanFiller">
+		<constructor-arg index="0" value="partie4" />
+		<property name="jrBeanFactory" ref="jrBeanAideDispPart4Factory" />
+		<property name="subFillers">
+			<list>
+				<ref bean="prescripteursAideDispPart4Filler" />
+				<ref bean="typeDispAideDispPart4Filler" />
+				<ref bean="destDispAideDispPart4Filler" />
+				<ref bean="numConditionnementsAideDispPart4Filler" />
+				<ref bean="infosPatientAideDispPart4Filler" />
+				<ref bean="aideDispensationAideDispPart4Filler" />
+				<ref bean="gestionRetoursPharmaDispAideDispPart4Filler" />
+			</list>
+		</property>
+	</bean>
+
+	<!-- PARTIE 5 -->
+	<bean id="respCommandeficheAideDispPart5Filler"
+		class="fr.pharma.eclipse.jasper.engine.filler.impl.aidedispensation.AideDispensationPart5InitCommandeFiller" />
+	<bean id="helperReception" parent="commonBlocWithMoAssocieBuilder">
+		<constructor-arg index="0" value="RECEPTION" /><!-- titre -->
+		<constructor-arg index="1" value="" /> <!-- propriété présence -->
+		<constructor-arg index="2"
+			value="detailDonneesPharma.infosComplementaires.modaliteReception" /><!-- 
+			propriété commentaire -->
+		<constructor-arg index="3"
+			value="detailDonneesPharma.infosComplementaires.documentModaliteReception" /><!-- 
+			propriété moAssocié -->
+	</bean>
+	<bean id="receptionAideDispPart5Filler" parent="commonBlocWithMoAssocieFiller">
+		<constructor-arg index="0" value="modalitesReception" />
+		<property name="helpers">
+			<list>
+				<ref bean="helperReception" />
+			</list>
+		</property>
+	</bean>
+	<!-- Global part 5 -->
+	<bean id="ficheAideDispPart5Filler" parent="commonJRBeanFiller">
+		<constructor-arg index="0" value="partie5" />
+		<property name="jrBeanFactory" ref="jrBeanAideDispPart5Factory" />
+		<property name="subFillers">
+			<list>
+				<ref bean="respCommandeficheAideDispPart5Filler" />
+				<ref bean="receptionAideDispPart5Filler" />
+			</list>
+		</property>
+	</bean>
+
+	<!-- PARTIE 6 -->
+	<bean id="ficheAideDispPart6SubFiller"
+		class="fr.pharma.eclipse.jasper.engine.filler.impl.aidedispensation.AideDispensationPart6GlobalFiller" />
+	<!-- Global part 6 -->
+	<bean id="ficheAideDispPart6Filler" parent="commonJRBeanFiller">
+		<constructor-arg index="0" value="partie6" />
+		<property name="jrBeanFactory" ref="jrBeanAideDispPart6Factory" />
+		<property name="subFillers">
+			<list>
+				<ref bean="ficheAideDispPart6SubFiller" />
+			</list>
+		</property>
+	</bean>
+
+	<!-- PARTIE 7 -->
+	<bean id="ficheAideDispPart7SubFiller"
+		class="fr.pharma.eclipse.jasper.engine.filler.impl.aidedispensation.AideDispensationPart7GlobalFiller" />
+	<!-- Global part 7 -->
+	<bean id="ficheAideDispPart7Filler" parent="commonJRBeanFiller">
+		<constructor-arg index="0" value="partie7" />
+		<property name="jrBeanFactory" ref="jrBeanAideDispPart7Factory" />
+		<property name="subFillers">
+			<list>
+				<ref bean="ficheAideDispPart7SubFiller" />
+			</list>
+		</property>
+	</bean>
+
+	<!-- ============================= -->
+	<!-- DATAS BUILDERS -->
+	<!-- ============================= -->
+	<bean id="commonAttributesDatasBuilders" abstract="true">
+		<property name="jrDataSourceFactory" ref="jrDataSourceFactory" />
+		<property name="reportNameHelper" ref="jasperReportNameHelper" />
+		<property name="checkHandler" ref="jasperDataSourceCheckHandler" />
+		<property name="headerBuilder" ref="commonHeaderBuilder" />
+	</bean>
+	<!-- FICHE_INFO_ESSAI -->
+	<bean id="ficheInfoEssaiJRDatasBuilder" parent="commonAttributesDatasBuilders"
+		class="fr.pharma.eclipse.jasper.engine.builder.impl.FicheInfosEssaiDatasBuilder">
+		<property name="habilitationsHelper" ref="habilitationsHelper" />
+	</bean>
+	<!-- MODELE_PRESCRIPTION_NOMINATIVE -->
+	<bean id="modelePrescNominativeJRDatasBuilder" parent="commonAttributesDatasBuilders"
+		class="fr.pharma.eclipse.jasper.engine.builder.impl.ModelePrescNominativeDatasBuilder" />
+
+	<!-- CERTIFICAT_DESTRUCTION -->
+	<bean id="certificatDestructionJRDatasBuilder" parent="commonAttributesDatasBuilders"
+		class="fr.pharma.eclipse.jasper.engine.builder.impl.CertificatSortieDatasBuilder">
+		<property name="sousTitre" value="Certificat de destruction"/>
+	</bean>
+
+	<!-- CERTIFICAT_DESTRUCTION -->
+	<bean id="accuseReceptionJRDatasBuilder" parent="commonAttributesDatasBuilders"
+		class="fr.pharma.eclipse.jasper.engine.builder.impl.AccuseReceptionDatasBuilder">
+	</bean>
+	
+
+	<!-- CERTIFICAT_RETOUR -->
+	<bean id="certificatRetourJRDatasBuilder" parent="commonAttributesDatasBuilders"
+		class="fr.pharma.eclipse.jasper.engine.builder.impl.CertificatSortieDatasBuilder" >
+		<property name="sousTitre" value="Certificat de retour"/>
+		</bean>
+
+	<!-- FICHE_AIDE_DISPENSATION -->
+	<bean id="ficheAideDispensationJRDatasBuilder" parent="commonAttributesDatasBuilders"
+		class="fr.pharma.eclipse.jasper.engine.builder.impl.FicheAideDispensationDatasBuilder">
+		<property name="dataSourceFillers">
+			<list>
+				<ref bean="ficheAideDispPart1Filler" />
+				<ref bean="ficheAideDispPart2Filler" />
+				<ref bean="ficheAideDispPart3Filler" />
+				<ref bean="ficheAideDispPart4Filler" />
+				<ref bean="ficheAideDispPart5Filler" />
+				<ref bean="ficheAideDispPart6Filler" />
+				<ref bean="ficheAideDispPart7Filler" />
+			</list>
+		</property>
+	</bean>
+
+
+	<!-- ============================= -->
+	<!-- EXPORTER : JasperPrint -->
+	<!-- ============================= -->
+	<bean id="jasperPrintExporter"
+		class="fr.pharma.eclipse.jasper.engine.exporter.JasperPrintExporter">
+		<property name="ioFactory" ref="ioStreamsFactory" />
+		<property name="jrExporterFactories">
+			<map>
+				<entry key="DOC" value-ref="jrRTFExporterFactory" />
+				<entry key="PDF" value-ref="jrPDFExporterFactory" />
+			</map>
+		</property>
+	</bean>
+
+	<!-- ============================= -->
+	<!-- MANAGER : common -->
+	<!-- ============================= -->
+	<bean id="abstractJasperReportBuildManager" abstract="true"
+		class="fr.pharma.eclipse.jasper.engine.manager.JasperReportBuildManager">
+		<property name="jpExporter" ref="jasperPrintExporter" />
+		<property name="commonParametersHelper" ref="commonParamsHelper" />
+	</bean>
+
+	<!-- ============================= -->
+	<!-- MANAGER : FICHE_INFO_ESSAI -->
+	<!-- ============================= -->
+	<bean id="fichierInfoEssaiJRManager" parent="abstractJasperReportBuildManager">
+		<constructor-arg index="0">
+			<value>FICHE_INFO_ESSAI</value>
+		</constructor-arg>
+		<property name="datasBuilder" ref="ficheInfoEssaiJRDatasBuilder" />
+		<property name="jpFactory" ref="ficheInfoEssaiJasperPrintFactory" />
+	</bean>
+
+	<!-- =========================================== -->
+	<!-- MANAGER : MODELE_PRESCRIPTION_NOMINATIVE -->
+	<!-- =========================================== -->
+	<bean id="modelePrescNominativeJRManager" parent="abstractJasperReportBuildManager">
+		<constructor-arg index="0">
+			<value>MODELE_PRESCRIPTION_NOMINATIVE</value>
+		</constructor-arg>
+		<property name="datasBuilder" ref="modelePrescNominativeJRDatasBuilder" />
+		<property name="jpFactory" ref="modelePrescNominativeJasperPrintFactory" />
+	</bean>
+
+
+	<!-- =========================================== -->
+	<!-- MANAGER : CERTIFICAT_DESTRUCTION -->
+	<!-- =========================================== -->
+	<bean id="certificatDestructionJRManager" parent="abstractJasperReportBuildManager">
+		<constructor-arg index="0">
+			<value>CERTIFICAT_DESTRUCTION</value>
+		</constructor-arg>
+		<property name="datasBuilder" ref="certificatDestructionJRDatasBuilder" />
+		<property name="jpFactory" ref="certificatSortiJasperPrintFactory" />
+	</bean>
+
+	<!-- =========================================== -->
+	<!-- MANAGER : ACCUSE RECEPTION 				 -->
+	<!-- =========================================== -->
+	<bean id="accuseReceptionJRManager" parent="abstractJasperReportBuildManager">
+		<constructor-arg index="0">
+			<value>ACCUSE_RECEPTION</value>
+		</constructor-arg>
+		<property name="datasBuilder" ref="accuseReceptionJRDatasBuilder" />
+		<property name="jpFactory" ref="accuseReceptionJasperPrintFactory" />
+	</bean>
+
+	<!-- =========================================== -->
+	<!-- MANAGER : CERTIFICAT_RETOUR -->
+	<!-- =========================================== -->
+	<bean id="certificatRetourJRManager" parent="abstractJasperReportBuildManager">
+		<constructor-arg index="0">
+			<value>CERTIFICAT_RETOUR</value>
+		</constructor-arg>
+		<property name="datasBuilder" ref="certificatRetourJRDatasBuilder" />
+		<property name="jpFactory" ref="certificatSortiJasperPrintFactory" />
+	</bean>
+
+	<!-- =========================================== -->
+	<!-- MANAGER : FICHE_AIDE_DISPENSATION -->
+	<!-- =========================================== -->
+	<bean id="ficheAideDispensationJRManager" parent="abstractJasperReportBuildManager">
+		<constructor-arg index="0">
+			<value>FICHE_AIDE_DISPENSATION</value>
+		</constructor-arg>
+		<property name="datasBuilder" ref="ficheAideDispensationJRDatasBuilder" />
+		<property name="jpFactory" ref="ficheAideDispensationJasperPrintFactory" />
+	</bean>
+
+	<!-- ============================= -->
+	<!-- MANAGERS -->
+	<!-- ============================= -->
+	<util:map id="jasperReportsMapManagers">
+		<entry key="FICHE_INFO_ESSAI" value-ref="fichierInfoEssaiJRManager" />
+		<entry key="MODELE_PRESCRIPTION_NOMINATIVE" value-ref="modelePrescNominativeJRManager" />
+		<entry key="FICHE_AIDE_DISPENSATION" value-ref="ficheAideDispensationJRManager" />
+		<entry key="CERTIFICAT_RETOUR" value-ref="certificatRetourJRManager" />
+		<entry key="CERTIFICAT_DESTRUCTION" value-ref="certificatDestructionJRManager" />
+		<entry key="ACCUSE_RECEPTION" value-ref="accuseReceptionJRManager" />
+	</util:map>
+
+	<!-- ============================= -->
+	<!-- DOCUMENTMAKER : DESTRUCTION -->
+	<!-- ============================= -->
+	<bean id="certificatDestructionMaker"
+		class="fr.pharma.eclipse.jasper.document.maker.impl.CertificatDestructionMaker">
+		<property name="nom" value="Certificat-destruction.doc" />
+		<property name="typeFichier" value="application/msword" />
+		<property name="documentFactory" ref="docDestructionCompleteFactory" />
+	</bean>
+	
+	
+
+	<!-- ============================= -->
+	<!-- DOCUMENTMAKER : RETOUR PROMO -->
+	<!-- ============================= -->
+	<bean id="certificatRetourMaker"
+		class="fr.pharma.eclipse.jasper.document.maker.impl.CertificatRetourPromoteurMaker">
+		<property name="nom" value="Certificat-retour-promoteur.doc" />
+		<property name="typeFichier" value="application/msword" />
+		<property name="documentFactory" ref="docRetourPromoteurCompleteFactory" />
+	</bean>
+
+	<!-- ============================= -->
+	<!-- DOCUMENTMAKER : DICTIONARY -->
+	<!-- ============================= -->
+	<bean id="documentMakerDictionary"
+		class="fr.pharma.eclipse.jasper.document.DocumentMakerDictionary">
+		<property name="map">
+			<map>
+				<entry key-ref="CERTIFICAT_DESTRUCTION" value-ref="certificatDestructionMaker"/>
+				<entry key-ref="CERTIFICAT_RETOUR" value-ref="certificatRetourMaker"/>
+			</map>
+		</property>
+	</bean>
+</beans>

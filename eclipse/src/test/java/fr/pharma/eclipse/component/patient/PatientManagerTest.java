@@ -23,12 +23,10 @@ import fr.pharma.eclipse.utils.constants.EclipseConstants;
 
 /**
  * Ttest de la classe PatientManager.
- 
+ * @author Netapsys
  * @version $Revision$ $Date$
  */
-public class PatientManagerTest
-    extends AbstractEclipseJUnitTest
-{
+public class PatientManagerTest extends AbstractEclipseJUnitTest {
 
     /**
      * PatientManager
@@ -49,8 +47,7 @@ public class PatientManagerTest
      * {@inheritDoc}
      */
     @Override
-    public void setUp()
-    {
+    public void setUp() {
         this.mockedFactory = Mockito.mock(HistoriquePatientFactory.class);
         this.mockedPatientService = Mockito.mock(PatientService.class);
         this.manager = new PatientManager(this.mockedPatientService);
@@ -61,8 +58,7 @@ public class PatientManagerTest
      * {@inheritDoc}
      */
     @Override
-    public void tearDown()
-    {
+    public void tearDown() {
         this.mockedPatientService = null;
         this.manager = null;
         this.mockedFactory = null;
@@ -72,8 +68,7 @@ public class PatientManagerTest
      * {@inheritDoc}
      */
     @Override
-    public void testInit()
-    {
+    public void testInit() {
         Assert.assertNotNull(this.manager);
         Assert.assertNotNull(this.mockedPatientService);
         Assert.assertNotNull(this.mockedFactory);
@@ -83,8 +78,7 @@ public class PatientManagerTest
      * Test de la méthode reinit().
      */
     @Test
-    public void testReinit()
-    {
+    public void testReinit() {
 
         this.manager.setBean(new Patient());
         this.manager.setEditHistorique(true);
@@ -97,10 +91,8 @@ public class PatientManagerTest
      * Test de la méthode initHistorique.
      */
     @Test
-    public void testInitHistorique()
-    {
-        Mockito.when(this.mockedFactory.getInitializedObject(Matchers.any(Patient.class)))
-                .thenReturn(new HistoriquePatient());
+    public void testInitHistorique() {
+        Mockito.when(this.mockedFactory.getInitializedObject(Matchers.any(Patient.class))).thenReturn(new HistoriquePatient());
         this.manager.initHistorique();
         Assert.assertNotNull(this.manager.getHistorique());
         Assert.assertTrue(this.manager.isEditHistorique());
@@ -110,16 +102,14 @@ public class PatientManagerTest
      * Test de la méthode addHistorique.
      */
     @Test
-    public void testAddHistorique()
-    {
+    public void testAddHistorique() {
         this.manager.setBean(new Patient());
         final HistoriquePatient historique = new HistoriquePatient();
         historique.setDate(Calendar.getInstance(EclipseConstants.LOCALE));
         this.manager.setHistorique(historique);
         this.manager.addHistorique();
         Assert.assertNull(this.manager.getHistorique());
-        Assert.assertEquals(1,
-                            this.manager.getBean().getHistoriquePatient().size());
+        Assert.assertEquals(1, this.manager.getBean().getHistoriquePatient().size());
         Assert.assertFalse(this.manager.isEditHistorique());
 
     }
@@ -128,8 +118,7 @@ public class PatientManagerTest
      * Méthode en charge de tester le changement d'onglet.
      */
     @Test
-    public void testOnOngletChange()
-    {
+    public void testOnOngletChange() {
         final TabChangeEvent mockEvent = Mockito.mock(TabChangeEvent.class);
         final Tab tab = Mockito.mock(Tab.class);
         Mockito.when(mockEvent.getTab()).thenReturn(tab);
@@ -142,8 +131,7 @@ public class PatientManagerTest
      * Test de la méthode updateSurfaceCorporelle.
      */
     @Test
-    public void testUpdateInitialesNom()
-    {
+    public void testUpdateInitialesNom() {
         final ValueChangeEvent event = Mockito.mock(ValueChangeEvent.class);
         final UIComponent component = Mockito.mock(UIComponent.class);
         Mockito.when(event.getComponent()).thenReturn(component);
@@ -162,8 +150,7 @@ public class PatientManagerTest
      * Test de la méthode updateSurfaceCorporelle.
      */
     @Test
-    public void testUpdateInitialesPrenom()
-    {
+    public void testUpdateInitialesPrenom() {
         final ValueChangeEvent event = Mockito.mock(ValueChangeEvent.class);
         final UIComponent component = Mockito.mock(UIComponent.class);
         Mockito.when(event.getComponent()).thenReturn(component);
@@ -182,8 +169,7 @@ public class PatientManagerTest
      * Test de la méthode updateSurfaceCorporelle.
      */
     @Test
-    public void testUpdateInitialesEmpty()
-    {
+    public void testUpdateInitialesEmpty() {
         final ValueChangeEvent event = Mockito.mock(ValueChangeEvent.class);
         final UIComponent component = Mockito.mock(UIComponent.class);
         Mockito.when(event.getComponent()).thenReturn(component);
@@ -201,8 +187,7 @@ public class PatientManagerTest
      * Test des autres getters setter.
      */
     @Test
-    public void testGetterSetter()
-    {
+    public void testGetterSetter() {
         this.manager.setInclusionCourante(new Inclusion());
         Assert.assertNotNull(this.manager.getInclusionCourante());
         this.manager.setPrescriptions(Mockito.mock(List.class));

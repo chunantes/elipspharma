@@ -5,16 +5,14 @@ import fr.pharma.eclipse.domain.model.essai.detail.administratif.document.Docume
 
 /**
  * Classe utilitaire pour la génération de documents de tests.
- 
+ * @author Netapsys
  * @version $Revision$ $Date$
  */
-public final class DocumentsUtils
-{
+public final class DocumentsUtils {
     /**
      * Constructeur privé.
      */
-    private DocumentsUtils()
-    {
+    private DocumentsUtils() {
         super();
     }
 
@@ -23,8 +21,7 @@ public final class DocumentsUtils
      * @param id Identifiant technique.
      * @return Le document d'autorité compétente.
      */
-    public static DocumentAutoriteCompetente makeDocumentACTest(final long id)
-    {
+    public static DocumentAutoriteCompetente makeDocumentACTest(final long id) {
         final DocumentAutoriteCompetente doc = new DocumentAutoriteCompetente();
         doc.setType(TypeDocumentEssai.AUTORITE_COMPETENTE);
         doc.setId(id);

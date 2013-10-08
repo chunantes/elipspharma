@@ -1,22 +1,21 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<flow xmlns="http://www.springframework.org/schema/webflow"
-	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-	xsi:schemaLocation="http://www.springframework.org/schema/webflow
-    http://www.springframework.org/schema/webflow/spring-webflow-2.0.xsd" parent="main">
-    
+<flow xmlns="http://www.springframework.org/schema/webflow" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.springframework.org/schema/webflow
+    http://www.springframework.org/schema/webflow/spring-webflow-2.0.xsd"
+	parent="main">
+
 	<!-- Démarrage -->
 	<on-start>
-		<evaluate expression="ordonnancierSearchCriteria.clear()"/>
-		<evaluate expression="ordonnancierDispManager.init()"/>
-	</on-start>    
-    
-    <!-- Page principale -->
+		<evaluate expression="ordonnancierSearchCriteria.clear()" />
+		<evaluate expression="ordonnancierDispManager.init()" />
+	</on-start>
+
+	<!-- Page principale -->
 	<view-state id="impressionDispensation" view="../../../../pages/ordonnancier/dispensation/impression/impressionDispensation.xhtml">
 		<transition on="calculerOrdonnancierDisp">
 			<evaluate expression="ordonnancierDispService.calculerOrdonnancier(ordonnancierDispManager.criteria)" result="ordonnancierDispManager.ordonnancier" />
 		</transition>
 		<transition on="imprimerOrdonnancierDisp" />
-		<transition on="error" to="impressionDispensation"/>
+		<transition on="error" to="impressionDispensation" />
 	</view-state>
-    
+
 </flow>

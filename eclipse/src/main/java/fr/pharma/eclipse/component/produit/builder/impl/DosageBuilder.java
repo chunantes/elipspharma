@@ -6,14 +6,12 @@ import fr.pharma.eclipse.component.produit.builder.UnitePrescriptionBuilder;
 import fr.pharma.eclipse.domain.model.produit.Conditionnement;
 
 /**
- * Classe en charge de construire l'unité de prescription pour un conditionnement ayant comme mode
- * de prescription : Dose.
- 
+ * Classe en charge de construire l'unité de prescription pour un
+ * conditionnement ayant comme mode de prescription : Dose.
+ * @author Netapsys
  * @version $Revision$ $Date$
  */
-public class DosageBuilder
-    implements UnitePrescriptionBuilder, Serializable
-{
+public class DosageBuilder implements UnitePrescriptionBuilder, Serializable {
 
     /**
      * SerialVersionUID.
@@ -24,14 +22,10 @@ public class DosageBuilder
      * {@inheritDoc}
      */
     @Override
-    public void build(final Conditionnement conditionnement)
-    {
-        if (conditionnement.getUniteDosage() != null)
-        {
+    public void build(final Conditionnement conditionnement) {
+        if (conditionnement.getUniteDosage() != null) {
             conditionnement.setUnitePrescription(conditionnement.getUniteDosage().getLibelle());
-        }
-        else
-        {
+        } else {
             conditionnement.setUnitePrescription("unité inconnue");
         }
     }

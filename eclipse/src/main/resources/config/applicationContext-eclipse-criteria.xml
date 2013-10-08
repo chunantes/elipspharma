@@ -76,6 +76,7 @@
 		scope="session">
 		<property name="activeOrder" value="dateCreation" />
 		<property name="ascending" value="false"/>
+		<property name="similarToEnabled" value="true"/>
 	</bean>
 
 	<!-- =========================================== -->
@@ -260,6 +261,15 @@
 		class="fr.pharma.eclipse.domain.criteria.ordonnancier.OrdonnancierSearchCriteria"
 		scope="session">
 		<property name="activeOrder" value="dateDebut" />
+	</bean>
+	
+	<!-- ======================================== -->
+	<!-- CRITERE DE RECHERCHE : REPRISE PASSIF      -->
+	<!-- ======================================== -->
+	<bean id="reprisePassifSearchCriteria"
+		class="fr.pharma.eclipse.domain.criteria.reprisePassif.ReprisePassifSearchCriteria"
+		scope="session">
+		<property name="activeOrder" value="dateDispensation" />
 	</bean>
 	
 	<!-- ======================================== -->

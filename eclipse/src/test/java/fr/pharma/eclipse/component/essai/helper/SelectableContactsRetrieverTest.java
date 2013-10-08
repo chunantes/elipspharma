@@ -22,12 +22,10 @@ import fr.pharma.eclipse.utils.PersonneUtils;
 
 /**
  * Test de la classe SelectableContactsRetriever.
- 
+ * @author Netapsys
  * @version $Revision$ $Date$
  */
-public class SelectableContactsRetrieverTest
-    extends AbstractEclipseJUnitTest
-{
+public class SelectableContactsRetrieverTest extends AbstractEclipseJUnitTest {
     /**
      * Classe testée.
      */
@@ -52,8 +50,7 @@ public class SelectableContactsRetrieverTest
      * {@inheritDoc}
      */
     @Override
-    public void setUp()
-    {
+    public void setUp() {
         this.mockedSeeker = Mockito.mock(SelectableContactsSeeker.class);
         this.mockedFilter = Mockito.mock(SelectableContactsFilter.class);
         this.retriever = new SelectableContactsRetriever();
@@ -65,8 +62,7 @@ public class SelectableContactsRetrieverTest
      * {@inheritDoc}
      */
     @Override
-    public void tearDown()
-    {
+    public void tearDown() {
         this.retriever = null;
         this.mockedSeeker = null;
         this.mockedFilter = null;
@@ -76,28 +72,22 @@ public class SelectableContactsRetrieverTest
      * {@inheritDoc}
      */
     @Override
-    public void testInit()
-    {
+    public void testInit() {
         Assert.assertNotNull(this.retriever);
-        Assert.assertEquals(this.mockedFilter,
-                            this.retriever.getFilter());
-        Assert.assertEquals(this.mockedSeeker,
-                            this.retriever.getContactsSeekers().get(0));
+        Assert.assertEquals(this.mockedFilter, this.retriever.getFilter());
+        Assert.assertEquals(this.mockedSeeker, this.retriever.getContactsSeekers().get(0));
     }
 
     /**
      * Test de la méthode retrieveSelectableContacts - mauvais type.
      */
     @Test
-    public void testRetrieveSelectableContactsKo()
-    {
+    public void testRetrieveSelectableContactsKo() {
         final Essai essai = EssaiUtils.makeEssaiTest(1);
         final TypeContact typeContact = SelectableContactsRetrieverTest.TYPE_CONTACT;
         Mockito.when(this.mockedSeeker.supports(typeContact)).thenReturn(false);
 
-        final Collection<? extends Personne> result =
-            this.retriever.retrieveSelectableContacts(essai,
-                                                      typeContact);
+        final Collection<? extends Personne> result = this.retriever.retrieveSelectableContacts(essai, typeContact);
         Assert.assertNotNull(result);
         Assert.assertTrue(result.isEmpty());
     }
@@ -107,8 +97,7 @@ public class SelectableContactsRetrieverTest
      */
     @SuppressWarnings("unchecked")
     @Test
-    public void testRetrieveSelectableContacts()
-    {
+    public void testRetrieveSelectableContacts() {
         long id = 1;
         final Essai essai = EssaiUtils.makeEssaiTest(id++);
         final TypeContact typeContact = SelectableContactsRetrieverTest.TYPE_CONTACT;
@@ -123,27 +112,15 @@ public class SelectableContactsRetrieverTest
         expectedContacts.add(personne3);
 
         Mockito.when(this.mockedSeeker.getContacts(essai)).thenReturn(expectedContacts);
-        Mockito
-                .doAnswer(this.prepareFilterAnswer(essai,
-                                                   typeContact,
-                                                   expectedContacts))
-                .when(this.mockedFilter)
-                .filter(Matchers.any(Essai.class),
-                        Matchers.any(TypeContact.class),
-                        Matchers.anyList());
+        Mockito.doAnswer(this.prepareFilterAnswer(essai, typeContact, expectedContacts)).when(this.mockedFilter)
+                .filter(Matchers.any(Essai.class), Matchers.any(TypeContact.class), Matchers.anyList());
 
-        final Collection<? extends Personne> result =
-            this.retriever.retrieveSelectableContacts(essai,
-                                                      typeContact);
+        final Collection<? extends Personne> result = this.retriever.retrieveSelectableContacts(essai, typeContact);
         Mockito.verify(this.mockedSeeker).getContacts(essai);
-        Mockito.verify(this.mockedFilter).filter(Matchers.any(Essai.class),
-                                                 Matchers.any(TypeContact.class),
-                                                 Matchers.anyList());
+        Mockito.verify(this.mockedFilter).filter(Matchers.any(Essai.class), Matchers.any(TypeContact.class), Matchers.anyList());
         Assert.assertNotNull(result);
-        Assert.assertEquals(expectedContacts.size(),
-                            result.size());
-        for (final Personne personne : expectedContacts)
-        {
+        Assert.assertEquals(expectedContacts.size(), result.size());
+        for (final Personne personne : expectedContacts) {
             Assert.assertTrue(result.contains(personne));
         }
     }
@@ -152,33 +129,26 @@ public class SelectableContactsRetrieverTest
      * Création de l'objet Answer pour le mock du filtre.
      * @param essai Essai attendu.
      * @param typeContact Type de contact attendu.
-     * @param expectedContacts Contacts attendus dans la liste des sélectionnables.
+     * @param expectedContacts Contacts attendus dans la liste des
+     * sélectionnables.
      * @return L'objet Answer.
      */
     private Answer<Object> prepareFilterAnswer(final Essai essai,
                                                final TypeContact typeContact,
-                                               final List<Personne> expectedContacts)
-    {
+                                               final List<Personne> expectedContacts) {
         return new Answer<Object>() {
 
             @SuppressWarnings("unchecked")
             @Override
-            public Object answer(final InvocationOnMock invocation)
-                throws Throwable
-            {
+            public Object answer(final InvocationOnMock invocation) throws Throwable {
                 int i = 0;
                 final Essai argEssai = (Essai) invocation.getArguments()[i++];
                 final TypeContact argTypeContact = (TypeContact) invocation.getArguments()[i++];
-                final Collection<Personne> argSelectable =
-                    (Collection<Personne>) invocation.getArguments()[i++];
-                Assert.assertEquals(essai,
-                                    argEssai);
-                Assert.assertEquals(typeContact,
-                                    argTypeContact);
-                Assert.assertEquals(expectedContacts.size(),
-                                    argSelectable.size());
-                for (final Personne personne : expectedContacts)
-                {
+                final Collection<Personne> argSelectable = (Collection<Personne>) invocation.getArguments()[i++];
+                Assert.assertEquals(essai, argEssai);
+                Assert.assertEquals(typeContact, argTypeContact);
+                Assert.assertEquals(expectedContacts.size(), argSelectable.size());
+                for (final Personne personne : expectedContacts) {
                     Assert.assertTrue(argSelectable.contains(personne));
                 }
                 return null;

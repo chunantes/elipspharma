@@ -28,12 +28,10 @@ import fr.pharma.eclipse.utils.constants.EclipseConstants;
 
 /**
  * Classe en charge de manager les contacts d'un essai.
- 
+ * @author Netapsys
  * @version $Revision$ $Date$
  */
-public class ContactsManager
-    implements Serializable
-{
+public class ContactsManager implements Serializable {
 
     /**
      * Serial ID.
@@ -71,19 +69,19 @@ public class ContactsManager
     private SelectableBeanFactory<Personne> selectableBeanFactory;
 
     /**
-     * Map des initialiseurs de droit d'habilitation par type de contact. (Clé : name de la valeur
-     * de l'énumération de TypeContact.)
+     * Map des initialiseurs de droit d'habilitation par type de contact. (Clé :
+     * name de la valeur de l'énumération de TypeContact.)
      */
     private Map<String, DroitHabilitationInitializer> initializers;
 
     /**
      * Manager des contacts sélectionnables (modifié dans l'IHM).<br>
-     * On utilise un SelectableBeansManager et non un BeansManager pour avoir deux niveaux de
-     * sélection :<br>
+     * On utilise un SelectableBeansManager et non un BeanListManager pour avoir
+     * deux niveaux de sélection :<br>
      * - selectableContactsManager.selected : donne la sélection des contacts.<br>
-     * -selectableContactsManager.bean.selected : donne un second niveau de sélection (utilisé
-     * pour l'attribution des droits pour distinguer Investigateur Co de Investigateur principal
-     * notamment).
+     * -selectableContactsManager.bean.selected : donne un second niveau de
+     * sélection (utilisé pour l'attribution des droits pour distinguer
+     * Investigateur Co de Investigateur principal notamment).
      */
     private SelectableBeansManager<Personne> selectableContactsManager;
 
@@ -109,37 +107,32 @@ public class ContactsManager
      * @return L'ensemble des habilitations du groupe.
      */
     public Set<Habilitation> getGroupeHabilitations(final Essai essai,
-                                                    final GroupeContacts groupe)
-    {
-        return this.habilitationsHelper.getHabilitations(essai,
-                                                         groupe.getDroits());
+                                                    final GroupeContacts groupe) {
+        return this.habilitationsHelper.getHabilitations(essai, groupe.getDroits());
     }
 
     /**
      * Méthode qui indique si l'essai possède un investigateur principal.
      * @param essai Essai à inspecter.
-     * @return true ssi l'essai possède une habilitation avec un droit Investigateur principal.
+     * @return true ssi l'essai possède une habilitation avec un droit
+     * Investigateur principal.
      */
-    public boolean hasInvestigateurPrincipal(final Essai essai)
-    {
-        this.investigateurPrincipal =
-            this.habilitationsHelper.getInvestigateurPrincipal(essai) != null;
+    public boolean hasInvestigateurPrincipal(final Essai essai) {
+        this.investigateurPrincipal = this.habilitationsHelper.getInvestigateurPrincipal(essai) != null;
         return this.investigateurPrincipal;
     }
 
     /**
-     * Méthode qui indique si l'essai possède un investigateur principal en sondant la liste
-     * d'ahabilitation.
+     * Méthode qui indique si l'essai possède un investigateur principal en
+     * sondant la liste d'ahabilitation.
      * @param essai L'essai.
-     * @return true ssi l'essai possède une habilitation avec un droit Investigateur principal.
+     * @return true ssi l'essai possède une habilitation avec un droit
+     * Investigateur principal.
      */
-    public boolean hasInvestigateurPrincipalInList(final EssaiManager essaiManager)
-    {
+    public boolean hasInvestigateurPrincipalInList(final EssaiManager essaiManager) {
         Boolean result = false;
-        for (final Habilitation h : essaiManager.getGroupeInvestigateurs())
-        {
-            if (h.getDroit().equals(Droit.INVESTIGATEUR_PRINCIPAL))
-            {
+        for (final Habilitation h : essaiManager.getGroupeInvestigateurs()) {
+            if (h.getDroit().equals(Droit.INVESTIGATEUR_PRINCIPAL)) {
                 result = true;
             }
         }
@@ -151,50 +144,37 @@ public class ContactsManager
      * Méthode en charge de désactiver les contacts sélectionnés d'un essai.
      * @param essai Essai à inspecter.
      */
-    public void disableContacts(final Essai essai)
-    {
+    public void disableContacts(final Essai essai) {
         final DetailContacts detailContact = essai.getDetailContacts();
         final Personne personneConnectee = this.userService.getPersonne();
-        this.disableContacts(detailContact.getHabilitations(),
-                             personneConnectee);
+        this.disableContacts(detailContact.getHabilitations(), personneConnectee);
     }
 
     /**
      * Méthode en charge d'initialiser la liste des contacts sélectionnables.
      * @param essai Essai à inspecter.
      */
-    public void initSelectableContacts(final Essai essai)
-    {
+    public void initSelectableContacts(final Essai essai) {
         this.selectableContactsManager.getBeans().clear();
         this.selectableContactsManager.resetBeanSelected();
-        this.selectableContactsManager
-                .getBeans()
-                .addAll(this.selectableBeanFactory.getInitializedObjects(this.contactsRetriever
-                        .retrieveSelectableContacts(essai,
-                                                    this.typeContactToAdd)));
+        this.selectableContactsManager.getBeans()
+                .addAll(this.selectableBeanFactory.getInitializedObjects(this.contactsRetriever.retrieveSelectableContacts(essai, this.typeContactToAdd)));
     }
 
     /**
-     * Méthode en charge de valider l'ajout des contacts sélectionnés dans le manager.
+     * Méthode en charge de valider l'ajout des contacts sélectionnés dans le
+     * manager.
      * @param essai Essai sur lequel on ajoute les contacts.
      */
-    public void ajouterContacts(final Essai essai)
-    {
-        final DroitHabilitationInitializer initializer =
-            this.initializers.get(this.typeContactToAdd.name());
-        if (initializer == null)
-        {
-            Log.error(new StringBuilder("[ajouterContacts] ")
-                    .append("Aucun initialiseur pour le type de contact '")
-                    .append(this.typeContactToAdd)
-                    .append("'=> pas d'ajout de contact possible!")
-                    .toString());
+    public void ajouterContacts(final Essai essai) {
+        final DroitHabilitationInitializer initializer = this.initializers.get(this.typeContactToAdd.name());
+        if (initializer == null) {
+            Log.error(new StringBuilder("[ajouterContacts] ").append("Aucun initialiseur pour le type de contact '").append(this.typeContactToAdd)
+                    .append("'=> pas d'ajout de contact possible!").toString());
             return;
         }
 
-        for (final SelectableBean<Personne> nouveauContact : this.selectableContactsManager
-                .getBeansSelected())
-        {
+        for (final SelectableBean<Personne> nouveauContact : this.selectableContactsManager.getBeansSelected()) {
             final Habilitation habilitation = this.habilitationFactory.getInitializedObject();
             habilitation.setPersonne(nouveauContact.getBean());
             habilitation.setDetailContacts(essai.getDetailContacts());
@@ -207,22 +187,20 @@ public class ContactsManager
     /**
      * Méthode en charge de réinitialiser le manager.
      */
-    public void reset()
-    {
+    public void reset() {
         this.selectableContactsManager.getBeans().clear();
         this.selectedHabilitation = null;
     }
 
     /**
-     * Méthode en charge de désactiver les habilitations sélectionnées d'une liste donnée.
+     * Méthode en charge de désactiver les habilitations sélectionnées d'une
+     * liste donnée.
      * @param habilitations Liste des habilitations à traiter.
      * @param personneConnectee Personne connectée.
      */
     private void disableContacts(final SortedSet<Habilitation> habilitations,
-                                 final Personne personneConnectee)
-    {
-        for (final Habilitation habilitation : this.helper.getBeansSelected(habilitations))
-        {
+                                 final Personne personneConnectee) {
+        for (final Habilitation habilitation : this.helper.getBeansSelected(habilitations)) {
             habilitation.setActive(false);
             habilitation.setDateDesactivation(Calendar.getInstance(EclipseConstants.LOCALE));
             habilitation.setAuteurDesactivation(personneConnectee.getLogin());
@@ -231,8 +209,7 @@ public class ContactsManager
     }
 
     public void updateDroit(final Essai essai,
-                            final String droit)
-    {
+                            final String droit) {
         this.getSelectedHabilitation().setDroit(Droit.valueOf(droit));
         this.hasInvestigateurPrincipal(essai);
 
@@ -245,8 +222,7 @@ public class ContactsManager
      * Getter sur helper.
      * @return Retourne le helper.
      */
-    BeanManagerHelper<BeanObject> getHelper()
-    {
+    BeanManagerHelper<BeanObject> getHelper() {
         return this.helper;
     }
 
@@ -254,8 +230,7 @@ public class ContactsManager
      * Setter pour helper.
      * @param helper le helper à écrire.
      */
-    public void setHelper(final BeanManagerHelper<BeanObject> helper)
-    {
+    public void setHelper(final BeanManagerHelper<BeanObject> helper) {
         this.helper = helper;
     }
 
@@ -263,8 +238,7 @@ public class ContactsManager
      * Getter sur userService.
      * @return Retourne le userService.
      */
-    UserService getUserService()
-    {
+    UserService getUserService() {
         return this.userService;
     }
 
@@ -272,8 +246,7 @@ public class ContactsManager
      * Setter pour userService.
      * @param userService le userService à écrire.
      */
-    public void setUserService(final UserService userService)
-    {
+    public void setUserService(final UserService userService) {
         this.userService = userService;
     }
 
@@ -281,8 +254,7 @@ public class ContactsManager
      * Getter sur typeContactToAdd.
      * @return Retourne le typeContactToAdd.
      */
-    public TypeContact getTypeContactToAdd()
-    {
+    public TypeContact getTypeContactToAdd() {
         return this.typeContactToAdd;
     }
 
@@ -290,8 +262,7 @@ public class ContactsManager
      * Setter pour typeContactToAdd.
      * @param typeContactToAdd le typeContactToAdd à écrire.
      */
-    public void setTypeContactToAdd(final TypeContact typeContactToAdd)
-    {
+    public void setTypeContactToAdd(final TypeContact typeContactToAdd) {
         this.typeContactToAdd = typeContactToAdd;
     }
 
@@ -299,8 +270,7 @@ public class ContactsManager
      * Getter sur contactsRetriever.
      * @return Retourne le contactsRetriever.
      */
-    SelectableContactsRetriever getContactsRetriever()
-    {
+    SelectableContactsRetriever getContactsRetriever() {
         return this.contactsRetriever;
     }
 
@@ -308,8 +278,7 @@ public class ContactsManager
      * Setter pour contactsRetriever.
      * @param contactsRetriever le contactsRetriever à écrire.
      */
-    public void setContactsRetriever(final SelectableContactsRetriever contactsRetriever)
-    {
+    public void setContactsRetriever(final SelectableContactsRetriever contactsRetriever) {
         this.contactsRetriever = contactsRetriever;
     }
 
@@ -317,8 +286,7 @@ public class ContactsManager
      * Getter sur habilitationFactory.
      * @return Retourne le habilitationFactory.
      */
-    HabilitationFactory getHabilitationFactory()
-    {
+    HabilitationFactory getHabilitationFactory() {
         return this.habilitationFactory;
     }
 
@@ -326,8 +294,7 @@ public class ContactsManager
      * Setter pour habilitationFactory.
      * @param habilitationFactory le habilitationFactory à écrire.
      */
-    public void setHabilitationFactory(final HabilitationFactory habilitationFactory)
-    {
+    public void setHabilitationFactory(final HabilitationFactory habilitationFactory) {
         this.habilitationFactory = habilitationFactory;
     }
 
@@ -335,8 +302,7 @@ public class ContactsManager
      * Getter sur initializers.
      * @return Retourne le initializers.
      */
-    Map<String, DroitHabilitationInitializer> getInitializers()
-    {
+    Map<String, DroitHabilitationInitializer> getInitializers() {
         return this.initializers;
     }
 
@@ -344,8 +310,7 @@ public class ContactsManager
      * Setter pour initializers.
      * @param initializers le initializers à écrire.
      */
-    public void setInitializers(final Map<String, DroitHabilitationInitializer> initializers)
-    {
+    public void setInitializers(final Map<String, DroitHabilitationInitializer> initializers) {
         this.initializers = initializers;
     }
 
@@ -353,8 +318,7 @@ public class ContactsManager
      * Getter sur selectableBeanFactory.
      * @return Retourne le selectableBeanFactory.
      */
-    SelectableBeanFactory<Personne> getSelectableBeanFactory()
-    {
+    SelectableBeanFactory<Personne> getSelectableBeanFactory() {
         return this.selectableBeanFactory;
     }
 
@@ -362,8 +326,7 @@ public class ContactsManager
      * Setter pour selectableBeanFactory.
      * @param selectableBeanFactory le selectableBeanFactory à écrire.
      */
-    public void setSelectableBeanFactory(final SelectableBeanFactory<Personne> selectableBeanFactory)
-    {
+    public void setSelectableBeanFactory(final SelectableBeanFactory<Personne> selectableBeanFactory) {
         this.selectableBeanFactory = selectableBeanFactory;
     }
 
@@ -371,8 +334,7 @@ public class ContactsManager
      * Setter pour selectableContactsManager.
      * @param selectableContactsManager le selectableContactsManager à écrire.
      */
-    public void setSelectableContactsManager(final SelectableBeansManager<Personne> selectableContactsManager)
-    {
+    public void setSelectableContactsManager(final SelectableBeansManager<Personne> selectableContactsManager) {
         this.selectableContactsManager = selectableContactsManager;
     }
 
@@ -380,8 +342,7 @@ public class ContactsManager
      * Getter sur selectableContactsManager.
      * @return Retourne le selectableContactsManager.
      */
-    SelectableBeansManager<Personne> getSelectableContactsManager()
-    {
+    SelectableBeansManager<Personne> getSelectableContactsManager() {
         return this.selectableContactsManager;
     }
 
@@ -389,8 +350,7 @@ public class ContactsManager
      * Getter sur habilitationsHelper.
      * @return Retourne le habilitationsHelper.
      */
-    HabilitationsHelper getHabilitationsHelper()
-    {
+    HabilitationsHelper getHabilitationsHelper() {
         return this.habilitationsHelper;
     }
 
@@ -398,8 +358,7 @@ public class ContactsManager
      * Setter pour habilitationsHelper.
      * @param habilitationsHelper le habilitationsHelper à écrire.
      */
-    public void setHabilitationsHelper(final HabilitationsHelper habilitationsHelper)
-    {
+    public void setHabilitationsHelper(final HabilitationsHelper habilitationsHelper) {
         this.habilitationsHelper = habilitationsHelper;
     }
 
@@ -407,8 +366,7 @@ public class ContactsManager
      * Getter sur selectedHabilitation.
      * @return Retourne le selectedHabilitation.
      */
-    public Habilitation getSelectedHabilitation()
-    {
+    public Habilitation getSelectedHabilitation() {
         return this.selectedHabilitation;
     }
 
@@ -416,8 +374,7 @@ public class ContactsManager
      * Setter pour selectedHabilitation.
      * @param selectedHabilitation le selectedHabilitation à écrire.
      */
-    public void setSelectedHabilitation(final Habilitation selectedHabilitation)
-    {
+    public void setSelectedHabilitation(final Habilitation selectedHabilitation) {
         this.selectedHabilitation = selectedHabilitation;
     }
 
@@ -425,8 +382,7 @@ public class ContactsManager
      * Getter pour investigateurPrincipal.
      * @return Le investigateurPrincipal
      */
-    public Boolean getInvestigateurPrincipal()
-    {
+    public Boolean getInvestigateurPrincipal() {
         return this.investigateurPrincipal;
     }
 
@@ -434,8 +390,7 @@ public class ContactsManager
      * Setter pour investigateurPrincipal.
      * @param investigateurPrincipal Le investigateurPrincipal à écrire.
      */
-    public void setInvestigateurPrincipal(final Boolean investigateurPrincipal)
-    {
+    public void setInvestigateurPrincipal(final Boolean investigateurPrincipal) {
         this.investigateurPrincipal = investigateurPrincipal;
     }
 }

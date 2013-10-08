@@ -12,20 +12,17 @@ import fr.pharma.eclipse.exception.ValidationException;
 
 /**
  * Handler d'exception pour ValidationExceptionHandler (validation eclipse).
- 
+ * @author Netapsys
  * @version $Revision$ $Date$
  */
-public class ValidationExceptionHandler
-    implements ExceptionHandler
-{
+public class ValidationExceptionHandler implements ExceptionHandler {
 
     /**
      * {@inheritDoc}
      */
     @Override
     public void handle(final Exception exception,
-                       final RequestControlContext context)
-    {
+                       final RequestControlContext context) {
         final ValidationException exValidation = (ValidationException) exception.getCause();
         // Construction de la clé du message.
         final StringBuilder strToResolve = new StringBuilder();
@@ -33,16 +30,12 @@ public class ValidationExceptionHandler
         strToResolve.append(".");
         strToResolve.append(exValidation.getValues()[0]);
         final MessageBuilder builder = new MessageBuilder().error();
-        builder.codes(new String[]
-        {strToResolve.toString() });
+        builder.codes(new String[]{strToResolve.toString() });
 
         // Construction des arguments du message.
         final int valuesSize = exValidation.getValues().length;
-        if (valuesSize > 1)
-        {
-            final String[] args = Arrays.copyOfRange(exValidation.getValues(),
-                                                     1,
-                                                     valuesSize);
+        if (valuesSize > 1) {
+            final String[] args = Arrays.copyOfRange(exValidation.getValues(), 1, valuesSize);
             builder.args(args);
         }
 
@@ -51,17 +44,12 @@ public class ValidationExceptionHandler
 
         String messageKey = StringUtils.EMPTY;
         messageKey = exValidation.getValues()[0];
-        context.getFlashScope().put("messageContextKey",
-                                    messageKey);
-        context.getFlashScope().put("messageContext",
-                                    context.getMessageContext());
-        context.getFlashScope().put("messageSource",
-                                    exValidation.getSource());
+        context.getFlashScope().put("messageContextKey", messageKey);
+        context.getFlashScope().put("messageContext", context.getMessageContext());
+        context.getFlashScope().put("messageSource", exValidation.getSource());
 
-        final String excAtt2 =
-            TransitionExecutingFlowExecutionExceptionHandler.ROOT_CAUSE_EXCEPTION_ATTRIBUTE;
-        context.getFlashScope().put(excAtt2,
-                                    exValidation);
+        final String excAtt2 = TransitionExecutingFlowExecutionExceptionHandler.ROOT_CAUSE_EXCEPTION_ATTRIBUTE;
+        context.getFlashScope().put(excAtt2, exValidation);
 
     }
 

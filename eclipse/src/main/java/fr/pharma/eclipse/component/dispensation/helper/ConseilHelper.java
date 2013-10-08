@@ -9,13 +9,12 @@ import fr.pharma.eclipse.domain.model.prescription.ProduitPrescrit;
 import fr.pharma.eclipse.service.dispensation.builder.ConseilDispensationBuilder;
 
 /**
- * Helper au manager DispensationManager en charge de construire les messages de conseils.
- 
+ * Helper au manager DispensationManager en charge de construire les messages de
+ * conseils.
+ * @author Netapsys
  * @version $Revision$ $Date$
  */
-public class ConseilHelper
-    implements Serializable
-{
+public class ConseilHelper implements Serializable {
 
     /**
      * COnstructeur de conseil à la dispensation.
@@ -38,11 +37,9 @@ public class ConseilHelper
     {
         String conseilText = "";
         ConseilDispensation conseil = null;
-        if (this.conseilBuilder.support(produitPrescrit))
-        {
+        if (this.conseilBuilder.support(produitPrescrit)) {
             conseil = this.conseilBuilder.build(produitPrescrit);
-            if (conseil != null)
-            {
+            if (conseil != null) {
                 conseilText = this.conseilBuilder.format(conseil);
             }
         }
@@ -53,8 +50,7 @@ public class ConseilHelper
      * Setter pour builder.
      * @param builder le builder à écrire.
      */
-    public void setBuilder(final ConseilDispensationBuilder builder)
-    {
+    public void setBuilder(final ConseilDispensationBuilder builder) {
         this.conseilBuilder = builder;
     }
 

@@ -14,16 +14,16 @@ import fr.pharma.eclipse.utils.constants.EclipseConstants;
 import fr.pharma.eclipse.utils.introspection.BeanTool;
 
 /**
- * Classe générique en charge de gérer les documents liés aux protocoles sur un essai clinique.
+ * Classe générique en charge de gérer les documents liés aux protocoles sur un
+ * essai clinique.
  * @param <DOC> Type générique de document d'essai.
- * @param <PARENT> Type dérivé de {@link BeanObject} représentant le parent du document.
- 
+ * @param <PARENT> Type dérivé de {@link BeanObject} représentant le parent du
+ * document.
+ * @author Netapsys
  * @version $Revision$ $Date$
  */
-public class DocumentBrochureProduitsManager<DOC extends DocumentBrochureProduits, PARENT extends BeanObject>
-    extends GenericDocumentEssaiManager<DOC, PARENT>
-    implements Serializable
-{
+public class DocumentBrochureProduitsManager<DOC extends DocumentBrochureProduits, PARENT extends BeanObject> extends GenericDocumentEssaiManager<DOC, PARENT> implements
+    Serializable {
 
     /**
      * Serial ID.
@@ -48,35 +48,26 @@ public class DocumentBrochureProduitsManager<DOC extends DocumentBrochureProduit
     /**
      * Constructeur.
      * @param typeDocumentsName Nom du type des documents managés.
-     * @throws IllegalArgumentException Si typeDocumentsName ne correspond pas à une valeur de
-     * l'énumération {@link TypeDocumentEssai}.
+     * @throws IllegalArgumentException Si typeDocumentsName ne correspond pas à
+     * une valeur de l'énumération {@link TypeDocumentEssai}.
      */
-    public DocumentBrochureProduitsManager(final String typeDocumentsName)
-    {
+    public DocumentBrochureProduitsManager(final String typeDocumentsName) {
         super(typeDocumentsName);
     }
 
     @Override
     @SuppressWarnings("unchecked")
-    public DOC createDocument(final Essai essai)
-    {
+    public DOC createDocument(final Essai essai) {
         // Document BDD.
-        final PARENT parent =
-            (PARENT) BeanTool.getPropriete(essai,
-                                           this.getTypeDocuments()
-                                                   .getDocumentsParentPropertyFromEssai());
-        final DOC doc = this.getFactory().getInitializedObject(parent,
-                                                               this.getFichier(),
-                                                               this.getCommentaire().trim());
+        final PARENT parent = (PARENT) BeanTool.getPropriete(essai, this.getTypeDocuments().getDocumentsParentPropertyFromEssai());
+        final DOC doc = this.getFactory().getInitializedObject(parent, this.getFichier(), this.getCommentaire().trim());
 
         doc.setDateMaj(this.date);
         doc.setTypeDocumentBrochure(this.typeDocumentBrochure);
-        doc.setVersion(this.version);
+        doc.setVersionDoc(this.version);
 
         // Document Physique.
-        this.getDocService().saveOnDisk(essai,
-                                        doc,
-                                        this.getFichier());
+        this.getDocService().saveOnDisk(essai, doc, this.getFichier());
 
         this.resetFormDatas();
         return doc;
@@ -86,17 +77,16 @@ public class DocumentBrochureProduitsManager<DOC extends DocumentBrochureProduit
      * {@inheritDoc}
      */
     @Override
-    public boolean canCreateDocument()
-    {
+    public boolean canCreateDocument() {
         return true;
     }
 
     /**
-     * Méthode de réinitialisation des données du formulaire (fichier + commentaire).
+     * Méthode de réinitialisation des données du formulaire (fichier +
+     * commentaire).
      */
     @Override
-    public void resetFormDatas()
-    {
+    public void resetFormDatas() {
         super.resetFormDatas();
         this.version = StringUtils.EMPTY;
         this.typeDocumentBrochure = null;
@@ -106,8 +96,7 @@ public class DocumentBrochureProduitsManager<DOC extends DocumentBrochureProduit
      * Getter pour version.
      * @return Le version
      */
-    public String getVersion()
-    {
+    public String getVersion() {
         return this.version;
     }
 
@@ -115,8 +104,7 @@ public class DocumentBrochureProduitsManager<DOC extends DocumentBrochureProduit
      * Setter pour version.
      * @param version Le version à écrire.
      */
-    public void setVersion(final String version)
-    {
+    public void setVersion(final String version) {
         this.version = version;
     }
 
@@ -124,8 +112,7 @@ public class DocumentBrochureProduitsManager<DOC extends DocumentBrochureProduit
      * Getter pour typeDocumentBrochure.
      * @return Le typeDocumentBrochure
      */
-    public TypeDocumentBrochure getTypeDocumentBrochure()
-    {
+    public TypeDocumentBrochure getTypeDocumentBrochure() {
         return this.typeDocumentBrochure;
     }
 
@@ -133,8 +120,7 @@ public class DocumentBrochureProduitsManager<DOC extends DocumentBrochureProduit
      * Setter pour typeDocumentBrochure.
      * @param typeDocumentBrochure Le typeDocumentBrochure à écrire.
      */
-    public void setTypeDocumentBrochure(final TypeDocumentBrochure typeDocumentBrochure)
-    {
+    public void setTypeDocumentBrochure(final TypeDocumentBrochure typeDocumentBrochure) {
         this.typeDocumentBrochure = typeDocumentBrochure;
     }
 
@@ -142,8 +128,7 @@ public class DocumentBrochureProduitsManager<DOC extends DocumentBrochureProduit
      * Getter pour date.
      * @return Le date
      */
-    public Calendar getDate()
-    {
+    public Calendar getDate() {
         return this.date;
     }
 
@@ -151,8 +136,7 @@ public class DocumentBrochureProduitsManager<DOC extends DocumentBrochureProduit
      * Setter pour date.
      * @param date Le date à écrire.
      */
-    public void setDate(final Calendar date)
-    {
+    public void setDate(final Calendar date) {
         this.date = date;
     }
 

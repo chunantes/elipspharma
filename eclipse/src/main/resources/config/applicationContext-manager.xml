@@ -47,11 +47,11 @@
 	<!-- ================== -->
 	<!-- PHARMACIES MANAGER -->
 	<!-- ================== -->
-	<bean id="pharmaciesManager" class="fr.pharma.eclipse.component.BeansManager"
+	<bean id="pharmaciesManager" class="fr.pharma.eclipse.component.BeanListManager"
 		scope="session" lazy-init="true">
 		<constructor-arg index="0" ref="pharmacieSearchCriteria" />
 	</bean>
-	<bean id="pharmaciePrincipaleManager" class="fr.pharma.eclipse.component.BeansManager"
+	<bean id="pharmaciePrincipaleManager" class="fr.pharma.eclipse.component.BeanListManager"
 		scope="session" lazy-init="true">
 		<constructor-arg index="0" ref="pharmacieSearchCriteria" />
 	</bean>
@@ -83,7 +83,7 @@
 	<!-- ====================== -->
 	<!-- ETABLISSEMENTS MANAGER -->
 	<!-- ====================== -->
-	<bean id="etablissementsManager" class="fr.pharma.eclipse.component.BeansManager"
+	<bean id="etablissementsManager" class="fr.pharma.eclipse.component.BeanListManager"
 		scope="session" lazy-init="true">
 		<constructor-arg index="0" ref="etablissementSearchCriteria" />
 	</bean>
@@ -99,7 +99,7 @@
 	<!-- ====================== -->
 	<!-- SITES MANAGER          -->
 	<!-- ====================== -->
-	<bean id="sitesManager" class="fr.pharma.eclipse.component.BeansManager"
+	<bean id="sitesManager" class="fr.pharma.eclipse.component.BeanListManager"
 		scope="session" lazy-init="true">
 		<constructor-arg index="0" ref="siteSearchCriteria" />
 	</bean>
@@ -120,7 +120,7 @@
 	<!-- ====================== -->
 	<!-- SERVICES MANAGER       -->
 	<!-- ====================== -->
-	<bean id="servicesManager" class="fr.pharma.eclipse.component.BeansManager"
+	<bean id="servicesManager" class="fr.pharma.eclipse.component.BeanListManager"
 		scope="session" lazy-init="true">
 		<constructor-arg index="0" ref="serviceSearchCriteria" />
 	</bean>
@@ -157,7 +157,7 @@
 	<!-- ====================== -->
 	<!-- PROMOTEURS MANAGER     -->
 	<!-- ====================== -->
-	<bean id="promoteursManager" class="fr.pharma.eclipse.component.BeansManager"
+	<bean id="promoteursManager" class="fr.pharma.eclipse.component.BeanListManager"
 		scope="session" lazy-init="true">
 		<constructor-arg index="0" ref="promoteurSearchCriteria" />
 	</bean>
@@ -173,7 +173,7 @@
 	<!-- ====================== -->
 	<!-- POLES MANAGER          -->
 	<!-- ====================== -->
-	<bean id="polesManager" class="fr.pharma.eclipse.component.BeansManager"
+	<bean id="polesManager" class="fr.pharma.eclipse.component.BeanListManager"
 		scope="session" lazy-init="true">
 		<constructor-arg index="0" ref="poleSearchCriteria" />
 	</bean>
@@ -348,7 +348,7 @@
 	<!-- ====================== -->
 	<!-- PRODUITS  MANAGER      -->
 	<!-- ====================== -->
-	<bean id="produitsManager" class="fr.pharma.eclipse.component.produit.ProduitsManager"
+	<bean id="produitsManager" class="fr.pharma.eclipse.component.produit.ProduitListManager"
 		scope="session" lazy-init="true">
 		<constructor-arg index="0" ref="produitSearchCriteria" />
 		<property name="typeProduitDictionary">
@@ -364,8 +364,8 @@
 	<!-- ======================== -->
 	<!-- CONDITIONNEMENTS MANAGER -->
 	<!-- ======================== -->
-	<bean id="conditionnementsManager"
-		class="fr.pharma.eclipse.component.produit.ConditionnementsManager"
+	<bean id="conditionnementListManager"
+		class="fr.pharma.eclipse.component.produit.ConditionnementListManager"
 		scope="session" lazy-init="true">
 		<constructor-arg index="0" ref="conditionnementSearchCriteria" />
 		<property name="redirectDictionary" ref="redirectProduitDictionary" />
@@ -408,7 +408,7 @@
 	<!-- CONDITIONNEMENTS MANAGER -->
 	<!-- ======================== -->
 	<bean id="detailsStockagesManager"
-		class="fr.pharma.eclipse.component.produit.DetailsStockagesManager"
+		class="fr.pharma.eclipse.component.produit.DetailStockageListManager"
 		scope="session" lazy-init="true">
 		<constructor-arg index="0" ref="detailStockageSearchCriteria" />
 		<property name="redirectDictionary" ref="redirectProduitDictionary" />
@@ -491,7 +491,15 @@
 	<!-- =========================== -->
 	<!-- PPRESCRIPTIONs TYPE MANAGER -->
 	<!-- =========================== -->
-	<bean id="prescriptionsManager" class="fr.pharma.eclipse.component.prescription.PrescriptionsManager" 
+	<bean id="prescriptionsManager" class="fr.pharma.eclipse.component.prescription.PrescriptionListManager" 
+		scope="session" lazy-init="true">
+		<constructor-arg index="0" ref="prescriptionSearchCriteria" />
+	</bean>
+	
+	<!-- =========================== -->
+	<!-- PPRESCRIPTION DTO MANAGER   -->
+	<!-- =========================== -->
+	<bean id="prescriptionDTOManager" class="fr.pharma.eclipse.component.prescription.PrescriptionDTOManager" 
 		scope="session" lazy-init="true">
 		<constructor-arg index="0" ref="prescriptionSearchCriteria" />
 	</bean>
@@ -507,7 +515,7 @@
 	<!-- ====================== -->
 	<!-- PPRESCRIPTIONs MANAGER -->
 	<!-- ====================== -->
-	<bean id="prescriptionsTypeManager" class="fr.pharma.eclipse.component.BeansManager"
+	<bean id="prescriptionsTypeManager" class="fr.pharma.eclipse.component.BeanListManager"
 		scope="session" lazy-init="true">
 		<constructor-arg index="0" ref="prescriptionTypeSearchCriteria" />
 	</bean>
@@ -515,7 +523,7 @@
 	<!-- ========================= -->
 	<!-- PRODUITSPRESCRITS MANAGER -->
 	<!-- ========================= -->
-	<bean id="produitsPrescritsManager" class="fr.pharma.eclipse.component.BeansManager"
+	<bean id="produitsPrescritsManager" class="fr.pharma.eclipse.component.BeanListManager"
 		scope="session" lazy-init="true">
 		<constructor-arg index="0" ref="produitPrescritSearchCriteria" />
 	</bean>
@@ -537,9 +545,17 @@
 	</bean>
 	
 	<!-- =========================== -->
+	<!-- DISPENSATION DTO MANAGER    -->
+	<!-- =========================== -->
+	<bean id="dispensationDTOManager" class="fr.pharma.eclipse.component.dispensation.DispensationDTOManager" 
+		scope="session" lazy-init="true">
+		<constructor-arg index="0" ref="dispensationSearchCriteria" />
+	</bean>	
+	
+	<!-- =========================== -->
 	<!-- DISPENSATIONS MANAGER -->
 	<!-- =========================== -->
-	<bean id="dispensationsManager" class="fr.pharma.eclipse.component.dispensation.DispensationsManager" 
+	<bean id="dispensationsManager" class="fr.pharma.eclipse.component.dispensation.DispensationListManager" 
 		scope="session" lazy-init="true">
 		<constructor-arg index="0" ref="dispensationSearchCriteria" />
 	</bean>
@@ -589,7 +605,7 @@
 	<!-- ========================== -->
 	<bean id="sortieManager"
 		class="fr.pharma.eclipse.component.stock.SortieManager"
-		scope="session" lazy-init="true">
+		scope="conversation" lazy-init="true">
 	</bean>
 	
 	<util:map id="mapFactoriesByTypeMouvement" map-class="java.util.HashMap">
@@ -628,7 +644,7 @@
 	<!-- ========================== -->
 	<!-- MOUVEMENTS STOCK MANAGER 	-->
 	<!-- ========================== -->	
-	<bean id="mouvementsStockManager" class="fr.pharma.eclipse.component.BeansManager"
+	<bean id="mouvementsStockManager" class="fr.pharma.eclipse.component.BeanListManager"
 		scope="session" lazy-init="true">
 		<constructor-arg index="0" ref="mouvementStockSearchCriteria" />
 	</bean>
@@ -898,7 +914,7 @@
 				<entry key="PROTOCOLE" value-ref="documentProtocoleEssaiManager" />
 				<entry key="BROCHURE_PDUITS" value-ref="documentBrochureProduitsEssaiManager" />
 				<entry key="AUTORISATION_IMPORTATION" value-ref="documentAutorisationImportationEssaiManager" />
-				<entry key="AUTORISAITON_DISTRIBUTION" value-ref="documentAutorisationDistributionEssaiManager" />
+				<entry key="AUTORISATION_DISTRIBUTION" value-ref="documentAutorisationDistributionEssaiManager" />
 				<entry key="AUTRE" value-ref="documentAutreEssaiManager" />
 			</map>
 		</property>
@@ -922,8 +938,7 @@
 	<!-- ====================== -->
 	<!-- ESSAI MANAGER          -->
 	<!-- ====================== -->
-	<bean id="essaisManager" class="fr.pharma.eclipse.component.essai.EssaisManager"
-		scope="session" lazy-init="true">
+	<bean id="essaisManager" class="fr.pharma.eclipse.component.essai.EssaiListManager" scope="conversation">
 		<constructor-arg index="0" ref="essaiSearchCriteria" />
 	</bean>
 	<bean id="essaiSigrecManager" class="fr.pharma.eclipse.component.BeanManager"
@@ -934,15 +949,14 @@
 	<!-- ====================== -->
 	<!-- PATIENT MANAGER        -->
 	<!-- ====================== -->
-	<bean id="patientManager" class="fr.pharma.eclipse.component.patient.PatientManager"
-		parent="genericBeanManager" scope="conversation" lazy-init="true">
+	<bean id="patientManager" class="fr.pharma.eclipse.component.patient.PatientManager" parent="genericBeanManager" scope="conversation">
 		<constructor-arg index="0" ref="patientService" />
 	</bean>
 
 	<!-- ====================== -->
 	<!-- PATIENTS MANAGER          -->
 	<!-- ====================== -->
-	<bean id="patientsManager" class="fr.pharma.eclipse.component.patient.PatientsManager"
+	<bean id="patientsManager" class="fr.pharma.eclipse.component.patient.PatientListManager"
 		scope="session" lazy-init="true">
 		<constructor-arg index="0" ref="patientSearchCriteria" />
 	</bean>
@@ -950,7 +964,7 @@
 	<!-- ====================== -->
 	<!-- EVENEMENTS             -->
 	<!-- ====================== -->
-	<bean id="evenementsManager" class="fr.pharma.eclipse.component.evenement.EvenementsManager"
+	<bean id="evenementsManager" class="fr.pharma.eclipse.component.evenement.EvenementListManager"
 		scope="session" lazy-init="true">
 		<constructor-arg index="0" ref="evenementSearchCriteria" />
 	</bean>
@@ -966,7 +980,7 @@
 	<!-- ====================== -->
 	<!-- INCIDENTS        	    -->
 	<!-- ====================== -->
-	<bean id="incidentsManager" class="fr.pharma.eclipse.component.BeansManager"
+	<bean id="incidentsManager" class="fr.pharma.eclipse.component.BeanListManager"
 		scope="session" lazy-init="true">
 		<constructor-arg index="0" ref="incidentSearchCriteria" />
 	</bean>
@@ -983,7 +997,7 @@
 	<!-- ====================== -->
 	<!-- ESSAIS MANAGER SIGREC  -->
 	<!-- ====================== -->
-	<bean id="essaisSigrecManager" class="fr.pharma.eclipse.component.BeansManager"
+	<bean id="essaisSigrecManager" class="fr.pharma.eclipse.component.BeanListManager"
 		scope="session" lazy-init="true">
 		<constructor-arg index="0" ref="essaiSigrecSearchCriteria" />
 	</bean>
@@ -1019,13 +1033,14 @@
 	<!-- ============================ -->
 	<!-- ACCUEIL MANAGER              -->
 	<!-- ============================ -->
-	<bean id="accueilManager" class="fr.pharma.eclipse.component.accueil.AccueilManager" scope="session" lazy-init="true"/>
+	<bean id="accueilManager" class="fr.pharma.eclipse.component.accueil.AccueilManager" scope="session" lazy-init="true">
+	</bean>
 
 	<!-- ======================== -->
 	<!-- GRILLES MODELE MANAGER   -->
 	<!-- ======================== -->
 	<bean id="grillesModeleManager"
-		class="fr.pharma.eclipse.component.BeansManager"
+		class="fr.pharma.eclipse.component.BeanListManager"
 		scope="session" lazy-init="true">
 		<constructor-arg index="0" ref="grilleModeleSearchCriteria" />
 	</bean>
@@ -1081,6 +1096,15 @@
 		scope="session" lazy-init="true">
 		<constructor-arg index="0" ref="ordonnancierSearchCriteria" />
 	</bean>	
+	
+	<!-- =================================== -->
+	<!-- REPRISE PASSIF   -->
+	<!-- =================================== -->
+	<bean id="reprisePassifManager"
+		class="fr.pharma.eclipse.component.reprisePassif.ReprisePassifManager"
+		scope="session" lazy-init="true">
+		<constructor-arg index="0" ref="reprisePassifSearchCriteria" />
+	</bean>
 
 	<!-- ====================== -->
 	<!-- RETOUR PATIENT MANAGER -->
@@ -1093,8 +1117,7 @@
 	<!-- ====================== -->
 	<!-- RETOURS PATIENT MANAGER-->
 	<!-- ====================== -->
-	<bean id="retoursPatientManager" class="fr.pharma.eclipse.component.stock.RetoursPatientManager" 
-	scope="session" lazy-init="true">
+	<bean id="retoursPatientManager" class="fr.pharma.eclipse.component.stock.RetourPatientListManager" scope="conversation">
 		<constructor-arg index="0" ref="retourPatientSearchCriteria" />
 	</bean>
 

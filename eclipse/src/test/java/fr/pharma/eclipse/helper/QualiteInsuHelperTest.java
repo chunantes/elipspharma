@@ -10,12 +10,10 @@ import fr.pharma.eclipse.utils.AbstractEclipseJUnitTest;
 
 /**
  * Test de la classe QualiteInsuHelper.
- 
+ * @author Netapsys
  * @version $Revision$ $Date$
  */
-public class QualiteInsuHelperTest
-    extends AbstractEclipseJUnitTest
-{
+public class QualiteInsuHelperTest extends AbstractEclipseJUnitTest {
     /**
      * Helper.
      */
@@ -30,8 +28,7 @@ public class QualiteInsuHelperTest
      * {@inheritDoc}
      */
     @Override
-    public void setUp()
-    {
+    public void setUp() {
         this.service = Mockito.mock(UserService.class);
         this.helper = new DroitAccesHelper();
         this.helper.setUserService(this.service);
@@ -41,8 +38,7 @@ public class QualiteInsuHelperTest
      * {@inheritDoc}
      */
     @Override
-    public void tearDown()
-    {
+    public void tearDown() {
         this.service = null;
         this.helper = null;
     }
@@ -52,8 +48,7 @@ public class QualiteInsuHelperTest
      */
     @Override
     @Test
-    public void testInit()
-    {
+    public void testInit() {
         Assert.assertNotNull(this.service);
         Assert.assertNotNull(this.helper);
     }

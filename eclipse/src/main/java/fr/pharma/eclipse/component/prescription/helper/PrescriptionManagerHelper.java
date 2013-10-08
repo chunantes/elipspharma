@@ -18,12 +18,10 @@ import fr.pharma.eclipse.service.common.GenericService;
 
 /**
  * Helper du manager PrescriptionManager.
- 
+ * @author Netapsys
  * @version $Revision$ $Date$
  */
-public class PrescriptionManagerHelper
-    implements Serializable
-{
+public class PrescriptionManagerHelper implements Serializable {
 
     /**
      * Factory de ProduitPrescrit.
@@ -43,17 +41,13 @@ public class PrescriptionManagerHelper
     private static final long serialVersionUID = 5433380424627166099L;
 
     /**
-     * Méthode en charge de mettre à jour les produits prescrits de la prescription avec les
-     * prescriptions types définies dans la sequence.
+     * Méthode en charge de mettre à jour les produits prescrits de la
+     * prescription avec les prescriptions types définies dans la sequence.
      * @param prescription La prescription.
      */
-    public void initProduitsPrescrits(final Prescription prescription)
-    {
-        for (final PrescriptionType p : prescription.getSequence().getPrescriptions())
-        {
-            prescription.getProduitsPrescrits().add(this.factory
-                    .getInitializedObject(p,
-                                          prescription));
+    public void initProduitsPrescrits(final Prescription prescription) {
+        for (final PrescriptionType p : prescription.getSequence().getPrescriptions()) {
+            prescription.getProduitsPrescrits().add(this.factory.getInitializedObject(p, prescription));
         }
     }
 
@@ -63,11 +57,9 @@ public class PrescriptionManagerHelper
      * @return Les conditionnements.
      */
     @SuppressWarnings("unchecked")
-    public DataModel<Conditionnement> getConditionnements(final Produit p)
-    {
+    public DataModel<Conditionnement> getConditionnements(final Produit p) {
         final List<Conditionnement> list = new ArrayList<Conditionnement>();
-        if (p != null)
-        {
+        if (p != null) {
             list.addAll(this.produitService.reattach(p).getConditionnements());
         }
         return new SerializableListDataModel(list);
@@ -77,8 +69,7 @@ public class PrescriptionManagerHelper
      * Setter pour produitService.
      * @param produitService le produitService à écrire.
      */
-    public void setProduitService(final GenericService<Produit> produitService)
-    {
+    public void setProduitService(final GenericService<Produit> produitService) {
         this.produitService = produitService;
     }
 
@@ -86,8 +77,7 @@ public class PrescriptionManagerHelper
      * Setter pour factory.
      * @param factory le factory à écrire.
      */
-    public void setFactory(final ProduitPrescritFactory factory)
-    {
+    public void setFactory(final ProduitPrescritFactory factory) {
         this.factory = factory;
     }
 

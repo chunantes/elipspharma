@@ -1,33 +1,32 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<flow xmlns="http://www.springframework.org/schema/webflow"
-	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-	xsi:schemaLocation="http://www.springframework.org/schema/webflow
-    http://www.springframework.org/schema/webflow/spring-webflow-2.0.xsd" parent="main">
+<flow xmlns="http://www.springframework.org/schema/webflow" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.springframework.org/schema/webflow
+    http://www.springframework.org/schema/webflow/spring-webflow-2.0.xsd"
+	parent="main">
 
 	<!-- Variable d'entrée -->
 	<input name="idPharmacie" />
-	
+
 	<on-start>
-		<evaluate expression="etablissementSearchCriteria.clear()"/>
-		<evaluate expression="etablissementService.getAll(etablissementSearchCriteria)" result="etablissementsManager.beans"/>
-		<evaluate expression="pharmacieManager.setIndexOngletCourant(0)"/>
-		<evaluate expression="pharmacieManager.setStockageDisplay(null)"/>
+		<evaluate expression="etablissementSearchCriteria.clear()" />
+		<evaluate expression="etablissementService.getAll(etablissementSearchCriteria)" result="etablissementsManager.beans" />
+		<evaluate expression="pharmacieManager.setIndexOngletCourant(0)" />
+		<evaluate expression="pharmacieManager.setStockageDisplay(null)" />
 	</on-start>
 
 	<decision-state id="createOrEdit">
-		<if test="idPharmacie==null" then="create" else="edit"/>
+		<if test="idPharmacie==null" then="create" else="edit" />
 	</decision-state>
-	
+
 	<!-- Création -->
 	<action-state id="create">
-		<evaluate expression="pharmacieManager.setBean(pharmacieFactory.getInitializedObject())"/>
-		<transition to="editPharmacie"/>
+		<evaluate expression="pharmacieManager.setBean(pharmacieFactory.getInitializedObject())" />
+		<transition to="editPharmacie" />
 	</action-state>
-	
+
 	<!-- Modification -->
 	<action-state id="edit">
-		<evaluate expression="pharmacieManager.setBean(pharmacieService.get(idPharmacie))"/>
-		<transition to="editPharmacie"/>
+		<evaluate expression="pharmacieManager.setBean(pharmacieService.get(idPharmacie))" />
+		<transition to="editPharmacie" />
 	</action-state>
 
 	<!-- Page principale -->
@@ -35,32 +34,35 @@
 		<on-render>
 			<evaluate expression="pharmacieService.reattach(pharmacieManager.bean)" result="pharmacieManager.bean" />
 		</on-render>
-	
+
 		<transition on="cancel" to="createOrEdit">
-			<evaluate expression="pharmacieService.dettach(pharmacieManager.bean)"/>
+			<set name="idPharmacie" value="pharmacieManager.bean.id" type="java.lang.Long" />
+			<evaluate expression="pharmacieService.dettach(pharmacieManager.bean)" />
 		</transition>
 		<transition on="save">
-			<evaluate expression="pharmacieService.save(pharmacieManager.bean)" result="pharmacieManager.bean"/>
-			<evaluate expression="pharmacieManager.confirmEnregistrement()"/>
+			<evaluate expression="pharmacieService.save(pharmacieManager.bean)" result="pharmacieManager.bean" />
+			<evaluate expression="pharmacieManager.confirmEnregistrement()" />
 		</transition>
-		
-			<!--  Edition d'un pharmacien -->
+
+		<!-- Edition d'un pharmacien -->
 		<transition on="editPharmacien" to="editPharmacien">
 			<set name="flashScope.idPharmacien" value="personnesManager.beanSelected.id" type="java.lang.Long" />
-			<evaluate expression="null" result="personnesManager.beanSelected"/>	
+			<evaluate expression="null" result="personnesManager.beanSelected" />
 		</transition>
-		
-		<transition on="comeback" to="comeback"/>
-		<transition on="error" to="editPharmacie"/>
+
+		<transition on="comeback" to="comeback" />
+		<transition on="error" to="editPharmacie" />
 	</view-state>
-	
-	<!-- Edition d'un pharamcien-->
+
+	<!-- Edition d'un pharamcien -->
 	<subflow-state id="editPharmacien" subflow="personne/pharmacien">
-		<attribute name="idPharmacien" value="flashScope.idPharmacien"/>
-		<transition to="editPharmacie"/>
-	</subflow-state>	
-	
+		<attribute name="idPharmacien" value="flashScope.idPharmacien" />
+		<transition to="editPharmacie">
+			<evaluate expression="pharmacieService.get(pharmacieManager.bean.id)" result="pharmacieManager.bean" />
+		</transition>
+	</subflow-state>
+
 	<!-- Etat final -->
-	<end-state id="comeback"/>
-	
+	<end-state id="comeback" />
+
 </flow>

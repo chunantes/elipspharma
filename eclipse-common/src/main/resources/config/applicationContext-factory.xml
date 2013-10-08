@@ -1381,6 +1381,17 @@
 			value="fr.pharma.eclipse.domain.model.ordonnancier.OrdonnancierFabReconst" />
 	</bean>	
 	
+	<!-- ================================================= -->
+	<!-- REPRISE PASSIF : FACTORY -->
+	<!-- ================================================= -->
+	<bean id="ReprisePassif"
+		class="fr.pharma.eclipse.domain.model.reprisePassif.ReprisePassif"
+		scope="prototype" />
+	<bean id="reprisePassifFactory" class="fr.pharma.eclipse.factory.common.BeanObjectFactory">
+		<constructor-arg
+			value="fr.pharma.eclipse.domain.model.reprisePassif.ReprisePassif" />
+	</bean>	
+	
 		
 	<!-- ================================================= -->
 	<!-- RETOUR PATIENT  : FACTORY 						   -->

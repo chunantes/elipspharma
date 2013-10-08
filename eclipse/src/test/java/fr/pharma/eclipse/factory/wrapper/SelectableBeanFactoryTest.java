@@ -13,12 +13,10 @@ import fr.pharma.eclipse.utils.PharmacieUtils;
 
 /**
  * Test de la classe {@link SelectableBeanFactory}.
- 
+ * @author Netapsys
  * @version $Revision$ $Date$
  */
-public class SelectableBeanFactoryTest
-    extends AbstractEclipseJUnitTest
-{
+public class SelectableBeanFactoryTest extends AbstractEclipseJUnitTest {
     /**
      * Fabrique testée.
      */
@@ -28,8 +26,7 @@ public class SelectableBeanFactoryTest
      * {@inheritDoc}
      */
     @Override
-    public void setUp()
-    {
+    public void setUp() {
         this.factory = new SelectableBeanFactory<Pharmacie>();
     }
 
@@ -37,8 +34,7 @@ public class SelectableBeanFactoryTest
      * {@inheritDoc}
      */
     @Override
-    public void tearDown()
-    {
+    public void tearDown() {
         this.factory = null;
     }
 
@@ -46,8 +42,7 @@ public class SelectableBeanFactoryTest
      * {@inheritDoc}
      */
     @Override
-    public void testInit()
-    {
+    public void testInit() {
         Assert.assertNotNull(this.factory);
     }
 
@@ -55,32 +50,23 @@ public class SelectableBeanFactoryTest
      * Test de la méthode getInitializedObject(BEAN).
      */
     @Test
-    public void testGetInitializedObjectBEAN()
-    {
+    public void testGetInitializedObjectBEAN() {
         final Pharmacie pharmacie = PharmacieUtils.makePharmacieTest(1);
         final SelectableBean<Pharmacie> wrapper = this.factory.getInitializedObject(pharmacie);
-        this.verifyWrapper(wrapper,
-                           pharmacie);
+        this.verifyWrapper(wrapper, pharmacie);
     }
 
     /**
      * Test de la méthode getInitializedObject(ListOfBEAN).
      */
     @Test
-    public void testGetInitializedObjectListOfBEAN()
-    {
+    public void testGetInitializedObjectListOfBEAN() {
         long id = 1;
-        final List<Pharmacie> pharmacies = Arrays.asList(PharmacieUtils.makePharmacieTest(id++),
-                                                         PharmacieUtils.makePharmacieTest(id++),
-                                                         PharmacieUtils.makePharmacieTest(id++));
-        final List<SelectableBean<Pharmacie>> wrappers =
-            this.factory.getInitializedObjects(pharmacies);
-        Assert.assertEquals(pharmacies.size(),
-                            wrappers.size());
-        for (int i = 0; i < pharmacies.size(); i++)
-        {
-            this.verifyWrapper(wrappers.get(i),
-                               pharmacies.get(i));
+        final List<Pharmacie> pharmacies = Arrays.asList(PharmacieUtils.makePharmacieTest(id++), PharmacieUtils.makePharmacieTest(id++), PharmacieUtils.makePharmacieTest(id++));
+        final List<SelectableBean<Pharmacie>> wrappers = this.factory.getInitializedObjects(pharmacies);
+        Assert.assertEquals(pharmacies.size(), wrappers.size());
+        for (int i = 0; i < pharmacies.size(); i++) {
+            this.verifyWrapper(wrappers.get(i), pharmacies.get(i));
         }
     }
     /**
@@ -89,12 +75,10 @@ public class SelectableBeanFactoryTest
      * @param pharmacie Pharmacie attendue dans le wrapper.
      */
     private void verifyWrapper(final SelectableBean<Pharmacie> wrapper,
-                               final Pharmacie pharmacie)
-    {
+                               final Pharmacie pharmacie) {
         Assert.assertNotNull(wrapper);
         Assert.assertFalse(wrapper.getSelected());
-        Assert.assertEquals(pharmacie,
-                            wrapper.getBean());
+        Assert.assertEquals(pharmacie, wrapper.getBean());
     }
 
 }

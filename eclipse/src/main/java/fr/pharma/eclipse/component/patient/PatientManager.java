@@ -2,6 +2,7 @@ package fr.pharma.eclipse.component.patient;
 
 import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -13,6 +14,7 @@ import javax.faces.event.ValueChangeEvent;
 import org.apache.commons.lang.StringUtils;
 import org.primefaces.event.TabChangeEvent;
 
+import fr.pharma.eclipse.comparator.acteur.HistoriquePatientComparator;
 import fr.pharma.eclipse.component.BeanManager;
 import fr.pharma.eclipse.domain.enums.patient.FormuleSurfaceCorporelle;
 import fr.pharma.eclipse.domain.model.dispensation.Dispensation;
@@ -27,12 +29,10 @@ import fr.pharma.eclipse.utils.constants.EclipseConstants;
 
 /**
  * Manager de Patient.
- 
+ * @author Netapsys
  * @version $Revision$ $Date$
  */
-public class PatientManager
-    extends BeanManager<Patient>
-{
+public class PatientManager extends BeanManager<Patient> {
     /**
      * Serial ID.
      */
@@ -83,26 +83,35 @@ public class PatientManager
     private List<Dispensation> dispensations = new ArrayList<Dispensation>();
 
     /**
+     * Dispensation.
+     */
+    private List<HistoriquePatient> listeHistoriquePatient = new ArrayList<HistoriquePatient>();
+
+    public List<HistoriquePatient> getListeHistoriquePatient() {
+        Collections.sort(this.listeHistoriquePatient, new HistoriquePatientComparator());
+        return this.listeHistoriquePatient;
+    }
+
+    public void setListeHistoriquePatient(final List<HistoriquePatient> listeHistoriquePatient) {
+        this.listeHistoriquePatient = listeHistoriquePatient;
+    }
+
+    /**
      * Map de description des onglets de Patient.
      */
     protected static final Map<String, Integer> INFOS_ONGLETS = new HashMap<String, Integer>();
     {
-        PatientManager.INFOS_ONGLETS.put("ONG_ESSAI",
-                                         0);
-        PatientManager.INFOS_ONGLETS.put("ONG_PRESCRIPTION",
-                                         1);
-        PatientManager.INFOS_ONGLETS.put("ONG_DISPENSATION",
-                                         2);
-        PatientManager.INFOS_ONGLETS.put("ONG_RETOUR",
-                                         3);
+        PatientManager.INFOS_ONGLETS.put("ONG_ESSAI", 0);
+        PatientManager.INFOS_ONGLETS.put("ONG_PRESCRIPTION", 1);
+        PatientManager.INFOS_ONGLETS.put("ONG_DISPENSATION", 2);
+        PatientManager.INFOS_ONGLETS.put("ONG_RETOUR", 3);
     };
 
     /**
      * Constructeur.
      * @param service Service de gestion de patient.
      */
-    public PatientManager(final PatientService service)
-    {
+    public PatientManager(final PatientService service) {
         super(service);
     }
 
@@ -110,8 +119,7 @@ public class PatientManager
      * Listener appelé lorsque l'utilisateur change d'onglet.
      * @param event Evénement remonté par le composant primeFaces.
      */
-    public void onOngletChange(final TabChangeEvent event)
-    {
+    public void onOngletChange(final TabChangeEvent event) {
         final String tabId = event.getTab().getId();
         this.setIndexOngletCourant(PatientManager.INFOS_ONGLETS.get(tabId));
     }
@@ -119,8 +127,7 @@ public class PatientManager
     /**
      * Méthode en charge d'intiialiser l'historique.
      */
-    public void initHistorique()
-    {
+    public void initHistorique() {
         this.historique = this.factory.getInitializedObject(this.getBean());
         this.editHistorique = true;
     }
@@ -128,24 +135,20 @@ public class PatientManager
     /**
      * Ajout de l'historique au patient courant.
      */
-    public void addHistorique()
-    {
+    public void addHistorique() {
         final Calendar courant = Calendar.getInstance(EclipseConstants.LOCALE);
-        this.historique.getDate().set(Calendar.MINUTE,
-                                      courant.get(Calendar.MINUTE));
-        this.historique.getDate().set(Calendar.SECOND,
-                                      courant.get(Calendar.SECOND));
-        this.historique.getDate().set(Calendar.HOUR_OF_DAY,
-                                      courant.get(Calendar.HOUR_OF_DAY));
+        this.historique.getDate().set(Calendar.MINUTE, courant.get(Calendar.MINUTE));
+        this.historique.getDate().set(Calendar.SECOND, courant.get(Calendar.SECOND));
+        this.historique.getDate().set(Calendar.HOUR_OF_DAY, courant.get(Calendar.HOUR_OF_DAY));
         this.getBean().getHistoriquePatient().add(this.historique);
+        this.listeHistoriquePatient.add(this.historique);
         this.reinit();
     }
 
     /**
      * Méthode en charge de réinitialiser les élément du manager.
      */
-    public void reinit()
-    {
+    public void reinit() {
         this.historique = null;
         this.editHistorique = false;
         this.inclusionCourante = null;
@@ -156,27 +159,18 @@ public class PatientManager
     }
 
     /**
-     * Méthode en charge de mettre à jour la surface corporelle de l'objet HistoriquePatient.
+     * Méthode en charge de mettre à jour la surface corporelle de l'objet
+     * HistoriquePatient.
      * @param event Evenement JSF.
      */
-    public void updateSurfaceCorporelle()
-    {
-        if (this.getHistorique().getTaille() != null
-            && this.getHistorique().getPoid() != null
-            && this.getHistorique().getPatient().getDateNaissance() != null)
-        {
-            final FormuleSurfaceCorporelle formule =
-                ((PatientService) this.getService()).updateSurfaceCorporelle(this.historique);
-            if (formule != null)
-            {
+    public void updateSurfaceCorporelle() {
+        if (this.getHistorique().getTaille() != null && this.getHistorique().getPoid() != null && this.getHistorique().getPatient().getDateNaissance() != null) {
+            final FormuleSurfaceCorporelle formule = ((PatientService) this.getService()).updateSurfaceCorporelle(this.historique);
+            if (formule != null) {
                 this.setFormuleUtilisee(formule.getLibelle());
             }
-        }
-        else
-        {
-            this.facesUtils
-                    .addMessage(FacesMessage.SEVERITY_ERROR,
-                                "gestionPatient.surface.taille.poids.et.date.naissance.requis");
+        } else {
+            this.facesUtils.addMessage(FacesMessage.SEVERITY_ERROR, "gestionPatient.surface.taille.poids.et.date.naissance.requis");
             this.setFormuleUtilisee("");
             this.getHistorique().setSurfaceCorporelle(null);
         }
@@ -186,19 +180,12 @@ public class PatientManager
      * Méthode en charge de construire les initiales en fonction du patient.
      * @return Les initiales.
      */
-    private String getMakeInitiales()
-    {
+    private String getMakeInitiales() {
         String result = "";
-        if (StringUtils.isNotBlank(StringUtils.strip(this.getBean().getNom()))
-            && StringUtils.isNotBlank(StringUtils.strip(this.getBean().getPrenom())))
-        {
-            result += StringUtils.upperCase(StringUtils.substring(this.getBean().getNom(),
-                                                                  0,
-                                                                  3));
+        if (StringUtils.isNotBlank(StringUtils.strip(this.getBean().getNom())) && StringUtils.isNotBlank(StringUtils.strip(this.getBean().getPrenom()))) {
+            result += StringUtils.upperCase(StringUtils.substring(this.getBean().getNom(), 0, 3));
             result += "-";
-            result += StringUtils.upperCase(StringUtils.substring(this.getBean().getPrenom(),
-                                                                  0,
-                                                                  2));
+            result += StringUtils.upperCase(StringUtils.substring(this.getBean().getPrenom(), 0, 2));
         }
         return result;
     }
@@ -206,14 +193,10 @@ public class PatientManager
      * Méthode en charge de mettre à jour les initiales de l'objet Patient.
      * @param event Evenement JSF.
      */
-    public void updateInitiales(final ValueChangeEvent event)
-    {
-        if (event.getComponent().getId().equals("nom"))
-        {
+    public void updateInitiales(final ValueChangeEvent event) {
+        if (event.getComponent().getId().equals("nom")) {
             this.getBean().setNom((String) event.getNewValue());
-        }
-        else if (event.getComponent().getId().equals("prenom"))
-        {
+        } else if (event.getComponent().getId().equals("prenom")) {
             this.getBean().setPrenom((String) event.getNewValue());
         }
         this.getBean().setInitiales(this.getMakeInitiales());
@@ -223,8 +206,7 @@ public class PatientManager
      * Getter pour indexOngletCourant.
      * @return Le indexOngletCourant
      */
-    public int getIndexOngletCourant()
-    {
+    public int getIndexOngletCourant() {
         return this.indexOngletCourant;
     }
 
@@ -232,8 +214,7 @@ public class PatientManager
      * Setter pour indexOngletCourant.
      * @param indexOngletCourant Le indexOngletCourant à écrire.
      */
-    public void setIndexOngletCourant(final int indexOngletCourant)
-    {
+    public void setIndexOngletCourant(final int indexOngletCourant) {
         this.indexOngletCourant = indexOngletCourant;
     }
 
@@ -241,8 +222,7 @@ public class PatientManager
      * Getter sur historique.
      * @return Retourne le historique.
      */
-    public HistoriquePatient getHistorique()
-    {
+    public HistoriquePatient getHistorique() {
         return this.historique;
     }
 
@@ -250,8 +230,7 @@ public class PatientManager
      * Setter pour historique.
      * @param historique le historique à écrire.
      */
-    public void setHistorique(final HistoriquePatient historique)
-    {
+    public void setHistorique(final HistoriquePatient historique) {
         this.historique = historique;
     }
 
@@ -259,8 +238,7 @@ public class PatientManager
      * Setter pour factory.
      * @param factory le factory à écrire.
      */
-    public void setFactory(final HistoriquePatientFactory factory)
-    {
+    public void setFactory(final HistoriquePatientFactory factory) {
         this.factory = factory;
     }
 
@@ -268,8 +246,7 @@ public class PatientManager
      * Getter sur editHistorique.
      * @return Retourne le editHistorique.
      */
-    public boolean isEditHistorique()
-    {
+    public boolean isEditHistorique() {
         return this.editHistorique;
     }
 
@@ -277,8 +254,7 @@ public class PatientManager
      * Setter pour editHistorique.
      * @param editHistorique le editHistorique à écrire.
      */
-    public void setEditHistorique(final boolean editHistorique)
-    {
+    public void setEditHistorique(final boolean editHistorique) {
         this.editHistorique = editHistorique;
     }
 
@@ -286,8 +262,7 @@ public class PatientManager
      * Getter sur formuleUtilisee.
      * @return Retourne le formuleUtilisee.
      */
-    public String getFormuleUtilisee()
-    {
+    public String getFormuleUtilisee() {
         return this.formuleUtilisee;
     }
 
@@ -295,8 +270,7 @@ public class PatientManager
      * Setter pour formuleUtilisee.
      * @param formuleUtilisee le formuleUtilisee à écrire.
      */
-    public void setFormuleUtilisee(final String formuleUtilisee)
-    {
+    public void setFormuleUtilisee(final String formuleUtilisee) {
         this.formuleUtilisee = formuleUtilisee;
     }
 
@@ -304,8 +278,7 @@ public class PatientManager
      * Getter sur inclusionCourante.
      * @return Retourne le inclusionCourante.
      */
-    public Inclusion getInclusionCourante()
-    {
+    public Inclusion getInclusionCourante() {
         return this.inclusionCourante;
     }
 
@@ -313,8 +286,7 @@ public class PatientManager
      * Setter pour inclusionCourante.
      * @param inclusionCourante le inclusionCourante à écrire.
      */
-    public void setInclusionCourante(final Inclusion inclusionCourante)
-    {
+    public void setInclusionCourante(final Inclusion inclusionCourante) {
         this.inclusionCourante = inclusionCourante;
     }
 
@@ -322,8 +294,7 @@ public class PatientManager
      * Getter sur prescriptions.
      * @return Retourne le prescriptions.
      */
-    public List<Prescription> getPrescriptions()
-    {
+    public List<Prescription> getPrescriptions() {
         return this.prescriptions;
     }
 
@@ -331,8 +302,7 @@ public class PatientManager
      * Setter pour prescriptions.
      * @param prescriptions le prescriptions à écrire.
      */
-    public void setPrescriptions(final List<Prescription> prescriptions)
-    {
+    public void setPrescriptions(final List<Prescription> prescriptions) {
         this.prescriptions = prescriptions;
     }
 
@@ -340,8 +310,7 @@ public class PatientManager
      * Getter sur dispensations.
      * @return Retourne le dispensations.
      */
-    public List<Dispensation> getDispensations()
-    {
+    public List<Dispensation> getDispensations() {
         return this.dispensations;
     }
 
@@ -349,8 +318,7 @@ public class PatientManager
      * Setter pour dispensations.
      * @param dispensations le dispensations à écrire.
      */
-    public void setDispensations(final List<Dispensation> dispensations)
-    {
+    public void setDispensations(final List<Dispensation> dispensations) {
         this.dispensations = dispensations;
     }
 
@@ -358,8 +326,7 @@ public class PatientManager
      * Getter pour facesUtils.
      * @return Le facesUtils
      */
-    public FacesUtils getFacesUtils()
-    {
+    public FacesUtils getFacesUtils() {
         return this.facesUtils;
     }
 
@@ -367,8 +334,7 @@ public class PatientManager
      * Setter pour facesUtils.
      * @param facesUtils Le facesUtils à écrire.
      */
-    public void setFacesUtils(final FacesUtils facesUtils)
-    {
+    public void setFacesUtils(final FacesUtils facesUtils) {
         this.facesUtils = facesUtils;
     }
 

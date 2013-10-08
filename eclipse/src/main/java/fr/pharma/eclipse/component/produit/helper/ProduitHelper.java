@@ -9,12 +9,10 @@ import fr.pharma.eclipse.domain.model.produit.Produit;
 
 /**
  * Helper dédié aux produits.
- 
+ * @author Netapsys
  * @version $Revision$ $Date$
  */
-public class ProduitHelper
-    implements Serializable
-{
+public class ProduitHelper implements Serializable {
 
     /**
      * SerialVersionUID.
@@ -22,20 +20,17 @@ public class ProduitHelper
     private static final long serialVersionUID = 2501244687082763049L;
 
     /**
-     * Retourne une chaine de caractère contenant tous les noms des produtis de l'essai en
-     * paramètre.
+     * Retourne une chaine de caractère contenant tous les noms des produtis de
+     * l'essai en paramètre.
      * @param essai L'essai.
-     * @return une chaine de caractère contenant tous les noms des produtis de l'essai en
-     * paramètre.
+     * @return une chaine de caractère contenant tous les noms des produtis de
+     * l'essai en paramètre.
      */
-    public String getProduitsAsString(final Essai essai)
-    {
+    public String getProduitsAsString(final Essai essai) {
         final StringBuffer sb = new StringBuffer();
-        for (final Produit p : essai.getDetailProduit().getProduits())
-        {
+        for (final Produit p : essai.getDetailProduit().getProduits()) {
             sb.append(p.getNom()).append(" / ");
         }
-        return StringUtils.substringBeforeLast(sb.toString(),
-                                               "/");
+        return StringUtils.substringBeforeLast(sb.toString(), "/");
     }
 }

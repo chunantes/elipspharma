@@ -10,18 +10,16 @@ import fr.pharma.eclipse.domain.model.common.BeanObject;
 /**
  * Fabrique d'objets sélectionnables pour l'IHM.
  * @param <BEAN> Type des objets rattachés au wrapper créé.
- 
+ * @author Netapsys
  * @version $Revision$ $Date$
  */
-public class SelectableBeanFactory<BEAN extends BeanObject>
-{
+public class SelectableBeanFactory<BEAN extends BeanObject> {
     /**
      * Méthode de fabrication d'objet SelectableBean.
      * @param bean Bean métier à wrapper.
      * @return Un objet SelectableBean.
      */
-    public SelectableBean<BEAN> getInitializedObject(final BEAN bean)
-    {
+    public SelectableBean<BEAN> getInitializedObject(final BEAN bean) {
         return new SelectableBean<BEAN>(bean);
     }
 
@@ -30,11 +28,9 @@ public class SelectableBeanFactory<BEAN extends BeanObject>
      * @param beans Collection de beans métiers à wrapper.
      * @return Un objet SelectableBean.
      */
-    public List<SelectableBean<BEAN>> getInitializedObjects(final Collection<BEAN> beans)
-    {
+    public List<SelectableBean<BEAN>> getInitializedObjects(final Collection<BEAN> beans) {
         final List<SelectableBean<BEAN>> wrappers = new ArrayList<SelectableBean<BEAN>>();
-        for (final BEAN bean : beans)
-        {
+        for (final BEAN bean : beans) {
             wrappers.add(this.getInitializedObject(bean));
         }
         return wrappers;

@@ -14,14 +14,12 @@ import fr.pharma.eclipse.utils.Utils;
 import fr.pharma.eclipse.utils.file.FileHelper;
 
 /**
- * Classe en charge de remplir les données d'un fichier à partir d'un objet de l'IHM correspondant
- * au fileUpload.
- 
+ * Classe en charge de remplir les données d'un fichier à partir d'un objet de
+ * l'IHM correspondant au fileUpload.
+ * @author Netapsys
  * @version $Revision$ $Date$
  */
-public class FichierFiller
-    implements Serializable
-{
+public class FichierFiller implements Serializable {
 
     /**
      * Serial ID.
@@ -39,39 +37,31 @@ public class FichierFiller
     private FileHelper fileHelper;
 
     /**
-     * Méthode qui renseigne les informations du fichier métier à partir de celles du fichier
-     * remonté de l'IHM.
+     * Méthode qui renseigne les informations du fichier métier à partir de
+     * celles du fichier remonté de l'IHM.
      * @param file Fichier téléchargé via l'IHM.
      * @param fichier Fichier métier.
      */
     public void fill(final UploadedFile file,
-                     final Fichier fichier)
-    {
-        try
-        {
+                     final Fichier fichier) {
+        try {
             fichier.setContenu(file.getBytes());
             fichier.setNom(this.fileHelper.extractFileName(file.getName()));
             fichier.setTypeFichier(file.getContentType());
-        }
-        catch (final IOException e)
-        {
-            FichierFiller.LOG.error(new StringBuilder("Erreur de récupération de fichier : ")
-                    .append(Utils.getStringStack(e))
-                    .toString());
+        } catch (final IOException e) {
+            FichierFiller.LOG.error(new StringBuilder("Erreur de récupération de fichier : ").append(Utils.getStringStack(e)).toString());
         }
     }
 
     /**
-     * Méthode qui renseigne les informations du fichier métier à partir de celles du fichier en
-     * paramètre.
+     * Méthode qui renseigne les informations du fichier métier à partir de
+     * celles du fichier en paramètre.
      * @param file Fichier.
      * @param fichier Fichier métier.
      */
     public void fill(final File file,
-                     final Fichier fichier)
-    {
-        try
-        {
+                     final Fichier fichier) {
+        try {
 
             final byte[] b = new byte[(int) file.length()];
             final FileInputStream fileInputStream = new FileInputStream(file);
@@ -79,12 +69,8 @@ public class FichierFiller
             fichier.setContenu(b);
             fichier.setNom(file.getName());
             fichier.setTypeFichier("application/vnd.ms-excel");
-        }
-        catch (final IOException e)
-        {
-            FichierFiller.LOG.error(new StringBuilder("Erreur de récupération de fichier : ")
-                    .append(Utils.getStringStack(e))
-                    .toString());
+        } catch (final IOException e) {
+            FichierFiller.LOG.error(new StringBuilder("Erreur de récupération de fichier : ").append(Utils.getStringStack(e)).toString());
         }
     }
 
@@ -92,8 +78,7 @@ public class FichierFiller
      * Getter sur fileHelper.
      * @return Retourne le fileHelper.
      */
-    FileHelper getFileHelper()
-    {
+    FileHelper getFileHelper() {
         return this.fileHelper;
     }
 
@@ -101,8 +86,7 @@ public class FichierFiller
      * Setter pour fileHelper.
      * @param fileHelper le fileHelper à écrire.
      */
-    public void setFileHelper(final FileHelper fileHelper)
-    {
+    public void setFileHelper(final FileHelper fileHelper) {
         this.fileHelper = fileHelper;
     }
 

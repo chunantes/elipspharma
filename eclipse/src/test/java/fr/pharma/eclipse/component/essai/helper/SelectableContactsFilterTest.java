@@ -17,12 +17,10 @@ import fr.pharma.eclipse.utils.PersonneUtils;
 
 /**
  * Test de la classe SelectableContactsFilter.
- 
+ * @author Netapsys
  * @version $Revision$ $Date$
  */
-public class SelectableContactsFilterTest
-    extends AbstractEclipseJUnitTest
-{
+public class SelectableContactsFilterTest extends AbstractEclipseJUnitTest {
     /**
      * Filter.
      */
@@ -32,8 +30,7 @@ public class SelectableContactsFilterTest
      * {@inheritDoc}
      */
     @Override
-    public void setUp()
-    {
+    public void setUp() {
         this.filter = new SelectableContactsFilter();
     }
 
@@ -41,8 +38,7 @@ public class SelectableContactsFilterTest
      * {@inheritDoc}
      */
     @Override
-    public void tearDown()
-    {
+    public void tearDown() {
         this.filter = null;
     }
 
@@ -50,8 +46,7 @@ public class SelectableContactsFilterTest
      * {@inheritDoc}
      */
     @Override
-    public void testInit()
-    {
+    public void testInit() {
         Assert.assertNotNull(this.filter);
     }
 
@@ -59,16 +54,13 @@ public class SelectableContactsFilterTest
      * Test de la méthode filter.
      */
     @Test
-    public void testFilterEmpty()
-    {
+    public void testFilterEmpty() {
         long id = 1;
         final Essai essai = EssaiUtils.makeEssaiTest(id++);
         final TypeContact typeContact = TypeContact.CRO;
         final List<Cro> selectableBeans = new ArrayList<Cro>();
 
-        this.filter.filter(essai,
-                           typeContact,
-                           selectableBeans);
+        this.filter.filter(essai, typeContact, selectableBeans);
 
         Assert.assertTrue(selectableBeans.isEmpty());
     }
@@ -77,8 +69,7 @@ public class SelectableContactsFilterTest
      * Test de la méthode filter.
      */
     @Test
-    public void testFilter()
-    {
+    public void testFilter() {
         long id = 1;
         final Essai essai = EssaiUtils.makeEssaiTest(id++);
         final TypeContact typeContact = TypeContact.CRO;
@@ -104,9 +95,7 @@ public class SelectableContactsFilterTest
         selectableBeans.add(personne2);
         selectableBeans.add(personne3);
 
-        this.filter.filter(essai,
-                           typeContact,
-                           selectableBeans);
+        this.filter.filter(essai, typeContact, selectableBeans);
 
         Assert.assertTrue(selectableBeans.contains(personne1));
         Assert.assertFalse(selectableBeans.contains(personne2));

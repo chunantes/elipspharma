@@ -4,6 +4,7 @@ import java.util.Calendar;
 import java.util.HashMap;
 import java.util.Map;
 
+import javax.faces.application.FacesMessage;
 import javax.faces.component.UIComponent;
 import javax.faces.event.ActionEvent;
 
@@ -25,22 +26,21 @@ import fr.pharma.eclipse.domain.model.essai.Essai;
 import fr.pharma.eclipse.domain.model.essai.detail.design.DetailDesign;
 import fr.pharma.eclipse.domain.model.essai.detail.produit.DetailProduit;
 import fr.pharma.eclipse.domain.model.produit.Medicament;
-import fr.pharma.eclipse.exception.common.CommonException;
 import fr.pharma.eclipse.factory.design.BrasFactory;
 import fr.pharma.eclipse.json.DesignConverter;
 import fr.pharma.eclipse.service.helper.design.TimeHelper;
 import fr.pharma.eclipse.utils.AbstractEclipseJUnitTest;
 import fr.pharma.eclipse.utils.FacesUtils;
 import fr.pharma.eclipse.validator.remove.RemoveValidator;
+import fr.pharma.eclipse.validator.remove.impl.BrasRemoveValidator;
+import fr.pharma.eclipse.validator.remove.impl.SequenceRemoveValidator;
 
 /**
  * Test du manager DesignsManager.
- 
+ * @author Netapsys
  * @version $Revision$ $Date$
  */
-public class DesignsManagerTest
-    extends AbstractEclipseJUnitTest
-{
+public class DesignsManagerTest extends AbstractEclipseJUnitTest {
 
     /**
      * DesignsManager.
@@ -91,32 +91,39 @@ public class DesignsManagerTest
      * {@inheritDoc}
      */
     @Override
-    public void setUp()
-    {
-        this.facesUtils = Mockito.mock(FacesUtils.class);
-        this.essaiManager = Mockito.mock(EssaiManager.class);
-        this.brasRemoveValidator = Mockito.mock(RemoveValidator.class);
-        this.treeDesignHelper = Mockito.mock(TreeDesignHelper.class);
-        this.sequenceRemoveValidator = Mockito.mock(RemoveValidator.class);
-        this.brasFactory = Mockito.mock(BrasFactory.class);
-        this.designConverter = Mockito.mock(DesignConverter.class);
-        this.timeHelper = Mockito.mock(TimeHelper.class);
+    public void setUp() {
         this.designsManager = new DesignsManager();
-        this.designsManager.setBrasFactory(this.brasFactory);
-        this.designsManager.setBrasRemoveValidator(this.brasRemoveValidator);
-        this.designsManager.setDesignConverter(this.designConverter);
-        this.designsManager.setEssaiManager(this.essaiManager);
-        this.designsManager.setSequenceRemoveValidator(this.sequenceRemoveValidator);
-        this.designsManager.setTreeDesignHelper(this.treeDesignHelper);
-        this.designsManager.setTimeHelper(this.timeHelper);
 
+        this.facesUtils = Mockito.mock(FacesUtils.class);
+        this.designsManager.setFacesUtils(this.facesUtils);
+
+        this.essaiManager = Mockito.mock(EssaiManager.class);
+        this.designsManager.setEssaiManager(this.essaiManager);
+
+        this.brasRemoveValidator = Mockito.mock(BrasRemoveValidator.class);
+        this.designsManager.setBrasRemoveValidator(this.brasRemoveValidator);
+
+        this.treeDesignHelper = Mockito.mock(TreeDesignHelper.class);
+        this.designsManager.setTreeDesignHelper(this.treeDesignHelper);
+
+        this.sequenceRemoveValidator = Mockito.mock(SequenceRemoveValidator.class);
+        this.designsManager.setSequenceRemoveValidator(this.sequenceRemoveValidator);
+
+        this.brasFactory = Mockito.mock(BrasFactory.class);
+        this.designsManager.setBrasFactory(this.brasFactory);
+
+        this.designConverter = Mockito.mock(DesignConverter.class);
+        this.designsManager.setDesignConverter(this.designConverter);
+
+        this.timeHelper = Mockito.mock(TimeHelper.class);
+        this.designsManager.setTimeHelper(this.timeHelper);
     }
+
     /**
      * {@inheritDoc}
      */
     @Override
-    public void tearDown()
-    {
+    public void tearDown() {
         this.facesUtils = null;
         this.essaiManager = null;
         this.brasRemoveValidator = null;
@@ -134,8 +141,7 @@ public class DesignsManagerTest
      */
     @Test
     @Override
-    public void testInit()
-    {
+    public void testInit() {
         Assert.assertNotNull(this.designsManager);
         Assert.assertNotNull(this.essaiManager);
         Assert.assertNotNull(this.facesUtils);
@@ -151,66 +157,62 @@ public class DesignsManagerTest
      * Test de la méthode initBras.
      */
     @Test
-    public void testInitBras()
-    {
+    public void testInitBras() {
         final Bras bras = Mockito.mock(Bras.class);
         final UIComponent component = Mockito.mock(UIComponent.class);
         final ActionEvent event = Mockito.mock(ActionEvent.class);
         final Map<String, Object> attributes = new HashMap<String, Object>();
-        attributes.put("designableParent",
-                       bras);
+        attributes.put("designableParent", bras);
         Mockito.when(event.getComponent()).thenReturn(component);
         Mockito.when(component.getAttributes()).thenReturn(attributes);
         Mockito.when(this.brasFactory.getInitializedObject()).thenReturn(new Bras());
         this.designsManager.initBras(event);
-        Assert.assertEquals(bras,
-                            this.designsManager.getBras().getParent());
+        Assert.assertEquals(bras, this.designsManager.getBras().getParent());
     }
 
     /**
      * Test de la méthode initProduits.
      */
     @Test
-    public void testInitProduits()
-    {
+    public void testInitProduits() {
         final Essai essai = new Essai();
         essai.setDetailProduit(new DetailProduit());
         essai.getDetailProduit().getProduits().add(new Medicament());
         Mockito.when(this.essaiManager.getBean()).thenReturn(essai);
         this.designsManager.initProduits();
-        Assert.assertEquals(1,
-                            this.designsManager.getProduits().size());
+        Assert.assertEquals(1, this.designsManager.getProduits().size());
     }
 
     /**
      * Test de la méthode editBras.
      */
     @Test
-    public void testEditBras()
-    {
+    public void testEditBras() {
         final Bras bras = Mockito.mock(Bras.class);
+        final Essai essai = new Essai();
+        essai.setDetailDesign(new DetailDesign());
+
         final UIComponent component = Mockito.mock(UIComponent.class);
         final ActionEvent event = Mockito.mock(ActionEvent.class);
         final Map<String, Object> attributes = new HashMap<String, Object>();
-        attributes.put("brasCurrent",
-                       bras);
+        attributes.put("brasCurrent", bras);
+
+        essai.getDetailDesign().getBras().add(bras);
+        Mockito.when(this.essaiManager.getBean()).thenReturn(essai);
+        Mockito.when(bras.getNomComplet()).thenReturn("Nom complet");
+
         Mockito.when(event.getComponent()).thenReturn(component);
         Mockito.when(component.getAttributes()).thenReturn(attributes);
         this.designsManager.editBras(event);
-        Assert.assertEquals(bras,
-                            this.designsManager.getBras());
-        Assert.assertEquals(TypeDesignable.BRAS,
-                            this.designsManager.getType());
-        Assert.assertEquals("EDIT",
-                            this.designsManager.getActionCurrent());
+        Assert.assertEquals(bras, this.designsManager.getBras());
+        Assert.assertEquals(TypeDesignable.BRAS, this.designsManager.getType());
+        Assert.assertEquals("EDIT", this.designsManager.getActionCurrent());
     }
-
     /**
      * Test de la méthode selectDateListener.
      */
     @Test
-    public void testSelectDateListener()
-    {
+    public void testSelectDateListener() {
         final SelectEvent event = Mockito.mock(SelectEvent.class);
         Mockito.when(event.getObject()).thenReturn(Calendar.getInstance());
         this.designsManager.selectDateListener(event);
@@ -221,61 +223,55 @@ public class DesignsManagerTest
      * Test de la méthode processDateFin.
      */
     @Test
-    public void testProcessDateFin()
-    {
+    public void testProcessDateFin() {
+        // Prepare
         final Essai essai = new Essai();
         essai.setDetailDesign(new DetailDesign());
         Mockito.when(this.essaiManager.getBean()).thenReturn(essai);
-        Mockito.when(this.timeHelper.getDateFinForDesign(Matchers.any(DetailDesign.class)))
-                .thenReturn(new TempsPrescription());
-        Mockito.when(this.timeHelper.convertTime(Matchers.any(Calendar.class),
-                                                 Matchers.any(TempsPrescription.class)))
-                .thenReturn(Calendar.getInstance());
+        Mockito.when(this.timeHelper.getDateFinForDesign(Matchers.any(DetailDesign.class))).thenReturn(new TempsPrescription());
+        Mockito.when(this.timeHelper.convertTime(Matchers.any(Calendar.class), Matchers.any(TempsPrescription.class))).thenReturn(Calendar.getInstance());
+
+        // Test
         this.designsManager.processDateFin(Calendar.getInstance());
+
+        // Verify
         Assert.assertNotNull(this.designsManager.getDateFin());
-        Mockito.verify(this.timeHelper).convertTime(Matchers.any(Calendar.class),
-                                                    Matchers.any(TempsPrescription.class));
+        Mockito.verify(this.timeHelper).convertTime(Matchers.any(Calendar.class), Matchers.any(TempsPrescription.class));
     }
 
     /**
      * Test de la méthode processDateFin.
      */
-    @Test(expected = CommonException.class)
-    public void testProcessDateFinKo()
-    {
+    @Test
+    public void testProcessDateFinKo() {
+        // Prepare
         final Essai essai = new Essai();
         essai.setDetailDesign(new DetailDesign());
         Mockito.when(this.essaiManager.getBean()).thenReturn(essai);
-        Mockito.doThrow(new CommonException())
-                .when(this.timeHelper)
-                .getDateFinForDesign(Matchers.any(DetailDesign.class));
-        Mockito.when(this.timeHelper.convertTime(Matchers.any(Calendar.class),
-                                                 Matchers.any(TempsPrescription.class)))
-                .thenReturn(Calendar.getInstance());
+        Mockito.when(this.timeHelper.getDateFinForDesign(Matchers.any(DetailDesign.class))).thenReturn(null);
+
+        // Test
         this.designsManager.processDateFin(Calendar.getInstance());
+
+        // Verify
         Assert.assertNull(this.designsManager.getDateFin());
-        Mockito.verify(this.timeHelper,
-                       Mockito.never()).convertTime(Matchers.any(Calendar.class),
-                                                    Matchers.any(TempsPrescription.class));
+        Mockito.verify(this.timeHelper, Mockito.never()).convertTime(Matchers.any(Calendar.class), Matchers.any(TempsPrescription.class));
     }
 
     /**
      * Test de la méthode initSequence.
      */
     @Test
-    public void testInitSequence()
-    {
+    public void testInitSequence() {
         this.initEssai();
-        Assert.assertNotNull(this.designsManager.initSequence("Bras 1-sequence 1",
-                                                              "Bras 1"));
+        Assert.assertNotNull(this.designsManager.initSequence("Bras 1-sequence 1", "Bras 1"));
     }
 
     /**
      * Test de la méthode findBras.
      */
     @Test
-    public void testFindBras()
-    {
+    public void testFindBras() {
         this.initEssai();
         Assert.assertNotNull(this.designsManager.findBras("Bras 1"));
     }
@@ -284,8 +280,7 @@ public class DesignsManagerTest
      * Test de la méthode init.
      */
     @Test
-    public void testInitMethod()
-    {
+    public void testInitMethod() {
         this.initEssai();
         this.designsManager.setActionCurrent("test");
         this.designsManager.setBras(new Bras());
@@ -302,15 +297,13 @@ public class DesignsManagerTest
         Assert.assertNull(this.designsManager.getDateFin());
         Assert.assertNull(this.designsManager.getJson());
         Assert.assertNull(this.designsManager.getJsonDate());
-        Assert.assertEquals("",
-                            this.designsManager.getActionCurrent());
+        Assert.assertEquals("", this.designsManager.getActionCurrent());
         Assert.assertNotNull(this.designsManager.getProduits());
     }
     /**
      * Méthode en charge d'initialiser l'essai pour les tests.
      */
-    private void initEssai()
-    {
+    private void initEssai() {
         final Bras b1 = new Bras();
         b1.setNom("Bras 1");
         final Bras b2 = new Bras();
@@ -334,16 +327,9 @@ public class DesignsManagerTest
      * Test de la méthode removeSequence.
      */
     @Test
-    public void testRemoveSequence()
-    {
+    public void testRemoveSequence() {
         this.initEssai();
-        this.designsManager.setCurrent(this.essaiManager
-                .getBean()
-                .getDetailDesign()
-                .getBras()
-                .first()
-                .getSequences()
-                .first());
+        this.designsManager.setCurrent(this.essaiManager.getBean().getDetailDesign().getBras().first().getSequences().first());
         this.designsManager.removeSequence();
     }
 
@@ -351,33 +337,63 @@ public class DesignsManagerTest
      * Test de la méthode removeBras.
      */
     @Test
-    public void testRemoveBras()
-    {
+    public void testRemoveBras() {
         this.initEssai();
-        this.designsManager.setCurrent(this.essaiManager
-                .getBean()
-                .getDetailDesign()
-                .getBras()
-                .first());
+
+        Bras bras = this.essaiManager.getBean().getDetailDesign().getBras().first();
+
+        this.designsManager.setCurrent(bras);
         this.designsManager.removeBras();
+
+        Assert.assertFalse(this.essaiManager.getBean().getDetailDesign().getBras().contains(bras));
+
+        // test pour PHARMA-459
+        bras = new Bras();
+        bras.setNom("mon bras");
+        this.designsManager.setCurrent(bras);
+        this.designsManager.removeBras();
+
+        Assert.assertFalse(this.essaiManager.getBean().getDetailDesign().getBras().contains(bras));
     }
 
     /**
      * Test de la méthode addSequence.
      */
     @Test
-    public void testAddSequence()
-    {
+    public void testAddSequence() {
         this.initEssai();
         this.designsManager.setNomCompletSequence("Bras 1-sequence 1");
         this.designsManager.setActionCurrent("EDIT");
-        this.designsManager.addSequence(this.essaiManager
-                .getBean()
-                .getDetailDesign()
-                .getBras()
-                .first()
-                .getSequences()
-                .first());
+        this.designsManager.addSequence(this.essaiManager.getBean().getDetailDesign().getBras().first().getSequences().first());
 
     }
+
+    @Test
+    public void testInitDesignChronoNoBras() {
+        // Prepare
+        final Essai essai = new Essai();
+        essai.setDetailDesign(new DetailDesign());
+        Mockito.when(this.essaiManager.getBean()).thenReturn(essai);
+
+        // Test
+        this.designsManager.initDesignChrono();
+
+        // Validate
+        Mockito.verify(this.facesUtils).addMessage(FacesMessage.SEVERITY_ERROR, "designs.data.empty");
+
+    }
+
+    @Test
+    public void testInitDesignChronoNoDateDebut() {
+        // Prepare
+        this.initEssai();
+        this.designsManager.setDateDebut(null);
+
+        // Test
+        this.designsManager.initDesignChrono();
+
+        // Validate
+        Mockito.verify(this.facesUtils).addMessage(FacesMessage.SEVERITY_ERROR, "designs.data.invalid");
+    }
+
 }

@@ -12,11 +12,10 @@ import fr.pharma.eclipse.domain.model.stock.NumTraitement;
 
 /**
  * Classe en charge de tester la saisie automatique des numéros de traitement.
- 
+ * @author Netapsys
  * @version $Revision$ $Date$
  */
-public class AutoSaisieNumTraitementTest
-{
+public class AutoSaisieNumTraitementTest {
     /**
      * AutoSaisieNumTraitement à tester.
      */
@@ -26,8 +25,7 @@ public class AutoSaisieNumTraitementTest
      * Méthode en charge d'initialiser les données de test.
      */
     @Before
-    public void init()
-    {
+    public void init() {
         this.autoSaisieNumTraitement = new AutoSaisieNumTraitement();
     }
 
@@ -35,8 +33,7 @@ public class AutoSaisieNumTraitementTest
      * Méthode en charge de purger les données de test.
      */
     @After
-    public void end()
-    {
+    public void end() {
         this.autoSaisieNumTraitement = null;
     }
 
@@ -44,8 +41,7 @@ public class AutoSaisieNumTraitementTest
      * Méthode en charge de tester l'initialisation des données de test.
      */
     @Test
-    public void testInit()
-    {
+    public void testInit() {
         Assert.assertNotNull(this.autoSaisieNumTraitement);
     }
 
@@ -53,126 +49,99 @@ public class AutoSaisieNumTraitementTest
      * Méthode en charge de tester la saisie automatique.
      */
     @Test
-    public void testHandle1()
-    {
+    public void testHandle1() {
         final List<NumTraitement> numsTraitements = new ArrayList<NumTraitement>();
-        for (int i = 0; i <= 2; i++)
-        {
+        for (int i = 0; i <= 2; i++) {
             numsTraitements.add(new NumTraitement());
         }
         numsTraitements.get(0).setNumTraitement("CEL-01");
 
         this.autoSaisieNumTraitement.handle(numsTraitements);
 
-        Assert.assertEquals("CEL-01",
-                            numsTraitements.get(0).getNumTraitement());
-        Assert.assertEquals("CEL-02",
-                            numsTraitements.get(1).getNumTraitement());
-        Assert.assertEquals("CEL-03",
-                            numsTraitements.get(2).getNumTraitement());
+        Assert.assertEquals("CEL-01", numsTraitements.get(0).getNumTraitement());
+        Assert.assertEquals("CEL-02", numsTraitements.get(1).getNumTraitement());
+        Assert.assertEquals("CEL-03", numsTraitements.get(2).getNumTraitement());
     }
 
     /**
      * Méthode en charge de tester la saisie automatique.
      */
     @Test
-    public void testHandle2()
-    {
+    public void testHandle2() {
         final List<NumTraitement> numsTraitements = new ArrayList<NumTraitement>();
-        for (int i = 0; i <= 2; i++)
-        {
+        for (int i = 0; i <= 2; i++) {
             numsTraitements.add(new NumTraitement());
         }
         numsTraitements.get(0).setNumTraitement("CEL-0");
 
         this.autoSaisieNumTraitement.handle(numsTraitements);
 
-        Assert.assertEquals("CEL-0",
-                            numsTraitements.get(0).getNumTraitement());
-        Assert.assertEquals("CEL-1",
-                            numsTraitements.get(1).getNumTraitement());
-        Assert.assertEquals("CEL-2",
-                            numsTraitements.get(2).getNumTraitement());
+        Assert.assertEquals("CEL-0", numsTraitements.get(0).getNumTraitement());
+        Assert.assertEquals("CEL-1", numsTraitements.get(1).getNumTraitement());
+        Assert.assertEquals("CEL-2", numsTraitements.get(2).getNumTraitement());
     }
 
     /**
      * Méthode en charge de tester la saisie automatique.
      */
     @Test
-    public void testHandle3()
-    {
+    public void testHandle3() {
         final List<NumTraitement> numsTraitements = new ArrayList<NumTraitement>();
-        for (int i = 0; i <= 2; i++)
-        {
+        for (int i = 0; i <= 2; i++) {
             numsTraitements.add(new NumTraitement());
         }
         numsTraitements.get(0).setNumTraitement("00-A-000A012");
 
         this.autoSaisieNumTraitement.handle(numsTraitements);
 
-        Assert.assertEquals("00-A-000A012",
-                            numsTraitements.get(0).getNumTraitement());
-        Assert.assertEquals("00-A-000A013",
-                            numsTraitements.get(1).getNumTraitement());
-        Assert.assertEquals("00-A-000A014",
-                            numsTraitements.get(2).getNumTraitement());
+        Assert.assertEquals("00-A-000A012", numsTraitements.get(0).getNumTraitement());
+        Assert.assertEquals("00-A-000A013", numsTraitements.get(1).getNumTraitement());
+        Assert.assertEquals("00-A-000A014", numsTraitements.get(2).getNumTraitement());
     }
 
     /**
      * Méthode en charge de tester la saisie automatique.
      */
     @Test
-    public void testHandle4()
-    {
+    public void testHandle4() {
         final List<NumTraitement> numsTraitements = new ArrayList<NumTraitement>();
-        for (int i = 0; i <= 2; i++)
-        {
+        for (int i = 0; i <= 2; i++) {
             numsTraitements.add(new NumTraitement());
         }
         numsTraitements.get(0).setNumTraitement("00-A-000A098");
 
         this.autoSaisieNumTraitement.handle(numsTraitements);
 
-        Assert.assertEquals("00-A-000A098",
-                            numsTraitements.get(0).getNumTraitement());
-        Assert.assertEquals("00-A-000A099",
-                            numsTraitements.get(1).getNumTraitement());
-        Assert.assertEquals("00-A-000A100",
-                            numsTraitements.get(2).getNumTraitement());
+        Assert.assertEquals("00-A-000A098", numsTraitements.get(0).getNumTraitement());
+        Assert.assertEquals("00-A-000A099", numsTraitements.get(1).getNumTraitement());
+        Assert.assertEquals("00-A-000A100", numsTraitements.get(2).getNumTraitement());
     }
 
     /**
      * Méthode en charge de tester la saisie automatique.
      */
     @Test
-    public void testHandle5()
-    {
+    public void testHandle5() {
         final List<NumTraitement> numsTraitements = new ArrayList<NumTraitement>();
-        for (int i = 0; i <= 2; i++)
-        {
+        for (int i = 0; i <= 2; i++) {
             numsTraitements.add(new NumTraitement());
         }
         numsTraitements.get(0).setNumTraitement("19");
 
         this.autoSaisieNumTraitement.handle(numsTraitements);
 
-        Assert.assertEquals("19",
-                            numsTraitements.get(0).getNumTraitement());
-        Assert.assertEquals("20",
-                            numsTraitements.get(1).getNumTraitement());
-        Assert.assertEquals("21",
-                            numsTraitements.get(2).getNumTraitement());
+        Assert.assertEquals("19", numsTraitements.get(0).getNumTraitement());
+        Assert.assertEquals("20", numsTraitements.get(1).getNumTraitement());
+        Assert.assertEquals("21", numsTraitements.get(2).getNumTraitement());
     }
 
     /**
      * Méthode en charge de tester le lancement de la saisie.
      */
     @Test
-    public void testLaunchSaisieIndex0KO()
-    {
+    public void testLaunchSaisieIndex0KO() {
         final List<NumTraitement> numsTraitements = new ArrayList<NumTraitement>();
-        for (int i = 0; i <= 2; i++)
-        {
+        for (int i = 0; i <= 2; i++) {
             numsTraitements.add(new NumTraitement());
         }
         this.autoSaisieNumTraitement.handle(numsTraitements);
@@ -185,20 +154,16 @@ public class AutoSaisieNumTraitementTest
      * Méthode en charge de tester le lancement de la saisie.
      */
     @Test
-    public void testLaunchSaisieIndexOtherKO()
-    {
+    public void testLaunchSaisieIndexOtherKO() {
         final List<NumTraitement> numsTraitements = new ArrayList<NumTraitement>();
-        for (int i = 0; i <= 2; i++)
-        {
+        for (int i = 0; i <= 2; i++) {
             numsTraitements.add(new NumTraitement());
         }
         numsTraitements.get(0).setNumTraitement("00-A-000A098");
         numsTraitements.get(1).setNumTraitement("toto");
         this.autoSaisieNumTraitement.handle(numsTraitements);
-        Assert.assertEquals("00-A-000A098",
-                            numsTraitements.get(0).getNumTraitement());
-        Assert.assertEquals("toto",
-                            numsTraitements.get(1).getNumTraitement());
+        Assert.assertEquals("00-A-000A098", numsTraitements.get(0).getNumTraitement());
+        Assert.assertEquals("toto", numsTraitements.get(1).getNumTraitement());
         Assert.assertNull(numsTraitements.get(2).getNumTraitement());
     }
 

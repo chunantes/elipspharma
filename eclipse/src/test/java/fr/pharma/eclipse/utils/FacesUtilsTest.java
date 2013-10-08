@@ -12,34 +12,29 @@ import org.junit.Test;
 import org.mockito.Mockito;
 
 import fr.pharma.eclipse.utils.constants.EclipseConstants;
-import fr.pharma.eclipse.utils.message.EclipseMessageBuilder;
+import fr.pharma.eclipse.utils.message.MessageBuilder;
 
 /**
  * Classe en charge de tester la classe utilitaire Faces.
- 
+ * @author Netapsys
  * @version $Revision$ $Date$
  */
-public class FacesUtilsTest
-    extends FacesContextUtils
-{
+public class FacesUtilsTest extends FacesContextUtils {
     /**
      * FacesUtils à tester.
      */
     private FacesUtils facesUtils;
 
-    /**
-     * EclipseMessageBuilder mocké.
-     */
-    private EclipseMessageBuilder mockMessageBuilder;
+    /***/
+    private MessageBuilder mockMessageBuilder;
 
     /**
      * Méthode en charge d'initialiser les données de test.
      */
     @Before
-    public void init()
-    {
+    public void init() {
         this.facesUtils = new FacesUtils();
-        this.mockMessageBuilder = Mockito.mock(EclipseMessageBuilder.class);
+        this.mockMessageBuilder = Mockito.mock(MessageBuilder.class);
         this.facesUtils.setMessageBuilder(this.mockMessageBuilder);
     }
 
@@ -47,8 +42,7 @@ public class FacesUtilsTest
      * Méthode en charge de purger les données de test.
      */
     @After
-    public void end()
-    {
+    public void end() {
         this.facesUtils = null;
         this.mockMessageBuilder = null;
     }
@@ -57,23 +51,21 @@ public class FacesUtilsTest
      * Méthode en charge de tester l'initialisation des données de test.
      */
     @Test
-    public void testInit()
-    {
+    public void testInit() {
         Assert.assertNotNull(this.facesUtils);
         Assert.assertNotNull(this.mockMessageBuilder);
     }
 
     /**
-     * Méthode en charge de tester l'ajout de message sur l'instance courante FacesContext.
+     * Méthode en charge de tester l'ajout de message sur l'instance courante
+     * FacesContext.
      */
     @Test
-    public void testAddMessage()
-    {
+    public void testAddMessage() {
         final FacesContext facesContext = Mockito.mock(FacesContext.class);
         super.setFacesContext(facesContext);
         final String codeMessage = "codeMessage";
-        this.facesUtils.addMessage(FacesMessage.SEVERITY_ERROR,
-                                   codeMessage);
+        this.facesUtils.addMessage(FacesMessage.SEVERITY_ERROR, codeMessage);
         Mockito.verify(this.mockMessageBuilder).getMessage(codeMessage);
     }
 
@@ -81,8 +73,7 @@ public class FacesUtilsTest
      * Méthode en charge de tester la méthode de formattage de date.
      */
     @Test
-    public void testFormatDate()
-    {
+    public void testFormatDate() {
         final Calendar calendar = Calendar.getInstance(EclipseConstants.LOCALE);
         Assert.assertNotNull(this.facesUtils.formatDate(calendar));
     }

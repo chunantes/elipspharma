@@ -9,12 +9,10 @@ import fr.pharma.eclipse.utils.AbstractEclipseJUnitTest;
 
 /**
  * Test de la classe SimpleDroitHabilitationInitializer.
- 
+ * @author Netapsys
  * @version $Revision$ $Date$
  */
-public class SimpleDroitHabilitationInitializerTest
-    extends AbstractEclipseJUnitTest
-{
+public class SimpleDroitHabilitationInitializerTest extends AbstractEclipseJUnitTest {
 
     /**
      * Classe testée.
@@ -30,19 +28,15 @@ public class SimpleDroitHabilitationInitializerTest
      * {@inheritDoc}
      */
     @Override
-    public void setUp()
-    {
-        this.initializer =
-            new SimpleDroitHabilitationInitializer(SimpleDroitHabilitationInitializerTest.TYPE_CONTACT
-                    .name());
+    public void setUp() {
+        this.initializer = new SimpleDroitHabilitationInitializer(SimpleDroitHabilitationInitializerTest.TYPE_CONTACT.name());
     }
 
     /**
      * {@inheritDoc}
      */
     @Override
-    public void tearDown()
-    {
+    public void tearDown() {
         this.initializer = null;
     }
 
@@ -50,23 +44,19 @@ public class SimpleDroitHabilitationInitializerTest
      * {@inheritDoc}
      */
     @Override
-    public void testInit()
-    {
+    public void testInit() {
         Assert.assertNotNull(this.initializer);
-        Assert.assertEquals(SimpleDroitHabilitationInitializerTest.TYPE_CONTACT,
-                            this.initializer.getTypeContact());
+        Assert.assertEquals(SimpleDroitHabilitationInitializerTest.TYPE_CONTACT, this.initializer.getTypeContact());
     }
 
     /**
      * Test de la méthode initialize. .
      */
     @Test
-    public void testInitialize()
-    {
+    public void testInitialize() {
         final Habilitation hab = new Habilitation();
         Assert.assertNull(hab.getDroit());
         this.initializer.initialize(hab);
-        Assert.assertEquals(SimpleDroitHabilitationInitializerTest.TYPE_CONTACT.getDroit(),
-                            hab.getDroit());
+        Assert.assertEquals(SimpleDroitHabilitationInitializerTest.TYPE_CONTACT.getDroit(), hab.getDroit());
     }
 }

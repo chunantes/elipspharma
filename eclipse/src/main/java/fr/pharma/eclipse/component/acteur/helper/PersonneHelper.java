@@ -11,12 +11,10 @@ import fr.pharma.eclipse.domain.model.acteur.Personne;
 
 /**
  * Helper pour Personne.
- 
+ * @author Netapsys
  * @version $Revision$ $Date$
  */
-public class PersonneHelper
-    implements Serializable
-{
+public class PersonneHelper implements Serializable {
 
     /**
      * SerialVersionUID.
@@ -24,15 +22,14 @@ public class PersonneHelper
     private static final long serialVersionUID = 2967527814927728844L;
 
     /**
-     * Méthode en charge de retourner une liste triée des personnes en paramètre.
+     * Méthode en charge de retourner une liste triée des personnes en
+     * paramètre.
      * @param personnes
      * @return la liste triée.
      */
-    public List<Personne> sortPersonnes(final Collection<Personne> personnes)
-    {
+    public List<Personne> sortPersonnes(final Collection<Personne> personnes) {
         final List<Personne> result = new ArrayList<Personne>(personnes);
-        Collections.sort(result,
-                         new PersonneComparator());
+        Collections.sort(result, new PersonneComparator());
 
         return result;
     }

@@ -13,13 +13,10 @@ import fr.pharma.eclipse.service.common.GenericService;
 
 /**
  * Manager de services.
- 
+ * @author Netapsys
  * @version $Revision$ $Date$
  */
-public class ServiceManager
-    extends BeanManager<Service>
-    implements Serializable
-{
+public class ServiceManager extends BeanManager<Service> implements Serializable {
     /**
      * Serial ID.
      */
@@ -34,8 +31,7 @@ public class ServiceManager
      * Constructeur.
      * @param service Le service.
      */
-    public ServiceManager(final GenericService<Service> service)
-    {
+    public ServiceManager(final GenericService<Service> service) {
         super(service);
     }
 
@@ -43,13 +39,11 @@ public class ServiceManager
      * Méthode en charge de retourner les personnes du services.
      * @return La liste des personnes du service.
      */
-    public List<Personne> findPersonnes()
-    {
+    public List<Personne> findPersonnes() {
         this.personnes = new ArrayList<Personne>();
         this.personnes.addAll(this.getBean().getArcInvestigateurs());
         this.personnes.addAll(this.getBean().getInvestigateurs());
-        Collections.sort(this.personnes,
-                         new BeanWithNomComparator());
+        Collections.sort(this.personnes, new BeanWithNomComparator());
         return this.personnes;
 
     }
@@ -58,8 +52,7 @@ public class ServiceManager
      * Getter sur personnes.
      * @return Retourne le personnes.
      */
-    public List<Personne> getPersonnes()
-    {
+    public List<Personne> getPersonnes() {
         return this.personnes;
     }
 
@@ -67,8 +60,7 @@ public class ServiceManager
      * Setter pour personnes.
      * @param personnes le personnes à écrire.
      */
-    public void setPersonnes(final List<Personne> personnes)
-    {
+    public void setPersonnes(final List<Personne> personnes) {
         this.personnes = personnes;
     }
 

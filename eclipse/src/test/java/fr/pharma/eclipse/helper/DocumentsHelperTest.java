@@ -2,9 +2,8 @@ package fr.pharma.eclipse.helper;
 
 import java.text.ParseException;
 
-import junit.framework.Assert;
-
 import org.junit.After;
+import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
 
@@ -14,11 +13,10 @@ import fr.pharma.eclipse.utils.Utils;
 
 /**
  * Test de la classe DocumentsHelper.
- 
+ * @author Netapsys
  * @version $Revision$ $Date$
  */
-public class DocumentsHelperTest
-{
+public class DocumentsHelperTest {
     /**
      * Helper testé.
      */
@@ -28,8 +26,7 @@ public class DocumentsHelperTest
      * Méthode d'initialisation.
      */
     @Before
-    public void setUp()
-    {
+    public void setUp() {
         this.helper = new DocumentsHelper();
     }
 
@@ -37,8 +34,7 @@ public class DocumentsHelperTest
      * Méthode de finalisation.
      */
     @After
-    public void tearDown()
-    {
+    public void tearDown() {
         this.helper = null;
     }
 
@@ -47,20 +43,13 @@ public class DocumentsHelperTest
      * @throws ParseException Erreur de préparation des données.
      */
     @Test
-    public void testGetLastDocTitle()
-        throws ParseException
-    {
+    public void testGetLastDocTitle() throws ParseException {
         final DocumentEclipse doc = DocumentsUtils.makeDocumentACTest(1);
-        doc.setDateMaj(Utils.parseDate("11/11/2010",
-                                       "dd/MM/yyyy"));
+        doc.setDateMaj(Utils.parseDate("11/11/2010", "dd/MM/yyyy"));
         doc.setMajPar("netapsys");
         final String expectedTitle = "Ajouté le 11/11/2010 par netapsys";
-        final String actualTitle = this.helper.buildDocTitle(doc,
-                                                             "Ajouté le",
-                                                             "par",
-                                                             "dd/MM/yyyy");
-        Assert.assertEquals(expectedTitle,
-                            actualTitle);
+        final String actualTitle = this.helper.buildDocTitle(doc, "Ajouté le", "par", "dd/MM/yyyy");
+        Assert.assertEquals(expectedTitle, actualTitle);
     }
 
 }

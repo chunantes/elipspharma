@@ -11,6 +11,8 @@
 	<!-- JPA ECLIPSE                   -->
 	<!-- ============================= -->	
 	<persistence-unit name="eclipse" transaction-type="RESOURCE_LOCAL" >
+		<class>fr.pharma.eclipse.domain.model.acl.AclEssai</class>
+		<class>fr.pharma.eclipse.domain.model.acl.AclPharmacie</class>
 		<class>fr.pharma.eclipse.domain.model.acteur.ArcInvestigateur</class>
 		<class>fr.pharma.eclipse.domain.model.acteur.ArcPromoteur</class>
 		<class>fr.pharma.eclipse.domain.model.acteur.ContactPromoteur</class>
@@ -116,6 +118,7 @@
 		<class>fr.pharma.eclipse.domain.model.suivi.stockage.PharmacieSuivi</class>
 		<class>fr.pharma.eclipse.domain.model.suivi.produit.ProduitSuivi</class>
 		<class>fr.pharma.eclipse.domain.model.stock.MvtStock</class>
+		<class>fr.pharma.eclipse.domain.model.stock.LigneStock</class>
 		<class>fr.pharma.eclipse.domain.model.stock.document.DocumentMvtStock</class>
 		<class>fr.pharma.eclipse.domain.model.stock.document.DocumentDestruction</class>
 		<class>fr.pharma.eclipse.domain.model.stock.document.DocumentRetourPromoteur</class>
@@ -157,8 +160,8 @@
 		<class>fr.pharma.eclipse.domain.model.stock.RetourPatient</class>
 		<class>fr.pharma.eclipse.domain.model.acteur.document.DocumentCV</class>
 		<class>fr.pharma.eclipse.domain.model.acteur.document.DocumentValidationFormation</class>
-		
-		<exclude-unlisted-classes>true</exclude-unlisted-classes>
+		<class>fr.pharma.eclipse.domain.model.reprisePassif.ReprisePassif</class>
+		<exclude-unlisted-classes>false</exclude-unlisted-classes>
 	</persistence-unit>
 	
 	<!-- ============================= -->

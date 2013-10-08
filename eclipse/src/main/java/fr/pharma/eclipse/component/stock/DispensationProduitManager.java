@@ -12,12 +12,10 @@ import fr.pharma.eclipse.service.common.GenericService;
 
 /**
  * Manager de Dispensation de produit.
- 
+ * @author Netapsys
  * @version $Revision$ $Date$
  */
-public class DispensationProduitManager
-    extends BeanManager<DispensationProduit>
-{
+public class DispensationProduitManager extends BeanManager<DispensationProduit> {
 
     /**
      * SerialVersionUID.
@@ -34,32 +32,26 @@ public class DispensationProduitManager
      * Constructeur.
      * @param service Le service.
      */
-    public DispensationProduitManager(final GenericService<DispensationProduit> service)
-    {
+    public DispensationProduitManager(final GenericService<DispensationProduit> service) {
         super(service);
     }
 
     /**
-     * Méthode appelée par l'IHM en charge d'initialiser une DispensationProduit pour la popup de
-     * dispensation d'un produit.
+     * Méthode appelée par l'IHM en charge d'initialiser une DispensationProduit
+     * pour la popup de dispensation d'un produit.
      * @param event Evenemetn JSF.
      */
-    public void initDispensation(final ActionEvent event)
-    {
-        final ProduitPrescrit produit =
-            (ProduitPrescrit) event.getComponent().getAttributes().get("produitCurrent");
-        final Dispensation dispensation =
-            (Dispensation) event.getComponent().getAttributes().get("dispensation");
-        this.setBean(this.factory.getInitializedObject(produit,
-                                                       dispensation));
+    public void initDispensation(final ActionEvent event) {
+        final ProduitPrescrit produit = (ProduitPrescrit) event.getComponent().getAttributes().get("produitCurrent");
+        final Dispensation dispensation = (Dispensation) event.getComponent().getAttributes().get("dispensation");
+        this.setBean(this.factory.getInitializedObject(produit, dispensation));
     }
 
     /**
      * Setter pour factory.
      * @param factory le factory à écrire.
      */
-    public void setFactory(final DispensationProduitFactory factory)
-    {
+    public void setFactory(final DispensationProduitFactory factory) {
         this.factory = factory;
     }
 

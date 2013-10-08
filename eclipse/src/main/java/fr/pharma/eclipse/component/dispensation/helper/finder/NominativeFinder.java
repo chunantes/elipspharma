@@ -17,51 +17,40 @@ import fr.pharma.eclipse.predicate.GenericPredicate;
 
 /**
  * Implé"mentation pour les essais en Type de dispensation Nominative.
- 
+ * @author Netapsys
  * @version $Revision$ $Date$
  */
-public class NominativeFinder
-    implements Serializable, LigneStockFinder
-{
+public class NominativeFinder implements Serializable, LigneStockFinder {
 
     /**
      * SerialVersionUID.
      */
     private static final long serialVersionUID = -6313141963755548237L;
 
-    public void initLignesStocks(final SortieManager sortieManager)
-    {
+    @Override
+    public void initLignesStocks(final SortieManager sortieManager) {
 
         final MvtStock mvt = sortieManager.getSortieCurrent().getMvtSortie();
 
-        // on recherche les conditionnements du produit correspondant au mode de prescription du
+        // on recherche les conditionnements du produit correspondant au mode de
+        // prescription du
         // produi prescrit.
 
         @SuppressWarnings("unchecked")
         final List<Conditionnement> conditionnements =
-            new ArrayList<Conditionnement>(CollectionUtils.select(mvt.getProduit()
-                                                                          .getConditionnements(),
-                                                                  new GenericPredicate("modePrescription",
-                                                                                       mvt.getConditionnement()
-                                                                                               .getModePrescription())));
+            new ArrayList<Conditionnement>(CollectionUtils.select(mvt.getProduit().getConditionnements(), new GenericPredicate("modePrescription", mvt.getConditionnement()
+                    .getModePrescription())));
         sortieManager.getSortieCurrent().setConditionnements(conditionnements);
-        // on charge les lignes de stocks des conditionnements ayant le meme mode de prescription
-        for (final Conditionnement conditionnement : conditionnements)
-        {
+        // on charge les lignes de stocks des conditionnements ayant le meme
+        // mode de prescription
+        for (final Conditionnement conditionnement : conditionnements) {
 
             // Valorisation des lignes de stock possibles pour une sortie
-            // booleen sur les dotations déterminé par le contexte de la dispensation.
-            final List<LigneStock> lignesStock =
-                sortieManager.getStockService().getLinesStock(mvt.getEssai(),
-                                                              mvt.getPharmacie(),
-                                                              mvt.getProduit(),
-                                                              conditionnement,
-                                                              false);
+            // booleen sur les dotations déterminé par le contexte de la
+            // dispensation.
+            final List<LigneStock> lignesStock = sortieManager.getStockService().getAllLignesStock(mvt.getEssai(), mvt.getPharmacie(), mvt.getProduit(), conditionnement, false);
             // Filtre des stocks en quarantaine.
-            CollectionUtils
-                    .filter(lignesStock,
-                            new NotPredicate(new BeanPropertyValueEqualsPredicate("stockage",
-                                                                                  "En quarantaine")));
+            CollectionUtils.filter(lignesStock, new NotPredicate(new BeanPropertyValueEqualsPredicate("stockage", "En quarantaine")));
 
             sortieManager.getSortieCurrent().getLignesStock().addAll(lignesStock);
 

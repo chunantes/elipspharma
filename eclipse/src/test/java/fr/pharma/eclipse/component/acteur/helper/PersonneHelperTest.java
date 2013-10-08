@@ -13,12 +13,10 @@ import fr.pharma.eclipse.utils.AbstractEclipseJUnitTest;
 
 /**
  * Test du helper PersonneHelper.
- 
+ * @author Netapsys
  * @version $Revision$ $Date$
  */
-public class PersonneHelperTest
-    extends AbstractEclipseJUnitTest
-{
+public class PersonneHelperTest extends AbstractEclipseJUnitTest {
 
     /**
      * Helper.
@@ -29,8 +27,7 @@ public class PersonneHelperTest
      * {@inheritDoc}
      */
     @Override
-    public void setUp()
-    {
+    public void setUp() {
         this.helper = new PersonneHelper();
     }
 
@@ -38,8 +35,7 @@ public class PersonneHelperTest
      * {@inheritDoc}
      */
     @Override
-    public void tearDown()
-    {
+    public void tearDown() {
         this.helper = null;
     }
 
@@ -47,8 +43,7 @@ public class PersonneHelperTest
      * {@inheritDoc}
      */
     @Override
-    public void testInit()
-    {
+    public void testInit() {
         Assert.assertNotNull(this.helper);
     }
 
@@ -56,23 +51,14 @@ public class PersonneHelperTest
      * Test de la méthode sortPersonnes.
      */
     @Test
-    public void testSortPersonnes()
-    {
+    public void testSortPersonnes() {
 
         final List<Personne> personnes = new ArrayList<Personne>();
 
-        final Personne p1 = this.createPersonne(TypePersonne.ARC_INVESTIGATEUR,
-                                                "nom1",
-                                                "prenom");
-        final Personne p2 = this.createPersonne(TypePersonne.CRO,
-                                                "nom2",
-                                                "prenom");
-        final Personne p3 = this.createPersonne(TypePersonne.ARC_INVESTIGATEUR,
-                                                "na",
-                                                "prenom");
-        final Personne p4 = this.createPersonne(TypePersonne.ARC_INVESTIGATEUR,
-                                                "na",
-                                                "pa");
+        final Personne p1 = this.createPersonne(TypePersonne.ARC_INVESTIGATEUR, "nom1", "prenom");
+        final Personne p2 = this.createPersonne(TypePersonne.CRO, "nom2", "prenom");
+        final Personne p3 = this.createPersonne(TypePersonne.ARC_INVESTIGATEUR, "na", "prenom");
+        final Personne p4 = this.createPersonne(TypePersonne.ARC_INVESTIGATEUR, "na", "pa");
         personnes.add(p1);
         personnes.add(p2);
         personnes.add(p3);
@@ -80,19 +66,13 @@ public class PersonneHelperTest
 
         final List<Personne> result = this.helper.sortPersonnes(personnes);
 
-        Assert.assertEquals("nom2",
-                            result.get(0).getNom());
-        Assert.assertEquals("na",
-                            result.get(1).getNom());
-        Assert.assertEquals("pa",
-                            result.get(1).getPrenom());
-        Assert.assertEquals("na",
-                            result.get(2).getNom());
-        Assert.assertEquals("prenom",
-                            result.get(2).getPrenom());
+        Assert.assertEquals("nom2", result.get(0).getNom());
+        Assert.assertEquals("na", result.get(1).getNom());
+        Assert.assertEquals("pa", result.get(1).getPrenom());
+        Assert.assertEquals("na", result.get(2).getNom());
+        Assert.assertEquals("prenom", result.get(2).getPrenom());
 
-        Assert.assertEquals("nom1",
-                            result.get(3).getNom());
+        Assert.assertEquals("nom1", result.get(3).getNom());
 
     }
     /**
@@ -104,8 +84,7 @@ public class PersonneHelperTest
      */
     private Personne createPersonne(final TypePersonne type,
                                     final String nom,
-                                    final String prenom)
-    {
+                                    final String prenom) {
         final Personne personne = new ArcInvestigateur();
         personne.setType(type);
         personne.setNom(nom);

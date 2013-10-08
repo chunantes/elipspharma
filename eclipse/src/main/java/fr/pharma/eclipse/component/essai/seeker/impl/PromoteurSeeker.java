@@ -18,12 +18,10 @@ import fr.pharma.eclipse.service.common.GenericService;
 
 /**
  * Classe en charge de rechercher les promoteurs sélectionnables pour l'essai.
- 
+ * @author Netapsys
  * @version $Revision$ $Date$
  */
-public class PromoteurSeeker
-    implements SelectableContactsSeeker, BeanFactoryAware
-{
+public class PromoteurSeeker implements SelectableContactsSeeker, BeanFactoryAware {
 
     /**
      * Serial ID.
@@ -44,8 +42,7 @@ public class PromoteurSeeker
      * {@inheritDoc}
      */
     @Override
-    public boolean supports(final TypeContact typeContact)
-    {
+    public boolean supports(final TypeContact typeContact) {
         return TypeContact.PROMOTEUR.equals(typeContact);
     }
 
@@ -53,8 +50,7 @@ public class PromoteurSeeker
      * {@inheritDoc}
      */
     @Override
-    public List<Personne> getContacts(final Essai essai)
-    {
+    public List<Personne> getContacts(final Essai essai) {
         return new ArrayList<Personne>(this.service.getAll(this.getSearchCriteria(essai)));
     }
 
@@ -64,10 +60,8 @@ public class PromoteurSeeker
      * @param essai Essai pour lequel on souhaite ajouter des contacts.
      * @return Le critère de recherche qui permet de récupérer les contacts.
      */
-    private PersonneSearchCriteria getSearchCriteria(final Essai essai)
-    {
-        final ContactPromoteurSearchCriteria criteria =
-            (ContactPromoteurSearchCriteria) this.beanFactory.getBean("contactPromoteurCriteria");
+    private PersonneSearchCriteria getSearchCriteria(final Essai essai) {
+        final ContactPromoteurSearchCriteria criteria = (ContactPromoteurSearchCriteria) this.beanFactory.getBean("contactPromoteurCriteria");
         criteria.setPromoteur(essai.getPromoteur());
         return criteria;
     }
@@ -76,9 +70,7 @@ public class PromoteurSeeker
      * {@inheritDoc}
      */
     @Override
-    public void setBeanFactory(final BeanFactory beanFactory)
-        throws BeansException
-    {
+    public void setBeanFactory(final BeanFactory beanFactory) throws BeansException {
         this.beanFactory = beanFactory;
     }
 
@@ -86,8 +78,7 @@ public class PromoteurSeeker
      * Getter sur beanFactory.
      * @return Retourne le beanFactory.
      */
-    BeanFactory getBeanFactory()
-    {
+    BeanFactory getBeanFactory() {
         return this.beanFactory;
     }
 
@@ -95,8 +86,7 @@ public class PromoteurSeeker
      * Getter sur service.
      * @return Retourne le service.
      */
-    GenericService<ContactPromoteur> getService()
-    {
+    GenericService<ContactPromoteur> getService() {
         return this.service;
     }
 
@@ -104,8 +94,7 @@ public class PromoteurSeeker
      * Setter pour service.
      * @param service le service à écrire.
      */
-    public void setService(final GenericService<ContactPromoteur> service)
-    {
+    public void setService(final GenericService<ContactPromoteur> service) {
         this.service = service;
     }
 }

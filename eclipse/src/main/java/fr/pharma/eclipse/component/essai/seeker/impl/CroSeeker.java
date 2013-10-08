@@ -18,12 +18,10 @@ import fr.pharma.eclipse.service.common.GenericService;
 
 /**
  * Classe en charge de rechercher les Cro sélectionnables pour l'essai.
- 
+ * @author Netapsys
  * @version $Revision$ $Date$
  */
-public class CroSeeker
-    implements SelectableContactsSeeker, BeanFactoryAware
-{
+public class CroSeeker implements SelectableContactsSeeker, BeanFactoryAware {
 
     /**
      * Serial ID.
@@ -44,8 +42,7 @@ public class CroSeeker
      * {@inheritDoc}
      */
     @Override
-    public boolean supports(final TypeContact typeContact)
-    {
+    public boolean supports(final TypeContact typeContact) {
         return TypeContact.CRO.equals(typeContact);
     }
 
@@ -53,8 +50,7 @@ public class CroSeeker
      * {@inheritDoc}
      */
     @Override
-    public List<Personne> getContacts(final Essai essai)
-    {
+    public List<Personne> getContacts(final Essai essai) {
         return new ArrayList<Personne>(this.service.getAll(this.getSearchCriteria(essai)));
     }
 
@@ -64,10 +60,8 @@ public class CroSeeker
      * @param essai Essai pour lequel on souhaite ajouter des contacts.
      * @return Le critère de recherche qui permet de récupérer les contacts.
      */
-    private PersonneSearchCriteria getSearchCriteria(final Essai essai)
-    {
-        final PersonneSearchCriteria criteria =
-            (PersonneSearchCriteria) this.beanFactory.getBean("personneCriteria");
+    private PersonneSearchCriteria getSearchCriteria(final Essai essai) {
+        final PersonneSearchCriteria criteria = (PersonneSearchCriteria) this.beanFactory.getBean("personneCriteria");
         criteria.setTypePersonne(TypePersonne.CRO);
         return criteria;
     }
@@ -76,9 +70,7 @@ public class CroSeeker
      * {@inheritDoc}
      */
     @Override
-    public void setBeanFactory(final BeanFactory beanFactory)
-        throws BeansException
-    {
+    public void setBeanFactory(final BeanFactory beanFactory) throws BeansException {
         this.beanFactory = beanFactory;
     }
 
@@ -86,8 +78,7 @@ public class CroSeeker
      * Getter sur beanFactory.
      * @return Retourne le beanFactory.
      */
-    BeanFactory getBeanFactory()
-    {
+    BeanFactory getBeanFactory() {
         return this.beanFactory;
     }
 
@@ -95,8 +86,7 @@ public class CroSeeker
      * Getter sur service.
      * @return Retourne le service.
      */
-    GenericService<Cro> getService()
-    {
+    GenericService<Cro> getService() {
         return this.service;
     }
 
@@ -104,8 +94,7 @@ public class CroSeeker
      * Setter pour service.
      * @param service le service à écrire.
      */
-    public void setService(final GenericService<Cro> service)
-    {
+    public void setService(final GenericService<Cro> service) {
         this.service = service;
     }
 

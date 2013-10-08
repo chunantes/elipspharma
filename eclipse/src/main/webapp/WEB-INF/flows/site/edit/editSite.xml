@@ -1,44 +1,43 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<flow xmlns="http://www.springframework.org/schema/webflow"
-	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-	xsi:schemaLocation="http://www.springframework.org/schema/webflow
-    http://www.springframework.org/schema/webflow/spring-webflow-2.0.xsd" parent="main">
+<flow xmlns="http://www.springframework.org/schema/webflow" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.springframework.org/schema/webflow
+    http://www.springframework.org/schema/webflow/spring-webflow-2.0.xsd"
+	parent="main">
 
 	<!-- Variable d'entrée -->
 	<input name="idSite" />
-	
+
 	<on-start>
 		<evaluate expression="etablissementSearchCriteria.clear()"></evaluate>
-		<evaluate expression="etablissementService.getAll(etablissementSearchCriteria)" result="etablissementsManager.beans"/>
+		<evaluate expression="etablissementService.getAll(etablissementSearchCriteria)" result="etablissementsManager.beans" />
 	</on-start>
 
 	<decision-state id="createOrEdit">
-		<if test="idSite==null" then="create" else="edit"/>
+		<if test="idSite==null" then="create" else="edit" />
 	</decision-state>
-	
+
 	<!-- Création -->
 	<action-state id="create">
-		<evaluate expression="siteManager.setBean(siteFactory.getInitializedObject())"/>
-		<transition to="editSite"/>
+		<evaluate expression="siteManager.setBean(siteFactory.getInitializedObject())" />
+		<transition to="editSite" />
 	</action-state>
-	
+
 	<!-- Modification -->
 	<action-state id="edit">
-		<evaluate expression="siteManager.setBean(siteService.get(idSite))"/>
-		<transition to="editSite"/>
+		<evaluate expression="siteManager.setBean(siteService.get(idSite))" />
+		<transition to="editSite" />
 	</action-state>
 
 	<!-- Page principale -->
 	<view-state id="editSite" view="../../../pages/site/edit/editSite.xhtml">
-		<transition on="cancel" to="createOrEdit"/>
+		<transition on="cancel" to="createOrEdit" />
 		<transition on="save" to="comeback">
-			<evaluate expression="siteService.save(siteManager.bean)"/>
+			<evaluate expression="siteService.save(siteManager.bean)" />
 		</transition>
-		<transition on="comeback" to="comeback"/>
-		<transition on="error" to="editSite"/>
+		<transition on="comeback" to="comeback" />
+		<transition on="error" to="editSite" />
 	</view-state>
-	
+
 	<!-- Etat final -->
-	<end-state id="comeback"/>
-	
+	<end-state id="comeback" />
+
 </flow>

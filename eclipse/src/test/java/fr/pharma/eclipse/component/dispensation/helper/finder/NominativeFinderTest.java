@@ -24,12 +24,10 @@ import fr.pharma.eclipse.utils.AbstractEclipseJUnitTest;
 
 /**
  * Test NominativeFinder.
- 
+ * @author Netapsys
  * @version $Revision$ $Date$
  */
-public class NominativeFinderTest
-    extends AbstractEclipseJUnitTest
-{
+public class NominativeFinderTest extends AbstractEclipseJUnitTest {
 
     /**
      * Finder.
@@ -40,8 +38,7 @@ public class NominativeFinderTest
      * {@inheritDoc}
      */
     @Override
-    public void setUp()
-    {
+    public void setUp() {
         this.finder = new NominativeFinder();
     }
 
@@ -49,8 +46,7 @@ public class NominativeFinderTest
      * {@inheritDoc}
      */
     @Override
-    public void tearDown()
-    {
+    public void tearDown() {
         this.finder = null;
     }
 
@@ -58,8 +54,7 @@ public class NominativeFinderTest
      * {@inheritDoc}
      */
     @Override
-    public void testInit()
-    {
+    public void testInit() {
         Assert.assertNotNull(this.finder);
     }
 
@@ -67,8 +62,7 @@ public class NominativeFinderTest
      * Test de la méthode initLignesStocks.
      */
     @Test
-    public void testInitLignesStocks()
-    {
+    public void testInitLignesStocks() {
         final SortieManager sortieManager = new SortieManager();
         final Sortie sortieCurrent = new Sortie();
         sortieCurrent.setMvtSortie(new DispensationGlobale());
@@ -92,20 +86,13 @@ public class NominativeFinderTest
 
         final List<LigneStock> liste = new ArrayList<LigneStock>();
 
-        Mockito.when(stockService.getLinesStock(Matchers.any(Essai.class),
-                                                Matchers.any(Pharmacie.class),
-                                                Matchers.any(Produit.class),
-                                                Matchers.any(Conditionnement.class),
+        Mockito.when(stockService.getAllLignesStock(Matchers.any(Essai.class), Matchers.any(Pharmacie.class), Matchers.any(Produit.class), Matchers.any(Conditionnement.class),
                                                 Matchers.anyBoolean())).thenReturn(liste);
 
         this.finder.initLignesStocks(sortieManager);
 
-        Mockito.verify(stockService,
-                       Mockito.times(1)).getLinesStock(Matchers.any(Essai.class),
-                                                       Matchers.any(Pharmacie.class),
-                                                       Matchers.any(Produit.class),
-                                                       Matchers.any(Conditionnement.class),
-                                                       Matchers.anyBoolean());
+        Mockito.verify(stockService, Mockito.times(1)).getAllLignesStock(Matchers.any(Essai.class), Matchers.any(Pharmacie.class), Matchers.any(Produit.class),
+                                                                     Matchers.any(Conditionnement.class), Matchers.anyBoolean());
 
     }
 }

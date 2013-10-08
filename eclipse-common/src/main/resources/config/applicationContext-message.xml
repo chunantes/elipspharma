@@ -7,6 +7,6 @@
 	<!-- ======================= -->
 	<!-- ECLIPSE MESSAGE BUILDER -->
 	<!-- ======================= -->
-	<bean id="eclipseMessageBuilder" class="fr.pharma.eclipse.utils.message.EclipseMessageBuilder" />
+	<bean id="messageBuilder" class="fr.pharma.eclipse.utils.message.MessageBuilder" />
 
 </beans>

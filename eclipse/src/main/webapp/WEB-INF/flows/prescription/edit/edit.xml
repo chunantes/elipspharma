@@ -1,7 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<flow xmlns="http://www.springframework.org/schema/webflow"
-	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-	xsi:schemaLocation="http://www.springframework.org/schema/webflow
+<flow xmlns="http://www.springframework.org/schema/webflow" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.springframework.org/schema/webflow
     http://www.springframework.org/schema/webflow/spring-webflow-2.0.xsd"
 	parent="main">
 
@@ -13,15 +11,11 @@
 		<evaluate expression="essaiSearchCriteria.clear()" />
 		<evaluate expression="patientSearchCriteria.clear()" />
 		<!-- Initialisation complétion automatique des essais -->
-		<evaluate expression="'numInterne'"
-			result="autoCompleteEssaiManager.searchCriteria.activeOrder" />
-		<evaluate expression="'numInterneOrNomOrPromoteur'"
-			result="autoCompleteEssaiManager.searchCriteriaProperty" />
+		<evaluate expression="'numInterne'" result="autoCompleteEssaiManager.searchCriteria.activeOrder" />
+		<evaluate expression="'numInterneOrNomOrPromoteur'" result="autoCompleteEssaiManager.searchCriteriaProperty" />
 
-		<evaluate expression="'numeroIpp'"
-			result="autoCompletePatientManager.searchCriteria.activeOrder" />
-		<evaluate expression="'numeroIppOrNomOrPrenom'"
-			result="autoCompletePatientManager.searchCriteriaProperty" />
+		<evaluate expression="'numeroIpp'" result="autoCompletePatientManager.searchCriteria.activeOrder" />
+		<evaluate expression="'numeroIppOrNomOrPrenom'" result="autoCompletePatientManager.searchCriteriaProperty" />
 		<evaluate expression="prescriptionManager.init()" />
 	</on-start>
 
@@ -31,52 +25,43 @@
 
 	<!-- Création -->
 	<action-state id="create">
-		<evaluate
-			expression="prescriptionManager.setBean(prescriptionFactory.getInitializedObject())" />
+		<evaluate expression="prescriptionManager.setBean(prescriptionFactory.getInitializedObject())" />
 		<transition to="createPrescription" />
 	</action-state>
 
 	<!-- Modification -->
 	<action-state id="edit">
-		<evaluate
-			expression="prescriptionManager.setBean(prescriptionService.get(idPrescription))" />
+		<evaluate expression="prescriptionManager.setBean(prescriptionService.get(idPrescription))" />
 		<transition to="editPrescription">
 			<set name="prescriptionManager.valid" value="true" />
-			<set value="prescriptionManager.bean.dispenseEmpty" name="prescriptionManager.readOnly"  />
+			<set value="prescriptionManager.bean.dispenseEmpty" name="prescriptionManager.readOnly" />
 		</transition>
 	</action-state>
 
 
-<!-- Page principale -->
-	<view-state id="createPrescription"
-		view="../../../pages/prescription/edit/editPrescription.xhtml">
+	<!-- Page principale -->
+	<view-state id="createPrescription" view="../../../pages/prescription/edit/editPrescription.xhtml">
 		<on-render>
-			<evaluate expression="prescriptionService.reattach(prescriptionManager.bean)"
-				result="prescriptionManager.bean" />
+			<evaluate expression="prescriptionService.reattach(prescriptionManager.bean)" result="prescriptionManager.bean" />
 		</on-render>
 
 		<!-- Prescrire -->
 		<transition on="save" to="viewRecapPrescription">
-			<evaluate expression="prescriptionService.reattach(prescriptionManager.bean)"
-				result="prescriptionManager.bean" />
-			<evaluate expression="essaiService.reattach(prescriptionManager.bean.inclusion.essai)"
-				result="prescriptionManager.bean.inclusion.essai" />
-			<evaluate expression="inclusionService.save(prescriptionManager.bean.inclusion)"/>
-			<evaluate expression="prescriptionService.save(prescriptionManager.bean)"
-				result="prescriptionManager.bean" />
+			<evaluate expression="prescriptionService.reattach(prescriptionManager.bean)" result="prescriptionManager.bean" />
+			<evaluate expression="essaiService.reattach(prescriptionManager.bean.inclusion.essai)" result="prescriptionManager.bean.inclusion.essai" />
+			<evaluate expression="inclusionService.save(prescriptionManager.bean.inclusion)" />
+			<evaluate expression="prescriptionService.save(prescriptionManager.bean)" result="prescriptionManager.bean" />
 			<set name="prescriptionManager.readOnly" value="true" />
-			<evaluate expression="prescriptionManager.confirm()"/>
+			<evaluate expression="prescriptionManager.confirm()" />
 		</transition>
 		<transition on="saveAndDispense" to="editDispensation">
-			<evaluate expression="prescriptionService.reattach(prescriptionManager.bean)"
-				result="prescriptionManager.bean" />
-			<evaluate expression="essaiService.reattach(prescriptionManager.bean.inclusion.essai)"
-				result="prescriptionManager.bean.inclusion.essai" />
-			<evaluate expression="inclusionService.save(prescriptionManager.bean.inclusion)"/>
+			<evaluate expression="prescriptionService.reattach(prescriptionManager.bean)" result="prescriptionManager.bean" />
+			<evaluate expression="essaiService.reattach(prescriptionManager.bean.inclusion.essai)" result="prescriptionManager.bean.inclusion.essai" />
+			<evaluate expression="inclusionService.save(prescriptionManager.bean.inclusion)" />
 			<evaluate expression="prescriptionService.save(prescriptionManager.bean)" />
 			<set name="prescriptionManager.readOnly" value="true" />
 			<set name="flashScope.idPrescription" value="prescriptionManager.bean.id" />
-			<evaluate expression="prescriptionManager.confirm()"/>
+			<evaluate expression="prescriptionManager.confirm()" />
 		</transition>
 
 		<!-- Ajouter un patient -->
@@ -89,8 +74,7 @@
 
 		<!-- ajouter un produit prescrit -->
 		<transition on="addProduitPrescrit" to="editPrescription">
-			<evaluate
-				expression="prescriptionManager.addProduitPrescrit(produitPrescritManager.bean)" />
+			<evaluate expression="prescriptionManager.addProduitPrescrit(produitPrescritManager.bean)" />
 		</transition>
 
 
@@ -106,40 +90,32 @@
 	</view-state>
 
 	<!-- Page principale -->
-	<view-state id="editPrescription"
-		view="../../../pages/prescription/edit/editPrescription.xhtml">
+	<view-state id="editPrescription" view="../../../pages/prescription/edit/editPrescription.xhtml">
 
 		<on-render>
-		<evaluate
-			expression="prescriptionService.reattach(prescriptionManager.bean)" result="prescriptionManager.bean" />
-		<evaluate
-			expression="essaiService.reattach(prescriptionManager.bean.inclusion.essai)" result="prescriptionManager.bean.inclusion.essai" />
-		<set name="prescriptionManager.patientSelected" value="prescriptionManager.bean.inclusion.patient"/>
-		<evaluate expression="prescriptionManager.initServices()"/>
+			<evaluate expression="prescriptionService.reattach(prescriptionManager.bean)" result="prescriptionManager.bean" />
+			<evaluate expression="essaiService.reattach(prescriptionManager.bean.inclusion.essai)" result="prescriptionManager.bean.inclusion.essai" />
+			<set name="prescriptionManager.patientSelected" value="prescriptionManager.bean.inclusion.patient" />
+			<evaluate expression="prescriptionManager.initServices()" />
 		</on-render>
-		
+
 		<!-- Prescrire -->
 		<transition on="save" to="viewRecapPrescription">
-			<evaluate expression="prescriptionService.reattach(prescriptionManager.bean)"
-				result="prescriptionManager.bean" />
-			<evaluate expression="essaiService.reattach(prescriptionManager.bean.inclusion.essai)"
-				result="prescriptionManager.bean.inclusion.essai" />
-			<evaluate expression="inclusionService.save(prescriptionManager.bean.inclusion)"/>
-			<evaluate expression="prescriptionService.save(prescriptionManager.bean)"
-				result="prescriptionManager.bean" />
+			<evaluate expression="prescriptionService.reattach(prescriptionManager.bean)" result="prescriptionManager.bean" />
+			<evaluate expression="essaiService.reattach(prescriptionManager.bean.inclusion.essai)" result="prescriptionManager.bean.inclusion.essai" />
+			<evaluate expression="inclusionService.save(prescriptionManager.bean.inclusion)" />
+			<evaluate expression="prescriptionService.save(prescriptionManager.bean)" result="prescriptionManager.bean" />
 			<set name="prescriptionManager.readOnly" value="true" />
-			<evaluate expression="prescriptionManager.confirm()"/>
+			<evaluate expression="prescriptionManager.confirm()" />
 		</transition>
 		<transition on="saveAndDispense" to="editDispensation">
-			<evaluate expression="prescriptionService.reattach(prescriptionManager.bean)"
-				result="prescriptionManager.bean" />
-			<evaluate expression="essaiService.reattach(prescriptionManager.bean.inclusion.essai)"
-				result="prescriptionManager.bean.inclusion.essai" />
-			<evaluate expression="inclusionService.save(prescriptionManager.bean.inclusion)"/>
+			<evaluate expression="prescriptionService.reattach(prescriptionManager.bean)" result="prescriptionManager.bean" />
+			<evaluate expression="essaiService.reattach(prescriptionManager.bean.inclusion.essai)" result="prescriptionManager.bean.inclusion.essai" />
+			<evaluate expression="inclusionService.save(prescriptionManager.bean.inclusion)" />
 			<evaluate expression="prescriptionService.save(prescriptionManager.bean)" />
 			<set name="prescriptionManager.readOnly" value="true" />
 			<set name="flashScope.idPrescription" value="prescriptionManager.bean.id" />
-			<evaluate expression="prescriptionManager.confirm()"/>
+			<evaluate expression="prescriptionManager.confirm()" />
 		</transition>
 
 		<!-- Ajouter un patient -->
@@ -152,8 +128,7 @@
 
 		<!-- ajouter un produit prescrit -->
 		<transition on="addProduitPrescrit" to="editPrescription">
-			<evaluate
-				expression="prescriptionManager.addProduitPrescrit(produitPrescritManager.bean)" />
+			<evaluate expression="prescriptionManager.addProduitPrescrit(produitPrescritManager.bean)" />
 		</transition>
 
 
@@ -168,23 +143,20 @@
 		<transition on="error" to="editPrescription" />
 	</view-state>
 
-	
-	<view-state id="viewRecapPrescription"
-		view="../../../pages/prescription/edit/recapPrescription.xhtml">
-		
-		<on-render>
-		<evaluate
-			expression="prescriptionService.reattach(prescriptionManager.bean)" result="prescriptionManager.bean" />
-		<evaluate
-			expression="essaiService.reattach(prescriptionManager.bean.inclusion.essai)" result="prescriptionManager.bean.inclusion.essai" />
-		<evaluate expression="prescriptionManager.initServices()"/>
-		</on-render>
-		
-		
-		<transition on="cancel" to="viewConsulterPrescription"/>
-	</view-state>	
 
-	<!--  Ajout d'un patient  -->
+	<view-state id="viewRecapPrescription" view="../../../pages/prescription/edit/recapPrescription.xhtml">
+
+		<on-render>
+			<evaluate expression="prescriptionService.reattach(prescriptionManager.bean)" result="prescriptionManager.bean" />
+			<evaluate expression="essaiService.reattach(prescriptionManager.bean.inclusion.essai)" result="prescriptionManager.bean.inclusion.essai" />
+			<evaluate expression="prescriptionManager.initServices()" />
+		</on-render>
+
+
+		<transition on="cancel" to="viewConsulterPrescription" />
+	</view-state>
+
+	<!-- Ajout d'un patient -->
 	<subflow-state id="addPatient" subflow="patient/edit">
 		<transition to="editPrescription" />
 	</subflow-state>
@@ -193,9 +165,7 @@
 	<subflow-state id="editPatient" subflow="patient/edit">
 		<attribute name="idPatient" value="flashScope.idPatient" />
 		<transition to="editPrescription">
-			<evaluate
-				expression="patientService.get(prescriptionManager.patientSelected.id)"
-				result="prescriptionManager.patientSelected" />
+			<evaluate expression="patientService.get(prescriptionManager.patientSelected.id)" result="prescriptionManager.patientSelected" />
 		</transition>
 	</subflow-state>
 

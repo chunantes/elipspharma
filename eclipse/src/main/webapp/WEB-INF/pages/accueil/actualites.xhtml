@@ -7,10 +7,10 @@
      <div id="actualites" class="accueil" > 
 		 <h2><h:outputText value="#{resourceBundle['accueil.actualites']}"/></h2>
 		    		
-	    <p:dataTable id="essaisActualites" value="#{accueilManager.essaisActualites}"  scrollable="true" var="essaiActualite" emptyMessage="#{resourceBundle['results.none']}"
-		 	selection="#{accueilManager.essaiSelected}" selectionMode="single" 
+	    <p:dataTable id="essaisActualites" value="#{accueilManager.essaisActualites}" scrollable="true" var="essaiActualite" emptyMessage="#{resourceBundle['results.none']}"
+		 	selection="#{accueilManager.actualiteSelected}" selectionMode="single" 
 			update="essaisActualites" styleClass="dataTableScrollable" onRowSelectStart="showWait();"
-	    	onselectComplete="javascript:document.getElementById('editEssaiButton').click();" >
+	    	onselectComplete="javascript:document.getElementById('editEssaiFromActualiteButton').click();" >
 			
    			<p:column id="essai" styleClass="panelCol_20">
    				<f:facet name="header">
@@ -23,7 +23,7 @@
    				<f:facet name="header">
    					<h:outputText value="#{resourceBundle['actualites.promoteur']}"/> 
    				</f:facet>
-   				<h:outputText value="#{essaiActualite.promoteur.raisonSociale}"/>
+   				<h:outputText value="#{essaiActualite.raisonSociale}"/>
    			</p:column>
    			
    			<p:column id="codePromoteur" styleClass="panelCol_40">

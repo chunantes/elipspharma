@@ -15,12 +15,10 @@ import fr.pharma.eclipse.utils.constants.EclipseConstants;
 
 /**
  * Classe de converter pour les objets java Calendar.
- 
+ * @author Netapsys
  * @version $Revision$ $Date$
  */
-public class CalendarConverter
-    implements Converter, Serializable
-{
+public class CalendarConverter implements Converter, Serializable {
 
     /**
      * Serial ID.
@@ -33,20 +31,14 @@ public class CalendarConverter
     @Override
     public Object getAsObject(final FacesContext context,
                               final UIComponent component,
-                              final String value)
-    {
-        if (!StringUtils.hasText(value))
-        {
+                              final String value) {
+        if (!StringUtils.hasText(value)) {
             return null;
         }
 
-        try
-        {
-            return Utils.parseDate(value,
-                                   EclipseConstants.PATTERN_SIMPLE);
-        }
-        catch (final ParseException e)
-        {
+        try {
+            return Utils.parseDate(value, EclipseConstants.PATTERN_SIMPLE);
+        } catch (final ParseException e) {
             return null;
         }
     }
@@ -57,21 +49,15 @@ public class CalendarConverter
     @Override
     public String getAsString(final FacesContext context,
                               final UIComponent component,
-                              final Object value)
-    {
-        if (value == null)
-        {
+                              final Object value) {
+        if (value == null) {
             return null;
         }
 
-        try
-        {
+        try {
             final Calendar cal = (Calendar) value;
-            return Utils.formatDate(cal.getTime(),
-                                    EclipseConstants.PATTERN_SIMPLE);
-        }
-        catch (final ClassCastException e)
-        {
+            return Utils.formatDate(cal.getTime(), EclipseConstants.PATTERN_SIMPLE);
+        } catch (final ClassCastException e) {
             return null;
         }
     }

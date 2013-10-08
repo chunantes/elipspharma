@@ -1,0 +1,65 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns:c="http://java.sun.com/jsp/jstl/core"
+	xmlns:fn="http://java.sun.com/jsp/jstl/functions"
+	xmlns:fmt="http://java.sun.com/jsp/jstl/fmt"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:elips="http://www.elipspharma.fr/jsp/jstl/functions"
+	xmlns:util="urn:jsptagdir:/WEB-INF/tags/util"
+	xmlns:spring="http://www.springframework.org/tags"
+	xmlns:jsp="http://java.sun.com/JSP/Page" version="2.0">
+
+<jsp:directive.page contentType="text/html;charset=UTF-8" />
+<jsp:output omit-xml-declaration="yes" />
+
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+<title>ELIPS'PHARMA - Page inconnue</title>
+<link type="text/css" rel="stylesheet" href="#{facesContext.externalContext.requestContextPath}/resources/css/eclipse.css" /> 
+<style type="text/css">
+html {
+	overflow: auto;
+}
+
+body {
+	font-family: Arial, Helvetica, sans-serif;
+}
+
+h1 {
+	background-image: url("../images/titre_h1.jpg");
+	background-repeat: no-repeat;
+	color: #5DB677;
+	font-size: 22px;
+	height: 29px;
+	margin: 20px 0 0;
+	padding: 2px 0 0 20px;
+	text-transform: uppercase;
+	text-align: center;
+}
+
+.exceptionMessage {
+	white-space: pre-wrap; /* css-3 */
+	white-space: -moz-pre-wrap; /* Mozilla, since 1999 */
+	white-space: -pre-wrap; /* Opera 4-6 */
+	white-space: -o-pre-wrap; /* Opera 7 */
+	word-wrap: break-word; /* Internet Explorer 5.5+ */
+}
+</style>
+</head>
+
+<body>
+	<div class="main">
+		<div
+			style="text-align: center; color: #D6710B; font-size: 14px; font-weight: bold; padding: 10px; margin-top: 10px">
+			<h1>Autorisation insuffisante (code 401)</h1>
+			<h3 style="text-align: center;">Vous n'avez pas l'autorisation
+				d'accéder à la page demandée, ou vous n'avez pas l'autorisation
+				d'effectuer l'action demandée.</h3>
+			<div>
+				<h:outputLink value="#{request.contextPath}">Retour à la page d'accueil</h:outputLink>
+			</div>
+		</div>
+	</div>
+
+</body>
+</html>

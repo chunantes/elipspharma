@@ -28,12 +28,10 @@ import fr.pharma.eclipse.utils.constants.EclipseConstants;
 
 /**
  * Manager de consultation de stock (Etat de stock).
- 
+ * @author Netapsys
  * @version $Revision$ $Date$
  */
-public class StockManager
-    implements Serializable
-{
+public class StockManager implements Serializable {
     /**
      * Serial ID.
      */
@@ -85,8 +83,7 @@ public class StockManager
      * Constructeur.
      * @param searchCriteria Critère de recherche.
      */
-    public StockManager(final StockSearchCriteria searchCriteria)
-    {
+    public StockManager(final StockSearchCriteria searchCriteria) {
         this.searchCriteria = searchCriteria;
     }
 
@@ -94,18 +91,14 @@ public class StockManager
      * Getter pour stockagesSelectable.
      * @return Le stockagesSelectable
      */
-    public TreeNode getStockagesSelectable()
-    {
+    public TreeNode getStockagesSelectable() {
         // Récupération de la pharmacie sélectionnée
         final Pharmacie pharmacie = this.getSearchCriteria().getPharmacie();
 
-        if (pharmacie != null)
-        {
+        if (pharmacie != null) {
             this.stockagesSelectable = this.treeStockageHelper.buildTree(pharmacie);
             return this.stockagesSelectable;
-        }
-        else
-        {
+        } else {
             return null;
         }
     }
@@ -113,10 +106,8 @@ public class StockManager
     /**
      * Méthode en charge de mettre à jour le stockage de recherche.
      */
-    public void updateStockage()
-    {
-        if (this.getNodeSelected() != null)
-        {
+    public void updateStockage() {
+        if (this.getNodeSelected() != null) {
             final Stockage stockage = (Stockage) this.getNodeSelected().getData();
             this.getSearchCriteria().setStockage(stockage);
         }
@@ -125,8 +116,7 @@ public class StockManager
     /**
      * Méthode en charge de supprimer le stockage de recherche.
      */
-    public void delStockage()
-    {
+    public void delStockage() {
         this.getSearchCriteria().setStockage(null);
     }
 
@@ -134,8 +124,7 @@ public class StockManager
      * Méthode appelée via la couche IHM lorsqu'une pharmacie est sélectionnée.
      * @param event Evénement remonté via la couche IHM.
      */
-    public void handleSelectPharmacie(final AjaxBehaviorEvent event)
-    {
+    public void handleSelectPharmacie(final AjaxBehaviorEvent event) {
         // Récupération de la pharmacie sélectionnée
         final HtmlSelectOneMenu select = (HtmlSelectOneMenu) event.getSource();
         final Pharmacie pharmacie = (Pharmacie) select.getLocalValue();
@@ -147,22 +136,20 @@ public class StockManager
     }
 
     /**
-     * Méthode en charge de déterminer si la quantité d'une ligne d'état de stock est inférieure
-     * au seuil plancher défini dans la partie Produit de l'essai.
+     * Méthode en charge de déterminer si la quantité d'une ligne d'état de
+     * stock est inférieure au seuil plancher défini dans la partie Produit de
+     * l'essai.
      * @param etatStock Ligne d'état de stock à tester.
      * @return Résultat de l'atteinte du seuil plancher.
      */
-    public Boolean seuilPlancherAtteint(final EtatStock etatStock)
-    {
+    public Boolean seuilPlancherAtteint(final EtatStock etatStock) {
         Boolean result = Boolean.FALSE;
 
         // Récupération du stock seuil du produit
         final Produit produit = etatStock.getProduit();
         final Integer seuilPlancher = produit.getDetailLogistique().getStockSeuil();
 
-        if (seuilPlancher != null
-            && etatStock.getQteEnStock() < seuilPlancher)
-        {
+        if ((seuilPlancher != null) && (etatStock.getQteEnStock() < seuilPlancher)) {
             result = Boolean.TRUE;
         }
         return result;
@@ -175,16 +162,9 @@ public class StockManager
      * @throws BadElementException en cas d'erreur .
      * @throws DocumentException en cas d'erreur.
      */
-    public void preProcessPDF(final Object document)
-        throws IOException,
-            BadElementException,
-            DocumentException
-    {
+    public void preProcessPDF(final Object document) throws IOException, BadElementException, DocumentException {
         final Calendar date = Calendar.getInstance(Locale.FRANCE);
-        this.processor.preProcessPDF(document,
-                                     "Consultation du stock au "
-                                             + Utils.formatDate(date.getTime(),
-                                                                EclipseConstants.PATTERN_SIMPLE));
+        this.processor.preProcessPDF(document, "Consultation du stock au " + Utils.formatDate(date.getTime(), EclipseConstants.PATTERN_SIMPLE));
     }
 
     /**
@@ -192,25 +172,18 @@ public class StockManager
      * @param stock Stock.
      * @return La chaine à afficher dans la cellule.
      */
-    public String getQuantites(final EtatStock stock)
-    {
+    public String getQuantites(final EtatStock stock) {
         final StringBuffer sb = new StringBuffer();
 
-        for (final EtatLigneStock e : stock.getEtatsLignesStockAsList())
-        {
+        for (final EtatLigneStock e : stock.getEtatsLignesStockAsList()) {
             sb.append(e.getQteEnStock()).append(" - ").append(e.getNumLot());
-            if (e.getNumTraitement() != null)
-            {
+            if (e.getNumTraitement() != null) {
                 sb.append(" - ").append(e.getNumTraitement());
-            }
-            else
-            {
+            } else {
                 sb.append(" - ").append(EclipseConstants.NON_APPLICABLE);
             }
-            if (e.getDatePeremption() != null)
-            {
-                sb.append(" - ").append(Utils.formatDate(e.getDatePeremption().getTime(),
-                                                         EclipseConstants.PATTERN_SIMPLE));
+            if (e.getDatePeremption() != null) {
+                sb.append(" - ").append(Utils.formatDate(e.getDatePeremption().getTime(), EclipseConstants.PATTERN_SIMPLE));
             }
             sb.append(" \r");
         }
@@ -221,8 +194,7 @@ public class StockManager
      * Getter pour beans.
      * @return Le beans
      */
-    public List<EtatStock> getBeans()
-    {
+    public List<EtatStock> getBeans() {
         return this.beans;
     }
 
@@ -230,8 +202,7 @@ public class StockManager
      * Setter pour beans.
      * @param beans Le beans à écrire.
      */
-    public void setBeans(final List<EtatStock> beans)
-    {
+    public void setBeans(final List<EtatStock> beans) {
         this.beans = beans;
     }
 
@@ -239,8 +210,7 @@ public class StockManager
      * Getter pour searchCriteria.
      * @return Le searchCriteria
      */
-    public StockSearchCriteria getSearchCriteria()
-    {
+    public StockSearchCriteria getSearchCriteria() {
         return this.searchCriteria;
     }
 
@@ -248,8 +218,7 @@ public class StockManager
      * Getter pour nodeSelected.
      * @return Le nodeSelected
      */
-    public TreeNode getNodeSelected()
-    {
+    public TreeNode getNodeSelected() {
         return this.nodeSelected;
     }
 
@@ -257,8 +226,7 @@ public class StockManager
      * Setter pour nodeSelected.
      * @param nodeSelected Le nodeSelected à écrire.
      */
-    public void setNodeSelected(final TreeNode nodeSelected)
-    {
+    public void setNodeSelected(final TreeNode nodeSelected) {
         this.nodeSelected = nodeSelected;
     }
 
@@ -266,8 +234,7 @@ public class StockManager
      * Setter pour treeStockageHelper.
      * @param treeStockageHelper Le treeStockageHelper à écrire.
      */
-    public void setTreeStockageHelper(final TreeStockageHelper treeStockageHelper)
-    {
+    public void setTreeStockageHelper(final TreeStockageHelper treeStockageHelper) {
         this.treeStockageHelper = treeStockageHelper;
     }
 
@@ -275,8 +242,7 @@ public class StockManager
      * Getter sur beanSelected.
      * @return Retourne le beanSelected.
      */
-    public EtatStock getBeanSelected()
-    {
+    public EtatStock getBeanSelected() {
         return this.beanSelected;
     }
 
@@ -284,8 +250,7 @@ public class StockManager
      * Setter pour beanSelected.
      * @param beanSelected le beanSelected à écrire.
      */
-    public void setBeanSelected(final EtatStock beanSelected)
-    {
+    public void setBeanSelected(final EtatStock beanSelected) {
         this.beanSelected = beanSelected;
     }
 
@@ -293,8 +258,7 @@ public class StockManager
      * Getter sur ligne.
      * @return Retourne le ligne.
      */
-    public EtatLigneStock getLigne()
-    {
+    public EtatLigneStock getLigne() {
         return this.ligne;
     }
 
@@ -302,8 +266,7 @@ public class StockManager
      * Setter pour ligne.
      * @param ligne le ligne à écrire.
      */
-    public void setLigne(final EtatLigneStock ligne)
-    {
+    public void setLigne(final EtatLigneStock ligne) {
         this.ligne = ligne;
     }
 
@@ -311,8 +274,7 @@ public class StockManager
      * Setter pour processor.
      * @param processor Le processor à écrire.
      */
-    public void setProcessor(final EclipseDocumentProcessor processor)
-    {
+    public void setProcessor(final EclipseDocumentProcessor processor) {
         this.processor = processor;
     }
 

@@ -15,12 +15,10 @@ import fr.pharma.eclipse.service.document.DocumentService;
 /**
  * Classe générique en charge de gérer un type de documents sur un pharmacien.
  * @param <DOC> Type générique de document d'un pharmacien.
- 
+ * @author Netapsys
  * @version $Revision$ $Date$
  */
-public class GenericDocumentManager<DOC extends DocumentPharmacien>
-    implements Serializable
-{
+public class GenericDocumentManager<DOC extends DocumentPharmacien> implements Serializable {
 
     /**
      * Serial ID.
@@ -56,21 +54,19 @@ public class GenericDocumentManager<DOC extends DocumentPharmacien>
     /**
      * Constructeur.
      * @param typeDocumentsName Nom du type des documents managés.
-     * @throws IllegalArgumentException Si typeDocumentsName ne correspond pas à une valeur de
-     * l'énumération {@link TypeDocumentPharmacien}.
+     * @throws IllegalArgumentException Si typeDocumentsName ne correspond pas à
+     * une valeur de l'énumération {@link TypeDocumentPharmacien}.
      */
-    public GenericDocumentManager(final String typeDocumentsName)
-    {
+    public GenericDocumentManager(final String typeDocumentsName) {
         this.typeDocuments = TypeDocumentPharmacien.valueOf(typeDocumentsName);
     }
 
     /**
-     * Méthode qui indique si un document peut être créé à partir des informations (fichier)
-     * mémorisés.
+     * Méthode qui indique si un document peut être créé à partir des
+     * informations (fichier) mémorisés.
      * @return true ssi la méthode createDocument peut être appelée.
      */
-    public boolean canCreateDocument()
-    {
+    public boolean canCreateDocument() {
         return this.fichier.getContenu().length > 0;
     }
 
@@ -79,19 +75,16 @@ public class GenericDocumentManager<DOC extends DocumentPharmacien>
      * et remet à blanc ces informations. La méthode canCreateDocument <br>
      * doit avoir été appelée et son retour doit être true.
      * @param pharmacien Produit sur lequel on souhaite créer le document.
-     * @return Un nouveau DocumentPharmacien. Le fichier physique est créé sur le disque.
+     * @return Un nouveau DocumentPharmacien. Le fichier physique est créé sur
+     * le disque.
      */
     @SuppressWarnings("unchecked")
-    public DOC createDocument(final Pharmacien pharmacien)
-    {
+    public DOC createDocument(final Pharmacien pharmacien) {
         // Document BDD.
-        final DOC doc = this.factory.getInitializedObject(this.fichier,
-                                                          pharmacien);
+        final DOC doc = this.factory.getInitializedObject(this.fichier, pharmacien);
 
         // Document Physique.
-        this.docService.saveOnDisk(pharmacien,
-                                   doc,
-                                   this.fichier);
+        this.docService.saveOnDisk(pharmacien, doc, this.fichier);
 
         this.resetFormDatas();
         return doc;
@@ -100,16 +93,14 @@ public class GenericDocumentManager<DOC extends DocumentPharmacien>
     /**
      * Méthode de réinitialisation des données du formulaire (fichier).
      */
-    public void resetFormDatas()
-    {
+    public void resetFormDatas() {
         this.resetFichier();
     }
 
     /**
      * Méthode de réinitialisation du fichier.
      */
-    private void resetFichier()
-    {
+    private void resetFichier() {
         this.fichier = new Fichier();
     }
 
@@ -117,8 +108,7 @@ public class GenericDocumentManager<DOC extends DocumentPharmacien>
      * Getter sur fichier.
      * @return Retourne le fichier.
      */
-    public Fichier getFichier()
-    {
+    public Fichier getFichier() {
         return this.fichier;
     }
 
@@ -126,8 +116,7 @@ public class GenericDocumentManager<DOC extends DocumentPharmacien>
      * Setter pour fichier.
      * @param fichier le fichier à écrire.
      */
-    public void setFichier(final Fichier fichier)
-    {
+    public void setFichier(final Fichier fichier) {
         this.fichier = fichier;
     }
 
@@ -135,8 +124,7 @@ public class GenericDocumentManager<DOC extends DocumentPharmacien>
      * Getter sur docService.
      * @return Retourne le docService.
      */
-    DocumentService getDocService()
-    {
+    DocumentService getDocService() {
         return this.docService;
     }
 
@@ -144,8 +132,7 @@ public class GenericDocumentManager<DOC extends DocumentPharmacien>
      * Setter pour docService.
      * @param docService le docService à écrire.
      */
-    public void setDocService(final DocumentService docService)
-    {
+    public void setDocService(final DocumentService docService) {
         this.docService = docService;
     }
 
@@ -153,8 +140,7 @@ public class GenericDocumentManager<DOC extends DocumentPharmacien>
      * Getter sur file.
      * @return Retourne le file.
      */
-    public UploadedFile getFile()
-    {
+    public UploadedFile getFile() {
         return null;
     }
 
@@ -162,23 +148,19 @@ public class GenericDocumentManager<DOC extends DocumentPharmacien>
      * Setter pour file.
      * @param file le file à écrire.
      */
-    public void setFile(final UploadedFile file)
-    {
+    public void setFile(final UploadedFile file) {
         this.resetFichier();
-        if (file == null)
-        {
+        if (file == null) {
             return;
         }
-        this.fichierFiller.fill(file,
-                                this.fichier);
+        this.fichierFiller.fill(file, this.fichier);
     }
 
     /**
      * Getter sur fichierFiller.
      * @return Retourne le fichierFiller.
      */
-    FichierFiller getFichierFiller()
-    {
+    FichierFiller getFichierFiller() {
         return this.fichierFiller;
     }
 
@@ -186,8 +168,7 @@ public class GenericDocumentManager<DOC extends DocumentPharmacien>
      * Setter pour fichierFiller.
      * @param fichierFiller le fichierFiller à écrire.
      */
-    public void setFichierFiller(final FichierFiller fichierFiller)
-    {
+    public void setFichierFiller(final FichierFiller fichierFiller) {
         this.fichierFiller = fichierFiller;
     }
 
@@ -195,8 +176,7 @@ public class GenericDocumentManager<DOC extends DocumentPharmacien>
      * Getter pour factory.
      * @return Le factory
      */
-    public DocumentPharmacienFactory<DOC> getFactory()
-    {
+    public DocumentPharmacienFactory<DOC> getFactory() {
         return this.factory;
     }
 
@@ -204,8 +184,7 @@ public class GenericDocumentManager<DOC extends DocumentPharmacien>
      * Setter pour factory.
      * @param factory Le factory à écrire.
      */
-    public void setFactory(final DocumentPharmacienFactory<DOC> factory)
-    {
+    public void setFactory(final DocumentPharmacienFactory<DOC> factory) {
         this.factory = factory;
     }
 
@@ -213,8 +192,7 @@ public class GenericDocumentManager<DOC extends DocumentPharmacien>
      * Getter pour typeDocuments.
      * @return Le typeDocuments
      */
-    public TypeDocumentPharmacien getTypeDocuments()
-    {
+    public TypeDocumentPharmacien getTypeDocuments() {
         return this.typeDocuments;
     }
 
