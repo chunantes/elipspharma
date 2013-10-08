@@ -9,13 +9,12 @@ import fr.pharma.eclipse.domain.model.essai.detail.pharma.embedded.InfosCompleme
 import fr.pharma.eclipse.jasper.engine.filler.JasperReportBeanFiller;
 
 /**
- * Filler en charge de valoriser les attributs de {@link JRBeanFicheAideDispensationPart7}.
- 
+ * Filler en charge de valoriser les attributs de
+ * {@link JRBeanFicheAideDispensationPart7}.
+ * @author Netapsys
  * @version $Revision$ $Date$
  */
-public class AideDispensationPart7GlobalFiller
-    implements JasperReportBeanFiller
-{
+public class AideDispensationPart7GlobalFiller implements JasperReportBeanFiller {
     /**
      * Serial ID.
      */
@@ -26,24 +25,19 @@ public class AideDispensationPart7GlobalFiller
      */
     @Override
     public void fill(final Essai essai,
-                     final JasperReportBean bean)
-    {
+                     final JasperReportBean bean) {
         final JRBeanFicheAideDispensationPart7 partie7 = (JRBeanFicheAideDispensationPart7) bean;
-        final InfosComplementaires infosComplementaires =
-            essai.getDetailDonneesPharma().getInfosComplementaires();
+        final InfosComplementaires infosComplementaires = essai.getDetailDonneesPharma().getInfosComplementaires();
 
         // Levée de l'insu
         final Responsabilite resp = infosComplementaires.getResponsabiliteInsu();
-        if (resp != null)
-        {
+        if (resp != null) {
             partie7.setRespLeveeInsu(resp.getLibelle());
         }
 
         // Mo Associé
         final DocumentEclipse doc = infosComplementaires.getDocumentResponsabiliteInsu();
-        if (Responsabilite.PHARMACIE.equals(resp)
-            && doc != null)
-        {
+        if (Responsabilite.PHARMACIE.equals(resp) && (doc != null)) {
             partie7.setMoAssocie(doc.getNomUtilisateur());
         }
     }

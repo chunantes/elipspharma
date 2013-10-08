@@ -9,12 +9,10 @@ import fr.pharma.eclipse.domain.criteria.common.SearchCriteria;
 
 /**
  * Artisan de recherche pour les contacts promoteur.
- 
+ * @author Netapsys
  * @version $Revision$ $Date$
  */
-public class ContactPromoteurSearchCriteriaMaker
-    extends AbstractCriteriaMaker
-{
+public class ContactPromoteurSearchCriteriaMaker extends AbstractCriteriaMaker {
 
     /**
      * Serial ID.
@@ -29,8 +27,7 @@ public class ContactPromoteurSearchCriteriaMaker
     /**
      * Constructeur par défaut.
      */
-    public ContactPromoteurSearchCriteriaMaker()
-    {
+    public ContactPromoteurSearchCriteriaMaker() {
         super(ContactPromoteurSearchCriteria.class);
     }
 
@@ -39,19 +36,14 @@ public class ContactPromoteurSearchCriteriaMaker
      */
     @Override
     public void transform(final Criteria criteria,
-                          final SearchCriteria searchCrit)
-    {
-        this.personneCriteriaMaker.transform(criteria,
-                                             searchCrit);
+                          final SearchCriteria searchCrit) {
+        this.personneCriteriaMaker.transform(criteria, searchCrit);
 
         final ContactPromoteurSearchCriteria crit = (ContactPromoteurSearchCriteria) searchCrit;
 
         // Promoteur
-        if (crit.getPromoteur() != null)
-        {
-            CriteriaMakerUtils.addCritere(criteria,
-                                          "promoteur",
-                                          crit.getPromoteur());
+        if (crit.getPromoteur() != null) {
+            CriteriaMakerUtils.addCritere(criteria, "promoteur", crit.getPromoteur());
         }
     }
 
@@ -59,8 +51,7 @@ public class ContactPromoteurSearchCriteriaMaker
      * Getter sur personneCriteriaMaker.
      * @return Retourne le personneCriteriaMaker.
      */
-    PersonneSearchCriteriaMaker getPersonneCriteriaMaker()
-    {
+    PersonneSearchCriteriaMaker getPersonneCriteriaMaker() {
         return this.personneCriteriaMaker;
     }
 
@@ -68,8 +59,7 @@ public class ContactPromoteurSearchCriteriaMaker
      * Setter pour personneCriteriaMaker.
      * @param personneCriteriaMaker le personneCriteriaMaker à écrire.
      */
-    public void setPersonneCriteriaMaker(final PersonneSearchCriteriaMaker personneCriteriaMaker)
-    {
+    public void setPersonneCriteriaMaker(final PersonneSearchCriteriaMaker personneCriteriaMaker) {
         this.personneCriteriaMaker = personneCriteriaMaker;
     }
 

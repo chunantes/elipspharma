@@ -6,16 +6,14 @@ import javax.persistence.Entity;
 import fr.pharma.eclipse.domain.enums.document.TypeDocumentEssai;
 
 /**
- * Bean métier représentant un document relatif à la convention de l'essai clinique et ses
- * avenants.
- 
+ * Bean métier représentant un document relatif à la convention de l'essai
+ * clinique et ses avenants.
+ * @author Netapsys
  * @version $Revision$ $Date$
  */
 @Entity
 @DiscriminatorValue("CONVENTION")
-public class DocumentConvention
-    extends DocumentAdministratif
-{
+public class DocumentConvention extends DocumentAdministratif {
 
     /**
      * Serial ID.
@@ -25,8 +23,7 @@ public class DocumentConvention
     /**
      * Constructeur par défaut.
      */
-    public DocumentConvention()
-    {
+    public DocumentConvention() {
         this.setType(TypeDocumentEssai.CONVENTION);
     }
 

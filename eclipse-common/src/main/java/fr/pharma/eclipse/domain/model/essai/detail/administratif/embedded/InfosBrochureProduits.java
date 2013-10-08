@@ -19,14 +19,12 @@ import fr.pharma.eclipse.comparator.document.DocumentBrochureComparator;
 import fr.pharma.eclipse.domain.model.essai.detail.administratif.document.DocumentAdministratif;
 
 /**
- * Informations, de la partie détail de l'administratif de l'essai, relatives à la brochure
- * investigateur sur les produits.
- 
+ * Informations, de la partie détail de l'administratif de l'essai, relatives à
+ * la brochure investigateur sur les produits.
+ * @author Netapsys
  * @version $Revision$ $Date$
  */
-public class InfosBrochureProduits
-    implements Serializable
-{
+public class InfosBrochureProduits implements Serializable {
 
     /**
      * Serial ID.
@@ -40,8 +38,7 @@ public class InfosBrochureProduits
     @Where(clause = "type='BROCHURE_PDUITS'")
     @LazyCollection(LazyCollectionOption.FALSE)
     @Sort(type = SortType.COMPARATOR, comparator = DocumentBrochureComparator.class)
-    private SortedSet<DocumentAdministratif> documents =
-        new TreeSet<DocumentAdministratif>(new DocumentBrochureComparator());
+    private SortedSet<DocumentAdministratif> documents = new TreeSet<DocumentAdministratif>(new DocumentBrochureComparator());
 
     /**
      * Booléen indiquant qu'il faut se référer au dossier papier<br>
@@ -55,8 +52,7 @@ public class InfosBrochureProduits
      * Getter sur documents.
      * @return Retourne le documents.
      */
-    public SortedSet<DocumentAdministratif> getDocuments()
-    {
+    public SortedSet<DocumentAdministratif> getDocuments() {
         return this.documents;
     }
 
@@ -64,8 +60,7 @@ public class InfosBrochureProduits
      * Setter pour documents.
      * @param documents le documents à écrire.
      */
-    public void setDocuments(final SortedSet<DocumentAdministratif> documents)
-    {
+    public void setDocuments(final SortedSet<DocumentAdministratif> documents) {
         this.documents = documents;
     }
 
@@ -73,8 +68,7 @@ public class InfosBrochureProduits
      * Getter sur docsDossierPapier.
      * @return Retourne le docsDossierPapier.
      */
-    public boolean isDocsDossierPapier()
-    {
+    public boolean isDocsDossierPapier() {
         return this.docsDossierPapier;
     }
 
@@ -82,8 +76,7 @@ public class InfosBrochureProduits
      * Setter pour docsDossierPapier.
      * @param docsDossierPapier le docsDossierPapier à écrire.
      */
-    public void setDocsDossierPapier(final boolean docsDossierPapier)
-    {
+    public void setDocsDossierPapier(final boolean docsDossierPapier) {
         this.docsDossierPapier = docsDossierPapier;
     }
 

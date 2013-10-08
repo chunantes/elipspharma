@@ -26,15 +26,13 @@ import fr.pharma.eclipse.domain.model.common.Clonable;
 import fr.pharma.eclipse.domain.model.produit.Produit;
 
 /**
- * Classe métier représentant les informations de détail liés à la logistique d'un produit.
- 
+ * Classe métier représentant les informations de détail liés à la logistique
+ * d'un produit.
+ * @author Netapsys
  * @version $Revision$ $Date$
  */
 @Entity(name = "produit_detail_logistique")
-public class DetailLogistique
-    extends BeanObject
-    implements Clonable<DetailLogistique>
-{
+public class DetailLogistique extends BeanObject implements Clonable<DetailLogistique> {
 
     /**
      * SerialVersionUID.
@@ -104,8 +102,7 @@ public class DetailLogistique
     @LazyCollection(LazyCollectionOption.TRUE)
     @Where(clause = "type='STOCK'")
     @Sort(type = SortType.COMPARATOR, comparator = DetailStockageComparator.class)
-    private SortedSet<DetailStockage> detailsStockages =
-        new TreeSet<DetailStockage>(new DetailStockageComparator());
+    private SortedSet<DetailStockage> detailsStockages = new TreeSet<DetailStockage>(new DetailStockageComparator());
 
     /**
      * Liste des stockages retours.
@@ -114,14 +111,13 @@ public class DetailLogistique
     @LazyCollection(LazyCollectionOption.TRUE)
     @Where(clause = "type='RETOUR'")
     @Sort(type = SortType.COMPARATOR, comparator = DetailStockageComparator.class)
-    private SortedSet<DetailStockage> stockagesRetours =
-        new TreeSet<DetailStockage>(new DetailStockageComparator());
+    private SortedSet<DetailStockage> stockagesRetours = new TreeSet<DetailStockage>(new DetailStockageComparator());
 
     /**
      * {@inheritDoc}
      */
-    public DetailLogistique cloneMe()
-    {
+    @Override
+    public DetailLogistique cloneMe() {
         final DetailLogistique detail = new DetailLogistique();
         detail.setAbriLumiere(this.getAbriLumiere());
         detail.setComptabiliteRetour(this.getComptabiliteRetour());
@@ -136,8 +132,7 @@ public class DetailLogistique
      * Getter sur produit.
      * @return Retourne le produit.
      */
-    public Produit getProduit()
-    {
+    public Produit getProduit() {
         return this.produit;
     }
 
@@ -145,8 +140,7 @@ public class DetailLogistique
      * Setter pour produit.
      * @param produit le produit à écrire.
      */
-    public void setProduit(final Produit produit)
-    {
+    public void setProduit(final Produit produit) {
         this.produit = produit;
     }
 
@@ -154,8 +148,7 @@ public class DetailLogistique
      * Getter sur conditionConservation.
      * @return Retourne le conditionConservation.
      */
-    public ConditionConservation getConditionConservation()
-    {
+    public ConditionConservation getConditionConservation() {
         return this.conditionConservation;
     }
 
@@ -163,8 +156,7 @@ public class DetailLogistique
      * Setter pour conditionConservation.
      * @param conditionConservation le conditionConservation à écrire.
      */
-    public void setConditionConservation(final ConditionConservation conditionConservation)
-    {
+    public void setConditionConservation(final ConditionConservation conditionConservation) {
         this.conditionConservation = conditionConservation;
     }
 
@@ -172,8 +164,7 @@ public class DetailLogistique
      * Getter sur misADisposition.
      * @return Retourne le misADisposition.
      */
-    public Boolean getMisADisposition()
-    {
+    public Boolean getMisADisposition() {
         return this.misADisposition;
     }
 
@@ -181,8 +172,7 @@ public class DetailLogistique
      * Setter pour misADisposition.
      * @param misADisposition le misADisposition à écrire.
      */
-    public void setMisADisposition(final Boolean misADisposition)
-    {
+    public void setMisADisposition(final Boolean misADisposition) {
         this.misADisposition = misADisposition;
     }
 
@@ -190,8 +180,7 @@ public class DetailLogistique
      * Getter sur quantiteAutorise.
      * @return Retourne le quantiteAutorise.
      */
-    public Integer getQuantiteAutorise()
-    {
+    public Integer getQuantiteAutorise() {
         return this.quantiteAutorise;
     }
 
@@ -199,8 +188,7 @@ public class DetailLogistique
      * Setter pour quantiteAutorise.
      * @param quantiteAutorise le quantiteAutorise à écrire.
      */
-    public void setQuantiteAutorise(final Integer quantiteAutorise)
-    {
+    public void setQuantiteAutorise(final Integer quantiteAutorise) {
         this.quantiteAutorise = quantiteAutorise;
     }
 
@@ -208,8 +196,7 @@ public class DetailLogistique
      * Getter sur stockSeuil.
      * @return Retourne le stockSeuil.
      */
-    public Integer getStockSeuil()
-    {
+    public Integer getStockSeuil() {
         return this.stockSeuil;
     }
 
@@ -217,8 +204,7 @@ public class DetailLogistique
      * Setter pour stockSeuil.
      * @param stockSeuil le stockSeuil à écrire.
      */
-    public void setStockSeuil(final Integer stockSeuil)
-    {
+    public void setStockSeuil(final Integer stockSeuil) {
         this.stockSeuil = stockSeuil;
     }
 
@@ -226,8 +212,7 @@ public class DetailLogistique
      * Getter sur comptabiliteRetour.
      * @return Retourne le comptabiliteRetour.
      */
-    public Boolean getComptabiliteRetour()
-    {
+    public Boolean getComptabiliteRetour() {
         return this.comptabiliteRetour;
     }
 
@@ -235,8 +220,7 @@ public class DetailLogistique
      * Setter pour comptabiliteRetour.
      * @param comptabiliteRetour le comptabiliteRetour à écrire.
      */
-    public void setComptabiliteRetour(final Boolean comptabiliteRetour)
-    {
+    public void setComptabiliteRetour(final Boolean comptabiliteRetour) {
         this.comptabiliteRetour = comptabiliteRetour;
     }
 
@@ -244,8 +228,7 @@ public class DetailLogistique
      * Getter sur abriLumiere.
      * @return Retourne le abriLumiere.
      */
-    public Boolean getAbriLumiere()
-    {
+    public Boolean getAbriLumiere() {
         return this.abriLumiere;
     }
 
@@ -253,8 +236,7 @@ public class DetailLogistique
      * Setter pour abriLumiere.
      * @param abriLumiere le abriLumiere à écrire.
      */
-    public void setAbriLumiere(final Boolean abriLumiere)
-    {
+    public void setAbriLumiere(final Boolean abriLumiere) {
         this.abriLumiere = abriLumiere;
     }
 
@@ -262,8 +244,7 @@ public class DetailLogistique
      * Getter sur stockages.
      * @return Retourne le stockages.
      */
-    public SortedSet<DetailStockage> getDetailsStockages()
-    {
+    public SortedSet<DetailStockage> getDetailsStockages() {
         return this.detailsStockages;
     }
 
@@ -272,8 +253,7 @@ public class DetailLogistique
      * @return Retourne le stockages.
      */
     @Deprecated
-    public SortedSet<DetailStockage> getStockages()
-    {
+    public SortedSet<DetailStockage> getStockages() {
         return this.detailsStockages;
     }
 
@@ -281,8 +261,7 @@ public class DetailLogistique
      * Getter sur stockagesRetours.
      * @return Retourne le stockagesRetours.
      */
-    public SortedSet<DetailStockage> getStockagesRetours()
-    {
+    public SortedSet<DetailStockage> getStockagesRetours() {
         return this.stockagesRetours;
     }
 
@@ -290,8 +269,7 @@ public class DetailLogistique
      * Setter pour stockages.
      * @param stockages le stockages à écrire.
      */
-    public void setDetailsStockages(final SortedSet<DetailStockage> stockages)
-    {
+    public void setDetailsStockages(final SortedSet<DetailStockage> stockages) {
         this.detailsStockages = stockages;
     }
 
@@ -299,8 +277,7 @@ public class DetailLogistique
      * Getter sur produitNonFourni.
      * @return Retourne le produitNonFourni.
      */
-    public Boolean getProduitNonFourni()
-    {
+    public Boolean getProduitNonFourni() {
         return this.produitNonFourni;
     }
 
@@ -308,8 +285,7 @@ public class DetailLogistique
      * Setter pour produitNonFourni.
      * @param produitNonFourni le produitNonFourni à écrire.
      */
-    public void setProduitNonFourni(final Boolean produitNonFourni)
-    {
+    public void setProduitNonFourni(final Boolean produitNonFourni) {
         this.produitNonFourni = produitNonFourni;
     }
 
@@ -317,8 +293,7 @@ public class DetailLogistique
      * Setter pour stockagesRetours.
      * @param stockagesRetours le stockagesRetours à écrire.
      */
-    public void setStockagesRetours(final SortedSet<DetailStockage> stockagesRetours)
-    {
+    public void setStockagesRetours(final SortedSet<DetailStockage> stockagesRetours) {
         this.stockagesRetours = stockagesRetours;
     }
 
@@ -326,17 +301,16 @@ public class DetailLogistique
      * Getter pour delaiAlerteAvtDateExpiration.
      * @return Le delaiAlerteAvtDateExpiration
      */
-    public Integer getDelaiAlerteAvtDateExpiration()
-    {
+    public Integer getDelaiAlerteAvtDateExpiration() {
         return this.delaiAlerteAvtDateExpiration;
     }
 
     /**
      * Setter pour delaiAlerteAvtDateExpiration.
-     * @param delaiAlerteAvtDateExpiration Le delaiAlerteAvtDateExpiration à écrire.
+     * @param delaiAlerteAvtDateExpiration Le delaiAlerteAvtDateExpiration à
+     * écrire.
      */
-    public void setDelaiAlerteAvtDateExpiration(final Integer delaiAlerteAvtDateExpiration)
-    {
+    public void setDelaiAlerteAvtDateExpiration(final Integer delaiAlerteAvtDateExpiration) {
         this.delaiAlerteAvtDateExpiration = delaiAlerteAvtDateExpiration;
     }
 

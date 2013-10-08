@@ -41,15 +41,12 @@ import fr.pharma.eclipse.domain.model.suivi.produit.ProduitSuivi;
 
 /**
  * Classe métier représentant un Produit.
- 
+ * @author Netapsys
  * @version $Revision$ $Date$
  */
 @Entity(name = "produit")
 @Inheritance(strategy = InheritanceType.JOINED)
-public abstract class Produit
-    extends BeanObjectSuivi
-    implements BeanWithNom, Clonable<Produit>, BeanParentDocument
-{
+public abstract class Produit extends BeanObjectSuivi implements BeanWithNom, Clonable<Produit>, BeanParentDocument {
 
     /**
      * SerialVersionUID.
@@ -132,8 +129,7 @@ public abstract class Produit
     @OneToMany(mappedBy = "produit", cascade = CascadeType.ALL, orphanRemoval = true)
     @LazyCollection(LazyCollectionOption.TRUE)
     @Sort(type = SortType.COMPARATOR, comparator = ConditionnementComparator.class)
-    private SortedSet<Conditionnement> conditionnements =
-        new TreeSet<Conditionnement>(new ConditionnementComparator());
+    private SortedSet<Conditionnement> conditionnements = new TreeSet<Conditionnement>(new ConditionnementComparator());
 
     /**
      * Liste des modifications de l'essai.
@@ -146,15 +142,15 @@ public abstract class Produit
     /**
      * {@inheritDoc}
      */
+    @Override
     public abstract Produit cloneMe();
 
     /**
-     * Méthode en charge de populer les données de la super classe Produit sur l'appel de ses
-     * enfants.
+     * Méthode en charge de populer les données de la super classe Produit sur
+     * l'appel de ses enfants.
      * @param p Le produit à populer.
      */
-    protected void cloneMe(final Produit p)
-    {
+    protected void cloneMe(final Produit p) {
         p.setClasseTherapeutique(this.classeTherapeutique);
         p.setCode(this.code);
         p.setConseils(this.conseils);
@@ -169,8 +165,7 @@ public abstract class Produit
      * Getter sur denomination.
      * @return Retourne le denomination.
      */
-    public String getDenomination()
-    {
+    public String getDenomination() {
         return this.denomination;
     }
 
@@ -178,8 +173,7 @@ public abstract class Produit
      * Setter pour modifs.
      * @param modifs le modifs à écrire.
      */
-    public void setModifs(final SortedSet<ProduitSuivi> modifs)
-    {
+    public void setModifs(final SortedSet<ProduitSuivi> modifs) {
         this.modifs = modifs;
     }
 
@@ -187,8 +181,7 @@ public abstract class Produit
      * Setter pour denomination.
      * @param denomination le denomination à écrire.
      */
-    public void setDenomination(final String denomination)
-    {
+    public void setDenomination(final String denomination) {
         this.denomination = denomination;
     }
 
@@ -196,8 +189,7 @@ public abstract class Produit
      * Getter sur code.
      * @return Retourne le code.
      */
-    public String getCode()
-    {
+    public String getCode() {
         return this.code;
     }
 
@@ -205,8 +197,7 @@ public abstract class Produit
      * Setter pour code.
      * @param code le code à écrire.
      */
-    public void setCode(final String code)
-    {
+    public void setCode(final String code) {
         this.code = code;
     }
 
@@ -214,8 +205,7 @@ public abstract class Produit
      * Getter sur classeTherapeutique.
      * @return Retourne le classeTherapeutique.
      */
-    public String getClasseTherapeutique()
-    {
+    public String getClasseTherapeutique() {
         return this.classeTherapeutique;
     }
 
@@ -223,8 +213,7 @@ public abstract class Produit
      * Setter pour classeTherapeutique.
      * @param classeTherapeutique le classeTherapeutique à écrire.
      */
-    public void setClasseTherapeutique(final String classeTherapeutique)
-    {
+    public void setClasseTherapeutique(final String classeTherapeutique) {
         this.classeTherapeutique = classeTherapeutique;
     }
 
@@ -232,8 +221,7 @@ public abstract class Produit
      * Getter sur type.
      * @return Retourne le type.
      */
-    public TypeProduit getType()
-    {
+    public TypeProduit getType() {
         return this.type;
     }
 
@@ -241,8 +229,7 @@ public abstract class Produit
      * Setter pour type.
      * @param type le type à écrire.
      */
-    public void setType(final TypeProduit type)
-    {
+    public void setType(final TypeProduit type) {
         this.type = type;
     }
 
@@ -251,16 +238,15 @@ public abstract class Produit
      * @return Retourne le modifs.
      */
     @Override
-    public SortedSet<ProduitSuivi> getModifs()
-    {
+    public SortedSet<ProduitSuivi> getModifs() {
         return this.modifs;
     }
 
     /**
      * {@inheritDoc}
      */
-    public String getNom()
-    {
+    @Override
+    public String getNom() {
         return this.denomination;
     }
 
@@ -268,8 +254,7 @@ public abstract class Produit
      * Getter sur detailProduit.
      * @return Retourne le detailProduit.
      */
-    public DetailProduit getDetailProduit()
-    {
+    public DetailProduit getDetailProduit() {
         return this.detailProduit;
     }
 
@@ -277,8 +262,7 @@ public abstract class Produit
      * Setter pour detailProduit.
      * @param detailProduit le detailProduit à écrire.
      */
-    public void setDetailProduit(final DetailProduit detailProduit)
-    {
+    public void setDetailProduit(final DetailProduit detailProduit) {
         this.detailProduit = detailProduit;
     }
 
@@ -286,8 +270,7 @@ public abstract class Produit
      * Getter sur conseils.
      * @return Retourne le conseils.
      */
-    public String getConseils()
-    {
+    public String getConseils() {
         return this.conseils;
     }
 
@@ -295,8 +278,7 @@ public abstract class Produit
      * Setter pour conseils.
      * @param conseils le conseils à écrire.
      */
-    public void setConseils(final String conseils)
-    {
+    public void setConseils(final String conseils) {
         this.conseils = conseils;
     }
 
@@ -304,10 +286,8 @@ public abstract class Produit
      * Getter sur imputationUf.
      * @return Retourne le imputationUf.
      */
-    public Boolean getImputationUf()
-    {
-        if (this.imputationUf == null)
-        {
+    public Boolean getImputationUf() {
+        if (this.imputationUf == null) {
             return false;
         }
         return this.imputationUf;
@@ -317,8 +297,7 @@ public abstract class Produit
      * Setter pour imputationUf.
      * @param imputationUf le imputationUf à écrire.
      */
-    public void setImputationUf(final Boolean imputationUf)
-    {
+    public void setImputationUf(final Boolean imputationUf) {
         this.imputationUf = imputationUf;
     }
 
@@ -326,8 +305,7 @@ public abstract class Produit
      * Getter sur services.
      * @return Retourne le services.
      */
-    public SortedSet<Service> getServices()
-    {
+    public SortedSet<Service> getServices() {
         return this.services;
     }
 
@@ -335,8 +313,7 @@ public abstract class Produit
      * Getter sur detailLogistique.
      * @return Retourne le detailLogistique.
      */
-    public DetailLogistique getDetailLogistique()
-    {
+    public DetailLogistique getDetailLogistique() {
         return this.detailLogistique;
     }
 
@@ -344,8 +321,7 @@ public abstract class Produit
      * Setter pour detailLogistique.
      * @param detailLogistique le detailLogistique à écrire.
      */
-    public void setDetailLogistique(final DetailLogistique detailLogistique)
-    {
+    public void setDetailLogistique(final DetailLogistique detailLogistique) {
         this.detailLogistique = detailLogistique;
     }
 
@@ -353,8 +329,7 @@ public abstract class Produit
      * Getter sur conditionnements.
      * @return Retourne le conditionnements.
      */
-    public SortedSet<Conditionnement> getConditionnements()
-    {
+    public SortedSet<Conditionnement> getConditionnements() {
         return this.conditionnements;
     }
 
@@ -362,8 +337,7 @@ public abstract class Produit
      * Setter pour conditionnements.
      * @param conditionnements le conditionnements à écrire.
      */
-    public void setConditionnements(final SortedSet<Conditionnement> conditionnements)
-    {
+    public void setConditionnements(final SortedSet<Conditionnement> conditionnements) {
         this.conditionnements = conditionnements;
     }
 
@@ -371,8 +345,7 @@ public abstract class Produit
      * Getter pour alerteActive.
      * @return Le alerteActive
      */
-    public Boolean getAlerteActive()
-    {
+    public Boolean getAlerteActive() {
         return this.alerteActive;
     }
 
@@ -380,18 +353,12 @@ public abstract class Produit
      * Setter pour alerteActive.
      * @param alerteActive Le alerteActive à écrire.
      */
-    public void setAlerteActive(final Boolean alerteActive)
-    {
+    public void setAlerteActive(final Boolean alerteActive) {
         this.alerteActive = alerteActive;
     }
 
     @Override
-    public String toString()
-    {
-        return this.denomination
-               + ":"
-               + this.code
-               + ":"
-               + this.type;
+    public String toString() {
+        return this.denomination + ":" + this.code + ":" + this.type;
     }
 }

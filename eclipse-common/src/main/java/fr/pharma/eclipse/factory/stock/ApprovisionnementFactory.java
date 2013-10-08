@@ -9,13 +9,10 @@ import fr.pharma.eclipse.domain.model.stockage.Pharmacie;
 
 /**
  * Factory de Bean Approvisionnement.
- 
+ * @author Netapsys
  * @version $Revision$ $Date$
  */
-public class ApprovisionnementFactory
-    extends MvtStockFactory<Approvisionnement>
-    implements ApproFactory<Approvisionnement>
-{
+public class ApprovisionnementFactory extends MvtStockFactory<Approvisionnement> implements ApproFactory<Approvisionnement> {
 
     /**
      * Serial ID.
@@ -26,10 +23,8 @@ public class ApprovisionnementFactory
      * Constructeur.
      * @param bean Classe.
      */
-    public ApprovisionnementFactory(final Class<Approvisionnement> bean)
-    {
-        super(bean,
-              TypeMvtStock.APPROVISIONNEMENT);
+    public ApprovisionnementFactory(final Class<Approvisionnement> bean) {
+        super(bean, TypeMvtStock.APPROVISIONNEMENT);
     }
 
     /**
@@ -37,20 +32,15 @@ public class ApprovisionnementFactory
      * @param bean Classe.
      * @param typeMvtStock type de mouvement.
      */
-    public ApprovisionnementFactory(
-                                    final Class<Approvisionnement> bean,
-                                    final TypeMvtStock typeMvtStock)
-    {
-        super(bean,
-              typeMvtStock);
+    public ApprovisionnementFactory(final Class<Approvisionnement> bean, final TypeMvtStock typeMvtStock) {
+        super(bean, typeMvtStock);
 
     }
     /**
      * {@inheritDoc}
      */
     @Override
-    public Approvisionnement getInitializedObject()
-    {
+    public Approvisionnement getInitializedObject() {
         final Approvisionnement appro = super.getInitializedObject();
         appro.setApproApprouve(Boolean.TRUE);
         appro.setExtensionPeremption(Boolean.FALSE);
@@ -58,19 +48,19 @@ public class ApprovisionnementFactory
     }
 
     /**
-     * Méthode en charge d'initialiser un Approvisionnement avec un essai, une pharmacie, une date
-     * de réception et une date d'arrivée de colis.
+     * Méthode en charge d'initialiser un Approvisionnement avec un essai, une
+     * pharmacie, une date de réception et une date d'arrivée de colis.
      * @param essai Essai.
      * @param pharmacie Pharmacie.
      * @param dateReception Date de réception.
      * @param dateArriveeColis Date d'arrivée du colis.
      * @return Approvisionnement.
      */
+    @Override
     public Approvisionnement getInitializedObject(final Essai essai,
                                                   final Pharmacie pharmacie,
                                                   final Calendar dateReception,
-                                                  final Calendar dateArriveeColis)
-    {
+                                                  final Calendar dateArriveeColis) {
         final Approvisionnement appro = this.getInitializedObject();
         appro.setEssai(essai);
         appro.setPharmacie(pharmacie);

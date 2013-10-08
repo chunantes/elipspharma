@@ -5,11 +5,9 @@ import fr.pharma.eclipse.service.common.GenericService;
 
 /**
  * Interface de services ElementToCheck.
- 
+ * @author Netapsys
  * @version $Revision$ $Date$
  */
-public interface ElementToCheckService
-    extends GenericService<ElementToCheck>
-{
+public interface ElementToCheckService extends GenericService<ElementToCheck> {
 
 }

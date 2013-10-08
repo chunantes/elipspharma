@@ -18,17 +18,15 @@ import fr.pharma.eclipse.domain.enums.TypeCommentaireEssai;
 import fr.pharma.eclipse.domain.model.essai.CommentaireEssai;
 
 /**
- * Classe métier représentant un commentaire laissé sur le détail de l'étude de faisabilité de
- * l'essai.
- 
+ * Classe métier représentant un commentaire laissé sur le détail de l'étude de
+ * faisabilité de l'essai.
+ * @author Netapsys
  * @version $Revision$ $Date$
  */
 @Entity(name = "essai_commentaire_detail_faisabilite")
 @Inheritance(strategy = InheritanceType.SINGLE_TABLE)
 @DiscriminatorColumn(name = "type", discriminatorType = DiscriminatorType.STRING)
-public abstract class CommentaireEssaiFaisabilite
-    extends CommentaireEssai
-{
+public abstract class CommentaireEssaiFaisabilite extends CommentaireEssai {
     /**
      * Serial ID.
      */
@@ -53,8 +51,7 @@ public abstract class CommentaireEssaiFaisabilite
      * Getter sur detailFaisabilite.
      * @return Retourne le detailFaisabilite.
      */
-    public DetailFaisabilite getDetailFaisabilite()
-    {
+    public DetailFaisabilite getDetailFaisabilite() {
         return this.detailFaisabilite;
     }
 
@@ -62,8 +59,7 @@ public abstract class CommentaireEssaiFaisabilite
      * Setter pour detailFaisabilite.
      * @param detailFaisabilite le detailFaisabilite à écrire.
      */
-    public void setDetailFaisabilite(final DetailFaisabilite detailFaisabilite)
-    {
+    public void setDetailFaisabilite(final DetailFaisabilite detailFaisabilite) {
         this.detailFaisabilite = detailFaisabilite;
     }
 
@@ -71,8 +67,7 @@ public abstract class CommentaireEssaiFaisabilite
      * Getter sur type.
      * @return Retourne le type.
      */
-    public TypeCommentaireEssai getType()
-    {
+    public TypeCommentaireEssai getType() {
         return this.type;
     }
 
@@ -80,8 +75,7 @@ public abstract class CommentaireEssaiFaisabilite
      * Setter pour type.
      * @param type le type à écrire.
      */
-    public void setType(final TypeCommentaireEssai type)
-    {
+    public void setType(final TypeCommentaireEssai type) {
         this.type = type;
     }
 }

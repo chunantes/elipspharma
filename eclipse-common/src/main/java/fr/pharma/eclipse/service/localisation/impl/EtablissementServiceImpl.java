@@ -11,13 +11,10 @@ import fr.pharma.eclipse.service.localisation.EtablissementService;
 
 /**
  * Classe d'implémentation du service de gestion des établissements.
- 
+ * @author Netapsys
  * @version $Revision$ $Date$
  */
-public class EtablissementServiceImpl
-    extends GenericServiceImpl<Etablissement>
-    implements EtablissementService
-{
+public class EtablissementServiceImpl extends GenericServiceImpl<Etablissement> implements EtablissementService {
     /**
      * Serial ID.
      */
@@ -33,8 +30,7 @@ public class EtablissementServiceImpl
      * Constructeur.
      * @param etablissementDao Dao de gestion des établissements.
      */
-    public EtablissementServiceImpl(final GenericDao<Etablissement> etablissementDao)
-    {
+    public EtablissementServiceImpl(final GenericDao<Etablissement> etablissementDao) {
         super(etablissementDao);
     }
 
@@ -42,8 +38,7 @@ public class EtablissementServiceImpl
      * {@inheritDoc}
      */
     @Override
-    public Etablissement save(final Etablissement etablissement)
-    {
+    public Etablissement save(final Etablissement etablissement) {
         final Etablissement etablissementToSave = this.reattach(etablissement);
         final EtablissementSuivi etabSuivi = this.etabSuiviFactory.getInitializedObject();
         etabSuivi.setEtablissement(etablissementToSave);
@@ -55,8 +50,7 @@ public class EtablissementServiceImpl
      * Setter pour etabSuiviFactory.
      * @param etabSuiviFactory le etabSuiviFactory à écrire.
      */
-    public void setEtabSuiviFactory(final SuiviFactory<EtablissementSuivi> etabSuiviFactory)
-    {
+    public void setEtabSuiviFactory(final SuiviFactory<EtablissementSuivi> etabSuiviFactory) {
         this.etabSuiviFactory = etabSuiviFactory;
     }
 

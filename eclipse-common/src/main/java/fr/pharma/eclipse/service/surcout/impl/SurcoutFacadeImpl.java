@@ -12,12 +12,10 @@ import fr.pharma.eclipse.service.surcout.SurcoutFacade;
 
 /**
  * Classe d'implémentation de la facade de gestion des surcouts.s
- 
+ * @author Netapsys
  * @version $Revision$ $Date$
  */
-public class SurcoutFacadeImpl
-    implements SurcoutFacade
-{
+public class SurcoutFacadeImpl implements SurcoutFacade {
 
     /**
      * Service des inclusions.
@@ -28,11 +26,11 @@ public class SurcoutFacadeImpl
     /**
      * {@inheritDoc}
      */
+    @Override
     public int countNbPatients(final Essai essai,
                                final Calendar dateDebut,
                                final Calendar dateFin,
-                               final boolean inclu)
-    {
+                               final boolean inclu) {
         final InclusionSearchCriteria criteria = new InclusionSearchCriteria();
         criteria.setEssai(essai);
         criteria.setActif(inclu);
@@ -44,37 +42,28 @@ public class SurcoutFacadeImpl
     /**
      * {@inheritDoc}
      */
+    @Override
     public int countNbAnnees(final Essai essai,
                              final Calendar dateDebut,
-                             final Calendar dateFin)
-    {
+                             final Calendar dateFin) {
         int nbAnnees = 0;
         final Calendar debut = essai.getDetailDates().getDebutEtude();
-        if (debut == null)
-        {
+        if (debut == null) {
 
-            throw new ValidationException("surcout.essai.dateDebut",
-                                          new String[]
-                                          {"notNull" });
+            throw new ValidationException("surcout.essai.dateDebut", new String[]{"notNull" });
         }
 
         final Calendar date = (Calendar) debut.clone();
 
-        date.add(Calendar.YEAR,
-                 1);
+        date.add(Calendar.YEAR, 1);
         final Calendar fin = (Calendar) dateFin.clone();
-        fin.add(Calendar.DAY_OF_MONTH,
-                1);
+        fin.add(Calendar.DAY_OF_MONTH, 1);
 
-        while (date.before(Calendar.getInstance()))
-        {
-            if (date.after(dateDebut)
-                && date.before(fin))
-            {
+        while (date.before(Calendar.getInstance())) {
+            if (date.after(dateDebut) && date.before(fin)) {
                 nbAnnees++;
             }
-            date.add(Calendar.YEAR,
-                     1);
+            date.add(Calendar.YEAR, 1);
         }
 
         return nbAnnees;
@@ -83,25 +72,18 @@ public class SurcoutFacadeImpl
     /**
      * {@inheritDoc}
      */
+    @Override
     public boolean inPremiereAnnee(final Essai essai,
                                    final Calendar dateDebut,
-                                   final Calendar dateFin)
-    {
+                                   final Calendar dateFin) {
         final Calendar debut = essai.getDetailDates().getDebutEtude();
-        if (debut == null)
-        {
+        if (debut == null) {
 
-            throw new ValidationException("surcout.essai.dateDebut",
-                                          new String[]
-                                          {"notNull" });
-        }
-        else
-        {
+            throw new ValidationException("surcout.essai.dateDebut", new String[]{"notNull" });
+        } else {
             final Calendar fin = (Calendar) dateFin.clone();
-            fin.add(Calendar.DAY_OF_MONTH,
-                    1);
-            return debut.after(dateDebut)
-                   && debut.before(fin);
+            fin.add(Calendar.DAY_OF_MONTH, 1);
+            return debut.after(dateDebut) && debut.before(fin);
         }
 
     }
@@ -110,8 +92,7 @@ public class SurcoutFacadeImpl
      * Setter pour inclusionService.
      * @param inclusionService le inclusionService à écrire.
      */
-    public void setInclusionService(final InclusionService inclusionService)
-    {
+    public void setInclusionService(final InclusionService inclusionService) {
         this.inclusionService = inclusionService;
     }
 }

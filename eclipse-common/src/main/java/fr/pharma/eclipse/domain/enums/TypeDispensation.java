@@ -2,11 +2,10 @@ package fr.pharma.eclipse.domain.enums;
 
 /**
  * Enumération représentant le Type de dispensation.
- 
+ * @author Netapsys
  * @version $Revision$ $Date$
  */
-public enum TypeDispensation
-{
+public enum TypeDispensation {
     /**
      * Globale.
      */
@@ -26,8 +25,7 @@ public enum TypeDispensation
      * Constructeur.
      * @param libelle Le libellé.
      */
-    TypeDispensation(final String libelle)
-    {
+    TypeDispensation(final String libelle) {
         this.libelle = libelle;
     }
 
@@ -35,8 +33,7 @@ public enum TypeDispensation
      * Getter pour libelle.
      * @return Retourne le libelle.
      */
-    public String getLibelle()
-    {
+    public String getLibelle() {
         return this.libelle;
     }
 
@@ -44,8 +41,7 @@ public enum TypeDispensation
      * {@inheritDoc}
      */
     @Override
-    public String toString()
-    {
+    public String toString() {
         return this.getLibelle();
     }
 

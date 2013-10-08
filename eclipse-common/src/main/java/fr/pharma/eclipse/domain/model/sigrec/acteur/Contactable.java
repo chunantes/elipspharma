@@ -1,13 +1,11 @@
 package fr.pharma.eclipse.domain.model.sigrec.acteur;
 
-
 /**
  * Interface définissant les éléments Contact.
- 
+ * @author Netapsys
  * @version $Revision$ $Date$
  */
-public interface Contactable
-{
+public interface Contactable {
     /**
      * Retourne le contact.
      * @return le contact.

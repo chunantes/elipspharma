@@ -2,11 +2,10 @@ package fr.pharma.eclipse.domain.enums;
 
 /**
  * Enumération représentant le type de promoteur.
- 
+ * @author Netapsys
  * @version $Revision$ $Date$
  */
-public enum TypePromoteur
-{
+public enum TypePromoteur {
     /**
      * Académique.
      */
@@ -36,8 +35,7 @@ public enum TypePromoteur
      * Constructeur.
      * @param libelle Le libellé du type de promoteur.
      */
-    TypePromoteur(final String libelle)
-    {
+    TypePromoteur(final String libelle) {
         this.libelle = libelle;
     }
 
@@ -45,8 +43,7 @@ public enum TypePromoteur
      * Getter pour libelle.
      * @return Retourne le libelle.
      */
-    public String getLibelle()
-    {
+    public String getLibelle() {
         return this.libelle;
     }
 
@@ -54,8 +51,7 @@ public enum TypePromoteur
      * {@inheritDoc}
      */
     @Override
-    public String toString()
-    {
+    public String toString() {
         return this.getLibelle();
     }
 

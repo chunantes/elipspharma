@@ -13,12 +13,10 @@ import fr.pharma.eclipse.domain.enums.produit.TypeProduit;
 
 /**
  * Informations generales relatives aux donnees pharma d'un essai clinique.
- 
+ * @author Netapsys
  * @version $Revision$ $Date$
  */
-public class InfosGenerales
-    implements Serializable
-{
+public class InfosGenerales implements Serializable {
 
     /**
      * Serial ID.
@@ -92,8 +90,7 @@ public class InfosGenerales
      * Getter sur typeProduitEvalue.
      * @return Retourne le typeProduitEvalue.
      */
-    public TypeProduit getTypeProduitEvalue()
-    {
+    public TypeProduit getTypeProduitEvalue() {
         return this.typeProduitEvalue;
     }
 
@@ -101,8 +98,7 @@ public class InfosGenerales
      * Setter pour typeProduitEvalue.
      * @param typeProduitEvalue le typeProduitEvalue à écrire.
      */
-    public void setTypeProduitEvalue(final TypeProduit typeProduitEvalue)
-    {
+    public void setTypeProduitEvalue(final TypeProduit typeProduitEvalue) {
         this.typeProduitEvalue = typeProduitEvalue;
     }
 
@@ -110,8 +106,7 @@ public class InfosGenerales
      * Getter sur qualiteInsu.
      * @return Retourne le qualiteInsu.
      */
-    public QualiteInsu getQualiteInsu()
-    {
+    public QualiteInsu getQualiteInsu() {
         return this.qualiteInsu;
     }
 
@@ -119,8 +114,7 @@ public class InfosGenerales
      * Setter pour qualiteInsu.
      * @param qualiteInsu le qualiteInsu à écrire.
      */
-    public void setQualiteInsu(final QualiteInsu qualiteInsu)
-    {
+    public void setQualiteInsu(final QualiteInsu qualiteInsu) {
         this.qualiteInsu = qualiteInsu;
     }
 
@@ -128,8 +122,7 @@ public class InfosGenerales
      * Getter sur nbCentresPrevus.
      * @return Retourne le nbCentresPrevus.
      */
-    public Integer getNbCentresPrevus()
-    {
+    public Integer getNbCentresPrevus() {
         return this.nbCentresPrevus;
     }
 
@@ -137,8 +130,7 @@ public class InfosGenerales
      * Setter pour nbCentresPrevus.
      * @param nbCentresPrevus le nbCentresPrevus à écrire.
      */
-    public void setNbCentresPrevus(final Integer nbCentresPrevus)
-    {
+    public void setNbCentresPrevus(final Integer nbCentresPrevus) {
         this.nbCentresPrevus = nbCentresPrevus;
     }
 
@@ -146,8 +138,7 @@ public class InfosGenerales
      * Getter pour dureeTotalePrevue.
      * @return Le dureeTotalePrevue
      */
-    public BigDecimal getDureeTotalePrevue()
-    {
+    public BigDecimal getDureeTotalePrevue() {
         return this.dureeTotalePrevue;
     }
 
@@ -155,8 +146,7 @@ public class InfosGenerales
      * Setter pour dureeTotalePrevue.
      * @param dureeTotalePrevue Le dureeTotalePrevue à écrire.
      */
-    public void setDureeTotalePrevue(final BigDecimal dureeTotalePrevue)
-    {
+    public void setDureeTotalePrevue(final BigDecimal dureeTotalePrevue) {
         this.dureeTotalePrevue = dureeTotalePrevue;
     }
 
@@ -164,8 +154,7 @@ public class InfosGenerales
      * Getter pour dureeTotalePatientPrevue.
      * @return Le dureeTotalePatientPrevue
      */
-    public BigDecimal getDureeTotalePatientPrevue()
-    {
+    public BigDecimal getDureeTotalePatientPrevue() {
         return this.dureeTotalePatientPrevue;
     }
 
@@ -173,8 +162,7 @@ public class InfosGenerales
      * Setter pour dureeTotalePatientPrevue.
      * @param dureeTotalePatientPrevue Le dureeTotalePatientPrevue à écrire.
      */
-    public void setDureeTotalePatientPrevue(final BigDecimal dureeTotalePatientPrevue)
-    {
+    public void setDureeTotalePatientPrevue(final BigDecimal dureeTotalePatientPrevue) {
         this.dureeTotalePatientPrevue = dureeTotalePatientPrevue;
     }
 
@@ -182,8 +170,7 @@ public class InfosGenerales
      * Getter sur nbPatientsPrevus.
      * @return Retourne le nbPatientsPrevus.
      */
-    public Integer getNbPatientsPrevus()
-    {
+    public Integer getNbPatientsPrevus() {
         return this.nbPatientsPrevus;
     }
 
@@ -191,8 +178,7 @@ public class InfosGenerales
      * Setter pour nbPatientsPrevus.
      * @param nbPatientsPrevus le nbPatientsPrevus à écrire.
      */
-    public void setNbPatientsPrevus(final Integer nbPatientsPrevus)
-    {
+    public void setNbPatientsPrevus(final Integer nbPatientsPrevus) {
         this.nbPatientsPrevus = nbPatientsPrevus;
     }
 
@@ -200,8 +186,7 @@ public class InfosGenerales
      * Getter sur uniteDureeTotalePrevue.
      * @return Retourne le uniteDureeTotalePrevue.
      */
-    public UniteTempsPrevision getUniteDureeTotalePrevue()
-    {
+    public UniteTempsPrevision getUniteDureeTotalePrevue() {
         return this.uniteDureeTotalePrevue;
     }
 
@@ -209,8 +194,7 @@ public class InfosGenerales
      * Getter sur uniteDureeTotalePatientPrevue.
      * @return Retourne le uniteDureeTotalePatientPrevue.
      */
-    public UniteTempsPrevision getUniteDureeTotalePatientPrevue()
-    {
+    public UniteTempsPrevision getUniteDureeTotalePatientPrevue() {
         return this.uniteDureeTotalePatientPrevue;
     }
 
@@ -218,17 +202,16 @@ public class InfosGenerales
      * Setter pour uniteDureeTotalePrevue.
      * @param uniteDureeTotalePrevue le uniteDureeTotalePrevue à écrire.
      */
-    public void setUniteDureeTotalePrevue(final UniteTempsPrevision uniteDureeTotalePrevue)
-    {
+    public void setUniteDureeTotalePrevue(final UniteTempsPrevision uniteDureeTotalePrevue) {
         this.uniteDureeTotalePrevue = uniteDureeTotalePrevue;
     }
 
     /**
      * Setter pour uniteDureeTotalePatientPrevue.
-     * @param uniteDureeTotalePatientPrevue le uniteDureeTotalePatientPrevue à écrire.
+     * @param uniteDureeTotalePatientPrevue le uniteDureeTotalePatientPrevue à
+     * écrire.
      */
-    public void setUniteDureeTotalePatientPrevue(final UniteTempsPrevision uniteDureeTotalePatientPrevue)
-    {
+    public void setUniteDureeTotalePatientPrevue(final UniteTempsPrevision uniteDureeTotalePatientPrevue) {
         this.uniteDureeTotalePatientPrevue = uniteDureeTotalePatientPrevue;
     }
 
@@ -236,8 +219,7 @@ public class InfosGenerales
      * Getter sur nbPatientsPrevusTotal.
      * @return Retourne le nbPatientsPrevusTotal.
      */
-    public Integer getNbPatientsPrevusTotal()
-    {
+    public Integer getNbPatientsPrevusTotal() {
         return this.nbPatientsPrevusTotal;
     }
 
@@ -245,8 +227,7 @@ public class InfosGenerales
      * Setter pour nbPatientsPrevusTotal.
      * @param nbPatientsPrevusTotal le nbPatientsPrevusTotal à écrire.
      */
-    public void setNbPatientsPrevusTotal(final Integer nbPatientsPrevusTotal)
-    {
+    public void setNbPatientsPrevusTotal(final Integer nbPatientsPrevusTotal) {
         this.nbPatientsPrevusTotal = nbPatientsPrevusTotal;
     }
 
@@ -254,8 +235,7 @@ public class InfosGenerales
      * Getter pour numeroCentre.
      * @return Le numeroCentre
      */
-    public String getNumeroCentre()
-    {
+    public String getNumeroCentre() {
         return this.numeroCentre;
     }
 
@@ -263,8 +243,7 @@ public class InfosGenerales
      * Setter pour numeroCentre.
      * @param numeroCentre Le numeroCentre à écrire.
      */
-    public void setNumeroCentre(final String numeroCentre)
-    {
+    public void setNumeroCentre(final String numeroCentre) {
         this.numeroCentre = numeroCentre;
     }
 

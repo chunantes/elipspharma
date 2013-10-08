@@ -2,11 +2,10 @@ package fr.pharma.eclipse.dao.hibernate.constants;
 
 /**
  * Classe de constantes utilisées dans GenericDaoHibernate.
- 
+ * @author Netapsys
  * @version $Revision$ $Date$
  */
-public final class GenericDaoHibernateCstes
-{
+public final class GenericDaoHibernateCstes {
 
     /**
      * EntityManager fermé.
@@ -36,7 +35,6 @@ public final class GenericDaoHibernateCstes
     /**
      * Constructeur.
      */
-    protected GenericDaoHibernateCstes()
-    {
+    protected GenericDaoHibernateCstes() {
     }
 }

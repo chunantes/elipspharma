@@ -1,28 +1,22 @@
 package fr.pharma.eclipse.service.essai.updator.impl;
 
-import java.util.Collection;
+import org.hibernate.proxy.HibernateProxy;
 
-import org.apache.commons.collections.CollectionUtils;
-import org.apache.commons.collections.Predicate;
-import org.apache.commons.lang.StringUtils;
-
-import fr.pharma.eclipse.domain.enums.produit.NatureProduit;
 import fr.pharma.eclipse.domain.model.essai.Essai;
 import fr.pharma.eclipse.domain.model.produit.Medicament;
+import fr.pharma.eclipse.domain.model.produit.Produit;
 import fr.pharma.eclipse.service.essai.EssaiService;
 import fr.pharma.eclipse.service.essai.updator.EssaiBeforeSaveUpdator;
 import fr.pharma.eclipse.utils.constants.EclipseConstants;
 
 /**
- * Implémentation de l'interface {@link EssaiBeforeSaveUpdator} afin de mettre à jour le dci de
- * l'essai.
- 
- 
+ * Implémentation de l'interface {@link EssaiBeforeSaveUpdator} afin de mettre à
+ * jour le dci de l'essai.
+ * @author Netapsys
+ * @author Netapsys
  * @version $Revision$ $Date$
  */
-public class DciProduitEvalueBeforeSaveUpdator
-    implements EssaiBeforeSaveUpdator
-{
+public class DciProduitEvalueBeforeSaveUpdator implements EssaiBeforeSaveUpdator {
 
     /**
      * Serial ID.
@@ -34,58 +28,37 @@ public class DciProduitEvalueBeforeSaveUpdator
      */
     @Override
     public void update(final Essai essai,
-                       final EssaiService service)
-    {
-        // on recherche le premier médicament évalué.
-        final Collection<Medicament> results =
-            CollectionUtils.select(essai.getDetailProduit().getMedicaments(),
-                                   new Predicate() {
+                       final EssaiService service) {
 
-                                       @Override
-                                       public boolean evaluate(final Object object)
-                                       {
-                                           final Medicament m = (Medicament) object;
-                                           return m.getNature() != null
-                                                  && m
-                                                          .getNature()
-                                                          .equals(NatureProduit.PRODUIT_EVALUE)
-                                                  && StringUtils.isNotBlank(m.getDci());
-                                       }
-                                   });
         // initialisation.
         essai.setDci(EclipseConstants.NON_APPLICABLE);
         essai.setLibelleProduitEvalue(EclipseConstants.NON_APPLICABLE);
 
-        // on regarde si des produits evalues sont presents.
-        for (final Medicament result : results)
-        {
+        for (Produit p : essai.getDetailProduit().getMedicaments()) {
 
-            if (!essai.getDci().contains(result.getDci()))
-            {
-                if (essai.getDci().contains(EclipseConstants.NON_APPLICABLE))
-                {
-                    essai.setDci(result.getDci());
-                }
-                else
-                {
-                    essai.setDci(essai.getDci()
-                                 + EclipseConstants.COMMA
-                                 + EclipseConstants.SPACE
-                                 + result.getDci());
-                }
+            // getMedicaments est une liste de produits et Hibernate
+            // les donne des fois en tant que proxy. On converit le proxy en
+            // implementation avant le cast vers Medicament
+            // (qui plante si p reste un proxy)
+            if (p instanceof HibernateProxy) {
+                p = (Produit) ((HibernateProxy) p).getHibernateLazyInitializer().getImplementation();
             }
-            if (!essai.getLibelleProduitEvalue().contains(result.getDenomination()))
-            {
-                if (essai.getLibelleProduitEvalue().contains(EclipseConstants.NON_APPLICABLE))
-                {
-                    essai.setLibelleProduitEvalue(result.getDenomination());
+
+            final Medicament m = (Medicament) p;
+            if (m.isProduitEvalue()) {
+                if (!essai.getDci().contains(m.getDci())) {
+                    if (essai.getDci().contains(EclipseConstants.NON_APPLICABLE)) {
+                        essai.setDci(m.getDci());
+                    } else {
+                        essai.setDci(essai.getDci() + EclipseConstants.COMMA + EclipseConstants.SPACE + m.getDci());
+                    }
                 }
-                else
-                {
-                    essai.setLibelleProduitEvalue(essai.getLibelleProduitEvalue()
-                                                  + EclipseConstants.COMMA
-                                                  + EclipseConstants.SPACE
-                                                  + result.getDenomination());
+                if (!essai.getLibelleProduitEvalue().contains(m.getDenomination())) {
+                    if (essai.getLibelleProduitEvalue().contains(EclipseConstants.NON_APPLICABLE)) {
+                        essai.setLibelleProduitEvalue(m.getDenomination());
+                    } else {
+                        essai.setLibelleProduitEvalue(essai.getLibelleProduitEvalue() + EclipseConstants.COMMA + EclipseConstants.SPACE + m.getDenomination());
+                    }
                 }
             }
         }

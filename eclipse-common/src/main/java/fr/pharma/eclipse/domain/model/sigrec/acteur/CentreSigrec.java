@@ -18,13 +18,11 @@ import fr.pharma.eclipse.domain.model.common.BeanObject;
 
 /**
  * Classe du modèle d'import SIGREC représentant un centre investigateur.
- 
+ * @author Netapsys
  * @version $Revision$ $Date$
  */
 @Entity(name = "centre_sigrec")
-public class CentreSigrec
-    extends BeanObject
-{
+public class CentreSigrec extends BeanObject {
 
     /**
      * SerialVersionUID.
@@ -67,16 +65,14 @@ public class CentreSigrec
      */
     @OneToMany(mappedBy = "centre", cascade = CascadeType.ALL)
     @LazyCollection(LazyCollectionOption.TRUE)
-    private final List<ARCInvestigateurSigrec> arcInvestigateurs =
-        new ArrayList<ARCInvestigateurSigrec>();
+    private final List<ARCInvestigateurSigrec> arcInvestigateurs = new ArrayList<ARCInvestigateurSigrec>();
 
     /**
      * CoInvestigateurs.
      */
     @OneToMany(mappedBy = "centre", cascade = CascadeType.ALL)
     @LazyCollection(LazyCollectionOption.TRUE)
-    private final List<CoInvestigateurSigrec> coInvestigateurs =
-        new ArrayList<CoInvestigateurSigrec>();
+    private final List<CoInvestigateurSigrec> coInvestigateurs = new ArrayList<CoInvestigateurSigrec>();
 
     /**
      * Contact.
@@ -90,8 +86,7 @@ public class CentreSigrec
      * Getter sur numero.
      * @return Retourne le numero.
      */
-    public String getNumero()
-    {
+    public String getNumero() {
         return this.numero;
     }
 
@@ -99,8 +94,7 @@ public class CentreSigrec
      * Setter pour numero.
      * @param numero le numero à écrire.
      */
-    public void setNumero(final String numero)
-    {
+    public void setNumero(final String numero) {
         this.numero = numero;
     }
 
@@ -108,8 +102,7 @@ public class CentreSigrec
      * Getter sur numeroFiness.
      * @return Retourne le numeroFiness.
      */
-    public String getNumeroFiness()
-    {
+    public String getNumeroFiness() {
         return this.numeroFiness;
     }
 
@@ -117,8 +110,7 @@ public class CentreSigrec
      * Setter pour numeroFiness.
      * @param numeroFiness le numeroFiness à écrire.
      */
-    public void setNumeroFiness(final String numeroFiness)
-    {
+    public void setNumeroFiness(final String numeroFiness) {
         this.numeroFiness = numeroFiness;
     }
 
@@ -126,8 +118,7 @@ public class CentreSigrec
      * Getter sur nom.
      * @return Retourne le nom.
      */
-    public String getNom()
-    {
+    public String getNom() {
         return this.nom;
     }
 
@@ -135,8 +126,7 @@ public class CentreSigrec
      * Setter pour nom.
      * @param nom le nom à écrire.
      */
-    public void setNom(final String nom)
-    {
+    public void setNom(final String nom) {
         this.nom = nom;
     }
 
@@ -144,8 +134,7 @@ public class CentreSigrec
      * Getter sur contact.
      * @return Retourne le contact.
      */
-    public ContactSigrec getContact()
-    {
+    public ContactSigrec getContact() {
         return this.contact;
     }
 
@@ -153,8 +142,7 @@ public class CentreSigrec
      * Setter pour contact.
      * @param contact le contact à écrire.
      */
-    public void setContact(final ContactSigrec contact)
-    {
+    public void setContact(final ContactSigrec contact) {
         this.contact = contact;
     }
 
@@ -162,8 +150,7 @@ public class CentreSigrec
      * Getter sur idCentre.
      * @return Retourne le idCentre.
      */
-    public String getIdCentre()
-    {
+    public String getIdCentre() {
         return this.idCentre;
     }
 
@@ -171,8 +158,7 @@ public class CentreSigrec
      * Setter pour idCentre.
      * @param idCentre le idCentre à écrire.
      */
-    public void setIdCentre(final String idCentre)
-    {
+    public void setIdCentre(final String idCentre) {
         this.idCentre = idCentre;
     }
 
@@ -180,8 +166,7 @@ public class CentreSigrec
      * Getter sur investigateurs.
      * @return Retourne le investigateurs.
      */
-    public List<InvestigateurSigrec> getInvestigateurs()
-    {
+    public List<InvestigateurSigrec> getInvestigateurs() {
         return this.investigateurs;
     }
 
@@ -189,8 +174,7 @@ public class CentreSigrec
      * Getter sur arcInvestigateurs.
      * @return Retourne le arcInvestigateurs.
      */
-    public List<ARCInvestigateurSigrec> getArcInvestigateurs()
-    {
+    public List<ARCInvestigateurSigrec> getArcInvestigateurs() {
         return this.arcInvestigateurs;
     }
 
@@ -198,8 +182,7 @@ public class CentreSigrec
      * Getter sur coInvestigateurs.
      * @return Retourne le coInvestigateurs.
      */
-    public List<CoInvestigateurSigrec> getCoInvestigateurs()
-    {
+    public List<CoInvestigateurSigrec> getCoInvestigateurs() {
         return this.coInvestigateurs;
     }
 

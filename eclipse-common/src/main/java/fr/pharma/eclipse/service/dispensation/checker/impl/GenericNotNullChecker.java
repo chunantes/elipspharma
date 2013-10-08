@@ -7,12 +7,10 @@ import fr.pharma.eclipse.utils.introspection.BeanTool;
 
 /**
  * Classe en charge de vérifier qu'un attribut n'est pas null.
- 
+ * @author Netapsys
  * @version $Revision$ $Date$
  */
-public class GenericNotNullChecker<BEAN extends Object>
-    implements Checker<BEAN>, Serializable
-{
+public class GenericNotNullChecker<BEAN extends Object> implements Checker<BEAN>, Serializable {
     /**
      * SerialVersionUID.
      */
@@ -27,18 +25,16 @@ public class GenericNotNullChecker<BEAN extends Object>
      * Constructeur.
      * @param propriete Propriété.
      */
-    public GenericNotNullChecker(final String propriete)
-    {
+    public GenericNotNullChecker(final String propriete) {
         this.propriete = propriete;
     }
 
     /**
      * {@inheritDoc}
      */
-    public boolean check(final BEAN bean)
-    {
-        return BeanTool.getPropriete(bean,
-                                     this.propriete) != null;
+    @Override
+    public boolean check(final BEAN bean) {
+        return BeanTool.getPropriete(bean, this.propriete) != null;
     }
 
 }

@@ -6,15 +6,14 @@ import javax.persistence.Entity;
 import fr.pharma.eclipse.domain.enums.document.TypeDocumentProduit;
 
 /**
- * Bean métier représentant un document relatif à la randomisation d'un acte pharma.
- 
+ * Bean métier représentant un document relatif à la randomisation d'un acte
+ * pharma.
+ * @author Netapsys
  * @version $Revision$ $Date$
  */
 @Entity
 @DiscriminatorValue("RANDOMISATION")
-public class DocumentRandomisation
-    extends DocumentActesPharma
-{
+public class DocumentRandomisation extends DocumentActesPharma {
 
     /**
      * Serial ID.
@@ -24,8 +23,7 @@ public class DocumentRandomisation
     /**
      * Constructeur par défaut.
      */
-    public DocumentRandomisation()
-    {
+    public DocumentRandomisation() {
         this.setType(TypeDocumentProduit.RANDOMISATION);
     }
 

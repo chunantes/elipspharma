@@ -2,234 +2,123 @@ package fr.pharma.eclipse.service.alerte.builder.impl;
 
 import java.io.Serializable;
 import java.util.ArrayList;
-import java.util.Calendar;
 import java.util.List;
-import java.util.Map;
 
 import javax.annotation.Resource;
 
+import org.apache.commons.collections.CollectionUtils;
+import org.apache.commons.collections.Transformer;
 import org.apache.commons.lang.StringUtils;
 
-import fr.pharma.eclipse.domain.criteria.stock.ExtensionPeremptionSearchCriteria;
-import fr.pharma.eclipse.domain.criteria.stock.StockSearchCriteria;
 import fr.pharma.eclipse.domain.enums.alerte.TypeAlerte;
 import fr.pharma.eclipse.domain.model.alerte.Alerte;
-import fr.pharma.eclipse.domain.model.essai.Essai;
+import fr.pharma.eclipse.domain.model.essai.EssaiAlerte;
 import fr.pharma.eclipse.domain.model.produit.Produit;
-import fr.pharma.eclipse.domain.model.stock.Approvisionnement;
-import fr.pharma.eclipse.domain.model.stock.EtatLigneStock;
-import fr.pharma.eclipse.domain.model.stock.EtatStock;
 import fr.pharma.eclipse.domain.model.stockage.Pharmacie;
 import fr.pharma.eclipse.service.alerte.builder.AlerteBuilder;
-import fr.pharma.eclipse.service.stock.ApprovisionnementService;
-import fr.pharma.eclipse.service.stock.EtatStockService;
+import fr.pharma.eclipse.service.produit.ProduitService;
 import fr.pharma.eclipse.utils.constants.EclipseConstants;
-import fr.pharma.eclipse.utils.message.EclipseMessageBuilder;
+import fr.pharma.eclipse.utils.message.MessageBuilder;
 
 /**
- * Classe de builder des alertes concernant les produits / conditionnements / lots /
- * numTraitements dont le délai d'alerte avant la date de péremption est atteint.
- 
+ * Classe de builder des alertes concernant les produits / conditionnements /
+ * lots / numTraitements dont le délai d'alerte avant la date de péremption est
+ * atteint.
+ * @author Netapsys
  * @version $Revision$ $Date$
  */
-public class AlerteProduitPeremptionBuilder
-    implements AlerteBuilder, Serializable
-{
+public class AlerteProduitPeremptionBuilder implements AlerteBuilder, Serializable {
     /**
      * Serial ID.
      */
     private static final long serialVersionUID = -4502803429108358188L;
 
     /**
-     * Service de gestion des approvisionnements.
+     * Service de gestion des produits.
      */
-    @Resource(name = "approvisionnementService")
-    private ApprovisionnementService approvisionnementService;
+    @Resource(name = "produitService")
+    private ProduitService<Produit> produitService;
 
     /**
      * Builder de message.
      */
-    @Resource(name = "eclipseMessageBuilder")
-    private EclipseMessageBuilder messageBuilder;
+    @Resource(name = "messageBuilder")
+    private MessageBuilder messageBuilder;
 
     /**
-     * Service de gestion de l'état de stock.
+     * Requête de récupération des produits dont la date de péremption a atteint
+     * le délai d'alerte de péremption.
      */
-    @Resource(name = "etatStockService")
-    private EtatStockService etatStockService;
+    protected static final String REQ_PROD_PEREMPTION =
+        "select s.id_essai, s.id_pharmacie, s.id_produit, s.id_conditionnement, s.numlot, s.numtraitement, e.numInterne, e.nom, p.denomination, ph.nom as nomPharma, c.libelle, "
+                + "delaiAlerteAvtDateExpiration, datePeremption, s.datePeremption - (delaiAlerteAvtDateExpiration * interval '1 day'), sum(s.quantite_global) "
+                + "from lignestock s " + "inner join produit p on p.id = s.id_produit " + "inner join produit_detail_logistique pl on pl.id_produit=p.id "
+                + "inner join conditionnement c on c.id = s.id_conditionnement " + "inner join essai e on e.id = s.id_essai "
+                + "inner join pharmacie ph on ph.id = s.id_pharmacie " + "where p.alerteactive is true " + "and pl.delaiAlerteAvtDateExpiration is not null "
+                + "and s.datePeremption is not null " + "and s.id_essai in ({0}) and s.id_pharmacie in ({1}) "
+                + "group by s.id_essai, s.id_pharmacie, s.id_produit, s.id_conditionnement, s.numlot, s.numtraitement, e.numInterne, e.nom, p.denomination, ph.nom, "
+                + "c.libelle, delaiAlerteAvtDateExpiration, s.datePeremption "
+                + "having (sum(s.quantite_global)) > 0 and (s.datePeremption - (delaiAlerteAvtDateExpiration * interval '1 day')) < now() "
+                + "order by e.numInterne, e.nom, p.denomination, c.libelle, s.numlot, s.numtraitement";
 
     /**
      * {@inheritDoc}
      */
     @Override
-    public void build(final List<Essai> essais,
+    @SuppressWarnings({"rawtypes", "unchecked" })
+    public void build(final List<EssaiAlerte> essais,
                       final List<Pharmacie> pharmacies,
-                      final List<Alerte> alertes)
-    {
-        final ExtensionPeremptionSearchCriteria crit = new ExtensionPeremptionSearchCriteria();
-        crit.setEssais(essais);
-        crit.setPharmacies(pharmacies);
+                      final List<Alerte> alertes) {
 
-        final List<Approvisionnement> appros = this.approvisionnementService.getAll(crit);
-
-        for (final Approvisionnement appro : appros)
-        {
-            final Calendar datePeremption = appro.getDatePeremption();
-            final Produit produit = appro.getProduit();
-
-            if (datePeremption != null
-                && produit.getAlerteActive())
-            {
-                // Récupération du délai d'alerte avant la date de péremption pour un produit
-                // Délai en jours
-                final Integer delaiAlerte =
-                    produit.getDetailLogistique().getDelaiAlerteAvtDateExpiration();
-
-                final Calendar calendar = Calendar.getInstance(EclipseConstants.LOCALE);
-                calendar.setTime(datePeremption.getTime());
-                if (delaiAlerte != null)
-                {
-                    calendar.add(Calendar.DAY_OF_MONTH,
-                                 -delaiAlerte);
-                }
-                final Calendar now = Calendar.getInstance(EclipseConstants.LOCALE);
-
-                if (calendar.before(now))
-                {
-                    // veification que le stock n'est pas nul pout cet approvisionnement
-                    final boolean isStockNonNul = this.isStockNonNul(appro.getEssai(),
-                                                                     appro.getPharmacie(),
-                                                                     appro.getNumLot(),
-                                                                     appro.getNumTraitement());
-                    if (isStockNonNul)
-                    {
-                        final Alerte alerte = new Alerte(TypeAlerte.PRODUIT_PEREMPTION);
-                        alerte.setEssai(appro.getEssai());
-                        alerte.setPharmacie(appro.getPharmacie());
-                        alerte.setLibelle(this.buildMsg(appro));
-                        alertes.add(alerte);
-                    }
-                }
+        final List idsEssais = new ArrayList(essais);
+        CollectionUtils.transform(idsEssais, new Transformer() {
+            @Override
+            public Object transform(final Object input) {
+                return ((EssaiAlerte) input).getId();
             }
-        }
-    }
-
-    /**
-     * Vérifie que le stock de l'approvisionnement est non nul.
-     * @param essai : essai de l'approvisonnement.
-     * @param pharmacie : pharmacie de l'approvisonnement.
-     * @param numLot : numéro de lot de l'approvisonnement.
-     * @param numTraitement : numéro de traitement de l'approvisonnement.
-     * @return boolean
-     */
-    boolean isStockNonNul(final Essai essai,
-                          final Pharmacie pharmacie,
-                          final String numLot,
-                          final String numTraitement)
-    {
-        boolean stockNonNul = false;
-
-        if (numLot != null
-            && numTraitement != null)
-        {
-            // recuperation des etats stocks
-            final StockSearchCriteria criteria = new StockSearchCriteria();
-            criteria.setNumLot(numLot);
-            criteria.setEssai(essai);
-            criteria.setPharmacie(pharmacie);
-
-            final List<EtatStock> lignesEtatStock =
-                this.etatStockService.getLinesEtatStock(criteria);
-
-            for (final EtatStock etatStock : lignesEtatStock)
-            {
-                // on verifie si la qté de stock est non nulle pour le numéro de traitement et
-                // l'état de stock.
-                stockNonNul = this.isQuantiteEnstockNonNulle(numTraitement,
-                                                             etatStock);
-                if (stockNonNul)
-                {
-                    break;
-                }
+        });
+        final List idsPharmas = new ArrayList(pharmacies);
+        CollectionUtils.transform(idsPharmas, new Transformer() {
+            @Override
+            public Object transform(final Object input) {
+                return ((Pharmacie) input).getId();
             }
+        });
 
+        final String strIdsEssais = idsEssais.toString().replace("[", "").replace("]", "");
+        final String strIdsPharmas = idsPharmas.toString().replace("[", "").replace("]", "");
+
+        final List<Object[]> results =
+            this.produitService.executeSQLQueryTabObject(AlerteProduitPeremptionBuilder.REQ_PROD_PEREMPTION.replace("{0}", strIdsEssais).replace("{1}", strIdsPharmas), null);
+
+        for (final Object[] result : results) {
+
+            final Alerte alerte = new Alerte(TypeAlerte.PRODUIT_PEREMPTION, (String) result[6], (String) result[7]);
+            alerte.setNomPharmacie((String) result[9]);
+            final String message =
+                this.messageBuilder.getMessage("alerte.libDatePeremption",
+                                               new Object[]{(String) result[8], (String) result[10],
+                                                            StringUtils.defaultIfEmpty((String) result[4], EclipseConstants.NON_APPLICABLE),
+                                                            StringUtils.defaultIfEmpty((String) result[5], EclipseConstants.NON_APPLICABLE), });
+            alerte.setLibelle(message);
+            alertes.add(alerte);
         }
-
-        return stockNonNul;
-    }
-
-    /**
-     * Vérifie si, pour un numéro de traitement et un etat de stock donné, la quantité de produit
-     * en stock est non nulle.
-     * @param numTraitement
-     * @param etatStock
-     */
-    boolean isQuantiteEnstockNonNulle(final String numTraitement,
-                                      final EtatStock etatStock)
-    {
-        final Map<String, EtatLigneStock> etatsLignesStock = etatStock.getEtatsLignesStock();
-        final List<EtatLigneStock> etatsLignesStockAsList =
-            new ArrayList<EtatLigneStock>(etatsLignesStock.values());
-        for (final EtatLigneStock etatLigneStock : etatsLignesStockAsList)
-        {
-            if (numTraitement.equals(etatLigneStock.getNumTraitement()))
-            {
-                if (etatLigneStock.getQteEnStock() > 0)
-                {
-                    return true;
-                }
-                else
-                {
-                    return false;
-                }
-            }
-        }
-        // si on arrive ici c'est qu'on n'a pas trouvé de ligne de stock correspondant au numéro
-        // de traitement
-        return false;
-    }
-    /**
-     * Méthode en charge de construire le libellé du message d'alerte.
-     * @param appro Approvisionnement.
-     * @return Message.
-     */
-    private String buildMsg(final Approvisionnement appro)
-    {
-        return this.messageBuilder
-                .getMessage("alerte.libDatePeremption",
-                            new Object[]
-                            {appro.getProduit().getDenomination(),
-                             appro.getConditionnement().getLibelle(),
-                             StringUtils.defaultIfEmpty(appro.getNumLot(),
-                                                        EclipseConstants.NON_APPLICABLE),
-                             StringUtils.defaultIfEmpty(appro.getNumTraitement(),
-                                                        EclipseConstants.NON_APPLICABLE), });
-    }
-
-    /**
-     * Setter pour approvisionnementService.
-     * @param approvisionnementService Le approvisionnementService à écrire.
-     */
-    public void setApprovisionnementService(final ApprovisionnementService approvisionnementService)
-    {
-        this.approvisionnementService = approvisionnementService;
     }
 
     /**
      * Setter pour messageBuilder.
      * @param messageBuilder Le messageBuilder à écrire.
      */
-    public void setMessageBuilder(final EclipseMessageBuilder messageBuilder)
-    {
+    public void setMessageBuilder(final MessageBuilder messageBuilder) {
         this.messageBuilder = messageBuilder;
     }
 
     /**
-     * Setter pour etatStockService.
-     * @param etatStockService Le etatStockService à écrire.
+     * Setter pour produitService.
+     * @param produitService Le produitService à écrire.
      */
-    public void setEtatStockService(final EtatStockService etatStockService)
-    {
-        this.etatStockService = etatStockService;
+    public void setProduitService(final ProduitService<Produit> produitService) {
+        this.produitService = produitService;
     }
+
 }

@@ -1,19 +1,17 @@
 package fr.pharma.eclipse.domain.criteria.incident;
 
 import java.util.Calendar;
-import java.util.List;
 
 import fr.pharma.eclipse.domain.criteria.common.AbstractSearchCriteria;
+import fr.pharma.eclipse.domain.dto.EssaiDTO;
 import fr.pharma.eclipse.domain.model.essai.Essai;
 
 /**
  * Critère de recherche sur Incident.
- 
+ * @author Netapsys
  * @version $Revision$ $Date$
  */
-public class IncidentSearchCriteria
-    extends AbstractSearchCriteria
-{
+public class IncidentSearchCriteria extends AbstractSearchCriteria {
     /**
      * Serial ID.
      */
@@ -25,9 +23,9 @@ public class IncidentSearchCriteria
     private Essai essai;
 
     /**
-     * Liste d'essais.
+     * Essai DTO.
      */
-    private List<Essai> essais;
+    private EssaiDTO essaiDTO;
 
     /**
      * Date de début de la recherche.
@@ -43,20 +41,17 @@ public class IncidentSearchCriteria
      * {@inheritDoc}
      */
     @Override
-    public void clear()
-    {
+    public void clear() {
         this.setEssai(null);
         this.setDateDebut(null);
         this.setDateFin(null);
-        this.setEssais(null);
     }
 
     /**
      * Getter pour essai.
      * @return Le essai
      */
-    public Essai getEssai()
-    {
+    public Essai getEssai() {
         return this.essai;
     }
 
@@ -64,8 +59,7 @@ public class IncidentSearchCriteria
      * Setter pour essai.
      * @param essai Le essai à écrire.
      */
-    public void setEssai(final Essai essai)
-    {
+    public void setEssai(final Essai essai) {
         this.essai = essai;
     }
 
@@ -73,8 +67,7 @@ public class IncidentSearchCriteria
      * Getter pour dateDebut.
      * @return Le dateDebut
      */
-    public Calendar getDateDebut()
-    {
+    public Calendar getDateDebut() {
         return this.dateDebut;
     }
 
@@ -82,8 +75,7 @@ public class IncidentSearchCriteria
      * Setter pour dateDebut.
      * @param dateDebut Le dateDebut à écrire.
      */
-    public void setDateDebut(final Calendar dateDebut)
-    {
+    public void setDateDebut(final Calendar dateDebut) {
         this.dateDebut = dateDebut;
     }
 
@@ -91,8 +83,7 @@ public class IncidentSearchCriteria
      * Getter pour dateFin.
      * @return Le dateFin
      */
-    public Calendar getDateFin()
-    {
+    public Calendar getDateFin() {
         return this.dateFin;
     }
 
@@ -100,27 +91,24 @@ public class IncidentSearchCriteria
      * Setter pour dateFin.
      * @param dateFin Le dateFin à écrire.
      */
-    public void setDateFin(final Calendar dateFin)
-    {
+    public void setDateFin(final Calendar dateFin) {
         this.dateFin = dateFin;
     }
 
     /**
-     * Getter pour essais.
-     * @return Le essais
+     * Getter pour essaiDTO.
+     * @return Le essaiDTO
      */
-    public List<Essai> getEssais()
-    {
-        return this.essais;
+    public EssaiDTO getEssaiDTO() {
+        return this.essaiDTO;
     }
 
     /**
-     * Setter pour essais.
-     * @param essais Le essais à écrire.
+     * Setter pour essaiDTO.
+     * @param essaiDTO Le essaiDTO à écrire.
      */
-    public void setEssais(final List<Essai> essais)
-    {
-        this.essais = essais;
+    public void setEssaiDTO(final EssaiDTO essaiDTO) {
+        this.essaiDTO = essaiDTO;
     }
 
 }

@@ -8,18 +8,17 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.MappedSuperclass;
 import javax.persistence.Transient;
+import javax.persistence.Version;
 
 import fr.pharma.eclipse.domain.model.common.constants.BeanCstes;
 
 /**
  * Classe commune des objets métiers.
- 
+ * @author Netapsys
  * @version $Revision$ $Date$
  */
 @MappedSuperclass
-public abstract class BeanObject
-    implements Serializable
-{
+public abstract class BeanObject implements Serializable {
     /**
      * Serial Id.
      */
@@ -33,11 +32,15 @@ public abstract class BeanObject
     @Column(name = "id", updatable = false, nullable = false)
     private Long id;
 
+    @SuppressWarnings("unused")
+    @Version
+    private Long version;
+
     /**
      * Sélection.<br />
-     * ATTENTION : si la même instance d'objet est partagée dans deux listes d'objets
-     * sélectionnables utilisées en même temps, la sélection dans une liste peut impacter la
-     * deuxième !
+     * ATTENTION : si la même instance d'objet est partagée dans deux listes
+     * d'objets sélectionnables utilisées en même temps, la sélection dans une
+     * liste peut impacter la deuxième !
      */
     @Transient
     private Boolean selected = Boolean.FALSE;
@@ -46,32 +49,25 @@ public abstract class BeanObject
      * {@inheritDoc}
      */
     @Override
-    public boolean equals(final Object obj)
-    {
-        if (!(obj instanceof BeanObject))
-        {
+    public boolean equals(final Object obj) {
+        if (!(obj instanceof BeanObject)) {
             return false;
         }
 
         final BeanObject other = (BeanObject) obj;
 
-        if ((other == null)
-            || (this.getId() == null)
-            || (other.getId() == null))
-        {
-            return false;
+        if (other == this) {
+            return true;
         }
 
-        if (other == this)
-        {
-            return true;
+        if ((other == null) || (this.getId() == null) || (other.getId() == null)) {
+            return false;
         }
 
         final String otherCle = other.getId().toString();
         final String thisCle = this.getId().toString();
 
-        if (otherCle.equalsIgnoreCase(thisCle))
-        {
+        if (otherCle.equalsIgnoreCase(thisCle)) {
             return true;
         }
 
@@ -82,15 +78,10 @@ public abstract class BeanObject
      * {@inheritDoc}
      */
     @Override
-    public int hashCode()
-    {
-        if (this.getId() != null)
-        {
-            return (BeanCstes.NB_PREMIER + this.getId().hashCode())
-                   * BeanCstes.NB_PREMIER;
-        }
-        else
-        {
+    public int hashCode() {
+        if (this.getId() != null) {
+            return (BeanCstes.NB_PREMIER + this.getId().hashCode()) * BeanCstes.NB_PREMIER;
+        } else {
             return super.hashCode();
         }
     }
@@ -99,8 +90,7 @@ public abstract class BeanObject
      * Getter pour id.
      * @return Retourne le id.
      */
-    public Long getId()
-    {
+    public Long getId() {
         return this.id;
     }
 
@@ -108,8 +98,7 @@ public abstract class BeanObject
      * Setter pour id.
      * @param id le id à écrire.
      */
-    public void setId(final Long id)
-    {
+    public void setId(final Long id) {
         this.id = id;
     }
 
@@ -117,8 +106,7 @@ public abstract class BeanObject
      * Getter sur selected.
      * @return Retourne le selected.
      */
-    public Boolean getSelected()
-    {
+    public Boolean getSelected() {
         return this.selected;
     }
 
@@ -126,8 +114,7 @@ public abstract class BeanObject
      * Setter pour selected.
      * @param selected le selected à écrire.
      */
-    public void setSelected(final Boolean selected)
-    {
+    public void setSelected(final Boolean selected) {
         this.selected = selected;
     }
 

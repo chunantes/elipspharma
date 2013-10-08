@@ -2,11 +2,10 @@ package fr.pharma.eclipse.domain.enums;
 
 /**
  * Enumération des différents objets de recherche.
- 
+ * @author Netapsys
  * @version $Revision$ $Date$
  */
-public enum ObjetRecherche
-{
+public enum ObjetRecherche {
     /**
      * Alicament.
      */
@@ -86,8 +85,7 @@ public enum ObjetRecherche
      * Constructeur privé.
      * @param libelle Libellé de la valeur de l'énumération.
      */
-    private ObjetRecherche(final String libelle)
-    {
+    private ObjetRecherche(final String libelle) {
         this.libelle = libelle;
     }
 
@@ -95,8 +93,7 @@ public enum ObjetRecherche
      * Getter sur libelle.
      * @return Retourne le libelle.
      */
-    public String getLibelle()
-    {
+    public String getLibelle() {
         return this.libelle;
     }
 
@@ -104,8 +101,7 @@ public enum ObjetRecherche
      * {@inheritDoc}
      */
     @Override
-    public String toString()
-    {
+    public String toString() {
         return this.getLibelle();
     }
 

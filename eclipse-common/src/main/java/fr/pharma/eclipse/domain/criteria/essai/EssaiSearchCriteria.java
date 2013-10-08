@@ -10,12 +10,10 @@ import fr.pharma.eclipse.domain.model.stockage.Pharmacie;
 
 /**
  * Critère de recherche sur Essai.
- 
+ * @author Netapsys
  * @version $Revision$ $Date$
  */
-public class EssaiSearchCriteria
-    extends AbstractSearchCriteria
-{
+public class EssaiSearchCriteria extends AbstractSearchCriteria {
     /**
      * Serial ID.
      */
@@ -25,6 +23,11 @@ public class EssaiSearchCriteria
      * Numéro d'identification interne.
      */
     private String numInterne;
+
+    /**
+     * Numéro d'identification interne strict (égalité).
+     */
+    private String numInterneStrict;
 
     /**
      * Numéro SIGREC.
@@ -62,8 +65,8 @@ public class EssaiSearchCriteria
     private Promoteur promoteur;
 
     /**
-     * Site. Attention, la recherche par site n'utilise EssaiSearchCriteriaMaker. Utiliser
-     * EssaiService.getAllEssais().
+     * Site. Attention, la recherche par site n'utilise
+     * EssaiSearchCriteriaMaker. Utiliser EssaiService.getAllEssais().
      */
     private Site site;
 
@@ -88,8 +91,8 @@ public class EssaiSearchCriteria
     private String numInterneOrNomOrPromoteur;
 
     /**
-     * Booléen indiquant la récupération des essais dont le type de dispensation est null ou
-     * globale.
+     * Booléen indiquant la récupération des essais dont le type de dispensation
+     * est null ou globale.
      */
     private Boolean essaisDispensationGlobale;
 
@@ -102,8 +105,7 @@ public class EssaiSearchCriteria
      * Getter sur numInterne.
      * @return Retourne le numInterne.
      */
-    public String getNumInterne()
-    {
+    public String getNumInterne() {
         return this.numInterne;
     }
 
@@ -111,8 +113,7 @@ public class EssaiSearchCriteria
      * Setter pour numInterne.
      * @param numInterne le numInterne à écrire.
      */
-    public void setNumInterne(final String numInterne)
-    {
+    public void setNumInterne(final String numInterne) {
         this.numInterne = numInterne;
     }
 
@@ -120,8 +121,7 @@ public class EssaiSearchCriteria
      * Getter sur nom.
      * @return Retourne le nom.
      */
-    public String getNom()
-    {
+    public String getNom() {
         return this.nom;
     }
 
@@ -129,8 +129,7 @@ public class EssaiSearchCriteria
      * Setter pour nom.
      * @param nom le nom à écrire.
      */
-    public void setNom(final String nom)
-    {
+    public void setNom(final String nom) {
         this.nom = nom;
     }
 
@@ -138,8 +137,7 @@ public class EssaiSearchCriteria
      * Getter sur dci.
      * @return Retourne le dci.
      */
-    public String getDci()
-    {
+    public String getDci() {
         return this.dci;
     }
 
@@ -147,8 +145,7 @@ public class EssaiSearchCriteria
      * Setter pour dci.
      * @param dci le dci à écrire.
      */
-    public void setDci(final String dci)
-    {
+    public void setDci(final String dci) {
         this.dci = dci;
     }
 
@@ -156,8 +153,7 @@ public class EssaiSearchCriteria
      * Getter sur etat.
      * @return Retourne le etat.
      */
-    public EtatEssai getEtat()
-    {
+    public EtatEssai getEtat() {
         return this.etat;
     }
 
@@ -165,8 +161,7 @@ public class EssaiSearchCriteria
      * Setter pour etat.
      * @param etat le etat à écrire.
      */
-    public void setEtat(final EtatEssai etat)
-    {
+    public void setEtat(final EtatEssai etat) {
         this.etat = etat;
     }
 
@@ -174,8 +169,7 @@ public class EssaiSearchCriteria
      * Getter sur pharmacie.
      * @return Retourne le pharmacie.
      */
-    public Pharmacie getPharmacie()
-    {
+    public Pharmacie getPharmacie() {
         return this.pharmacie;
     }
 
@@ -183,8 +177,7 @@ public class EssaiSearchCriteria
      * Setter pour pharmacie.
      * @param pharmacie le pharmacie à écrire.
      */
-    public void setPharmacie(final Pharmacie pharmacie)
-    {
+    public void setPharmacie(final Pharmacie pharmacie) {
         this.pharmacie = pharmacie;
     }
 
@@ -192,8 +185,7 @@ public class EssaiSearchCriteria
      * Getter sur site.
      * @return Retourne le site.
      */
-    public Site getSite()
-    {
+    public Site getSite() {
         return this.site;
     }
 
@@ -201,8 +193,7 @@ public class EssaiSearchCriteria
      * Setter pour site.
      * @param site le site à écrire.
      */
-    public void setSite(final Site site)
-    {
+    public void setSite(final Site site) {
         this.site = site;
     }
 
@@ -210,8 +201,7 @@ public class EssaiSearchCriteria
      * {@inheritDoc}
      */
     @Override
-    public void clear()
-    {
+    public void clear() {
         this.setDci(null);
         this.setEtat(null);
         this.setNom(null);
@@ -232,8 +222,7 @@ public class EssaiSearchCriteria
      * Getter sur promoteur.
      * @return Retourne le promoteur.
      */
-    public Promoteur getPromoteur()
-    {
+    public Promoteur getPromoteur() {
         return this.promoteur;
     }
 
@@ -241,8 +230,7 @@ public class EssaiSearchCriteria
      * Setter pour promoteur.
      * @param promoteur le promoteur à écrire.
      */
-    public void setPromoteur(final Promoteur promoteur)
-    {
+    public void setPromoteur(final Promoteur promoteur) {
         this.promoteur = promoteur;
     }
 
@@ -250,8 +238,7 @@ public class EssaiSearchCriteria
      * Getter sur service.
      * @return Retourne le service.
      */
-    public Service getService()
-    {
+    public Service getService() {
         return this.service;
     }
 
@@ -259,8 +246,7 @@ public class EssaiSearchCriteria
      * Setter pour service.
      * @param service le service à écrire.
      */
-    public void setService(final Service service)
-    {
+    public void setService(final Service service) {
         this.service = service;
     }
 
@@ -268,8 +254,7 @@ public class EssaiSearchCriteria
      * Getter sur investigateur.
      * @return Retourne le investigateur.
      */
-    public Investigateur getInvestigateur()
-    {
+    public Investigateur getInvestigateur() {
         return this.investigateur;
     }
 
@@ -277,8 +262,7 @@ public class EssaiSearchCriteria
      * Setter pour investigateur.
      * @param investigateur le investigateur à écrire.
      */
-    public void setInvestigateur(final Investigateur investigateur)
-    {
+    public void setInvestigateur(final Investigateur investigateur) {
         this.investigateur = investigateur;
     }
 
@@ -286,8 +270,7 @@ public class EssaiSearchCriteria
      * Getter pour motsCles.
      * @return Le motsCles
      */
-    public String getMotsCles()
-    {
+    public String getMotsCles() {
         return this.motsCles;
     }
 
@@ -295,8 +278,7 @@ public class EssaiSearchCriteria
      * Setter pour motsCles.
      * @param motsCles Le motsCles à écrire.
      */
-    public void setMotsCles(final String motsCles)
-    {
+    public void setMotsCles(final String motsCles) {
         this.motsCles = motsCles;
     }
 
@@ -304,8 +286,7 @@ public class EssaiSearchCriteria
      * Getter sur anneeCreation.
      * @return Retourne le anneeCreation.
      */
-    public Integer getAnneeCreation()
-    {
+    public Integer getAnneeCreation() {
         return this.anneeCreation;
     }
 
@@ -313,8 +294,7 @@ public class EssaiSearchCriteria
      * Setter pour anneeCreation.
      * @param anneeCreation le anneeCreation à écrire.
      */
-    public void setAnneeCreation(final Integer anneeCreation)
-    {
+    public void setAnneeCreation(final Integer anneeCreation) {
         this.anneeCreation = anneeCreation;
     }
 
@@ -322,8 +302,7 @@ public class EssaiSearchCriteria
      * Getter sur numSigrec.
      * @return Retourne le numSigrec.
      */
-    public String getNumSigrec()
-    {
+    public String getNumSigrec() {
         return this.numSigrec;
     }
 
@@ -331,8 +310,7 @@ public class EssaiSearchCriteria
      * Setter pour numSigrec.
      * @param numSigrec le numSigrec à écrire.
      */
-    public void setNumSigrec(final String numSigrec)
-    {
+    public void setNumSigrec(final String numSigrec) {
         this.numSigrec = numSigrec;
     }
 
@@ -340,8 +318,7 @@ public class EssaiSearchCriteria
      * Getter pour numInterneOrNomOrPromoteur.
      * @return Le numInterneOrNomOrPromoteur
      */
-    public String getNumInterneOrNomOrPromoteur()
-    {
+    public String getNumInterneOrNomOrPromoteur() {
         return this.numInterneOrNomOrPromoteur;
     }
 
@@ -349,8 +326,7 @@ public class EssaiSearchCriteria
      * Setter pour numInterneOrNomOrPromoteur.
      * @param numInterneOrNomOrPromoteur Le numInterneOrNomOrPromoteur à écrire.
      */
-    public void setNumInterneOrNomOrPromoteur(final String numInterneOrNomOrPromoteur)
-    {
+    public void setNumInterneOrNomOrPromoteur(final String numInterneOrNomOrPromoteur) {
         this.numInterneOrNomOrPromoteur = numInterneOrNomOrPromoteur;
     }
 
@@ -358,8 +334,7 @@ public class EssaiSearchCriteria
      * Getter pour essaisDispensationGlobale.
      * @return Le essaisDispensationGlobale
      */
-    public Boolean getEssaisDispensationGlobale()
-    {
+    public Boolean getEssaisDispensationGlobale() {
         return this.essaisDispensationGlobale;
     }
 
@@ -367,8 +342,7 @@ public class EssaiSearchCriteria
      * Setter pour essaisDispensationGlobale.
      * @param essaisDispensationGlobale Le essaisDispensationGlobale à écrire.
      */
-    public void setEssaisDispensationGlobale(final Boolean essaisDispensationGlobale)
-    {
+    public void setEssaisDispensationGlobale(final Boolean essaisDispensationGlobale) {
         this.essaisDispensationGlobale = essaisDispensationGlobale;
     }
 
@@ -376,8 +350,7 @@ public class EssaiSearchCriteria
      * Getter pour numEudract.
      * @return Le numEudract
      */
-    public String getNumEudract()
-    {
+    public String getNumEudract() {
         return this.numEudract;
     }
 
@@ -385,9 +358,24 @@ public class EssaiSearchCriteria
      * Setter pour numEudract.
      * @param numEudract Le numEudract à écrire.
      */
-    public void setNumEudract(final String numEudract)
-    {
+    public void setNumEudract(final String numEudract) {
         this.numEudract = numEudract;
+    }
+
+    /**
+     * Getter pour numInterneStrict.
+     * @return Le numInterneStrict
+     */
+    public String getNumInterneStrict() {
+        return this.numInterneStrict;
+    }
+
+    /**
+     * Setter pour numInterneStrict.
+     * @param numInterneStrict Le numInterneStrict à écrire.
+     */
+    public void setNumInterneStrict(final String numInterneStrict) {
+        this.numInterneStrict = numInterneStrict;
     }
 
 }

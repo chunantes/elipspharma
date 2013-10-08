@@ -8,12 +8,10 @@ import fr.pharma.eclipse.jasper.constants.JasperConstants;
  * Classe représentant la source de données<br>
  * d'un bloc commun présentant un titre, une présence Oui/Non, un commentaire,<br>
  * et un document associé.
- 
+ * @author Netapsys
  * @version $Revision$ $Date$
  */
-public class JRBeanBlocWithMoAssocie
-    implements JasperReportBean
-{
+public class JRBeanBlocWithMoAssocie implements JasperReportBean {
 
     /**
      * Serial ID.
@@ -59,8 +57,7 @@ public class JRBeanBlocWithMoAssocie
      * Getter sur titre.
      * @return Retourne le titre.
      */
-    public String getTitre()
-    {
+    public String getTitre() {
         return this.titre;
     }
 
@@ -68,8 +65,7 @@ public class JRBeanBlocWithMoAssocie
      * Setter pour titre.
      * @param titre le titre à écrire.
      */
-    public void setTitre(final String titre)
-    {
+    public void setTitre(final String titre) {
         this.titre = titre;
     }
 
@@ -77,8 +73,7 @@ public class JRBeanBlocWithMoAssocie
      * Getter sur presence.
      * @return Retourne le presence.
      */
-    public Boolean getPresence()
-    {
+    public Boolean getPresence() {
         return this.presence;
     }
 
@@ -86,8 +81,7 @@ public class JRBeanBlocWithMoAssocie
      * Setter pour presence.
      * @param presence le presence à écrire.
      */
-    public void setPresence(final Boolean presence)
-    {
+    public void setPresence(final Boolean presence) {
         this.presence = presence;
     }
 
@@ -95,8 +89,7 @@ public class JRBeanBlocWithMoAssocie
      * Getter sur commentaire.
      * @return Retourne le commentaire.
      */
-    public String getCommentaire()
-    {
+    public String getCommentaire() {
         return this.commentaire;
     }
 
@@ -104,8 +97,7 @@ public class JRBeanBlocWithMoAssocie
      * Setter pour commentaire.
      * @param commentaire le commentaire à écrire.
      */
-    public void setCommentaire(final String commentaire)
-    {
+    public void setCommentaire(final String commentaire) {
         this.commentaire = commentaire;
         this.hasCommentaire = StringUtils.hasText(commentaire);
     }
@@ -114,8 +106,7 @@ public class JRBeanBlocWithMoAssocie
      * Getter sur moAssocie.
      * @return Retourne le moAssocie.
      */
-    public String getMoAssocie()
-    {
+    public String getMoAssocie() {
         return this.moAssocie;
     }
 
@@ -123,8 +114,7 @@ public class JRBeanBlocWithMoAssocie
      * Setter pour moAssocie.
      * @param moAssocie le moAssocie à écrire.
      */
-    public void setMoAssocie(final String moAssocie)
-    {
+    public void setMoAssocie(final String moAssocie) {
         this.moAssocie = moAssocie;
         this.hasMoAssocie = StringUtils.hasText(moAssocie);
     }
@@ -133,8 +123,7 @@ public class JRBeanBlocWithMoAssocie
      * Getter sur hasCommentaire.
      * @return Retourne le hasCommentaire.
      */
-    public Boolean getHasCommentaire()
-    {
+    public Boolean getHasCommentaire() {
         return this.hasCommentaire;
     }
 
@@ -142,8 +131,7 @@ public class JRBeanBlocWithMoAssocie
      * Getter sur hasMoAssocie.
      * @return Retourne le hasMoAssocie.
      */
-    public Boolean getHasMoAssocie()
-    {
+    public Boolean getHasMoAssocie() {
         return this.hasMoAssocie;
     }
 
@@ -151,8 +139,7 @@ public class JRBeanBlocWithMoAssocie
      * Getter sur showPresence.
      * @return Retourne le showPresence.
      */
-    public boolean getShowPresence()
-    {
+    public boolean getShowPresence() {
         return this.showPresence;
     }
 
@@ -160,8 +147,7 @@ public class JRBeanBlocWithMoAssocie
      * Setter pour showPresence.
      * @param showPresence le showPresence à écrire.
      */
-    public void setShowPresence(final boolean showPresence)
-    {
+    public void setShowPresence(final boolean showPresence) {
         this.showPresence = showPresence;
     }
 

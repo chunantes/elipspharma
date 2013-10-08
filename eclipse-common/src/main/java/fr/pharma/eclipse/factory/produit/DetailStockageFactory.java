@@ -7,13 +7,11 @@ import fr.pharma.eclipse.factory.common.BeanObjectFactory;
 
 /**
  * Factory de Bean DetailStockage.
- 
+ * @author Netapsys
  * @version $Revision$ $Date$
  * @param <DETAIL> Type DetailStockage.
  */
-public class DetailStockageFactory<DETAIL extends DetailStockage>
-    extends BeanObjectFactory<DETAIL>
-{
+public class DetailStockageFactory<DETAIL extends DetailStockage> extends BeanObjectFactory<DETAIL> {
 
     /**
      * SerialVersionUID.
@@ -24,8 +22,7 @@ public class DetailStockageFactory<DETAIL extends DetailStockage>
      * Constructeur.
      * @param bean Classe.
      */
-    public DetailStockageFactory(final Class<DETAIL> bean)
-    {
+    public DetailStockageFactory(final Class<DETAIL> bean) {
         super(bean);
     }
 
@@ -36,8 +33,7 @@ public class DetailStockageFactory<DETAIL extends DetailStockage>
      * @return Le detail stockage.
      */
     public DETAIL getInitializedObject(final Produit produit,
-                                       final TypeDetailStockage type)
-    {
+                                       final TypeDetailStockage type) {
         final DETAIL detailStockage = super.getInitializedObject();
         detailStockage.setType(type);
         detailStockage.setDetailLogistique(produit.getDetailLogistique());

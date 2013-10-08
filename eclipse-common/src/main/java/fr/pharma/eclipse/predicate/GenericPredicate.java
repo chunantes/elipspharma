@@ -9,16 +9,15 @@ import fr.pharma.eclipse.exception.common.CommonException;
 import fr.pharma.eclipse.utils.introspection.BeanTool;
 
 /**
- * Classe en charge de fournir une implémentation particulière des prédicates. L'utilisation
- * simple est d'instancier cette classe avec le nom d'une propriété + une valeur et de passer
- * cette instance à une méthode de la classe utilitaire CollectionUtils (countMatches, select,
- * exists, filter, find, select)
+ * Classe en charge de fournir une implémentation particulière des prédicates.
+ * L'utilisation simple est d'instancier cette classe avec le nom d'une
+ * propriété + une valeur et de passer cette instance à une méthode de la classe
+ * utilitaire CollectionUtils (countMatches, select, exists, filter, find,
+ * select)
  * @author Sébastien ROUL
  * @version $Revision$ $Date$
  */
-public class GenericPredicate
-    implements Predicate
-{
+public class GenericPredicate implements Predicate {
     /**
      * Logger par défaut.
      */
@@ -49,8 +48,7 @@ public class GenericPredicate
      * @param propriete Propriété à compararer
      * @param value : objet de référence (doit implémenter Comparable)
      */
-    public GenericPredicate(final String propriete, final Object value)
-    {
+    public GenericPredicate(final String propriete, final Object value) {
         this.propriete = propriete;
         this.value = value;
     }
@@ -59,66 +57,48 @@ public class GenericPredicate
      * Constructeur.
      * @param propriete Propriété à compararer
      * @param value Objet de référence (doit implémenter Comparable)
-     * @param allValue Si true : alors renvoie true lorsque le caractere "*" est trouvé.
+     * @param allValue Si true : alors renvoie true lorsque le caractere "*" est
+     * trouvé.
      */
-    public GenericPredicate(final String propriete, final Object value, final boolean allValue)
-    {
-        this(propriete,
-             value);
+    public GenericPredicate(final String propriete, final Object value, final boolean allValue) {
+        this(propriete, value);
         this.allValue = allValue;
     }
 
     /**
      * {@inheritDoc}
      */
+    @Override
     @SuppressWarnings("unchecked")
-    public boolean evaluate(final Object objectToCompare)
-    {
-        try
-        {
-            final Object propertyValueAsObject = BeanTool.getPropriete(objectToCompare,
-                                                                       this.propriete);
-            if (propertyValueAsObject == null)
-            {
+    public boolean evaluate(final Object objectToCompare) {
+        try {
+            final Object propertyValueAsObject = BeanTool.getPropriete(objectToCompare, this.propriete);
+            if (propertyValueAsObject == null) {
                 return false;
             }
 
             // Gestion du allValue si actif
-            if (this.allValue
-                && (propertyValueAsObject instanceof String)
-                && (GenericPredicate.WILDCARD.equals(propertyValueAsObject)))
-            {
+            if (this.allValue && (propertyValueAsObject instanceof String) && (GenericPredicate.WILDCARD.equals(propertyValueAsObject))) {
                 return true;
             }
             // La propriété est un bean du modèle métier
-            if (propertyValueAsObject instanceof BeanObject)
-            {
-                return this.handleBeanObject(propertyValueAsObject);
-            }
-            else
-            {
+            if (propertyValueAsObject instanceof BeanObject) {
+                return this.handleBeanObject((BeanObject) propertyValueAsObject);
+            } else {
                 // Préparation des valeurs
                 final Comparable compObject = (Comparable) propertyValueAsObject;
                 Comparable refObject = null;
-                if (this.value instanceof BeanObject)
-                {
-                    refObject = (Comparable) BeanTool.getPropriete(this.value,
-                                                                   this.propriete);
-                }
-                else
-                {
+                if (this.value instanceof BeanObject) {
+                    refObject = (Comparable) BeanTool.getPropriete(this.value, this.propriete);
+                } else {
                     refObject = (Comparable) this.value;
                 }
-                if (compObject.compareTo(refObject) == 0)
-                {
+                if (compObject.compareTo(refObject) == 0) {
                     return true;
                 }
             }
-        }
-        catch (final CommonException e)
-        {
-            GenericPredicate.LOG.error(e.getMessage(),
-                                 e);
+        } catch (final CommonException e) {
+            GenericPredicate.LOG.error(e.getMessage(), e);
         }
         return false;
     }
@@ -128,20 +108,15 @@ public class GenericPredicate
      * @param propertyValueAsObject Valeur propriété.
      * @return Résultat de comparaison.
      */
-    public boolean handleBeanObject(final Object propertyValueAsObject)
-    {
+    public boolean handleBeanObject(final BeanObject propertyValueAsObject) {
         final BeanObject valueAsBeanObject = (BeanObject) this.value;
-        final BeanObject propertyValueAsBeanObject = (BeanObject) propertyValueAsObject;
-
-        // On compare les ids.
-        final Long propertyValueId = propertyValueAsBeanObject.getId();
-        final Long valueId = valueAsBeanObject.getId();
-
-        if (propertyValueId == null)
-        {
+        if (valueAsBeanObject == null || propertyValueAsObject == null) {
             return false;
+        } else if (propertyValueAsObject.getId() == null) {
+            return false;
+        } else {
+            return propertyValueAsObject.getId().equals(valueAsBeanObject.getId());
         }
-        return propertyValueId.equals(valueId);
     }
 
 }

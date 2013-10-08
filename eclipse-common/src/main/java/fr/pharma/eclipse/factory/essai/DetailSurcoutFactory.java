@@ -10,12 +10,10 @@ import fr.pharma.eclipse.factory.common.BeanObjectWithParentFactory;
 
 /**
  * Description de la classe.
- 
+ * @author Netapsys
  * @version $Revision$ $Date$
  */
-public class DetailSurcoutFactory
-    extends BeanObjectWithParentFactory<DetailSurcout, Essai>
-{
+public class DetailSurcoutFactory extends BeanObjectWithParentFactory<DetailSurcout, Essai> {
 
     /**
      * SerialVersionUID.
@@ -32,8 +30,7 @@ public class DetailSurcoutFactory
      * {@inheritDoc}
      */
     @Override
-    public DetailSurcout getInitializedObject(final Essai essai)
-    {
+    public DetailSurcout getInitializedObject(final Essai essai) {
         final DetailSurcout detailSurcout = super.getInitializedObject(essai);
         final DonneesPrevision prevision = this.donneesPrevisionFactory.getInitializedObject();
         prevision.setDetailSurcout(detailSurcout);

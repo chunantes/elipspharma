@@ -9,16 +9,13 @@ import fr.pharma.eclipse.dictionary.maker.common.AbstractCriteriaMaker;
 import fr.pharma.eclipse.dictionary.maker.common.utils.CriteriaMakerUtils;
 import fr.pharma.eclipse.domain.criteria.common.SearchCriteria;
 import fr.pharma.eclipse.domain.criteria.evenement.EvenementSearchCriteria;
-import fr.pharma.eclipse.domain.model.essai.Essai;
 
 /**
  * Artisan de recherche pour les événements.
- 
+ * @author Netapsys
  * @version $Revision$ $Date$
  */
-public class EvenementSearchCriteriaMaker
-    extends AbstractCriteriaMaker
-{
+public class EvenementSearchCriteriaMaker extends AbstractCriteriaMaker {
     /**
      * Serial ID.
      */
@@ -27,8 +24,7 @@ public class EvenementSearchCriteriaMaker
     /**
      * Constructeur par défaut.
      */
-    public EvenementSearchCriteriaMaker()
-    {
+    public EvenementSearchCriteriaMaker() {
         super(EvenementSearchCriteria.class);
     }
 
@@ -37,69 +33,49 @@ public class EvenementSearchCriteriaMaker
      */
     @Override
     public void transform(final Criteria criteria,
-                          final SearchCriteria searchCrit)
-    {
+                          final SearchCriteria searchCrit) {
         final EvenementSearchCriteria crit = (EvenementSearchCriteria) searchCrit;
 
         // Critères sur Essai
-        this.handleCriteriaEssai(criteria,
-                                 crit);
+        this.handleCriteriaEssai(criteria, crit);
 
         // Type d'événement
-        if (crit.getTypeEvenement() != null)
-        {
-            CriteriaMakerUtils.addCritere(criteria,
-                                          "typeEvenement",
-                                          crit.getTypeEvenement());
+        if (crit.getTypeEvenement() != null) {
+            CriteriaMakerUtils.addCritere(criteria, "typeEvenement", crit.getTypeEvenement());
         }
 
         // Type de visite
-        if (crit.getTypeVisite() != null)
-        {
-            CriteriaMakerUtils.addCritere(criteria,
-                                          "typeVisite",
-                                          crit.getTypeVisite());
+        if (crit.getTypeVisite() != null) {
+            CriteriaMakerUtils.addCritere(criteria, "typeVisite", crit.getTypeVisite());
         }
 
         // Résultat de la visite
-        if (crit.getResultatVisite() != null)
-        {
-            CriteriaMakerUtils.addCritere(criteria,
-                                          "resultatVisite",
-                                          crit.getResultatVisite());
+        if (crit.getResultatVisite() != null) {
+            CriteriaMakerUtils.addCritere(criteria, "resultatVisite", crit.getResultatVisite());
         }
 
         // Recherche des visites dont le résultat est vide
-        if (crit.getResultVisiteVide() != null
-            && crit.getResultVisiteVide())
-        {
+        if (crit.getResultVisiteVide() != null && crit.getResultVisiteVide()) {
             criteria.add(Restrictions.isNull("resultatVisite"));
         }
 
         // Recherche des cessions PUI dont la date de réception est vide.
-        if (crit.getDateReceptionVide() != null
-            && crit.getDateReceptionVide())
-        {
+        if (crit.getDateReceptionVide() != null && crit.getDateReceptionVide()) {
             criteria.add(Restrictions.isNull("dateReception"));
         }
 
         // Date de début
-        if (crit.getDateDebut() != null)
-        {
-            criteria.add(Restrictions.ge("dateDebut",
-                                         crit.getDateDebut()));
+        if (crit.getDateDebut() != null) {
+            criteria.add(Restrictions.ge("dateDebut", crit.getDateDebut()));
         }
 
         // Date de fin
-        if (crit.getDateFin() != null)
-        {
+        if (crit.getDateFin() != null) {
             final Calendar cal = Calendar.getInstance();
             cal.setTime(crit.getDateFin().getTime());
             // Ajout d'un jour pour gérer les heures
-            cal.add(Calendar.DAY_OF_MONTH,
-                    1);
-            criteria.add(Restrictions.le("dateDebut",
-                                         cal));
+            cal.add(Calendar.DAY_OF_MONTH, 1);
+            criteria.add(Restrictions.le("dateDebut", cal));
         }
     }
 
@@ -109,24 +85,22 @@ public class EvenementSearchCriteriaMaker
      * @param crit Critère de recherche sur Evenement.
      */
     private void handleCriteriaEssai(final Criteria criteria,
-                                     final EvenementSearchCriteria crit)
-    {
+                                     final EvenementSearchCriteria crit) {
         // Essai
-        if (crit.getEssai() != null)
-        {
-            CriteriaMakerUtils.addCritere(criteria,
-                                          "essai",
-                                          crit.getEssai());
+        if (crit.getEssai() != null) {
+            final Criteria critEssai = criteria.createCriteria("essai");
+            critEssai.add(Restrictions.idEq(crit.getEssai().getId()));
         }
 
-        // Liste d'essais
-        if (crit.getEssais() != null)
-        {
-            CriteriaMakerUtils.addInCritere(criteria,
-                                            "essai",
-                                            crit.getEssais().toArray(new Essai[crit
-                                                    .getEssais()
-                                                    .size()]));
+        // Essai
+        if (crit.getEssaiDTO() != null) {
+            final Criteria critEssai = criteria.createCriteria("essai");
+            critEssai.add(Restrictions.idEq(crit.getEssaiDTO().getId()));
+        }
+
+        // Liste d'identifiants d'essais
+        if (crit.getIdsEssais() != null && crit.getIdsEssais().size() > 0) {
+            CriteriaMakerUtils.addInCritere(criteria, "essai.id", crit.getIdsEssais().toArray(new Long[crit.getIdsEssais().size()]));
         }
     }
 

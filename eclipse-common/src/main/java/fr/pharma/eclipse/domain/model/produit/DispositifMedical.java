@@ -16,13 +16,11 @@ import fr.pharma.eclipse.domain.model.produit.document.DocumentRandomisation;
 
 /**
  * Classe métier représentant un dispositif médical.
- 
+ * @author Netapsys
  * @version $Revision$ $Date$
  */
 @Entity(name = "dispositif_medical")
-public class DispositifMedical
-    extends Produit
-{
+public class DispositifMedical extends Produit {
 
     /**
      * SerialVersionUID.
@@ -108,8 +106,7 @@ public class DispositifMedical
      * {@inheritDoc}
      */
     @Override
-    public Produit cloneMe()
-    {
+    public Produit cloneMe() {
         final DispositifMedical dm = new DispositifMedical();
 
         // Clonage de la super classe.
@@ -133,8 +130,7 @@ public class DispositifMedical
      * Getter sur modele.
      * @return Retourne le modele.
      */
-    public String getModele()
-    {
+    public String getModele() {
         return this.modele;
     }
 
@@ -142,8 +138,7 @@ public class DispositifMedical
      * Setter pour modele.
      * @param modele le modele à écrire.
      */
-    public void setModele(final String modele)
-    {
+    public void setModele(final String modele) {
         this.modele = modele;
     }
 
@@ -151,8 +146,7 @@ public class DispositifMedical
      * Getter sur nomenclature.
      * @return Retourne le nomenclature.
      */
-    public String getNomenclature()
-    {
+    public String getNomenclature() {
         return this.nomenclature;
     }
 
@@ -160,8 +154,7 @@ public class DispositifMedical
      * Setter pour nomenclature.
      * @param nomenclature le nomenclature à écrire.
      */
-    public void setNomenclature(final String nomenclature)
-    {
+    public void setNomenclature(final String nomenclature) {
         this.nomenclature = nomenclature;
     }
 
@@ -169,8 +162,7 @@ public class DispositifMedical
      * Getter sur marquageCE.
      * @return Retourne le marquageCE.
      */
-    public Boolean getMarquageCE()
-    {
+    public Boolean getMarquageCE() {
         return this.marquageCE;
     }
 
@@ -178,8 +170,7 @@ public class DispositifMedical
      * Setter pour marquageCE.
      * @param marquageCE le marquageCE à écrire.
      */
-    public void setMarquageCE(final Boolean marquageCE)
-    {
+    public void setMarquageCE(final Boolean marquageCE) {
         this.marquageCE = marquageCE;
     }
 
@@ -187,8 +178,7 @@ public class DispositifMedical
      * Getter sur statutLpp.
      * @return Retourne le statutLpp.
      */
-    public String getStatutLpp()
-    {
+    public String getStatutLpp() {
         return this.statutLpp;
     }
 
@@ -196,8 +186,7 @@ public class DispositifMedical
      * Setter pour statutLpp.
      * @param statutLpp le statutLpp à écrire.
      */
-    public void setStatutLpp(final String statutLpp)
-    {
+    public void setStatutLpp(final String statutLpp) {
         this.statutLpp = statutLpp;
     }
 
@@ -205,8 +194,7 @@ public class DispositifMedical
      * Getter sur codeLppr.
      * @return Retourne le codeLppr.
      */
-    public String getCodeLppr()
-    {
+    public String getCodeLppr() {
         return this.codeLppr;
     }
 
@@ -214,8 +202,7 @@ public class DispositifMedical
      * Setter pour codeLppr.
      * @param codeLppr le codeLppr à écrire.
      */
-    public void setCodeLppr(final String codeLppr)
-    {
+    public void setCodeLppr(final String codeLppr) {
         this.codeLppr = codeLppr;
     }
 
@@ -223,8 +210,7 @@ public class DispositifMedical
      * Getter sur codeLogicielGestion.
      * @return Retourne le codeLogicielGestion.
      */
-    public String getCodeLogicielGestion()
-    {
+    public String getCodeLogicielGestion() {
         return this.codeLogicielGestion;
     }
 
@@ -232,8 +218,7 @@ public class DispositifMedical
      * Setter pour codeLogicielGestion.
      * @param codeLogicielGestion le codeLogicielGestion à écrire.
      */
-    public void setCodeLogicielGestion(final String codeLogicielGestion)
-    {
+    public void setCodeLogicielGestion(final String codeLogicielGestion) {
         this.codeLogicielGestion = codeLogicielGestion;
     }
 
@@ -241,8 +226,7 @@ public class DispositifMedical
      * Getter sur numeroMarche.
      * @return Retourne le numeroMarche.
      */
-    public String getNumeroMarche()
-    {
+    public String getNumeroMarche() {
         return this.numeroMarche;
     }
 
@@ -250,8 +234,7 @@ public class DispositifMedical
      * Setter pour numeroMarche.
      * @param numeroMarche le numeroMarche à écrire.
      */
-    public void setNumeroMarche(final String numeroMarche)
-    {
+    public void setNumeroMarche(final String numeroMarche) {
         this.numeroMarche = numeroMarche;
     }
 
@@ -259,8 +242,7 @@ public class DispositifMedical
      * Getter sur nature.
      * @return Retourne le nature.
      */
-    public NatureDM getNature()
-    {
+    public NatureDM getNature() {
         return this.nature;
     }
 
@@ -268,8 +250,7 @@ public class DispositifMedical
      * Setter pour nature.
      * @param nature le nature à écrire.
      */
-    public void setNature(final NatureDM nature)
-    {
+    public void setNature(final NatureDM nature) {
         this.nature = nature;
     }
 
@@ -277,8 +258,7 @@ public class DispositifMedical
      * Getter sur classe.
      * @return Retourne le classe.
      */
-    public ClasseDM getClasse()
-    {
+    public ClasseDM getClasse() {
         return this.classe;
     }
 
@@ -286,8 +266,7 @@ public class DispositifMedical
      * Setter pour classe.
      * @param classe le classe à écrire.
      */
-    public void setClasse(final ClasseDM classe)
-    {
+    public void setClasse(final ClasseDM classe) {
         this.classe = classe;
     }
 
@@ -295,8 +274,7 @@ public class DispositifMedical
      * Getter sur randomisation.
      * @return Retourne le randomisation.
      */
-    public Boolean getRandomisation()
-    {
+    public Boolean getRandomisation() {
         return this.randomisation;
     }
 
@@ -304,8 +282,7 @@ public class DispositifMedical
      * Setter pour randomisation.
      * @param randomisation le randomisation à écrire.
      */
-    public void setRandomisation(final Boolean randomisation)
-    {
+    public void setRandomisation(final Boolean randomisation) {
         this.randomisation = randomisation;
     }
 
@@ -313,8 +290,7 @@ public class DispositifMedical
      * Getter sur fournisseur.
      * @return Retourne le fournisseur.
      */
-    public String getFournisseur()
-    {
+    public String getFournisseur() {
         return this.fournisseur;
     }
 
@@ -322,24 +298,21 @@ public class DispositifMedical
      * Setter pour fournisseur.
      * @param fournisseur le fournisseur à écrire.
      */
-    public void setFournisseur(final String fournisseur)
-    {
+    public void setFournisseur(final String fournisseur) {
         this.fournisseur = fournisseur;
     }
     /**
      * Getter sur documentRandomisation.
      * @return Retourne le documentRandomisation.
      */
-    public DocumentRandomisation getDocumentRandomisation()
-    {
+    public DocumentRandomisation getDocumentRandomisation() {
         return this.documentRandomisation;
     }
     /**
      * Setter pour documentRandomisation.
      * @param documentRandomisation le documentRandomisation à écrire.
      */
-    public void setDocumentRandomisation(final DocumentRandomisation documentRandomisation)
-    {
+    public void setDocumentRandomisation(final DocumentRandomisation documentRandomisation) {
         this.documentRandomisation = documentRandomisation;
     }
 

@@ -7,13 +7,12 @@ import org.springframework.util.StringUtils;
 import fr.pharma.eclipse.domain.jasper.model.common.JRBeanHeader;
 
 /**
- * Classe en charge de construire la source de l'en-tête commune des rapports Jasper.
- 
+ * Classe en charge de construire la source de l'en-tête commune des rapports
+ * Jasper.
+ * @author Netapsys
  * @version $Revision$ $Date$
  */
-public class JRBeanHeaderBuilder
-    implements Serializable
-{
+public class JRBeanHeaderBuilder implements Serializable {
 
     /**
      * Serial ID.
@@ -29,13 +28,13 @@ public class JRBeanHeaderBuilder
      * Constructeur.
      * @param cheminLogoCHU Chemin d'accès au logo du CHU.
      */
-    public JRBeanHeaderBuilder(final String cheminLogoCHU)
-    {
+    public JRBeanHeaderBuilder(final String cheminLogoCHU) {
         this.cheminLogoCHU = cheminLogoCHU;
     }
 
     /**
-     * Méthode en charge de construire l'en-tête commune à partir des informations données.
+     * Méthode en charge de construire l'en-tête commune à partir des
+     * informations données.
      * @param sousTitre Sous-titre de l'imprimé.
      * @param processus Nom du processus de l'imprimé.
      * @param themes Thèmes de l'imprimé.
@@ -45,15 +44,13 @@ public class JRBeanHeaderBuilder
     public JRBeanHeader build(final String sousTitre,
                               final String processus,
                               final String themes,
-                              final String diffuseur)
-    {
+                              final String diffuseur) {
         final JRBeanHeader dataHeader = new JRBeanHeader();
         dataHeader.setSousTitre(sousTitre);
         dataHeader.setProcessus(processus);
         dataHeader.setThemes(themes);
         dataHeader.setDiffusionPar(diffuseur);
-        if (StringUtils.hasText(this.cheminLogoCHU))
-        {
+        if (StringUtils.hasText(this.cheminLogoCHU)) {
             dataHeader.setUrlImage(this.cheminLogoCHU);
         }
         return dataHeader;
@@ -63,8 +60,7 @@ public class JRBeanHeaderBuilder
      * Getter sur cheminLogoCHU.
      * @return Retourne le cheminLogoCHU.
      */
-    String getCheminLogoCHU()
-    {
+    String getCheminLogoCHU() {
         return this.cheminLogoCHU;
     }
 

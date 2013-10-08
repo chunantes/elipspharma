@@ -6,15 +6,14 @@ import javax.persistence.Entity;
 import fr.pharma.eclipse.domain.enums.document.TypeDocumentProduit;
 
 /**
- * Bean métier représentant un document relatif à la fabrication d'un acte pharma.
- 
+ * Bean métier représentant un document relatif à la fabrication d'un acte
+ * pharma.
+ * @author Netapsys
  * @version $Revision$ $Date$
  */
 @Entity
 @DiscriminatorValue("FABRICATION")
-public class DocumentFabrication
-    extends DocumentActesPharma
-{
+public class DocumentFabrication extends DocumentActesPharma {
 
     /**
      * Serial ID.
@@ -24,8 +23,7 @@ public class DocumentFabrication
     /**
      * Constructeur par défaut.
      */
-    public DocumentFabrication()
-    {
+    public DocumentFabrication() {
         this.setType(TypeDocumentProduit.FABRICATION);
     }
 

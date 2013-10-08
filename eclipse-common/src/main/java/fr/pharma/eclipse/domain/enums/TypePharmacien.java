@@ -2,11 +2,10 @@ package fr.pharma.eclipse.domain.enums;
 
 /**
  * Enumération représentantn les types de Pharmacien.
- 
+ * @author Netapsys
  * @version $Revision$ $Date$
  */
-public enum TypePharmacien
-{
+public enum TypePharmacien {
     /**
      * Pharmacien interne.
      */
@@ -57,8 +56,7 @@ public enum TypePharmacien
      * @param libelle Libellé de la valeur de l'énumération.
      * @param droit Droit associé.
      */
-    private TypePharmacien(final String libelle, final Droit droit)
-    {
+    private TypePharmacien(final String libelle, final Droit droit) {
         this.libelle = libelle;
         this.droit = droit;
     }
@@ -67,8 +65,7 @@ public enum TypePharmacien
      * Getter sur libelle.
      * @return Retourne le libelle.
      */
-    public String getLibelle()
-    {
+    public String getLibelle() {
         return this.libelle;
     }
 
@@ -76,8 +73,7 @@ public enum TypePharmacien
      * {@inheritDoc}
      */
     @Override
-    public String toString()
-    {
+    public String toString() {
         return this.getLibelle();
     }
 
@@ -85,8 +81,7 @@ public enum TypePharmacien
      * Getter sur droit.
      * @return Retourne le droit.
      */
-    public Droit getDroit()
-    {
+    public Droit getDroit() {
         return this.droit;
     }
 

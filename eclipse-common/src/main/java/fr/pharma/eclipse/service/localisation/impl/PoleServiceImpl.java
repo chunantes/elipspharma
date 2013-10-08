@@ -11,13 +11,10 @@ import fr.pharma.eclipse.service.localisation.PoleService;
 
 /**
  * Classe d'implémentation du service de gestion de pole.
- 
+ * @author Netapsys
  * @version $Revision$ $Date$
  */
-public class PoleServiceImpl
-    extends GenericServiceImpl<Pole>
-    implements PoleService
-{
+public class PoleServiceImpl extends GenericServiceImpl<Pole> implements PoleService {
     /**
      * Serial ID.
      */
@@ -33,8 +30,7 @@ public class PoleServiceImpl
      * Constructeur.
      * @param poleDao Dao de gestion des poles.
      */
-    public PoleServiceImpl(final GenericDao<Pole> poleDao)
-    {
+    public PoleServiceImpl(final GenericDao<Pole> poleDao) {
         super(poleDao);
     }
 
@@ -42,8 +38,7 @@ public class PoleServiceImpl
      * {@inheritDoc}
      */
     @Override
-    public Pole save(final Pole pole)
-    {
+    public Pole save(final Pole pole) {
         final Pole poleToSave = this.reattach(pole);
         final PoleSuivi poleSuivi = this.poleSuiviFactory.getInitializedObject();
         poleSuivi.setPole(poleToSave);
@@ -55,8 +50,7 @@ public class PoleServiceImpl
      * Setter pour poleSuiviFactory.
      * @param poleSuiviFactory le poleSuiviFactory à écrire.
      */
-    public void setPoleSuiviFactory(final SuiviFactory<PoleSuivi> poleSuiviFactory)
-    {
+    public void setPoleSuiviFactory(final SuiviFactory<PoleSuivi> poleSuiviFactory) {
         this.poleSuiviFactory = poleSuiviFactory;
     }
 

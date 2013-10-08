@@ -15,13 +15,11 @@ import fr.pharma.eclipse.domain.model.essai.detail.autresdocs.DetailAutresDocume
 
 /**
  * Bean métier représentant un document autre de l'essai clinique.
- 
+ * @author Netapsys
  * @version $Revision$ $Date$
  */
 @Entity(name = "essai_document_detail_autres_documents")
-public class DocumentAutre
-    extends DocumentEssai
-{
+public class DocumentAutre extends DocumentEssai {
 
     /**
      * Serial ID.
@@ -46,8 +44,7 @@ public class DocumentAutre
     /**
      * Constructeur par défaut.
      */
-    public DocumentAutre()
-    {
+    public DocumentAutre() {
         this.setType(TypeDocumentEssai.AUTRE);
     }
 
@@ -55,8 +52,7 @@ public class DocumentAutre
      * {@inheritDoc}
      */
     @Override
-    public TypeDocumentEssai getType()
-    {
+    public TypeDocumentEssai getType() {
         return this.type;
     }
 
@@ -64,8 +60,7 @@ public class DocumentAutre
      * {@inheritDoc}
      */
     @Override
-    public void setType(final TypeDocumentEssai type)
-    {
+    public void setType(final TypeDocumentEssai type) {
         this.type = type;
     }
 
@@ -73,8 +68,7 @@ public class DocumentAutre
      * Getter sur detailAutresDocuments.
      * @return Retourne le detailAutresDocuments.
      */
-    public DetailAutresDocuments getDetailAutresDocuments()
-    {
+    public DetailAutresDocuments getDetailAutresDocuments() {
         return this.detailAutresDocuments;
     }
 
@@ -82,8 +76,7 @@ public class DocumentAutre
      * Setter pour detailAutresDocuments.
      * @param detailAutresDocuments le detailAutresDocuments à écrire.
      */
-    public void setDetailAutresDocuments(final DetailAutresDocuments detailAutresDocuments)
-    {
+    public void setDetailAutresDocuments(final DetailAutresDocuments detailAutresDocuments) {
         this.detailAutresDocuments = detailAutresDocuments;
     }
 

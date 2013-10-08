@@ -2,11 +2,10 @@ package fr.pharma.eclipse.domain.enums.evenement;
 
 /**
  * Enumération représentant le type d'événement.
- 
+ * @author Netapsys
  * @version $Revision$ $Date$
  */
-public enum TypeEvenement
-{
+public enum TypeEvenement {
 
     /**
      * Destruction.
@@ -47,8 +46,7 @@ public enum TypeEvenement
      * Constructeur.
      * @param libelle Le libellé du type d'événement.
      */
-    TypeEvenement(final String libelle, final String claseCSS)
-    {
+    TypeEvenement(final String libelle, final String claseCSS) {
         this.libelle = libelle;
         this.classeCSS = claseCSS;
     }
@@ -57,8 +55,7 @@ public enum TypeEvenement
      * Getter pour libelle.
      * @return Retourne le libelle.
      */
-    public String getLibelle()
-    {
+    public String getLibelle() {
         return this.libelle;
     }
 
@@ -66,8 +63,7 @@ public enum TypeEvenement
      * {@inheritDoc}
      */
     @Override
-    public String toString()
-    {
+    public String toString() {
         return this.getLibelle();
     }
 
@@ -75,8 +71,7 @@ public enum TypeEvenement
      * Getter pour classeCSS.
      * @return Le classeCSS
      */
-    public String getClasseCSS()
-    {
+    public String getClasseCSS() {
         return this.classeCSS;
     }
 
@@ -84,8 +79,7 @@ public enum TypeEvenement
      * Setter pour classeCSS.
      * @param classeCSS Le classeCSS à écrire.
      */
-    public void setClasseCSS(final String classeCSS)
-    {
+    public void setClasseCSS(final String classeCSS) {
         this.classeCSS = classeCSS;
     }
 

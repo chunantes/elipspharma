@@ -2,11 +2,10 @@ package fr.pharma.eclipse.domain.enums.document;
 
 /**
  * Interface commune des énumérations définissant des types de documents.
- 
+ * @author Netapsys
  * @version $Revision$ $Date$
  */
-public interface EnumTypeDocument
-{
+public interface EnumTypeDocument {
     /**
      * Méthode qui récupère le type de documents Eclipse.
      * @return Le type général de document Eclipse.

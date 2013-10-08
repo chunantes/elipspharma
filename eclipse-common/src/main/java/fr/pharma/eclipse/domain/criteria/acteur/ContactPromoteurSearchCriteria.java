@@ -4,12 +4,10 @@ import fr.pharma.eclipse.domain.model.acteur.Promoteur;
 
 /**
  * Critère de recherche de contact promoteur.
- 
+ * @author Netapsys
  * @version $Revision$ $Date$
  */
-public class ContactPromoteurSearchCriteria
-    extends PersonneSearchCriteria
-{
+public class ContactPromoteurSearchCriteria extends PersonneSearchCriteria {
 
     /**
      * Serial ID.
@@ -25,8 +23,7 @@ public class ContactPromoteurSearchCriteria
      * Getter sur promoteur.
      * @return Retourne le promoteur.
      */
-    public Promoteur getPromoteur()
-    {
+    public Promoteur getPromoteur() {
         return this.promoteur;
     }
 
@@ -34,8 +31,7 @@ public class ContactPromoteurSearchCriteria
      * Setter pour promoteur.
      * @param promoteur le promoteur à écrire.
      */
-    public void setPromoteur(final Promoteur promoteur)
-    {
+    public void setPromoteur(final Promoteur promoteur) {
         this.promoteur = promoteur;
     }
 }

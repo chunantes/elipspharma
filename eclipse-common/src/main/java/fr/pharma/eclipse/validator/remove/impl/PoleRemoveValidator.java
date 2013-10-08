@@ -12,12 +12,10 @@ import fr.pharma.eclipse.validator.remove.RemoveValidator;
 
 /**
  * Classe de validation de suppression d'un objet Pole.
- 
+ * @author Netapsys
  * @version $Revision$ $Date$
  */
-public class PoleRemoveValidator
-    implements RemoveValidator<Pole>, Serializable
-{
+public class PoleRemoveValidator implements RemoveValidator<Pole>, Serializable {
     /**
      * Serial ID.
      */
@@ -33,17 +31,12 @@ public class PoleRemoveValidator
      * {@inheritDoc}
      */
     @Override
-    public void validate(final Pole pole)
-    {
+    public void validate(final Pole pole) {
         // Vérification Relation Pole-Service
         final ServiceSearchCriteria criteria = new ServiceSearchCriteria();
         criteria.setPole(pole);
-        if (this.serviceService.hasResult(criteria))
-        {
-            throw new ValidationException("remove",
-                                          new String[]
-                                          {"impossible" },
-                                          pole);
+        if (this.serviceService.hasResult(criteria)) {
+            throw new ValidationException("remove", new String[]{"impossible" }, pole);
         }
     }
 
@@ -51,8 +44,7 @@ public class PoleRemoveValidator
      * Setter pour serviceService.
      * @param serviceService le serviceService à écrire.
      */
-    public void setServiceService(final ServiceService serviceService)
-    {
+    public void setServiceService(final ServiceService serviceService) {
         this.serviceService = serviceService;
     }
 

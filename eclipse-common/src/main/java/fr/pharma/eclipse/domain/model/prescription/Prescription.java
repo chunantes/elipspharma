@@ -28,20 +28,16 @@ import fr.pharma.eclipse.domain.model.common.BeanObject;
 import fr.pharma.eclipse.domain.model.design.Sequence;
 import fr.pharma.eclipse.domain.model.dispensation.Dispensation;
 import fr.pharma.eclipse.domain.model.essai.Essai;
-import fr.pharma.eclipse.domain.model.essai.EssaiElement;
 import fr.pharma.eclipse.domain.model.localisation.Service;
 import fr.pharma.eclipse.domain.model.patient.Inclusion;
 
 /**
  * Classe métier représentant une Prescription réelle.
- 
+ * @author Netapsys
  * @version $Revision$ $Date$
  */
 @Entity(name = "prescription")
-public class Prescription
-    extends BeanObject
-    implements EssaiElement
-{
+public class Prescription extends BeanObject {
 
     /**
      * SerialVersionUID.
@@ -127,8 +123,7 @@ public class Prescription
     @OneToMany(mappedBy = "prescription", cascade = CascadeType.ALL, orphanRemoval = true)
     @LazyCollection(LazyCollectionOption.FALSE)
     @Sort(type = SortType.COMPARATOR, comparator = EclipseListComparator.class)
-    private final SortedSet<Dispensation> dispensations =
-        new TreeSet<Dispensation>(new EclipseListComparator());
+    private final SortedSet<Dispensation> dispensations = new TreeSet<Dispensation>(new EclipseListComparator());
 
     /**
      * Liste de produits prescrits.
@@ -136,18 +131,17 @@ public class Prescription
     @OneToMany(mappedBy = "prescription", cascade = CascadeType.ALL, orphanRemoval = true)
     @LazyCollection(LazyCollectionOption.FALSE)
     @Sort(type = SortType.COMPARATOR, comparator = ProduitPrescritComparator.class)
-    private SortedSet<ProduitPrescrit> produitsPrescrits =
-        new TreeSet<ProduitPrescrit>(new ProduitPrescritComparator());
+    private SortedSet<ProduitPrescrit> produitsPrescrits = new TreeSet<ProduitPrescrit>(new ProduitPrescritComparator());
 
     /**
-     * Retourne une chaine de caractère contenant les libelles des produits prescrits.
-     * @return une chaine de caractère contenant les libelles des produits prescrits.
+     * Retourne une chaine de caractère contenant les libelles des produits
+     * prescrits.
+     * @return une chaine de caractère contenant les libelles des produits
+     * prescrits.
      */
-    public String getLibelleProduitsPrescrits()
-    {
+    public String getLibelleProduitsPrescrits() {
         final StringBuffer buff = new StringBuffer();
-        for (final ProduitPrescrit p : this.produitsPrescrits)
-        {
+        for (final ProduitPrescrit p : this.produitsPrescrits) {
             buff.append(p.getProduit().getDenomination());
             buff.append(" ");
         }
@@ -158,8 +152,7 @@ public class Prescription
      * Getter sur investigateur.
      * @return Retourne le investigateur.
      */
-    public Investigateur getInvestigateur()
-    {
+    public Investigateur getInvestigateur() {
         return this.investigateur;
     }
 
@@ -167,8 +160,7 @@ public class Prescription
      * Setter pour investigateur.
      * @param investigateur le investigateur à écrire.
      */
-    public void setInvestigateur(final Investigateur investigateur)
-    {
+    public void setInvestigateur(final Investigateur investigateur) {
         this.investigateur = investigateur;
     }
 
@@ -176,8 +168,7 @@ public class Prescription
      * Getter sur datePrescription.
      * @return Retourne le datePrescription.
      */
-    public Calendar getDatePrescription()
-    {
+    public Calendar getDatePrescription() {
         return this.datePrescription;
     }
 
@@ -185,8 +176,7 @@ public class Prescription
      * Setter pour datePrescription.
      * @param datePrescription le datePrescription à écrire.
      */
-    public void setDatePrescription(final Calendar datePrescription)
-    {
+    public void setDatePrescription(final Calendar datePrescription) {
         this.datePrescription = datePrescription;
     }
 
@@ -194,8 +184,7 @@ public class Prescription
      * Getter sur numPrescription.
      * @return Retourne le numPrescription.
      */
-    public Integer getNumPrescription()
-    {
+    public Integer getNumPrescription() {
         return this.numPrescription;
     }
 
@@ -203,8 +192,7 @@ public class Prescription
      * Setter pour numPrescription.
      * @param numPrescription le numPrescription à écrire.
      */
-    public void setNumPrescription(final Integer numPrescription)
-    {
+    public void setNumPrescription(final Integer numPrescription) {
         this.numPrescription = numPrescription;
     }
 
@@ -212,8 +200,7 @@ public class Prescription
      * Getter sur service.
      * @return Retourne le service.
      */
-    public Service getService()
-    {
+    public Service getService() {
         return this.service;
     }
 
@@ -221,8 +208,7 @@ public class Prescription
      * Setter pour service.
      * @param service le service à écrire.
      */
-    public void setService(final Service service)
-    {
+    public void setService(final Service service) {
         this.service = service;
     }
 
@@ -230,8 +216,7 @@ public class Prescription
      * Getter sur produitsPrescrits.
      * @return Retourne le produitsPrescrits.
      */
-    public SortedSet<ProduitPrescrit> getProduitsPrescrits()
-    {
+    public SortedSet<ProduitPrescrit> getProduitsPrescrits() {
         return this.produitsPrescrits;
     }
 
@@ -239,8 +224,7 @@ public class Prescription
      * Setter pour produitsPrescrits.
      * @param produitsPrescrits le produitsPrescrits à écrire.
      */
-    public void setProduitsPrescrits(final SortedSet<ProduitPrescrit> produitsPrescrits)
-    {
+    public void setProduitsPrescrits(final SortedSet<ProduitPrescrit> produitsPrescrits) {
         this.produitsPrescrits = produitsPrescrits;
     }
 
@@ -248,8 +232,7 @@ public class Prescription
      * Getter sur inclusion.
      * @return Retourne le inclusion.
      */
-    public Inclusion getInclusion()
-    {
+    public Inclusion getInclusion() {
         return this.inclusion;
     }
 
@@ -257,8 +240,7 @@ public class Prescription
      * Setter pour inclusion.
      * @param inclusion le inclusion à écrire.
      */
-    public void setInclusion(final Inclusion inclusion)
-    {
+    public void setInclusion(final Inclusion inclusion) {
         this.inclusion = inclusion;
     }
 
@@ -266,8 +248,7 @@ public class Prescription
      * Getter sur dateDebutTraitement.
      * @return Retourne le dateDebutTraitement.
      */
-    public Calendar getDateDebutTraitement()
-    {
+    public Calendar getDateDebutTraitement() {
         return this.dateDebutTraitement;
     }
 
@@ -275,8 +256,7 @@ public class Prescription
      * Setter pour dateDebutTraitement.
      * @param dateDebutTraitement le dateDebutTraitement à écrire.
      */
-    public void setDateDebutTraitement(final Calendar dateDebutTraitement)
-    {
+    public void setDateDebutTraitement(final Calendar dateDebutTraitement) {
         this.dateDebutTraitement = dateDebutTraitement;
     }
 
@@ -284,8 +264,7 @@ public class Prescription
      * Getter sur sequence.
      * @return Retourne le sequence.
      */
-    public Sequence getSequence()
-    {
+    public Sequence getSequence() {
         return this.sequence;
     }
 
@@ -293,8 +272,7 @@ public class Prescription
      * Setter pour sequence.
      * @param sequence le sequence à écrire.
      */
-    public void setSequence(final Sequence sequence)
-    {
+    public void setSequence(final Sequence sequence) {
         this.sequence = sequence;
     }
 
@@ -302,8 +280,7 @@ public class Prescription
      * Getter sur dispense.
      * @return Retourne le dispense.
      */
-    public Boolean getDispense()
-    {
+    public Boolean getDispense() {
         return this.dispense;
     }
 
@@ -311,26 +288,22 @@ public class Prescription
      * Getter sur dispense.
      * @return Retourne le dispense.
      */
-    public Boolean getDispenseEmpty()
-    {
-        return this.dispense
-               || !this.getDispensations().isEmpty();
+    public Boolean getDispenseEmpty() {
+        return this.dispense || !this.getDispensations().isEmpty();
     }
 
     /**
      * Setter pour dispense.
      * @param dispense le dispense à écrire.
      */
-    public void setDispense(final Boolean dispense)
-    {
+    public void setDispense(final Boolean dispense) {
         this.dispense = dispense;
     }
 
     /**
      * {@inheritDoc}
      */
-    public Essai getEssai()
-    {
+    public Essai getEssai() {
         return this.getInclusion().getEssai();
     }
 
@@ -338,8 +311,7 @@ public class Prescription
      * Getter pour commentaire.
      * @return Le commentaire
      */
-    public String getCommentaire()
-    {
+    public String getCommentaire() {
         return this.commentaire;
     }
 
@@ -347,8 +319,7 @@ public class Prescription
      * Setter pour commentaire.
      * @param commentaire Le commentaire à écrire.
      */
-    public void setCommentaire(final String commentaire)
-    {
+    public void setCommentaire(final String commentaire) {
         this.commentaire = commentaire;
     }
 
@@ -356,8 +327,7 @@ public class Prescription
      * Getter pour dispensations.
      * @return Le dispensations
      */
-    public SortedSet<Dispensation> getDispensations()
-    {
+    public SortedSet<Dispensation> getDispensations() {
         return this.dispensations;
     }
 
@@ -365,8 +335,7 @@ public class Prescription
      * Getter pour numVisite.
      * @return Le numVisite
      */
-    public String getNumVisite()
-    {
+    public String getNumVisite() {
         return this.numVisite;
     }
 
@@ -374,8 +343,7 @@ public class Prescription
      * Setter pour numVisite.
      * @param numVisite Le numVisite à écrire.
      */
-    public void setNumVisite(final String numVisite)
-    {
+    public void setNumVisite(final String numVisite) {
         this.numVisite = numVisite;
     }
 
@@ -383,12 +351,9 @@ public class Prescription
      * Marquer produit dispensé
      * @param clé la clé du produit
      */
-    public void setProduitDispense(final Long cle)
-    {
-        for (final ProduitPrescrit p : this.produitsPrescrits)
-        {
-            if (p.getId() == cle)
-            {
+    public void setProduitDispense(final Long cle) {
+        for (final ProduitPrescrit p : this.produitsPrescrits) {
+            if (p.getId() == cle) {
                 p.setDispense(true);
             }
         }

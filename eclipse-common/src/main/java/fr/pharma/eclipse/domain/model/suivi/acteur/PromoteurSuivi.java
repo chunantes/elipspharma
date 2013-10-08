@@ -12,13 +12,11 @@ import fr.pharma.eclipse.domain.model.suivi.common.Suivi;
 
 /**
  * Bean métier représentant les suivis de modifications sur le bean Promoteur.
- 
+ * @author Netapsys
  * @version $Revision$ $Date$
  */
 @Entity(name = "promoteur_suivi")
-public class PromoteurSuivi
-    extends Suivi
-{
+public class PromoteurSuivi extends Suivi {
     /**
      * Serial ID.
      */
@@ -36,8 +34,7 @@ public class PromoteurSuivi
      * Getter sur promoteur.
      * @return Retourne le promoteur.
      */
-    public Promoteur getPromoteur()
-    {
+    public Promoteur getPromoteur() {
         return this.promoteur;
     }
 
@@ -45,8 +42,7 @@ public class PromoteurSuivi
      * Setter pour promoteur.
      * @param promoteur le promoteur à écrire.
      */
-    public void setPromoteur(final Promoteur promoteur)
-    {
+    public void setPromoteur(final Promoteur promoteur) {
         this.promoteur = promoteur;
     }
 

@@ -4,15 +4,14 @@ import javax.persistence.DiscriminatorValue;
 import javax.persistence.Entity;
 
 /**
- * Classe métier de commentaire sur la conclusion de l'étude de faisabilité de l'essai clinique.
- 
+ * Classe métier de commentaire sur la conclusion de l'étude de faisabilité de
+ * l'essai clinique.
+ * @author Netapsys
  * @version $Revision$ $Date$
  */
 @Entity
 @DiscriminatorValue("FAISABILITE_CONCL")
-public class CommentaireConclusionFaisabilite
-    extends CommentaireEssaiFaisabilite
-{
+public class CommentaireConclusionFaisabilite extends CommentaireEssaiFaisabilite {
 
     /**
      * Serial ID.

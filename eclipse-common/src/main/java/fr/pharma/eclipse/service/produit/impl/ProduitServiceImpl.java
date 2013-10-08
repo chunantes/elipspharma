@@ -26,14 +26,11 @@ import fr.pharma.eclipse.service.produit.ProduitService;
 
 /**
  * Classe d'implémentation du service de gestion de personne.
- 
+ * @author Netapsys
  * @version $Revision$ $Date$
  * @param <PRODUIT> Bean Objet Personne.
  */
-public class ProduitServiceImpl<PRODUIT extends Produit>
-    extends GenericServiceImpl<PRODUIT>
-    implements ProduitService<PRODUIT>
-{
+public class ProduitServiceImpl<PRODUIT extends Produit> extends GenericServiceImpl<PRODUIT> implements ProduitService<PRODUIT> {
 
     /**
      * SerialVersionUID.
@@ -56,17 +53,14 @@ public class ProduitServiceImpl<PRODUIT extends Produit>
      * Constructeur.
      * @param produitDao Dao de gestion des personnes.
      */
-    public ProduitServiceImpl(final GenericDao<PRODUIT> produitDao)
-    {
+    public ProduitServiceImpl(final GenericDao<PRODUIT> produitDao) {
         super(produitDao);
     }
 
     /**
-     * Méthode en charge d'ajouter un élément d'historique de maj sur un produit.
-     * @param p Le produit.
+     * {@inheritDoc}
      */
-    public void addMaj(final Produit p)
-    {
+    public void addMaj(final Produit p) {
         final ProduitSuivi suivi = this.produitSuiviFactory.getInitializedObject();
         suivi.setProduit(p);
         p.getModifs().add(suivi);
@@ -76,8 +70,7 @@ public class ProduitServiceImpl<PRODUIT extends Produit>
      * {@inheritDoc}
      */
     @Override
-    public PRODUIT save(final PRODUIT produit)
-    {
+    public PRODUIT save(final PRODUIT produit) {
         return this.saveCommon(produit);
     }
 
@@ -86,8 +79,7 @@ public class ProduitServiceImpl<PRODUIT extends Produit>
      * @param produit Produit à sauvegarde.
      * @return Le produit sauvegardée.
      */
-    private PRODUIT saveCommon(final PRODUIT produit)
-    {
+    private PRODUIT saveCommon(final PRODUIT produit) {
         final PRODUIT prod = this.reattach(produit);
         final ProduitSuivi personneSuivi = this.produitSuiviFactory.getInitializedObject();
         personneSuivi.setProduit(prod);
@@ -100,8 +92,7 @@ public class ProduitServiceImpl<PRODUIT extends Produit>
      */
     @Override
     public List<Produit> getProduits(final Essai essai,
-                                     final Pharmacie pharmacie)
-    {
+                                     final Pharmacie pharmacie) {
         final List<Produit> result = new ArrayList<Produit>();
 
         final Essai ess = this.essaiService.reattach(essai);
@@ -109,13 +100,10 @@ public class ProduitServiceImpl<PRODUIT extends Produit>
         // Récupération des produits de l'essai
         final SortedSet<Produit> produits = ess.getDetailProduit().getProduits();
 
-        // On ne garde que les produits ayant un lieu de stockage pour la pharmacie
-        for (final Produit produit : produits)
-        {
-            if (produit.getType() != TypeProduit.PREPARATION
-                && this.getStockageProduitPharma(produit,
-                                                 pharmacie) != null)
-            {
+        // On ne garde que les produits ayant un lieu de stockage pour la
+        // pharmacie
+        for (final Produit produit : produits) {
+            if (produit.getType() != TypeProduit.PREPARATION && this.getStockageProduitPharma(produit, pharmacie) != null) {
                 result.add(produit);
             }
         }
@@ -127,8 +115,7 @@ public class ProduitServiceImpl<PRODUIT extends Produit>
      */
     @Override
     public List<Produit> getProduitsWithPreparations(final Essai essai,
-                                                     final Pharmacie pharmacie)
-    {
+                                                     final Pharmacie pharmacie) {
         final List<Produit> result = new ArrayList<Produit>();
 
         final Essai ess = this.essaiService.reattach(essai);
@@ -136,12 +123,10 @@ public class ProduitServiceImpl<PRODUIT extends Produit>
         // Récupération des produits de l'essai
         final SortedSet<Produit> produits = ess.getDetailProduit().getProduits();
 
-        // On ne garde que les produits ayant un lieu de stockage pour la pharmacie
-        for (final Produit produit : produits)
-        {
-            if (this.getStockageProduitPharma(produit,
-                                              pharmacie) != null)
-            {
+        // On ne garde que les produits ayant un lieu de stockage pour la
+        // pharmacie
+        for (final Produit produit : produits) {
+            if (this.getStockageProduitPharma(produit, pharmacie) != null) {
                 result.add(produit);
             }
         }
@@ -153,8 +138,7 @@ public class ProduitServiceImpl<PRODUIT extends Produit>
      */
     @Override
     public List<Produit> getPreparations(final Essai essai,
-                                         final Pharmacie pharmacie)
-    {
+                                         final Pharmacie pharmacie) {
         final List<Produit> result = new ArrayList<Produit>();
 
         final Essai ess = this.essaiService.reattach(essai);
@@ -162,12 +146,10 @@ public class ProduitServiceImpl<PRODUIT extends Produit>
         // Récupération des produits de l'essai
         final SortedSet<Produit> produits = ess.getDetailProduit().getPreparations();
 
-        // On ne garde que les produits ayant un lieu de stockage pour la pharmacie
-        for (final Produit produit : produits)
-        {
-            if (this.getStockageProduitPharma(produit,
-                                              pharmacie) != null)
-            {
+        // On ne garde que les produits ayant un lieu de stockage pour la
+        // pharmacie
+        for (final Produit produit : produits) {
+            if (this.getStockageProduitPharma(produit, pharmacie) != null) {
                 result.add(produit);
             }
         }
@@ -179,33 +161,22 @@ public class ProduitServiceImpl<PRODUIT extends Produit>
      */
     @Override
     public Stockage getStockageProduitPharma(final Produit produit,
-                                             final Pharmacie pharmacie)
-    {
+                                             final Pharmacie pharmacie) {
 
         final DetailLogistique detailLogistique = produit.getDetailLogistique();
 
         final SortedSet<DetailStockage> stockages = detailLogistique.getDetailsStockages();
 
-        final DetailStockage resultDetailStockage =
-            (DetailStockage) CollectionUtils.find(stockages,
-                                                  new Predicate() {
-                                                      @Override
-                                                      public boolean evaluate(final Object object)
-                                                      {
-                                                          final DetailStockage d =
-                                                              (DetailStockage) object;
-                                                          return TypeDetailStockage.STOCK
-                                                                  .equals(d.getType())
-                                                                 && d.getPharmacie()
-                                                                         .equals(pharmacie);
-                                                      }
-                                                  });
-        if (resultDetailStockage != null)
-        {
+        final DetailStockage resultDetailStockage = (DetailStockage) CollectionUtils.find(stockages, new Predicate() {
+            @Override
+            public boolean evaluate(final Object object) {
+                final DetailStockage d = (DetailStockage) object;
+                return TypeDetailStockage.STOCK.equals(d.getType()) && d.getPharmacie().equals(pharmacie);
+            }
+        });
+        if (resultDetailStockage != null) {
             return resultDetailStockage.getStockage();
-        }
-        else
-        {
+        } else {
             return null;
         }
     }
@@ -213,20 +184,16 @@ public class ProduitServiceImpl<PRODUIT extends Produit>
     /**
      * {@inheritDoc}
      */
-    public List<Produit> getProduits(final Essai essai)
-    {
-        return new ArrayList<Produit>(this.essaiService
-                .reattach(essai)
-                .getDetailProduit()
-                .getProduits());
+    @Override
+    public List<Produit> getProduits(final Essai essai) {
+        return new ArrayList<Produit>(this.essaiService.reattach(essai).getDetailProduit().getProduits());
     }
 
     /**
      * Setter pour produitSuiviFactory.
      * @param produitSuiviFactory le produitSuiviFactory à écrire.
      */
-    public void setProduitSuiviFactory(final SuiviFactory<ProduitSuivi> produitSuiviFactory)
-    {
+    public void setProduitSuiviFactory(final SuiviFactory<ProduitSuivi> produitSuiviFactory) {
         this.produitSuiviFactory = produitSuiviFactory;
     }
 
@@ -234,8 +201,7 @@ public class ProduitServiceImpl<PRODUIT extends Produit>
      * Setter pour essaiService.
      * @param essaiService Le essaiService à écrire.
      */
-    public void setEssaiService(final EssaiService essaiService)
-    {
+    public void setEssaiService(final EssaiService essaiService) {
         this.essaiService = essaiService;
     }
 

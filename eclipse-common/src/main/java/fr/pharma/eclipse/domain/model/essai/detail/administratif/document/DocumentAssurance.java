@@ -6,15 +6,14 @@ import javax.persistence.Entity;
 import fr.pharma.eclipse.domain.enums.document.TypeDocumentEssai;
 
 /**
- * Bean métier représentant un document relatif à l'assurance de l'essai clinique.
- 
+ * Bean métier représentant un document relatif à l'assurance de l'essai
+ * clinique.
+ * @author Netapsys
  * @version $Revision$ $Date$
  */
 @Entity
 @DiscriminatorValue("ASSURANCE")
-public class DocumentAssurance
-    extends DocumentAdministratif
-{
+public class DocumentAssurance extends DocumentAdministratif {
 
     /**
      * Serial ID.
@@ -24,8 +23,7 @@ public class DocumentAssurance
     /**
      * Constructeur par défaut.
      */
-    public DocumentAssurance()
-    {
+    public DocumentAssurance() {
         this.setType(TypeDocumentEssai.ASSURANCE);
     }
 

@@ -9,14 +9,13 @@ import fr.pharma.eclipse.service.common.GenericService;
 
 /**
  * Interface de service de gestion de pharmacie.
- 
+ * @author Netapsys
  * @version $Revision$ $Date$
  */
-public interface PharmacieService
-    extends GenericService<Pharmacie>
-{
+public interface PharmacieService extends GenericService<Pharmacie> {
     /**
-     * Méthode en charge de supprimer un stockage dans la liste des stockages de la pharmacie.
+     * Méthode en charge de supprimer un stockage dans la liste des stockages de
+     * la pharmacie.
      * @param pharmacie Pharmacie.
      * @param stockage Stockage à supprimer.
      */
@@ -24,13 +23,10 @@ public interface PharmacieService
                         final Stockage stockage);
 
     /**
-     * Méthode générique de listing de toutes les pharmacies en proposant de les filtrer selon les
-     * habilitations.
-     * @param filtre Filtre à appliquer.
-     * @param criteria Critère de recherche.
-     * @return La liste de pharmacie.
+     * Méthode en charge de récupérer les pharmacies sans tenir compte des ACLs.
+     * @param searchCriteria Critère de recherche.
+     * @return Liste des pharmacies.
      */
-    List<Pharmacie> getAll(final SearchCriteria criteria,
-                           final boolean filtre);
+    List<Pharmacie> getAllSansAcl(final SearchCriteria searchCriteria);
 
 }

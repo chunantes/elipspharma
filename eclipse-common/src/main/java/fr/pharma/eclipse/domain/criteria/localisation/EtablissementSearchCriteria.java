@@ -4,12 +4,10 @@ import fr.pharma.eclipse.domain.criteria.common.AbstractSearchCriteria;
 
 /**
  * Critère de recherche sur Etablissement.
- 
+ * @author Netapsys
  * @version $Revision$ $Date$
  */
-public class EtablissementSearchCriteria
-    extends AbstractSearchCriteria
-{
+public class EtablissementSearchCriteria extends AbstractSearchCriteria {
     /**
      * Serial ID.
      */
@@ -24,8 +22,7 @@ public class EtablissementSearchCriteria
      * Getter pour nom.
      * @return Retourne le nom.
      */
-    public String getNom()
-    {
+    public String getNom() {
         return this.nom;
     }
 
@@ -33,8 +30,7 @@ public class EtablissementSearchCriteria
      * Setter pour nom.
      * @param nom le nom à écrire.
      */
-    public void setNom(final String nom)
-    {
+    public void setNom(final String nom) {
         this.nom = nom;
     }
 
@@ -42,8 +38,7 @@ public class EtablissementSearchCriteria
      * {@inheritDoc}
      */
     @Override
-    public void clear()
-    {
+    public void clear() {
         this.setNom(null);
     }
 

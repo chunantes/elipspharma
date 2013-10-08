@@ -9,12 +9,10 @@ import fr.pharma.eclipse.service.common.GenericService;
 
 /**
  * Interface de service de gestion des événements.
- 
+ * @author Netapsys
  * @version $Revision$ $Date$
  */
-public interface EvenementService
-    extends GenericService<Evenement>
-{
+public interface EvenementService extends GenericService<Evenement> {
 
     /**
      * Méthode en charge de retourner les prochains événements à venir.
@@ -23,9 +21,10 @@ public interface EvenementService
     List<Evenement> getNextEvenements();
 
     /**
-     * Méthode en charge de récupérer les évènement en courcicuitant la purge en fonction de
+     * Méthode en charge de récupérer les évènement en courcicuitant la purge en
+     * fonction de habilitations.
+     * @return les évènement en courcicuitant la purge en fonction de
      * habilitations.
-     * @return les évènement en courcicuitant la purge en fonction de habilitations.
      */
     List<Evenement> getAllWithoutPurge(EvenementSearchCriteria criteria);
 

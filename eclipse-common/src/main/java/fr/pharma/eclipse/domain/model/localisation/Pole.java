@@ -25,13 +25,11 @@ import fr.pharma.eclipse.domain.model.suivi.localisation.PoleSuivi;
 
 /**
  * Classe métier représentant un pôle.
- 
+ * @author Netapsys
  * @version $Revision$ $Date$
  */
 @Entity(name = "pole")
-public class Pole
-    extends BeanObjectSuivi
-{
+public class Pole extends BeanObjectSuivi {
     /**
      * Serial ID.
      */
@@ -57,8 +55,7 @@ public class Pole
     /**
      * Liste des services.
      */
-    @OneToMany(mappedBy = "pole", cascade =
-    {CascadeType.DETACH, CascadeType.MERGE, CascadeType.REFRESH, CascadeType.REMOVE })
+    @OneToMany(mappedBy = "pole", cascade = {CascadeType.DETACH, CascadeType.MERGE, CascadeType.REFRESH, CascadeType.REMOVE })
     @LazyCollection(LazyCollectionOption.FALSE)
     @Sort(type = SortType.COMPARATOR, comparator = BeanWithNomComparator.class)
     private SortedSet<Service> services = new TreeSet<Service>(new BeanWithNomComparator());
@@ -75,8 +72,7 @@ public class Pole
      * Getter sur nom.
      * @return Retourne le nom.
      */
-    public String getNom()
-    {
+    public String getNom() {
         return this.nom;
     }
 
@@ -84,8 +80,7 @@ public class Pole
      * Setter pour nom.
      * @param nom le nom à écrire.
      */
-    public void setNom(final String nom)
-    {
+    public void setNom(final String nom) {
         this.nom = nom;
     }
 
@@ -94,8 +89,7 @@ public class Pole
      * @return Retourne le modifs.
      */
     @Override
-    public SortedSet<PoleSuivi> getModifs()
-    {
+    public SortedSet<PoleSuivi> getModifs() {
         return this.modifs;
     }
 
@@ -103,8 +97,7 @@ public class Pole
      * Getter sur etablissement.
      * @return Retourne le etablissement.
      */
-    public Etablissement getEtablissement()
-    {
+    public Etablissement getEtablissement() {
         return this.etablissement;
     }
 
@@ -112,8 +105,7 @@ public class Pole
      * Setter pour etablissement.
      * @param etablissement le etablissement à écrire.
      */
-    public void setEtablissement(final Etablissement etablissement)
-    {
+    public void setEtablissement(final Etablissement etablissement) {
         this.etablissement = etablissement;
     }
 
@@ -121,8 +113,7 @@ public class Pole
      * Getter pour services.
      * @return Le services
      */
-    public SortedSet<Service> getServices()
-    {
+    public SortedSet<Service> getServices() {
         return this.services;
     }
 
@@ -130,8 +121,7 @@ public class Pole
      * Setter pour services.
      * @param services Le services à écrire.
      */
-    public void setServices(final SortedSet<Service> services)
-    {
+    public void setServices(final SortedSet<Service> services) {
         this.services = services;
     }
 

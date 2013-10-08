@@ -14,12 +14,10 @@ import fr.pharma.eclipse.service.indicateur.builder.IndicateurBuilder;
 
 /**
  * Implémentation de IndicateurService.
- 
+ * @author Netapsys
  * @version $Revision$ $Date$
  */
-public class IndicateurServiceImpl
-    implements IndicateurService, Serializable
-{
+public class IndicateurServiceImpl implements IndicateurService, Serializable {
 
     /**
      * SerialVersionUID.
@@ -37,17 +35,12 @@ public class IndicateurServiceImpl
     @Override
     public SortedSet<Indicateur> generateIndicateur(final Pharmacie pharmacie,
                                                     final Calendar dateDebut,
-                                                    final Calendar dateFin)
-    {
-        final SortedSet<Indicateur> results =
-            new TreeSet<Indicateur>(new BeanWithNomComparator());
+                                                    final Calendar dateFin) {
+        final SortedSet<Indicateur> results = new TreeSet<Indicateur>(new BeanWithNomComparator());
 
         // on traite tous les builder.
-        for (final IndicateurBuilder builder : this.builders)
-        {
-            results.add(builder.build(pharmacie,
-                                      dateDebut,
-                                      dateFin));
+        for (final IndicateurBuilder builder : this.builders) {
+            results.add(builder.build(pharmacie, dateDebut, dateFin));
         }
 
         return results;
@@ -57,8 +50,7 @@ public class IndicateurServiceImpl
      * Setter pour builders.
      * @param builders Le builders à écrire.
      */
-    public void setBuilders(final List<IndicateurBuilder> builders)
-    {
+    public void setBuilders(final List<IndicateurBuilder> builders) {
         this.builders = builders;
     }
 

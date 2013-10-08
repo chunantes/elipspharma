@@ -10,12 +10,10 @@ import fr.pharma.eclipse.domain.criteria.localisation.EtablissementSearchCriteri
 
 /**
  * Artisan de recherche pour les établissements.
- 
+ * @author Netapsys
  * @version $Revision$ $Date$
  */
-public class EtablissementSearchCriteriaMaker
-    extends AbstractCriteriaMaker
-{
+public class EtablissementSearchCriteriaMaker extends AbstractCriteriaMaker {
     /**
      * Serial ID.
      */
@@ -24,8 +22,7 @@ public class EtablissementSearchCriteriaMaker
     /**
      * Constructeur par défaut.
      */
-    public EtablissementSearchCriteriaMaker()
-    {
+    public EtablissementSearchCriteriaMaker() {
         super(EtablissementSearchCriteria.class);
     }
 
@@ -34,16 +31,12 @@ public class EtablissementSearchCriteriaMaker
      */
     @Override
     public void transform(final Criteria criteria,
-                          final SearchCriteria searchCrit)
-    {
+                          final SearchCriteria searchCrit) {
         final EtablissementSearchCriteria crit = (EtablissementSearchCriteria) searchCrit;
 
         // Nom
-        if (StringUtils.isNotEmpty(crit.getNom()))
-        {
-            CriteriaMakerUtils.addSqlCritere(criteria,
-                                             "nom",
-                                             crit.getNom());
+        if (StringUtils.isNotEmpty(crit.getNom())) {
+            CriteriaMakerUtils.addSqlCritere(criteria, "nom", crit.getNom());
         }
     }
 }

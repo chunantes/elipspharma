@@ -23,14 +23,13 @@ import fr.pharma.eclipse.domain.model.produit.Produit;
 import fr.pharma.eclipse.domain.model.suivi.essai.detail.DetailProduitSuivi;
 
 /**
- * Classe métier représentant les informations de détail des produits d'un essai clinique.
- 
+ * Classe métier représentant les informations de détail des produits d'un essai
+ * clinique.
+ * @author Netapsys
  * @version $Revision$ $Date$
  */
 @Entity(name = "essai_detail_produit")
-public class DetailProduit
-    extends BeanObjectSuivi
-{
+public class DetailProduit extends BeanObjectSuivi {
 
     /**
      * SerialVersionUID.
@@ -40,8 +39,7 @@ public class DetailProduit
     /**
      * Essai auquel est rattaché le détail.
      */
-    @OneToOne(cascade =
-    {CascadeType.MERGE, CascadeType.REFRESH })
+    @OneToOne(cascade = {CascadeType.MERGE, CascadeType.REFRESH })
     @JoinColumn(name = "id_essai")
     private Essai essai;
 
@@ -61,8 +59,7 @@ public class DetailProduit
     @Where(clause = "type='DISPOSITIF_MEDICAL'")
     @LazyCollection(LazyCollectionOption.FALSE)
     @Sort(type = SortType.COMPARATOR, comparator = ProduitComparator.class)
-    private SortedSet<Produit> dispositifsMedicaux =
-        new TreeSet<Produit>(new ProduitComparator());
+    private SortedSet<Produit> dispositifsMedicaux = new TreeSet<Produit>(new ProduitComparator());
 
     /**
      * Produits de type PRODUITS THERAPEUTIQUES.
@@ -71,8 +68,7 @@ public class DetailProduit
     @Where(clause = "type='PRODUIT_THERAPEUTIQUE'")
     @LazyCollection(LazyCollectionOption.FALSE)
     @Sort(type = SortType.COMPARATOR, comparator = ProduitComparator.class)
-    private SortedSet<Produit> produitsTherapeutiques =
-        new TreeSet<Produit>(new ProduitComparator());
+    private SortedSet<Produit> produitsTherapeutiques = new TreeSet<Produit>(new ProduitComparator());
 
     /**
      * Produits de type PREPARATION.
@@ -97,15 +93,13 @@ public class DetailProduit
     @OneToMany(mappedBy = "detailProduit", cascade = CascadeType.ALL)
     @LazyCollection(LazyCollectionOption.TRUE)
     @Sort(type = SortType.COMPARATOR, comparator = SuiviComparator.class)
-    private SortedSet<DetailProduitSuivi> modifs =
-        new TreeSet<DetailProduitSuivi>(new SuiviComparator());
+    private SortedSet<DetailProduitSuivi> modifs = new TreeSet<DetailProduitSuivi>(new SuiviComparator());
 
     /**
      * Getter sur essai.
      * @return Retourne le essai.
      */
-    public Essai getEssai()
-    {
+    public Essai getEssai() {
         return this.essai;
     }
 
@@ -113,8 +107,7 @@ public class DetailProduit
      * Setter pour essai.
      * @param essai le essai à écrire.
      */
-    public void setEssai(final Essai essai)
-    {
+    public void setEssai(final Essai essai) {
         this.essai = essai;
     }
 
@@ -123,8 +116,7 @@ public class DetailProduit
      * @return Retourne le modifs.
      */
     @Override
-    public SortedSet<DetailProduitSuivi> getModifs()
-    {
+    public SortedSet<DetailProduitSuivi> getModifs() {
         return this.modifs;
     }
 
@@ -132,8 +124,7 @@ public class DetailProduit
      * Getter sur medicaments.
      * @return Retourne le medicaments.
      */
-    public SortedSet<Produit> getMedicaments()
-    {
+    public SortedSet<Produit> getMedicaments() {
         return this.medicaments;
     }
 
@@ -141,8 +132,7 @@ public class DetailProduit
      * Getter sur dispositifsMedicaux.
      * @return Retourne le dispositifsMedicaux.
      */
-    public SortedSet<Produit> getDispositifsMedicaux()
-    {
+    public SortedSet<Produit> getDispositifsMedicaux() {
         return this.dispositifsMedicaux;
     }
 
@@ -150,8 +140,7 @@ public class DetailProduit
      * Getter sur produitsTherapeutiques.
      * @return Retourne le produitsTherapeutiques.
      */
-    public SortedSet<Produit> getProduitsTherapeutiques()
-    {
+    public SortedSet<Produit> getProduitsTherapeutiques() {
         return this.produitsTherapeutiques;
     }
 
@@ -159,8 +148,7 @@ public class DetailProduit
      * Setter pour medicaments.
      * @param medicaments le medicaments à écrire.
      */
-    public void setMedicaments(final SortedSet<Produit> medicaments)
-    {
+    public void setMedicaments(final SortedSet<Produit> medicaments) {
         this.medicaments = medicaments;
     }
 
@@ -168,8 +156,7 @@ public class DetailProduit
      * Setter pour dispositifsMedicaux.
      * @param dispositifsMedicaux le dispositifsMedicaux à écrire.
      */
-    public void setDispositifsMedicaux(final SortedSet<Produit> dispositifsMedicaux)
-    {
+    public void setDispositifsMedicaux(final SortedSet<Produit> dispositifsMedicaux) {
         this.dispositifsMedicaux = dispositifsMedicaux;
     }
 
@@ -177,8 +164,7 @@ public class DetailProduit
      * Setter pour produitsTherapeutiques.
      * @param produitsTherapeutiques le produitsTherapeutiques à écrire.
      */
-    public void setProduitsTherapeutiques(final SortedSet<Produit> produitsTherapeutiques)
-    {
+    public void setProduitsTherapeutiques(final SortedSet<Produit> produitsTherapeutiques) {
         this.produitsTherapeutiques = produitsTherapeutiques;
     }
 
@@ -186,8 +172,7 @@ public class DetailProduit
      * Setter pour modifs.
      * @param modifs le modifs à écrire.
      */
-    public void setModifs(final SortedSet<DetailProduitSuivi> modifs)
-    {
+    public void setModifs(final SortedSet<DetailProduitSuivi> modifs) {
         this.modifs = modifs;
     }
 
@@ -195,8 +180,7 @@ public class DetailProduit
      * Getter pour produits.
      * @return Le produits
      */
-    public SortedSet<Produit> getProduits()
-    {
+    public SortedSet<Produit> getProduits() {
         return this.produits;
     }
 
@@ -204,8 +188,7 @@ public class DetailProduit
      * Getter pour preparations.
      * @return Le preparations
      */
-    public SortedSet<Produit> getPreparations()
-    {
+    public SortedSet<Produit> getPreparations() {
         return this.preparations;
     }
 
@@ -213,8 +196,7 @@ public class DetailProduit
      * Setter pour preparations.
      * @param preparations Le preparations à écrire.
      */
-    public void setPreparations(final SortedSet<Produit> preparations)
-    {
+    public void setPreparations(final SortedSet<Produit> preparations) {
         this.preparations = preparations;
     }
 

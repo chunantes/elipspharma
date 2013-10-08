@@ -33,14 +33,11 @@ import fr.pharma.eclipse.utils.constants.EclipseConstants;
 
 /**
  * Classe métier représentant un bras de traitement.
- 
+ * @author Netapsys
  * @version $Revision$ $Date$
  */
 @Entity(name = "bras")
-public class Bras
-    extends BeanObject
-    implements Designable
-{
+public class Bras extends BeanObject implements Designable {
 
     /**
      * SerialVersionUID.
@@ -77,8 +74,7 @@ public class Bras
     /**
      * Bras parent.
      */
-    @ManyToOne(cascade =
-    {CascadeType.REFRESH, CascadeType.MERGE })
+    @ManyToOne(cascade = {CascadeType.REFRESH, CascadeType.MERGE })
     @JoinColumn(name = "id_bras_parent")
     @Index(name = "idx_brase_parent")
     private Bras parent;
@@ -103,8 +99,7 @@ public class Bras
      * Getter sur description.
      * @return Retourne le description.
      */
-    public String getDescription()
-    {
+    public String getDescription() {
         return this.description;
     }
 
@@ -112,8 +107,7 @@ public class Bras
      * Setter pour description.
      * @param description le description à écrire.
      */
-    public void setDescription(final String description)
-    {
+    public void setDescription(final String description) {
         this.description = description;
     }
 
@@ -121,8 +115,8 @@ public class Bras
      * Getter sur parent.
      * @return Retourne le parent.
      */
-    public Bras getParent()
-    {
+    @Override
+    public Bras getParent() {
         return this.parent;
     }
 
@@ -130,8 +124,7 @@ public class Bras
      * Setter pour parent.
      * @param parent le parent à écrire.
      */
-    public void setParent(final Bras parent)
-    {
+    public void setParent(final Bras parent) {
         this.parent = parent;
     }
 
@@ -139,8 +132,7 @@ public class Bras
      * Getter sur sousBras.
      * @return Retourne le sousBras.
      */
-    public SortedSet<Bras> getSousBras()
-    {
+    public SortedSet<Bras> getSousBras() {
         return this.sousBras;
     }
 
@@ -148,8 +140,7 @@ public class Bras
      * Setter pour sousBras.
      * @param sousBras le sousBras à écrire.
      */
-    public void setSousBras(final SortedSet<Bras> sousBras)
-    {
+    public void setSousBras(final SortedSet<Bras> sousBras) {
         this.sousBras = sousBras;
     }
 
@@ -157,8 +148,7 @@ public class Bras
      * Getter sur sequences.
      * @return Retourne le sequences.
      */
-    public SortedSet<Sequence> getSequences()
-    {
+    public SortedSet<Sequence> getSequences() {
         return this.sequences;
     }
 
@@ -166,8 +156,7 @@ public class Bras
      * Setter pour sequences.
      * @param sequences le sequences à écrire.
      */
-    public void setSequences(final SortedSet<Sequence> sequences)
-    {
+    public void setSequences(final SortedSet<Sequence> sequences) {
         this.sequences = sequences;
     }
 
@@ -175,8 +164,7 @@ public class Bras
      * Getter sur detailDesign.
      * @return Retourne le detailDesign.
      */
-    public DetailDesign getDetailDesign()
-    {
+    public DetailDesign getDetailDesign() {
         return this.detailDesign;
     }
 
@@ -184,8 +172,7 @@ public class Bras
      * Setter pour detailDesign.
      * @param detailDesign le detailDesign à écrire.
      */
-    public void setDetailDesign(final DetailDesign detailDesign)
-    {
+    public void setDetailDesign(final DetailDesign detailDesign) {
         this.detailDesign = detailDesign;
     }
 
@@ -193,8 +180,7 @@ public class Bras
      * {@inheritDoc}
      */
     @Override
-    public String getLibelleProduit()
-    {
+    public String getLibelleProduit() {
         return "";
     }
 
@@ -202,8 +188,7 @@ public class Bras
      * {@inheritDoc}
      */
     @Override
-    public String getNom()
-    {
+    public String getNom() {
         return this.nom;
     }
 
@@ -211,8 +196,7 @@ public class Bras
      * Setter pour nom.
      * @param nom le nom à écrire.
      */
-    public void setNom(final String nom)
-    {
+    public void setNom(final String nom) {
         this.nom = nom;
     }
 
@@ -220,8 +204,8 @@ public class Bras
      * Getter sur type.
      * @return Retourne le type.
      */
-    public TypeDesignable getType()
-    {
+    @Override
+    public TypeDesignable getType() {
         return this.type;
     }
 
@@ -229,8 +213,7 @@ public class Bras
      * Setter pour type.
      * @param type le type à écrire.
      */
-    public void setType(final TypeDesignable type)
-    {
+    public void setType(final TypeDesignable type) {
         this.type = type;
     }
 
@@ -238,8 +221,7 @@ public class Bras
      * {@inheritDoc}
      */
     @Override
-    public SortedSet<Designable> getEnfants()
-    {
+    public SortedSet<Designable> getEnfants() {
         final SortedSet<Designable> enfants = new TreeSet<Designable>(new DesignableComparator());
         enfants.addAll(this.getSequences());
         enfants.addAll(this.getSousBras());
@@ -251,23 +233,17 @@ public class Bras
      */
     @SuppressWarnings("unchecked")
     @Override
-    public TempsPrescription getDebut()
-    {
-        final Collection coll = CollectionUtils.selectRejected(this.getEnfants(),
-                                                               NullPredicate.getInstance());
-        CollectionUtils.transform(coll,
-                                  new Transformer() {
+    public TempsPrescription getDebut() {
+        final Collection coll = CollectionUtils.selectRejected(this.getEnfants(), NullPredicate.getInstance());
+        CollectionUtils.transform(coll, new Transformer() {
 
-                                      @Override
-                                      public Object transform(final Object input)
-                                      {
-                                          return ((Designable) input).getDebut();
-                                      }
-                                  });
-        if (!coll.isEmpty())
-        {
-            final Object r = Collections.min(coll,
-                                             new TempsPrescriptionComparator());
+            @Override
+            public Object transform(final Object input) {
+                return ((Designable) input).getDebut();
+            }
+        });
+        if (!coll.isEmpty()) {
+            final Object r = Collections.min(coll, new TempsPrescriptionComparator());
             return (TempsPrescription) r;
         }
         return null;
@@ -277,23 +253,17 @@ public class Bras
      */
     @SuppressWarnings("unchecked")
     @Override
-    public TempsPrescription getFin()
-    {
-        final Collection coll = CollectionUtils.selectRejected(this.getEnfants(),
-                                                               NullPredicate.getInstance());
-        CollectionUtils.transform(coll,
-                                  new Transformer() {
+    public TempsPrescription getFin() {
+        final Collection coll = CollectionUtils.selectRejected(this.getEnfants(), NullPredicate.getInstance());
+        CollectionUtils.transform(coll, new Transformer() {
 
-                                      @Override
-                                      public Object transform(final Object input)
-                                      {
-                                          return ((Designable) input).getFin();
-                                      }
-                                  });
-        if (!coll.isEmpty())
-        {
-            final Object r = Collections.max(coll,
-                                             new TempsPrescriptionComparator());
+            @Override
+            public Object transform(final Object input) {
+                return ((Designable) input).getFin();
+            }
+        });
+        if (!coll.isEmpty()) {
+            final Object r = Collections.max(coll, new TempsPrescriptionComparator());
             return (TempsPrescription) r;
         }
         return null;
@@ -303,26 +273,20 @@ public class Bras
      * Méthode en charge de retouner le nom complet d'un stockage.
      * @return Nom complet du stockage (inclusion du nom du parent).
      */
-    public String getNomComplet()
-    {
+    @Override
+    public String getNomComplet() {
         String result = this.getNom();
 
         Bras brasParent = this.getParent();
-        while (brasParent != null)
-        {
-            result = brasParent.getNom()
-                     + EclipseConstants.DASH
-                     + result;
+        while (brasParent != null) {
+            result = brasParent.getNom() + EclipseConstants.DASH + result;
             brasParent = brasParent.getParent();
         }
         return result;
     }
 
     @Override
-    public String toString()
-    {
-        return "[nomComplet: "
-               + this.getNomComplet()
-               + "]";
+    public String toString() {
+        return "[nomComplet: " + this.getNomComplet() + "]";
     }
 }

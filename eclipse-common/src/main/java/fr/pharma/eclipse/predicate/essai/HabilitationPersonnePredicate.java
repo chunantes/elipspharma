@@ -8,13 +8,12 @@ import fr.pharma.eclipse.domain.model.acteur.Personne;
 import fr.pharma.eclipse.domain.model.habilitation.Habilitation;
 
 /**
- * Classe en charge de retourner l'habilitation active correspondant à une personne.
- 
+ * Classe en charge de retourner l'habilitation active correspondant à une
+ * personne.
+ * @author Netapsys
  * @version $Revision$ $Date$
  */
-public class HabilitationPersonnePredicate
-    implements Predicate, Serializable
-{
+public class HabilitationPersonnePredicate implements Predicate, Serializable {
     /**
      * Serial ID.
      */
@@ -29,8 +28,7 @@ public class HabilitationPersonnePredicate
      * Constructeur prenant une Personne.
      * @param personne Droit.
      */
-    public HabilitationPersonnePredicate(final Personne personne)
-    {
+    public HabilitationPersonnePredicate(final Personne personne) {
         this.personne = personne;
     }
 
@@ -38,10 +36,8 @@ public class HabilitationPersonnePredicate
      * {@inheritDoc}
      */
     @Override
-    public boolean evaluate(final Object object)
-    {
+    public boolean evaluate(final Object object) {
         final Habilitation habilitation = (Habilitation) object;
-        return habilitation.isActive()
-               && this.personne.equals(habilitation.getPersonne());
+        return habilitation.isActive() && this.personne.equals(habilitation.getPersonne());
     }
 }

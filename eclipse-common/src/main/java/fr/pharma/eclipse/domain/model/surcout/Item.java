@@ -27,14 +27,11 @@ import fr.pharma.eclipse.domain.model.surcout.regle.Regle;
 
 /**
  * Classe du modèle représentant un item d'une grille de surcout.
- 
+ * @author Netapsys
  * @version $Revision$ $Date$
  */
 @Entity(name = "item")
-public class Item
-    extends BeanObject
-    implements BeanWithNom
-{
+public class Item extends BeanObject implements BeanWithNom {
 
     /**
      * SerialVersionUID.
@@ -82,8 +79,7 @@ public class Item
      * Getter sur grille.
      * @return Retourne le grille.
      */
-    public Grille getGrille()
-    {
+    public Grille getGrille() {
         return this.grille;
     }
 
@@ -91,8 +87,7 @@ public class Item
      * Setter pour grille.
      * @param grille le grille à écrire.
      */
-    public void setGrille(final Grille grille)
-    {
+    public void setGrille(final Grille grille) {
         this.grille = grille;
     }
 
@@ -100,8 +95,7 @@ public class Item
      * Getter sur categorie.
      * @return Retourne le categorie.
      */
-    public String getCategorie()
-    {
+    public String getCategorie() {
         return this.categorie;
     }
 
@@ -109,8 +103,7 @@ public class Item
      * Getter sur regles.
      * @return Retourne le regles.
      */
-    public SortedSet<Regle> getRegles()
-    {
+    public SortedSet<Regle> getRegles() {
         return this.regles;
     }
 
@@ -118,8 +111,7 @@ public class Item
      * Setter pour regles.
      * @param regles le regles à écrire.
      */
-    public void setRegles(final SortedSet<Regle> regles)
-    {
+    public void setRegles(final SortedSet<Regle> regles) {
         this.regles = regles;
     }
 
@@ -127,8 +119,7 @@ public class Item
      * Getter sur theme.
      * @return Retourne le theme.
      */
-    public String getTheme()
-    {
+    public String getTheme() {
         return this.theme;
     }
 
@@ -136,8 +127,7 @@ public class Item
      * Setter pour theme.
      * @param theme le theme à écrire.
      */
-    public void setTheme(final String theme)
-    {
+    public void setTheme(final String theme) {
         this.theme = theme;
     }
 
@@ -145,8 +135,7 @@ public class Item
      * Setter pour categorie.
      * @param categorie le categorie à écrire.
      */
-    public void setCategorie(final String categorie)
-    {
+    public void setCategorie(final String categorie) {
         this.categorie = categorie;
     }
 
@@ -154,8 +143,7 @@ public class Item
      * Getter sur acte.
      * @return Retourne le acte.
      */
-    public Acte getActe()
-    {
+    public Acte getActe() {
         return this.acte;
     }
 
@@ -163,8 +151,7 @@ public class Item
      * Setter pour acte.
      * @param acte le acte à écrire.
      */
-    public void setActe(final Acte acte)
-    {
+    public void setActe(final Acte acte) {
         this.acte = acte;
     }
 
@@ -172,15 +159,12 @@ public class Item
      * {@inheritDoc}
      */
     @Override
-    public String getNom()
-    {
+    public String getNom() {
         String s = "";
-        if (this.theme != null)
-        {
+        if (this.theme != null) {
             s += this.theme;
         }
-        if (this.categorie != null)
-        {
+        if (this.categorie != null) {
             s += this.categorie;
         }
         return s;

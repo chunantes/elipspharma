@@ -16,14 +16,11 @@ import fr.pharma.eclipse.domain.model.prescription.ProduitPrescrit;
 
 /**
  * Bean métier représentant un mouvement de stock de dispensation.
- 
+ * @author Netapsys
  * @version $Revision$ $Date$
  */
 @Entity(name = "mvt_dispensation")
-public class DispensationProduit
-    extends MvtStock
-    implements Serializable
-{
+public class DispensationProduit extends MvtStock implements Serializable {
 
     /**
      * SerialVersionUID.
@@ -42,8 +39,7 @@ public class DispensationProduit
     /**
      * Dispensation.
      */
-    @ManyToOne(cascade =
-    {CascadeType.MERGE, CascadeType.REFRESH })
+    @ManyToOne(cascade = {CascadeType.MERGE, CascadeType.REFRESH })
     @JoinColumn(name = "id_dispensation", nullable = false)
     @Index(name = "idx_dispensation_dispensation_produit")
     @NotNull
@@ -53,8 +49,7 @@ public class DispensationProduit
      * Getter sur produitPrescrit.
      * @return Retourne le produitPrescrit.
      */
-    public ProduitPrescrit getProduitPrescrit()
-    {
+    public ProduitPrescrit getProduitPrescrit() {
         return this.produitPrescrit;
     }
 
@@ -62,8 +57,7 @@ public class DispensationProduit
      * Setter pour produitPrescrit.
      * @param produitPrescrit le produitPrescrit à écrire.
      */
-    public void setProduitPrescrit(final ProduitPrescrit produitPrescrit)
-    {
+    public void setProduitPrescrit(final ProduitPrescrit produitPrescrit) {
         this.produitPrescrit = produitPrescrit;
     }
 
@@ -71,8 +65,7 @@ public class DispensationProduit
      * Getter sur dispensation.
      * @return Retourne le dispensation.
      */
-    public Dispensation getDispensation()
-    {
+    public Dispensation getDispensation() {
         return this.dispensation;
     }
 
@@ -80,8 +73,7 @@ public class DispensationProduit
      * Setter pour dispensation.
      * @param dispensation le dispensation à écrire.
      */
-    public void setDispensation(final Dispensation dispensation)
-    {
+    public void setDispensation(final Dispensation dispensation) {
         this.dispensation = dispensation;
     }
 

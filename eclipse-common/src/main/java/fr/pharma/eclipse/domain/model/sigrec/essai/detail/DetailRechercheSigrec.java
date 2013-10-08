@@ -17,15 +17,13 @@ import fr.pharma.eclipse.domain.model.common.BeanObject;
 import fr.pharma.eclipse.domain.model.sigrec.essai.EssaiSigrec;
 
 /**
- * Classe metier représentant les informations de détail general d'un essai clinique importe de
- * SIGREC.
- 
+ * Classe metier représentant les informations de détail general d'un essai
+ * clinique importe de SIGREC.
+ * @author Netapsys
  * @version $Revision$ $Date$
  */
 @Entity(name = "essai_detail_recherche_sigrec")
-public class DetailRechercheSigrec
-    extends BeanObject
-{
+public class DetailRechercheSigrec extends BeanObject {
 
     /**
      * SerialVersionUID.
@@ -90,8 +88,7 @@ public class DetailRechercheSigrec
      * Getter sur titreProtocole.
      * @return Retourne le titreProtocole.
      */
-    public String getTitreProtocole()
-    {
+    public String getTitreProtocole() {
         return this.titreProtocole;
     }
 
@@ -99,8 +96,7 @@ public class DetailRechercheSigrec
      * Setter pour titreProtocole.
      * @param titreProtocole le titreProtocole à écrire.
      */
-    public void setTitreProtocole(final String titreProtocole)
-    {
+    public void setTitreProtocole(final String titreProtocole) {
         this.titreProtocole = titreProtocole;
     }
 
@@ -108,8 +104,7 @@ public class DetailRechercheSigrec
      * Getter sur numEnregistrement.
      * @return Retourne le numEnregistrement.
      */
-    public String getNumEnregistrement()
-    {
+    public String getNumEnregistrement() {
         return this.numEnregistrement;
     }
 
@@ -117,8 +112,7 @@ public class DetailRechercheSigrec
      * Setter pour numEnregistrement.
      * @param numEnregistrement le numEnregistrement à écrire.
      */
-    public void setNumEnregistrement(final String numEnregistrement)
-    {
+    public void setNumEnregistrement(final String numEnregistrement) {
         this.numEnregistrement = numEnregistrement;
     }
 
@@ -126,8 +120,7 @@ public class DetailRechercheSigrec
      * Getter sur typeRecherche.
      * @return Retourne le typeRecherche.
      */
-    public TypeRecherche getTypeRecherche()
-    {
+    public TypeRecherche getTypeRecherche() {
         return this.typeRecherche;
     }
 
@@ -135,8 +128,7 @@ public class DetailRechercheSigrec
      * Setter pour typeRecherche.
      * @param typeRecherche le typeRecherche à écrire.
      */
-    public void setTypeRecherche(final TypeRecherche typeRecherche)
-    {
+    public void setTypeRecherche(final TypeRecherche typeRecherche) {
         this.typeRecherche = typeRecherche;
     }
 
@@ -144,8 +136,7 @@ public class DetailRechercheSigrec
      * Getter sur objetRecherche.
      * @return Retourne le objetRecherche.
      */
-    public ObjetRecherche getObjetRecherche()
-    {
+    public ObjetRecherche getObjetRecherche() {
         return this.objetRecherche;
     }
 
@@ -153,8 +144,7 @@ public class DetailRechercheSigrec
      * Setter pour objetRecherche.
      * @param objetRecherche le objetRecherche à écrire.
      */
-    public void setObjetRecherche(final ObjetRecherche objetRecherche)
-    {
+    public void setObjetRecherche(final ObjetRecherche objetRecherche) {
         this.objetRecherche = objetRecherche;
     }
 
@@ -162,8 +152,7 @@ public class DetailRechercheSigrec
      * Getter sur phaseRecherche.
      * @return Retourne le phaseRecherche.
      */
-    public PhaseRecherche getPhaseRecherche()
-    {
+    public PhaseRecherche getPhaseRecherche() {
         return this.phaseRecherche;
     }
 
@@ -171,8 +160,7 @@ public class DetailRechercheSigrec
      * Setter pour phaseRecherche.
      * @param phaseRecherche le phaseRecherche à écrire.
      */
-    public void setPhaseRecherche(final PhaseRecherche phaseRecherche)
-    {
+    public void setPhaseRecherche(final PhaseRecherche phaseRecherche) {
         this.phaseRecherche = phaseRecherche;
     }
 
@@ -180,8 +168,7 @@ public class DetailRechercheSigrec
      * Getter sur natureRecherche.
      * @return Retourne le natureRecherche.
      */
-    public NatureRecherche getNatureRecherche()
-    {
+    public NatureRecherche getNatureRecherche() {
         return this.natureRecherche;
     }
 
@@ -189,8 +176,7 @@ public class DetailRechercheSigrec
      * Setter pour natureRecherche.
      * @param natureRecherche le natureRecherche à écrire.
      */
-    public void setNatureRecherche(final NatureRecherche natureRecherche)
-    {
+    public void setNatureRecherche(final NatureRecherche natureRecherche) {
         this.natureRecherche = natureRecherche;
     }
 
@@ -198,8 +184,7 @@ public class DetailRechercheSigrec
      * Getter sur essai.
      * @return Retourne le essai.
      */
-    public EssaiSigrec getEssai()
-    {
+    public EssaiSigrec getEssai() {
         return this.essai;
     }
 
@@ -207,8 +192,7 @@ public class DetailRechercheSigrec
      * Setter pour essai.
      * @param essai le essai à écrire.
      */
-    public void setEssai(final EssaiSigrec essai)
-    {
+    public void setEssai(final EssaiSigrec essai) {
         this.essai = essai;
     }
 
@@ -216,8 +200,7 @@ public class DetailRechercheSigrec
      * Getter sur qualiteInsu.
      * @return Retourne le qualiteInsu.
      */
-    public QualiteInsu getQualiteInsu()
-    {
+    public QualiteInsu getQualiteInsu() {
         return this.qualiteInsu;
     }
 
@@ -225,8 +208,7 @@ public class DetailRechercheSigrec
      * Setter pour qualiteInsu.
      * @param qualiteInsu le qualiteInsu à écrire.
      */
-    public void setQualiteInsu(final QualiteInsu qualiteInsu)
-    {
+    public void setQualiteInsu(final QualiteInsu qualiteInsu) {
         this.qualiteInsu = qualiteInsu;
     }
 

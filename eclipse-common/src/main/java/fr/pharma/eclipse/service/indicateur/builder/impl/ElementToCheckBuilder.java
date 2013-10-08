@@ -16,14 +16,12 @@ import fr.pharma.eclipse.service.dispensation.ElementToCheckService;
 import fr.pharma.eclipse.service.indicateur.builder.IndicateurBuilder;
 
 /**
- * Builder en charge de construire les indicateurs relatifs aux ElementsToCheck (Reconstitutions
- * etc.)
- 
+ * Builder en charge de construire les indicateurs relatifs aux ElementsToCheck
+ * (Reconstitutions etc.)
+ * @author Netapsys
  * @version $Revision$ $Date$
  */
-public class ElementToCheckBuilder
-    implements IndicateurBuilder, Serializable
-{
+public class ElementToCheckBuilder implements IndicateurBuilder, Serializable {
 
     /**
      * SerialVersionUID.
@@ -52,8 +50,7 @@ public class ElementToCheckBuilder
     @Override
     public Indicateur build(final Pharmacie pharmacie,
                             final Calendar dateDebut,
-                            final Calendar dateFin)
-    {
+                            final Calendar dateFin) {
         final ElementToCheckSearchCriteria criteria = new ElementToCheckSearchCriteria();
         criteria.setDateDebut(dateDebut);
         criteria.setDateFin(dateFin);
@@ -62,16 +59,14 @@ public class ElementToCheckBuilder
 
         final List<ElementToCheck> results = this.service.getAll(criteria);
 
-        return new Indicateur(this.libelle,
-                              new BigDecimal(results.size()));
+        return new Indicateur(this.libelle, new BigDecimal(results.size()));
     }
 
     /**
      * Setter pour service.
      * @param service Le service à écrire.
      */
-    public void setService(final ElementToCheckService service)
-    {
+    public void setService(final ElementToCheckService service) {
         this.service = service;
     }
 
@@ -79,8 +74,7 @@ public class ElementToCheckBuilder
      * Getter pour type.
      * @return Le type
      */
-    public TypeElementToCheck getType()
-    {
+    public TypeElementToCheck getType() {
         return this.type;
     }
 
@@ -88,8 +82,7 @@ public class ElementToCheckBuilder
      * Setter pour type.
      * @param type Le type à écrire.
      */
-    public void setType(final TypeElementToCheck type)
-    {
+    public void setType(final TypeElementToCheck type) {
         this.type = type;
     }
 
@@ -97,8 +90,7 @@ public class ElementToCheckBuilder
      * Getter pour libelle.
      * @return Le libelle
      */
-    public String getLibelle()
-    {
+    public String getLibelle() {
         return this.libelle;
     }
 
@@ -106,8 +98,7 @@ public class ElementToCheckBuilder
      * Setter pour libelle.
      * @param libelle Le libelle à écrire.
      */
-    public void setLibelle(final String libelle)
-    {
+    public void setLibelle(final String libelle) {
         this.libelle = libelle;
     }
 

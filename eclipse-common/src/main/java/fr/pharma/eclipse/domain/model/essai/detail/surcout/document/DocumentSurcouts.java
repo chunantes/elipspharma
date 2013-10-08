@@ -20,16 +20,15 @@ import fr.pharma.eclipse.domain.model.essai.DocumentEssai;
 import fr.pharma.eclipse.domain.model.essai.detail.surcout.DetailSurcout;
 
 /**
- * Bean métier représentant un document d'essai clinique rattaché au détail des surcouts.
- 
+ * Bean métier représentant un document d'essai clinique rattaché au détail des
+ * surcouts.
+ * @author Netapsys
  * @version $Revision$ $Date$
  */
 @Entity(name = "essai_document_detail_surcout")
 @Inheritance(strategy = InheritanceType.SINGLE_TABLE)
 @DiscriminatorColumn(name = "type", discriminatorType = DiscriminatorType.STRING)
-public abstract class DocumentSurcouts
-    extends DocumentEssai
-{
+public abstract class DocumentSurcouts extends DocumentEssai {
 
     /**
      * Serial ID.
@@ -57,8 +56,7 @@ public abstract class DocumentSurcouts
      * @return Retourne le type.
      */
     @Override
-    public TypeDocumentEssai getType()
-    {
+    public TypeDocumentEssai getType() {
         return this.type;
     }
 
@@ -67,8 +65,7 @@ public abstract class DocumentSurcouts
      * @param type le type à écrire.
      */
     @Override
-    public void setType(final TypeDocumentEssai type)
-    {
+    public void setType(final TypeDocumentEssai type) {
         this.type = type;
     }
 
@@ -76,8 +73,7 @@ public abstract class DocumentSurcouts
      * Getter sur detailSurcout.
      * @return Retourne le detailSurcout.
      */
-    public DetailSurcout getDetailSurcout()
-    {
+    public DetailSurcout getDetailSurcout() {
         return this.detailSurcout;
     }
 
@@ -85,8 +81,7 @@ public abstract class DocumentSurcouts
      * Setter pour detailSurcout.
      * @param detailSurcout le detailSurcout à écrire.
      */
-    public void setDetailSurcout(final DetailSurcout detailSurcout)
-    {
+    public void setDetailSurcout(final DetailSurcout detailSurcout) {
         this.detailSurcout = detailSurcout;
     }
 

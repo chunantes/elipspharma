@@ -10,15 +10,13 @@ import javax.persistence.Enumerated;
 import fr.pharma.eclipse.domain.enums.design.UniteTemps;
 
 /**
- * Classe modèle représentant un objet temps de la prescription (Début et durée). Il aggrège un
- * nombre et un type de temps.
- 
+ * Classe modèle représentant un objet temps de la prescription (Début et
+ * durée). Il aggrège un nombre et un type de temps.
+ * @author Netapsys
  * @version $Revision$ $Date$
  */
 @Embeddable
-public class TempsPrescription
-    implements Serializable
-{
+public class TempsPrescription implements Serializable {
 
     /**
      * SerialVersionUID.
@@ -42,15 +40,12 @@ public class TempsPrescription
      * {@inheritDoc}
      */
     @Override
-    public String toString()
-    {
+    public String toString() {
         final StringBuffer buff = new StringBuffer();
-        if (this.getNb() != null)
-        {
+        if (this.getNb() != null) {
             buff.append(this.nb);
         }
-        if (this.getUnite() != null)
-        {
+        if (this.getUnite() != null) {
             buff.append(" ");
             buff.append(this.unite.getLibelleCourt());
         }
@@ -61,8 +56,7 @@ public class TempsPrescription
      * Getter sur nb.
      * @return Retourne le nb.
      */
-    public Integer getNb()
-    {
+    public Integer getNb() {
         return this.nb;
     }
 
@@ -70,8 +64,7 @@ public class TempsPrescription
      * Setter pour nb.
      * @param nb le nb à écrire.
      */
-    public void setNb(final Integer nb)
-    {
+    public void setNb(final Integer nb) {
         this.nb = nb;
     }
 
@@ -79,8 +72,7 @@ public class TempsPrescription
      * Getter sur unite.
      * @return Retourne le unite.
      */
-    public UniteTemps getUnite()
-    {
+    public UniteTemps getUnite() {
         return this.unite;
     }
 
@@ -88,8 +80,7 @@ public class TempsPrescription
      * Setter pour unite.
      * @param unite le unite à écrire.
      */
-    public void setUnite(final UniteTemps unite)
-    {
+    public void setUnite(final UniteTemps unite) {
         this.unite = unite;
     }
 

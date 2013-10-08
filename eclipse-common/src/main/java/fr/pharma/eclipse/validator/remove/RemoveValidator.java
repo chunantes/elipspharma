@@ -5,11 +5,10 @@ import fr.pharma.eclipse.domain.model.common.BeanObject;
 /**
  * Interface de validation sur la suppression d'un objet.
  * @param <BEAN> Bean Objet Métier.
- 
+ * @author Netapsys
  * @version $Revision$ $Date$
  */
-public interface RemoveValidator<BEAN extends BeanObject>
-{
+public interface RemoveValidator<BEAN extends BeanObject> {
     /**
      * Méthode en charge de valider la suppression d'un objet.
      * @param bean Bean à supprimer.

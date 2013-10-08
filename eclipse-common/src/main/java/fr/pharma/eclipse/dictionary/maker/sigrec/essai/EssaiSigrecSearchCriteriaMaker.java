@@ -10,12 +10,10 @@ import fr.pharma.eclipse.domain.criteria.sigrec.essai.EssaiSigrecSearchCriteria;
 
 /**
  * Artisan de recherche pour les essais sigrec.
- 
+ * @author Netapsys
  * @version $Revision$ $Date$
  */
-public class EssaiSigrecSearchCriteriaMaker
-    extends AbstractCriteriaMaker
-{
+public class EssaiSigrecSearchCriteriaMaker extends AbstractCriteriaMaker {
     /**
      * Serial ID.
      */
@@ -24,8 +22,7 @@ public class EssaiSigrecSearchCriteriaMaker
     /**
      * Constructeur par défaut.
      */
-    public EssaiSigrecSearchCriteriaMaker()
-    {
+    public EssaiSigrecSearchCriteriaMaker() {
         super(EssaiSigrecSearchCriteria.class);
     }
 
@@ -34,32 +31,21 @@ public class EssaiSigrecSearchCriteriaMaker
      */
     @Override
     public void transform(final Criteria criteria,
-                          final SearchCriteria searchCrit)
-    {
+                          final SearchCriteria searchCrit) {
         final EssaiSigrecSearchCriteria crit = (EssaiSigrecSearchCriteria) searchCrit;
 
         // Nom
-        if (StringUtils.isNotEmpty(crit.getNom()))
-        {
-            CriteriaMakerUtils.addSqlCritere(criteria,
-                                             "this_.nom",
-                                             crit.getNom());
+        if (StringUtils.isNotEmpty(crit.getNom())) {
+            CriteriaMakerUtils.addSqlCritere(criteria, "this_.nom", crit.getNom());
         }
         // Num identifiant AC
-        if (StringUtils.isNotEmpty(crit.getNumSigrec()))
-        {
-            final Criteria detail = criteria.createCriteria("detailRecherche",
-                                                            "detailRecherche");
-            CriteriaMakerUtils.addSqlCritere(detail,
-                                             "numEnregistrement",
-                                             crit.getNumSigrec());
+        if (StringUtils.isNotEmpty(crit.getNumSigrec())) {
+            final Criteria detail = criteria.createCriteria("detailRecherche", "detailRecherche");
+            CriteriaMakerUtils.addSqlCritere(detail, "numEnregistrement", crit.getNumSigrec());
         }
         // Promoteur
-        if (crit.getPromoteur() != null)
-        {
-            CriteriaMakerUtils.addCritere(criteria,
-                                          "promoteur",
-                                          crit.getPromoteur());
+        if (crit.getPromoteur() != null) {
+            CriteriaMakerUtils.addCritere(criteria, "promoteur", crit.getPromoteur());
         }
     }
 

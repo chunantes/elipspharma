@@ -10,12 +10,10 @@ import net.sf.jasperreports.engine.data.JRBeanCollectionDataSource;
 
 /**
  * Fabrique d'objets JRDataSource pour Jasper.
- 
+ * @author Netapsys
  * @version $Revision$ $Date$
  */
-public class JRDataSourceFactory
-    implements Serializable
-{
+public class JRDataSourceFactory implements Serializable {
 
     /**
      * Serial ID.
@@ -28,8 +26,7 @@ public class JRDataSourceFactory
      * @param source Bean source.
      * @return Un objet JRDataSource.
      */
-    public JRDataSource getInitializedObject(final Object source)
-    {
+    public JRDataSource getInitializedObject(final Object source) {
         final List<Object> sources = new ArrayList<Object>();
         sources.add(source);
         return this.getInitializedObject(sources);
@@ -41,8 +38,7 @@ public class JRDataSourceFactory
      * @param sources Liste des sources.
      * @return Un objet JRDataSource.
      */
-    public JRDataSource getInitializedObject(final Collection<? extends Object> sources)
-    {
+    public JRDataSource getInitializedObject(final Collection<? extends Object> sources) {
         return new JRBeanCollectionDataSource(sources);
     }
 

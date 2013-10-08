@@ -5,12 +5,10 @@ import fr.pharma.eclipse.domain.model.localisation.Etablissement;
 
 /**
  * Critère de recherche sur Site.
- 
+ * @author Netapsys
  * @version $Revision$ $Date$
  */
-public class SiteSearchCriteria
-    extends AbstractSearchCriteria
-{
+public class SiteSearchCriteria extends AbstractSearchCriteria {
     /**
      * Serial ID.
      */
@@ -30,8 +28,7 @@ public class SiteSearchCriteria
      * Getter pour nom.
      * @return Retourne le nom.
      */
-    public String getNom()
-    {
+    public String getNom() {
         return this.nom;
     }
 
@@ -39,8 +36,7 @@ public class SiteSearchCriteria
      * Setter pour nom.
      * @param nom le nom à écrire.
      */
-    public void setNom(final String nom)
-    {
+    public void setNom(final String nom) {
         this.nom = nom;
     }
 
@@ -48,8 +44,7 @@ public class SiteSearchCriteria
      * Getter sur etablissement.
      * @return Retourne le etablissement.
      */
-    public Etablissement getEtablissement()
-    {
+    public Etablissement getEtablissement() {
         return this.etablissement;
     }
 
@@ -57,8 +52,7 @@ public class SiteSearchCriteria
      * Setter pour etablissement.
      * @param etablissement le etablissement à écrire.
      */
-    public void setEtablissement(final Etablissement etablissement)
-    {
+    public void setEtablissement(final Etablissement etablissement) {
         this.etablissement = etablissement;
     }
 
@@ -66,8 +60,7 @@ public class SiteSearchCriteria
      * {@inheritDoc}
      */
     @Override
-    public void clear()
-    {
+    public void clear() {
         this.setNom(null);
         this.setEtablissement(null);
     }

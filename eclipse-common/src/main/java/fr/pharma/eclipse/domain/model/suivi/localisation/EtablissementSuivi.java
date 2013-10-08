@@ -11,14 +11,13 @@ import fr.pharma.eclipse.domain.model.localisation.Etablissement;
 import fr.pharma.eclipse.domain.model.suivi.common.Suivi;
 
 /**
- * Bean métier représentant les suivis de modifications sur le bean Etablissement.
- 
+ * Bean métier représentant les suivis de modifications sur le bean
+ * Etablissement.
+ * @author Netapsys
  * @version $Revision$ $Date$
  */
 @Entity(name = "etablissement_suivi")
-public class EtablissementSuivi
-    extends Suivi
-{
+public class EtablissementSuivi extends Suivi {
     /**
      * Serial ID.
      */
@@ -36,8 +35,7 @@ public class EtablissementSuivi
      * Getter sur etablissement.
      * @return Retourne le etablissement.
      */
-    public Etablissement getEtablissement()
-    {
+    public Etablissement getEtablissement() {
         return this.etablissement;
     }
 
@@ -45,8 +43,7 @@ public class EtablissementSuivi
      * Setter pour etablissement.
      * @param etablissement le etablissement à écrire.
      */
-    public void setEtablissement(final Etablissement etablissement)
-    {
+    public void setEtablissement(final Etablissement etablissement) {
         this.etablissement = etablissement;
     }
 

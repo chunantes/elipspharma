@@ -3,13 +3,12 @@ package fr.pharma.eclipse.service.patient.dictionary.processor;
 import fr.pharma.eclipse.service.patient.dictionary.SurfaceCorporelleProcessor;
 
 /**
- * Processor en charge de calculer la surface corporelle avec la formule de Dubois.
- 
+ * Processor en charge de calculer la surface corporelle avec la formule de
+ * Dubois.
+ * @author Netapsys
  * @version $Revision$ $Date$
  */
-public class DuboisProcessor
-    implements SurfaceCorporelleProcessor
-{
+public class DuboisProcessor implements SurfaceCorporelleProcessor {
 
     /**
      * Serial ID.
@@ -34,13 +33,9 @@ public class DuboisProcessor
     /**
      * {@inheritDoc}
      */
+    @Override
     public double process(final double taille,
-                          final double poids)
-    {
-        return DuboisProcessor.FORMULE_BASE
-               * Math.pow(taille,
-                          DuboisProcessor.FORMULE_POW_TAILLE)
-               * Math.pow(poids,
-                          DuboisProcessor.FORMULE_POW_POIDS);
+                          final double poids) {
+        return DuboisProcessor.FORMULE_BASE * Math.pow(taille, DuboisProcessor.FORMULE_POW_TAILLE) * Math.pow(poids, DuboisProcessor.FORMULE_POW_POIDS);
     }
 }

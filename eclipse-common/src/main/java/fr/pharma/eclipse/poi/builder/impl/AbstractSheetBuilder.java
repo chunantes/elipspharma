@@ -37,12 +37,10 @@ import fr.pharma.eclipse.utils.constants.EclipseConstants;
 
 /**
  * Description de la classe.
- 
+ * @author Netapsys
  * @version $Revision$ $Date$
  */
-public abstract class AbstractSheetBuilder
-    implements SheetBuilder, Serializable
-{
+public abstract class AbstractSheetBuilder implements SheetBuilder, Serializable {
 
     /**
      * SerialVersionUID.
@@ -72,28 +70,19 @@ public abstract class AbstractSheetBuilder
     public void build(final Essai essai,
                       final Map<Item, Resultat> datas,
                       final HSSFSheet sheet,
-                      final HSSFWorkbook workbook)
-    {
+                      final HSSFWorkbook workbook) {
         this.styles = this.createStyles(workbook);
-        this.createSheetHeader(essai,
-                               sheet);
+        this.createSheetHeader(essai, sheet);
 
         this.startRow = sheet.getLastRowNum() + 1;
 
-        this.createHeaders(datas,
-                           sheet,
-                           workbook);
-        for (final Item item : this.buildSortedItems(datas))
-        {
-            this.createLine(item,
-                            datas.get(item),
-                            sheet,
-                            workbook);
+        this.createHeaders(datas, sheet, workbook);
+        for (final Item item : this.buildSortedItems(datas)) {
+            this.createLine(item, datas.get(item), sheet, workbook);
         }
         this.resize(sheet);
 
-        this.createSheetFooter(essai,
-                               sheet);
+        this.createSheetFooter(essai, sheet);
         this.cleanup(sheet);
 
     }
@@ -104,18 +93,12 @@ public abstract class AbstractSheetBuilder
      * @param sheet Feuille excel.
      */
     private void createSheetFooter(final Essai essai,
-                                   final HSSFSheet sheet)
-    {
+                                   final HSSFSheet sheet) {
         final int row = sheet.getLastRowNum() + 1;
         sheet.createRow(row);
         final HSSFRow r = sheet.createRow(row + 1);
         final HSSFCell cell = r.createCell(0);
-        cell
-                .setCellValue(new HSSFRichTextString("Le "
-                                                     + Utils
-                                                             .formatDate(Calendar.getInstance(EclipseConstants.LOCALE)
-                                                                                 .getTime(),
-                                                                         EclipseConstants.PATTERN_SIMPLE)));
+        cell.setCellValue(new HSSFRichTextString("Le " + Utils.formatDate(Calendar.getInstance(EclipseConstants.LOCALE).getTime(), EclipseConstants.PATTERN_SIMPLE)));
         cell.setCellStyle(this.styles.get("header"));
     }
     /**
@@ -124,8 +107,7 @@ public abstract class AbstractSheetBuilder
      * @param sheet La feuille Excel.
      */
     protected void createSheetHeader(final Essai essai,
-                                     final HSSFSheet sheet)
-    {
+                                     final HSSFSheet sheet) {
 
         // Ligne 1 du header
         HSSFRow row = sheet.createRow(0);
@@ -134,9 +116,7 @@ public abstract class AbstractSheetBuilder
         cell.setCellValue(new HSSFRichTextString("PROMOTEUR"));
         cell.setCellStyle(this.styles.get("header"));
         row.createCell(1).setCellStyle(this.styles.get("header"));
-        row.createCell(2).setCellValue(new HSSFRichTextString(essai
-                .getPromoteur()
-                .getRaisonSociale()));
+        row.createCell(2).setCellValue(new HSSFRichTextString(essai.getPromoteur().getRaisonSociale()));
         cell = row.createCell(5);
         cell.setCellStyle(this.styles.get("header"));
         cell.setCellValue(new HSSFRichTextString("REFERENCE PROTOCOLE"));
@@ -151,20 +131,14 @@ public abstract class AbstractSheetBuilder
         cell.setCellStyle(this.styles.get("header"));
 
         row.createCell(1).setCellStyle(this.styles.get("header"));
-        row.createCell(2)
-                .setCellValue(new HSSFRichTextString(JasperUtils.formatterListeStrings(this
-                        .prepareNomsServices(essai.getServices()))));
+        row.createCell(2).setCellValue(new HSSFRichTextString(JasperUtils.formatterListeStrings(this.prepareNomsServices(essai.getServices()))));
         cell = row.createCell(5);
         cell.setCellValue(new HSSFRichTextString("INVESTIGATEUR PRINCIPAL"));
         cell.setCellStyle(this.styles.get("header"));
         row.createCell(6).setCellStyle(this.styles.get("header"));
-        final Investigateur invPrincipal =
-            this.habilitationsHelper.getInvestigateurPrincipal(essai);
-        if (invPrincipal != null)
-        {
-            row.createCell(7).setCellValue(new HSSFRichTextString(invPrincipal.getPrenom()
-                                                                  + " "
-                                                                  + invPrincipal.getNom()));
+        final Investigateur invPrincipal = this.habilitationsHelper.getInvestigateurPrincipal(essai);
+        if (invPrincipal != null) {
+            row.createCell(7).setCellValue(new HSSFRichTextString(invPrincipal.getPrenom() + " " + invPrincipal.getNom()));
         }
         row.createCell(8);
 
@@ -174,26 +148,16 @@ public abstract class AbstractSheetBuilder
         cell.setCellStyle(this.styles.get("header"));
         cell.setCellValue(new HSSFRichTextString("DUREE APROXIMATIVE DE L'ESSAI"));
         row.createCell(1).setCellStyle(this.styles.get("header"));
-        if (essai.getDetailSurcout().getDonneesPrevision().getNbAnnees() != null)
-        {
-            row.createCell(2).setCellValue(new HSSFRichTextString(essai
-                    .getDetailSurcout()
-                    .getDonneesPrevision()
-                    .getNbAnnees()
-                    .toString()));
+        if (essai.getDetailSurcout().getDonneesPrevision().getNbAnnees() != null) {
+            row.createCell(2).setCellValue(new HSSFRichTextString(essai.getDetailSurcout().getDonneesPrevision().getNbAnnees().toString()));
         }
         cell = row.createCell(5);
         cell.setCellValue(new HSSFRichTextString("NOMBRE DE PATIENTS PREVUS"));
         cell.setCellStyle(this.styles.get("header"));;
         row.createCell(6).setCellStyle(this.styles.get("header"));
 
-        if (essai.getDetailDonneesPharma().getInfosGenerales().getNbPatientsPrevus() != null)
-        {
-            row.createCell(7).setCellValue(new HSSFRichTextString(essai
-                    .getDetailDonneesPharma()
-                    .getInfosGenerales()
-                    .getNbPatientsPrevus()
-                    .toString()));
+        if (essai.getDetailDonneesPharma().getInfosGenerales().getNbPatientsPrevus() != null) {
+            row.createCell(7).setCellValue(new HSSFRichTextString(essai.getDetailDonneesPharma().getInfosGenerales().getNbPatientsPrevus().toString()));
         }
         row.createCell(8);
 
@@ -201,27 +165,14 @@ public abstract class AbstractSheetBuilder
         sheet.createRow(4);
 
         // MERGE des régions.
-        for (int i = 0; i < 3; i++)
-        {
+        for (int i = 0; i < 3; i++) {
 
-            sheet.addMergedRegion(new CellRangeAddress(i,
-                                                       i,
-                                                       0,
-                                                       1));
+            sheet.addMergedRegion(new CellRangeAddress(i, i, 0, 1));
 
-            sheet.addMergedRegion(new CellRangeAddress(i,
-                                                       i,
-                                                       2,
-                                                       3));
+            sheet.addMergedRegion(new CellRangeAddress(i, i, 2, 3));
 
-            sheet.addMergedRegion(new CellRangeAddress(i,
-                                                       i,
-                                                       5,
-                                                       6));
-            sheet.addMergedRegion(new CellRangeAddress(i,
-                                                       i,
-                                                       7,
-                                                       8));
+            sheet.addMergedRegion(new CellRangeAddress(i, i, 5, 6));
+            sheet.addMergedRegion(new CellRangeAddress(i, i, 7, 8));
         }
 
     }
@@ -231,24 +182,19 @@ public abstract class AbstractSheetBuilder
      * @return Liste des noms des services de l'investigateur
      */
     @SuppressWarnings("unchecked")
-    private Collection<String> prepareNomsServices(final Collection<Service> services)
-    {
-        if (services == null
-            || services.isEmpty())
-        {
+    private Collection<String> prepareNomsServices(final Collection<Service> services) {
+        if ((services == null) || services.isEmpty()) {
             return new ArrayList<String>();
         }
         final Collection collection = new ArrayList(services);
-        CollectionUtils.transform(collection,
-                                  new Transformer() {
+        CollectionUtils.transform(collection, new Transformer() {
 
-                                      @Override
-                                      public Object transform(final Object input)
-                                      {
-                                          final Service service = (Service) input;
-                                          return service.getNom();
-                                      }
-                                  });
+            @Override
+            public Object transform(final Object input) {
+                final Service service = (Service) input;
+                return service.getNom();
+            }
+        });
         return collection;
     }
 
@@ -263,7 +209,8 @@ public abstract class AbstractSheetBuilder
                                           HSSFWorkbook workbook);
 
     /**
-     * Méthode en charge de créer une ligne dans le tableau pour l'item en paramètre.
+     * Méthode en charge de créer une ligne dans le tableau pour l'item en
+     * paramètre.
      * @param item L'item.
      * @param sheet La feuille.
      * @param workbook WorkBook.
@@ -283,39 +230,29 @@ public abstract class AbstractSheetBuilder
      * Méthode en charge de nettoyer la grille.
      * @param sheet La grille.
      */
-    private void cleanup(final HSSFSheet sheet)
-    {
+    private void cleanup(final HSSFSheet sheet) {
 
         // merge des lignes
-        sheet
-                .addMergedRegion(new org.apache.poi.hssf.util.CellRangeAddress(0 + this
-                                                                                       .getStartRow(),
-                                                                               2 + this
-                                                                                       .getStartRow(),
-                                                                               0,
-                                                                               1));
+        sheet.addMergedRegion(new org.apache.poi.hssf.util.CellRangeAddress(0 + this.getStartRow(), 2 + this.getStartRow(), 0, 1));
 
     }
 
     /**
-     * Méthode en charge de créer une liste d'item à partir de la map et de la trier par thème et
-     * catégorie.
+     * Méthode en charge de créer une liste d'item à partir de la map et de la
+     * trier par thème et catégorie.
      * @param datas Les données.
      * @return La liste triée d'items.
      */
-    protected List<Item> buildSortedItems(final Map<Item, Resultat> datas)
-    {
+    protected List<Item> buildSortedItems(final Map<Item, Resultat> datas) {
         final List<Item> items = new ArrayList<Item>(datas.keySet());
-        Collections.sort(items,
-                         new ItemComparator());
+        Collections.sort(items, new ItemComparator());
         return items;
     }
 
     /**
      * create a library of cell styles
      */
-    protected Map<String, HSSFCellStyle> createStyles(final HSSFWorkbook wb)
-    {
+    protected Map<String, HSSFCellStyle> createStyles(final HSSFWorkbook wb) {
         final Map<String, HSSFCellStyle> styles = new HashMap<String, HSSFCellStyle>();
 
         // Header
@@ -327,20 +264,17 @@ public abstract class AbstractSheetBuilder
         header.setFillForegroundColor(HSSFColor.LIGHT_GREEN.index);
         header.setFillPattern(HSSFCellStyle.SOLID_FOREGROUND);
         header.setFont(headerFont);
-        styles.put("header",
-                   header);
+        styles.put("header", header);
 
         // Header
         final HSSFCellStyle donnees = AbstractSheetBuilder.createBorderedStyle(wb);
         donnees.setWrapText(true);
-        styles.put("donnees",
-                   donnees);
+        styles.put("donnees", donnees);
 
         return styles;
     }
 
-    private static HSSFCellStyle createBorderedStyle(final HSSFWorkbook wb)
-    {
+    private static HSSFCellStyle createBorderedStyle(final HSSFWorkbook wb) {
         final HSSFCellStyle style = wb.createCellStyle();
         style.setBorderRight(HSSFCellStyle.BORDER_THIN);
         style.setRightBorderColor(HSSFColor.BLACK.index);
@@ -356,24 +290,21 @@ public abstract class AbstractSheetBuilder
      * Getter pour startRow.
      * @return Le startRow
      */
-    public int getStartRow()
-    {
+    public int getStartRow() {
         return this.startRow;
     }
     /**
      * Setter pour startRow.
      * @param startRow Le startRow à écrire.
      */
-    public void setStartRow(final int startRow)
-    {
+    public void setStartRow(final int startRow) {
         this.startRow = startRow;
     }
     /**
      * Setter pour habilitationsHelper.
      * @param habilitationsHelper Le habilitationsHelper à écrire.
      */
-    public void setHabilitationsHelper(final HabilitationsHelper habilitationsHelper)
-    {
+    public void setHabilitationsHelper(final HabilitationsHelper habilitationsHelper) {
         this.habilitationsHelper = habilitationsHelper;
     }
 

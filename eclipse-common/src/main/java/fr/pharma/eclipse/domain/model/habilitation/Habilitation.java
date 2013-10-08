@@ -24,13 +24,11 @@ import fr.pharma.eclipse.domain.model.essai.detail.contact.DetailContacts;
 
 /**
  * Classe métier représentant une habilitation.
- 
+ * @author Netapsys
  * @version $Revision$ $Date$
  */
 @Entity(name = "habilitation")
-public class Habilitation
-    extends BeanObject
-{
+public class Habilitation extends BeanObject {
     /**
      * Serial ID.
      */
@@ -39,8 +37,7 @@ public class Habilitation
     /**
      * Personne.
      */
-    @ManyToOne(cascade =
-    {CascadeType.REFRESH, CascadeType.MERGE })
+    @ManyToOne(cascade = {CascadeType.REFRESH, CascadeType.MERGE })
     @JoinColumn(name = "id_personne", nullable = false)
     @Index(name = "idx_personne_habilitation")
     @NotNull
@@ -110,8 +107,7 @@ public class Habilitation
      * Getter pour personne.
      * @return Le personne
      */
-    public Personne getPersonne()
-    {
+    public Personne getPersonne() {
         return this.personne;
     }
 
@@ -119,8 +115,7 @@ public class Habilitation
      * Setter pour personne.
      * @param personne Le personne à écrire.
      */
-    public void setPersonne(final Personne personne)
-    {
+    public void setPersonne(final Personne personne) {
         this.personne = personne;
     }
 
@@ -128,8 +123,7 @@ public class Habilitation
      * Getter pour droit.
      * @return Le droit
      */
-    public Droit getDroit()
-    {
+    public Droit getDroit() {
         return this.droit;
     }
 
@@ -137,8 +131,7 @@ public class Habilitation
      * Setter pour droit.
      * @param droit Le droit à écrire.
      */
-    public void setDroit(final Droit droit)
-    {
+    public void setDroit(final Droit droit) {
         this.droit = droit;
     }
 
@@ -146,8 +139,7 @@ public class Habilitation
      * Getter sur active.
      * @return Retourne le active.
      */
-    public boolean isActive()
-    {
+    public boolean isActive() {
         return this.active;
     }
 
@@ -155,8 +147,7 @@ public class Habilitation
      * Setter pour active.
      * @param active le active à écrire.
      */
-    public void setActive(final boolean active)
-    {
+    public void setActive(final boolean active) {
         this.active = active;
     }
 
@@ -164,8 +155,7 @@ public class Habilitation
      * Getter sur dateCreation.
      * @return Retourne le dateCreation.
      */
-    public Calendar getDateCreation()
-    {
+    public Calendar getDateCreation() {
         return this.dateCreation;
     }
 
@@ -173,8 +163,7 @@ public class Habilitation
      * Setter pour dateCreation.
      * @param dateCreation le dateCreation à écrire.
      */
-    public void setDateCreation(final Calendar dateCreation)
-    {
+    public void setDateCreation(final Calendar dateCreation) {
         this.dateCreation = dateCreation;
     }
 
@@ -182,8 +171,7 @@ public class Habilitation
      * Getter sur auteurCreation.
      * @return Retourne le auteurCreation.
      */
-    public String getAuteurCreation()
-    {
+    public String getAuteurCreation() {
         return this.auteurCreation;
     }
 
@@ -191,8 +179,7 @@ public class Habilitation
      * Setter pour auteurCreation.
      * @param auteurCreation le auteurCreation à écrire.
      */
-    public void setAuteurCreation(final String auteurCreation)
-    {
+    public void setAuteurCreation(final String auteurCreation) {
         this.auteurCreation = auteurCreation;
     }
 
@@ -200,8 +187,7 @@ public class Habilitation
      * Getter sur dateDesactivation.
      * @return Retourne le dateDesactivation.
      */
-    public Calendar getDateDesactivation()
-    {
+    public Calendar getDateDesactivation() {
         return this.dateDesactivation;
     }
 
@@ -209,8 +195,7 @@ public class Habilitation
      * Setter pour dateDesactivation.
      * @param dateDesactivation le dateDesactivation à écrire.
      */
-    public void setDateDesactivation(final Calendar dateDesactivation)
-    {
+    public void setDateDesactivation(final Calendar dateDesactivation) {
         this.dateDesactivation = dateDesactivation;
     }
 
@@ -218,8 +203,7 @@ public class Habilitation
      * Getter sur auteurDesactivation.
      * @return Retourne le auteurDesactivation.
      */
-    public String getAuteurDesactivation()
-    {
+    public String getAuteurDesactivation() {
         return this.auteurDesactivation;
     }
 
@@ -227,8 +211,7 @@ public class Habilitation
      * Setter pour auteurDesactivation.
      * @param auteurDesactivation le auteurDesactivation à écrire.
      */
-    public void setAuteurDesactivation(final String auteurDesactivation)
-    {
+    public void setAuteurDesactivation(final String auteurDesactivation) {
         this.auteurDesactivation = auteurDesactivation;
     }
 
@@ -236,8 +219,7 @@ public class Habilitation
      * Getter sur detailContacts.
      * @return Retourne le detailContacts.
      */
-    public DetailContacts getDetailContacts()
-    {
+    public DetailContacts getDetailContacts() {
         return this.detailContacts;
     }
 
@@ -245,8 +227,7 @@ public class Habilitation
      * Setter pour detailContacts.
      * @param detailContacts le detailContacts à écrire.
      */
-    public void setDetailContacts(final DetailContacts detailContacts)
-    {
+    public void setDetailContacts(final DetailContacts detailContacts) {
         this.detailContacts = detailContacts;
     }
 
@@ -254,8 +235,7 @@ public class Habilitation
      * {@inheritDoc}
      */
     @Override
-    public String toString()
-    {
+    public String toString() {
         final StringBuilder builder = new StringBuilder("[");
         builder.append("id=").append(this.getId());
         builder.append(", droit=").append(this.droit);
@@ -267,8 +247,7 @@ public class Habilitation
      * Getter sur desactivable.
      * @return Retourne le desactivable.
      */
-    public boolean isDesactivable()
-    {
+    public boolean isDesactivable() {
         return this.desactivable;
     }
 
@@ -276,8 +255,7 @@ public class Habilitation
      * Setter pour desactivable.
      * @param desactivable le desactivable à écrire.
      */
-    public void setDesactivable(final boolean desactivable)
-    {
+    public void setDesactivable(final boolean desactivable) {
         this.desactivable = desactivable;
     }
 

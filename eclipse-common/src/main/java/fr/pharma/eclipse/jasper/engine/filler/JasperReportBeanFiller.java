@@ -6,13 +6,12 @@ import fr.pharma.eclipse.domain.jasper.model.common.JasperReportBean;
 import fr.pharma.eclipse.domain.model.essai.Essai;
 
 /**
- * Interface des helpers pour la construction d'une source de données de rapport Jasper.
- 
+ * Interface des helpers pour la construction d'une source de données de rapport
+ * Jasper.
+ * @author Netapsys
  * @version $Revision$ $Date$
  */
-public interface JasperReportBeanFiller
-    extends Serializable
-{
+public interface JasperReportBeanFiller extends Serializable {
 
     /**
      * Méthode en charge de compléter la source de données à partir de l'essai.

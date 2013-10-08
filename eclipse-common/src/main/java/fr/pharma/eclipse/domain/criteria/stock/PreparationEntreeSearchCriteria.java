@@ -15,12 +15,10 @@ import fr.pharma.eclipse.domain.model.stockage.Pharmacie;
 
 /**
  * Critère de recherche sur mouvement de stock de type 'Preparation Entree'.
- 
+ * @author Netapsys
  * @version $Revision$ $Date$
  */
-public class PreparationEntreeSearchCriteria
-    extends AbstractSearchCriteria
-{
+public class PreparationEntreeSearchCriteria extends AbstractSearchCriteria {
     /**
      * Serial ID.
      */
@@ -98,8 +96,8 @@ public class PreparationEntreeSearchCriteria
     private Service service;
 
     /**
-     * Utilisé pour les mouvements de type DispensationGlobale pour savoir si la quantité totale a
-     * été dispensée nominativement.
+     * Utilisé pour les mouvements de type DispensationGlobale pour savoir si la
+     * quantité totale a été dispensée nominativement.
      */
     private Boolean dispenseNominativement;
 
@@ -122,8 +120,7 @@ public class PreparationEntreeSearchCriteria
      * {@inheritDoc}
      */
     @Override
-    public void clear()
-    {
+    public void clear() {
         this.stockage = null;
         this.setEssai(null);
         this.setTypeMouvement(null);
@@ -145,8 +142,7 @@ public class PreparationEntreeSearchCriteria
      * Getter pour typeMouvement.
      * @return Le typeMouvement
      */
-    public TypeMvtStock getTypeMouvement()
-    {
+    public TypeMvtStock getTypeMouvement() {
         return this.typeMouvement;
     }
 
@@ -154,8 +150,7 @@ public class PreparationEntreeSearchCriteria
      * Setter pour typeMouvement.
      * @param typeMouvement Le typeMouvement à écrire.
      */
-    public void setTypeMouvement(final TypeMvtStock typeMouvement)
-    {
+    public void setTypeMouvement(final TypeMvtStock typeMouvement) {
         this.typeMouvement = typeMouvement;
     }
 
@@ -163,8 +158,7 @@ public class PreparationEntreeSearchCriteria
      * Getter pour essai.
      * @return Le essai
      */
-    public Essai getEssai()
-    {
+    public Essai getEssai() {
         return this.essai;
     }
 
@@ -172,8 +166,7 @@ public class PreparationEntreeSearchCriteria
      * Setter pour essai.
      * @param essai Le essai à écrire.
      */
-    public void setEssai(final Essai essai)
-    {
+    public void setEssai(final Essai essai) {
         this.essai = essai;
     }
 
@@ -181,8 +174,7 @@ public class PreparationEntreeSearchCriteria
      * Getter pour pharmacie.
      * @return Le pharmacie
      */
-    public Pharmacie getPharmacie()
-    {
+    public Pharmacie getPharmacie() {
         return this.pharmacie;
     }
 
@@ -190,8 +182,7 @@ public class PreparationEntreeSearchCriteria
      * Setter pour pharmacie.
      * @param pharmacie Le pharmacie à écrire.
      */
-    public void setPharmacie(final Pharmacie pharmacie)
-    {
+    public void setPharmacie(final Pharmacie pharmacie) {
         this.pharmacie = pharmacie;
     }
 
@@ -199,8 +190,7 @@ public class PreparationEntreeSearchCriteria
      * Getter pour produit.
      * @return Le produit
      */
-    public Produit getProduit()
-    {
+    public Produit getProduit() {
         return this.produit;
     }
 
@@ -208,8 +198,7 @@ public class PreparationEntreeSearchCriteria
      * Setter pour produit.
      * @param produit Le produit à écrire.
      */
-    public void setProduit(final Produit produit)
-    {
+    public void setProduit(final Produit produit) {
         this.produit = produit;
     }
 
@@ -217,8 +206,7 @@ public class PreparationEntreeSearchCriteria
      * Getter pour conditionnement.
      * @return Le conditionnement
      */
-    public Conditionnement getConditionnement()
-    {
+    public Conditionnement getConditionnement() {
         return this.conditionnement;
     }
 
@@ -226,8 +214,7 @@ public class PreparationEntreeSearchCriteria
      * Setter pour conditionnement.
      * @param conditionnement Le conditionnement à écrire.
      */
-    public void setConditionnement(final Conditionnement conditionnement)
-    {
+    public void setConditionnement(final Conditionnement conditionnement) {
         this.conditionnement = conditionnement;
     }
 
@@ -235,8 +222,7 @@ public class PreparationEntreeSearchCriteria
      * Getter pour typesMouvement.
      * @return Le typesMouvement
      */
-    public TypeMvtStock[] getTypesMouvement()
-    {
+    public TypeMvtStock[] getTypesMouvement() {
         return this.typesMouvement;
     }
 
@@ -244,8 +230,7 @@ public class PreparationEntreeSearchCriteria
      * Setter pour typesMouvement.
      * @param typesMouvement Le typesMouvement à écrire.
      */
-    public void setTypesMouvement(final TypeMvtStock[] typesMouvement)
-    {
+    public void setTypesMouvement(final TypeMvtStock[] typesMouvement) {
         this.typesMouvement = typesMouvement;
     }
 
@@ -253,8 +238,7 @@ public class PreparationEntreeSearchCriteria
      * Getter pour dateDebut.
      * @return Le dateDebut
      */
-    public Calendar getDateDebut()
-    {
+    public Calendar getDateDebut() {
         return this.dateDebut;
     }
 
@@ -262,8 +246,7 @@ public class PreparationEntreeSearchCriteria
      * Setter pour dateDebut.
      * @param dateDebut Le dateDebut à écrire.
      */
-    public void setDateDebut(final Calendar dateDebut)
-    {
+    public void setDateDebut(final Calendar dateDebut) {
         this.dateDebut = dateDebut;
     }
 
@@ -271,8 +254,7 @@ public class PreparationEntreeSearchCriteria
      * Getter pour dateFin.
      * @return Le dateFin
      */
-    public Calendar getDateFin()
-    {
+    public Calendar getDateFin() {
         return this.dateFin;
     }
 
@@ -280,8 +262,7 @@ public class PreparationEntreeSearchCriteria
      * Setter pour dateFin.
      * @param dateFin Le dateFin à écrire.
      */
-    public void setDateFin(final Calendar dateFin)
-    {
+    public void setDateFin(final Calendar dateFin) {
         this.dateFin = dateFin;
     }
 
@@ -289,8 +270,7 @@ public class PreparationEntreeSearchCriteria
      * Getter pour numLot.
      * @return Le numLot
      */
-    public String getNumLot()
-    {
+    public String getNumLot() {
         return this.numLot;
     }
 
@@ -298,8 +278,7 @@ public class PreparationEntreeSearchCriteria
      * Setter pour numLot.
      * @param numLot Le numLot à écrire.
      */
-    public void setNumLot(final String numLot)
-    {
+    public void setNumLot(final String numLot) {
         this.numLot = numLot;
     }
 
@@ -307,8 +286,7 @@ public class PreparationEntreeSearchCriteria
      * Getter pour denominationProduit.
      * @return Le denominationProduit
      */
-    public String getDenominationProduit()
-    {
+    public String getDenominationProduit() {
         return this.denominationProduit;
     }
 
@@ -316,8 +294,7 @@ public class PreparationEntreeSearchCriteria
      * Setter pour denominationProduit.
      * @param denominationProduit Le denominationProduit à écrire.
      */
-    public void setDenominationProduit(final String denominationProduit)
-    {
+    public void setDenominationProduit(final String denominationProduit) {
         this.denominationProduit = denominationProduit;
     }
 
@@ -325,8 +302,7 @@ public class PreparationEntreeSearchCriteria
      * Getter sur modePrescription.
      * @return Retourne le modePrescription.
      */
-    public ModePrescription getModePrescription()
-    {
+    public ModePrescription getModePrescription() {
         return this.modePrescription;
     }
 
@@ -334,8 +310,7 @@ public class PreparationEntreeSearchCriteria
      * Setter pour modePrescription.
      * @param modePrescription le modePrescription à écrire.
      */
-    public void setModePrescription(final ModePrescription modePrescription)
-    {
+    public void setModePrescription(final ModePrescription modePrescription) {
         this.modePrescription = modePrescription;
     }
 
@@ -343,8 +318,7 @@ public class PreparationEntreeSearchCriteria
      * Getter pour service.
      * @return Le service
      */
-    public Service getService()
-    {
+    public Service getService() {
         return this.service;
     }
 
@@ -352,8 +326,7 @@ public class PreparationEntreeSearchCriteria
      * Setter pour service.
      * @param service Le service à écrire.
      */
-    public void setService(final Service service)
-    {
+    public void setService(final Service service) {
         this.service = service;
     }
 
@@ -361,8 +334,7 @@ public class PreparationEntreeSearchCriteria
      * Getter pour dispenseNominativement.
      * @return Le dispenseNominativement
      */
-    public Boolean getDispenseNominativement()
-    {
+    public Boolean getDispenseNominativement() {
         return this.dispenseNominativement;
     }
 
@@ -370,8 +342,7 @@ public class PreparationEntreeSearchCriteria
      * Getter pour stockage.
      * @return Le stockage
      */
-    public DetailStockage getStockage()
-    {
+    public DetailStockage getStockage() {
         return this.stockage;
     }
 
@@ -379,8 +350,7 @@ public class PreparationEntreeSearchCriteria
      * Setter pour stockage.
      * @param stockage Le stockage à écrire.
      */
-    public void setStockage(final DetailStockage stockage)
-    {
+    public void setStockage(final DetailStockage stockage) {
         this.stockage = stockage;
     }
 
@@ -388,8 +358,7 @@ public class PreparationEntreeSearchCriteria
      * Setter pour dispenseNominativement.
      * @param dispenseNominativement Le dispenseNominativement à écrire.
      */
-    public void setDispenseNominativement(final Boolean dispenseNominativement)
-    {
+    public void setDispenseNominativement(final Boolean dispenseNominativement) {
         this.dispenseNominativement = dispenseNominativement;
     }
 
@@ -397,8 +366,7 @@ public class PreparationEntreeSearchCriteria
      * Getter pour numTraitement.
      * @return Le numTraitement
      */
-    public String getNumTraitement()
-    {
+    public String getNumTraitement() {
         return this.numTraitement;
     }
 
@@ -406,8 +374,7 @@ public class PreparationEntreeSearchCriteria
      * Setter pour numTraitement.
      * @param numTraitement Le numTraitement à écrire.
      */
-    public void setNumTraitement(final String numTraitement)
-    {
+    public void setNumTraitement(final String numTraitement) {
         this.numTraitement = numTraitement;
     }
 
@@ -415,8 +382,7 @@ public class PreparationEntreeSearchCriteria
      * Getter pour notNullNumOrdonnancier.
      * @return Le notNullNumOrdonnancier
      */
-    public Boolean getNotNullNumOrdonnancier()
-    {
+    public Boolean getNotNullNumOrdonnancier() {
         return this.notNullNumOrdonnancier;
     }
 
@@ -424,8 +390,7 @@ public class PreparationEntreeSearchCriteria
      * Setter pour notNullNumOrdonnancier.
      * @param notNullNumOrdonnancier Le notNullNumOrdonnancier à écrire.
      */
-    public void setNotNullNumOrdonnancier(final Boolean notNullNumOrdonnancier)
-    {
+    public void setNotNullNumOrdonnancier(final Boolean notNullNumOrdonnancier) {
         this.notNullNumOrdonnancier = notNullNumOrdonnancier;
     }
 
@@ -433,8 +398,7 @@ public class PreparationEntreeSearchCriteria
      * Getter pour sterile.
      * @return Le sterile
      */
-    public Boolean getSterile()
-    {
+    public Boolean getSterile() {
         return this.sterile;
     }
 
@@ -442,8 +406,7 @@ public class PreparationEntreeSearchCriteria
      * Setter pour sterile.
      * @param sterile Le sterile à écrire.
      */
-    public void setSterile(final Boolean sterile)
-    {
+    public void setSterile(final Boolean sterile) {
         this.sterile = sterile;
     }
 
@@ -451,8 +414,7 @@ public class PreparationEntreeSearchCriteria
      * Getter pour numLots.
      * @return Le numLots
      */
-    public ArrayList<String> getNumLots()
-    {
+    public ArrayList<String> getNumLots() {
         return this.numLots;
     }
 
@@ -460,8 +422,7 @@ public class PreparationEntreeSearchCriteria
      * Setter pour numLots.
      * @param numLots Le numLots à écrire.
      */
-    public void setNumLots(final ArrayList<String> numLots)
-    {
+    public void setNumLots(final ArrayList<String> numLots) {
         this.numLots = numLots;
     }
 

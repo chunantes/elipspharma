@@ -22,15 +22,13 @@ import fr.pharma.eclipse.domain.model.essai.detail.administratif.DetailAdministr
 /**
  * Bean métier représentant un document d'essai clinique rattaché au détail
  * administratif/réglementaire.
- 
+ * @author Netapsys
  * @version $Revision$ $Date$
  */
 @Entity(name = "essai_document_detail_administratif")
 @Inheritance(strategy = InheritanceType.SINGLE_TABLE)
 @DiscriminatorColumn(name = "type", discriminatorType = DiscriminatorType.STRING)
-public abstract class DocumentAdministratif
-    extends DocumentEssai
-{
+public abstract class DocumentAdministratif extends DocumentEssai {
 
     /**
      * Serial ID.
@@ -57,8 +55,7 @@ public abstract class DocumentAdministratif
      * Getter sur detailAdministratif.
      * @return Retourne le detailAdministratif.
      */
-    public DetailAdministratif getDetailAdministratif()
-    {
+    public DetailAdministratif getDetailAdministratif() {
         return this.detailAdministratif;
     }
 
@@ -66,8 +63,7 @@ public abstract class DocumentAdministratif
      * Setter pour detailAdministratif.
      * @param detailAdministratif le detailAdministratif à écrire.
      */
-    public void setDetailAdministratif(final DetailAdministratif detailAdministratif)
-    {
+    public void setDetailAdministratif(final DetailAdministratif detailAdministratif) {
         this.detailAdministratif = detailAdministratif;
     }
 
@@ -75,8 +71,8 @@ public abstract class DocumentAdministratif
      * Getter sur type.
      * @return Retourne le type.
      */
-    public TypeDocumentEssai getType()
-    {
+    @Override
+    public TypeDocumentEssai getType() {
         return this.type;
     }
 
@@ -84,8 +80,8 @@ public abstract class DocumentAdministratif
      * Setter pour type.
      * @param type le type à écrire.
      */
-    public void setType(final TypeDocumentEssai type)
-    {
+    @Override
+    public void setType(final TypeDocumentEssai type) {
         this.type = type;
     }
 

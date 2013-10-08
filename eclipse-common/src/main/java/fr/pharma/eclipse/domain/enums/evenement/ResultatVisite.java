@@ -2,11 +2,10 @@ package fr.pharma.eclipse.domain.enums.evenement;
 
 /**
  * Enumération représentant le résultat de la visite.
- 
+ * @author Netapsys
  * @version $Revision$ $Date$
  */
-public enum ResultatVisite
-{
+public enum ResultatVisite {
     /**
      * Effectué.
      */
@@ -26,8 +25,7 @@ public enum ResultatVisite
      * Constructeur.
      * @param libelle Le libellé du résultat de visite.
      */
-    ResultatVisite(final String libelle)
-    {
+    ResultatVisite(final String libelle) {
         this.libelle = libelle;
     }
 
@@ -35,8 +33,7 @@ public enum ResultatVisite
      * Getter pour libelle.
      * @return Retourne le libelle.
      */
-    public String getLibelle()
-    {
+    public String getLibelle() {
         return this.libelle;
     }
 
@@ -44,8 +41,7 @@ public enum ResultatVisite
      * {@inheritDoc}
      */
     @Override
-    public String toString()
-    {
+    public String toString() {
         return this.getLibelle();
     }
 

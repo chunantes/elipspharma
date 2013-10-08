@@ -6,13 +6,12 @@ import fr.pharma.eclipse.domain.jasper.model.common.JasperReportBean;
 /**
  * Classe représentant la source de données de la partie 2 (infos. des produits)<br>
  * du rapport Jasper intitulé<br>
- * "Fiche de gestion et d'aide à la dispensation d'un médicament en essai clinique". *
- 
+ * "Fiche de gestion et d'aide à la dispensation d'un médicament en essai clinique"
+ * . *
+ * @author Netapsys
  * @version $Revision$ $Date$
  */
-public class JRBeanFicheAideDispensationPart2
-    implements JasperReportBean
-{
+public class JRBeanFicheAideDispensationPart2 implements JasperReportBean {
 
     /**
      * Serial ID.
@@ -43,8 +42,7 @@ public class JRBeanFicheAideDispensationPart2
      * Getter sur medicaments.
      * @return Retourne le medicaments.
      */
-    public JRDataSource getMedicaments()
-    {
+    public JRDataSource getMedicaments() {
         return this.medicaments;
     }
 
@@ -52,8 +50,7 @@ public class JRBeanFicheAideDispensationPart2
      * Setter pour medicaments.
      * @param medicaments le medicaments à écrire.
      */
-    public void setMedicaments(final JRDataSource medicaments)
-    {
+    public void setMedicaments(final JRDataSource medicaments) {
         this.medicaments = medicaments;
     }
 
@@ -61,8 +58,7 @@ public class JRBeanFicheAideDispensationPart2
      * Getter sur dispoMedicaux.
      * @return Retourne le dispoMedicaux.
      */
-    public JRDataSource getDispoMedicaux()
-    {
+    public JRDataSource getDispoMedicaux() {
         return this.dispoMedicaux;
     }
 
@@ -70,8 +66,7 @@ public class JRBeanFicheAideDispensationPart2
      * Setter pour dispoMedicaux.
      * @param dispoMedicaux le dispoMedicaux à écrire.
      */
-    public void setDispoMedicaux(final JRDataSource dispoMedicaux)
-    {
+    public void setDispoMedicaux(final JRDataSource dispoMedicaux) {
         this.dispoMedicaux = dispoMedicaux;
     }
 
@@ -79,8 +74,7 @@ public class JRBeanFicheAideDispensationPart2
      * Getter sur pduitsTherapeutiques.
      * @return Retourne le pduitsTherapeutiques.
      */
-    public JRDataSource getPduitsTherapeutiques()
-    {
+    public JRDataSource getPduitsTherapeutiques() {
         return this.pduitsTherapeutiques;
     }
 
@@ -88,8 +82,7 @@ public class JRBeanFicheAideDispensationPart2
      * Setter pour pduitsTherapeutiques.
      * @param pduitsTherapeutiques le pduitsTherapeutiques à écrire.
      */
-    public void setPduitsTherapeutiques(final JRDataSource pduitsTherapeutiques)
-    {
+    public void setPduitsTherapeutiques(final JRDataSource pduitsTherapeutiques) {
         this.pduitsTherapeutiques = pduitsTherapeutiques;
     }
 
@@ -97,8 +90,7 @@ public class JRBeanFicheAideDispensationPart2
      * Getter sur actesPharmacies.
      * @return Retourne le actesPharmacies.
      */
-    public JRDataSource getActesPharmacies()
-    {
+    public JRDataSource getActesPharmacies() {
         return this.actesPharmacies;
     }
 
@@ -106,8 +98,7 @@ public class JRBeanFicheAideDispensationPart2
      * Setter pour actesPharmacies.
      * @param actesPharmacies le actesPharmacies à écrire.
      */
-    public void setActesPharmacies(final JRDataSource actesPharmacies)
-    {
+    public void setActesPharmacies(final JRDataSource actesPharmacies) {
         this.actesPharmacies = actesPharmacies;
     }
 

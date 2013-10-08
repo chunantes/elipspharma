@@ -8,23 +8,22 @@ import fr.pharma.eclipse.service.common.GenericService;
 
 /**
  * Interface de service de gestion de stockage.
- 
+ * @author Netapsys
  * @version $Revision$ $Date$
  */
-public interface StockageService
-    extends GenericService<Stockage>
-{
+public interface StockageService extends GenericService<Stockage> {
 
     /**
-     * Méthode en charge de retourner le nom complet d'un stockage (inclusion du nom de ses
-     * parents).
+     * Méthode en charge de retourner le nom complet d'un stockage (inclusion du
+     * nom de ses parents).
      * @param stockage Stockage.
      * @return Nom du stockage.
      */
     String getNomComplet(final Stockage stockage);
 
     /**
-     * Méthode en charge de tester la présence d'un stockage dans une liste de stockages.
+     * Méthode en charge de tester la présence d'un stockage dans une liste de
+     * stockages.
      * @param stockage Stockage.
      * @param stockages Liste de stockages.
      * @return Résultat du test.
@@ -33,11 +32,12 @@ public interface StockageService
                                      final SortedSet<Stockage> stockages);
 
     /**
-     * Verifie si le nom de stockage est utilise par un autre stockage de même niveau, de la pharmacie.
+     * Verifie si le nom de stockage est utilise par un autre stockage de même
+     * niveau, de la pharmacie.
      * @param stockage
      * @param pharmacie
      * @return booleen
      */
     Boolean isNomStockageUtiliseParAutreStockageDeMemeNiveau(final Stockage stockage,
-                                                 Pharmacie pharmacie);
+                                                             Pharmacie pharmacie);
 }

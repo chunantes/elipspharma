@@ -12,16 +12,13 @@ import fr.pharma.eclipse.domain.model.common.BeanObject;
 import fr.pharma.eclipse.domain.model.sigrec.acteur.ContactSigrec;
 
 /**
- * Classe commune des intervenants (ARC promoteurs, ARC Investigateur, investigateurprincipal,
- * Investigateur associé.
- 
+ * Classe commune des intervenants (ARC promoteurs, ARC Investigateur,
+ * investigateurprincipal, Investigateur associé.
+ * @author Netapsys
  * @version $Revision$ $Date$
  */
 @MappedSuperclass
-public abstract class IntervenantSigrec
-    extends BeanObject
-    implements Serializable
-{
+public abstract class IntervenantSigrec extends BeanObject implements Serializable {
 
     /**
      * SerialVersionUID.
@@ -63,8 +60,7 @@ public abstract class IntervenantSigrec
      * Getter sur contact.
      * @return Retourne le contact.
      */
-    public ContactSigrec getContact()
-    {
+    public ContactSigrec getContact() {
         return this.contact;
     }
 
@@ -72,8 +68,7 @@ public abstract class IntervenantSigrec
      * Setter pour contact.
      * @param contact le contact à écrire.
      */
-    public void setContact(final ContactSigrec contact)
-    {
+    public void setContact(final ContactSigrec contact) {
         this.contact = contact;
     }
 
@@ -81,8 +76,7 @@ public abstract class IntervenantSigrec
      * Getter sur identifiant.
      * @return Retourne le identifiant.
      */
-    public String getIdentifiant()
-    {
+    public String getIdentifiant() {
         return this.identifiant;
     }
 
@@ -90,8 +84,7 @@ public abstract class IntervenantSigrec
      * Setter pour identifiant.
      * @param identifiant le identifiant à écrire.
      */
-    public void setIdentifiant(final String identifiant)
-    {
+    public void setIdentifiant(final String identifiant) {
         this.identifiant = identifiant;
     }
 
@@ -99,8 +92,7 @@ public abstract class IntervenantSigrec
      * Getter sur intervenantId.
      * @return Retourne le intervenantId.
      */
-    public Integer getIntervenantId()
-    {
+    public Integer getIntervenantId() {
         return this.intervenantId;
     }
 
@@ -108,8 +100,7 @@ public abstract class IntervenantSigrec
      * Setter pour intervenantId.
      * @param intervenantId le intervenantId à écrire.
      */
-    public void setIntervenantId(final Integer intervenantId)
-    {
+    public void setIntervenantId(final Integer intervenantId) {
         this.intervenantId = intervenantId;
     }
 
@@ -117,8 +108,7 @@ public abstract class IntervenantSigrec
      * Getter sur titre.
      * @return Retourne le titre.
      */
-    public String getTitre()
-    {
+    public String getTitre() {
         return this.titre;
     }
 
@@ -126,8 +116,7 @@ public abstract class IntervenantSigrec
      * Setter pour titre.
      * @param titre le titre à écrire.
      */
-    public void setTitre(final String titre)
-    {
+    public void setTitre(final String titre) {
         this.titre = titre;
     }
 
@@ -135,8 +124,7 @@ public abstract class IntervenantSigrec
      * Getter sur numAdeli.
      * @return Retourne le numAdeli.
      */
-    public String getNumAdeli()
-    {
+    public String getNumAdeli() {
         return this.numAdeli;
     }
 
@@ -144,8 +132,7 @@ public abstract class IntervenantSigrec
      * Setter pour numAdeli.
      * @param numAdeli le numAdeli à écrire.
      */
-    public void setNumAdeli(final String numAdeli)
-    {
+    public void setNumAdeli(final String numAdeli) {
         this.numAdeli = numAdeli;
     }
 

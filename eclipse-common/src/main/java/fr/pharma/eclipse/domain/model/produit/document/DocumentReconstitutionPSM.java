@@ -6,15 +6,14 @@ import javax.persistence.Entity;
 import fr.pharma.eclipse.domain.enums.document.TypeDocumentProduit;
 
 /**
- * Bean métier représentant un document relatif à la reconstitution PSM d'un médicament.
- 
+ * Bean métier représentant un document relatif à la reconstitution PSM d'un
+ * médicament.
+ * @author Netapsys
  * @version $Revision$ $Date$
  */
 @Entity
 @DiscriminatorValue("RECONSTITUTION_PSM")
-public class DocumentReconstitutionPSM
-    extends DocumentActesPharma
-{
+public class DocumentReconstitutionPSM extends DocumentActesPharma {
 
     /**
      * Serial ID.
@@ -24,8 +23,7 @@ public class DocumentReconstitutionPSM
     /**
      * Constructeur par défaut.
      */
-    public DocumentReconstitutionPSM()
-    {
+    public DocumentReconstitutionPSM() {
         this.setType(TypeDocumentProduit.RECONSTITUTION_PSM);
     }
 

@@ -1,14 +1,11 @@
 package fr.pharma.eclipse.exception.common;
 
-
 /**
  * Classe de base des exceptions de l'application.
- 
+ * @author NETAPSYS
  * @version $Revision$ $Date$
  */
-public class CommonException
-    extends RuntimeException
-{
+public class CommonException extends RuntimeException {
 
     /**
      * Serial ID.
@@ -18,8 +15,7 @@ public class CommonException
     /**
      * Constructeur par défaut.
      */
-    public CommonException()
-    {
+    public CommonException() {
         super();
     }
 
@@ -27,8 +23,7 @@ public class CommonException
      * Constructeur par défaut.
      * @param error Message d'erreur.
      */
-    public CommonException(final String error)
-    {
+    public CommonException(final String error) {
         super(error);
     }
 
@@ -36,8 +31,7 @@ public class CommonException
      * Constructeur par défaut.
      * @param cause Erreur throwable.
      */
-    public CommonException(final Throwable cause)
-    {
+    public CommonException(final Throwable cause) {
         super(cause);
     }
 
@@ -46,10 +40,8 @@ public class CommonException
      * @param error Message d'erreur.
      * @param cause Erreur throwable.
      */
-    public CommonException(final String error, final Throwable cause)
-    {
-        super(error,
-              cause);
+    public CommonException(final String error, final Throwable cause) {
+        super(error, cause);
     }
 
 }

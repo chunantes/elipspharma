@@ -6,12 +6,10 @@ import fr.pharma.eclipse.jasper.constants.JasperConstants;
 /**
  * Classe représentant la source de données<br>
  * relative à un traitement pour un accusé de réception.
- 
+ * @author Netapsys
  * @version $Revision$ $Date$
  */
-public class JRBeanTraitement
-    implements JasperReportBean
-{
+public class JRBeanTraitement implements JasperReportBean {
 
     /**
      * Serial ID.
@@ -47,8 +45,7 @@ public class JRBeanTraitement
      * Getter pour descriptif.
      * @return Le descriptif
      */
-    public String getDescriptif()
-    {
+    public String getDescriptif() {
         return this.descriptif;
     }
 
@@ -56,8 +53,7 @@ public class JRBeanTraitement
      * Setter pour descriptif.
      * @param descriptif Le descriptif à écrire.
      */
-    public void setDescriptif(final String descriptif)
-    {
+    public void setDescriptif(final String descriptif) {
         this.descriptif = descriptif;
     }
 
@@ -65,8 +61,7 @@ public class JRBeanTraitement
      * Getter pour numLot.
      * @return Le numLot
      */
-    public String getNumLot()
-    {
+    public String getNumLot() {
         return this.numLot;
     }
 
@@ -74,8 +69,7 @@ public class JRBeanTraitement
      * Setter pour numLot.
      * @param numLot Le numLot à écrire.
      */
-    public void setNumLot(final String numLot)
-    {
+    public void setNumLot(final String numLot) {
         this.numLot = numLot;
     }
 
@@ -83,8 +77,7 @@ public class JRBeanTraitement
      * Getter pour numTraitement.
      * @return Le numTraitement
      */
-    public String getNumTraitement()
-    {
+    public String getNumTraitement() {
         return this.numTraitement;
     }
 
@@ -92,8 +85,7 @@ public class JRBeanTraitement
      * Setter pour numTraitement.
      * @param numTraitement Le numTraitement à écrire.
      */
-    public void setNumTraitement(final String numTraitement)
-    {
+    public void setNumTraitement(final String numTraitement) {
         this.numTraitement = numTraitement;
     }
 
@@ -101,8 +93,7 @@ public class JRBeanTraitement
      * Getter pour datePeremption.
      * @return Le datePeremption
      */
-    public String getDatePeremption()
-    {
+    public String getDatePeremption() {
         return this.datePeremption;
     }
 
@@ -110,8 +101,7 @@ public class JRBeanTraitement
      * Getter pour quantite.
      * @return Le quantite
      */
-    public String getQuantite()
-    {
+    public String getQuantite() {
         return this.quantite;
     }
 
@@ -119,8 +109,7 @@ public class JRBeanTraitement
      * Setter pour quantite.
      * @param quantite Le quantite à écrire.
      */
-    public void setQuantite(final String quantite)
-    {
+    public void setQuantite(final String quantite) {
         this.quantite = quantite;
     }
 
@@ -128,8 +117,7 @@ public class JRBeanTraitement
      * Setter pour datePeremption.
      * @param datePeremption Le datePeremption à écrire.
      */
-    public void setDatePeremption(final String datePeremption)
-    {
+    public void setDatePeremption(final String datePeremption) {
         this.datePeremption = datePeremption;
     }
 

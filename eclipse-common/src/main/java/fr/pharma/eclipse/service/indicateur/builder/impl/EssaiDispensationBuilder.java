@@ -19,15 +19,12 @@ import fr.pharma.eclipse.predicate.pharmacie.PharmacieEssaiPredicate;
 import fr.pharma.eclipse.service.indicateur.builder.IndicateurBuilder;
 
 /**
- * Builder en charge de construire l'indicateur correspondant aux essais avec au moins une
- * dispensation.
- 
+ * Builder en charge de construire l'indicateur correspondant aux essais avec au
+ * moins une dispensation.
+ * @author Netapsys
  * @version $Revision$ $Date$
  */
-public class EssaiDispensationBuilder
-    extends AbstractDispensationBuilder
-    implements IndicateurBuilder, Serializable
-{
+public class EssaiDispensationBuilder extends AbstractDispensationBuilder implements IndicateurBuilder, Serializable {
 
     /**
      * SerialVersionUID.
@@ -45,37 +42,28 @@ public class EssaiDispensationBuilder
     @Override
     public Indicateur build(final Pharmacie pharmacie,
                             final Calendar dateDebut,
-                            final Calendar dateFin)
-    {
-        final List results = this.loadDispensations(pharmacie,
-                                                    dateDebut,
-                                                    dateFin,
-                                                    true);
+                            final Calendar dateFin) {
+        final List results = this.loadDispensations(pharmacie, dateDebut, dateFin, true);
         final SortedSet<Essai> essais = new TreeSet<Essai>(new EclipseListComparator());
-        CollectionUtils.transform(results,
-                                  new Transformer() {
+        CollectionUtils.transform(results, new Transformer() {
 
-                                      @Override
-                                      public Object transform(final Object input)
-                                      {
-                                          return ((Dispensation) input).getEssai();
-                                      }
-                                  });
+            @Override
+            public Object transform(final Object input) {
+                return ((Dispensation) input).getEssai();
+            }
+        });
         essais.addAll(results);
 
         // On filtre les essais qui ne sont pas associés à la pharmacie.
-        CollectionUtils.filter(essais,
-                               new PharmacieEssaiPredicate(pharmacie));
+        CollectionUtils.filter(essais, new PharmacieEssaiPredicate(pharmacie));
 
-        return new Indicateur(this.libelle,
-                              new BigDecimal(essais.size()));
+        return new Indicateur(this.libelle, new BigDecimal(essais.size()));
     }
     /**
      * Getter pour libelle.
      * @return Le libelle
      */
-    public String getLibelle()
-    {
+    public String getLibelle() {
         return this.libelle;
     }
 
@@ -83,8 +71,7 @@ public class EssaiDispensationBuilder
      * Setter pour libelle.
      * @param libelle Le libelle à écrire.
      */
-    public void setLibelle(final String libelle)
-    {
+    public void setLibelle(final String libelle) {
         this.libelle = libelle;
     }
 

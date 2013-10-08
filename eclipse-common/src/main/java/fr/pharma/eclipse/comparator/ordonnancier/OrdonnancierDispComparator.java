@@ -6,13 +6,12 @@ import java.util.Comparator;
 import fr.pharma.eclipse.domain.model.dispensation.Dispensation;
 
 /**
- * Classe de comparator des beans Dispensation pour la gestion des ordonnanciers de dispensation.
- 
+ * Classe de comparator des beans Dispensation pour la gestion des ordonnanciers
+ * de dispensation.
+ * @author Netapsys
  * @version $Revision$ $Date$
  */
-public class OrdonnancierDispComparator
-    implements Comparator<Dispensation>, Serializable
-{
+public class OrdonnancierDispComparator implements Comparator<Dispensation>, Serializable {
     /**
      * Serial ID.
      */
@@ -23,8 +22,7 @@ public class OrdonnancierDispComparator
      */
     @Override
     public int compare(final Dispensation disp1,
-                       final Dispensation disp2)
-    {
+                       final Dispensation disp2) {
         // Comparaison selon le numéro d'ordonnancier
         return this.buildKey(disp1).compareTo(this.buildKey(disp2));
     }
@@ -34,11 +32,9 @@ public class OrdonnancierDispComparator
      * @param objet L'objet.
      * @return La clé.
      */
-    private String buildKey(final Dispensation objet)
-    {
+    private String buildKey(final Dispensation objet) {
         final StringBuffer sb = new StringBuffer();
-        if (objet.getNumOrdonnancier() != null)
-        {
+        if (objet.getNumOrdonnancier() != null) {
             sb.append(objet.getNumOrdonnancier());
         }
         return sb.toString();

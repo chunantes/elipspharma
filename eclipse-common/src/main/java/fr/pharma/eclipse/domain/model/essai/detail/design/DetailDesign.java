@@ -27,13 +27,11 @@ import fr.pharma.eclipse.domain.model.suivi.essai.detail.DetailDesignSuivi;
 
 /**
  * Description de la classe.
- 
+ * @author Netapsys
  * @version $Revision$ $Date$
  */
 @Entity(name = "essai_detail_design")
-public class DetailDesign
-    extends BeanObjectSuivi
-{
+public class DetailDesign extends BeanObjectSuivi {
 
     /**
      * SerialVersionUID.
@@ -68,15 +66,13 @@ public class DetailDesign
     @OneToMany(mappedBy = "detailDesign", cascade = CascadeType.ALL)
     @LazyCollection(LazyCollectionOption.TRUE)
     @Sort(type = SortType.COMPARATOR, comparator = SuiviComparator.class)
-    private SortedSet<DetailDesignSuivi> modifs =
-        new TreeSet<DetailDesignSuivi>(new SuiviComparator());
+    private SortedSet<DetailDesignSuivi> modifs = new TreeSet<DetailDesignSuivi>(new SuiviComparator());
 
     /**
      * Getter sur bras.
      * @return Retourne le bras.
      */
-    public SortedSet<Bras> getBras()
-    {
+    public SortedSet<Bras> getBras() {
         return this.bras;
     }
 
@@ -84,8 +80,7 @@ public class DetailDesign
      * Setter pour bras.
      * @param bras le bras à écrire.
      */
-    public void setBras(final SortedSet<Bras> bras)
-    {
+    public void setBras(final SortedSet<Bras> bras) {
         this.bras = bras;
     }
 
@@ -94,8 +89,7 @@ public class DetailDesign
      * @return Retourne le modifs.
      */
     @Override
-    public SortedSet<DetailDesignSuivi> getModifs()
-    {
+    public SortedSet<DetailDesignSuivi> getModifs() {
         return this.modifs;
     }
 
@@ -103,8 +97,7 @@ public class DetailDesign
      * Setter pour modifs.
      * @param modifs le modifs à écrire.
      */
-    public void setModifs(final SortedSet<DetailDesignSuivi> modifs)
-    {
+    public void setModifs(final SortedSet<DetailDesignSuivi> modifs) {
         this.modifs = modifs;
     }
 
@@ -112,8 +105,7 @@ public class DetailDesign
      * Getter sur essai.
      * @return Retourne le essai.
      */
-    public Essai getEssai()
-    {
+    public Essai getEssai() {
         return this.essai;
     }
 
@@ -121,8 +113,7 @@ public class DetailDesign
      * Setter pour essai.
      * @param essai le essai à écrire.
      */
-    public void setEssai(final Essai essai)
-    {
+    public void setEssai(final Essai essai) {
         this.essai = essai;
     }
 
@@ -130,8 +121,7 @@ public class DetailDesign
      * Getter pour type.
      * @return Le type
      */
-    public TypeDesign getType()
-    {
+    public TypeDesign getType() {
         return this.type;
     }
 
@@ -139,8 +129,7 @@ public class DetailDesign
      * Setter pour type.
      * @param type Le type à écrire.
      */
-    public void setType(final TypeDesign type)
-    {
+    public void setType(final TypeDesign type) {
         this.type = type;
     }
 }

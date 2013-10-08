@@ -2,11 +2,10 @@ package fr.pharma.eclipse.domain.enums;
 
 /**
  * Enumération des différents historiques d'un produit.
- 
+ * @author Netapsys
  * @version $Revision$ $Date$
  */
-public enum TypeHistoriqueProduit
-{
+public enum TypeHistoriqueProduit {
     /**
      * Historique général.
      */
@@ -38,30 +37,26 @@ public enum TypeHistoriqueProduit
     private int indexIHM;
 
     /**
-     * Propriété pour accéder à l'ensemble des modifications par introspection depuis un bean
-     * Produit.
+     * Propriété pour accéder à l'ensemble des modifications par introspection
+     * depuis un bean Produit.
      */
     private String modifsPropertyFromProduit;
 
     /**
-     * Propriété pour accéder au bean parent des modifications par introspection depuis un bean
-     * Produit.
+     * Propriété pour accéder au bean parent des modifications par introspection
+     * depuis un bean Produit.
      */
     private String modifsParentPropertyFromProduit;
 
     /**
      * Constructeur.
      * @param indexIHM Index de l'onglet correspondant dans l'IHM.
-     * @param modifsPropertyFromProduit Propriété pour accéder à l'ensemble des modifications par
-     * introspection depuis un bean Produit.
-     * @param modifsParentPropertyFromProduit Propriété pour accéder au bean parent des
+     * @param modifsPropertyFromProduit Propriété pour accéder à l'ensemble des
      * modifications par introspection depuis un bean Produit.
+     * @param modifsParentPropertyFromProduit Propriété pour accéder au bean
+     * parent des modifications par introspection depuis un bean Produit.
      */
-    private TypeHistoriqueProduit(
-                                  final int indexIHM,
-                                  final String modifsPropertyFromProduit,
-                                  final String modifsParentPropertyFromProduit)
-    {
+    private TypeHistoriqueProduit(final int indexIHM, final String modifsPropertyFromProduit, final String modifsParentPropertyFromProduit) {
         this.indexIHM = indexIHM;
         this.modifsPropertyFromProduit = modifsPropertyFromProduit;
         this.modifsParentPropertyFromProduit = modifsParentPropertyFromProduit;
@@ -71,8 +66,7 @@ public enum TypeHistoriqueProduit
      * Getter sur modifsPropertyFromProduit.
      * @return Retourne le modifsPropertyFromProduit.
      */
-    public String getModifsPropertyFromProduit()
-    {
+    public String getModifsPropertyFromProduit() {
         return this.modifsPropertyFromProduit;
     }
 
@@ -80,8 +74,7 @@ public enum TypeHistoriqueProduit
      * Getter sur modifsParentPropertyFromProduit.
      * @return Retourne le modifsParentPropertyFromProduit.
      */
-    public String getModifsParentPropertyFromProduit()
-    {
+    public String getModifsParentPropertyFromProduit() {
         return this.modifsParentPropertyFromProduit;
     }
 
@@ -89,8 +82,7 @@ public enum TypeHistoriqueProduit
      * Getter sur indexIHM.
      * @return Retourne le indexIHM.
      */
-    public int getIndexIHM()
-    {
+    public int getIndexIHM() {
         return this.indexIHM;
     }
 }

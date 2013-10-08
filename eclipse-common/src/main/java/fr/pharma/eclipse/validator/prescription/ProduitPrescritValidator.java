@@ -6,15 +6,14 @@ import fr.pharma.eclipse.domain.model.prescription.ProduitPrescrit;
 
 /**
  * Interface des validator relatifs à la gestion des produits prescrits.
- 
+ * @author Netapsys
  * @version $Revision$ $Date$
  */
-public interface ProduitPrescritValidator
-{
+public interface ProduitPrescritValidator {
 
     /**
-     * Méthode en charge de valider si un produit prescrit équivalent (meme produit et meme mode
-     * de prescription) a déjà été défini.
+     * Méthode en charge de valider si un produit prescrit équivalent (meme
+     * produit et meme mode de prescription) a déjà été défini.
      * @param produitPrescrit Le produit prescrit à valider.
      * @param produitsPrescrits La liste de produits prescrits.
      */

@@ -11,12 +11,10 @@ import fr.pharma.eclipse.domain.criteria.common.SearchCriteria;
 
 /**
  * Artisan de recherche pour les ARC investigateurs.
- 
+ * @author Netapsys
  * @version $Revision$ $Date$
  */
-public class ArcInvestigateurSearchCriteriaMaker
-    extends AbstractCriteriaMaker
-{
+public class ArcInvestigateurSearchCriteriaMaker extends AbstractCriteriaMaker {
 
     /**
      * Serial ID.
@@ -31,8 +29,7 @@ public class ArcInvestigateurSearchCriteriaMaker
     /**
      * Constructeur par défaut.
      */
-    public ArcInvestigateurSearchCriteriaMaker()
-    {
+    public ArcInvestigateurSearchCriteriaMaker() {
         super(ArcInvestigateurSearchCriteria.class);
     }
 
@@ -41,32 +38,23 @@ public class ArcInvestigateurSearchCriteriaMaker
      */
     @Override
     public void transform(final Criteria criteria,
-                          final SearchCriteria searchCrit)
-    {
-        this.personneCriteriaMaker.transform(criteria,
-                                             searchCrit);
+                          final SearchCriteria searchCrit) {
+        this.personneCriteriaMaker.transform(criteria, searchCrit);
 
         final ArcInvestigateurSearchCriteria crit = (ArcInvestigateurSearchCriteria) searchCrit;
 
         // Services
-        if (crit.getServices() != null
-            && !crit.getServices().isEmpty())
-        {
-            final List<Integer> serviceIds =
-                CriteriaMakerUtils.prepareObjectIds(crit.getServices());
-            final Criteria critServices = criteria.createCriteria("services",
-                                                                  "services");
-            CriteriaMakerUtils.addInCritere(critServices,
-                                            "services.id",
-                                            serviceIds.toArray());
+        if ((crit.getServices() != null) && !crit.getServices().isEmpty()) {
+            final List<Integer> serviceIds = CriteriaMakerUtils.prepareObjectIds(crit.getServices());
+            final Criteria critServices = criteria.createCriteria("services", "services");
+            CriteriaMakerUtils.addInCritere(critServices, "services.id", serviceIds.toArray());
         }
     }
     /**
      * Getter sur personneCriteriaMaker.
      * @return Retourne le personneCriteriaMaker.
      */
-    PersonneSearchCriteriaMaker getPersonneCriteriaMaker()
-    {
+    PersonneSearchCriteriaMaker getPersonneCriteriaMaker() {
         return this.personneCriteriaMaker;
     }
 
@@ -74,8 +62,7 @@ public class ArcInvestigateurSearchCriteriaMaker
      * Setter pour personneCriteriaMaker.
      * @param personneCriteriaMaker le personneCriteriaMaker à écrire.
      */
-    public void setPersonneCriteriaMaker(final PersonneSearchCriteriaMaker personneCriteriaMaker)
-    {
+    public void setPersonneCriteriaMaker(final PersonneSearchCriteriaMaker personneCriteriaMaker) {
         this.personneCriteriaMaker = personneCriteriaMaker;
     }
 

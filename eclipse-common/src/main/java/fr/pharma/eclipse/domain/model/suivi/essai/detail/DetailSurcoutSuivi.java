@@ -11,14 +11,13 @@ import fr.pharma.eclipse.domain.model.essai.detail.surcout.DetailSurcout;
 import fr.pharma.eclipse.domain.model.suivi.common.Suivi;
 
 /**
- * Bean métier représentant les suivis de modifications sur le bean DetailSurcout.
- 
+ * Bean métier représentant les suivis de modifications sur le bean
+ * DetailSurcout.
+ * @author Netapsys
  * @version $Revision$ $Date$
  */
 @Entity(name = "essai_detail_surcout_suivi")
-public class DetailSurcoutSuivi
-    extends Suivi
-{
+public class DetailSurcoutSuivi extends Suivi {
     /**
      * Serial ID.
      */
@@ -36,8 +35,7 @@ public class DetailSurcoutSuivi
      * Getter sur detailSurcout.
      * @return Retourne le detailSurcout.
      */
-    public DetailSurcout getDetailSurcout()
-    {
+    public DetailSurcout getDetailSurcout() {
         return this.detailSurcout;
     }
 
@@ -45,8 +43,7 @@ public class DetailSurcoutSuivi
      * Setter pour detailSurcout.
      * @param detailSurcout le detailSurcout à écrire.
      */
-    public void setDetailSurcout(final DetailSurcout detailSurcout)
-    {
+    public void setDetailSurcout(final DetailSurcout detailSurcout) {
         this.detailSurcout = detailSurcout;
     }
 

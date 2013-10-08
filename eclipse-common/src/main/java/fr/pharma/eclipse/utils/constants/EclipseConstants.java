@@ -4,11 +4,10 @@ import java.util.Locale;
 
 /**
  * Classe contenant les constantes globales pour Eclipse.
- 
+ * @author Netapsys
  * @version $Revision$ $Date$
  */
-public final class EclipseConstants
-{
+public final class EclipseConstants {
     /**
      * Saut de ligne.
      */
@@ -85,7 +84,8 @@ public final class EclipseConstants
     public static final String ROLE = "ROLE_";
 
     /**
-     * Nombre minimum de caractères de la partie 'chrono' du numéro Sigrec par défaut.
+     * Nombre minimum de caractères de la partie 'chrono' du numéro Sigrec par
+     * défaut.
      */
     public static final int NUM_SIGREC_MIN_DIGITS = 2;
 
@@ -126,7 +126,6 @@ public final class EclipseConstants
     /**
      * Constructeur.
      */
-    protected EclipseConstants()
-    {
+    protected EclipseConstants() {
     }
 }

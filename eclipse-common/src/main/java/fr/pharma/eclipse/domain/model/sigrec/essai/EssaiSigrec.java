@@ -30,14 +30,13 @@ import fr.pharma.eclipse.domain.model.sigrec.essai.detail.DetailRechercheSigrec;
 import fr.pharma.eclipse.domain.model.sigrec.essai.detail.PrevisionSigrec;
 
 /**
- * Classe métier représentant un Essai clinique (appelé aussi étude) importé de SIGREC.
- 
+ * Classe métier représentant un Essai clinique (appelé aussi étude) importé de
+ * SIGREC.
+ * @author Netapsys
  * @version $Revision$ $Date$
  */
 @Entity(name = "essai_sigrec")
-public class EssaiSigrec
-    extends BeanObject
-{
+public class EssaiSigrec extends BeanObject {
     /**
      * Serial ID.
      */
@@ -127,23 +126,20 @@ public class EssaiSigrec
      */
     @OneToMany(mappedBy = "essai", cascade = CascadeType.ALL)
     @LazyCollection(LazyCollectionOption.TRUE)
-    private final List<CoInvestigateurSigrec> coInvestigateurs =
-        new ArrayList<CoInvestigateurSigrec>();
+    private final List<CoInvestigateurSigrec> coInvestigateurs = new ArrayList<CoInvestigateurSigrec>();
 
     /**
      * ARC Investigateurs.
      */
     @OneToMany(mappedBy = "essai", cascade = CascadeType.ALL)
     @LazyCollection(LazyCollectionOption.TRUE)
-    private final List<ARCInvestigateurSigrec> arcInvestigateurs =
-        new ArrayList<ARCInvestigateurSigrec>();
+    private final List<ARCInvestigateurSigrec> arcInvestigateurs = new ArrayList<ARCInvestigateurSigrec>();
 
     /**
      * Getter sur nom.
      * @return Retourne le nom.
      */
-    public String getNom()
-    {
+    public String getNom() {
         return this.nom;
     }
 
@@ -151,8 +147,7 @@ public class EssaiSigrec
      * Setter pour nom.
      * @param nom le nom à écrire.
      */
-    public void setNom(final String nom)
-    {
+    public void setNom(final String nom) {
         this.nom = nom;
     }
 
@@ -160,8 +155,7 @@ public class EssaiSigrec
      * Getter sur promoteur.
      * @return Retourne le promoteur.
      */
-    public PromoteurSigrec getPromoteur()
-    {
+    public PromoteurSigrec getPromoteur() {
         return this.promoteur;
     }
 
@@ -169,8 +163,7 @@ public class EssaiSigrec
      * Setter pour promoteur.
      * @param promoteur le promoteur à écrire.
      */
-    public void setPromoteur(final PromoteurSigrec promoteur)
-    {
+    public void setPromoteur(final PromoteurSigrec promoteur) {
         this.promoteur = promoteur;
     }
 
@@ -178,8 +171,7 @@ public class EssaiSigrec
      * Getter sur codePromoteur.
      * @return Retourne le codePromoteur.
      */
-    public String getCodePromoteur()
-    {
+    public String getCodePromoteur() {
         return this.codePromoteur;
     }
 
@@ -187,8 +179,7 @@ public class EssaiSigrec
      * Setter pour codePromoteur.
      * @param codePromoteur le codePromoteur à écrire.
      */
-    public void setCodePromoteur(final String codePromoteur)
-    {
+    public void setCodePromoteur(final String codePromoteur) {
         this.codePromoteur = codePromoteur;
     }
 
@@ -196,8 +187,7 @@ public class EssaiSigrec
      * Getter sur numIdentificationAC.
      * @return Retourne le numIdentificationAC.
      */
-    public String getNumIdentificationAC()
-    {
+    public String getNumIdentificationAC() {
         return this.numIdentificationAC;
     }
 
@@ -205,8 +195,7 @@ public class EssaiSigrec
      * Setter pour numIdentificationAC.
      * @param numIdentificationAC le numIdentificationAC à écrire.
      */
-    public void setNumIdentificationAC(final String numIdentificationAC)
-    {
+    public void setNumIdentificationAC(final String numIdentificationAC) {
         this.numIdentificationAC = numIdentificationAC;
     }
 
@@ -214,8 +203,7 @@ public class EssaiSigrec
      * Getter sur typePromoteur.
      * @return Retourne le typePromoteur.
      */
-    public TypePromoteur getTypePromoteur()
-    {
+    public TypePromoteur getTypePromoteur() {
         return this.typePromoteur;
     }
 
@@ -223,8 +211,7 @@ public class EssaiSigrec
      * Setter pour typePromoteur.
      * @param typePromoteur le typePromoteur à écrire.
      */
-    public void setTypePromoteur(final TypePromoteur typePromoteur)
-    {
+    public void setTypePromoteur(final TypePromoteur typePromoteur) {
         this.typePromoteur = typePromoteur;
     }
 
@@ -232,8 +219,7 @@ public class EssaiSigrec
      * Getter sur detailRecherche.
      * @return Retourne le detailRecherche.
      */
-    public DetailRechercheSigrec getDetailRecherche()
-    {
+    public DetailRechercheSigrec getDetailRecherche() {
         return this.detailRecherche;
     }
 
@@ -241,8 +227,7 @@ public class EssaiSigrec
      * Setter pour detailRecherche.
      * @param detailRecherche le detailRecherche à écrire.
      */
-    public void setDetailRecherche(final DetailRechercheSigrec detailRecherche)
-    {
+    public void setDetailRecherche(final DetailRechercheSigrec detailRecherche) {
         this.detailRecherche = detailRecherche;
     }
 
@@ -250,8 +235,7 @@ public class EssaiSigrec
      * Getter sur prevision.
      * @return Retourne le prevision.
      */
-    public PrevisionSigrec getPrevision()
-    {
+    public PrevisionSigrec getPrevision() {
         return this.prevision;
     }
 
@@ -259,8 +243,7 @@ public class EssaiSigrec
      * Setter pour prevision.
      * @param prevision le prevision à écrire.
      */
-    public void setPrevision(final PrevisionSigrec prevision)
-    {
+    public void setPrevision(final PrevisionSigrec prevision) {
         this.prevision = prevision;
     }
 
@@ -268,8 +251,7 @@ public class EssaiSigrec
      * Getter sur assurances.
      * @return Retourne le assurances.
      */
-    public List<AssuranceSigrec> getAssurances()
-    {
+    public List<AssuranceSigrec> getAssurances() {
         return this.assurances;
     }
 
@@ -277,8 +259,7 @@ public class EssaiSigrec
      * Getter sur cros.
      * @return Retourne le cros.
      */
-    public List<CROSigrec> getCros()
-    {
+    public List<CROSigrec> getCros() {
         return this.cros;
     }
 
@@ -286,8 +267,7 @@ public class EssaiSigrec
      * Getter sur investigateurPrincipal.
      * @return Retourne le investigateurPrincipal.
      */
-    public InvestigateurSigrec getInvestigateurPrincipal()
-    {
+    public InvestigateurSigrec getInvestigateurPrincipal() {
         return this.investigateurPrincipal;
     }
 
@@ -295,8 +275,7 @@ public class EssaiSigrec
      * Setter pour investigateurPrincipal.
      * @param investigateurPrincipal le investigateurPrincipal à écrire.
      */
-    public void setInvestigateurPrincipal(final InvestigateurSigrec investigateurPrincipal)
-    {
+    public void setInvestigateurPrincipal(final InvestigateurSigrec investigateurPrincipal) {
         this.investigateurPrincipal = investigateurPrincipal;
     }
 
@@ -304,8 +283,7 @@ public class EssaiSigrec
      * Getter sur coInvestigateurs.
      * @return Retourne le coInvestigateurs.
      */
-    public List<CoInvestigateurSigrec> getCoInvestigateurs()
-    {
+    public List<CoInvestigateurSigrec> getCoInvestigateurs() {
         return this.coInvestigateurs;
     }
 
@@ -313,8 +291,7 @@ public class EssaiSigrec
      * Getter sur arcInvestigateurs.
      * @return Retourne le arcInvestigateurs.
      */
-    public List<ARCInvestigateurSigrec> getArcInvestigateurs()
-    {
+    public List<ARCInvestigateurSigrec> getArcInvestigateurs() {
         return this.arcInvestigateurs;
     }
 
@@ -322,8 +299,7 @@ public class EssaiSigrec
      * Getter sur multicentrique.
      * @return Retourne le multicentrique.
      */
-    public Boolean getMulticentrique()
-    {
+    public Boolean getMulticentrique() {
         return this.multicentrique;
     }
 
@@ -331,8 +307,7 @@ public class EssaiSigrec
      * Setter pour multicentrique.
      * @param multicentrique le multicentrique à écrire.
      */
-    public void setMulticentrique(final Boolean multicentrique)
-    {
+    public void setMulticentrique(final Boolean multicentrique) {
         this.multicentrique = multicentrique;
     }
 
@@ -340,8 +315,7 @@ public class EssaiSigrec
      * Getter sur nbCentres.
      * @return Retourne le nbCentres.
      */
-    public Integer getNbCentres()
-    {
+    public Integer getNbCentres() {
         return this.nbCentres;
     }
 
@@ -349,8 +323,7 @@ public class EssaiSigrec
      * Setter pour nbCentres.
      * @param nbCentres le nbCentres à écrire.
      */
-    public void setNbCentres(final Integer nbCentres)
-    {
+    public void setNbCentres(final Integer nbCentres) {
         this.nbCentres = nbCentres;
     }
 

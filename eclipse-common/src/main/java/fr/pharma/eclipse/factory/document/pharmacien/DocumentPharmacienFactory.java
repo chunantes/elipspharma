@@ -9,12 +9,10 @@ import fr.pharma.eclipse.domain.model.common.Fichier;
 /**
  * Interface des fabriques de documents Pharmacien.
  * @param <DOC> Type de document de pharmacien créé.
- 
+ * @author Netapsys
  * @version $Revision$ $Date$
  */
-public interface DocumentPharmacienFactory<DOC extends DocumentPharmacien>
-    extends Serializable
-{
+public interface DocumentPharmacienFactory<DOC extends DocumentPharmacien> extends Serializable {
     /**
      * Méthode de création d'un nouveau document de Pharmacien.
      * @param fichier Fichier importé par l'utilisateur.

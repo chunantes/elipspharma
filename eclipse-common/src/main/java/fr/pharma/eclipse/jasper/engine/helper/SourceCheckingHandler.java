@@ -6,13 +6,12 @@ import fr.pharma.eclipse.jasper.exception.JasperReportBuildException;
 
 /**
  * Classe de helper pour la levée d'exception JasperReportBuildException<br>
- * lors des vérifications pour valider les sources de données des FicheInfosEssaiDatasBuilder.
- 
+ * lors des vérifications pour valider les sources de données des
+ * FicheInfosEssaiDatasBuilder.
+ * @author Netapsys
  * @version $Revision$ $Date$
  */
-public class SourceCheckingHandler
-    implements Serializable
-{
+public class SourceCheckingHandler implements Serializable {
 
     /**
      * Serial ID.
@@ -26,11 +25,8 @@ public class SourceCheckingHandler
      * @throws JasperReportBuildException En cas d'invalidité d'une condition.
      */
     public void handleCheck(final boolean check,
-                            final String messageErreur)
-        throws JasperReportBuildException
-    {
-        if (check)
-        {
+                            final String messageErreur) throws JasperReportBuildException {
+        if (check) {
             return;
         }
         throw new JasperReportBuildException(messageErreur);

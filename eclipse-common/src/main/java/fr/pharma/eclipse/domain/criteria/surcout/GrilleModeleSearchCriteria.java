@@ -6,12 +6,10 @@ import fr.pharma.eclipse.domain.criteria.common.AbstractSearchCriteria;
 
 /**
  * Critere de recherche pour le bean GrilleModele.
- 
+ * @author Netapsys
  * @version $Revision$ $Date$
  */
-public class GrilleModeleSearchCriteria
-    extends AbstractSearchCriteria
-{
+public class GrilleModeleSearchCriteria extends AbstractSearchCriteria {
 
     /**
      * SerialVersionUID
@@ -32,8 +30,7 @@ public class GrilleModeleSearchCriteria
      * {@inheritDoc}
      */
     @Override
-    public void clear()
-    {
+    public void clear() {
         this.dateValidite = null;
         this.nom = null;
     }
@@ -42,8 +39,7 @@ public class GrilleModeleSearchCriteria
      * Getter sur dateValidite.
      * @return Retourne le dateValidite.
      */
-    public Calendar getDateValidite()
-    {
+    public Calendar getDateValidite() {
         return this.dateValidite;
     }
 
@@ -51,8 +47,7 @@ public class GrilleModeleSearchCriteria
      * Setter pour dateValidite.
      * @param dateValidite le dateValidite à écrire.
      */
-    public void setDateValidite(final Calendar dateValidite)
-    {
+    public void setDateValidite(final Calendar dateValidite) {
         this.dateValidite = dateValidite;
     }
 
@@ -60,8 +55,7 @@ public class GrilleModeleSearchCriteria
      * Getter sur nom.
      * @return Retourne le nom.
      */
-    public String getNom()
-    {
+    public String getNom() {
         return this.nom;
     }
 
@@ -69,8 +63,7 @@ public class GrilleModeleSearchCriteria
      * Setter pour nom.
      * @param nom le nom à écrire.
      */
-    public void setNom(final String nom)
-    {
+    public void setNom(final String nom) {
         this.nom = nom;
     }
 

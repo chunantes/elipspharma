@@ -14,12 +14,10 @@ import fr.pharma.eclipse.service.evenement.updator.EvenementBeforeSaveUpdator;
 
 /**
  * Description de la classe.
- 
+ * @author Netapsys
  * @version $Revision$ $Date$
  */
-public class ClotureUpdator
-    implements EvenementBeforeSaveUpdator
-{
+public class ClotureUpdator implements EvenementBeforeSaveUpdator {
 
     /**
      * SerialVersionUID.
@@ -37,14 +35,11 @@ public class ClotureUpdator
      */
     @Override
     public void update(final Evenement evenement,
-                       final EvenementServiceImpl service)
-    {
+                       final EvenementServiceImpl service) {
         final Essai essai = this.serviceEssai.get(evenement.getEssai().getId());
         essai.getDetailDates().setCloture(evenement.getDateDebut());
         essai.setEtat(EtatEssai.CLOTURE);
-        this.serviceEssai.addDetailEtatEssai(essai,
-                                             EtatEssai.CLOTURE,
-                                             "Visite de cloture effectuée.");
+        this.serviceEssai.addDetailEtatEssai(essai, EtatEssai.CLOTURE, "Visite de cloture effectuée.");
         this.serviceEssai.save(essai);
     }
 
@@ -52,21 +47,16 @@ public class ClotureUpdator
      * {@inheritDoc}
      */
     @Override
-    public boolean support(final Evenement evenement)
-    {
-        return evenement.getTypeEvenement().equals(TypeEvenement.VISITE)
-               && evenement.getTypeVisite().equals(TypeVisite.CLOTURE)
-               && evenement.getResultatVisite() != null
-               && evenement.getResultatVisite().equals(ResultatVisite.EFFECTUE)
-               && evenement.getEssai() != null;
+    public boolean support(final Evenement evenement) {
+        return evenement.getTypeEvenement().equals(TypeEvenement.VISITE) && evenement.getTypeVisite().equals(TypeVisite.CLOTURE) && (evenement.getResultatVisite() != null)
+               && evenement.getResultatVisite().equals(ResultatVisite.EFFECTUE) && (evenement.getEssai() != null);
     }
 
     /**
      * Setter pour serviceEssai.
      * @param serviceEssai Le serviceEssai à écrire.
      */
-    public void setServiceEssai(final EssaiService serviceEssai)
-    {
+    public void setServiceEssai(final EssaiService serviceEssai) {
         this.serviceEssai = serviceEssai;
     }
 }

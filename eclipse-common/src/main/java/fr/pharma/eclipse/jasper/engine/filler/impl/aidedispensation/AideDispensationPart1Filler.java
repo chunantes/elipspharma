@@ -24,13 +24,12 @@ import fr.pharma.eclipse.utils.Utils;
 import fr.pharma.eclipse.utils.constants.EclipseConstants;
 
 /**
- * Filler en charge de construire la partie 1 du bean {@link JRBeanFicheAideDispensation}.
- 
+ * Filler en charge de construire la partie 1 du bean
+ * {@link JRBeanFicheAideDispensation}.
+ * @author Netapsys
  * @version $Revision$ $Date$
  */
-public class AideDispensationPart1Filler
-    implements JasperReportBeanFiller
-{
+public class AideDispensationPart1Filler implements JasperReportBeanFiller {
 
     /**
      * Serial ID.
@@ -57,8 +56,7 @@ public class AideDispensationPart1Filler
      */
     @Override
     public void fill(final Essai essai,
-                     final JasperReportBean bean)
-    {
+                     final JasperReportBean bean) {
 
         // Construction du bean.
         final JRBeanFicheAideDispensationPart1 part1 = new JRBeanFicheAideDispensationPart1();
@@ -66,31 +64,19 @@ public class AideDispensationPart1Filler
         part1.setCodeProtocole(essai.getNumInterne());
         part1.setNomUsuel(essai.getNom());
         part1.setTitreProtocole(essai.getDetailRecherche().getTitreProtocole());
-        this.fillInfosInvestigateur(essai,
-                                    part1);
-        part1.setNumeroCentre(essai
-                .getDetailDonneesPharma()
-                .getInfosGenerales()
-                .getNumeroCentre());
-        part1.setServiceInvestigateur(JasperUtils.formatterListeStrings(this
-                .prepareNomsServices(essai.getServices())));
-        this.fillPhase(essai,
-                       part1);
-        this.fillInfosCentres(essai,
-                              part1);
-        this.fillNbPatients(essai,
-                            part1);
+        this.fillInfosInvestigateur(essai, part1);
+        part1.setNumeroCentre(essai.getDetailDonneesPharma().getInfosGenerales().getNumeroCentre());
+        part1.setServiceInvestigateur(JasperUtils.formatterListeStrings(this.prepareNomsServices(essai.getServices())));
+        this.fillPhase(essai, part1);
+        this.fillInfosCentres(essai, part1);
+        this.fillNbPatients(essai, part1);
         part1.setNbGroupes(String.valueOf(essai.getDetailDesign().getBras().size()));
-        this.fillQualiteInsu(essai,
-                             part1);
-        this.fillDates(essai,
-                       part1);
+        this.fillQualiteInsu(essai, part1);
+        this.fillDates(essai, part1);
 
         // Appel des sous-fillers.
-        for (final JasperReportBeanFiller subFiller : this.subFillers)
-        {
-            subFiller.fill(essai,
-                           part1);
+        for (final JasperReportBeanFiller subFiller : this.subFillers) {
+            subFiller.fill(essai, part1);
         }
 
         // Valorisation dans la source principale.
@@ -103,23 +89,14 @@ public class AideDispensationPart1Filler
      * @param part1 Partie 1 à valoriser.
      */
     private void fillDates(final Essai essai,
-                           final JRBeanFicheAideDispensationPart1 part1)
-    {
+                           final JRBeanFicheAideDispensationPart1 part1) {
         final DetailDates detailDates = essai.getDetailDates();
         final String pattern = EclipseConstants.PATTERN_SIMPLE;
         final String defaultValue = JasperConstants.DEFAULT_FIELD_VALUE;
-        part1.setDateActivation(Utils.formatDate(detailDates.getActivation(),
-                                                 pattern,
-                                                 defaultValue));
-        part1.setDateMiseEnPlace(Utils.formatDate(detailDates.getDebutEtude(),
-                                                  pattern,
-                                                  defaultValue));
-        part1.setDatePrevueFinEssai(Utils.formatDate(detailDates.getFinEtudePrev(),
-                                                     pattern,
-                                                     defaultValue));
-        part1.setDatePrevueFinInclusions(Utils.formatDate(detailDates.getFinInclusionPrev(),
-                                                          pattern,
-                                                          defaultValue));
+        part1.setDateActivation(Utils.formatDate(detailDates.getActivation(), pattern, defaultValue));
+        part1.setDateMiseEnPlace(Utils.formatDate(detailDates.getDebutEtude(), pattern, defaultValue));
+        part1.setDatePrevueFinEssai(Utils.formatDate(detailDates.getFinEtudePrev(), pattern, defaultValue));
+        part1.setDatePrevueFinInclusions(Utils.formatDate(detailDates.getFinInclusionPrev(), pattern, defaultValue));
     }
 
     /**
@@ -128,12 +105,9 @@ public class AideDispensationPart1Filler
      * @param part1 Partie 1 à valoriser.
      */
     private void fillQualiteInsu(final Essai essai,
-                                 final JRBeanFicheAideDispensationPart1 part1)
-    {
-        final QualiteInsu qualiteInsu =
-            essai.getDetailDonneesPharma().getInfosGenerales().getQualiteInsu();
-        if (qualiteInsu != null)
-        {
+                                 final JRBeanFicheAideDispensationPart1 part1) {
+        final QualiteInsu qualiteInsu = essai.getDetailDonneesPharma().getInfosGenerales().getQualiteInsu();
+        if (qualiteInsu != null) {
             part1.setQualiteInsu(qualiteInsu.getLibelle());
         }
     }
@@ -144,41 +118,35 @@ public class AideDispensationPart1Filler
      * @param part1 Partie 1 à valoriser.
      */
     private void fillNbPatients(final Essai essai,
-                                final JRBeanFicheAideDispensationPart1 part1)
-    {
-        final Integer nbPatientsPrevus =
-            essai.getDetailDonneesPharma().getInfosGenerales().getNbPatientsPrevus();
-        if (nbPatientsPrevus != null)
-        {
+                                final JRBeanFicheAideDispensationPart1 part1) {
+        final Integer nbPatientsPrevus = essai.getDetailDonneesPharma().getInfosGenerales().getNbPatientsPrevus();
+        if (nbPatientsPrevus != null) {
             part1.setNbPatients(String.valueOf(nbPatientsPrevus));
         }
     }
 
     /**
-     * Méthode en charge de valoriser les informations relatives à l'investigateur de l'essai.
+     * Méthode en charge de valoriser les informations relatives à
+     * l'investigateur de l'essai.
      * @param essai Essai.
      * @param part1 Partie 1 à valoriser.
      */
     private void fillInfosInvestigateur(final Essai essai,
-                                        final JRBeanFicheAideDispensationPart1 part1)
-    {
-        final Investigateur invPrincipal =
-            this.habilitationsHelper.getInvestigateurPrincipal(essai);
+                                        final JRBeanFicheAideDispensationPart1 part1) {
+        final Investigateur invPrincipal = this.habilitationsHelper.getInvestigateurPrincipal(essai);
         part1.setInvestigateur(JasperUtils.makeLibelleInvestigateur(invPrincipal));
     }
 
     /**
-     * Méthode en charge de valoriser les informations sur les centres de l'essai.
+     * Méthode en charge de valoriser les informations sur les centres de
+     * l'essai.
      * @param essai Essai.
      * @param part1 Partie 1 à valoriser.
      */
     private void fillInfosCentres(final Essai essai,
-                                  final JRBeanFicheAideDispensationPart1 part1)
-    {
-        final Integer nbCentresPrevus =
-            essai.getDetailDonneesPharma().getInfosGenerales().getNbCentresPrevus();
-        if (nbCentresPrevus != null)
-        {
+                                  final JRBeanFicheAideDispensationPart1 part1) {
+        final Integer nbCentresPrevus = essai.getDetailDonneesPharma().getInfosGenerales().getNbCentresPrevus();
+        if (nbCentresPrevus != null) {
             part1.setNbCentres(String.valueOf(nbCentresPrevus));
             part1.setMulticentrique(JasperUtils.transformToOuiNon(nbCentresPrevus > 1));
         }
@@ -190,10 +158,8 @@ public class AideDispensationPart1Filler
      * @param part1 Partie 1 à valoriser.
      */
     private void fillPhase(final Essai essai,
-                           final JRBeanFicheAideDispensationPart1 part1)
-    {
-        if (essai.getDetailRecherche().getPhaseRecherche() != null)
-        {
+                           final JRBeanFicheAideDispensationPart1 part1) {
+        if (essai.getDetailRecherche().getPhaseRecherche() != null) {
             part1.setPhase(essai.getDetailRecherche().getPhaseRecherche().getLibelle());
         }
     }
@@ -204,24 +170,19 @@ public class AideDispensationPart1Filler
      * @return Liste des noms des services de l'investigateur
      */
     @SuppressWarnings("unchecked")
-    private Collection<String> prepareNomsServices(final Collection<Service> services)
-    {
-        if (services == null
-            || services.isEmpty())
-        {
+    private Collection<String> prepareNomsServices(final Collection<Service> services) {
+        if ((services == null) || services.isEmpty()) {
             return new ArrayList<String>();
         }
         final Collection collection = new ArrayList(services);
-        CollectionUtils.transform(collection,
-                                  new Transformer() {
+        CollectionUtils.transform(collection, new Transformer() {
 
-                                      @Override
-                                      public Object transform(final Object input)
-                                      {
-                                          final Service service = (Service) input;
-                                          return service.getNom();
-                                      }
-                                  });
+            @Override
+            public Object transform(final Object input) {
+                final Service service = (Service) input;
+                return service.getNom();
+            }
+        });
         return collection;
     }
 
@@ -229,8 +190,7 @@ public class AideDispensationPart1Filler
      * Getter sur jrDataSourceFactory.
      * @return Retourne le jrDataSourceFactory.
      */
-    JRDataSourceFactory getJrDataSourceFactory()
-    {
+    JRDataSourceFactory getJrDataSourceFactory() {
         return this.jrDataSourceFactory;
     }
 
@@ -238,8 +198,7 @@ public class AideDispensationPart1Filler
      * Setter pour jrDataSourceFactory.
      * @param jrDataSourceFactory le jrDataSourceFactory à écrire.
      */
-    public void setJrDataSourceFactory(final JRDataSourceFactory jrDataSourceFactory)
-    {
+    public void setJrDataSourceFactory(final JRDataSourceFactory jrDataSourceFactory) {
         this.jrDataSourceFactory = jrDataSourceFactory;
     }
 
@@ -247,8 +206,7 @@ public class AideDispensationPart1Filler
      * Getter sur habilitationsHelper.
      * @return Retourne le habilitationsHelper.
      */
-    HabilitationsHelper getHabilitationsHelper()
-    {
+    HabilitationsHelper getHabilitationsHelper() {
         return this.habilitationsHelper;
     }
 
@@ -256,8 +214,7 @@ public class AideDispensationPart1Filler
      * Setter pour habilitationsHelper.
      * @param habilitationsHelper le habilitationsHelper à écrire.
      */
-    public void setHabilitationsHelper(final HabilitationsHelper habilitationsHelper)
-    {
+    public void setHabilitationsHelper(final HabilitationsHelper habilitationsHelper) {
         this.habilitationsHelper = habilitationsHelper;
     }
 
@@ -265,8 +222,7 @@ public class AideDispensationPart1Filler
      * Getter sur subFillers.
      * @return Retourne le subFillers.
      */
-    List<JasperReportBeanFiller> getSubFillers()
-    {
+    List<JasperReportBeanFiller> getSubFillers() {
         return this.subFillers;
     }
 
@@ -274,8 +230,7 @@ public class AideDispensationPart1Filler
      * Setter pour subFillers.
      * @param subFillers le subFillers à écrire.
      */
-    public void setSubFillers(final List<JasperReportBeanFiller> subFillers)
-    {
+    public void setSubFillers(final List<JasperReportBeanFiller> subFillers) {
         this.subFillers = subFillers;
     }
 

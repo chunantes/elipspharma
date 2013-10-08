@@ -8,12 +8,10 @@ import fr.pharma.eclipse.utils.constants.EclipseConstants;
 
 /**
  * Description de la classe.
- 
+ * @author Netapsys
  * @version $Revision$ $Date$
  */
-public class ElementToCheckComparator
-    implements Comparator<ElementToCheck>, Serializable
-{
+public class ElementToCheckComparator implements Comparator<ElementToCheck>, Serializable {
     /**
      * SerialVersionUID.
      */
@@ -24,8 +22,7 @@ public class ElementToCheckComparator
      */
     @Override
     public int compare(final ElementToCheck p1,
-                       final ElementToCheck p2)
-    {
+                       final ElementToCheck p2) {
         final String key1 = this.buildKey(p1);
         final String key2 = this.buildKey(p2);
 
@@ -37,8 +34,7 @@ public class ElementToCheckComparator
      * @param p ElementToCheck dont on veut construire la clé.
      * @return La clé du ElementToCheck.
      */
-    private String buildKey(final ElementToCheck p)
-    {
+    private String buildKey(final ElementToCheck p) {
         final StringBuilder builder = new StringBuilder();
         builder.append(p.getNom()).append(EclipseConstants.COMMA);
         builder.append(p.getProduitPrescrit().getId()).append(EclipseConstants.COMMA);

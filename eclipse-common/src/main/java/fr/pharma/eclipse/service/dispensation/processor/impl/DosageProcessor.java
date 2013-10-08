@@ -8,15 +8,12 @@ import fr.pharma.eclipse.domain.model.prescription.ProduitPrescrit;
 import fr.pharma.eclipse.service.dispensation.processor.ConseilDispensationProcessor;
 
 /**
- * Processor en charge de calculer les conseils à la dispensation pour les modes de prescription
- * DOSAGE.
- 
+ * Processor en charge de calculer les conseils à la dispensation pour les modes
+ * de prescription DOSAGE.
+ * @author Netapsys
  * @version $Revision$ $Date$
  */
-public class DosageProcessor
-    extends GenericConseilDispensationProcessor
-    implements ConseilDispensationProcessor, Serializable
-{
+public class DosageProcessor extends GenericConseilDispensationProcessor implements ConseilDispensationProcessor, Serializable {
 
     /**
      * SerialVersionUID.
@@ -27,8 +24,7 @@ public class DosageProcessor
      * {@inheritDoc}
      */
     @Override
-    public ConseilDispensation process(final ProduitPrescrit produitPrescrit)
-    {
+    public ConseilDispensation process(final ProduitPrescrit produitPrescrit) {
         return super.process(produitPrescrit);
     }
 
@@ -36,11 +32,8 @@ public class DosageProcessor
      * {@inheritDoc}
      */
     @Override
-    protected Integer processNbASortir(final ProduitPrescrit produitPrescrit)
-    {
-        return new BigDecimal(this.frequenceHelper.convertToInt(produitPrescrit.getDuree(),
-                                                                produitPrescrit.getFrequence()))
-                .multiply(produitPrescrit.getNbUniteDosage())
+    protected Integer processNbASortir(final ProduitPrescrit produitPrescrit) {
+        return new BigDecimal(this.frequenceHelper.convertToInt(produitPrescrit.getDuree(), produitPrescrit.getFrequence())).multiply(produitPrescrit.getNbUniteDosage())
                 .intValue();
     }
 }

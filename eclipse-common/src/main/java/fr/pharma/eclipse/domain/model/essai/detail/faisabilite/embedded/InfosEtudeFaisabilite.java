@@ -23,14 +23,12 @@ import fr.pharma.eclipse.domain.model.essai.detail.faisabilite.CommentaireEssaiF
 import fr.pharma.eclipse.domain.model.localisation.Service;
 
 /**
- * Informations, de la partie détail de faisabilité de l'essai, relatives à l'étude de
- * faisabilité.
- 
+ * Informations, de la partie détail de faisabilité de l'essai, relatives à
+ * l'étude de faisabilité.
+ * @author Netapsys
  * @version $Revision$ $Date$
  */
-public class InfosEtudeFaisabilite
-    implements Serializable
-{
+public class InfosEtudeFaisabilite implements Serializable {
 
     /**
      * Serial ID.
@@ -71,8 +69,7 @@ public class InfosEtudeFaisabilite
     @JoinTable(name = "essai_detail_faisabilite_service", joinColumns = @JoinColumn(name = "id_essai"), inverseJoinColumns = @JoinColumn(name = "id_service"))
     @LazyCollection(LazyCollectionOption.FALSE)
     @Sort(type = SortType.COMPARATOR, comparator = BeanWithNomComparator.class)
-    private SortedSet<Service> servicesImputation =
-        new TreeSet<Service>(new BeanWithNomComparator());
+    private SortedSet<Service> servicesImputation = new TreeSet<Service>(new BeanWithNomComparator());
 
     /**
      * Commentaires sur la partie achats de produits par la PUI.
@@ -81,8 +78,7 @@ public class InfosEtudeFaisabilite
     @Where(clause = "type='FAISABILITE_ACHAT_PROD'")
     @LazyCollection(LazyCollectionOption.FALSE)
     @Sort(type = SortType.COMPARATOR, comparator = SuiviComparator.class)
-    private SortedSet<CommentaireEssaiFaisabilite> commentairesAchatsPUI =
-        new TreeSet<CommentaireEssaiFaisabilite>(new SuiviComparator());
+    private SortedSet<CommentaireEssaiFaisabilite> commentairesAchatsPUI = new TreeSet<CommentaireEssaiFaisabilite>(new SuiviComparator());
 
     /* ******************************** */
     /* </ACHATS DE PRODUITS PAR LA PUI> */
@@ -167,8 +163,7 @@ public class InfosEtudeFaisabilite
     @Where(clause = "type='FAISABILITE_DISTRIB_PHARMA'")
     @LazyCollection(LazyCollectionOption.FALSE)
     @Sort(type = SortType.COMPARATOR, comparator = SuiviComparator.class)
-    private SortedSet<CommentaireEssaiFaisabilite> commentairesDistribAutresPharma =
-        new TreeSet<CommentaireEssaiFaisabilite>(new SuiviComparator());
+    private SortedSet<CommentaireEssaiFaisabilite> commentairesDistribAutresPharma = new TreeSet<CommentaireEssaiFaisabilite>(new SuiviComparator());
 
     /* ******************************** */
     /* </DISTRIBUTION AUTRES PHARMA> */
@@ -211,24 +206,22 @@ public class InfosEtudeFaisabilite
     @Where(clause = "type='FAISABILITE_ETUDE'")
     @LazyCollection(LazyCollectionOption.FALSE)
     @Sort(type = SortType.COMPARATOR, comparator = SuiviComparator.class)
-    private SortedSet<CommentaireEssaiFaisabilite> commentaires =
-        new TreeSet<CommentaireEssaiFaisabilite>(new SuiviComparator());
+    private SortedSet<CommentaireEssaiFaisabilite> commentaires = new TreeSet<CommentaireEssaiFaisabilite>(new SuiviComparator());
 
     /**
      * Getter sur prestaParticulieresPharmacie.
      * @return Retourne le prestaParticulieresPharmacie.
      */
-    public Boolean getPrestaParticulieresPharmacie()
-    {
+    public Boolean getPrestaParticulieresPharmacie() {
         return this.prestaParticulieresPharmacie;
     }
 
     /**
      * Setter pour prestaParticulieresPharmacie.
-     * @param prestaParticulieresPharmacie le prestaParticulieresPharmacie à écrire.
+     * @param prestaParticulieresPharmacie le prestaParticulieresPharmacie à
+     * écrire.
      */
-    public void setPrestaParticulieresPharmacie(final Boolean prestaParticulieresPharmacie)
-    {
+    public void setPrestaParticulieresPharmacie(final Boolean prestaParticulieresPharmacie) {
         this.prestaParticulieresPharmacie = prestaParticulieresPharmacie;
     }
 
@@ -236,8 +229,7 @@ public class InfosEtudeFaisabilite
      * Getter sur achatsProduitsPUI.
      * @return Retourne le achatsProduitsPUI.
      */
-    public Boolean getAchatsProduitsPUI()
-    {
+    public Boolean getAchatsProduitsPUI() {
         return this.achatsProduitsPUI;
     }
 
@@ -245,8 +237,7 @@ public class InfosEtudeFaisabilite
      * Setter pour achatsProduitsPUI.
      * @param achatsProduitsPUI le achatsProduitsPUI à écrire.
      */
-    public void setAchatsProduitsPUI(final Boolean achatsProduitsPUI)
-    {
+    public void setAchatsProduitsPUI(final Boolean achatsProduitsPUI) {
         this.achatsProduitsPUI = achatsProduitsPUI;
     }
 
@@ -254,8 +245,7 @@ public class InfosEtudeFaisabilite
      * Getter sur refProduitsCHU.
      * @return Retourne le refProduitsCHU.
      */
-    public Boolean getRefProduitsCHU()
-    {
+    public Boolean getRefProduitsCHU() {
         return this.refProduitsCHU;
     }
 
@@ -263,8 +253,7 @@ public class InfosEtudeFaisabilite
      * Setter pour refProduitsCHU.
      * @param refProduitsCHU le refProduitsCHU à écrire.
      */
-    public void setRefProduitsCHU(final Boolean refProduitsCHU)
-    {
+    public void setRefProduitsCHU(final Boolean refProduitsCHU) {
         this.refProduitsCHU = refProduitsCHU;
     }
 
@@ -272,8 +261,7 @@ public class InfosEtudeFaisabilite
      * Getter sur accordPharmaCentrale.
      * @return Retourne le accordPharmaCentrale.
      */
-    public Boolean getAccordPharmaCentrale()
-    {
+    public Boolean getAccordPharmaCentrale() {
         return this.accordPharmaCentrale;
     }
 
@@ -281,8 +269,7 @@ public class InfosEtudeFaisabilite
      * Setter pour accordPharmaCentrale.
      * @param accordPharmaCentrale le accordPharmaCentrale à écrire.
      */
-    public void setAccordPharmaCentrale(final Boolean accordPharmaCentrale)
-    {
+    public void setAccordPharmaCentrale(final Boolean accordPharmaCentrale) {
         this.accordPharmaCentrale = accordPharmaCentrale;
     }
 
@@ -290,8 +277,7 @@ public class InfosEtudeFaisabilite
      * Getter sur servicesImputation.
      * @return Retourne le servicesImputation.
      */
-    public SortedSet<Service> getServicesImputation()
-    {
+    public SortedSet<Service> getServicesImputation() {
         return this.servicesImputation;
     }
 
@@ -299,8 +285,7 @@ public class InfosEtudeFaisabilite
      * Setter pour servicesImputation.
      * @param servicesImputation le servicesImputation à écrire.
      */
-    public void setServicesImputation(final SortedSet<Service> servicesImputation)
-    {
+    public void setServicesImputation(final SortedSet<Service> servicesImputation) {
         this.servicesImputation = servicesImputation;
     }
 
@@ -308,8 +293,7 @@ public class InfosEtudeFaisabilite
      * Getter sur commentairesAchatsPUI.
      * @return Retourne le commentairesAchatsPUI.
      */
-    public SortedSet<CommentaireEssaiFaisabilite> getCommentairesAchatsPUI()
-    {
+    public SortedSet<CommentaireEssaiFaisabilite> getCommentairesAchatsPUI() {
         return this.commentairesAchatsPUI;
     }
 
@@ -317,8 +301,7 @@ public class InfosEtudeFaisabilite
      * Setter pour commentairesAchatsPUI.
      * @param commentairesAchatsPUI le commentairesAchatsPUI à écrire.
      */
-    public void setCommentairesAchatsPUI(final SortedSet<CommentaireEssaiFaisabilite> commentairesAchatsPUI)
-    {
+    public void setCommentairesAchatsPUI(final SortedSet<CommentaireEssaiFaisabilite> commentairesAchatsPUI) {
         this.commentairesAchatsPUI = commentairesAchatsPUI;
     }
 
@@ -326,8 +309,7 @@ public class InfosEtudeFaisabilite
      * Getter sur demandeImportation.
      * @return Retourne le demandeImportation.
      */
-    public Boolean getDemandeImportation()
-    {
+    public Boolean getDemandeImportation() {
         return this.demandeImportation;
     }
 
@@ -335,8 +317,7 @@ public class InfosEtudeFaisabilite
      * Setter pour demandeImportation.
      * @param demandeImportation le demandeImportation à écrire.
      */
-    public void setDemandeImportation(final Boolean demandeImportation)
-    {
+    public void setDemandeImportation(final Boolean demandeImportation) {
         this.demandeImportation = demandeImportation;
     }
 
@@ -344,8 +325,7 @@ public class InfosEtudeFaisabilite
      * Getter sur randomisationParPharma.
      * @return Retourne le randomisationParPharma.
      */
-    public Boolean getRandomisationParPharma()
-    {
+    public Boolean getRandomisationParPharma() {
         return this.randomisationParPharma;
     }
 
@@ -353,8 +333,7 @@ public class InfosEtudeFaisabilite
      * Setter pour randomisationParPharma.
      * @param randomisationParPharma le randomisationParPharma à écrire.
      */
-    public void setRandomisationParPharma(final Boolean randomisationParPharma)
-    {
+    public void setRandomisationParPharma(final Boolean randomisationParPharma) {
         this.randomisationParPharma = randomisationParPharma;
     }
 
@@ -362,8 +341,7 @@ public class InfosEtudeFaisabilite
      * Getter sur randomisationPossEnGarde.
      * @return Retourne le randomisationPossEnGarde.
      */
-    public Boolean getRandomisationPossEnGarde()
-    {
+    public Boolean getRandomisationPossEnGarde() {
         return this.randomisationPossEnGarde;
     }
 
@@ -371,8 +349,7 @@ public class InfosEtudeFaisabilite
      * Setter pour randomisationPossEnGarde.
      * @param randomisationPossEnGarde le randomisationPossEnGarde à écrire.
      */
-    public void setRandomisationPossEnGarde(final Boolean randomisationPossEnGarde)
-    {
+    public void setRandomisationPossEnGarde(final Boolean randomisationPossEnGarde) {
         this.randomisationPossEnGarde = randomisationPossEnGarde;
     }
 
@@ -380,8 +357,7 @@ public class InfosEtudeFaisabilite
      * Getter sur gestionAveugle.
      * @return Retourne le gestionAveugle.
      */
-    public Boolean getGestionAveugle()
-    {
+    public Boolean getGestionAveugle() {
         return this.gestionAveugle;
     }
 
@@ -389,8 +365,7 @@ public class InfosEtudeFaisabilite
      * Setter pour gestionAveugle.
      * @param gestionAveugle le gestionAveugle à écrire.
      */
-    public void setGestionAveugle(final Boolean gestionAveugle)
-    {
+    public void setGestionAveugle(final Boolean gestionAveugle) {
         this.gestionAveugle = gestionAveugle;
     }
 
@@ -398,8 +373,7 @@ public class InfosEtudeFaisabilite
      * Getter sur dispensationPossEnGarde.
      * @return Retourne le dispensationPossEnGarde.
      */
-    public Boolean getDispensationPossEnGarde()
-    {
+    public Boolean getDispensationPossEnGarde() {
         return this.dispensationPossEnGarde;
     }
 
@@ -407,8 +381,7 @@ public class InfosEtudeFaisabilite
      * Setter pour dispensationPossEnGarde.
      * @param dispensationPossEnGarde le dispensationPossEnGarde à écrire.
      */
-    public void setDispensationPossEnGarde(final Boolean dispensationPossEnGarde)
-    {
+    public void setDispensationPossEnGarde(final Boolean dispensationPossEnGarde) {
         this.dispensationPossEnGarde = dispensationPossEnGarde;
     }
 
@@ -416,17 +389,16 @@ public class InfosEtudeFaisabilite
      * Getter sur distribAutresPharmaPossible.
      * @return Retourne le distribAutresPharmaPossible.
      */
-    public Boolean getDistribAutresPharmaPossible()
-    {
+    public Boolean getDistribAutresPharmaPossible() {
         return this.distribAutresPharmaPossible;
     }
 
     /**
      * Setter pour distribAutresPharmaPossible.
-     * @param distribAutresPharmaPossible le distribAutresPharmaPossible à écrire.
+     * @param distribAutresPharmaPossible le distribAutresPharmaPossible à
+     * écrire.
      */
-    public void setDistribAutresPharmaPossible(final Boolean distribAutresPharmaPossible)
-    {
+    public void setDistribAutresPharmaPossible(final Boolean distribAutresPharmaPossible) {
         this.distribAutresPharmaPossible = distribAutresPharmaPossible;
     }
 
@@ -434,8 +406,7 @@ public class InfosEtudeFaisabilite
      * Getter sur circuitDistribDefini.
      * @return Retourne le circuitDistribDefini.
      */
-    public Boolean getCircuitDistribDefini()
-    {
+    public Boolean getCircuitDistribDefini() {
         return this.circuitDistribDefini;
     }
 
@@ -443,8 +414,7 @@ public class InfosEtudeFaisabilite
      * Setter pour circuitDistribDefini.
      * @param circuitDistribDefini le circuitDistribDefini à écrire.
      */
-    public void setCircuitDistribDefini(final Boolean circuitDistribDefini)
-    {
+    public void setCircuitDistribDefini(final Boolean circuitDistribDefini) {
         this.circuitDistribDefini = circuitDistribDefini;
     }
 
@@ -452,8 +422,7 @@ public class InfosEtudeFaisabilite
      * Getter sur socTransportDefinie.
      * @return Retourne le socTransportDefinie.
      */
-    public Boolean getSocTransportDefinie()
-    {
+    public Boolean getSocTransportDefinie() {
         return this.socTransportDefinie;
     }
 
@@ -461,8 +430,7 @@ public class InfosEtudeFaisabilite
      * Setter pour socTransportDefinie.
      * @param socTransportDefinie le socTransportDefinie à écrire.
      */
-    public void setSocTransportDefinie(final Boolean socTransportDefinie)
-    {
+    public void setSocTransportDefinie(final Boolean socTransportDefinie) {
         this.socTransportDefinie = socTransportDefinie;
     }
 
@@ -470,17 +438,16 @@ public class InfosEtudeFaisabilite
      * Getter sur suiviTempNecessairePdtTransp.
      * @return Retourne le suiviTempNecessairePdtTransp.
      */
-    public Boolean getSuiviTempNecessairePdtTransp()
-    {
+    public Boolean getSuiviTempNecessairePdtTransp() {
         return this.suiviTempNecessairePdtTransp;
     }
 
     /**
      * Setter pour suiviTempNecessairePdtTransp.
-     * @param suiviTempNecessairePdtTransp le suiviTempNecessairePdtTransp à écrire.
+     * @param suiviTempNecessairePdtTransp le suiviTempNecessairePdtTransp à
+     * écrire.
      */
-    public void setSuiviTempNecessairePdtTransp(final Boolean suiviTempNecessairePdtTransp)
-    {
+    public void setSuiviTempNecessairePdtTransp(final Boolean suiviTempNecessairePdtTransp) {
         this.suiviTempNecessairePdtTransp = suiviTempNecessairePdtTransp;
     }
 
@@ -488,8 +455,7 @@ public class InfosEtudeFaisabilite
      * Getter sur suiviStocksParPharmacie.
      * @return Retourne le suiviStocksParPharmacie.
      */
-    public Boolean getSuiviStocksParPharmacie()
-    {
+    public Boolean getSuiviStocksParPharmacie() {
         return this.suiviStocksParPharmacie;
     }
 
@@ -497,8 +463,7 @@ public class InfosEtudeFaisabilite
      * Setter pour suiviStocksParPharmacie.
      * @param suiviStocksParPharmacie le suiviStocksParPharmacie à écrire.
      */
-    public void setSuiviStocksParPharmacie(final Boolean suiviStocksParPharmacie)
-    {
+    public void setSuiviStocksParPharmacie(final Boolean suiviStocksParPharmacie) {
         this.suiviStocksParPharmacie = suiviStocksParPharmacie;
     }
 
@@ -506,17 +471,16 @@ public class InfosEtudeFaisabilite
      * Getter sur commentairesDistribAutresPharma.
      * @return Retourne le commentairesDistribAutresPharma.
      */
-    public SortedSet<CommentaireEssaiFaisabilite> getCommentairesDistribAutresPharma()
-    {
+    public SortedSet<CommentaireEssaiFaisabilite> getCommentairesDistribAutresPharma() {
         return this.commentairesDistribAutresPharma;
     }
 
     /**
      * Setter pour commentairesDistribAutresPharma.
-     * @param commentairesDistribAutresPharma le commentairesDistribAutresPharma à écrire.
+     * @param commentairesDistribAutresPharma le commentairesDistribAutresPharma
+     * à écrire.
      */
-    public void setCommentairesDistribAutresPharma(final SortedSet<CommentaireEssaiFaisabilite> commentairesDistribAutresPharma)
-    {
+    public void setCommentairesDistribAutresPharma(final SortedSet<CommentaireEssaiFaisabilite> commentairesDistribAutresPharma) {
         this.commentairesDistribAutresPharma = commentairesDistribAutresPharma;
     }
 
@@ -524,8 +488,7 @@ public class InfosEtudeFaisabilite
      * Getter sur reconstitutions.
      * @return Retourne le reconstitutions.
      */
-    public Boolean getReconstitutions()
-    {
+    public Boolean getReconstitutions() {
         return this.reconstitutions;
     }
 
@@ -533,8 +496,7 @@ public class InfosEtudeFaisabilite
      * Setter pour reconstitutions.
      * @param reconstitutions le reconstitutions à écrire.
      */
-    public void setReconstitutions(final Boolean reconstitutions)
-    {
+    public void setReconstitutions(final Boolean reconstitutions) {
         this.reconstitutions = reconstitutions;
     }
 
@@ -542,8 +504,7 @@ public class InfosEtudeFaisabilite
      * Getter sur preparations.
      * @return Retourne le preparations.
      */
-    public Boolean getPreparations()
-    {
+    public Boolean getPreparations() {
         return this.preparations;
     }
 
@@ -551,8 +512,7 @@ public class InfosEtudeFaisabilite
      * Setter pour preparations.
      * @param preparations le preparations à écrire.
      */
-    public void setPreparations(final Boolean preparations)
-    {
+    public void setPreparations(final Boolean preparations) {
         this.preparations = preparations;
     }
 
@@ -560,8 +520,7 @@ public class InfosEtudeFaisabilite
      * Getter sur etiquetagesPduits.
      * @return Retourne le etiquetagesPduits.
      */
-    public Boolean getEtiquetagesPduits()
-    {
+    public Boolean getEtiquetagesPduits() {
         return this.etiquetagesPduits;
     }
 
@@ -569,8 +528,7 @@ public class InfosEtudeFaisabilite
      * Setter pour etiquetagesPduits.
      * @param etiquetagesPduits le etiquetagesPduits à écrire.
      */
-    public void setEtiquetagesPduits(final Boolean etiquetagesPduits)
-    {
+    public void setEtiquetagesPduits(final Boolean etiquetagesPduits) {
         this.etiquetagesPduits = etiquetagesPduits;
     }
 
@@ -578,8 +536,7 @@ public class InfosEtudeFaisabilite
      * Getter sur conditionnementPduits.
      * @return Retourne le conditionnementPduits.
      */
-    public Boolean getConditionnementPduits()
-    {
+    public Boolean getConditionnementPduits() {
         return this.conditionnementPduits;
     }
 
@@ -587,8 +544,7 @@ public class InfosEtudeFaisabilite
      * Setter pour conditionnementPduits.
      * @param conditionnementPduits le conditionnementPduits à écrire.
      */
-    public void setConditionnementPduits(final Boolean conditionnementPduits)
-    {
+    public void setConditionnementPduits(final Boolean conditionnementPduits) {
         this.conditionnementPduits = conditionnementPduits;
     }
 
@@ -596,8 +552,7 @@ public class InfosEtudeFaisabilite
      * Getter sur donneesStabilite.
      * @return Retourne le donneesStabilite.
      */
-    public Boolean getDonneesStabilite()
-    {
+    public Boolean getDonneesStabilite() {
         return this.donneesStabilite;
     }
 
@@ -605,8 +560,7 @@ public class InfosEtudeFaisabilite
      * Setter pour donneesStabilite.
      * @param donneesStabilite le donneesStabilite à écrire.
      */
-    public void setDonneesStabilite(final Boolean donneesStabilite)
-    {
+    public void setDonneesStabilite(final Boolean donneesStabilite) {
         this.donneesStabilite = donneesStabilite;
     }
 
@@ -614,8 +568,7 @@ public class InfosEtudeFaisabilite
      * Getter sur commentaires.
      * @return Retourne le commentaires.
      */
-    public SortedSet<CommentaireEssaiFaisabilite> getCommentaires()
-    {
+    public SortedSet<CommentaireEssaiFaisabilite> getCommentaires() {
         return this.commentaires;
     }
 
@@ -623,8 +576,7 @@ public class InfosEtudeFaisabilite
      * Setter pour commentaires.
      * @param commentaires le commentaires à écrire.
      */
-    public void setCommentaires(final SortedSet<CommentaireEssaiFaisabilite> commentaires)
-    {
+    public void setCommentaires(final SortedSet<CommentaireEssaiFaisabilite> commentaires) {
         this.commentaires = commentaires;
     }
 

@@ -16,13 +16,10 @@ import fr.pharma.eclipse.service.indicateur.builder.IndicateurBuilder;
 
 /**
  * Classe en charge de construire l'indicateur Nombre de dotations.
- 
+ * @author Netapsys
  * @version $Revision$ $Date$
  */
-public class NbDotationBuilder
-    extends AbstractDispensationBuilder
-    implements Serializable, IndicateurBuilder
-{
+public class NbDotationBuilder extends AbstractDispensationBuilder implements Serializable, IndicateurBuilder {
 
     /**
      * SerialVersionUID.
@@ -46,15 +43,11 @@ public class NbDotationBuilder
     @Override
     public Indicateur build(final Pharmacie pharmacie,
                             final Calendar dateDebut,
-                            final Calendar dateFin)
-    {
+                            final Calendar dateFin) {
 
-        final List<Dotation> results = this.loadDotations(pharmacie,
-                                                          dateDebut,
-                                                          dateFin);
+        final List<Dotation> results = this.loadDotations(pharmacie, dateDebut, dateFin);
 
-        return new Indicateur(this.libelle,
-                              new BigDecimal(results.size()));
+        return new Indicateur(this.libelle, new BigDecimal(results.size()));
     }
 
     /**
@@ -65,8 +58,7 @@ public class NbDotationBuilder
      */
     protected List<Dotation> loadDotations(final Pharmacie pharmacie,
                                            final Calendar dateDebut,
-                                           final Calendar dateFin)
-    {
+                                           final Calendar dateFin) {
         final DotationSearchCriteria criteria = new DotationSearchCriteria();
         criteria.setDateDebut(dateDebut);
         criteria.setDateFin(dateFin);
@@ -80,8 +72,7 @@ public class NbDotationBuilder
      * Getter pour libelle.
      * @return Le libelle
      */
-    public String getLibelle()
-    {
+    public String getLibelle() {
         return this.libelle;
     }
 
@@ -89,8 +80,7 @@ public class NbDotationBuilder
      * Setter pour libelle.
      * @param libelle Le libelle à écrire.
      */
-    public void setLibelle(final String libelle)
-    {
+    public void setLibelle(final String libelle) {
         this.libelle = libelle;
     }
 
@@ -98,8 +88,7 @@ public class NbDotationBuilder
      * Setter pour dotationService.
      * @param dotationServiceS Le dotationService à écrire.
      */
-    public void setDotationService(final DotationService dotationService)
-    {
+    public void setDotationService(final DotationService dotationService) {
         this.dotationService = dotationService;
     }
 }

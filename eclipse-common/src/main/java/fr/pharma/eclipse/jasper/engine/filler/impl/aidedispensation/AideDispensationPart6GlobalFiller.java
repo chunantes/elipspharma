@@ -9,13 +9,12 @@ import fr.pharma.eclipse.domain.model.essai.detail.pharma.embedded.InfosCompleme
 import fr.pharma.eclipse.jasper.engine.filler.JasperReportBeanFiller;
 
 /**
- * Filler en charge de valoriser les attributs de {@link JRBeanFicheAideDispensationPart6}.
- 
+ * Filler en charge de valoriser les attributs de
+ * {@link JRBeanFicheAideDispensationPart6}.
+ * @author Netapsys
  * @version $Revision$ $Date$
  */
-public class AideDispensationPart6GlobalFiller
-    implements JasperReportBeanFiller
-{
+public class AideDispensationPart6GlobalFiller implements JasperReportBeanFiller {
     /**
      * Serial ID.
      */
@@ -26,24 +25,19 @@ public class AideDispensationPart6GlobalFiller
      */
     @Override
     public void fill(final Essai essai,
-                     final JasperReportBean bean)
-    {
+                     final JasperReportBean bean) {
         final JRBeanFicheAideDispensationPart6 partie6 = (JRBeanFicheAideDispensationPart6) bean;
-        final InfosComplementaires infosComplementaires =
-            essai.getDetailDonneesPharma().getInfosComplementaires();
+        final InfosComplementaires infosComplementaires = essai.getDetailDonneesPharma().getInfosComplementaires();
 
         // Gestion des retours
         final Responsabilite resp = infosComplementaires.getGestionRetour();
-        if (resp != null)
-        {
+        if (resp != null) {
             partie6.setRespRetour(resp.getLibelle());
         }
 
         // Type de retour
         final TypeMvtStock typeMvtStock = infosComplementaires.getTypeRetour();
-        if (Responsabilite.PHARMACIE.equals(resp)
-            && typeMvtStock != null)
-        {
+        if (Responsabilite.PHARMACIE.equals(resp) && (typeMvtStock != null)) {
             partie6.setTypeRetour(typeMvtStock.getLibelle());
         }
     }

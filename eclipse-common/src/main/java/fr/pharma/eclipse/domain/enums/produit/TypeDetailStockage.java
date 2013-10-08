@@ -2,11 +2,10 @@ package fr.pharma.eclipse.domain.enums.produit;
 
 /**
  * Enumération représentant le type de détails stockage.
- 
+ * @author Netapsys
  * @version $Revision$ $Date$
  */
-public enum TypeDetailStockage
-{
+public enum TypeDetailStockage {
     /**
      * Retour.
      */
@@ -26,8 +25,7 @@ public enum TypeDetailStockage
      * Constructeur.
      * @param libelle Le libellé du type de produit.
      */
-    TypeDetailStockage(final String libelle)
-    {
+    TypeDetailStockage(final String libelle) {
         this.libelle = libelle;
     }
 
@@ -35,8 +33,7 @@ public enum TypeDetailStockage
      * Getter pour libelle.
      * @return Retourne le libelle.
      */
-    public String getLibelle()
-    {
+    public String getLibelle() {
         return this.libelle;
     }
 
@@ -44,8 +41,7 @@ public enum TypeDetailStockage
      * {@inheritDoc}
      */
     @Override
-    public String toString()
-    {
+    public String toString() {
         return this.getLibelle();
     }
 

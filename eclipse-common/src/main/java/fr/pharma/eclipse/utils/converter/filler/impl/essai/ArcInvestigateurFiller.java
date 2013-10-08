@@ -18,14 +18,12 @@ import fr.pharma.eclipse.utils.converter.BeanConverter;
 import fr.pharma.eclipse.utils.converter.filler.Filler;
 
 /**
- * Filler en charge de populer les informations relatives aux arc investigateurs dans les beans
- * Essai à partir de bean EssaiSigrec.
- 
+ * Filler en charge de populer les informations relatives aux arc investigateurs
+ * dans les beans Essai à partir de bean EssaiSigrec.
+ * @author Netapsys
  * @version $Revision$ $Date$
  */
-public class ArcInvestigateurFiller
-    implements Filler<EssaiSigrec, Essai>
-{
+public class ArcInvestigateurFiller implements Filler<EssaiSigrec, Essai> {
 
     /**
      * Converter.
@@ -50,55 +48,46 @@ public class ArcInvestigateurFiller
      */
     @Override
     public void fill(final EssaiSigrec source,
-                     final Essai destination)
-    {
+                     final Essai destination) {
 
         // Co investigateurs.
-        for (final ARCInvestigateurSigrec i : source.getArcInvestigateurs())
-        {
-            this.process(i,
-                         Droit.ARC_INVESTIGATEUR,
-                         destination);
+        for (final ARCInvestigateurSigrec i : source.getArcInvestigateurs()) {
+            this.process(i, Droit.ARC_INVESTIGATEUR, destination);
         }
     }
 
     /**
-     * Méthode en charge d'attacher l'arc investigateur en paramètre selon les droit en paramètre
-     * sur l'essai en paramètre.
+     * Méthode en charge d'attacher l'arc investigateur en paramètre selon les
+     * droit en paramètre sur l'essai en paramètre.
      * @param intervenant L'invistigateur.
      * @param droit Le droit.
      * @param essai L'essai.
      */
     private void process(final ARCInvestigateurSigrec intervenant,
                          final Droit droit,
-                         final Essai essai)
-    {
+                         final Essai essai) {
         // Recherche de l'investigateur en base.
         ArcInvestigateur investigateur = this.searchPersonne(intervenant);
 
         // S'il est null on l'initialise.
-        if (investigateur == null)
-        {
+        if (investigateur == null) {
             investigateur = this.converter.convert(intervenant);
             investigateur = this.service.saveForSigrec(investigateur);
         }
 
         // Construction de l'habilitation.
-        this.buildHabilitation(essai,
-                               investigateur,
-                               droit);
+        this.buildHabilitation(essai, investigateur, droit);
     }
     /**
-     * Méthode en charge de construire l'habilitation pour l'essai, le droit et la personne en
-     * paramètre.
+     * Méthode en charge de construire l'habilitation pour l'essai, le droit et
+     * la personne en paramètre.
      * @param essai L'essai.
      * @param personne La personne.
      * @param droit Le droit.
      */
     private void buildHabilitation(final Essai essai,
                                    final Personne personne,
-                                   final Droit droit)
-    {
+                                   final Droit droit) {
         final Habilitation h = this.habilitationFactory.getInitializedObject();
         h.setPersonne(personne);
         h.setDetailContacts(essai.getDetailContacts());
@@ -107,22 +96,20 @@ public class ArcInvestigateurFiller
     }
 
     /**
-     * Retourne <code>true</code> si l'investigateur en parametre est présent en base.
+     * Retourne <code>true</code> si l'investigateur en parametre est présent en
+     * base.
      * @param intervenant L'investigateur.
-     * @return <code>true</code> si l'investigateur en parametre est présent en base.
+     * @return <code>true</code> si l'investigateur en parametre est présent en
+     * base.
      */
-    private ArcInvestigateur searchPersonne(final ARCInvestigateurSigrec intervenant)
-    {
+    private ArcInvestigateur searchPersonne(final ARCInvestigateurSigrec intervenant) {
         final PersonneSearchCriteria criteria = new PersonneSearchCriteria();
         criteria.setNom(intervenant.getContact().getNom());
         criteria.setPrenom(intervenant.getContact().getPrenom());
         final List<ArcInvestigateur> results = this.service.getAll(criteria);
-        if (results.size() > 0)
-        {
+        if (results.size() > 0) {
             return results.get(0);
-        }
-        else
-        {
+        } else {
             return null;
         }
     }
@@ -131,8 +118,7 @@ public class ArcInvestigateurFiller
      * {@inheritDoc}
      */
     @Override
-    public boolean support(final EssaiSigrec source)
-    {
+    public boolean support(final EssaiSigrec source) {
         return source != null;
     }
 
@@ -140,8 +126,7 @@ public class ArcInvestigateurFiller
      * Setter pour converter.
      * @param converter le converter à écrire.
      */
-    public void setConverter(final BeanConverter<ARCInvestigateurSigrec, ArcInvestigateur> converter)
-    {
+    public void setConverter(final BeanConverter<ARCInvestigateurSigrec, ArcInvestigateur> converter) {
         this.converter = converter;
     }
 
@@ -149,8 +134,7 @@ public class ArcInvestigateurFiller
      * Setter pour service.
      * @param service le service à écrire.
      */
-    public void setService(final PersonneService<ArcInvestigateur> service)
-    {
+    public void setService(final PersonneService<ArcInvestigateur> service) {
         this.service = service;
     }
 
@@ -158,8 +142,7 @@ public class ArcInvestigateurFiller
      * Setter pour habilitationFactory.
      * @param habilitationFactory le habilitationFactory à écrire.
      */
-    public void setHabilitationFactory(final HabilitationFactory habilitationFactory)
-    {
+    public void setHabilitationFactory(final HabilitationFactory habilitationFactory) {
         this.habilitationFactory = habilitationFactory;
     }
 

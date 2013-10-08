@@ -18,16 +18,15 @@ import fr.pharma.eclipse.domain.model.essai.DocumentEssai;
 import fr.pharma.eclipse.domain.model.essai.detail.pharma.DetailDonneesPharma;
 
 /**
- * Bean métier représentant un document d'essai clinique rattaché au détail Donnees Pharma.
- 
+ * Bean métier représentant un document d'essai clinique rattaché au détail
+ * Donnees Pharma.
+ * @author Netapsys
  * @version $Revision$ $Date$
  */
 @Entity(name = "essai_document_detail_pharma")
 @Inheritance(strategy = InheritanceType.SINGLE_TABLE)
 @DiscriminatorColumn(name = "type", discriminatorType = DiscriminatorType.STRING)
-public abstract class DocumentDonneesPharma
-    extends DocumentEssai
-{
+public abstract class DocumentDonneesPharma extends DocumentEssai {
 
     /**
      * SerialVersionUID.
@@ -53,8 +52,7 @@ public abstract class DocumentDonneesPharma
      * Getter sur detailDonneesPharma.
      * @return Retourne le detailDonneesPharma.
      */
-    public DetailDonneesPharma getDetailDonneesPharma()
-    {
+    public DetailDonneesPharma getDetailDonneesPharma() {
         return this.detailDonneesPharma;
     }
 
@@ -62,8 +60,7 @@ public abstract class DocumentDonneesPharma
      * Setter pour detailDonneesPharma.
      * @param detailDonneesPharma le detailDonneesPharma à écrire.
      */
-    public void setDetailDonneesPharma(final DetailDonneesPharma detailDonneesPharma)
-    {
+    public void setDetailDonneesPharma(final DetailDonneesPharma detailDonneesPharma) {
         this.detailDonneesPharma = detailDonneesPharma;
     }
 
@@ -72,8 +69,7 @@ public abstract class DocumentDonneesPharma
      * @return Retourne le type.
      */
     @Override
-    public TypeDocumentEssai getType()
-    {
+    public TypeDocumentEssai getType() {
         return this.type;
     }
 
@@ -82,8 +78,7 @@ public abstract class DocumentDonneesPharma
      * @param type le type à écrire.
      */
     @Override
-    public void setType(final TypeDocumentEssai type)
-    {
+    public void setType(final TypeDocumentEssai type) {
         this.type = type;
     }
 

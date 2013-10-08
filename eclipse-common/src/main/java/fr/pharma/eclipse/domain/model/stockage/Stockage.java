@@ -27,13 +27,11 @@ import fr.pharma.eclipse.utils.constants.EclipseConstants;
 
 /**
  * Bean métier représentant un lieu de stockage.
- 
+ * @author Netapsys
  * @version $Revision$ $Date$
  */
 @Entity(name = "stockage")
-public class Stockage
-    extends BeanObject
-{
+public class Stockage extends BeanObject {
     /**
      * Serial ID.
      */
@@ -42,8 +40,7 @@ public class Stockage
     /**
      * Stockage parent.
      */
-    @ManyToOne(cascade =
-    {CascadeType.MERGE, CascadeType.REFRESH })
+    @ManyToOne(cascade = {CascadeType.MERGE, CascadeType.REFRESH })
     @JoinColumn(name = "id_stockage_parent")
     @Index(name = "idx_stockage_parent")
     private Stockage parent;
@@ -101,8 +98,7 @@ public class Stockage
      * Getter pour nom.
      * @return Le nom
      */
-    public String getNom()
-    {
+    public String getNom() {
         return this.nom;
     }
 
@@ -110,8 +106,7 @@ public class Stockage
      * Setter pour nom.
      * @param nom Le nom à écrire.
      */
-    public void setNom(final String nom)
-    {
+    public void setNom(final String nom) {
         this.nom = nom;
     }
 
@@ -119,8 +114,7 @@ public class Stockage
      * Getter pour parent.
      * @return Le parent
      */
-    public Stockage getParent()
-    {
+    public Stockage getParent() {
         return this.parent;
     }
 
@@ -128,8 +122,7 @@ public class Stockage
      * Setter pour parent.
      * @param parent Le parent à écrire.
      */
-    public void setParent(final Stockage parent)
-    {
+    public void setParent(final Stockage parent) {
         this.parent = parent;
     }
 
@@ -137,8 +130,7 @@ public class Stockage
      * Getter pour enfants.
      * @return Le enfants
      */
-    public SortedSet<Stockage> getEnfants()
-    {
+    public SortedSet<Stockage> getEnfants() {
         return this.enfants;
     }
 
@@ -146,8 +138,7 @@ public class Stockage
      * Setter pour enfants.
      * @param enfants Le enfants à écrire.
      */
-    public void setEnfants(final SortedSet<Stockage> enfants)
-    {
+    public void setEnfants(final SortedSet<Stockage> enfants) {
         this.enfants = enfants;
     }
 
@@ -155,8 +146,7 @@ public class Stockage
      * Getter pour conservation.
      * @return Le conservation
      */
-    public ConditionConservation getConservation()
-    {
+    public ConditionConservation getConservation() {
         return this.conservation;
     }
 
@@ -164,8 +154,7 @@ public class Stockage
      * Setter pour conservation.
      * @param conservation Le conservation à écrire.
      */
-    public void setConservation(final ConditionConservation conservation)
-    {
+    public void setConservation(final ConditionConservation conservation) {
         this.conservation = conservation;
     }
 
@@ -173,8 +162,7 @@ public class Stockage
      * Getter pour pharmacie.
      * @return Le pharmacie
      */
-    public Pharmacie getPharmacie()
-    {
+    public Pharmacie getPharmacie() {
         return this.pharmacie;
     }
 
@@ -182,8 +170,7 @@ public class Stockage
      * Setter pour pharmacie.
      * @param pharmacie Le pharmacie à écrire.
      */
-    public void setPharmacie(final Pharmacie pharmacie)
-    {
+    public void setPharmacie(final Pharmacie pharmacie) {
         this.pharmacie = pharmacie;
     }
 
@@ -191,27 +178,35 @@ public class Stockage
      * Méthode en charge de retouner le nom complet d'un stockage.
      * @return Nom complet du stockage (inclusion du nom du parent).
      */
-    public String getNomComplet()
-    {
+    public String getNomComplet() {
         String result = this.getNom();
 
         Stockage stockParent = this.getParent();
-        while (stockParent != null)
-        {
-            result = stockParent.getNom()
-                     + EclipseConstants.DASH
-                     + result;
+        while (stockParent != null) {
+            result = stockParent.getNom() + EclipseConstants.DASH + result;
             stockParent = stockParent.getParent();
         }
         return result;
     }
 
     /**
+     * Cette méthode permet de contourner un bug du composant Tree de
+     * PrimeFaces.<br>
+     * En effet, lorsqu'un nom de stockage contient un apostrophe, il se produit
+     * une erreur javascript car le délimiteur de propriétés contenu dans le
+     * JSON alimentant le p:tree est l'apostrophe. <br>
+     * Cette méthode permet donc de recuperer le nom du stockage en remplaçant
+     * les apostrophe par leur équivalent unicode.
+     * @return le nom du stockage
+     */
+    public String getNomPourPTree() {
+        return this.nom != null ? this.nom.replace("'", "&#39;") : null;
+    }
+    /**
      * Getter pour identifiantStockage.
      * @return Le identifiantStockage
      */
-    public String getIdentifiantStockage()
-    {
+    public String getIdentifiantStockage() {
         return this.identifiantStockage;
     }
 
@@ -219,8 +214,7 @@ public class Stockage
      * Setter pour identifiantStockage.
      * @param identifiantStockage Le identifiantStockage à écrire.
      */
-    public void setIdentifiantStockage(final String identifiantStockage)
-    {
+    public void setIdentifiantStockage(final String identifiantStockage) {
         this.identifiantStockage = identifiantStockage;
     }
 
@@ -228,8 +222,7 @@ public class Stockage
      * Getter pour identifiantSondeTemp.
      * @return Le identifiantSondeTemp
      */
-    public String getIdentifiantSondeTemp()
-    {
+    public String getIdentifiantSondeTemp() {
         return this.identifiantSondeTemp;
     }
 
@@ -237,8 +230,7 @@ public class Stockage
      * Setter pour identifiantSondeTemp.
      * @param identifiantSondeTemp Le identifiantSondeTemp à écrire.
      */
-    public void setIdentifiantSondeTemp(final String identifiantSondeTemp)
-    {
+    public void setIdentifiantSondeTemp(final String identifiantSondeTemp) {
         this.identifiantSondeTemp = identifiantSondeTemp;
     }
 
@@ -246,17 +238,16 @@ public class Stockage
      * Getter pour identifiantEnregistreurTemp.
      * @return Le identifiantEnregistreurTemp
      */
-    public String getIdentifiantEnregistreurTemp()
-    {
+    public String getIdentifiantEnregistreurTemp() {
         return this.identifiantEnregistreurTemp;
     }
 
     /**
      * Setter pour identifiantEnregistreurTemp.
-     * @param identifiantEnregistreurTemp Le identifiantEnregistreurTemp à écrire.
+     * @param identifiantEnregistreurTemp Le identifiantEnregistreurTemp à
+     * écrire.
      */
-    public void setIdentifiantEnregistreurTemp(final String identifiantEnregistreurTemp)
-    {
+    public void setIdentifiantEnregistreurTemp(final String identifiantEnregistreurTemp) {
         this.identifiantEnregistreurTemp = identifiantEnregistreurTemp;
     }
 
@@ -264,8 +255,7 @@ public class Stockage
      * {@inheritDoc}
      */
     @Override
-    public String toString()
-    {
+    public String toString() {
         final StringBuilder builder = new StringBuilder("[");
         builder.append("id: ").append(this.getId());
         builder.append(", pharmacie: ").append(this.pharmacie);

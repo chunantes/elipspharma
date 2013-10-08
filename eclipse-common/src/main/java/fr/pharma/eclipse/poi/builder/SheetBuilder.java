@@ -10,12 +10,12 @@ import fr.pharma.eclipse.domain.model.surcout.Item;
 import fr.pharma.eclipse.domain.model.surcout.Resultat;
 
 /**
- * Interface définissant le comportement des builders en charge de construire la feuille excel.
- 
+ * Interface définissant le comportement des builders en charge de construire la
+ * feuille excel.
+ * @author Netapsys
  * @version $Revision$ $Date$
  */
-public interface SheetBuilder
-{
+public interface SheetBuilder {
     /**
      * Méthode en charge de construire le feuille excel.
      * @param essai L'essai.

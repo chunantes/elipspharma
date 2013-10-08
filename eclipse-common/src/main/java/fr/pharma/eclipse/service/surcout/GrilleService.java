@@ -11,14 +11,13 @@ import fr.pharma.eclipse.service.common.GenericService;
 
 /**
  * Interface des services de gestion des grilles.
- 
+ * @author Netapsys
  * @version $Revision$ $Date$
  */
-public interface GrilleService
-    extends GenericService<Grille>
-{
+public interface GrilleService extends GenericService<Grille> {
     /**
-     * Méthode en charge d'effectuer les calculs de couts réels sur la grille en paramètre.
+     * Méthode en charge d'effectuer les calculs de couts réels sur la grille en
+     * paramètre.
      * @param grille La grille.
      * @param dateDebut Date de début de l'intervalle de calcul.
      * @param dateFin Date de fin de l'intervalle de calcul.
@@ -29,8 +28,8 @@ public interface GrilleService
                                     final Calendar dateFin);
 
     /**
-     * Méthode en charge d'effectuer les calculs de couts prévisionnels sur la grille en
-     * paramètre.
+     * Méthode en charge d'effectuer les calculs de couts prévisionnels sur la
+     * grille en paramètre.
      * @param grille La grille.
      * @param prevision Les données prévisonnelles.
      * @return Une Map associant un item et son cout.

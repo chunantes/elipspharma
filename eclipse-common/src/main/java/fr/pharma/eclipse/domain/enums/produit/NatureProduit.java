@@ -2,11 +2,10 @@ package fr.pharma.eclipse.domain.enums.produit;
 
 /**
  * Enumération représentant la nature d'un produit.
- 
+ * @author Netapsys
  * @version $Revision$ $Date$
  */
-public enum NatureProduit
-{
+public enum NatureProduit {
     /**
      * Produit évalué.
      */
@@ -31,8 +30,7 @@ public enum NatureProduit
      * Constructeur.
      * @param libelle Le libellé de la nature du produit.
      */
-    NatureProduit(final String libelle)
-    {
+    NatureProduit(final String libelle) {
         this.libelle = libelle;
     }
 
@@ -40,8 +38,7 @@ public enum NatureProduit
      * Getter pour libelle.
      * @return Retourne le libelle.
      */
-    public String getLibelle()
-    {
+    public String getLibelle() {
         return this.libelle;
     }
 
@@ -49,8 +46,7 @@ public enum NatureProduit
      * {@inheritDoc}
      */
     @Override
-    public String toString()
-    {
+    public String toString() {
         return this.getLibelle();
     }
 

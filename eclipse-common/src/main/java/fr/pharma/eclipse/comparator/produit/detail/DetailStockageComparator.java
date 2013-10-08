@@ -11,12 +11,10 @@ import fr.pharma.eclipse.utils.constants.EclipseConstants;
 
 /**
  * Classe de comparator de détail de stockage.
- 
+ * @author Netapsys
  * @version $Revision$ $Date$
  */
-public class DetailStockageComparator
-    implements Serializable, Comparator<DetailStockage>
-{
+public class DetailStockageComparator implements Serializable, Comparator<DetailStockage> {
 
     /**
      * Serial ID.
@@ -31,8 +29,7 @@ public class DetailStockageComparator
     /**
      * Constructeur.
      */
-    public DetailStockageComparator()
-    {
+    public DetailStockageComparator() {
         this.helper = new DetailStockageComparatorHelper();
     }
 
@@ -41,34 +38,28 @@ public class DetailStockageComparator
      */
     @Override
     public int compare(final DetailStockage detailSto1,
-                       final DetailStockage detailSto2)
-    {
+                       final DetailStockage detailSto2) {
         final String key1 = this.buildKey(detailSto1);
         final String key2 = this.buildKey(detailSto2);
         return key1.compareTo(key2);
     }
 
     /**
-     * Méthode en charge de construire la clé à comparer d'un détail de stockage.
+     * Méthode en charge de construire la clé à comparer d'un détail de
+     * stockage.
      * @param detailStockage Détail de stockage.
-     * @return La clé du détail de stockage (idPharma + libellé nom stockage + id de stockage).
+     * @return La clé du détail de stockage (idPharma + libellé nom stockage +
+     * id de stockage).
      */
-    private String buildKey(final DetailStockage detailStockage)
-    {
+    private String buildKey(final DetailStockage detailStockage) {
         final StringBuilder keyBuilder = new StringBuilder();
         final String defaultValue = StringUtils.EMPTY;
         final String separateur = EclipseConstants.SEMI_COLON;
-        this.helper.appendPharmaciePart(keyBuilder,
-                                        detailStockage.getPharmacie(),
-                                        defaultValue);
+        this.helper.appendPharmaciePart(keyBuilder, detailStockage.getPharmacie(), defaultValue);
         keyBuilder.append(separateur);
-        this.helper.appendStockagePart(keyBuilder,
-                                       detailStockage.getStockage(),
-                                       defaultValue);
+        this.helper.appendStockagePart(keyBuilder, detailStockage.getStockage(), defaultValue);
         keyBuilder.append(separateur);
-        this.helper.appendIdStockagePart(keyBuilder,
-                                         detailStockage.getIdentifiantStockage(),
-                                         defaultValue);
+        this.helper.appendIdStockagePart(keyBuilder, detailStockage.getIdentifiantStockage(), defaultValue);
         return keyBuilder.toString();
     }
 
@@ -76,8 +67,7 @@ public class DetailStockageComparator
      * Getter sur helper.
      * @return Retourne le helper.
      */
-    DetailStockageComparatorHelper getHelper()
-    {
+    DetailStockageComparatorHelper getHelper() {
         return this.helper;
     }
 
@@ -85,8 +75,7 @@ public class DetailStockageComparator
      * Setter pour helper.
      * @param helper le helper à écrire.
      */
-    public void setHelper(final DetailStockageComparatorHelper helper)
-    {
+    public void setHelper(final DetailStockageComparatorHelper helper) {
         this.helper = helper;
     }
 }

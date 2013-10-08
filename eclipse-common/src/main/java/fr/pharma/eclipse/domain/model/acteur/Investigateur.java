@@ -20,14 +20,12 @@ import fr.pharma.eclipse.domain.model.localisation.Service;
 
 /**
  * Classe métier représentant un investigateur.
- 
+ * @author Netapsys
  * @version $Revision$ $Date$
  */
 @Entity
 @DiscriminatorValue("INVESTIGATEUR")
-public class Investigateur
-    extends Personne
-{
+public class Investigateur extends Personne {
     /**
      * Serial ID.
      */
@@ -52,8 +50,7 @@ public class Investigateur
      * Getter sur titre.
      * @return Retourne le titre.
      */
-    public String getTitre()
-    {
+    public String getTitre() {
         return this.titre;
     }
 
@@ -61,8 +58,7 @@ public class Investigateur
      * Setter pour titre.
      * @param titre le titre à écrire.
      */
-    public void setTitre(final String titre)
-    {
+    public void setTitre(final String titre) {
         this.titre = titre;
     }
 
@@ -70,8 +66,7 @@ public class Investigateur
      * Getter sur services.
      * @return Retourne le services.
      */
-    public SortedSet<Service> getServices()
-    {
+    public SortedSet<Service> getServices() {
         return this.services;
     }
 
@@ -79,8 +74,7 @@ public class Investigateur
      * Setter pour services.
      * @param services le services à écrire.
      */
-    public void setServices(final SortedSet<Service> services)
-    {
+    public void setServices(final SortedSet<Service> services) {
         this.services = services;
     }
 

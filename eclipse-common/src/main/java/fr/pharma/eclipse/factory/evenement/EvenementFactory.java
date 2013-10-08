@@ -8,12 +8,10 @@ import fr.pharma.eclipse.service.user.UserService;
 
 /**
  * Factory de Bean Evenement.
- 
+ * @author Netapsys
  * @version $Revision$ $Date$
  */
-public class EvenementFactory
-    extends BeanObjectFactory<Evenement>
-{
+public class EvenementFactory extends BeanObjectFactory<Evenement> {
     /**
      * Serial ID.
      */
@@ -29,8 +27,7 @@ public class EvenementFactory
      * Constructeur.
      * @param bean Classe.
      */
-    public EvenementFactory(final Class<Evenement> bean)
-    {
+    public EvenementFactory(final Class<Evenement> bean) {
         super(bean);
     }
 
@@ -41,8 +38,7 @@ public class EvenementFactory
      * @return Dotation.
      */
     @Override
-    public Evenement getInitializedObject()
-    {
+    public Evenement getInitializedObject() {
         final Evenement evenement = super.getInitializedObject();
         evenement.setResponsable(this.userService.getPersonne());
         return evenement;
@@ -52,8 +48,7 @@ public class EvenementFactory
      * Setter pour userService.
      * @param userService Le userService à écrire.
      */
-    public void setUserService(final UserService userService)
-    {
+    public void setUserService(final UserService userService) {
         this.userService = userService;
     }
 

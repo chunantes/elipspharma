@@ -12,13 +12,11 @@ import fr.pharma.eclipse.domain.model.suivi.common.Suivi;
 
 /**
  * Bean métier représentant les suivis de modifications sur le bean Pharmacie.
- 
+ * @author Netapsys
  * @version $Revision$ $Date$
  */
 @Entity(name = "pharmacie_suivi")
-public class PharmacieSuivi
-    extends Suivi
-{
+public class PharmacieSuivi extends Suivi {
     /**
      * Serial ID.
      */
@@ -36,8 +34,7 @@ public class PharmacieSuivi
      * Getter sur pharmacie.
      * @return Retourne le pharmacie.
      */
-    public Pharmacie getPharmacie()
-    {
+    public Pharmacie getPharmacie() {
         return this.pharmacie;
     }
 
@@ -45,8 +42,7 @@ public class PharmacieSuivi
      * Setter pour pharmacie.
      * @param pharmacie le pharmacie à écrire.
      */
-    public void setPharmacie(final Pharmacie pharmacie)
-    {
+    public void setPharmacie(final Pharmacie pharmacie) {
         this.pharmacie = pharmacie;
     }
 

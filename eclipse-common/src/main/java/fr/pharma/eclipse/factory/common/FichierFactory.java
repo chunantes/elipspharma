@@ -6,12 +6,10 @@ import fr.pharma.eclipse.domain.model.common.Fichier;
 
 /**
  * Fabrique d'objets {@link Fichier}.
- 
+ * @author Netapsys
  * @version $Revision$ $Date$
  */
-public class FichierFactory
-    implements Serializable
-{
+public class FichierFactory implements Serializable {
 
     /**
      * Serial ID.
@@ -22,8 +20,7 @@ public class FichierFactory
      * Méthode de création d'un nouveau fichier.
      * @return Fichier.
      */
-    public Fichier getInitializedObject()
-    {
+    public Fichier getInitializedObject() {
         return new Fichier();
     }
 

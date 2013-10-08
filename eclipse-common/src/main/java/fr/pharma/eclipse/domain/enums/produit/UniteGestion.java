@@ -2,11 +2,10 @@ package fr.pharma.eclipse.domain.enums.produit;
 
 /**
  * Enumération représentant les unités de gestion d'une prescription.
- 
+ * @author Netapsys
  * @version $Revision$ $Date$
  */
-public enum UniteGestion
-{
+public enum UniteGestion {
 
     /**
      * Boite.
@@ -62,8 +61,7 @@ public enum UniteGestion
      * Constructeur.
      * @param libelle Le libellé de la nature du Dm.
      */
-    UniteGestion(final String libelle, final TypeUniteGestion type)
-    {
+    UniteGestion(final String libelle, final TypeUniteGestion type) {
         this.libelle = libelle;
         this.type = type;
     }
@@ -72,8 +70,7 @@ public enum UniteGestion
      * Getter pour libelle.
      * @return Retourne le libelle.
      */
-    public String getLibelle()
-    {
+    public String getLibelle() {
         return this.libelle;
     }
 
@@ -81,8 +78,7 @@ public enum UniteGestion
      * {@inheritDoc}
      */
     @Override
-    public String toString()
-    {
+    public String toString() {
         return this.getLibelle();
     }
 
@@ -90,8 +86,7 @@ public enum UniteGestion
      * Getter pour type.
      * @return Le type
      */
-    public TypeUniteGestion getType()
-    {
+    public TypeUniteGestion getType() {
         return this.type;
     }
 
@@ -99,8 +94,7 @@ public enum UniteGestion
      * Setter pour type.
      * @param type Le type à écrire.
      */
-    public void setType(final TypeUniteGestion type)
-    {
+    public void setType(final TypeUniteGestion type) {
         this.type = type;
     }
 

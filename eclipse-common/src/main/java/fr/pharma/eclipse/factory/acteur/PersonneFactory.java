@@ -10,13 +10,11 @@ import fr.pharma.eclipse.service.sir.GenericSirService;
 
 /**
  * Factory de Bean Personne.
- 
+ * @author Netapsys
  * @version $Revision$ $Date$
  * @param <PERSONNE> Bean Objet Personne.
  */
-public class PersonneFactory<PERSONNE extends Personne>
-    extends BeanObjectFactory<PERSONNE>
-{
+public class PersonneFactory<PERSONNE extends Personne> extends BeanObjectFactory<PERSONNE> {
     /**
      * Serial ID.
      */
@@ -38,8 +36,7 @@ public class PersonneFactory<PERSONNE extends Personne>
      * @param bean Classe.
      * @param typePersonne Type de la personne.
      */
-    public PersonneFactory(final Class<PERSONNE> bean, final TypePersonne typePersonne)
-    {
+    public PersonneFactory(final Class<PERSONNE> bean, final TypePersonne typePersonne) {
         super(bean);
         this.typePersonne = typePersonne;
     }
@@ -48,23 +45,21 @@ public class PersonneFactory<PERSONNE extends Personne>
      * {@inheritDoc}
      */
     @Override
-    public PERSONNE getInitializedObject()
-    {
+    public PERSONNE getInitializedObject() {
         final PERSONNE personne = super.getInitializedObject();
         personne.setType(this.typePersonne);
         return personne;
     }
 
     /**
-     * Méthode en charge de retourner une PERSONNE à partir des informations d'une PersonneSir.
+     * Méthode en charge de retourner une PERSONNE à partir des informations
+     * d'une PersonneSir.
      * @param idPersonneSir Identifiant technique de la Personne SIR.
      * @return PERSONNE.
      */
-    public PERSONNE getInitializedObject(final Integer idPersonneSir)
-    {
+    public PERSONNE getInitializedObject(final Integer idPersonneSir) {
         final PERSONNE personne = this.getInitializedObject();
-        if (idPersonneSir != null)
-        {
+        if (idPersonneSir != null) {
             final PersonneSir personneSir = this.personneSirService.get(idPersonneSir);
             personne.setLogin(personneSir.getLogin());
             personne.setNom(personneSir.getNom());
@@ -78,8 +73,7 @@ public class PersonneFactory<PERSONNE extends Personne>
      * Setter pour personneSirService.
      * @param personneSirService le personneSirService à écrire.
      */
-    public void setPersonneSirService(final GenericSirService<PersonneSir> personneSirService)
-    {
+    public void setPersonneSirService(final GenericSirService<PersonneSir> personneSirService) {
         this.personneSirService = personneSirService;
     }
 

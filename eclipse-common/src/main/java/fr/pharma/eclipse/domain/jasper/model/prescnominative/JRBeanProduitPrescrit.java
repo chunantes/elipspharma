@@ -6,12 +6,10 @@ import fr.pharma.eclipse.jasper.constants.JasperConstants;
 /**
  * Classe représentant la source de données<br>
  * relative à un produit prescrit d'une prescription.
- 
+ * @author Netapsys
  * @version $Revision$ $Date$
  */
-public class JRBeanProduitPrescrit
-    implements JasperReportBean
-{
+public class JRBeanProduitPrescrit implements JasperReportBean {
 
     /**
      * Serial ID.
@@ -47,8 +45,7 @@ public class JRBeanProduitPrescrit
      * Getter pour denomination.
      * @return Le denomination
      */
-    public String getDenomination()
-    {
+    public String getDenomination() {
         return this.denomination;
     }
 
@@ -56,8 +53,7 @@ public class JRBeanProduitPrescrit
      * Setter pour denomination.
      * @param denomination Le denomination à écrire.
      */
-    public void setDenomination(final String denomination)
-    {
+    public void setDenomination(final String denomination) {
         this.denomination = denomination;
     }
 
@@ -65,8 +61,7 @@ public class JRBeanProduitPrescrit
      * Getter pour voie.
      * @return Le voie
      */
-    public String getVoie()
-    {
+    public String getVoie() {
         return this.voie;
     }
 
@@ -74,8 +69,7 @@ public class JRBeanProduitPrescrit
      * Setter pour voie.
      * @param voie Le voie à écrire.
      */
-    public void setVoie(final String voie)
-    {
+    public void setVoie(final String voie) {
         this.voie = voie;
     }
 
@@ -83,8 +77,7 @@ public class JRBeanProduitPrescrit
      * Getter pour posologie.
      * @return Le posologie
      */
-    public String getPosologie()
-    {
+    public String getPosologie() {
         return this.posologie;
     }
 
@@ -92,8 +85,7 @@ public class JRBeanProduitPrescrit
      * Setter pour posologie.
      * @param posologie Le posologie à écrire.
      */
-    public void setPosologie(final String posologie)
-    {
+    public void setPosologie(final String posologie) {
         this.posologie = posologie;
     }
 
@@ -101,8 +93,7 @@ public class JRBeanProduitPrescrit
      * Getter pour duree.
      * @return Le duree
      */
-    public String getDuree()
-    {
+    public String getDuree() {
         return this.duree;
     }
 
@@ -110,8 +101,7 @@ public class JRBeanProduitPrescrit
      * Setter pour duree.
      * @param duree Le duree à écrire.
      */
-    public void setDuree(final String duree)
-    {
+    public void setDuree(final String duree) {
         this.duree = duree;
     }
 
@@ -119,8 +109,7 @@ public class JRBeanProduitPrescrit
      * Getter pour quantite.
      * @return Le quantite
      */
-    public String getQuantite()
-    {
+    public String getQuantite() {
         return this.quantite;
     }
 
@@ -128,8 +117,7 @@ public class JRBeanProduitPrescrit
      * Setter pour quantite.
      * @param quantite Le quantite à écrire.
      */
-    public void setQuantite(final String quantite)
-    {
+    public void setQuantite(final String quantite) {
         this.quantite = quantite;
     }
 

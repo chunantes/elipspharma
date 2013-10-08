@@ -10,12 +10,10 @@ import fr.pharma.eclipse.domain.model.essai.DocumentEssai;
  * Interface des fabriques de documents Essai.
  * @param <DOC> Type de document d'essai créé.
  * @param <PARENT> Type de l'objet porteur du document.
- 
+ * @author Netapsys
  * @version $Revision$ $Date$
  */
-public interface DocumentEssaiFactory<DOC extends DocumentEssai, PARENT extends BeanObject>
-    extends Serializable
-{
+public interface DocumentEssaiFactory<DOC extends DocumentEssai, PARENT extends BeanObject> extends Serializable {
     /**
      * Méthode de création d'un nouveau document d'essai.
      * @param parent Object parent du document.

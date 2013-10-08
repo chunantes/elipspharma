@@ -6,12 +6,10 @@ import fr.pharma.eclipse.domain.model.essai.Essai;
 
 /**
  * Critère de recherche sur Patient.
- 
+ * @author Netapsys
  * @version $Revision$ $Date$
  */
-public class PatientSearchCriteria
-    extends AbstractSearchCriteria
-{
+public class PatientSearchCriteria extends AbstractSearchCriteria {
     /**
      * Serial ID.
      */
@@ -66,8 +64,7 @@ public class PatientSearchCriteria
      * Getter pour nom.
      * @return Retourne le nom.
      */
-    public String getNom()
-    {
+    public String getNom() {
         return this.nom;
     }
 
@@ -75,8 +72,7 @@ public class PatientSearchCriteria
      * Setter pour nom.
      * @param nom le nom à écrire.
      */
-    public void setNom(final String nom)
-    {
+    public void setNom(final String nom) {
         this.nom = nom;
     }
 
@@ -84,8 +80,7 @@ public class PatientSearchCriteria
      * {@inheritDoc}
      */
     @Override
-    public void clear()
-    {
+    public void clear() {
         this.setNom(null);
         this.setNumeroIpp(null);
         this.setNumeroIppOrNomOrPrenom(null);
@@ -99,8 +94,7 @@ public class PatientSearchCriteria
      * Getter sur numeroIpp.
      * @return Retourne le numeroIpp.
      */
-    public String getNumeroIpp()
-    {
+    public String getNumeroIpp() {
         return this.numeroIpp;
     }
 
@@ -108,8 +102,7 @@ public class PatientSearchCriteria
      * Setter pour numeroIpp.
      * @param numeroIpp le numeroIpp à écrire.
      */
-    public void setNumeroIpp(final String numeroIpp)
-    {
+    public void setNumeroIpp(final String numeroIpp) {
         this.numeroIpp = numeroIpp;
     }
 
@@ -117,8 +110,7 @@ public class PatientSearchCriteria
      * Getter sur prenom.
      * @return Retourne le prenom.
      */
-    public String getPrenom()
-    {
+    public String getPrenom() {
         return this.prenom;
     }
 
@@ -126,8 +118,7 @@ public class PatientSearchCriteria
      * Setter pour prenom.
      * @param prenom le prenom à écrire.
      */
-    public void setPrenom(final String prenom)
-    {
+    public void setPrenom(final String prenom) {
         this.prenom = prenom;
     }
 
@@ -135,8 +126,7 @@ public class PatientSearchCriteria
      * Getter sur numeroIppOrNomOrPrenom.
      * @return Retourne le numeroIppOrNomOrPrenom.
      */
-    public String getNumeroIppOrNomOrPrenom()
-    {
+    public String getNumeroIppOrNomOrPrenom() {
         return this.numeroIppOrNomOrPrenom;
     }
 
@@ -144,8 +134,7 @@ public class PatientSearchCriteria
      * Setter pour numeroIppOrNomOrPrenom.
      * @param numeroIppOrNomOrPrenom le numeroIppOrNomOrPrenom à écrire.
      */
-    public void setNumeroIppOrNomOrPrenom(final String numeroIppOrNomOrPrenom)
-    {
+    public void setNumeroIppOrNomOrPrenom(final String numeroIppOrNomOrPrenom) {
         this.numeroIppOrNomOrPrenom = numeroIppOrNomOrPrenom;
     }
 
@@ -153,8 +142,7 @@ public class PatientSearchCriteria
      * Getter sur essai.
      * @return Retourne le essai.
      */
-    public Essai getEssai()
-    {
+    public Essai getEssai() {
         return this.essai;
     }
 
@@ -162,8 +150,7 @@ public class PatientSearchCriteria
      * Setter pour essai.
      * @param essai le essai à écrire.
      */
-    public void setEssai(final Essai essai)
-    {
+    public void setEssai(final Essai essai) {
         this.essai = essai;
     }
 
@@ -171,8 +158,7 @@ public class PatientSearchCriteria
      * Getter sur initiales.
      * @return Retourne le initiales.
      */
-    public String getInitiales()
-    {
+    public String getInitiales() {
         return this.initiales;
     }
 
@@ -180,8 +166,7 @@ public class PatientSearchCriteria
      * Setter pour initiales.
      * @param initiales le initiales à écrire.
      */
-    public void setInitiales(final String initiales)
-    {
+    public void setInitiales(final String initiales) {
         this.initiales = initiales;
     }
 
@@ -189,8 +174,7 @@ public class PatientSearchCriteria
      * Getter pour numeroIppExact.
      * @return Le numeroIppExact
      */
-    public String getNumeroIppExact()
-    {
+    public String getNumeroIppExact() {
         return this.numeroIppExact;
     }
 
@@ -198,8 +182,7 @@ public class PatientSearchCriteria
      * Setter pour numeroIppExact.
      * @param numeroIppExact Le numeroIppExact à écrire.
      */
-    public void setNumeroIppExact(final String numeroIppExact)
-    {
+    public void setNumeroIppExact(final String numeroIppExact) {
         this.numeroIppExact = numeroIppExact;
     }
 
@@ -207,8 +190,7 @@ public class PatientSearchCriteria
      * Getter pour byEssai.
      * @return Le byEssai
      */
-    public TypeRechercheParEssai getByEssai()
-    {
+    public TypeRechercheParEssai getByEssai() {
         return this.byEssai;
     }
 
@@ -216,8 +198,7 @@ public class PatientSearchCriteria
      * Setter pour byEssai.
      * @param byEssai Le byEssai à écrire.
      */
-    public void setByEssai(final TypeRechercheParEssai byEssai)
-    {
+    public void setByEssai(final TypeRechercheParEssai byEssai) {
         this.byEssai = byEssai;
     }
 
@@ -225,8 +206,7 @@ public class PatientSearchCriteria
      * Getter pour essaiByType.
      * @return Le essaiByType
      */
-    public Essai getEssaiByType()
-    {
+    public Essai getEssaiByType() {
         return this.essaiByType;
     }
 
@@ -234,8 +214,7 @@ public class PatientSearchCriteria
      * Setter pour essaiByType.
      * @param essaiByType Le essaiByType à écrire.
      */
-    public void setEssaiByType(final Essai essaiByType)
-    {
+    public void setEssaiByType(final Essai essaiByType) {
         this.essaiByType = essaiByType;
     }
 

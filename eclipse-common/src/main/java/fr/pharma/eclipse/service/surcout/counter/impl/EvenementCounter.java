@@ -17,13 +17,12 @@ import fr.pharma.eclipse.service.evenement.EvenementService;
 import fr.pharma.eclipse.service.surcout.counter.ActeCounter;
 
 /**
- * Classe en charge de compter le nombre d'évènements pour un essai ou un patient dans un essai.
- 
+ * Classe en charge de compter le nombre d'évènements pour un essai ou un
+ * patient dans un essai.
+ * @author Netapsys
  * @version $Revision$ $Date$
  */
-public abstract class EvenementCounter
-    implements ActeCounter, Serializable
-{
+public abstract class EvenementCounter implements ActeCounter, Serializable {
 
     /**
      * Serial UID.
@@ -44,8 +43,7 @@ public abstract class EvenementCounter
                                       final Essai essai,
                                       final Patient patient,
                                       final Calendar dateDebut,
-                                      final Calendar dateFin)
-    {
+                                      final Calendar dateFin) {
         this.checkPatient(patient);
         final EvenementSearchCriteria crit = new EvenementSearchCriteria();
         crit.setTypeEvenement(type);
@@ -59,22 +57,18 @@ public abstract class EvenementCounter
      * Setter pour evenementService.
      * @param evenementService Le evenementService à écrire.
      */
-    public void setEvenementService(final EvenementService evenementService)
-    {
+    public void setEvenementService(final EvenementService evenementService) {
         this.evenementService = evenementService;
     }
 
     /**
-     * Méthode en charge de vérifier que la règle est bien de perimètre "par essai".
+     * Méthode en charge de vérifier que la règle est bien de perimètre
+     * "par essai".
      * @param patient Patient.
      */
-    protected void checkPatient(final Patient patient)
-    {
-        if (patient != null)
-        {
-            throw new ValidationException("surcout.support.patient",
-                                          new String[]
-                                          {"error" });
+    protected void checkPatient(final Patient patient) {
+        if (patient != null) {
+            throw new ValidationException("surcout.support.patient", new String[]{"error" });
         }
     }
 }

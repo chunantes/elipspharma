@@ -19,19 +19,16 @@ import fr.pharma.eclipse.dao.sir.GenericSirDao;
 import fr.pharma.eclipse.dictionary.CriteriaDictionary;
 import fr.pharma.eclipse.domain.criteria.common.SearchCriteria;
 import fr.pharma.eclipse.domain.model.sir.common.BeanSirObject;
-import fr.pharma.eclipse.utils.constants.EclipseConstants;
 
 /**
- * DAO (Data Access Object) générique sur base Hibernate pour l'utilisation standard des POJOs
- * (CRUD).
+ * DAO (Data Access Object) générique sur base Hibernate pour l'utilisation
+ * standard des POJOs (CRUD).
  * @param <SIR> Bean Objet Métier SIR.
- 
+ * @author NETAPSYS
  * @version $Revision$ $Date$
  */
 
-public class GenericSirDaoHibernate<SIR extends BeanSirObject>
-    implements GenericSirDao<SIR>, Serializable
-{
+public class GenericSirDaoHibernate<SIR extends BeanSirObject> implements GenericSirDao<SIR>, Serializable {
     /**
      * Serial ID.
      */
@@ -62,34 +59,31 @@ public class GenericSirDaoHibernate<SIR extends BeanSirObject>
      * Constructeur de la DAO générique.
      * @param persistentClass La classe dont le type est à gérer par la DAO.
      */
-    public GenericSirDaoHibernate(final Class<SIR> persistentClass)
-    {
+    public GenericSirDaoHibernate(final Class<SIR> persistentClass) {
         this.persistentClass = persistentClass;
     }
 
     /**
      * {@inheritDoc}
      */
+    @Override
     @SuppressWarnings("unchecked")
     @Transactional(readOnly = true)
-    public List<SIR> getAll(final SearchCriteria criteria)
-    {
+    public List<SIR> getAll(final SearchCriteria criteria) {
         final Criteria crit = this.createCriteria();
         crit.setResultTransformer(CriteriaSpecification.DISTINCT_ROOT_ENTITY);
-        this.applySearchCriteria(crit,
-                                 criteria);
-        this.applySortCriteria(crit,
-                               criteria);
+        this.applySearchCriteria(crit, criteria);
+        this.applySortCriteria(crit, criteria);
         return crit.list();
     }
 
     /**
      * {@inheritDoc}
      */
+    @Override
     @SuppressWarnings("unchecked")
     @Transactional(readOnly = true)
-    public List<SIR> getAll()
-    {
+    public List<SIR> getAll() {
         return this.createCriteria().list();
     }
 
@@ -99,10 +93,8 @@ public class GenericSirDaoHibernate<SIR extends BeanSirObject>
      * @param criteria Le gestionnaire de critères de recherche.
      */
     private void applySearchCriteria(final Criteria crit,
-                                     final SearchCriteria criteria)
-    {
-        this.getCriteriaDictionary().apply(crit,
-                                           criteria);
+                                     final SearchCriteria criteria) {
+        this.getCriteriaDictionary().apply(crit, criteria);
     }
 
     /**
@@ -111,24 +103,17 @@ public class GenericSirDaoHibernate<SIR extends BeanSirObject>
      * @param criteria Critère de recherche.
      */
     protected void applySortCriteria(final Criteria crit,
-                                     final SearchCriteria criteria)
-    {
-        if (criteria.getActiveOrder() != null)
-        {
-            if (criteria.isAscending())
-            {
+                                     final SearchCriteria criteria) {
+        if (criteria.getActiveOrder() != null) {
+            if (criteria.isAscending()) {
                 final Order order = Order.asc(criteria.getActiveOrder());
-                if (!criteria.isCaseSensitiveOrder())
-                {
+                if (!criteria.isCaseSensitiveOrder()) {
                     order.ignoreCase();
                 }
                 crit.addOrder(order);
-            }
-            else
-            {
+            } else {
                 final Order order = Order.desc(criteria.getActiveOrder());
-                if (!criteria.isCaseSensitiveOrder())
-                {
+                if (!criteria.isCaseSensitiveOrder()) {
                     order.ignoreCase();
                 }
                 crit.addOrder(order);
@@ -139,26 +124,16 @@ public class GenericSirDaoHibernate<SIR extends BeanSirObject>
     /**
      * {@inheritDoc}
      */
+    @Override
     @Transactional(readOnly = true)
-    public SIR get(final Integer id)
-    {
-        try
-        {
-            final SIR entity = this.entityManager.find(this.persistentClass,
-                                                       id);
+    public SIR get(final Integer id) {
+        try {
+            final SIR entity = this.entityManager.find(this.persistentClass, id);
             return entity;
-        }
-        catch (final IllegalStateException e)
-        {
-            this.handleException("get",
-                                 e,
-                                 GenericDaoHibernateCstes.ENTITY_MANAGER_CLOSED);
-        }
-        catch (final IllegalArgumentException e)
-        {
-            this.handleException("get",
-                                 e,
-                                 GenericDaoHibernateCstes.BEAN_UNMANAGED);
+        } catch (final IllegalStateException e) {
+            this.handleException("get", e, GenericDaoHibernateCstes.ENTITY_MANAGER_CLOSED);
+        } catch (final IllegalArgumentException e) {
+            this.handleException("get", e, GenericDaoHibernateCstes.BEAN_UNMANAGED);
         }
         return null;
     }
@@ -167,8 +142,7 @@ public class GenericSirDaoHibernate<SIR extends BeanSirObject>
      * Définit un critère de recherche sur la session actuelle.
      * @return Un critère de recherche sur la session actuelle.
      */
-    private Criteria createCriteria()
-    {
+    private Criteria createCriteria() {
         final Session session = this.getCurrentSession();
         final Criteria crit = session.createCriteria(this.persistentClass);
         return crit;
@@ -178,17 +152,11 @@ public class GenericSirDaoHibernate<SIR extends BeanSirObject>
      * Obtention de la session courante.
      * @return Session.
      */
-    protected Session getCurrentSession()
-    {
-        try
-        {
+    protected Session getCurrentSession() {
+        try {
             return (Session) this.getEntityManager().getDelegate();
-        }
-        catch (final IllegalStateException e)
-        {
-            this.handleException("getCurrentSession",
-                                 e,
-                                 GenericDaoHibernateCstes.ENTITY_MANAGER_CLOSED);
+        } catch (final IllegalStateException e) {
+            this.handleException("getCurrentSession", e, GenericDaoHibernateCstes.ENTITY_MANAGER_CLOSED);
         }
         return null;
     }
@@ -201,22 +169,15 @@ public class GenericSirDaoHibernate<SIR extends BeanSirObject>
      */
     public void handleException(final String nameMethod,
                                 final Throwable throwable,
-                                final String detailMessage)
-    {
-        this.log.error("Exception dans la méthode : "
-                       + nameMethod
-                       + EclipseConstants.SAUT_LIGNE
-                       + throwable.getMessage()
-                       + EclipseConstants.SAUT_LIGNE
-                       + detailMessage);
+                                final String detailMessage) {
+        this.log.error("Exception dans la méthode [" + nameMethod + "] : " + detailMessage, throwable);
     }
 
     /**
      * Getter pour criteriaDictionary.
      * @return Retourne le criteriaDictionary.
      */
-    public CriteriaDictionary getCriteriaDictionary()
-    {
+    public CriteriaDictionary getCriteriaDictionary() {
         return this.criteriaDictionary;
     }
 
@@ -224,8 +185,7 @@ public class GenericSirDaoHibernate<SIR extends BeanSirObject>
      * Setter pour criteriaDictionary.
      * @param criteriaDictionary le criteriaDictionary à écrire.
      */
-    public void setCriteriaDictionary(final CriteriaDictionary criteriaDictionary)
-    {
+    public void setCriteriaDictionary(final CriteriaDictionary criteriaDictionary) {
         this.criteriaDictionary = criteriaDictionary;
     }
 
@@ -233,8 +193,7 @@ public class GenericSirDaoHibernate<SIR extends BeanSirObject>
      * Récupération de entityManager.
      * @return Retourne le entityManager.
      */
-    public EntityManager getEntityManager()
-    {
+    public EntityManager getEntityManager() {
         return this.entityManager;
     }
 
@@ -242,8 +201,7 @@ public class GenericSirDaoHibernate<SIR extends BeanSirObject>
      * Affectation du champ entityManager.
      * @param entityManager le entityManager à écrire.
      */
-    public void setEntityManager(final EntityManager entityManager)
-    {
+    public void setEntityManager(final EntityManager entityManager) {
         this.entityManager = entityManager;
     }
 
@@ -251,8 +209,7 @@ public class GenericSirDaoHibernate<SIR extends BeanSirObject>
      * Getter pour persistentClass.
      * @return Retourne le persistentClass.
      */
-    protected Class<SIR> getPersistentClass()
-    {
+    protected Class<SIR> getPersistentClass() {
         return this.persistentClass;
     }
 }

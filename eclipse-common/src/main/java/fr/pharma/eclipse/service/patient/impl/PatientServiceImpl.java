@@ -26,13 +26,10 @@ import fr.pharma.eclipse.validator.save.impl.PatientSaveValidator;
 
 /**
  * Classe d'implémentation du service de gestion de patient.
- 
+ * @author Netapsys
  * @version $Revision$ $Date$
  */
-public class PatientServiceImpl
-    extends GenericServiceImpl<Patient>
-    implements PatientService
-{
+public class PatientServiceImpl extends GenericServiceImpl<Patient> implements PatientService {
     /**
      * Serial ID.
      */
@@ -66,8 +63,7 @@ public class PatientServiceImpl
      * Constructeur.
      * @param patientDao Dao de gestion des patients.
      */
-    public PatientServiceImpl(final GenericDao<Patient> patientDao)
-    {
+    public PatientServiceImpl(final GenericDao<Patient> patientDao) {
         super(patientDao);
     }
 
@@ -75,10 +71,8 @@ public class PatientServiceImpl
      * {@inheritDoc}
      */
     @Override
-    public Patient save(final Patient patient)
-    {
-        this.patientSaveValidator.validate(patient,
-                                           this);
+    public Patient save(final Patient patient) {
+        this.patientSaveValidator.validate(patient, this);
         final Patient patientToSave = this.reattach(patient);
         final PatientSuivi patientSuivi = this.patientSuiviFactory.getInitializedObject();
         patientSuivi.setPatient(patientToSave);
@@ -90,37 +84,27 @@ public class PatientServiceImpl
      * {@inheritDoc}
      */
     @Override
-    public FormuleSurfaceCorporelle updateSurfaceCorporelle(final HistoriquePatient historique)
-    {
-        if (historique.getPatient().getDateNaissance() != null
-            && historique.getTaille() != null
-            && historique.getPoid() != null)
-        {
+    public FormuleSurfaceCorporelle updateSurfaceCorporelle(final HistoriquePatient historique) {
+        if ((historique.getPatient().getDateNaissance() != null) && (historique.getTaille() != null) && (historique.getPoid() != null)) {
             final FormuleSurfaceCorporelle formule = this.getFormule(historique.getPatient());
-            historique.setSurfaceCorporelle(this.dictionary.process(formule,
-                                                                    historique.getTaille(),
-                                                                    historique.getPoid()));
+            historique.setSurfaceCorporelle(this.dictionary.process(formule, historique.getTaille(), historique.getPoid()));
             return formule;
         }
         return null;
     }
 
     /**
-     * Méthode en charge de retourner la formule corespondante à l'age du patient en paramètre.
+     * Méthode en charge de retourner la formule corespondante à l'age du
+     * patient en paramètre.
      * @param patient Le patient.
      * @return La formule correspondante.
      */
-    private FormuleSurfaceCorporelle getFormule(final Patient patient)
-    {
+    private FormuleSurfaceCorporelle getFormule(final Patient patient) {
         final Calendar date = Calendar.getInstance(EclipseConstants.LOCALE);
-        final int annees = date.get(Calendar.YEAR)
-                           - patient.getDateNaissance().get(Calendar.YEAR);
-        if (annees >= 18)
-        {
+        final int annees = date.get(Calendar.YEAR) - patient.getDateNaissance().get(Calendar.YEAR);
+        if (annees >= 18) {
             return FormuleSurfaceCorporelle.DUBOIS;
-        }
-        else
-        {
+        } else {
             return FormuleSurfaceCorporelle.MOSTELLER;
 
         }
@@ -129,20 +113,17 @@ public class PatientServiceImpl
     /**
      * {@inheritDoc}
      */
-    public Inclusion getInclusionCourante(final Patient patient)
-    {
-        return (Inclusion) CollectionUtils.find(patient.getInclusions(),
-                                                new GenericPredicate("actif",
-                                                                     true));
+    @Override
+    public Inclusion getInclusionCourante(final Patient patient) {
+        return (Inclusion) CollectionUtils.find(patient.getInclusions(), new GenericPredicate("actif", true));
     }
 
     /**
      * {@inheritDoc}
      */
-    public void desinclure(final Patient patient)
-    {
-        this.validator.validate(patient,
-                                this);
+    @Override
+    public void desinclure(final Patient patient) {
+        this.validator.validate(patient, this);
         final Inclusion inclusion = this.getInclusionCourante(patient);
         inclusion.setActif(false);
         inclusion.setDateDesinclusion(Calendar.getInstance(EclipseConstants.LOCALE));
@@ -152,8 +133,8 @@ public class PatientServiceImpl
     /**
      * {@inheritDoc}
      */
-    public List<Patient> getAllPatientsForEssai(final Essai essai)
-    {
+    @Override
+    public List<Patient> getAllPatientsForEssai(final Essai essai) {
         final PatientSearchCriteria crit = new PatientSearchCriteria();
         crit.setEssai(essai);
         return this.getAll(crit);
@@ -163,8 +144,7 @@ public class PatientServiceImpl
      * Setter pour patientSuiviFactory.
      * @param patientSuiviFactory le patientSuiviFactory à écrire.
      */
-    public void setPatientSuiviFactory(final SuiviFactory<PatientSuivi> patientSuiviFactory)
-    {
+    public void setPatientSuiviFactory(final SuiviFactory<PatientSuivi> patientSuiviFactory) {
         this.patientSuiviFactory = patientSuiviFactory;
     }
 
@@ -172,8 +152,7 @@ public class PatientServiceImpl
      * Setter pour dictionary.
      * @param dictionary le dictionary à écrire.
      */
-    public void setDictionary(final SurfaceCorporelleDictionary dictionary)
-    {
+    public void setDictionary(final SurfaceCorporelleDictionary dictionary) {
         this.dictionary = dictionary;
     }
 
@@ -181,8 +160,7 @@ public class PatientServiceImpl
      * Setter pour validator.
      * @param validator le validator à écrire.
      */
-    public void setValidator(final DesinclusionPatientValidator validator)
-    {
+    public void setValidator(final DesinclusionPatientValidator validator) {
         this.validator = validator;
     }
 
@@ -190,8 +168,7 @@ public class PatientServiceImpl
      * Setter pour patientSaveValidator.
      * @param patientSaveValidator Le patientSaveValidator à écrire.
      */
-    public void setPatientSaveValidator(final PatientSaveValidator patientSaveValidator)
-    {
+    public void setPatientSaveValidator(final PatientSaveValidator patientSaveValidator) {
         this.patientSaveValidator = patientSaveValidator;
     }
 

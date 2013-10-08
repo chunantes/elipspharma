@@ -1,6 +1,7 @@
 package fr.pharma.eclipse.dictionary.maker.incident;
 
 import java.util.Calendar;
+import java.util.List;
 
 import org.hibernate.Criteria;
 import org.hibernate.criterion.Restrictions;
@@ -9,16 +10,13 @@ import fr.pharma.eclipse.dictionary.maker.common.AbstractCriteriaMaker;
 import fr.pharma.eclipse.dictionary.maker.common.utils.CriteriaMakerUtils;
 import fr.pharma.eclipse.domain.criteria.common.SearchCriteria;
 import fr.pharma.eclipse.domain.criteria.incident.IncidentSearchCriteria;
-import fr.pharma.eclipse.domain.model.essai.Essai;
 
 /**
  * Artisan de recherche pour les incidents.
- 
+ * @author Netapsys
  * @version $Revision$ $Date$
  */
-public class IncidentSearchCriteriaMaker
-    extends AbstractCriteriaMaker
-{
+public class IncidentSearchCriteriaMaker extends AbstractCriteriaMaker {
     /**
      * Serial ID.
      */
@@ -27,8 +25,7 @@ public class IncidentSearchCriteriaMaker
     /**
      * Constructeur par défaut.
      */
-    public IncidentSearchCriteriaMaker()
-    {
+    public IncidentSearchCriteriaMaker() {
         super(IncidentSearchCriteria.class);
     }
 
@@ -37,59 +34,41 @@ public class IncidentSearchCriteriaMaker
      */
     @Override
     public void transform(final Criteria criteria,
-                          final SearchCriteria searchCrit)
-    {
+                          final SearchCriteria searchCrit) {
         final IncidentSearchCriteria crit = (IncidentSearchCriteria) searchCrit;
 
         // Critères sur Essai
-        this.handleCriteriaEssai(criteria,
-                                 crit);
+        Criteria critEssai = null;
+        if (crit.getEssai() != null) {
+            critEssai = criteria.createCriteria("essai");
+            critEssai.add(Restrictions.idEq(crit.getEssai().getId()));
+        }
+
+        // Essai DTO
+        if (crit.getEssaiDTO() != null) {
+            critEssai = criteria.createCriteria("essai");
+            critEssai.add(Restrictions.idEq(crit.getEssaiDTO().getId()));
+        }
 
         // Date de début
-        if (crit.getDateDebut() != null)
-        {
-            criteria.add(Restrictions.ge("date",
-                                         crit.getDateDebut()));
+        if (crit.getDateDebut() != null) {
+            criteria.add(Restrictions.ge("date", crit.getDateDebut()));
         }
 
         // Date de fin
-        if (crit.getDateFin() != null)
-        {
+        if (crit.getDateFin() != null) {
             final Calendar cal = Calendar.getInstance();
             cal.setTime(crit.getDateFin().getTime());
             // Ajout d'un jour pour gérer les heures
-            cal.add(Calendar.DAY_OF_MONTH,
-                    1);
-            criteria.add(Restrictions.le("date",
-                                         cal));
+            cal.add(Calendar.DAY_OF_MONTH, 1);
+            criteria.add(Restrictions.le("date", cal));
         }
+
+        // Restriction par rapport aux acls des essais
+        final List<Long> idsEssais = this.getAclSearchDao().findIdsEssais();
+        if (critEssai == null) {
+            critEssai = criteria.createCriteria("essai");
+        }
+        CriteriaMakerUtils.addInCritere(criteria, "essai.id", idsEssais.toArray(new Object[idsEssais.size()]));
     }
-
-    /**
-     * Méthode en charge de gérer les critères posés sur les essais.
-     * @param criteria Criteria Hibernate.
-     * @param crit Critère de recherche sur Incident.
-     */
-    private void handleCriteriaEssai(final Criteria criteria,
-                                     final IncidentSearchCriteria crit)
-    {
-        // Essai
-        if (crit.getEssai() != null)
-        {
-            CriteriaMakerUtils.addCritere(criteria,
-                                          "essai",
-                                          crit.getEssai());
-        }
-
-        // Liste d'essais
-        if (crit.getEssais() != null)
-        {
-            CriteriaMakerUtils.addInCritere(criteria,
-                                            "essai",
-                                            crit.getEssais().toArray(new Essai[crit
-                                                    .getEssais()
-                                                    .size()]));
-        }
-    }
-
 }

@@ -9,6 +9,7 @@ import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.EnumType;
 import javax.persistence.Enumerated;
+import javax.persistence.FetchType;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
@@ -30,19 +31,15 @@ import fr.pharma.eclipse.domain.enums.evenement.TypeVisite;
 import fr.pharma.eclipse.domain.model.acteur.Personne;
 import fr.pharma.eclipse.domain.model.common.BeanObjectSuivi;
 import fr.pharma.eclipse.domain.model.essai.Essai;
-import fr.pharma.eclipse.domain.model.essai.EssaiElement;
 import fr.pharma.eclipse.domain.model.suivi.evenement.EvenementSuivi;
 
 /**
  * Bean métier représant un événement.
- 
+ * @author Netapsys
  * @version $Revision$ $Date$
  */
 @Entity(name = "evenement")
-public class Evenement
-    extends BeanObjectSuivi
-    implements EssaiElement
-{
+public class Evenement extends BeanObjectSuivi {
     /**
      * Serial ID.
      */
@@ -51,8 +48,7 @@ public class Evenement
     /**
      * Essai.
      */
-    @ManyToOne(cascade =
-    {CascadeType.REFRESH, CascadeType.MERGE })
+    @ManyToOne(cascade = {CascadeType.REFRESH, CascadeType.MERGE }, fetch = FetchType.LAZY)
     @JoinColumn(name = "id_essai")
     @Index(name = "idx_essai_evenement")
     private Essai essai;
@@ -183,15 +179,13 @@ public class Evenement
     @OneToMany(mappedBy = "evenement", cascade = CascadeType.ALL)
     @LazyCollection(LazyCollectionOption.TRUE)
     @Sort(type = SortType.COMPARATOR, comparator = SuiviComparator.class)
-    private final SortedSet<EvenementSuivi> modifs =
-        new TreeSet<EvenementSuivi>(new SuiviComparator());
+    private final SortedSet<EvenementSuivi> modifs = new TreeSet<EvenementSuivi>(new SuiviComparator());
 
     /**
      * Getter pour libelle.
      * @return Le libelle
      */
-    public String getLibelle()
-    {
+    public String getLibelle() {
         return this.libelle;
     }
 
@@ -199,8 +193,7 @@ public class Evenement
      * Setter pour libelle.
      * @param libelle Le libelle à écrire.
      */
-    public void setLibelle(final String libelle)
-    {
+    public void setLibelle(final String libelle) {
         this.libelle = libelle;
     }
 
@@ -208,8 +201,7 @@ public class Evenement
      * Getter pour commentaire.
      * @return Le commentaire
      */
-    public String getCommentaire()
-    {
+    public String getCommentaire() {
         return this.commentaire;
     }
 
@@ -217,8 +209,7 @@ public class Evenement
      * Setter pour commentaire.
      * @param commentaire Le commentaire à écrire.
      */
-    public void setCommentaire(final String commentaire)
-    {
+    public void setCommentaire(final String commentaire) {
         this.commentaire = commentaire;
     }
 
@@ -226,8 +217,7 @@ public class Evenement
      * Getter pour dateDebut.
      * @return Le dateDebut
      */
-    public Calendar getDateDebut()
-    {
+    public Calendar getDateDebut() {
         return this.dateDebut;
     }
 
@@ -235,8 +225,7 @@ public class Evenement
      * Setter pour dateDebut.
      * @param dateDebut Le dateDebut à écrire.
      */
-    public void setDateDebut(final Calendar dateDebut)
-    {
+    public void setDateDebut(final Calendar dateDebut) {
         this.dateDebut = dateDebut;
     }
 
@@ -244,8 +233,7 @@ public class Evenement
      * Getter pour essai.
      * @return Le essai
      */
-    public Essai getEssai()
-    {
+    public Essai getEssai() {
         return this.essai;
     }
 
@@ -253,8 +241,7 @@ public class Evenement
      * Setter pour essai.
      * @param essai Le essai à écrire.
      */
-    public void setEssai(final Essai essai)
-    {
+    public void setEssai(final Essai essai) {
         this.essai = essai;
     }
 
@@ -263,8 +250,7 @@ public class Evenement
      * @return Le modifs
      */
     @Override
-    public SortedSet<EvenementSuivi> getModifs()
-    {
+    public SortedSet<EvenementSuivi> getModifs() {
         return this.modifs;
     }
 
@@ -272,8 +258,7 @@ public class Evenement
      * Getter pour typeVisite.
      * @return Le typeVisite
      */
-    public TypeVisite getTypeVisite()
-    {
+    public TypeVisite getTypeVisite() {
         return this.typeVisite;
     }
 
@@ -281,8 +266,7 @@ public class Evenement
      * Setter pour typeVisite.
      * @param typeVisite Le typeVisite à écrire.
      */
-    public void setTypeVisite(final TypeVisite typeVisite)
-    {
+    public void setTypeVisite(final TypeVisite typeVisite) {
         this.typeVisite = typeVisite;
     }
 
@@ -290,8 +274,7 @@ public class Evenement
      * Getter pour resultatVisite.
      * @return Le resultatVisite
      */
-    public ResultatVisite getResultatVisite()
-    {
+    public ResultatVisite getResultatVisite() {
         return this.resultatVisite;
     }
 
@@ -299,8 +282,7 @@ public class Evenement
      * Setter pour resultatVisite.
      * @param resultatVisite Le resultatVisite à écrire.
      */
-    public void setResultatVisite(final ResultatVisite resultatVisite)
-    {
+    public void setResultatVisite(final ResultatVisite resultatVisite) {
         this.resultatVisite = resultatVisite;
     }
 
@@ -308,8 +290,7 @@ public class Evenement
      * Getter pour typeEvenement.
      * @return Le typeEvenement
      */
-    public TypeEvenement getTypeEvenement()
-    {
+    public TypeEvenement getTypeEvenement() {
         return this.typeEvenement;
     }
 
@@ -317,8 +298,7 @@ public class Evenement
      * Setter pour typeEvenement.
      * @param typeEvenement Le typeEvenement à écrire.
      */
-    public void setTypeEvenement(final TypeEvenement typeEvenement)
-    {
+    public void setTypeEvenement(final TypeEvenement typeEvenement) {
         this.typeEvenement = typeEvenement;
     }
 
@@ -326,8 +306,7 @@ public class Evenement
      * Getter pour heureDebut.
      * @return Le heureDebut
      */
-    public String getHeureDebut()
-    {
+    public String getHeureDebut() {
         return this.heureDebut;
     }
 
@@ -335,8 +314,7 @@ public class Evenement
      * Setter pour heureDebut.
      * @param heureDebut Le heureDebut à écrire.
      */
-    public void setHeureDebut(final String heureDebut)
-    {
+    public void setHeureDebut(final String heureDebut) {
         this.heureDebut = heureDebut;
     }
 
@@ -344,8 +322,7 @@ public class Evenement
      * Getter sur arc.
      * @return Retourne le arc.
      */
-    public String getArc()
-    {
+    public String getArc() {
         return this.arc;
     }
 
@@ -353,8 +330,7 @@ public class Evenement
      * Getter sur personnelPharmacie.
      * @return Retourne le personnelPharmacie.
      */
-    public String getPersonnelPharmacie()
-    {
+    public String getPersonnelPharmacie() {
         return this.personnelPharmacie;
     }
 
@@ -362,8 +338,7 @@ public class Evenement
      * Setter pour arc.
      * @param arc le arc à écrire.
      */
-    public void setArc(final String arc)
-    {
+    public void setArc(final String arc) {
         this.arc = arc;
     }
 
@@ -371,8 +346,7 @@ public class Evenement
      * Setter pour personnelPharmacie.
      * @param personnelPharmacie le personnelPharmacie à écrire.
      */
-    public void setPersonnelPharmacie(final String personnelPharmacie)
-    {
+    public void setPersonnelPharmacie(final String personnelPharmacie) {
         this.personnelPharmacie = personnelPharmacie;
     }
 
@@ -380,8 +354,7 @@ public class Evenement
      * Getter sur dateFin.
      * @return Retourne le dateFin.
      */
-    public Calendar getDateFin()
-    {
+    public Calendar getDateFin() {
         return this.dateFin;
     }
 
@@ -389,8 +362,7 @@ public class Evenement
      * Getter sur heureFin.
      * @return Retourne le heureFin.
      */
-    public String getHeureFin()
-    {
+    public String getHeureFin() {
         return this.heureFin;
     }
 
@@ -398,8 +370,7 @@ public class Evenement
      * Getter sur journee.
      * @return Retourne le journee.
      */
-    public Boolean getJournee()
-    {
+    public Boolean getJournee() {
         return this.journee;
     }
 
@@ -407,8 +378,7 @@ public class Evenement
      * Setter pour dateFin.
      * @param dateFin le dateFin à écrire.
      */
-    public void setDateFin(final Calendar dateFin)
-    {
+    public void setDateFin(final Calendar dateFin) {
         this.dateFin = dateFin;
     }
 
@@ -416,8 +386,7 @@ public class Evenement
      * Setter pour heureFin.
      * @param heureFin le heureFin à écrire.
      */
-    public void setHeureFin(final String heureFin)
-    {
+    public void setHeureFin(final String heureFin) {
         this.heureFin = heureFin;
     }
 
@@ -425,8 +394,7 @@ public class Evenement
      * Setter pour journee.
      * @param journee le journee à écrire.
      */
-    public void setJournee(final Boolean journee)
-    {
+    public void setJournee(final Boolean journee) {
         this.journee = journee;
     }
 
@@ -434,8 +402,7 @@ public class Evenement
      * Getter pour responsable.
      * @return Le responsable
      */
-    public Personne getResponsable()
-    {
+    public Personne getResponsable() {
         return this.responsable;
     }
 
@@ -443,8 +410,7 @@ public class Evenement
      * Setter pour responsable.
      * @param responsable Le responsable à écrire.
      */
-    public void setResponsable(final Personne responsable)
-    {
+    public void setResponsable(final Personne responsable) {
         this.responsable = responsable;
     }
 
@@ -452,8 +418,7 @@ public class Evenement
      * Getter pour nombre.
      * @return Le nombre
      */
-    public Integer getNombre()
-    {
+    public Integer getNombre() {
         return this.nombre;
     }
 
@@ -461,8 +426,7 @@ public class Evenement
      * Setter pour nombre.
      * @param nombre Le nombre à écrire.
      */
-    public void setNombre(final Integer nombre)
-    {
+    public void setNombre(final Integer nombre) {
         this.nombre = nombre;
     }
 
@@ -470,8 +434,7 @@ public class Evenement
      * Getter pour validation.
      * @return Le validation
      */
-    public String getValidation()
-    {
+    public String getValidation() {
         return this.validation;
     }
 
@@ -479,8 +442,7 @@ public class Evenement
      * Setter pour validation.
      * @param validation Le validation à écrire.
      */
-    public void setValidation(final String validation)
-    {
+    public void setValidation(final String validation) {
         this.validation = validation;
     }
 
@@ -488,8 +450,7 @@ public class Evenement
      * Getter pour realisePar.
      * @return Le realisePar
      */
-    public RealisePar getRealisePar()
-    {
+    public RealisePar getRealisePar() {
         return this.realisePar;
     }
 
@@ -497,8 +458,7 @@ public class Evenement
      * Setter pour realisePar.
      * @param realisePar Le realisePar à écrire.
      */
-    public void setRealisePar(final RealisePar realisePar)
-    {
+    public void setRealisePar(final RealisePar realisePar) {
         this.realisePar = realisePar;
     }
 
@@ -506,8 +466,7 @@ public class Evenement
      * Getter pour dateReception.
      * @return Le dateReception
      */
-    public Calendar getDateReception()
-    {
+    public Calendar getDateReception() {
         return this.dateReception;
     }
 
@@ -515,8 +474,7 @@ public class Evenement
      * Setter pour dateReception.
      * @param dateReception Le dateReception à écrire.
      */
-    public void setDateReception(final Calendar dateReception)
-    {
+    public void setDateReception(final Calendar dateReception) {
         this.dateReception = dateReception;
     }
 
@@ -524,8 +482,7 @@ public class Evenement
      * Getter pour destinataire.
      * @return Le destinataire
      */
-    public String getDestinataire()
-    {
+    public String getDestinataire() {
         return this.destinataire;
     }
 
@@ -533,8 +490,7 @@ public class Evenement
      * Setter pour destinataire.
      * @param destinataire Le destinataire à écrire.
      */
-    public void setDestinataire(final String destinataire)
-    {
+    public void setDestinataire(final String destinataire) {
         this.destinataire = destinataire;
     }
 

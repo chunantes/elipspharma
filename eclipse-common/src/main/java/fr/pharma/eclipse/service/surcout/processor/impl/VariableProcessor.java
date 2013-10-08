@@ -19,16 +19,16 @@ import fr.pharma.eclipse.service.surcout.processor.SurcoutProcessor;
 import fr.pharma.eclipse.service.surcout.processor.VariableSubProcessor;
 
 /**
- * Processor en charge de calculer le cout d'un item contenant des regles variables.<br>
+ * Processor en charge de calculer le cout d'un item contenant des regles
+ * variables.<br>
  * <br>
- * Le structure du moteur de calcul est : VariableProcessor -> VariableSubProcessor -> Counter.<br>
+ * Le structure du moteur de calcul est : VariableProcessor ->
+ * VariableSubProcessor -> Counter.<br>
  * Les composants sont defini dans applicationContext-surcout.xml.<br>
- 
+ * @author Netapsys
  * @version $Revision$ $Date$
  */
-public class VariableProcessor
-    implements SurcoutProcessor, Serializable
-{
+public class VariableProcessor implements SurcoutProcessor, Serializable {
 
     /**
      * SerialVersionUID.
@@ -36,7 +36,8 @@ public class VariableProcessor
     private static final long serialVersionUID = -573668290869275358L;
 
     /**
-     * Map contenant le subProcessor à appliquer en fonction du mode de calcul de la règle.
+     * Map contenant le subProcessor à appliquer en fonction du mode de calcul
+     * de la règle.
      */
     private Map<ModeCalcul, VariableSubProcessor> subProcessors;
 
@@ -47,19 +48,14 @@ public class VariableProcessor
     public Resultat process(final Item item,
                             final Essai essai,
                             final Calendar dateDebut,
-                            final Calendar dateFin)
-    {
+                            final Calendar dateFin) {
         final Resultat total = new Resultat();
 
-        // Pour chaque règle on applique le subProcessor correspondant au mode de calcul de la
+        // Pour chaque règle on applique le subProcessor correspondant au mode
+        // de calcul de la
         // règle.
-        for (final Regle regle : this.getReglesCoutVariable(item))
-        {
-            final Resultat returned = this.subProcessors.get(regle.getMode()).process(item,
-                                                                                      regle,
-                                                                                      essai,
-                                                                                      dateDebut,
-                                                                                      dateFin);
+        for (final Regle regle : this.getReglesCoutVariable(item)) {
+            final Resultat returned = this.subProcessors.get(regle.getMode()).process(item, regle, essai, dateDebut, dateFin);
             total.setMontant(total.getMontant().add(returned.getMontant()));
             total.setNbActes(returned.getNbActes());
         }
@@ -73,18 +69,14 @@ public class VariableProcessor
     @Override
     public Resultat process(final Item item,
                             final Essai essai,
-                            final DonneesPrevision prevision)
-    {
+                            final DonneesPrevision prevision) {
         final Resultat total = new Resultat();
 
-        // Pour chaque règle on applique le subProcessor correspondant au mode de calcul de la
+        // Pour chaque règle on applique le subProcessor correspondant au mode
+        // de calcul de la
         // règle.
-        for (final Regle regle : this.getReglesCoutVariable(item))
-        {
-            final Resultat returned = this.subProcessors.get(regle.getMode()).process(item,
-                                                                                      regle,
-                                                                                      essai,
-                                                                                      prevision);
+        for (final Regle regle : this.getReglesCoutVariable(item)) {
+            final Resultat returned = this.subProcessors.get(regle.getMode()).process(item, regle, essai, prevision);
             total.setMontant(total.getMontant().add(returned.getMontant()));
             total.setNbActes(returned.getNbActes());
         }
@@ -93,26 +85,22 @@ public class VariableProcessor
     }
 
     /**
-     * Méthode en charge de filtrer les règles de l'item et de ne retourner que les règles de cout
-     * variables.
+     * Méthode en charge de filtrer les règles de l'item et de ne retourner que
+     * les règles de cout variables.
      * @param item L'item.
      * @return Les regles au cout variables.
      */
     @SuppressWarnings("unchecked")
-    private Collection<Regle> getReglesCoutVariable(final Item item)
-    {
+    private Collection<Regle> getReglesCoutVariable(final Item item) {
 
-        return CollectionUtils.select(item.getRegles(),
-                                      new GenericPredicate("type",
-                                                           TypeCout.VARIABLE));
+        return CollectionUtils.select(item.getRegles(), new GenericPredicate("type", TypeCout.VARIABLE));
     }
 
     /**
      * Setter pour subProcessors.
      * @param subProcessors le subProcessors à écrire.
      */
-    public void setSubProcessors(final Map<ModeCalcul, VariableSubProcessor> subProcessors)
-    {
+    public void setSubProcessors(final Map<ModeCalcul, VariableSubProcessor> subProcessors) {
         this.subProcessors = subProcessors;
     }
 

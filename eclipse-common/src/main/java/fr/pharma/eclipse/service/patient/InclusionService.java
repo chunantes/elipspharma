@@ -5,11 +5,9 @@ import fr.pharma.eclipse.service.common.GenericService;
 
 /**
  * Interface des services de gestion des inclusions.
- 
+ * @author Netapsys
  * @version $Revision$ $Date$
  */
-public interface InclusionService
-    extends GenericService<Inclusion>
-{
+public interface InclusionService extends GenericService<Inclusion> {
 
 }

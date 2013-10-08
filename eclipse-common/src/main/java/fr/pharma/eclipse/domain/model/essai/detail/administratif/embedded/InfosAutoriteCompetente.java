@@ -26,14 +26,12 @@ import fr.pharma.eclipse.domain.enums.TypeAC;
 import fr.pharma.eclipse.domain.model.essai.detail.administratif.document.DocumentAdministratif;
 
 /**
- * Informations relatives à l'autorité compétente sur le détail Administratif/Réglementaire d'un
- * essai clinique.
- 
+ * Informations relatives à l'autorité compétente sur le détail
+ * Administratif/Réglementaire d'un essai clinique.
+ * @author Netapsys
  * @version $Revision$ $Date$
  */
-public class InfosAutoriteCompetente
-    implements Serializable
-{
+public class InfosAutoriteCompetente implements Serializable {
 
     /**
      * Serial ID.
@@ -80,8 +78,7 @@ public class InfosAutoriteCompetente
     @Where(clause = "type='AUTORITE_COMPETENTE'")
     @LazyCollection(LazyCollectionOption.FALSE)
     @Sort(type = SortType.COMPARATOR, comparator = SuiviComparator.class)
-    private SortedSet<DocumentAdministratif> documents =
-        new TreeSet<DocumentAdministratif>(new SuiviComparator());
+    private SortedSet<DocumentAdministratif> documents = new TreeSet<DocumentAdministratif>(new SuiviComparator());
 
     /**
      * Booléen indiquant qu'il faut se référer au dossier papier<br>
@@ -95,8 +92,7 @@ public class InfosAutoriteCompetente
      * Getter sur accordAC.
      * @return Retourne le accordAC.
      */
-    public Boolean getAccordAC()
-    {
+    public Boolean getAccordAC() {
         return this.accordAC;
     }
 
@@ -104,8 +100,7 @@ public class InfosAutoriteCompetente
      * Setter pour accordAC.
      * @param accordAC le accordAC à écrire.
      */
-    public void setAccordAC(final Boolean accordAC)
-    {
+    public void setAccordAC(final Boolean accordAC) {
         this.accordAC = accordAC;
     }
 
@@ -113,8 +108,7 @@ public class InfosAutoriteCompetente
      * Getter sur typeAC.
      * @return Retourne le typeAC.
      */
-    public TypeAC getTypeAC()
-    {
+    public TypeAC getTypeAC() {
         return this.typeAC;
     }
 
@@ -122,8 +116,7 @@ public class InfosAutoriteCompetente
      * Setter pour typeAC.
      * @param typeAC le typeAC à écrire.
      */
-    public void setTypeAC(final TypeAC typeAC)
-    {
+    public void setTypeAC(final TypeAC typeAC) {
         this.typeAC = typeAC;
     }
 
@@ -131,8 +124,7 @@ public class InfosAutoriteCompetente
      * Getter sur nomAC.
      * @return Retourne le nomAC.
      */
-    public String getNomAC()
-    {
+    public String getNomAC() {
         return this.nomAC;
     }
 
@@ -140,8 +132,7 @@ public class InfosAutoriteCompetente
      * Setter pour nomAC.
      * @param nomAC le nomAC à écrire.
      */
-    public void setNomAC(final String nomAC)
-    {
+    public void setNomAC(final String nomAC) {
         this.nomAC = nomAC;
     }
 
@@ -149,8 +140,7 @@ public class InfosAutoriteCompetente
      * Getter sur numIdentAC.
      * @return Retourne le numIdentAC.
      */
-    public String getNumIdentAC()
-    {
+    public String getNumIdentAC() {
         return this.numIdentAC;
     }
 
@@ -158,8 +148,7 @@ public class InfosAutoriteCompetente
      * Setter pour numIdentAC.
      * @param numIdentAC le numIdentAC à écrire.
      */
-    public void setNumIdentAC(final String numIdentAC)
-    {
+    public void setNumIdentAC(final String numIdentAC) {
         this.numIdentAC = numIdentAC;
     }
 
@@ -167,8 +156,7 @@ public class InfosAutoriteCompetente
      * Getter sur dateAC.
      * @return Retourne le dateAC.
      */
-    public Calendar getDateAC()
-    {
+    public Calendar getDateAC() {
         return this.dateAC;
     }
 
@@ -176,8 +164,7 @@ public class InfosAutoriteCompetente
      * Setter pour dateAC.
      * @param dateAC le dateAC à écrire.
      */
-    public void setDateAC(final Calendar dateAC)
-    {
+    public void setDateAC(final Calendar dateAC) {
         this.dateAC = dateAC;
     }
 
@@ -185,8 +172,7 @@ public class InfosAutoriteCompetente
      * Getter sur documents.
      * @return Retourne le documents.
      */
-    public SortedSet<DocumentAdministratif> getDocuments()
-    {
+    public SortedSet<DocumentAdministratif> getDocuments() {
         return this.documents;
     }
 
@@ -194,8 +180,7 @@ public class InfosAutoriteCompetente
      * Setter pour documents.
      * @param documents le documents à écrire.
      */
-    public void setDocuments(final SortedSet<DocumentAdministratif> documents)
-    {
+    public void setDocuments(final SortedSet<DocumentAdministratif> documents) {
         this.documents = documents;
     }
 
@@ -203,8 +188,7 @@ public class InfosAutoriteCompetente
      * Getter sur docsDossierPapier.
      * @return Retourne le docsDossierPapier.
      */
-    public boolean isDocsDossierPapier()
-    {
+    public boolean isDocsDossierPapier() {
         return this.docsDossierPapier;
     }
 
@@ -212,8 +196,7 @@ public class InfosAutoriteCompetente
      * Setter pour docsDossierPapier.
      * @param docsDossierPapier le docsDossierPapier à écrire.
      */
-    public void setDocsDossierPapier(final boolean docsDossierPapier)
-    {
+    public void setDocsDossierPapier(final boolean docsDossierPapier) {
         this.docsDossierPapier = docsDossierPapier;
     }
 

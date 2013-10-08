@@ -16,13 +16,10 @@ import fr.pharma.eclipse.service.stockage.StockageService;
 
 /**
  * Classe d'implémentation du service de gestion de stockage.
- 
+ * @author Netapsys
  * @version $Revision$ $Date$
  */
-public class StockageServiceImpl
-    extends GenericServiceImpl<Stockage>
-    implements StockageService
-{
+public class StockageServiceImpl extends GenericServiceImpl<Stockage> implements StockageService {
     /**
      * Serial ID.
      */
@@ -32,8 +29,7 @@ public class StockageServiceImpl
      * Constructeur.
      * @param stockageDao Dao de gestion des stockages.
      */
-    public StockageServiceImpl(final GenericDao<Stockage> stockageDao)
-    {
+    public StockageServiceImpl(final GenericDao<Stockage> stockageDao) {
         super(stockageDao);
     }
 
@@ -41,11 +37,8 @@ public class StockageServiceImpl
      * {@inheritDoc}
      */
     @Override
-    public String getNomComplet(final Stockage stockage)
-    {
-        return this.addNomStockageParents(stockage,
-                                          StringUtils.EMPTY)
-               + stockage.getNom();
+    public String getNomComplet(final Stockage stockage) {
+        return this.addNomStockageParents(stockage, StringUtils.EMPTY) + stockage.getNom();
     }
 
     /**
@@ -53,17 +46,13 @@ public class StockageServiceImpl
      */
     @Override
     public Boolean isStockageAlreadyPresent(final Stockage stockage,
-                                            final SortedSet<Stockage> stockages)
-    {
+                                            final SortedSet<Stockage> stockages) {
         Boolean result = Boolean.FALSE;
 
-        for (final Stockage stock : stockages)
-        {
+        for (final Stockage stock : stockages) {
             // Même nom
-            if (this.getNomComplet(stock).compareToIgnoreCase(this.getNomComplet(stockage)) == 0)
-            {
-                if (stock != stockage)
-                {
+            if (this.getNomComplet(stock).compareToIgnoreCase(this.getNomComplet(stockage)) == 0) {
+                if (stock != stockage) {
                     result = Boolean.TRUE;
                     break;
                 }
@@ -77,51 +66,43 @@ public class StockageServiceImpl
      */
     @Override
     public Boolean isNomStockageUtiliseParAutreStockageDeMemeNiveau(final Stockage stockage,
-                                                                    final Pharmacie pharmacie)
-    {
+                                                                    final Pharmacie pharmacie) {
         Boolean result = Boolean.FALSE;
 
         final StockageSearchCriteria criteria = new StockageSearchCriteria();
         criteria.setPharmacie(pharmacie);
         criteria.setNom(stockage.getNom());
-        if (stockage.getParent() != null)
-        {
+        if (stockage.getParent() != null) {
             criteria.setParent(stockage.getParent());
             criteria.setHasParent(Boolean.TRUE);
-        }
-        else
-        {
+        } else {
             criteria.setHasParent(Boolean.FALSE);
         }
 
-        // on recherche les stockages de même niveau (cad ayant le même parent) que le stockage.
+        // on recherche les stockages de même niveau (cad ayant le même parent)
+        // que le stockage.
         final List<Stockage> stockagesDeMemeNiveau = this.getAll(criteria);
 
         // on filtre sur le nom
-        CollectionUtils.filter(stockagesDeMemeNiveau,
-                               new GenericPredicate("nom",
-                                                    stockage.getNom()));
+        CollectionUtils.filter(stockagesDeMemeNiveau, new GenericPredicate("nom", stockage.getNom()));
 
-        // on verifie maintenant que le nom du stockage n'est pas déja porté par un stockage de
+        // on verifie maintenant que le nom du stockage n'est pas déja porté par
+        // un stockage de
         // même niveau.
-        if (stockagesDeMemeNiveau.size() > 0)
-        {
-            // il y a un stockage de même niveau portant le nom. Il faut vérifier si c'est le meme
+        if (stockagesDeMemeNiveau.size() > 0) {
+            // il y a un stockage de même niveau portant le nom. Il faut
+            // vérifier si c'est le meme
             // objet.
 
-            // Si notre stockage n'a pas d'id, c'est qu'il n'est pas en base, donc c'est un
+            // Si notre stockage n'a pas d'id, c'est qu'il n'est pas en base,
+            // donc c'est un
             // nouveau stockage. Donc le stockage récupéré n'est pas le même.
-            if (stockage.getId() == null)
-            {
+            if (stockage.getId() == null) {
                 result = Boolean.TRUE;
-            }
-            else
-            {
-                // le stockage en base n'a pas le même id, donc ce n'est pas le même.
-                if (stockagesDeMemeNiveau.get(0).getId().longValue() != stockage
-                        .getId()
-                        .longValue())
-                {
+            } else {
+                // le stockage en base n'a pas le même id, donc ce n'est pas le
+                // même.
+                if (stockagesDeMemeNiveau.get(0).getId().longValue() != stockage.getId().longValue()) {
                     result = Boolean.TRUE;
                 }
             }
@@ -137,13 +118,10 @@ public class StockageServiceImpl
      * @return Nom des parents.
      */
     private String addNomStockageParents(final Stockage stockage,
-                                         final String str)
-    {
+                                         final String str) {
         final Stockage parent = stockage.getParent();
-        while (parent != null)
-        {
-            return this.addNomStockageParents(parent,
-                                              parent.getNom().concat(str));
+        while (parent != null) {
+            return this.addNomStockageParents(parent, parent.getNom().concat(str));
         }
         return str;
     }

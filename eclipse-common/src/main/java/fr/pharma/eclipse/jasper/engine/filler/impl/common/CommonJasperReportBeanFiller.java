@@ -11,12 +11,10 @@ import fr.pharma.eclipse.utils.introspection.BeanTool;
 
 /**
  * Implémentation commune de classe en charge de valoriser un bean JasperReport.
- 
+ * @author Netapsys
  * @version $Revision$ $Date$
  */
-public class CommonJasperReportBeanFiller
-    implements JasperReportBeanFiller
-{
+public class CommonJasperReportBeanFiller implements JasperReportBeanFiller {
 
     /**
      * Serial ID.
@@ -49,8 +47,7 @@ public class CommonJasperReportBeanFiller
      * @param propertyToSet Nom de la propriété que doit valoriser ce filler<br>
      * dans le bean principal.
      */
-    public CommonJasperReportBeanFiller(final String propertyToSet)
-    {
+    public CommonJasperReportBeanFiller(final String propertyToSet) {
         this.propertyToSet = propertyToSet;
     }
 
@@ -59,30 +56,24 @@ public class CommonJasperReportBeanFiller
      */
     @Override
     public void fill(final Essai essai,
-                     final JasperReportBean bean)
-    {
+                     final JasperReportBean bean) {
         // Création du bean.
         final JasperReportBean subBean = this.jrBeanFactory.getInitializedObject();
 
         // Appel des sous-fillers.
-        for (final JasperReportBeanFiller subFiller : this.subFillers)
-        {
-            subFiller.fill(essai,
-                           subBean);
+        for (final JasperReportBeanFiller subFiller : this.subFillers) {
+            subFiller.fill(essai, subBean);
         }
 
         // Valorisation de la propriété dans le bean principal.
-        BeanTool.setPropriete(bean,
-                              this.propertyToSet,
-                              this.jrDataSourceFactory.getInitializedObject(subBean));
+        BeanTool.setPropriete(bean, this.propertyToSet, this.jrDataSourceFactory.getInitializedObject(subBean));
     }
 
     /**
      * Getter sur jrDataSourceFactory.
      * @return Retourne le jrDataSourceFactory.
      */
-    JRDataSourceFactory getJrDataSourceFactory()
-    {
+    JRDataSourceFactory getJrDataSourceFactory() {
         return this.jrDataSourceFactory;
     }
 
@@ -90,8 +81,7 @@ public class CommonJasperReportBeanFiller
      * Setter pour jrDataSourceFactory.
      * @param jrDataSourceFactory le jrDataSourceFactory à écrire.
      */
-    public void setJrDataSourceFactory(final JRDataSourceFactory jrDataSourceFactory)
-    {
+    public void setJrDataSourceFactory(final JRDataSourceFactory jrDataSourceFactory) {
         this.jrDataSourceFactory = jrDataSourceFactory;
     }
 
@@ -99,8 +89,7 @@ public class CommonJasperReportBeanFiller
      * Getter sur jrBeanFactory.
      * @return Retourne le jrBeanFactory.
      */
-    JasperReportBeanFactory getJrBeanFactory()
-    {
+    JasperReportBeanFactory getJrBeanFactory() {
         return this.jrBeanFactory;
     }
 
@@ -108,8 +97,7 @@ public class CommonJasperReportBeanFiller
      * Setter pour jrBeanFactory.
      * @param jrBeanFactory le jrBeanFactory à écrire.
      */
-    public void setJrBeanFactory(final JasperReportBeanFactory jrBeanFactory)
-    {
+    public void setJrBeanFactory(final JasperReportBeanFactory jrBeanFactory) {
         this.jrBeanFactory = jrBeanFactory;
     }
 
@@ -117,8 +105,7 @@ public class CommonJasperReportBeanFiller
      * Getter sur subFillers.
      * @return Retourne le subFillers.
      */
-    List<JasperReportBeanFiller> getSubFillers()
-    {
+    List<JasperReportBeanFiller> getSubFillers() {
         return this.subFillers;
     }
 
@@ -126,8 +113,7 @@ public class CommonJasperReportBeanFiller
      * Setter pour subFillers.
      * @param subFillers le subFillers à écrire.
      */
-    public void setSubFillers(final List<JasperReportBeanFiller> subFillers)
-    {
+    public void setSubFillers(final List<JasperReportBeanFiller> subFillers) {
         this.subFillers = subFillers;
     }
 
@@ -135,8 +121,7 @@ public class CommonJasperReportBeanFiller
      * Getter sur propertyToSet.
      * @return Retourne le propertyToSet.
      */
-    String getPropertyToSet()
-    {
+    String getPropertyToSet() {
         return this.propertyToSet;
     }
 

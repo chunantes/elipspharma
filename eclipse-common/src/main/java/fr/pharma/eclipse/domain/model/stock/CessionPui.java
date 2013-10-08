@@ -13,14 +13,13 @@ import fr.pharma.eclipse.domain.enums.stock.RaisonSortie;
 import fr.pharma.eclipse.domain.model.stockage.Pharmacie;
 
 /**
- * Bean métier représentant un mouvement de stock de cession à une PUI (pharmacie).
- 
+ * Bean métier représentant un mouvement de stock de cession à une PUI
+ * (pharmacie).
+ * @author Netapsys
  * @version $Revision$ $Date$
  */
 @Entity(name = "mvt_cession_pui")
-public class CessionPui
-    extends MvtStock
-{
+public class CessionPui extends MvtStock {
     /**
      * Serial ID.
      */
@@ -57,8 +56,7 @@ public class CessionPui
      * Getter pour commentaire.
      * @return Le commentaire
      */
-    public String getCommentaire()
-    {
+    public String getCommentaire() {
         return this.commentaire;
     }
 
@@ -66,8 +64,7 @@ public class CessionPui
      * Setter pour commentaire.
      * @param commentaire Le commentaire à écrire.
      */
-    public void setCommentaire(final String commentaire)
-    {
+    public void setCommentaire(final String commentaire) {
         this.commentaire = commentaire;
     }
 
@@ -75,8 +72,7 @@ public class CessionPui
      * Getter pour pharmacieDest.
      * @return Le pharmacieDest
      */
-    public Pharmacie getPharmacieDest()
-    {
+    public Pharmacie getPharmacieDest() {
         return this.pharmacieDest;
     }
 
@@ -84,8 +80,7 @@ public class CessionPui
      * Setter pour pharmacieDest.
      * @param pharmacieDest Le pharmacieDest à écrire.
      */
-    public void setPharmacieDest(final Pharmacie pharmacieDest)
-    {
+    public void setPharmacieDest(final Pharmacie pharmacieDest) {
         this.pharmacieDest = pharmacieDest;
     }
 
@@ -93,8 +88,7 @@ public class CessionPui
      * Getter pour raisonSortie.
      * @return Le raisonSortie
      */
-    public RaisonSortie getRaisonSortie()
-    {
+    public RaisonSortie getRaisonSortie() {
         return this.raisonSortie;
     }
 
@@ -102,8 +96,7 @@ public class CessionPui
      * Setter pour raisonSortie.
      * @param raisonSortie Le raisonSortie à écrire.
      */
-    public void setRaisonSortie(final RaisonSortie raisonSortie)
-    {
+    public void setRaisonSortie(final RaisonSortie raisonSortie) {
         this.raisonSortie = raisonSortie;
     }
 
@@ -111,8 +104,7 @@ public class CessionPui
      * Getter pour commentaireRaison.
      * @return Le commentaireRaison
      */
-    public String getCommentaireRaison()
-    {
+    public String getCommentaireRaison() {
         return this.commentaireRaison;
     }
 
@@ -120,8 +112,7 @@ public class CessionPui
      * Setter pour commentaireRaison.
      * @param commentaireRaison Le commentaireRaison à écrire.
      */
-    public void setCommentaireRaison(final String commentaireRaison)
-    {
+    public void setCommentaireRaison(final String commentaireRaison) {
         this.commentaireRaison = commentaireRaison;
     }
 

@@ -11,12 +11,10 @@ import fr.pharma.eclipse.utils.constants.EclipseConstants;
 /**
  * Classe de factory de bean concernant les suivis de modifications.
  * @param <SUIVI> Bean Objet Suivi de modification.
- 
+ * @author Netapsys
  * @version $Revision$ $Date$
  */
-public class SuiviFactory<SUIVI extends Suivi>
-    extends BeanObjectFactory<SUIVI>
-{
+public class SuiviFactory<SUIVI extends Suivi> extends BeanObjectFactory<SUIVI> {
     /**
      * Serial ID.
      */
@@ -26,8 +24,7 @@ public class SuiviFactory<SUIVI extends Suivi>
      * Constructeur.
      * @param suivi Classe de SUIVI.
      */
-    public SuiviFactory(final Class<SUIVI> suivi)
-    {
+    public SuiviFactory(final Class<SUIVI> suivi) {
         super(suivi);
     }
 
@@ -35,8 +32,7 @@ public class SuiviFactory<SUIVI extends Suivi>
      * {@inheritDoc}
      */
     @Override
-    public SUIVI getInitializedObject()
-    {
+    public SUIVI getInitializedObject() {
         final SUIVI suivi = super.getInitializedObject();
         suivi.setDateMaj(Calendar.getInstance(EclipseConstants.LOCALE));
         suivi.setMajPar(SecurityContextHolder.getContext().getAuthentication().getName());

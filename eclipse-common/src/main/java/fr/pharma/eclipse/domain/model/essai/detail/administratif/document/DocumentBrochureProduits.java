@@ -10,16 +10,14 @@ import fr.pharma.eclipse.domain.enums.document.TypeDocumentBrochure;
 import fr.pharma.eclipse.domain.enums.document.TypeDocumentEssai;
 
 /**
- * Bean métier représentant un document relatif à la brochure investigateur des produits de
- * l'essai clinique.
- 
+ * Bean métier représentant un document relatif à la brochure investigateur des
+ * produits de l'essai clinique.
+ * @author Netapsys
  * @version $Revision$ $Date$
  */
 @Entity
 @DiscriminatorValue("BROCHURE_PDUITS")
-public class DocumentBrochureProduits
-    extends DocumentAdministratif
-{
+public class DocumentBrochureProduits extends DocumentAdministratif {
 
     /**
      * Serial ID.
@@ -29,8 +27,8 @@ public class DocumentBrochureProduits
     /**
      * Version.
      */
-    @Column(name = "version")
-    private String version;
+    @Column(name = "version_doc")
+    private String versionDoc;
 
     /**
      * Type de document protocole (Protocole ou amendement).
@@ -42,8 +40,7 @@ public class DocumentBrochureProduits
     /**
      * Constructeur par défaut.
      */
-    public DocumentBrochureProduits()
-    {
+    public DocumentBrochureProduits() {
         this.setType(TypeDocumentEssai.BROCHURE_PDUITS);
     }
 
@@ -51,8 +48,7 @@ public class DocumentBrochureProduits
      * Getter pour typeDocumentBrochure.
      * @return Le typeDocumentBrochure
      */
-    public TypeDocumentBrochure getTypeDocumentBrochure()
-    {
+    public TypeDocumentBrochure getTypeDocumentBrochure() {
         return this.typeDocumentBrochure;
     }
 
@@ -60,27 +56,24 @@ public class DocumentBrochureProduits
      * Setter pour typeDocumentBrochure.
      * @param typeDocumentBrochure Le typeDocumentBrochure à écrire.
      */
-    public void setTypeDocumentBrochure(final TypeDocumentBrochure typeDocumentBrochure)
-    {
+    public void setTypeDocumentBrochure(final TypeDocumentBrochure typeDocumentBrochure) {
         this.typeDocumentBrochure = typeDocumentBrochure;
     }
 
     /**
-     * Getter pour version.
-     * @return Le version
+     * Getter pour versionDoc.
+     * @return Le versionDoc
      */
-    public String getVersion()
-    {
-        return this.version;
+    public String getVersionDoc() {
+        return this.versionDoc;
     }
 
     /**
-     * Setter pour version.
-     * @param version Le version à écrire.
+     * Setter pour versionDoc.
+     * @param version Le versionDoc à écrire.
      */
-    public void setVersion(final String version)
-    {
-        this.version = version;
+    public void setVersionDoc(final String versionDoc) {
+        this.versionDoc = versionDoc;
     }
 
 }

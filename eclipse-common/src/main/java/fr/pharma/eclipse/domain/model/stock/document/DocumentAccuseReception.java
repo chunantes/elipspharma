@@ -6,16 +6,14 @@ import javax.persistence.Entity;
 import fr.pharma.eclipse.domain.enums.document.TypeDocumentStock;
 
 /**
- * Bean métier représentant un document relatif à une sortie de stock de type Cession PUI : Accusé
- * de réception.
- 
+ * Bean métier représentant un document relatif à une sortie de stock de type
+ * Cession PUI : Accusé de réception.
+ * @author Netapsys
  * @version $Revision$ $Date$
  */
 @Entity
 @DiscriminatorValue("DESTRUCTION")
-public class DocumentAccuseReception
-    extends DocumentMvtStock
-{
+public class DocumentAccuseReception extends DocumentMvtStock {
     /**
      * Serial ID.
      */
@@ -24,8 +22,7 @@ public class DocumentAccuseReception
     /**
      * Constructeur par défaut.
      */
-    public DocumentAccuseReception()
-    {
+    public DocumentAccuseReception() {
         this.setType(TypeDocumentStock.DESTRUCTION);
     }
 

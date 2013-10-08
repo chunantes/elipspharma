@@ -11,12 +11,10 @@ import fr.pharma.eclipse.domain.enums.EtatRetour;
 
 /**
  * Artisan de recherche pour les retours de patients.
- 
+ * @author Netapsys
  * @version $Revision$ $Date$
  */
-public class RetourPatientSearchCriteriaMaker
-    extends AbstractCriteriaMaker
-{
+public class RetourPatientSearchCriteriaMaker extends AbstractCriteriaMaker {
     /**
      * Serial ID.
      */
@@ -25,8 +23,7 @@ public class RetourPatientSearchCriteriaMaker
     /**
      * Constructeur par défaut.
      */
-    public RetourPatientSearchCriteriaMaker()
-    {
+    public RetourPatientSearchCriteriaMaker() {
         super(RetourPatientSearchCriteria.class);
     }
 
@@ -35,55 +32,35 @@ public class RetourPatientSearchCriteriaMaker
      */
     @Override
     public void transform(final Criteria criteria,
-                          final SearchCriteria searchCrit)
-    {
+                          final SearchCriteria searchCrit) {
         final RetourPatientSearchCriteria crit = (RetourPatientSearchCriteria) searchCrit;
         // Essai
-        if (crit.getEssai() != null)
-        {
-            CriteriaMakerUtils.addCritere(criteria,
-                                          "essai",
-                                          crit.getEssai());
+        if (crit.getEssai() != null) {
+            CriteriaMakerUtils.addCritere(criteria, "essai", crit.getEssai());
         }
 
         // Produit
-        if (crit.getProduit() != null)
-        {
-            CriteriaMakerUtils.addCritere(criteria,
-                                          "produit",
-                                          crit.getProduit());
+        if (crit.getProduit() != null) {
+            CriteriaMakerUtils.addCritere(criteria, "produit", crit.getProduit());
         }
 
         // Produit
-        if (crit.getPatient() != null)
-        {
-            CriteriaMakerUtils.addCritere(criteria,
-                                          "patient",
-                                          crit.getPatient());
+        if (crit.getPatient() != null) {
+            CriteriaMakerUtils.addCritere(criteria, "patient", crit.getPatient());
         }
 
         // Stocakge
-        if (crit.getStockage() != null)
-        {
-            CriteriaMakerUtils.addCritere(criteria,
-                                          "detailStockage",
-                                          crit.getStockage());
+        if (crit.getStockage() != null) {
+            CriteriaMakerUtils.addCritere(criteria, "detailStockage", crit.getStockage());
         }
 
         // Etat
-        if (crit.getEtat() != null)
-        {
+        if (crit.getEtat() != null) {
             // si l'utilisateur a sélectionné l'état aggrégé SORTI.
-            if (crit.getEtat().equals(EtatRetour.SORTI))
-            {
-                criteria.add(Restrictions.ne("etat",
-                                             EtatRetour.PRESENT));
-            }
-            else
-            {
-                CriteriaMakerUtils.addCritere(criteria,
-                                              "etat",
-                                              crit.getEtat());
+            if (crit.getEtat().equals(EtatRetour.SORTI)) {
+                criteria.add(Restrictions.ne("etat", EtatRetour.PRESENT));
+            } else {
+                CriteriaMakerUtils.addCritere(criteria, "etat", crit.getEtat());
             }
         }
     }

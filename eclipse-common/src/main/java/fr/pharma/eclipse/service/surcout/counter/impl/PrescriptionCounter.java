@@ -9,19 +9,16 @@ import fr.pharma.eclipse.domain.criteria.prescription.PrescriptionSearchCriteria
 import fr.pharma.eclipse.domain.model.essai.Essai;
 import fr.pharma.eclipse.domain.model.patient.Patient;
 import fr.pharma.eclipse.domain.model.surcout.DonneesPrevision;
-import fr.pharma.eclipse.exception.ValidationException;
 import fr.pharma.eclipse.service.prescription.PrescriptionService;
 import fr.pharma.eclipse.service.surcout.counter.ActeCounter;
 
 /**
- * Classe en charge de compter le nombre de prescriptions pour un essai ou un patient dans un
- * essai.
- 
+ * Classe en charge de compter le nombre de prescriptions pour un essai ou un
+ * patient dans un essai.
+ * @author Netapsys
  * @version $Revision$ $Date$
  */
-public class PrescriptionCounter
-    implements ActeCounter, Serializable
-{
+public class PrescriptionCounter implements ActeCounter, Serializable {
     /**
      * Serial UID.
      */
@@ -34,19 +31,20 @@ public class PrescriptionCounter
     private PrescriptionService prescriptionService;
 
     /**
-     * Méthode en charge de compter le nombre de dispensation pour l'essai (ou pour le patient si
-     * le patient n'est pas null) dans l'intervalle en paramètre.
+     * Méthode en charge de compter le nombre de dispensation pour l'essai (ou
+     * pour le patient si le patient n'est pas null) dans l'intervalle en
+     * paramètre.
      * @param essai L'essai.
      * @param patient Le patient (si null alors le calcul se fait pour l'essai).
      * @param dateDebut Date Début de l'intervalle.
      * @param dateFin Date de fin de l'intervalle.
      * @return Le nombre de dispensations.
      */
+    @Override
     public int process(final Essai essai,
                        final Patient patient,
                        final Calendar dateDebut,
-                       final Calendar dateFin)
-    {
+                       final Calendar dateFin) {
         final PrescriptionSearchCriteria criteria = new PrescriptionSearchCriteria();
         criteria.setEssai(essai);
         criteria.setPatient(patient);
@@ -61,31 +59,15 @@ public class PrescriptionCounter
     @Override
     public int process(final Essai essai,
                        final Patient patient,
-                       final DonneesPrevision prevision)
-    {
+                       final DonneesPrevision prevision) {
         return prevision.getNbPrescriptions();
-    }
-
-    /**
-     * Méthode en charge de vérifier que le calcul se fait par patient.
-     * @param patient Le patient.
-     */
-    private void checkPatient(final Patient patient)
-    {
-        if (patient == null)
-        {
-            throw new ValidationException("surcout.prescription.patient",
-                                          new String[]
-                                          {"error" });
-        }
     }
 
     /**
      * Setter pour dispensationService.
      * @param prescriptionService le dispensationService à écrire.
      */
-    public void setPrescriptionService(final PrescriptionService prescriptionService)
-    {
+    public void setPrescriptionService(final PrescriptionService prescriptionService) {
         this.prescriptionService = prescriptionService;
     }
 

@@ -8,12 +8,10 @@ import fr.pharma.eclipse.validator.remove.RemoveValidator;
 
 /**
  * Classe de validation de suppression d'un objet Service.
- 
+ * @author Netapsys
  * @version $Revision$ $Date$
  */
-public class ServiceRemoveValidator
-    implements RemoveValidator<Service>, Serializable
-{
+public class ServiceRemoveValidator implements RemoveValidator<Service>, Serializable {
     /**
      * Serial ID.
      */
@@ -23,33 +21,20 @@ public class ServiceRemoveValidator
      * {@inheritDoc}
      */
     @Override
-    public void validate(final Service service)
-    {
+    public void validate(final Service service) {
         // Vérification Relation Service-Investigateur
-        if (!service.getInvestigateurs().isEmpty())
-        {
-            throw new ValidationException("remove",
-                                          new String[]
-                                          {"impossible" },
-                                          service);
+        if (!service.getInvestigateurs().isEmpty()) {
+            throw new ValidationException("remove", new String[]{"impossible" }, service);
         }
 
         // Vérification Relation Service-ArcInvestigateur
-        if (!service.getArcInvestigateurs().isEmpty())
-        {
-            throw new ValidationException("remove",
-                                          new String[]
-                                          {"impossible" },
-                                          service);
+        if (!service.getArcInvestigateurs().isEmpty()) {
+            throw new ValidationException("remove", new String[]{"impossible" }, service);
         }
 
         // Vérification Relation Service-Essais
-        if (!service.getEssais().isEmpty())
-        {
-            throw new ValidationException("remove",
-                                          new String[]
-                                          {"impossible" },
-                                          service);
+        if (!service.getEssais().isEmpty()) {
+            throw new ValidationException("remove", new String[]{"impossible" }, service);
         }
     }
 

@@ -13,12 +13,10 @@ import fr.pharma.eclipse.domain.criteria.common.SearchCriteria;
 
 /**
  * Dictionnaire de critères de recherche.
- 
+ * @author NETAPSYS
  * @version $Revision$ $Date$
  */
-public class CriteriaDictionaryImpl
-    implements CriteriaDictionary, Serializable
-{
+public class CriteriaDictionaryImpl implements CriteriaDictionary, Serializable {
     /**
      * Serial ID.
      */
@@ -33,18 +31,14 @@ public class CriteriaDictionaryImpl
     /**
      * {@inheritDoc}
      */
+    @Override
     public void apply(final Criteria criteria,
-                      final SearchCriteria searchCrit)
-    {
-        Assert.notNull(searchCrit,
-                       "SearchCriteria must not be null");
+                      final SearchCriteria searchCrit) {
+        Assert.notNull(searchCrit, "SearchCriteria must not be null");
         final CriteriaMaker maker = this.getMakers().get(searchCrit.getClass());
-        Assert.notNull(maker,
-                       "Maker must not be null");
-        if (maker.supports(searchCrit.getClass()))
-        {
-            maker.transform(criteria,
-                            searchCrit);
+        Assert.notNull(maker, "Maker must not be null");
+        if (maker.supports(searchCrit.getClass())) {
+            maker.transform(criteria, searchCrit);
         }
     }
 
@@ -53,8 +47,7 @@ public class CriteriaDictionaryImpl
      * @return Retourne les artisans.
      */
     @SuppressWarnings("unchecked")
-    public Map<Class, CriteriaMaker> getMakers()
-    {
+    public Map<Class, CriteriaMaker> getMakers() {
         return this.makers;
     }
 
@@ -63,8 +56,7 @@ public class CriteriaDictionaryImpl
      * @param makers les artisans à écrire.
      */
     @SuppressWarnings("unchecked")
-    public void setMakers(final Map<Class, CriteriaMaker> makers)
-    {
+    public void setMakers(final Map<Class, CriteriaMaker> makers) {
         this.makers = makers;
     }
 

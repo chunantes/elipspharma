@@ -8,12 +8,10 @@ import fr.pharma.eclipse.domain.model.essai.Essai;
 
 /**
  * Critère de recherche sur Personne.
- 
+ * @author Netapsys
  * @version $Revision$ $Date$
  */
-public class PersonneSearchCriteria
-    extends AbstractSearchCriteria
-{
+public class PersonneSearchCriteria extends AbstractSearchCriteria {
     /**
      * Serial ID.
      */
@@ -63,8 +61,7 @@ public class PersonneSearchCriteria
      * Getter sur nom.
      * @return Retourne le nom.
      */
-    public String getNom()
-    {
+    public String getNom() {
         return this.nom;
     }
 
@@ -72,8 +69,7 @@ public class PersonneSearchCriteria
      * Setter pour nom.
      * @param nom le nom à écrire.
      */
-    public void setNom(final String nom)
-    {
+    public void setNom(final String nom) {
         this.nom = nom;
     }
 
@@ -81,8 +77,7 @@ public class PersonneSearchCriteria
      * {@inheritDoc}
      */
     @Override
-    public void clear()
-    {
+    public void clear() {
         this.setNom(null);
         this.setTypePersonne(null);
         this.setNomSociete(null);
@@ -97,8 +92,7 @@ public class PersonneSearchCriteria
      * Getter sur typePersonne.
      * @return Retourne le typePersonne.
      */
-    public TypePersonne getTypePersonne()
-    {
+    public TypePersonne getTypePersonne() {
         return this.typePersonne;
     }
 
@@ -106,8 +100,7 @@ public class PersonneSearchCriteria
      * Getter sur nomSociete.
      * @return Retourne le nomSociete.
      */
-    public String getNomSociete()
-    {
+    public String getNomSociete() {
         return this.nomSociete;
     }
 
@@ -115,8 +108,7 @@ public class PersonneSearchCriteria
      * Setter pour nomSociete.
      * @param nomSociete le nomSociete à écrire.
      */
-    public void setNomSociete(final String nomSociete)
-    {
+    public void setNomSociete(final String nomSociete) {
         this.nomSociete = nomSociete;
     }
 
@@ -124,8 +116,7 @@ public class PersonneSearchCriteria
      * Setter pour typePersonne.
      * @param typePersonne le typePersonne à écrire.
      */
-    public void setTypePersonne(final TypePersonne typePersonne)
-    {
+    public void setTypePersonne(final TypePersonne typePersonne) {
         this.typePersonne = typePersonne;
     }
 
@@ -133,8 +124,7 @@ public class PersonneSearchCriteria
      * Getter sur prenom.
      * @return Retourne le prenom.
      */
-    public String getPrenom()
-    {
+    public String getPrenom() {
         return this.prenom;
     }
 
@@ -142,8 +132,7 @@ public class PersonneSearchCriteria
      * Setter pour prenom.
      * @param prenom le prenom à écrire.
      */
-    public void setPrenom(final String prenom)
-    {
+    public void setPrenom(final String prenom) {
         this.prenom = prenom;
     }
 
@@ -151,8 +140,7 @@ public class PersonneSearchCriteria
      * Getter pour login.
      * @return Le login
      */
-    public String getLogin()
-    {
+    public String getLogin() {
         return this.login;
     }
 
@@ -160,8 +148,7 @@ public class PersonneSearchCriteria
      * Setter pour login.
      * @param login Le login à écrire.
      */
-    public void setLogin(final String login)
-    {
+    public void setLogin(final String login) {
         this.login = login;
     }
 
@@ -169,8 +156,7 @@ public class PersonneSearchCriteria
      * Getter pour essai.
      * @return Le essai
      */
-    public Essai getEssai()
-    {
+    public Essai getEssai() {
         return this.essai;
     }
 
@@ -178,8 +164,7 @@ public class PersonneSearchCriteria
      * Setter pour essai.
      * @param essai Le essai à écrire.
      */
-    public void setEssai(final Essai essai)
-    {
+    public void setEssai(final Essai essai) {
         this.essai = essai;
     }
 
@@ -187,8 +172,7 @@ public class PersonneSearchCriteria
      * Getter pour dateDebut.
      * @return Le dateDebut
      */
-    public Calendar getDateDebut()
-    {
+    public Calendar getDateDebut() {
         return this.dateDebut;
     }
 
@@ -196,8 +180,7 @@ public class PersonneSearchCriteria
      * Setter pour dateDebut.
      * @param dateDebut Le dateDebut à écrire.
      */
-    public void setDateDebut(final Calendar dateDebut)
-    {
+    public void setDateDebut(final Calendar dateDebut) {
         this.dateDebut = dateDebut;
     }
 
@@ -205,8 +188,7 @@ public class PersonneSearchCriteria
      * Getter pour dateFin.
      * @return Le dateFin
      */
-    public Calendar getDateFin()
-    {
+    public Calendar getDateFin() {
         return this.dateFin;
     }
 
@@ -214,8 +196,7 @@ public class PersonneSearchCriteria
      * Setter pour dateFin.
      * @param dateFin Le dateFin à écrire.
      */
-    public void setDateFin(final Calendar dateFin)
-    {
+    public void setDateFin(final Calendar dateFin) {
         this.dateFin = dateFin;
     }
 

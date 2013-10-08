@@ -2,16 +2,14 @@ package fr.pharma.eclipse.domain.enums.document;
 
 /**
  * Enumération des types de documents statiques.
- 
+ * @author Netapsys
  * @version $Revision$ $Date$
  */
-public enum TypeDocumentStatique
-{
+public enum TypeDocumentStatique {
     /**
      * Lettre d'accusé réception pour les cessions PUI.
      */
-    LETTRE_AR_CESSION("Lettre d'accusé réception pour les cessions PUI",
-            "lettre_accuse_reception.doc"),
+    LETTRE_AR_CESSION("Lettre d'accusé réception pour les cessions PUI", "lettre_accuse_reception.doc"),
 
     /**
      * Document relatif aux cessions PUI.
@@ -32,8 +30,7 @@ public enum TypeDocumentStatique
      * Constructeur.
      * @param libelle Libellé.
      */
-    private TypeDocumentStatique(final String libelle, final String nom)
-    {
+    private TypeDocumentStatique(final String libelle, final String nom) {
         this.libelle = libelle;
         this.nom = nom;
     }
@@ -42,8 +39,7 @@ public enum TypeDocumentStatique
      * Getter pour libelle.
      * @return Le libelle
      */
-    public String getLibelle()
-    {
+    public String getLibelle() {
         return this.libelle;
     }
 
@@ -51,8 +47,7 @@ public enum TypeDocumentStatique
      * Getter pour nom.
      * @return Le nom
      */
-    public String getNom()
-    {
+    public String getNom() {
         return this.nom;
     }
 }

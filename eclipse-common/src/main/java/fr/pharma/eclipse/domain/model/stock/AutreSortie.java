@@ -9,13 +9,11 @@ import fr.pharma.eclipse.domain.enums.stock.RaisonSortie;
 
 /**
  * Bean métier représentant un mouvement de stock de sortie autre.
- 
+ * @author Netapsys
  * @version $Revision$ $Date$
  */
 @Entity(name = "mvt_autre_sortie")
-public class AutreSortie
-    extends MvtStock
-{
+public class AutreSortie extends MvtStock {
     /**
      * Serial ID.
      */
@@ -44,8 +42,7 @@ public class AutreSortie
      * Getter pour commentaire.
      * @return Le commentaire
      */
-    public String getCommentaire()
-    {
+    public String getCommentaire() {
         return this.commentaire;
     }
 
@@ -53,8 +50,7 @@ public class AutreSortie
      * Setter pour commentaire.
      * @param commentaire Le commentaire à écrire.
      */
-    public void setCommentaire(final String commentaire)
-    {
+    public void setCommentaire(final String commentaire) {
         this.commentaire = commentaire;
     }
 
@@ -62,8 +58,7 @@ public class AutreSortie
      * Getter pour raisonSortie.
      * @return Le raisonSortie
      */
-    public RaisonSortie getRaisonSortie()
-    {
+    public RaisonSortie getRaisonSortie() {
         return this.raisonSortie;
     }
 
@@ -71,8 +66,7 @@ public class AutreSortie
      * Setter pour raisonSortie.
      * @param raisonSortie Le raisonSortie à écrire.
      */
-    public void setRaisonSortie(final RaisonSortie raisonSortie)
-    {
+    public void setRaisonSortie(final RaisonSortie raisonSortie) {
         this.raisonSortie = raisonSortie;
     }
 
@@ -80,8 +74,7 @@ public class AutreSortie
      * Getter pour commentaireRaison.
      * @return Le commentaireRaison
      */
-    public String getCommentaireRaison()
-    {
+    public String getCommentaireRaison() {
         return this.commentaireRaison;
     }
 
@@ -89,8 +82,7 @@ public class AutreSortie
      * Setter pour commentaireRaison.
      * @param commentaireRaison Le commentaireRaison à écrire.
      */
-    public void setCommentaireRaison(final String commentaireRaison)
-    {
+    public void setCommentaireRaison(final String commentaireRaison) {
         this.commentaireRaison = commentaireRaison;
     }
 

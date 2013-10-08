@@ -20,13 +20,11 @@ import fr.pharma.eclipse.domain.model.sigrec.essai.EssaiSigrec;
 
 /**
  * Classe du modèle représentant une assurance importée de SIGREC.
- 
+ * @author Netapsys
  * @version $Revision$ $Date$
  */
 @Entity(name = "assurance_sigrec")
-public class AssuranceSigrec
-    extends BeanObject
-{
+public class AssuranceSigrec extends BeanObject {
 
     /**
      * SerialVersionUID.
@@ -61,7 +59,8 @@ public class AssuranceSigrec
     private Calendar dateFinValidite;
 
     /**
-     * Contact. Le nom de l'assureur est stockée dans la propriété raisonSociale.
+     * Contact. Le nom de l'assureur est stockée dans la propriété
+     * raisonSociale.
      */
     @ManyToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "id_contact")
@@ -72,8 +71,7 @@ public class AssuranceSigrec
      * Getter sur numeroContrat.
      * @return Retourne le numeroContrat.
      */
-    public String getNumeroContrat()
-    {
+    public String getNumeroContrat() {
         return this.numeroContrat;
     }
 
@@ -81,8 +79,7 @@ public class AssuranceSigrec
      * Setter pour numeroContrat.
      * @param numeroContrat le numeroContrat à écrire.
      */
-    public void setNumeroContrat(final String numeroContrat)
-    {
+    public void setNumeroContrat(final String numeroContrat) {
         this.numeroContrat = numeroContrat;
     }
 
@@ -90,8 +87,7 @@ public class AssuranceSigrec
      * Getter sur dateDebutValidite.
      * @return Retourne le dateDebutValidite.
      */
-    public Calendar getDateDebutValidite()
-    {
+    public Calendar getDateDebutValidite() {
         return this.dateDebutValidite;
     }
 
@@ -99,8 +95,7 @@ public class AssuranceSigrec
      * Setter pour dateDebutValidite.
      * @param dateDebutValidite le dateDebutValidite à écrire.
      */
-    public void setDateDebutValidite(final Calendar dateDebutValidite)
-    {
+    public void setDateDebutValidite(final Calendar dateDebutValidite) {
         this.dateDebutValidite = dateDebutValidite;
     }
 
@@ -108,8 +103,7 @@ public class AssuranceSigrec
      * Getter sur dateFinValidite.
      * @return Retourne le dateFinValidite.
      */
-    public Calendar getDateFinValidite()
-    {
+    public Calendar getDateFinValidite() {
         return this.dateFinValidite;
     }
 
@@ -117,8 +111,7 @@ public class AssuranceSigrec
      * Setter pour dateFinValidite.
      * @param dateFinValidite le dateFinValidite à écrire.
      */
-    public void setDateFinValidite(final Calendar dateFinValidite)
-    {
+    public void setDateFinValidite(final Calendar dateFinValidite) {
         this.dateFinValidite = dateFinValidite;
     }
 
@@ -126,8 +119,7 @@ public class AssuranceSigrec
      * Getter sur contact.
      * @return Retourne le contact.
      */
-    public ContactSigrec getContact()
-    {
+    public ContactSigrec getContact() {
         return this.contact;
     }
 
@@ -135,8 +127,7 @@ public class AssuranceSigrec
      * Setter pour contact.
      * @param contact le contact à écrire.
      */
-    public void setContact(final ContactSigrec contact)
-    {
+    public void setContact(final ContactSigrec contact) {
         this.contact = contact;
     }
 
@@ -144,8 +135,7 @@ public class AssuranceSigrec
      * Getter sur essai.
      * @return Retourne le essai.
      */
-    public EssaiSigrec getEssai()
-    {
+    public EssaiSigrec getEssai() {
         return this.essai;
     }
 
@@ -153,8 +143,7 @@ public class AssuranceSigrec
      * Setter pour essai.
      * @param essai le essai à écrire.
      */
-    public void setEssai(final EssaiSigrec essai)
-    {
+    public void setEssai(final EssaiSigrec essai) {
         this.essai = essai;
     }
 

@@ -2,11 +2,10 @@ package fr.pharma.eclipse.domain.enums.produit;
 
 /**
  * Enumération des différentes classes de Dispositifs médicaux.
- 
+ * @author Netapsys
  * @version $Revision$ $Date$
  */
-public enum UniteDosage
-{
+public enum UniteDosage {
     /**
      * Comprimé.
      */
@@ -86,8 +85,7 @@ public enum UniteDosage
      * Constructeur privé.
      * @param libelle Libellé de la valeur de l'énumération.
      */
-    private UniteDosage(final String libelle, final String libelleLong)
-    {
+    private UniteDosage(final String libelle, final String libelleLong) {
         this.libelle = libelle;
         this.libelleLong = libelleLong;
     }
@@ -96,8 +94,7 @@ public enum UniteDosage
      * Getter sur libelle.
      * @return Retourne le libelle.
      */
-    public String getLibelle()
-    {
+    public String getLibelle() {
         return this.libelle;
     }
 
@@ -105,8 +102,7 @@ public enum UniteDosage
      * {@inheritDoc}
      */
     @Override
-    public String toString()
-    {
+    public String toString() {
         return this.getLibelle();
     }
 
@@ -114,8 +110,7 @@ public enum UniteDosage
      * Getter sur libelleLong.
      * @return Retourne le libelleLong.
      */
-    public String getLibelleLong()
-    {
+    public String getLibelleLong() {
         return this.libelleLong;
     }
 
@@ -123,8 +118,7 @@ public enum UniteDosage
      * Setter pour libelleLong.
      * @param libelleLong le libelleLong à écrire.
      */
-    public void setLibelleLong(final String libelleLong)
-    {
+    public void setLibelleLong(final String libelleLong) {
         this.libelleLong = libelleLong;
     }
 }

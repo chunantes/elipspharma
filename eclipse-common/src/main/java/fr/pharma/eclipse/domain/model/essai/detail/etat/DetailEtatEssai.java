@@ -15,14 +15,13 @@ import fr.pharma.eclipse.domain.model.essai.Essai;
 import fr.pharma.eclipse.domain.model.suivi.common.Suivi;
 
 /**
- * Classe métier représentant les informations de détail de l'état d'un essai clinique.
- 
+ * Classe métier représentant les informations de détail de l'état d'un essai
+ * clinique.
+ * @author Netapsys
  * @version $Revision$ $Date$
  */
 @Entity(name = "essai_detail_etat")
-public class DetailEtatEssai
-    extends Suivi
-{
+public class DetailEtatEssai extends Suivi {
     /**
      * Serial ID.
      */
@@ -55,8 +54,7 @@ public class DetailEtatEssai
      * Getter pour essai.
      * @return Le essai
      */
-    public Essai getEssai()
-    {
+    public Essai getEssai() {
         return this.essai;
     }
 
@@ -64,8 +62,7 @@ public class DetailEtatEssai
      * Setter pour essai.
      * @param essai Le essai à écrire.
      */
-    public void setEssai(final Essai essai)
-    {
+    public void setEssai(final Essai essai) {
         this.essai = essai;
     }
 
@@ -73,8 +70,7 @@ public class DetailEtatEssai
      * Getter pour etatEssai.
      * @return Le etatEssai
      */
-    public EtatEssai getEtatEssai()
-    {
+    public EtatEssai getEtatEssai() {
         return this.etatEssai;
     }
 
@@ -82,8 +78,7 @@ public class DetailEtatEssai
      * Setter pour etatEssai.
      * @param etatEssai Le etatEssai à écrire.
      */
-    public void setEtatEssai(final EtatEssai etatEssai)
-    {
+    public void setEtatEssai(final EtatEssai etatEssai) {
         this.etatEssai = etatEssai;
     }
 
@@ -91,8 +86,7 @@ public class DetailEtatEssai
      * Getter pour commentaire.
      * @return Le commentaire
      */
-    public String getCommentaire()
-    {
+    public String getCommentaire() {
         return this.commentaire;
     }
 
@@ -100,8 +94,7 @@ public class DetailEtatEssai
      * Setter pour commentaire.
      * @param commentaire Le commentaire à écrire.
      */
-    public void setCommentaire(final String commentaire)
-    {
+    public void setCommentaire(final String commentaire) {
         this.commentaire = commentaire;
     }
 

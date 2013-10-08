@@ -16,13 +16,11 @@ import fr.pharma.eclipse.domain.model.common.BeanObject;
 
 /**
  * Historique de données patient.
- 
+ * @author Netapsys
  * @version $Revision$ $Date$
  */
 @Entity(name = "historique_patient")
-public class HistoriquePatient
-    extends BeanObject
-{
+public class HistoriquePatient extends BeanObject {
 
     /**
      * SerialVersionUID.
@@ -73,8 +71,7 @@ public class HistoriquePatient
      * Getter sur date.
      * @return Retourne le date.
      */
-    public Calendar getDate()
-    {
+    public Calendar getDate() {
         return this.date;
     }
 
@@ -82,8 +79,7 @@ public class HistoriquePatient
      * Setter pour date.
      * @param date le date à écrire.
      */
-    public void setDate(final Calendar date)
-    {
+    public void setDate(final Calendar date) {
         this.date = date;
     }
 
@@ -91,8 +87,7 @@ public class HistoriquePatient
      * Getter sur poid.
      * @return Retourne le poid.
      */
-    public Double getPoid()
-    {
+    public Double getPoid() {
         return this.poid;
     }
 
@@ -100,8 +95,7 @@ public class HistoriquePatient
      * Setter pour poid.
      * @param poid le poid à écrire.
      */
-    public void setPoid(final Double poid)
-    {
+    public void setPoid(final Double poid) {
         this.poid = poid;
     }
 
@@ -109,8 +103,7 @@ public class HistoriquePatient
      * Getter sur taille.
      * @return Retourne le taille.
      */
-    public Double getTaille()
-    {
+    public Double getTaille() {
         return this.taille;
     }
 
@@ -118,8 +111,7 @@ public class HistoriquePatient
      * Setter pour taille.
      * @param taille le taille à écrire.
      */
-    public void setTaille(final Double taille)
-    {
+    public void setTaille(final Double taille) {
         this.taille = taille;
     }
 
@@ -127,8 +119,7 @@ public class HistoriquePatient
      * Getter sur surfaceCorporelle.
      * @return Retourne le surfaceCorporelle.
      */
-    public Double getSurfaceCorporelle()
-    {
+    public Double getSurfaceCorporelle() {
         return this.surfaceCorporelle;
     }
 
@@ -136,8 +127,7 @@ public class HistoriquePatient
      * Setter pour surfaceCorporelle.
      * @param surfaceCorporelle le surfaceCorporelle à écrire.
      */
-    public void setSurfaceCorporelle(final Double surfaceCorporelle)
-    {
+    public void setSurfaceCorporelle(final Double surfaceCorporelle) {
         this.surfaceCorporelle = surfaceCorporelle;
     }
 
@@ -145,8 +135,7 @@ public class HistoriquePatient
      * Getter sur patient.
      * @return Retourne le patient.
      */
-    public Patient getPatient()
-    {
+    public Patient getPatient() {
         return this.patient;
     }
 
@@ -154,8 +143,7 @@ public class HistoriquePatient
      * Setter pour patient.
      * @param patient le patient à écrire.
      */
-    public void setPatient(final Patient patient)
-    {
+    public void setPatient(final Patient patient) {
         this.patient = patient;
     }
 
@@ -163,8 +151,7 @@ public class HistoriquePatient
      * Getter sur commentaire.
      * @return Retourne le commentaire.
      */
-    public String getCommentaire()
-    {
+    public String getCommentaire() {
         return this.commentaire;
     }
 
@@ -172,8 +159,7 @@ public class HistoriquePatient
      * Setter pour commentaire.
      * @param commentaire le commentaire à écrire.
      */
-    public void setCommentaire(final String commentaire)
-    {
+    public void setCommentaire(final String commentaire) {
         this.commentaire = commentaire;
     }
 

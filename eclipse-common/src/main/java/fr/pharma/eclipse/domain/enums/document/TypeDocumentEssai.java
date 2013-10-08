@@ -3,14 +3,13 @@ package fr.pharma.eclipse.domain.enums.document;
 /**
  * Enumération des différents types de documents, relatifs à l'essai clinique,<br>
  * sauvegardés sur le disque via l'application.
- 
+ * @author Netapsys
  * @version $Revision$ $Date$
  */
-public enum TypeDocumentEssai implements EnumTypeDocument
-{
+public enum TypeDocumentEssai implements EnumTypeDocument {
     /**
-     * Document associé à l'autorité compétente dans le détail Administratif/Réglementaire de
-     * l'essai clinique.
+     * Document associé à l'autorité compétente dans le détail
+     * Administratif/Réglementaire de l'essai clinique.
      */
     AUTORITE_COMPETENTE("ac", "detailAdministratif.infosAC.documents", "detailAdministratif"),
 
@@ -33,111 +32,91 @@ public enum TypeDocumentEssai implements EnumTypeDocument
     ASSURANCE("assu", "detailAdministratif.infosAssurance.documents", "detailAdministratif"),
 
     /**
-     * Document associé au protocole dans le détail Administratif/Réglementaire de l'essai
-     * clinique.
+     * Document associé au protocole dans le détail Administratif/Réglementaire
+     * de l'essai clinique.
      */
     PROTOCOLE("proto", "detailAdministratif.infosProtocole.documents", "detailAdministratif"),
 
     /**
-     * Document associé à la brochure investigateur sur les produits dans le détail
-     * Administratif/Réglementaire de l'essai clinique.
+     * Document associé à la brochure investigateur sur les produits dans le
+     * détail Administratif/Réglementaire de l'essai clinique.
      */
-    BROCHURE_PDUITS("broPro", "detailAdministratif.infosBrochure.documents",
-            "detailAdministratif"),
+    BROCHURE_PDUITS("broPro", "detailAdministratif.infosBrochure.documents", "detailAdministratif"),
 
     /**
-     * Document associé à la responsabilité de l'insu en cas de pharmacie dans le détail<br>
+     * Document associé à la responsabilité de l'insu en cas de pharmacie dans
+     * le détail<br>
      * Donnees Pharma de l'essai clinique.
      */
-    RESPONSABILITE_INSU("responsabiliteInsu",
-            "detailDonneesPharma.infosComplementaires.documentResponsabiliteInsu",
-            "detailDonneesPharma"),
+    RESPONSABILITE_INSU("responsabiliteInsu", "detailDonneesPharma.infosComplementaires.documentResponsabiliteInsu", "detailDonneesPharma"),
 
     /**
      * Document associé à la modalite de reception des traitement dans le détail<br>
      * Donnees Pharma de l'essai clinique.
      */
-    MODALITE_RECEPTION("modaliteReception",
-            "detailDonneesPharma.infosComplementaires.documentModaliteReception",
-            "detailDonneesPharma"),
+    MODALITE_RECEPTION("modaliteReception", "detailDonneesPharma.infosComplementaires.documentModaliteReception", "detailDonneesPharma"),
 
     /**
-     * Document associé à la modalite de Destruction des traitement dans le détail<br>
+     * Document associé à la modalite de Destruction des traitement dans le
+     * détail<br>
      * Donnees Pharma de l'essai clinique.
      */
-    MODALITE_DESTRUCTION("modaliteDestruction",
-            "detailDonneesPharma.infosComplementaires.documentModaliteDestruction",
-            "detailDonneesPharma"),
+    MODALITE_DESTRUCTION("modaliteDestruction", "detailDonneesPharma.infosComplementaires.documentModaliteDestruction", "detailDonneesPharma"),
 
     /**
-     * Document associé à la responsabilité des commandes en cas de pharmacie dans le détail<br>
+     * Document associé à la responsabilité des commandes en cas de pharmacie
+     * dans le détail<br>
      * Donnees Pharma de l'essai clinique.
      */
-    RESPONSABILITE_COMMANDE("responsabiliteCommande",
-            "detailDonneesPharma.infosComplementaires.documentResponsabiliteCommande",
-            "detailDonneesPharma"),
+    RESPONSABILITE_COMMANDE("responsabiliteCommande", "detailDonneesPharma.infosComplementaires.documentResponsabiliteCommande", "detailDonneesPharma"),
 
     /**
      * Document associé à la numerotation de conditionnement dans le détail<br>
      * Donnees Pharma de l'essai clinique.
      */
-    NUMEROTATION_CONDITIONNEMENT("numerotationConditionnement",
-            "detailDonneesPharma.infosDispensations.documentNumerotationConditionnement",
-            "detailDonneesPharma"),
+    NUMEROTATION_CONDITIONNEMENT("numerotationConditionnement", "detailDonneesPharma.infosDispensations.documentNumerotationConditionnement", "detailDonneesPharma"),
 
     /**
      * Document associé aux informations de conditionnements dans le détail<br>
      * Donnees Pharma de l'essai clinique.
      */
-    INFORMATION_CONDITIONNEMENT("informationConditionnement",
-            "detailDonneesPharma.infosDispensations.documentInformationConditionnement",
-            "detailDonneesPharma"),
+    INFORMATION_CONDITIONNEMENT("informationConditionnement", "detailDonneesPharma.infosDispensations.documentInformationConditionnement", "detailDonneesPharma"),
 
     /**
      * Document associé à la contre etiquette dans le détail<br>
      * Donnees Pharma de l'essai clinique.
      */
-    CONTRE_ETIQUETTE("contreEtiquette",
-            "detailDonneesPharma.infosDispensations.documentContreEtiquette",
-            "detailDonneesPharma"),
+    CONTRE_ETIQUETTE("contreEtiquette", "detailDonneesPharma.infosDispensations.documentContreEtiquette", "detailDonneesPharma"),
 
     /**
      * Document associé aux conseils patients dans le détail<br>
      * Donnees Pharma de l'essai clinique.
      */
-    CONSEIL_PATIENT("conseilPatient",
-            "detailDonneesPharma.infosDispensations.documentConseilPatient",
-            "detailDonneesPharma"),
+    CONSEIL_PATIENT("conseilPatient", "detailDonneesPharma.infosDispensations.documentConseilPatient", "detailDonneesPharma"),
 
     /**
      * Document associé à l'aide aux dispensations dans le détail<br>
      * Donnees Pharma de l'essai clinique.
      */
-    AIDE_DISPENSATION("aideDispensation",
-            "detailDonneesPharma.infosDispensations.documentAideDispensation",
-            "detailDonneesPharma"),
+    AIDE_DISPENSATION("aideDispensation", "detailDonneesPharma.infosDispensations.documentAideDispensation", "detailDonneesPharma"),
 
     /**
      * Document associé à la responsabilité de la randomisation<br>
      * en cas de pharmacie dans le détail Donnees Pharma de l'essai clinique.
      */
-    RESPONSABILITE_RANDOMISATION("responsabiliteRandomisation",
-            "detailDonneesPharma.infosComplementaires.documentResponsabiliteRandomisation",
-            "detailDonneesPharma"),
+    RESPONSABILITE_RANDOMISATION("responsabiliteRandomisation", "detailDonneesPharma.infosComplementaires.documentResponsabiliteRandomisation", "detailDonneesPharma"),
 
     /**
-     * Document associé à l'autorisation d'importation dans le détail Administratif/Réglementaire
-     * de l'essai clinique.
+     * Document associé à l'autorisation d'importation dans le détail
+     * Administratif/Réglementaire de l'essai clinique.
      */
-    AUTORISATION_IMPORTATION("autorisationImportation",
-            "detailAdministratif.infosAutorisationImportation.documents", "detailAdministratif"),
+    AUTORISATION_IMPORTATION("autorisationImportation", "detailAdministratif.infosAutorisationImportation.documents", "detailAdministratif"),
 
     /**
      * Document associé à l'autorisation de distribution dans le détail
      * Administratif/Réglementaire de l'essai clinique.
      */
-    AUTORISATION_DISTRIBUTION("autorisationDistribution",
-            "detailAdministratif.infosAutorisationDistribution.documents", "detailAdministratif"),
+    AUTORISATION_DISTRIBUTION("autorisationDistribution", "detailAdministratif.infosAutorisationDistribution.documents", "detailAdministratif"),
 
     /**
      * Document surcouts previsionnels.
@@ -155,7 +134,8 @@ public enum TypeDocumentEssai implements EnumTypeDocument
     AUTRE("autre", "detailAutresDocuments.documents", "detailAutresDocuments");
 
     /**
-     * Chemin d'accès aux documents de ce type à partir du répertoire de l'essai.
+     * Chemin d'accès aux documents de ce type à partir du répertoire de
+     * l'essai.
      */
     private String repertoire;
 
@@ -171,18 +151,14 @@ public enum TypeDocumentEssai implements EnumTypeDocument
 
     /**
      * Constructeur.
-     * @param repertoire Chemin d'accès aux documents de ce type à partir du répertoire de
-     * l'essai.
-     * @param documentsPropertyFromEssai Propriété pour accéder à la liste des documents depuis le
-     * bean Essai.
-     * @param documentsParentPropertyFromEssai Propriété pour accéder au parent des documents
-     * depuis le bean Essai.
+     * @param repertoire Chemin d'accès aux documents de ce type à partir du
+     * répertoire de l'essai.
+     * @param documentsPropertyFromEssai Propriété pour accéder à la liste des
+     * documents depuis le bean Essai.
+     * @param documentsParentPropertyFromEssai Propriété pour accéder au parent
+     * des documents depuis le bean Essai.
      */
-    private TypeDocumentEssai(
-                              final String repertoire,
-                              final String documentsPropertyFromEssai,
-                              final String documentsParentPropertyFromEssai)
-    {
+    private TypeDocumentEssai(final String repertoire, final String documentsPropertyFromEssai, final String documentsParentPropertyFromEssai) {
         this.repertoire = repertoire;
         this.documentsPropertyFromEssai = documentsPropertyFromEssai;
         this.documentsParentPropertyFromEssai = documentsParentPropertyFromEssai;
@@ -192,8 +168,7 @@ public enum TypeDocumentEssai implements EnumTypeDocument
      * Getter sur repertoire.
      * @return Retourne le repertoire.
      */
-    public String getRepertoire()
-    {
+    public String getRepertoire() {
         return this.repertoire;
     }
 
@@ -201,8 +176,7 @@ public enum TypeDocumentEssai implements EnumTypeDocument
      * Getter sur documentsPropertyFromEssai.
      * @return Retourne le documentsPropertyFromEssai.
      */
-    public String getDocumentsPropertyFromEssai()
-    {
+    public String getDocumentsPropertyFromEssai() {
         return this.documentsPropertyFromEssai;
     }
 
@@ -210,8 +184,7 @@ public enum TypeDocumentEssai implements EnumTypeDocument
      * {@inheritDoc}
      */
     @Override
-    public TypeDocumentEclipse getTypeEclipse()
-    {
+    public TypeDocumentEclipse getTypeEclipse() {
         return TypeDocumentEclipse.ESSAI;
     }
 
@@ -219,8 +192,7 @@ public enum TypeDocumentEssai implements EnumTypeDocument
      * Getter sur documentsParentPropertyFromEssai.
      * @return Retourne le documentsParentPropertyFromEssai.
      */
-    public String getDocumentsParentPropertyFromEssai()
-    {
+    public String getDocumentsParentPropertyFromEssai() {
         return this.documentsParentPropertyFromEssai;
     }
 

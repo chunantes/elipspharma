@@ -26,13 +26,11 @@ import fr.pharma.eclipse.domain.model.produit.detail.DetailStockage;
 
 /**
  * Bean métier représentant un retour patient.
- 
+ * @author Netapsys
  * @version $Revision$ $Date$
  */
 @Entity(name = "retour_patient")
-public class RetourPatient
-    extends BeanObject
-{
+public class RetourPatient extends BeanObject {
 
     /**
      * SerialVersionUID.
@@ -161,8 +159,7 @@ public class RetourPatient
      * Getter sur essai.
      * @return Retourne le essai.
      */
-    public Essai getEssai()
-    {
+    public Essai getEssai() {
         return this.essai;
     }
 
@@ -170,8 +167,7 @@ public class RetourPatient
      * Getter sur patient.
      * @return Retourne le patient.
      */
-    public Patient getPatient()
-    {
+    public Patient getPatient() {
         return this.patient;
     }
 
@@ -179,8 +175,7 @@ public class RetourPatient
      * Getter sur personne.
      * @return Retourne le personne.
      */
-    public Personne getPersonne()
-    {
+    public Personne getPersonne() {
         return this.personne;
     }
 
@@ -188,8 +183,7 @@ public class RetourPatient
      * Getter sur produit.
      * @return Retourne le produit.
      */
-    public Produit getProduit()
-    {
+    public Produit getProduit() {
         return this.produit;
     }
 
@@ -197,8 +191,7 @@ public class RetourPatient
      * Getter sur conditionnement.
      * @return Retourne le conditionnement.
      */
-    public Conditionnement getConditionnement()
-    {
+    public Conditionnement getConditionnement() {
         return this.conditionnement;
     }
 
@@ -206,8 +199,7 @@ public class RetourPatient
      * Setter pour essai.
      * @param essai le essai à écrire.
      */
-    public void setEssai(final Essai essai)
-    {
+    public void setEssai(final Essai essai) {
         this.essai = essai;
     }
 
@@ -215,8 +207,7 @@ public class RetourPatient
      * Setter pour patient.
      * @param patient le patient à écrire.
      */
-    public void setPatient(final Patient patient)
-    {
+    public void setPatient(final Patient patient) {
         this.patient = patient;
     }
 
@@ -224,8 +215,7 @@ public class RetourPatient
      * Setter pour personne.
      * @param personne le personne à écrire.
      */
-    public void setPersonne(final Personne personne)
-    {
+    public void setPersonne(final Personne personne) {
         this.personne = personne;
     }
 
@@ -233,8 +223,7 @@ public class RetourPatient
      * Setter pour produit.
      * @param produit le produit à écrire.
      */
-    public void setProduit(final Produit produit)
-    {
+    public void setProduit(final Produit produit) {
         this.produit = produit;
     }
 
@@ -242,8 +231,7 @@ public class RetourPatient
      * Setter pour conditionnement.
      * @param conditionnement le conditionnement à écrire.
      */
-    public void setConditionnement(final Conditionnement conditionnement)
-    {
+    public void setConditionnement(final Conditionnement conditionnement) {
         this.conditionnement = conditionnement;
     }
 
@@ -251,8 +239,7 @@ public class RetourPatient
      * Getter sur date.
      * @return Retourne le date.
      */
-    public Calendar getDate()
-    {
+    public Calendar getDate() {
         return this.date;
     }
 
@@ -260,8 +247,7 @@ public class RetourPatient
      * Setter pour date.
      * @param date le date à écrire.
      */
-    public void setDate(final Calendar date)
-    {
+    public void setDate(final Calendar date) {
         this.date = date;
     }
 
@@ -269,8 +255,7 @@ public class RetourPatient
      * Getter sur detailStockage.
      * @return Retourne le detailStockage.
      */
-    public DetailStockage getDetailStockage()
-    {
+    public DetailStockage getDetailStockage() {
         return this.detailStockage;
     }
 
@@ -278,8 +263,7 @@ public class RetourPatient
      * Setter pour detailStockage.
      * @param detailStockage le detailStockage à écrire.
      */
-    public void setDetailStockage(final DetailStockage detailStockage)
-    {
+    public void setDetailStockage(final DetailStockage detailStockage) {
         this.detailStockage = detailStockage;
     }
 
@@ -287,8 +271,7 @@ public class RetourPatient
      * Getter sur quantite.
      * @return Retourne le quantite.
      */
-    public Integer getQuantite()
-    {
+    public Integer getQuantite() {
         return this.quantite;
     }
 
@@ -296,8 +279,7 @@ public class RetourPatient
      * Getter sur commentaire.
      * @return Retourne le commentaire.
      */
-    public String getCommentaire()
-    {
+    public String getCommentaire() {
         return this.commentaire;
     }
 
@@ -305,8 +287,7 @@ public class RetourPatient
      * Setter pour quantite.
      * @param quantite le quantite à écrire.
      */
-    public void setQuantite(final Integer quantite)
-    {
+    public void setQuantite(final Integer quantite) {
         this.quantite = quantite;
     }
 
@@ -314,8 +295,7 @@ public class RetourPatient
      * Setter pour commentaire.
      * @param commentaire le commentaire à écrire.
      */
-    public void setCommentaire(final String commentaire)
-    {
+    public void setCommentaire(final String commentaire) {
         this.commentaire = commentaire;
     }
 
@@ -323,8 +303,7 @@ public class RetourPatient
      * Getter pour etat.
      * @return Le etat
      */
-    public EtatRetour getEtat()
-    {
+    public EtatRetour getEtat() {
         return this.etat;
     }
 
@@ -332,8 +311,7 @@ public class RetourPatient
      * Setter pour etat.
      * @param etat Le etat à écrire.
      */
-    public void setEtat(final EtatRetour etat)
-    {
+    public void setEtat(final EtatRetour etat) {
         this.etat = etat;
     }
 
@@ -341,8 +319,7 @@ public class RetourPatient
      * Getter pour dateEtat.
      * @return Le dateEtat
      */
-    public Calendar getDateEtat()
-    {
+    public Calendar getDateEtat() {
         return this.dateEtat;
     }
 
@@ -350,8 +327,7 @@ public class RetourPatient
      * Setter pour dateEtat.
      * @param dateEtat Le dateEtat à écrire.
      */
-    public void setDateEtat(final Calendar dateEtat)
-    {
+    public void setDateEtat(final Calendar dateEtat) {
         this.dateEtat = dateEtat;
     }
 
@@ -359,8 +335,7 @@ public class RetourPatient
      * Getter pour commentaireEtat.
      * @return Le commentaireEtat
      */
-    public String getCommentaireEtat()
-    {
+    public String getCommentaireEtat() {
         return this.commentaireEtat;
     }
 
@@ -368,8 +343,7 @@ public class RetourPatient
      * Setter pour commentaireEtat.
      * @param commentaireEtat Le commentaireEtat à écrire.
      */
-    public void setCommentaireEtat(final String commentaireEtat)
-    {
+    public void setCommentaireEtat(final String commentaireEtat) {
         this.commentaireEtat = commentaireEtat;
     }
 
@@ -377,8 +351,7 @@ public class RetourPatient
      * Getter pour type.
      * @return Le type
      */
-    public TypeRetour getType()
-    {
+    public TypeRetour getType() {
         return this.type;
     }
 
@@ -386,8 +359,7 @@ public class RetourPatient
      * Setter pour type.
      * @param type Le type à écrire.
      */
-    public void setType(final TypeRetour type)
-    {
+    public void setType(final TypeRetour type) {
         this.type = type;
     }
 
@@ -395,8 +367,7 @@ public class RetourPatient
      * Getter pour commentaireEntame.
      * @return Le commentaireEntame
      */
-    public String getCommentaireEntame()
-    {
+    public String getCommentaireEntame() {
         return this.commentaireEntame;
     }
 
@@ -404,8 +375,7 @@ public class RetourPatient
      * Setter pour commentaireEntame.
      * @param commentaireEntame Le commentaireEntame à écrire.
      */
-    public void setCommentaireEntame(final String commentaireEntame)
-    {
+    public void setCommentaireEntame(final String commentaireEntame) {
         this.commentaireEntame = commentaireEntame;
     }
 
@@ -413,8 +383,7 @@ public class RetourPatient
      * Getter pour numOrdonnancier.
      * @return Le numOrdonnancier
      */
-    public Integer getNumOrdonnancier()
-    {
+    public Integer getNumOrdonnancier() {
         return this.numOrdonnancier;
     }
 
@@ -422,8 +391,7 @@ public class RetourPatient
      * Setter pour numOrdonnancier.
      * @param numOrdonnancier Le numOrdonnancier à écrire.
      */
-    public void setNumOrdonnancier(final Integer numOrdonnancier)
-    {
+    public void setNumOrdonnancier(final Integer numOrdonnancier) {
         this.numOrdonnancier = numOrdonnancier;
     }
 
@@ -431,8 +399,7 @@ public class RetourPatient
      * Getter pour numTraitement.
      * @return Le numTraitement
      */
-    public String getNumTraitement()
-    {
+    public String getNumTraitement() {
         return this.numTraitement;
     }
 
@@ -440,8 +407,7 @@ public class RetourPatient
      * Setter pour numTraitement.
      * @param numTraitement Le numTraitement à écrire.
      */
-    public void setNumTraitement(final String numTraitement)
-    {
+    public void setNumTraitement(final String numTraitement) {
         this.numTraitement = numTraitement;
     }
 
@@ -449,8 +415,7 @@ public class RetourPatient
      * Getter pour numLot.
      * @return Le numLot
      */
-    public String getNumLot()
-    {
+    public String getNumLot() {
         return this.numLot;
     }
 
@@ -458,8 +423,7 @@ public class RetourPatient
      * Setter pour numLot.
      * @param numLot Le numLot à écrire.
      */
-    public void setNumLot(final String numLot)
-    {
+    public void setNumLot(final String numLot) {
         this.numLot = numLot;
     }
 

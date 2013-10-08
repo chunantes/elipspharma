@@ -7,14 +7,12 @@ import fr.pharma.eclipse.service.essai.updator.EssaiBeforeSaveUpdator;
 import fr.pharma.eclipse.service.helper.common.BeanPropertyReinitializer;
 
 /**
- * Implémentation de l'interface {@link EssaiBeforeSaveUpdator} spécifique à la partie étude de
- * faisabilité de l'essai.
- 
+ * Implémentation de l'interface {@link EssaiBeforeSaveUpdator} spécifique à la
+ * partie étude de faisabilité de l'essai.
+ * @author Netapsys
  * @version $Revision$ $Date$
  */
-public class DetailFaisabiliteBeforeSaveUpdator
-    implements EssaiBeforeSaveUpdator
-{
+public class DetailFaisabiliteBeforeSaveUpdator implements EssaiBeforeSaveUpdator {
 
     /**
      * Serial ID.
@@ -31,30 +29,24 @@ public class DetailFaisabiliteBeforeSaveUpdator
      */
     @Override
     public void update(final Essai essai,
-                       final EssaiService service)
-    {
+                       final EssaiService service) {
         final InfosEtudeFaisabilite infosEtude = essai.getDetailFaisabilite().getInfosEtude();
         // Réinitialisation éventuelle des données en fonction des blocs
         // affichés à l'écran (en application des règles de gestion décrites
         // dans le cahier des charges).
-        if (infosEtude.getPrestaParticulieresPharmacie() != Boolean.TRUE)
-        {
+        if (infosEtude.getPrestaParticulieresPharmacie() != Boolean.TRUE) {
             this.handleDetailGlobal(infosEtude);
         }
 
-        if (infosEtude.getAchatsProduitsPUI() != Boolean.TRUE)
-        {
+        if (infosEtude.getAchatsProduitsPUI() != Boolean.TRUE) {
             this.handleBlocAchatsPduits(infosEtude);
         }
 
-        if (infosEtude.getRandomisationParPharma() != Boolean.TRUE)
-        {
-            this.reinitializer.resetPropertyToNull(infosEtude,
-                                                   "randomisationPossEnGarde");
+        if (infosEtude.getRandomisationParPharma() != Boolean.TRUE) {
+            this.reinitializer.resetPropertyToNull(infosEtude, "randomisationPossEnGarde");
         }
 
-        if (infosEtude.getDistribAutresPharmaPossible() != Boolean.TRUE)
-        {
+        if (infosEtude.getDistribAutresPharmaPossible() != Boolean.TRUE) {
             this.handleBlocDistribution(infosEtude);
         }
 
@@ -64,34 +56,24 @@ public class DetailFaisabiliteBeforeSaveUpdator
      * InfosEtudeFaisabilite.distribAutresPharmaPossible.
      * @param infosEtude Informations de l'étude.
      */
-    private void handleBlocDistribution(final InfosEtudeFaisabilite infosEtude)
-    {
-        this.reinitializer.resetPropertyToNull(infosEtude,
-                                               "circuitDistribDefini");
-        this.reinitializer.resetPropertyToNull(infosEtude,
-                                               "socTransportDefinie");
-        this.reinitializer.resetPropertyToNull(infosEtude,
-                                               "suiviTempNecessairePdtTransp");
-        this.reinitializer.resetPropertyToNull(infosEtude,
-                                               "suiviStocksParPharmacie");
-        this.reinitializer.resetCollection(infosEtude,
-                                           "commentairesDistribAutresPharma");
+    private void handleBlocDistribution(final InfosEtudeFaisabilite infosEtude) {
+        this.reinitializer.resetPropertyToNull(infosEtude, "circuitDistribDefini");
+        this.reinitializer.resetPropertyToNull(infosEtude, "socTransportDefinie");
+        this.reinitializer.resetPropertyToNull(infosEtude, "suiviTempNecessairePdtTransp");
+        this.reinitializer.resetPropertyToNull(infosEtude, "suiviStocksParPharmacie");
+        this.reinitializer.resetCollection(infosEtude, "commentairesDistribAutresPharma");
     }
 
     /**
-     * Traitements des informations dépendant de InfosEtudeFaisabilite.achatsProduitsPUI.
+     * Traitements des informations dépendant de
+     * InfosEtudeFaisabilite.achatsProduitsPUI.
      * @param infosEtude Informations de l'étude.
      */
-    private void handleBlocAchatsPduits(final InfosEtudeFaisabilite infosEtude)
-    {
-        this.reinitializer.resetPropertyToNull(infosEtude,
-                                               "refProduitsCHU");
-        this.reinitializer.resetPropertyToNull(infosEtude,
-                                               "accordPharmaCentrale");
-        this.reinitializer.resetCollection(infosEtude,
-                                           "servicesImputation");
-        this.reinitializer.resetCollection(infosEtude,
-                                           "commentairesAchatsPUI");
+    private void handleBlocAchatsPduits(final InfosEtudeFaisabilite infosEtude) {
+        this.reinitializer.resetPropertyToNull(infosEtude, "refProduitsCHU");
+        this.reinitializer.resetPropertyToNull(infosEtude, "accordPharmaCentrale");
+        this.reinitializer.resetCollection(infosEtude, "servicesImputation");
+        this.reinitializer.resetCollection(infosEtude, "commentairesAchatsPUI");
     }
 
     /**
@@ -99,40 +81,26 @@ public class DetailFaisabiliteBeforeSaveUpdator
      * InfosEtudeFaisabilite.prestaParticulieresPharmacie.
      * @param infosEtude Informations de l'étude.
      */
-    private void handleDetailGlobal(final InfosEtudeFaisabilite infosEtude)
-    {
-        this.reinitializer.resetPropertyToNull(infosEtude,
-                                               "achatsProduitsPUI");
-        this.reinitializer.resetPropertyToNull(infosEtude,
-                                               "demandeImportation");
-        this.reinitializer.resetPropertyToNull(infosEtude,
-                                               "randomisationParPharma");
-        this.reinitializer.resetPropertyToNull(infosEtude,
-                                               "gestionAveugle");
-        this.reinitializer.resetPropertyToNull(infosEtude,
-                                               "dispensationPossEnGarde");
-        this.reinitializer.resetPropertyToNull(infosEtude,
-                                               "distribAutresPharmaPossible");
-        this.reinitializer.resetPropertyToNull(infosEtude,
-                                               "reconstitutions");
-        this.reinitializer.resetPropertyToNull(infosEtude,
-                                               "preparations");
-        this.reinitializer.resetPropertyToNull(infosEtude,
-                                               "etiquetagesPduits");
-        this.reinitializer.resetPropertyToNull(infosEtude,
-                                               "conditionnementPduits");
-        this.reinitializer.resetPropertyToNull(infosEtude,
-                                               "donneesStabilite");
-        this.reinitializer.resetCollection(infosEtude,
-                                           "commentaires");
+    private void handleDetailGlobal(final InfosEtudeFaisabilite infosEtude) {
+        this.reinitializer.resetPropertyToNull(infosEtude, "achatsProduitsPUI");
+        this.reinitializer.resetPropertyToNull(infosEtude, "demandeImportation");
+        this.reinitializer.resetPropertyToNull(infosEtude, "randomisationParPharma");
+        this.reinitializer.resetPropertyToNull(infosEtude, "gestionAveugle");
+        this.reinitializer.resetPropertyToNull(infosEtude, "dispensationPossEnGarde");
+        this.reinitializer.resetPropertyToNull(infosEtude, "distribAutresPharmaPossible");
+        this.reinitializer.resetPropertyToNull(infosEtude, "reconstitutions");
+        this.reinitializer.resetPropertyToNull(infosEtude, "preparations");
+        this.reinitializer.resetPropertyToNull(infosEtude, "etiquetagesPduits");
+        this.reinitializer.resetPropertyToNull(infosEtude, "conditionnementPduits");
+        this.reinitializer.resetPropertyToNull(infosEtude, "donneesStabilite");
+        this.reinitializer.resetCollection(infosEtude, "commentaires");
     }
 
     /**
      * Setter pour reinitializer.
      * @param reinitializer le reinitializer à écrire.
      */
-    public void setReinitializer(final BeanPropertyReinitializer<InfosEtudeFaisabilite> reinitializer)
-    {
+    public void setReinitializer(final BeanPropertyReinitializer<InfosEtudeFaisabilite> reinitializer) {
         this.reinitializer = reinitializer;
     }
 

@@ -13,12 +13,10 @@ import fr.pharma.eclipse.validator.remove.RemoveValidator;
 
 /**
  * Classe de validation de suppression d'un objet Stockage.
- 
+ * @author Netapsys
  * @version $Revision$ $Date$
  */
-public class StockageRemoveValidator
-    implements RemoveValidator<Stockage>, Serializable
-{
+public class StockageRemoveValidator implements RemoveValidator<Stockage>, Serializable {
     /**
      * Serial ID.
      */
@@ -34,26 +32,17 @@ public class StockageRemoveValidator
      * {@inheritDoc}
      */
     @Override
-    public void validate(final Stockage stockage)
-    {
+    public void validate(final Stockage stockage) {
         // Vérification Relation Pole-Service
         final ProduitSearchCriteria criteria = new ProduitSearchCriteria();
         criteria.setStockage(stockage);
-        if (this.produitService.hasResult(criteria))
-        {
-            throw new ValidationException("remove",
-                                          new String[]
-                                          {"impossible" },
-                                          stockage);
+        if (this.produitService.hasResult(criteria)) {
+            throw new ValidationException("remove", new String[]{"impossible" }, stockage);
         }
         criteria.setStockageRetour(stockage);
         criteria.setStockage(null);
-        if (this.produitService.hasResult(criteria))
-        {
-            throw new ValidationException("remove",
-                                          new String[]
-                                          {"impossible" },
-                                          stockage);
+        if (this.produitService.hasResult(criteria)) {
+            throw new ValidationException("remove", new String[]{"impossible" }, stockage);
         }
     }
 
@@ -61,8 +50,7 @@ public class StockageRemoveValidator
      * Setter pour produitService.
      * @param produitService Le produitService à écrire.
      */
-    public void setProduitService(final ProduitService<Produit> produitService)
-    {
+    public void setProduitService(final ProduitService<Produit> produitService) {
         this.produitService = produitService;
     }
 

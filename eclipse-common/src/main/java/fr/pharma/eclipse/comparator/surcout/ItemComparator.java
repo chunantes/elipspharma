@@ -8,12 +8,10 @@ import fr.pharma.eclipse.utils.constants.EclipseConstants;
 
 /**
  * Comparator sur les items.
- 
+ * @author Netapsys
  * @version $Revision$ $Date$
  */
-public class ItemComparator
-    implements Comparator<Item>, Serializable
-{
+public class ItemComparator implements Comparator<Item>, Serializable {
 
     /**
      * SerialVersionUID.
@@ -25,8 +23,7 @@ public class ItemComparator
      */
     @Override
     public int compare(final Item o1,
-                       final Item o2)
-    {
+                       final Item o2) {
         final String key1 = this.buildKey(o1);
         final String key2 = this.buildKey(o2);
 
@@ -38,12 +35,10 @@ public class ItemComparator
      * @param p Item dont on veut construire la clé.
      * @return La clé de l'Item.
      */
-    private String buildKey(final Item p)
-    {
+    private String buildKey(final Item p) {
         final StringBuilder builder = new StringBuilder();
         builder.append(p.getTheme()).append(EclipseConstants.COMMA);
-        if (p.getCategorie() != null)
-        {
+        if (p.getCategorie() != null) {
             builder.append(p.getCategorie());
         }
         return builder.toString();

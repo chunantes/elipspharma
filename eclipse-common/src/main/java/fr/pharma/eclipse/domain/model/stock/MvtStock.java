@@ -22,22 +22,18 @@ import fr.pharma.eclipse.domain.model.acteur.Personne;
 import fr.pharma.eclipse.domain.model.common.BeanObject;
 import fr.pharma.eclipse.domain.model.common.BeanParentDocument;
 import fr.pharma.eclipse.domain.model.essai.Essai;
-import fr.pharma.eclipse.domain.model.essai.EssaiElement;
 import fr.pharma.eclipse.domain.model.produit.Conditionnement;
 import fr.pharma.eclipse.domain.model.produit.Produit;
 import fr.pharma.eclipse.domain.model.stockage.Pharmacie;
 
 /**
  * Bean métier représentant un mouvement de stock.
- 
+ * @author Netapsys
  * @version $Revision$ $Date$
  */
 @Entity(name = "mvtstock")
 @Inheritance(strategy = InheritanceType.JOINED)
-public abstract class MvtStock
-    extends BeanObject
-    implements BeanParentDocument, EssaiElement
-{
+public abstract class MvtStock extends BeanObject implements BeanParentDocument {
     /**
      * Serial ID.
      */
@@ -142,8 +138,7 @@ public abstract class MvtStock
      * Getter pour produit.
      * @return Le produit
      */
-    public Produit getProduit()
-    {
+    public Produit getProduit() {
         return this.produit;
     }
 
@@ -151,8 +146,7 @@ public abstract class MvtStock
      * Setter pour produit.
      * @param produit Le produit à écrire.
      */
-    public void setProduit(final Produit produit)
-    {
+    public void setProduit(final Produit produit) {
         this.produit = produit;
     }
 
@@ -160,8 +154,7 @@ public abstract class MvtStock
      * Getter pour personne.
      * @return Le personne
      */
-    public Personne getPersonne()
-    {
+    public Personne getPersonne() {
         return this.personne;
     }
 
@@ -169,8 +162,7 @@ public abstract class MvtStock
      * Setter pour personne.
      * @param personne Le personne à écrire.
      */
-    public void setPersonne(final Personne personne)
-    {
+    public void setPersonne(final Personne personne) {
         this.personne = personne;
     }
 
@@ -178,8 +170,7 @@ public abstract class MvtStock
      * Getter pour quantite.
      * @return Le quantite
      */
-    public Integer getQuantite()
-    {
+    public Integer getQuantite() {
         return this.quantite;
     }
 
@@ -187,8 +178,7 @@ public abstract class MvtStock
      * Setter pour quantite.
      * @param quantite Le quantite à écrire.
      */
-    public void setQuantite(final Integer quantite)
-    {
+    public void setQuantite(final Integer quantite) {
         this.quantite = quantite;
     }
 
@@ -196,8 +186,7 @@ public abstract class MvtStock
      * Getter pour type.
      * @return Le type
      */
-    public TypeMvtStock getType()
-    {
+    public TypeMvtStock getType() {
         return this.type;
     }
 
@@ -205,8 +194,7 @@ public abstract class MvtStock
      * Setter pour type.
      * @param type Le type à écrire.
      */
-    public void setType(final TypeMvtStock type)
-    {
+    public void setType(final TypeMvtStock type) {
         this.type = type;
     }
 
@@ -214,8 +202,7 @@ public abstract class MvtStock
      * Getter pour essai.
      * @return Le essai
      */
-    public Essai getEssai()
-    {
+    public Essai getEssai() {
         return this.essai;
     }
 
@@ -223,8 +210,7 @@ public abstract class MvtStock
      * Setter pour essai.
      * @param essai Le essai à écrire.
      */
-    public void setEssai(final Essai essai)
-    {
+    public void setEssai(final Essai essai) {
         this.essai = essai;
     }
 
@@ -232,8 +218,7 @@ public abstract class MvtStock
      * Getter pour dateCreation.
      * @return Le dateCreation
      */
-    public Calendar getDateCreation()
-    {
+    public Calendar getDateCreation() {
         return this.dateCreation;
     }
 
@@ -241,8 +226,7 @@ public abstract class MvtStock
      * Setter pour dateCreation.
      * @param dateCreation Le dateCreation à écrire.
      */
-    public void setDateCreation(final Calendar dateCreation)
-    {
+    public void setDateCreation(final Calendar dateCreation) {
         this.dateCreation = dateCreation;
     }
 
@@ -250,8 +234,7 @@ public abstract class MvtStock
      * Getter pour conditionnement.
      * @return Le conditionnement
      */
-    public Conditionnement getConditionnement()
-    {
+    public Conditionnement getConditionnement() {
         return this.conditionnement;
     }
 
@@ -259,8 +242,7 @@ public abstract class MvtStock
      * Setter pour conditionnement.
      * @param conditionnement Le conditionnement à écrire.
      */
-    public void setConditionnement(final Conditionnement conditionnement)
-    {
+    public void setConditionnement(final Conditionnement conditionnement) {
         this.conditionnement = conditionnement;
     }
 
@@ -268,8 +250,7 @@ public abstract class MvtStock
      * Getter pour pharmacie.
      * @return Le pharmacie
      */
-    public Pharmacie getPharmacie()
-    {
+    public Pharmacie getPharmacie() {
         return this.pharmacie;
     }
 
@@ -277,8 +258,7 @@ public abstract class MvtStock
      * Setter pour pharmacie.
      * @param pharmacie Le pharmacie à écrire.
      */
-    public void setPharmacie(final Pharmacie pharmacie)
-    {
+    public void setPharmacie(final Pharmacie pharmacie) {
         this.pharmacie = pharmacie;
     }
 
@@ -286,8 +266,7 @@ public abstract class MvtStock
      * Getter pour numLot.
      * @return Le numLot
      */
-    public String getNumLot()
-    {
+    public String getNumLot() {
         return this.numLot;
     }
 
@@ -295,8 +274,7 @@ public abstract class MvtStock
      * Setter pour numLot.
      * @param numLot Le numLot à écrire.
      */
-    public void setNumLot(final String numLot)
-    {
+    public void setNumLot(final String numLot) {
         this.numLot = numLot;
     }
 
@@ -304,8 +282,7 @@ public abstract class MvtStock
      * Getter pour numTraitement.
      * @return Le numTraitement
      */
-    public String getNumTraitement()
-    {
+    public String getNumTraitement() {
         return this.numTraitement;
     }
 
@@ -313,8 +290,7 @@ public abstract class MvtStock
      * Setter pour numTraitement.
      * @param numTraitement Le numTraitement à écrire.
      */
-    public void setNumTraitement(final String numTraitement)
-    {
+    public void setNumTraitement(final String numTraitement) {
         this.numTraitement = numTraitement;
     }
 
@@ -322,8 +298,7 @@ public abstract class MvtStock
      * Getter pour approuve.
      * @return Le approuve
      */
-    public Boolean getApproApprouve()
-    {
+    public Boolean getApproApprouve() {
         return this.approApprouve;
     }
 
@@ -331,8 +306,7 @@ public abstract class MvtStock
      * Setter pour approuve.
      * @param approApprouve Le approuve à écrire.
      */
-    public void setApproApprouve(final Boolean approApprouve)
-    {
+    public void setApproApprouve(final Boolean approApprouve) {
         this.approApprouve = approApprouve;
     }
 
@@ -340,8 +314,7 @@ public abstract class MvtStock
      * Getter pour datePeremption.
      * @return Le datePeremption
      */
-    public Calendar getDatePeremption()
-    {
+    public Calendar getDatePeremption() {
         return this.datePeremption;
     }
 
@@ -349,14 +322,12 @@ public abstract class MvtStock
      * Setter pour datePeremption.
      * @param datePeremption Le datePeremption à écrire.
      */
-    public void setDatePeremption(final Calendar datePeremption)
-    {
+    public void setDatePeremption(final Calendar datePeremption) {
         this.datePeremption = datePeremption;
     }
 
     @Override
-    public String toString()
-    {
+    public String toString() {
         final StringBuilder builder = new StringBuilder("[");
         builder.append("id: ").append(this.getId());
         builder.append(", essai: ").append(this.essai);

@@ -19,6 +19,8 @@ import javax.persistence.OneToOne;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 
+import org.hibernate.annotations.Fetch;
+import org.hibernate.annotations.FetchMode;
 import org.hibernate.annotations.Index;
 import org.hibernate.annotations.LazyCollection;
 import org.hibernate.annotations.LazyCollectionOption;
@@ -56,14 +58,11 @@ import fr.pharma.eclipse.domain.model.suivi.essai.EssaiSuivi;
 
 /**
  * Classe métier représentant un Essai clinique (appelé aussi étude).
- 
+ * @author Netapsys
  * @version $Revision$ $Date$
  */
 @Entity(name = "essai")
-public class Essai
-    extends BeanObjectSuivi
-    implements BeanWithNom, BeanParentDocument
-{
+public class Essai extends BeanObjectSuivi implements BeanWithNom, BeanParentDocument {
     /**
      * Serial ID.
      */
@@ -110,10 +109,8 @@ public class Essai
      * Liste de détails sur l'état de l'essai.
      */
     @OneToMany(mappedBy = "essai", cascade = CascadeType.ALL, orphanRemoval = true)
-    @LazyCollection(LazyCollectionOption.TRUE)
     @Sort(type = SortType.COMPARATOR, comparator = SuiviComparator.class)
-    private SortedSet<DetailEtatEssai> detailsEtatEssai =
-        new TreeSet<DetailEtatEssai>(new SuiviComparator());
+    private SortedSet<DetailEtatEssai> detailsEtatEssai = new TreeSet<DetailEtatEssai>(new SuiviComparator());
 
     /**
      * Type du promoteur sur l'essai.
@@ -137,9 +134,10 @@ public class Essai
     /**
      * Promoteur.
      */
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "id_promoteur", nullable = false)
     @Index(name = "idx_promo_essai")
+    @Fetch(FetchMode.JOIN)
     private Promoteur promoteur;
 
     /**
@@ -222,7 +220,6 @@ public class Essai
      */
     @ManyToMany(targetEntity = Service.class)
     @JoinTable(name = "essai_service", joinColumns = @JoinColumn(name = "id_essai"), inverseJoinColumns = @JoinColumn(name = "id_service"))
-    @LazyCollection(LazyCollectionOption.TRUE)
     @Sort(type = SortType.COMPARATOR, comparator = BeanWithNomComparator.class)
     private SortedSet<Service> services = new TreeSet<Service>(new BeanWithNomComparator());
 
@@ -230,16 +227,13 @@ public class Essai
      * Liste des événements de l'essai.
      */
     @OneToMany(mappedBy = "essai", cascade = CascadeType.ALL, orphanRemoval = true)
-    @LazyCollection(LazyCollectionOption.TRUE)
     @Sort(type = SortType.COMPARATOR, comparator = EvenementComparator.class)
-    private final SortedSet<Evenement> evenements =
-        new TreeSet<Evenement>(new EvenementComparator());
+    private final SortedSet<Evenement> evenements = new TreeSet<Evenement>(new EvenementComparator());
 
     /**
      * Liste des incidents de l'essai.
      */
     @OneToMany(mappedBy = "essai", cascade = CascadeType.ALL, orphanRemoval = true)
-    @LazyCollection(LazyCollectionOption.TRUE)
     @Sort(type = SortType.COMPARATOR, comparator = IncidentComparator.class)
     private SortedSet<Incident> incidents = new TreeSet<Incident>(new IncidentComparator());
 
@@ -254,9 +248,7 @@ public class Essai
     /**
      * Tous les mvts.
      */
-    @OneToMany(mappedBy = "essai", cascade =
-    {CascadeType.MERGE, CascadeType.REFRESH }, orphanRemoval = true)
-    @LazyCollection(LazyCollectionOption.TRUE)
+    @OneToMany(mappedBy = "essai", cascade = {CascadeType.MERGE, CascadeType.REFRESH }, orphanRemoval = true)
     @Sort(type = SortType.COMPARATOR, comparator = EclipseListComparator.class)
     private final SortedSet<MvtStock> mvts = new TreeSet<MvtStock>(new EclipseListComparator());
 
@@ -271,8 +263,7 @@ public class Essai
      * Getter sur numInterne.
      * @return Retourne le numInterne.
      */
-    public String getNumInterne()
-    {
+    public String getNumInterne() {
         return this.numInterne;
     }
 
@@ -280,8 +271,7 @@ public class Essai
      * Setter pour numInterne.
      * @param numInterne le numInterne à écrire.
      */
-    public void setNumInterne(final String numInterne)
-    {
+    public void setNumInterne(final String numInterne) {
         this.numInterne = numInterne;
     }
 
@@ -289,8 +279,8 @@ public class Essai
      * Getter sur nom.
      * @return Retourne le nom.
      */
-    public String getNom()
-    {
+    @Override
+    public String getNom() {
         return this.nom;
     }
 
@@ -298,8 +288,7 @@ public class Essai
      * Setter pour nom.
      * @param nom le nom à écrire.
      */
-    public void setNom(final String nom)
-    {
+    public void setNom(final String nom) {
         this.nom = nom;
     }
 
@@ -307,8 +296,7 @@ public class Essai
      * Getter sur dci.
      * @return Retourne le dci.
      */
-    public String getDci()
-    {
+    public String getDci() {
         return this.dci;
     }
 
@@ -316,8 +304,7 @@ public class Essai
      * Setter pour dci.
      * @param dci le dci à écrire.
      */
-    public void setDci(final String dci)
-    {
+    public void setDci(final String dci) {
         this.dci = dci;
     }
 
@@ -325,8 +312,7 @@ public class Essai
      * Getter sur promoteur.
      * @return Retourne le promoteur.
      */
-    public Promoteur getPromoteur()
-    {
+    public Promoteur getPromoteur() {
         return this.promoteur;
     }
 
@@ -334,8 +320,7 @@ public class Essai
      * Setter pour promoteur.
      * @param promoteur le promoteur à écrire.
      */
-    public void setPromoteur(final Promoteur promoteur)
-    {
+    public void setPromoteur(final Promoteur promoteur) {
         this.promoteur = promoteur;
     }
 
@@ -343,8 +328,7 @@ public class Essai
      * Getter sur etat.
      * @return Retourne le etat.
      */
-    public EtatEssai getEtat()
-    {
+    public EtatEssai getEtat() {
         return this.etat;
     }
 
@@ -352,8 +336,7 @@ public class Essai
      * Setter pour etat.
      * @param etat le etat à écrire.
      */
-    public void setEtat(final EtatEssai etat)
-    {
+    public void setEtat(final EtatEssai etat) {
         this.etat = etat;
     }
 
@@ -362,8 +345,7 @@ public class Essai
      * @return Retourne le modifs.
      */
     @Override
-    public SortedSet<EssaiSuivi> getModifs()
-    {
+    public SortedSet<EssaiSuivi> getModifs() {
         return this.modifs;
     }
 
@@ -371,8 +353,7 @@ public class Essai
      * Getter sur codePromoteur.
      * @return Retourne le codePromoteur.
      */
-    public String getCodePromoteur()
-    {
+    public String getCodePromoteur() {
         return this.codePromoteur;
     }
 
@@ -380,8 +361,7 @@ public class Essai
      * Setter pour codePromoteur.
      * @param codePromoteur le codePromoteur à écrire.
      */
-    public void setCodePromoteur(final String codePromoteur)
-    {
+    public void setCodePromoteur(final String codePromoteur) {
         this.codePromoteur = codePromoteur;
     }
 
@@ -389,8 +369,7 @@ public class Essai
      * Getter sur typePromoteur.
      * @return Retourne le typePromoteur.
      */
-    public TypePromoteur getTypePromoteur()
-    {
+    public TypePromoteur getTypePromoteur() {
         return this.typePromoteur;
     }
 
@@ -398,8 +377,7 @@ public class Essai
      * Setter pour typePromoteur.
      * @param typePromoteur le typePromoteur à écrire.
      */
-    public void setTypePromoteur(final TypePromoteur typePromoteur)
-    {
+    public void setTypePromoteur(final TypePromoteur typePromoteur) {
         this.typePromoteur = typePromoteur;
     }
 
@@ -407,8 +385,7 @@ public class Essai
      * Getter sur emplacementPhysiqueDossier.
      * @return Retourne le emplacementPhysiqueDossier.
      */
-    public String getEmplacementPhysiqueDossier()
-    {
+    public String getEmplacementPhysiqueDossier() {
         return this.emplacementPhysiqueDossier;
     }
 
@@ -416,8 +393,7 @@ public class Essai
      * Setter pour emplacementPhysiqueDossier.
      * @param emplacementPhysiqueDossier le emplacementPhysiqueDossier à écrire.
      */
-    public void setEmplacementPhysiqueDossier(final String emplacementPhysiqueDossier)
-    {
+    public void setEmplacementPhysiqueDossier(final String emplacementPhysiqueDossier) {
         this.emplacementPhysiqueDossier = emplacementPhysiqueDossier;
     }
 
@@ -425,8 +401,7 @@ public class Essai
      * Getter sur detailRecherche.
      * @return Retourne le detailRecherche.
      */
-    public DetailRecherche getDetailRecherche()
-    {
+    public DetailRecherche getDetailRecherche() {
         return this.detailRecherche;
     }
 
@@ -434,8 +409,7 @@ public class Essai
      * Setter pour detailRecherche.
      * @param detailRecherche le detailRecherche à écrire.
      */
-    public void setDetailRecherche(final DetailRecherche detailRecherche)
-    {
+    public void setDetailRecherche(final DetailRecherche detailRecherche) {
         this.detailRecherche = detailRecherche;
     }
 
@@ -443,8 +417,7 @@ public class Essai
      * Getter sur libelleProduitEvalue.
      * @return Retourne le libelleProduitEvalue.
      */
-    public String getLibelleProduitEvalue()
-    {
+    public String getLibelleProduitEvalue() {
         return this.libelleProduitEvalue;
     }
 
@@ -452,8 +425,7 @@ public class Essai
      * Setter pour libelleProduitEvalue.
      * @param libelleProduitEvalue le libelleProduitEvalue à écrire.
      */
-    public void setLibelleProduitEvalue(final String libelleProduitEvalue)
-    {
+    public void setLibelleProduitEvalue(final String libelleProduitEvalue) {
         this.libelleProduitEvalue = libelleProduitEvalue;
     }
 
@@ -461,8 +433,7 @@ public class Essai
      * Getter sur services.
      * @return Retourne le services.
      */
-    public SortedSet<Service> getServices()
-    {
+    public SortedSet<Service> getServices() {
         return this.services;
     }
 
@@ -470,8 +441,7 @@ public class Essai
      * Setter pour services.
      * @param services le services à écrire.
      */
-    public void setServices(final SortedSet<Service> services)
-    {
+    public void setServices(final SortedSet<Service> services) {
         this.services = services;
     }
 
@@ -479,11 +449,10 @@ public class Essai
      * {@inheritDoc}
      */
     @Override
-    public String toString()
-    {
-        final StringBuilder builder = new StringBuilder("[");
-        builder.append("id: ").append(this.getId());
-        builder.append(", nom: ").append(this.nom);
+    public String toString() {
+        final StringBuilder builder = new StringBuilder("Essai #");
+        builder.append(this.getId());
+        builder.append("[nom: ").append(this.nom);
         builder.append(", selected: ").append(this.getSelected());
         return builder.append("]").toString();
     }
@@ -492,8 +461,7 @@ public class Essai
      * Getter sur detailDates.
      * @return Retourne le detailDates.
      */
-    public DetailDates getDetailDates()
-    {
+    public DetailDates getDetailDates() {
         return this.detailDates;
     }
 
@@ -501,8 +469,7 @@ public class Essai
      * Setter pour detailDates.
      * @param detailDates le detailDates à écrire.
      */
-    public void setDetailDates(final DetailDates detailDates)
-    {
+    public void setDetailDates(final DetailDates detailDates) {
         this.detailDates = detailDates;
     }
 
@@ -510,8 +477,7 @@ public class Essai
      * Getter sur detailFaisabilite.
      * @return Retourne le detailFaisabilite.
      */
-    public DetailFaisabilite getDetailFaisabilite()
-    {
+    public DetailFaisabilite getDetailFaisabilite() {
         return this.detailFaisabilite;
     }
 
@@ -519,8 +485,7 @@ public class Essai
      * Setter pour detailFaisabilite.
      * @param detailFaisabilite le detailFaisabilite à écrire.
      */
-    public void setDetailFaisabilite(final DetailFaisabilite detailFaisabilite)
-    {
+    public void setDetailFaisabilite(final DetailFaisabilite detailFaisabilite) {
         this.detailFaisabilite = detailFaisabilite;
     }
 
@@ -528,8 +493,7 @@ public class Essai
      * Getter sur anneeCreation.
      * @return Retourne le anneeCreation.
      */
-    public Integer getAnneeCreation()
-    {
+    public Integer getAnneeCreation() {
         return this.anneeCreation;
     }
 
@@ -537,8 +501,7 @@ public class Essai
      * Setter pour anneeCreation.
      * @param anneeCreation le anneeCreation à écrire.
      */
-    public void setAnneeCreation(final Integer anneeCreation)
-    {
+    public void setAnneeCreation(final Integer anneeCreation) {
         this.anneeCreation = anneeCreation;
     }
 
@@ -546,8 +509,7 @@ public class Essai
      * Getter sur detailAdministratif.
      * @return Retourne le detailAdministratif.
      */
-    public DetailAdministratif getDetailAdministratif()
-    {
+    public DetailAdministratif getDetailAdministratif() {
         return this.detailAdministratif;
     }
 
@@ -555,8 +517,7 @@ public class Essai
      * Setter pour detailAdministratif.
      * @param detailAdministratif le detailAdministratif à écrire.
      */
-    public void setDetailAdministratif(final DetailAdministratif detailAdministratif)
-    {
+    public void setDetailAdministratif(final DetailAdministratif detailAdministratif) {
         this.detailAdministratif = detailAdministratif;
     }
 
@@ -564,8 +525,7 @@ public class Essai
      * Getter sur detailProduit.
      * @return Retourne le detailProduit.
      */
-    public DetailProduit getDetailProduit()
-    {
+    public DetailProduit getDetailProduit() {
         return this.detailProduit;
     }
 
@@ -573,8 +533,7 @@ public class Essai
      * Setter pour detailProduit.
      * @param detailProduit le detailProduit à écrire.
      */
-    public void setDetailProduit(final DetailProduit detailProduit)
-    {
+    public void setDetailProduit(final DetailProduit detailProduit) {
         this.detailProduit = detailProduit;
     }
 
@@ -582,8 +541,7 @@ public class Essai
      * Getter sur pharmaciePrincipale.
      * @return Retourne le pharmaciePrincipale.
      */
-    public Pharmacie getPharmaciePrincipale()
-    {
+    public Pharmacie getPharmaciePrincipale() {
         return this.pharmaciePrincipale;
     }
 
@@ -591,8 +549,7 @@ public class Essai
      * Setter pour pharmaciePrincipale.
      * @param pharmaciePrincipale le pharmaciePrincipale à écrire.
      */
-    public void setPharmaciePrincipale(final Pharmacie pharmaciePrincipale)
-    {
+    public void setPharmaciePrincipale(final Pharmacie pharmaciePrincipale) {
         this.pharmaciePrincipale = pharmaciePrincipale;
     }
 
@@ -600,8 +557,7 @@ public class Essai
      * Getter sur detailContacts.
      * @return Retourne le detailContacts.
      */
-    public DetailContacts getDetailContacts()
-    {
+    public DetailContacts getDetailContacts() {
         return this.detailContacts;
     }
 
@@ -609,8 +565,7 @@ public class Essai
      * Setter pour detailContacts.
      * @param detailContacts le detailContacts à écrire.
      */
-    public void setDetailContacts(final DetailContacts detailContacts)
-    {
+    public void setDetailContacts(final DetailContacts detailContacts) {
         this.detailContacts = detailContacts;
     }
 
@@ -618,8 +573,7 @@ public class Essai
      * Getter sur detailDonneesPharma.
      * @return Retourne le detailDonneesPharma.
      */
-    public DetailDonneesPharma getDetailDonneesPharma()
-    {
+    public DetailDonneesPharma getDetailDonneesPharma() {
         return this.detailDonneesPharma;
     }
 
@@ -627,8 +581,7 @@ public class Essai
      * Setter pour detailDonneesPharma.
      * @param detailDonneesPharma le detailDonneesPharma à écrire.
      */
-    public void setDetailDonneesPharma(final DetailDonneesPharma detailDonneesPharma)
-    {
+    public void setDetailDonneesPharma(final DetailDonneesPharma detailDonneesPharma) {
         this.detailDonneesPharma = detailDonneesPharma;
     }
 
@@ -636,8 +589,7 @@ public class Essai
      * Getter sur detailDesign.
      * @return Retourne le detailDesign.
      */
-    public DetailDesign getDetailDesign()
-    {
+    public DetailDesign getDetailDesign() {
         return this.detailDesign;
     }
 
@@ -645,8 +597,7 @@ public class Essai
      * Setter pour detailDesign.
      * @param detailDesign le detailDesign à écrire.
      */
-    public void setDetailDesign(final DetailDesign detailDesign)
-    {
+    public void setDetailDesign(final DetailDesign detailDesign) {
         this.detailDesign = detailDesign;
     }
 
@@ -654,8 +605,7 @@ public class Essai
      * Setter pour detailAutresDocuments.
      * @param detailAutresDocuments le detailAutresDocuments à écrire.
      */
-    public void setDetailAutresDocuments(final DetailAutresDocuments detailAutresDocuments)
-    {
+    public void setDetailAutresDocuments(final DetailAutresDocuments detailAutresDocuments) {
         this.detailAutresDocuments = detailAutresDocuments;
     }
 
@@ -663,8 +613,7 @@ public class Essai
      * Getter sur detailAutresDocuments.
      * @return Retourne le detailAutresDocuments.
      */
-    public DetailAutresDocuments getDetailAutresDocuments()
-    {
+    public DetailAutresDocuments getDetailAutresDocuments() {
         return this.detailAutresDocuments;
     }
 
@@ -672,8 +621,7 @@ public class Essai
      * Getter pour alerteActive.
      * @return Le alerteActive
      */
-    public Boolean getAlerteActive()
-    {
+    public Boolean getAlerteActive() {
         return this.alerteActive;
     }
 
@@ -681,8 +629,7 @@ public class Essai
      * Setter pour alerteActive.
      * @param alerteActive Le alerteActive à écrire.
      */
-    public void setAlerteActive(final Boolean alerteActive)
-    {
+    public void setAlerteActive(final Boolean alerteActive) {
         this.alerteActive = alerteActive;
     }
 
@@ -690,8 +637,7 @@ public class Essai
      * Getter pour evenements.
      * @return Le evenements
      */
-    public SortedSet<Evenement> getEvenements()
-    {
+    public SortedSet<Evenement> getEvenements() {
         return this.evenements;
     }
 
@@ -699,8 +645,7 @@ public class Essai
      * Getter pour detailsEtatEssai.
      * @return Le detailsEtatEssai
      */
-    public SortedSet<DetailEtatEssai> getDetailsEtatEssai()
-    {
+    public SortedSet<DetailEtatEssai> getDetailsEtatEssai() {
         return this.detailsEtatEssai;
     }
 
@@ -708,8 +653,7 @@ public class Essai
      * Setter pour detailsEtatEssai.
      * @param detailsEtatEssai Le detailsEtatEssai à écrire.
      */
-    public void setDetailsEtatEssai(final SortedSet<DetailEtatEssai> detailsEtatEssai)
-    {
+    public void setDetailsEtatEssai(final SortedSet<DetailEtatEssai> detailsEtatEssai) {
         this.detailsEtatEssai = detailsEtatEssai;
     }
 
@@ -717,8 +661,7 @@ public class Essai
      * Getter sur detailSurcout.
      * @return Retourne le detailSurcout.
      */
-    public DetailSurcout getDetailSurcout()
-    {
+    public DetailSurcout getDetailSurcout() {
         return this.detailSurcout;
     }
 
@@ -726,8 +669,7 @@ public class Essai
      * Setter pour detailSurcout.
      * @param detailSurcout le detailSurcout à écrire.
      */
-    public void setDetailSurcout(final DetailSurcout detailSurcout)
-    {
+    public void setDetailSurcout(final DetailSurcout detailSurcout) {
         this.detailSurcout = detailSurcout;
     }
 
@@ -735,8 +677,7 @@ public class Essai
      * Getter sur incidents.
      * @return Retourne le incidents.
      */
-    public SortedSet<Incident> getIncidents()
-    {
+    public SortedSet<Incident> getIncidents() {
         return this.incidents;
     }
 
@@ -744,8 +685,7 @@ public class Essai
      * Setter pour incidents.
      * @param incidents le incidents à écrire.
      */
-    public void setIncidents(final SortedSet<Incident> incidents)
-    {
+    public void setIncidents(final SortedSet<Incident> incidents) {
         this.incidents = incidents;
     }
 
@@ -753,8 +693,7 @@ public class Essai
      * Getter pour mvts.
      * @return Le mvts
      */
-    public SortedSet<MvtStock> getMvts()
-    {
+    public SortedSet<MvtStock> getMvts() {
         return this.mvts;
     }
 
@@ -762,8 +701,7 @@ public class Essai
      * Getter pour dateSignature.
      * @return Le dateSignature
      */
-    public Calendar getDateSignature()
-    {
+    public Calendar getDateSignature() {
         return this.dateSignature;
     }
 
@@ -771,8 +709,7 @@ public class Essai
      * Setter pour dateSignature.
      * @param dateSignature Le dateSignature à écrire.
      */
-    public void setDateSignature(final Calendar dateSignature)
-    {
+    public void setDateSignature(final Calendar dateSignature) {
         this.dateSignature = dateSignature;
     }
 

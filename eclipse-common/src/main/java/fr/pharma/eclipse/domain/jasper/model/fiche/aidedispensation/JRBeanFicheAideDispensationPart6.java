@@ -8,13 +8,12 @@ import fr.pharma.eclipse.jasper.constants.JasperConstants;
 /**
  * Classe représentant la source de données de la partie 6 (infos. retours)<br>
  * du rapport Jasper intitulé<br>
- * "Fiche de gestion et d'aide à la dispensation d'un médicament en essai clinique". *
- 
+ * "Fiche de gestion et d'aide à la dispensation d'un médicament en essai clinique"
+ * . *
+ * @author Netapsys
  * @version $Revision$ $Date$
  */
-public class JRBeanFicheAideDispensationPart6
-    implements JasperReportBean
-{
+public class JRBeanFicheAideDispensationPart6 implements JasperReportBean {
     /**
      * Serial ID.
      */
@@ -39,8 +38,7 @@ public class JRBeanFicheAideDispensationPart6
      * Getter sur respRetour.
      * @return Retourne le respRetour.
      */
-    public String getRespRetour()
-    {
+    public String getRespRetour() {
         return this.respRetour;
     }
 
@@ -48,8 +46,7 @@ public class JRBeanFicheAideDispensationPart6
      * Setter pour respRetour.
      * @param respRetour le respRetour à écrire.
      */
-    public void setRespRetour(final String respRetour)
-    {
+    public void setRespRetour(final String respRetour) {
         this.respRetour = respRetour;
     }
 
@@ -57,8 +54,7 @@ public class JRBeanFicheAideDispensationPart6
      * Getter sur typeRetour.
      * @return Retourne le typeRetour.
      */
-    public String getTypeRetour()
-    {
+    public String getTypeRetour() {
         return this.typeRetour;
     }
 
@@ -66,8 +62,7 @@ public class JRBeanFicheAideDispensationPart6
      * Setter pour typeRetour.
      * @param typeRetour le typeRetour à écrire.
      */
-    public void setTypeRetour(final String typeRetour)
-    {
+    public void setTypeRetour(final String typeRetour) {
         this.typeRetour = typeRetour;
         this.showTypeRetour = StringUtils.hasText(typeRetour);
     }
@@ -76,8 +71,7 @@ public class JRBeanFicheAideDispensationPart6
      * Getter sur showTypeRetour.
      * @return Retourne le showTypeRetour.
      */
-    public boolean getShowTypeRetour()
-    {
+    public boolean getShowTypeRetour() {
         return this.showTypeRetour;
     }
 

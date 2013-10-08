@@ -9,14 +9,13 @@ import fr.pharma.eclipse.service.common.GenericService;
 
 /**
  * Interface du service de gestion des documents.
- 
+ * @author Netapsys
  * @version $Revision$ $Date$
  */
-public interface DocumentService
-    extends GenericService<DocumentEclipse>
-{
+public interface DocumentService extends GenericService<DocumentEclipse> {
     /**
-     * Méthode en charge de créer un objet File à partir d'un document et de son parent.
+     * Méthode en charge de créer un objet File à partir d'un document et de son
+     * parent.
      * @param bean Bean porteur du document.
      * @param doc Document à télécharger.
      * @return L'objet File correspondant au document.

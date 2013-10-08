@@ -29,14 +29,13 @@ import fr.pharma.eclipse.domain.model.essai.Essai;
 import fr.pharma.eclipse.domain.model.suivi.essai.detail.DetailRechercheSuivi;
 
 /**
- * Classe métier représentant les informations de détail général d'un essai clinique.
- 
+ * Classe métier représentant les informations de détail général d'un essai
+ * clinique.
+ * @author Netapsys
  * @version $Revision$ $Date$
  */
 @Entity(name = "essai_detail_recherche")
-public class DetailRecherche
-    extends BeanObjectSuivi
-{
+public class DetailRecherche extends BeanObjectSuivi {
 
     /**
      * Serial ID.
@@ -109,8 +108,7 @@ public class DetailRecherche
     @OneToMany(mappedBy = "detailRecherche", cascade = CascadeType.ALL)
     @LazyCollection(LazyCollectionOption.TRUE)
     @Sort(type = SortType.COMPARATOR, comparator = SuiviComparator.class)
-    private SortedSet<CommentaireEssaiRecherche> commentaires =
-        new TreeSet<CommentaireEssaiRecherche>(new SuiviComparator());
+    private SortedSet<CommentaireEssaiRecherche> commentaires = new TreeSet<CommentaireEssaiRecherche>(new SuiviComparator());
 
     /**
      * Liste des modifications du détail.
@@ -118,15 +116,13 @@ public class DetailRecherche
     @OneToMany(mappedBy = "detailRecherche", cascade = CascadeType.ALL)
     @LazyCollection(LazyCollectionOption.TRUE)
     @Sort(type = SortType.COMPARATOR, comparator = SuiviComparator.class)
-    private SortedSet<DetailRechercheSuivi> modifs =
-        new TreeSet<DetailRechercheSuivi>(new SuiviComparator());
+    private SortedSet<DetailRechercheSuivi> modifs = new TreeSet<DetailRechercheSuivi>(new SuiviComparator());
 
     /**
      * {@inheritDoc}
      */
     @Override
-    public SortedSet<DetailRechercheSuivi> getModifs()
-    {
+    public SortedSet<DetailRechercheSuivi> getModifs() {
         return this.modifs;
     }
 
@@ -134,8 +130,7 @@ public class DetailRecherche
      * Getter sur titreProtocole.
      * @return Retourne le titreProtocole.
      */
-    public String getTitreProtocole()
-    {
+    public String getTitreProtocole() {
         return this.titreProtocole;
     }
 
@@ -143,8 +138,7 @@ public class DetailRecherche
      * Setter pour titreProtocole.
      * @param titreProtocole le titreProtocole à écrire.
      */
-    public void setTitreProtocole(final String titreProtocole)
-    {
+    public void setTitreProtocole(final String titreProtocole) {
         this.titreProtocole = titreProtocole;
     }
 
@@ -152,8 +146,7 @@ public class DetailRecherche
      * Getter sur numEnregistrement.
      * @return Retourne le numEnregistrement.
      */
-    public String getNumEnregistrement()
-    {
+    public String getNumEnregistrement() {
         return this.numEnregistrement;
     }
 
@@ -161,8 +154,7 @@ public class DetailRecherche
      * Setter pour numEnregistrement.
      * @param numEnregistrement le numEnregistrement à écrire.
      */
-    public void setNumEnregistrement(final String numEnregistrement)
-    {
+    public void setNumEnregistrement(final String numEnregistrement) {
         this.numEnregistrement = numEnregistrement;
     }
 
@@ -170,8 +162,7 @@ public class DetailRecherche
      * Getter sur typeRecherche.
      * @return Retourne le typeRecherche.
      */
-    public TypeRecherche getTypeRecherche()
-    {
+    public TypeRecherche getTypeRecherche() {
         return this.typeRecherche;
     }
 
@@ -179,8 +170,7 @@ public class DetailRecherche
      * Setter pour typeRecherche.
      * @param typeRecherche le typeRecherche à écrire.
      */
-    public void setTypeRecherche(final TypeRecherche typeRecherche)
-    {
+    public void setTypeRecherche(final TypeRecherche typeRecherche) {
         this.typeRecherche = typeRecherche;
     }
 
@@ -188,8 +178,7 @@ public class DetailRecherche
      * Getter sur objetRecherche.
      * @return Retourne le objetRecherche.
      */
-    public ObjetRecherche getObjetRecherche()
-    {
+    public ObjetRecherche getObjetRecherche() {
         return this.objetRecherche;
     }
 
@@ -197,8 +186,7 @@ public class DetailRecherche
      * Setter pour objetRecherche.
      * @param objetRecherche le objetRecherche à écrire.
      */
-    public void setObjetRecherche(final ObjetRecherche objetRecherche)
-    {
+    public void setObjetRecherche(final ObjetRecherche objetRecherche) {
         this.objetRecherche = objetRecherche;
     }
 
@@ -206,8 +194,7 @@ public class DetailRecherche
      * Getter sur phaseRecherche.
      * @return Retourne le phaseRecherche.
      */
-    public PhaseRecherche getPhaseRecherche()
-    {
+    public PhaseRecherche getPhaseRecherche() {
         return this.phaseRecherche;
     }
 
@@ -215,8 +202,7 @@ public class DetailRecherche
      * Setter pour phaseRecherche.
      * @param phaseRecherche le phaseRecherche à écrire.
      */
-    public void setPhaseRecherche(final PhaseRecherche phaseRecherche)
-    {
+    public void setPhaseRecherche(final PhaseRecherche phaseRecherche) {
         this.phaseRecherche = phaseRecherche;
     }
 
@@ -224,8 +210,7 @@ public class DetailRecherche
      * Getter sur natureRecherche.
      * @return Retourne le natureRecherche.
      */
-    public NatureRecherche getNatureRecherche()
-    {
+    public NatureRecherche getNatureRecherche() {
         return this.natureRecherche;
     }
 
@@ -233,8 +218,7 @@ public class DetailRecherche
      * Setter pour natureRecherche.
      * @param natureRecherche le natureRecherche à écrire.
      */
-    public void setNatureRecherche(final NatureRecherche natureRecherche)
-    {
+    public void setNatureRecherche(final NatureRecherche natureRecherche) {
         this.natureRecherche = natureRecherche;
     }
 
@@ -242,8 +226,7 @@ public class DetailRecherche
      * Getter sur thematique.
      * @return Retourne le thematique.
      */
-    public Thematique getThematique()
-    {
+    public Thematique getThematique() {
         return this.thematique;
     }
 
@@ -251,8 +234,7 @@ public class DetailRecherche
      * Setter pour thematique.
      * @param thematique le thematique à écrire.
      */
-    public void setThematique(final Thematique thematique)
-    {
+    public void setThematique(final Thematique thematique) {
         this.thematique = thematique;
     }
 
@@ -260,8 +242,7 @@ public class DetailRecherche
      * Getter sur motsCles.
      * @return Retourne le motsCles.
      */
-    public String getMotsCles()
-    {
+    public String getMotsCles() {
         return this.motsCles;
     }
 
@@ -269,8 +250,7 @@ public class DetailRecherche
      * Setter pour motsCles.
      * @param motsCles le motsCles à écrire.
      */
-    public void setMotsCles(final String motsCles)
-    {
+    public void setMotsCles(final String motsCles) {
         this.motsCles = motsCles;
     }
 
@@ -278,8 +258,7 @@ public class DetailRecherche
      * Getter sur commentaires.
      * @return Retourne le commentaires.
      */
-    public SortedSet<CommentaireEssaiRecherche> getCommentaires()
-    {
+    public SortedSet<CommentaireEssaiRecherche> getCommentaires() {
         return this.commentaires;
     }
 
@@ -287,8 +266,7 @@ public class DetailRecherche
      * Setter pour commentaires.
      * @param commentaires le commentaires à écrire.
      */
-    public void setCommentaires(final SortedSet<CommentaireEssaiRecherche> commentaires)
-    {
+    public void setCommentaires(final SortedSet<CommentaireEssaiRecherche> commentaires) {
         this.commentaires = commentaires;
     }
 
@@ -296,8 +274,7 @@ public class DetailRecherche
      * Getter sur essai.
      * @return Retourne le essai.
      */
-    public Essai getEssai()
-    {
+    public Essai getEssai() {
         return this.essai;
     }
 
@@ -305,8 +282,7 @@ public class DetailRecherche
      * Setter pour essai.
      * @param essai le essai à écrire.
      */
-    public void setEssai(final Essai essai)
-    {
+    public void setEssai(final Essai essai) {
         this.essai = essai;
     }
 
@@ -314,8 +290,7 @@ public class DetailRecherche
      * Setter pour modifs.
      * @param modifs le modifs à écrire.
      */
-    public void setModifs(final SortedSet<DetailRechercheSuivi> modifs)
-    {
+    public void setModifs(final SortedSet<DetailRechercheSuivi> modifs) {
         this.modifs = modifs;
     }
 

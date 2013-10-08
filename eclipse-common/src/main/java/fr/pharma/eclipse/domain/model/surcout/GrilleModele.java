@@ -24,14 +24,11 @@ import fr.pharma.eclipse.utils.constants.EclipseConstants;
 
 /**
  * Modèle de grille des surcouts.
- 
+ * @author Netapsys
  * @version $Revision$ $Date$
  */
 @Entity(name = "grille_modele")
-public class GrilleModele
-    extends BeanObject
-    implements Clonable<GrilleModele>
-{
+public class GrilleModele extends BeanObject implements Clonable<GrilleModele> {
 
     /**
      * SerialVersionUID.
@@ -81,8 +78,7 @@ public class GrilleModele
      * Getter sur nom.
      * @return Retourne le nom.
      */
-    public String getNom()
-    {
+    public String getNom() {
         return this.nom;
     }
 
@@ -90,8 +86,7 @@ public class GrilleModele
      * Setter pour nom.
      * @param nom le nom à écrire.
      */
-    public void setNom(final String nom)
-    {
+    public void setNom(final String nom) {
         this.nom = nom;
     }
 
@@ -99,8 +94,7 @@ public class GrilleModele
      * Getter sur dateDebutValidite.
      * @return Retourne le dateDebutValidite.
      */
-    public Calendar getDateDebutValidite()
-    {
+    public Calendar getDateDebutValidite() {
         return this.dateDebutValidite;
     }
 
@@ -108,8 +102,7 @@ public class GrilleModele
      * Setter pour dateDebutValidite.
      * @param dateDebutValidite le dateDebutValidite à écrire.
      */
-    public void setDateDebutValidite(final Calendar dateDebutValidite)
-    {
+    public void setDateDebutValidite(final Calendar dateDebutValidite) {
         this.dateDebutValidite = dateDebutValidite;
     }
 
@@ -117,8 +110,7 @@ public class GrilleModele
      * Getter sur dateFinValidite.
      * @return Retourne le dateFinValidite.
      */
-    public Calendar getDateFinValidite()
-    {
+    public Calendar getDateFinValidite() {
         return this.dateFinValidite;
     }
 
@@ -126,8 +118,7 @@ public class GrilleModele
      * Setter pour dateFinValidite.
      * @param dateFinValidite le dateFinValidite à écrire.
      */
-    public void setDateFinValidite(final Calendar dateFinValidite)
-    {
+    public void setDateFinValidite(final Calendar dateFinValidite) {
         this.dateFinValidite = dateFinValidite;
     }
 
@@ -135,8 +126,7 @@ public class GrilleModele
      * Getter sur themes.
      * @return Retourne le themes.
      */
-    public SortedSet<Theme> getThemes()
-    {
+    public SortedSet<Theme> getThemes() {
         return this.themes;
     }
 
@@ -144,8 +134,7 @@ public class GrilleModele
      * Setter pour themes.
      * @param themes le themes à écrire.
      */
-    public void setThemes(final SortedSet<Theme> themes)
-    {
+    public void setThemes(final SortedSet<Theme> themes) {
         this.themes = themes;
     }
 
@@ -153,8 +142,7 @@ public class GrilleModele
      * Getter sur dateCreation.
      * @return Retourne le dateCreation.
      */
-    public Calendar getDateCreation()
-    {
+    public Calendar getDateCreation() {
         return this.dateCreation;
     }
 
@@ -162,8 +150,7 @@ public class GrilleModele
      * Setter pour dateCreation.
      * @param dateCreation le dateCreation à écrire.
      */
-    public void setDateCreation(final Calendar dateCreation)
-    {
+    public void setDateCreation(final Calendar dateCreation) {
         this.dateCreation = dateCreation;
     }
 
@@ -171,14 +158,11 @@ public class GrilleModele
      * {@inheritDoc}
      */
     @Override
-    public GrilleModele cloneMe()
-    {
+    public GrilleModele cloneMe() {
         final GrilleModele grille = new GrilleModele();
         grille.setDateCreation(Calendar.getInstance(EclipseConstants.LOCALE));
-        grille.setNom(this.getNom()
-                      + " - copie");
-        for (final Theme theme : this.getThemes())
-        {
+        grille.setNom(this.getNom() + " - copie");
+        for (final Theme theme : this.getThemes()) {
             final Theme copie = theme.cloneMe();
             copie.setGrilleModele(grille);
             grille.getThemes().add(copie);
@@ -190,8 +174,7 @@ public class GrilleModele
      * Getter sur grilles.
      * @return Retourne le grilles.
      */
-    public SortedSet<Grille> getGrilles()
-    {
+    public SortedSet<Grille> getGrilles() {
         return this.grilles;
     }
 
@@ -199,8 +182,7 @@ public class GrilleModele
      * Setter pour grilles.
      * @param grilles le grilles à écrire.
      */
-    public void setGrilles(final SortedSet<Grille> grilles)
-    {
+    public void setGrilles(final SortedSet<Grille> grilles) {
         this.grilles = grilles;
     }
 

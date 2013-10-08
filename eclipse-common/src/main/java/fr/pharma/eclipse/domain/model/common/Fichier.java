@@ -10,12 +10,10 @@ import org.springframework.web.multipart.MultipartFile;
 
 /**
  * Contenu d'un fichier.
- 
+ * @author Netapsys
  * @version $Revision$ $Date$
  */
-public class Fichier
-    implements Serializable
-{
+public class Fichier implements Serializable {
     /**
      * Serial ID.
      */
@@ -50,8 +48,7 @@ public class Fichier
      * Getter pour contenu.
      * @return Retourne le contenu.
      */
-    public byte[] getContenu()
-    {
+    public byte[] getContenu() {
         return this.contenu;
     }
 
@@ -59,8 +56,7 @@ public class Fichier
      * Setter pour contenu.
      * @param contenu le contenu à écrire.
      */
-    public void setContenu(final byte[] contenu)
-    {
+    public void setContenu(final byte[] contenu) {
         this.contenu = contenu;
     }
 
@@ -68,8 +64,7 @@ public class Fichier
      * Getter pour nom.
      * @return Retourne le nom.
      */
-    public String getNom()
-    {
+    public String getNom() {
         return this.nom;
     }
 
@@ -77,8 +72,7 @@ public class Fichier
      * Setter pour nom.
      * @param nom le nom à écrire.
      */
-    public void setNom(final String nom)
-    {
+    public void setNom(final String nom) {
         this.nom = nom;
     }
 
@@ -86,8 +80,7 @@ public class Fichier
      * Getter pour file.
      * @return Retourne le file.
      */
-    public MultipartFile getFile()
-    {
+    public MultipartFile getFile() {
         return this.file;
     }
 
@@ -95,18 +88,11 @@ public class Fichier
      * Setter pour file.
      * @param file le file à écrire.
      */
-    public void setFile(final MultipartFile file)
-    {
-        try
-        {
-            this.setFiledata(file.getBytes(),
-                             file.getContentType(),
-                             file.getOriginalFilename());
-        }
-        catch (final IOException e)
-        {
-            this.log.error("Exception dans l'affectation du fichier",
-                           e.getCause());
+    public void setFile(final MultipartFile file) {
+        try {
+            this.setFiledata(file.getBytes(), file.getContentType(), file.getOriginalFilename());
+        } catch (final IOException e) {
+            this.log.error("Exception dans l'affectation du fichier", e.getCause());
         }
     }
 
@@ -118,8 +104,7 @@ public class Fichier
      */
     public void setFiledata(final byte[] data,
                             final String contentType,
-                            final String filename)
-    {
+                            final String filename) {
         this.setContenu(data);
         this.setTypeFichier(contentType);
         this.setNom(filename);
@@ -129,8 +114,7 @@ public class Fichier
      * Getter pour typeFichier.
      * @return Retourne le typeFichier.
      */
-    public String getTypeFichier()
-    {
+    public String getTypeFichier() {
         return this.typeFichier;
     }
 
@@ -138,8 +122,7 @@ public class Fichier
      * Setter pour typeFichier.
      * @param typeFichier le typeFichier à écrire.
      */
-    public void setTypeFichier(final String typeFichier)
-    {
+    public void setTypeFichier(final String typeFichier) {
         this.typeFichier = typeFichier;
     }
 
@@ -147,12 +130,10 @@ public class Fichier
      * {@inheritDoc}
      */
     @Override
-    public String toString()
-    {
+    public String toString() {
         final StringBuilder builder = new StringBuilder("[");
         builder.append("Nom: ").append(this.nom);
-        builder.append(", du contenu? ").append(this.contenu != null
-                                                && this.contenu.length > 0);
+        builder.append(", du contenu? ").append((this.contenu != null) && (this.contenu.length > 0));
         return builder.append("]").toString();
     }
 }

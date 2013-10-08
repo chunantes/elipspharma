@@ -5,12 +5,10 @@ import java.math.BigDecimal;
 
 /**
  * Classe représentant un résultat pour les calculs de couts.
- 
+ * @author Netapsys
  * @version $Revision$ $Date$
  */
-public class Resultat
-    implements Serializable
-{
+public class Resultat implements Serializable {
 
     /**
      * SerialVersionUID.
@@ -30,8 +28,7 @@ public class Resultat
     /**
      * Constructeur.
      */
-    public Resultat()
-    {
+    public Resultat() {
         this.montant = new BigDecimal(0);
         this.nbActes = 0;
     }
@@ -40,8 +37,7 @@ public class Resultat
      * Getter sur montant.
      * @return Retourne le montant.
      */
-    public BigDecimal getMontant()
-    {
+    public BigDecimal getMontant() {
         return this.montant;
     }
 
@@ -49,8 +45,7 @@ public class Resultat
      * Getter sur nbActes.
      * @return Retourne le nbActes.
      */
-    public Integer getNbActes()
-    {
+    public Integer getNbActes() {
         return this.nbActes;
     }
 
@@ -58,8 +53,7 @@ public class Resultat
      * Setter pour montant.
      * @param montant le montant à écrire.
      */
-    public void setMontant(final BigDecimal montant)
-    {
+    public void setMontant(final BigDecimal montant) {
         this.montant = montant;
     }
 
@@ -67,8 +61,7 @@ public class Resultat
      * Setter pour nbActes.
      * @param nbActes le nbActes à écrire.
      */
-    public void setNbActes(final Integer nbActes)
-    {
+    public void setNbActes(final Integer nbActes) {
         this.nbActes = nbActes;
     }
 

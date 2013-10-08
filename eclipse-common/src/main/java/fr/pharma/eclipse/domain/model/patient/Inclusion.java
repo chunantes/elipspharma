@@ -14,18 +14,14 @@ import org.hibernate.annotations.Index;
 
 import fr.pharma.eclipse.domain.model.common.BeanObject;
 import fr.pharma.eclipse.domain.model.essai.Essai;
-import fr.pharma.eclipse.domain.model.essai.EssaiElement;
 
 /**
  * Classe du modèle représentant une inclusion.
- 
+ * @author Netapsys
  * @version $Revision$ $Date$
  */
 @Entity(name = "inclusion")
-public class Inclusion
-    extends BeanObject
-    implements EssaiElement
-{
+public class Inclusion extends BeanObject {
 
     /**
      * SerialVersionUID.
@@ -86,8 +82,7 @@ public class Inclusion
      * Getter sur patient.
      * @return Retourne le patient.
      */
-    public Patient getPatient()
-    {
+    public Patient getPatient() {
         return this.patient;
     }
 
@@ -95,8 +90,7 @@ public class Inclusion
      * Setter pour patient.
      * @param patient le patient à écrire.
      */
-    public void setPatient(final Patient patient)
-    {
+    public void setPatient(final Patient patient) {
         this.patient = patient;
     }
 
@@ -104,8 +98,7 @@ public class Inclusion
      * Getter sur essai.
      * @return Retourne le essai.
      */
-    public Essai getEssai()
-    {
+    public Essai getEssai() {
         return this.essai;
     }
 
@@ -113,8 +106,7 @@ public class Inclusion
      * Setter pour essai.
      * @param essai le essai à écrire.
      */
-    public void setEssai(final Essai essai)
-    {
+    public void setEssai(final Essai essai) {
         this.essai = essai;
     }
 
@@ -122,8 +114,7 @@ public class Inclusion
      * Getter sur numInclusion.
      * @return Retourne le numInclusion.
      */
-    public String getNumInclusion()
-    {
+    public String getNumInclusion() {
         return this.numInclusion;
     }
 
@@ -131,8 +122,7 @@ public class Inclusion
      * Setter pour numInclusion.
      * @param numInclusion le numInclusion à écrire.
      */
-    public void setNumInclusion(final String numInclusion)
-    {
+    public void setNumInclusion(final String numInclusion) {
         this.numInclusion = numInclusion;
     }
 
@@ -140,8 +130,7 @@ public class Inclusion
      * Getter sur numRandomisation.
      * @return Retourne le numRandomisation.
      */
-    public String getNumRandomisation()
-    {
+    public String getNumRandomisation() {
         return this.numRandomisation;
     }
 
@@ -149,8 +138,7 @@ public class Inclusion
      * Setter pour numRandomisation.
      * @param numRandomisation le numRandomisation à écrire.
      */
-    public void setNumRandomisation(final String numRandomisation)
-    {
+    public void setNumRandomisation(final String numRandomisation) {
         this.numRandomisation = numRandomisation;
     }
 
@@ -158,8 +146,7 @@ public class Inclusion
      * Getter sur actif.
      * @return Retourne le actif.
      */
-    public Boolean getActif()
-    {
+    public Boolean getActif() {
         return this.actif;
     }
 
@@ -167,8 +154,7 @@ public class Inclusion
      * Setter pour actif.
      * @param actif le actif à écrire.
      */
-    public void setActif(final Boolean actif)
-    {
+    public void setActif(final Boolean actif) {
         this.actif = actif;
     }
 
@@ -176,8 +162,7 @@ public class Inclusion
      * Getter sur dateInclusion.
      * @return Retourne le dateInclusion.
      */
-    public Calendar getDateInclusion()
-    {
+    public Calendar getDateInclusion() {
         return this.dateInclusion;
     }
 
@@ -185,8 +170,7 @@ public class Inclusion
      * Setter pour dateInclusion.
      * @param dateInclusion le dateInclusion à écrire.
      */
-    public void setDateInclusion(final Calendar dateInclusion)
-    {
+    public void setDateInclusion(final Calendar dateInclusion) {
         this.dateInclusion = dateInclusion;
     }
 
@@ -194,8 +178,7 @@ public class Inclusion
      * Getter sur dateDesinclusion.
      * @return Retourne le dateDesinclusion.
      */
-    public Calendar getDateDesinclusion()
-    {
+    public Calendar getDateDesinclusion() {
         return this.dateDesinclusion;
     }
 
@@ -203,8 +186,7 @@ public class Inclusion
      * Setter pour dateDesinclusion.
      * @param dateDesinclusion le dateDesinclusion à écrire.
      */
-    public void setDateDesinclusion(final Calendar dateDesinclusion)
-    {
+    public void setDateDesinclusion(final Calendar dateDesinclusion) {
         this.dateDesinclusion = dateDesinclusion;
     }
 

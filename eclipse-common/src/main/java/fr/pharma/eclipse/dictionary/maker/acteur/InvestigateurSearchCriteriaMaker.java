@@ -11,12 +11,10 @@ import fr.pharma.eclipse.domain.criteria.common.SearchCriteria;
 
 /**
  * Artisan de recherche pour les investigateurs.
- 
+ * @author Netapsys
  * @version $Revision$ $Date$
  */
-public class InvestigateurSearchCriteriaMaker
-    extends AbstractCriteriaMaker
-{
+public class InvestigateurSearchCriteriaMaker extends AbstractCriteriaMaker {
 
     /**
      * Serial ID.
@@ -31,8 +29,7 @@ public class InvestigateurSearchCriteriaMaker
     /**
      * Constructeur par défaut.
      */
-    public InvestigateurSearchCriteriaMaker()
-    {
+    public InvestigateurSearchCriteriaMaker() {
         super(InvestigateurSearchCriteria.class);
     }
 
@@ -41,40 +38,28 @@ public class InvestigateurSearchCriteriaMaker
      */
     @Override
     public void transform(final Criteria criteria,
-                          final SearchCriteria searchCrit)
-    {
-        this.personneCriteriaMaker.transform(criteria,
-                                             searchCrit);
+                          final SearchCriteria searchCrit) {
+        this.personneCriteriaMaker.transform(criteria, searchCrit);
 
         final InvestigateurSearchCriteria crit = (InvestigateurSearchCriteria) searchCrit;
 
         // Titre
-        if (crit.getTitre() != null)
-        {
-            CriteriaMakerUtils.addSqlCritere(criteria,
-                                             "this_.titre",
-                                             crit.getTitre());
+        if (crit.getTitre() != null) {
+            CriteriaMakerUtils.addSqlCritere(criteria, "this_.titre", crit.getTitre());
         }
 
         // Services
-        if (crit.getServices() != null
-            && !crit.getServices().isEmpty())
-        {
-            final List<Integer> serviceIds =
-                CriteriaMakerUtils.prepareObjectIds(crit.getServices());
-            final Criteria critServices = criteria.createCriteria("services",
-                                                                  "services");
-            CriteriaMakerUtils.addInCritere(critServices,
-                                            "services.id",
-                                            serviceIds.toArray());
+        if ((crit.getServices() != null) && !crit.getServices().isEmpty()) {
+            final List<Integer> serviceIds = CriteriaMakerUtils.prepareObjectIds(crit.getServices());
+            final Criteria critServices = criteria.createCriteria("services", "services");
+            CriteriaMakerUtils.addInCritere(critServices, "services.id", serviceIds.toArray());
         }
     }
     /**
      * Getter sur personneCriteriaMaker.
      * @return Retourne le personneCriteriaMaker.
      */
-    PersonneSearchCriteriaMaker getPersonneCriteriaMaker()
-    {
+    PersonneSearchCriteriaMaker getPersonneCriteriaMaker() {
         return this.personneCriteriaMaker;
     }
 
@@ -82,8 +67,7 @@ public class InvestigateurSearchCriteriaMaker
      * Setter pour personneCriteriaMaker.
      * @param personneCriteriaMaker le personneCriteriaMaker à écrire.
      */
-    public void setPersonneCriteriaMaker(final PersonneSearchCriteriaMaker personneCriteriaMaker)
-    {
+    public void setPersonneCriteriaMaker(final PersonneSearchCriteriaMaker personneCriteriaMaker) {
         this.personneCriteriaMaker = personneCriteriaMaker;
     }
 

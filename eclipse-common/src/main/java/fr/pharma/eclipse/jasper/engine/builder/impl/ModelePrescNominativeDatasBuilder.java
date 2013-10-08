@@ -24,12 +24,10 @@ import fr.pharma.eclipse.jasper.exception.JasperReportBuildException;
 /**
  * Classe en charge de constuire les données pour le rapport Jasper de type
  * TypeRapportJasper.MODELE_PRESCRIPTION_NOMINATIVE.
- 
+ * @author Netapsys
  * @version $Revision$ $Date$
  */
-public class ModelePrescNominativeDatasBuilder
-    implements JasperReportDatasBuilder
-{
+public class ModelePrescNominativeDatasBuilder implements JasperReportDatasBuilder {
 
     /**
      * Serial ID.
@@ -47,7 +45,8 @@ public class ModelePrescNominativeDatasBuilder
     private JRDataSourceFactory jrDataSourceFactory;
 
     /**
-     * Helper pour la levée d'exception JasperReportBuildException sur condition.
+     * Helper pour la levée d'exception JasperReportBuildException sur
+     * condition.
      */
     private SourceCheckingHandler checkHandler;
 
@@ -66,16 +65,12 @@ public class ModelePrescNominativeDatasBuilder
      * {@inheritDoc}
      */
     @Override
-    public JRDataSource buildDataSource(final Object source)
-    {
+    public JRDataSource buildDataSource(final Object source) {
         Essai essai = null;
         Prescription prescription = null;
-        if (source instanceof Essai)
-        {
+        if (source instanceof Essai) {
             essai = (Essai) source;
-        }
-        else
-        {
+        } else {
             prescription = (Prescription) source;
             essai = prescription.getEssai();
         }
@@ -85,15 +80,12 @@ public class ModelePrescNominativeDatasBuilder
         dataSource.setPromoteur(essai.getPromoteur().getRaisonSociale());
         dataSource.setCodeProtocole(essai.getNumInterne());
         dataSource.setNomUsuel(essai.getNom());
-        if (prescription != null)
-        {
+        if (prescription != null) {
             // Beans produits.
-            final Collection<JRBeanProduitPrescrit> beansProduit =
-                this.helper.transform(prescription.getProduitsPrescrits());
+            final Collection<JRBeanProduitPrescrit> beansProduit = this.helper.transform(prescription.getProduitsPrescrits());
 
             // Création de la source de données.
-            final JRDataSource dtProduits =
-                this.jrDataSourceFactory.getInitializedObject(beansProduit);
+            final JRDataSource dtProduits = this.jrDataSourceFactory.getInitializedObject(beansProduit);
             dataSource.setProduits(dtProduits);
 
             dataSource.setNumVisite(prescription.getNumVisite());
@@ -102,11 +94,8 @@ public class ModelePrescNominativeDatasBuilder
 
         // Construction de l'en-tête.
         final JRBeanHeader dataHeader =
-            this.headerBuilder
-                    .build("Prescription nominative de médicament en expérimentation clinique",
-                           "Métier pôle Pharmacie-Stérilisation\\Dispensation",
-                           "Essais cliniques",
-                           "Pharmacie");
+            this.headerBuilder.build("Prescription nominative de médicament en expérimentation clinique", "Métier pôle Pharmacie-Stérilisation\\Dispensation", "Essais cliniques",
+                                     "Pharmacie");
         dataSource.setHeader(dataHeader);
 
         // Retour
@@ -116,8 +105,7 @@ public class ModelePrescNominativeDatasBuilder
      * {@inheritDoc}
      */
     @Override
-    public Map<String, Object> buildParameters(final Object source)
-    {
+    public Map<String, Object> buildParameters(final Object source) {
         return new HashMap<String, Object>();
     }
 
@@ -126,25 +114,18 @@ public class ModelePrescNominativeDatasBuilder
      */
     @Override
     public String buildReportName(final Object source,
-                                  final TypeRapportJasper typeRapport)
-    {
+                                  final TypeRapportJasper typeRapport) {
         Essai essai = null;
-        if (source instanceof Essai)
-        {
+        if (source instanceof Essai) {
             essai = (Essai) source;
-        }
-        else
-        {
+        } else {
             essai = ((Prescription) source).getInclusion().getEssai();
         }
         final StringBuilder builder = new StringBuilder();
-        this.reportNameHelper.addCommonNamePart(builder,
-                                                typeRapport);
-        this.reportNameHelper.addIdEssaiPart(builder,
-                                             essai);
+        this.reportNameHelper.addCommonNamePart(builder, typeRapport);
+        this.reportNameHelper.addIdEssaiPart(builder, essai);
         this.reportNameHelper.addDatePart(builder);
-        this.reportNameHelper.addCommonExtensionPart(builder,
-                                                     typeRapport);
+        this.reportNameHelper.addCommonExtensionPart(builder, typeRapport);
         return builder.toString();
     }
 
@@ -152,21 +133,11 @@ public class ModelePrescNominativeDatasBuilder
      * {@inheritDoc}
      */
     @Override
-    public void checkSource(final Object source)
-        throws JasperReportBuildException
-    {
-        this.checkHandler.handleCheck(source != null,
-                                      new StringBuilder("[ModelePrescNominativeDatasBuilder] ")
-                                              .append("La source est nulle.")
-                                              .toString());
-        this.checkHandler
-                .handleCheck(source instanceof Essai
-                                     || source instanceof Prescription,
-                             new StringBuilder("[ModelePrescNominativeDatasBuilder] ")
-                                     .append("Le type attendu de la source est Essai ou Prescription(source: ")
-                                     .append(source)
-                                     .append(").")
-                                     .toString());
+    public void checkSource(final Object source) throws JasperReportBuildException {
+        this.checkHandler.handleCheck(source != null, new StringBuilder("[ModelePrescNominativeDatasBuilder] ").append("La source est nulle.").toString());
+        this.checkHandler.handleCheck((source instanceof Essai) || (source instanceof Prescription),
+                                      new StringBuilder("[ModelePrescNominativeDatasBuilder] ").append("Le type attendu de la source est Essai ou Prescription(source: ")
+                                              .append(source).append(").").toString());
 
     }
 
@@ -174,8 +145,7 @@ public class ModelePrescNominativeDatasBuilder
      * Getter sur reportNameHelper.
      * @return Retourne le reportNameHelper.
      */
-    ReportNameBuildHelper getReportNameHelper()
-    {
+    ReportNameBuildHelper getReportNameHelper() {
         return this.reportNameHelper;
     }
 
@@ -183,8 +153,7 @@ public class ModelePrescNominativeDatasBuilder
      * Setter pour reportNameHelper.
      * @param reportNameHelper le reportNameHelper à écrire.
      */
-    public void setReportNameHelper(final ReportNameBuildHelper reportNameHelper)
-    {
+    public void setReportNameHelper(final ReportNameBuildHelper reportNameHelper) {
         this.reportNameHelper = reportNameHelper;
     }
 
@@ -192,8 +161,7 @@ public class ModelePrescNominativeDatasBuilder
      * Getter sur jrDataSourceFactory.
      * @return Retourne le jrDataSourceFactory.
      */
-    JRDataSourceFactory getJrDataSourceFactory()
-    {
+    JRDataSourceFactory getJrDataSourceFactory() {
         return this.jrDataSourceFactory;
     }
 
@@ -201,8 +169,7 @@ public class ModelePrescNominativeDatasBuilder
      * Setter pour jrDataSourceFactory.
      * @param jrDataSourceFactory le jrDataSourceFactory à écrire.
      */
-    public void setJrDataSourceFactory(final JRDataSourceFactory jrDataSourceFactory)
-    {
+    public void setJrDataSourceFactory(final JRDataSourceFactory jrDataSourceFactory) {
         this.jrDataSourceFactory = jrDataSourceFactory;
     }
 
@@ -210,8 +177,7 @@ public class ModelePrescNominativeDatasBuilder
      * Getter sur checkHandler.
      * @return Retourne le checkHandler.
      */
-    SourceCheckingHandler getCheckHandler()
-    {
+    SourceCheckingHandler getCheckHandler() {
         return this.checkHandler;
     }
 
@@ -219,8 +185,7 @@ public class ModelePrescNominativeDatasBuilder
      * Setter pour checkHandler.
      * @param checkHandler le checkHandler à écrire.
      */
-    public void setCheckHandler(final SourceCheckingHandler checkHandler)
-    {
+    public void setCheckHandler(final SourceCheckingHandler checkHandler) {
         this.checkHandler = checkHandler;
     }
 
@@ -228,8 +193,7 @@ public class ModelePrescNominativeDatasBuilder
      * Getter sur headerBuilder.
      * @return Retourne le headerBuilder.
      */
-    JRBeanHeaderBuilder getHeaderBuilder()
-    {
+    JRBeanHeaderBuilder getHeaderBuilder() {
         return this.headerBuilder;
     }
 
@@ -237,16 +201,14 @@ public class ModelePrescNominativeDatasBuilder
      * Setter pour headerBuilder.
      * @param headerBuilder le headerBuilder à écrire.
      */
-    public void setHeaderBuilder(final JRBeanHeaderBuilder headerBuilder)
-    {
+    public void setHeaderBuilder(final JRBeanHeaderBuilder headerBuilder) {
         this.headerBuilder = headerBuilder;
     }
     /**
      * Setter pour helper.
      * @param helper Le helper à écrire.
      */
-    public void setHelper(final ProduitPrescritFillerHelper helper)
-    {
+    public void setHelper(final ProduitPrescritFillerHelper helper) {
         this.helper = helper;
     }
 

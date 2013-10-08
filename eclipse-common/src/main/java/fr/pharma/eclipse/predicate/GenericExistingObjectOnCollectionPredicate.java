@@ -11,14 +11,13 @@ import fr.pharma.eclipse.utils.introspection.BeanTool;
 /**
  * Ce prédicat parcourt une liste d'un objet,<br>
  * et renvoie true si et seulement si un des objets satisfait un sous-prédicat.
- 
+ * @author Netapsys
  * @version $Revision$ $Date$
  */
-public class GenericExistingObjectOnCollectionPredicate
-    implements Predicate
-{
+public class GenericExistingObjectOnCollectionPredicate implements Predicate {
     /**
-     * Propriété de l'objet évalué, représentant la collection d'objets à évaluer.
+     * Propriété de l'objet évalué, représentant la collection d'objets à
+     * évaluer.
      */
     private String collectionProperty;
 
@@ -29,19 +28,14 @@ public class GenericExistingObjectOnCollectionPredicate
 
     /**
      * Constructeur.
-     * @param collectionProperty Propriété de l'objet évalué, représentant la collection d'objets
-     * à évaluer (non nul).
-     * @param collectionObjectsPredicate Prédicat à appliquer sur la collection de l'objet évalué
-     * (non nul).
+     * @param collectionProperty Propriété de l'objet évalué, représentant la
+     * collection d'objets à évaluer (non nul).
+     * @param collectionObjectsPredicate Prédicat à appliquer sur la collection
+     * de l'objet évalué (non nul).
      */
-    public GenericExistingObjectOnCollectionPredicate(
-                                                      final String collectionProperty,
-                                                      final Predicate collectionObjectsPredicate)
-    {
-        Assert.notNull(collectionProperty,
-                       "La propriété 'collectionProperty' ne doit pas être nulle.");
-        Assert.notNull(collectionObjectsPredicate,
-                       "La propriété 'collectionObjectsPredicate' ne doit pas être nulle.");
+    public GenericExistingObjectOnCollectionPredicate(final String collectionProperty, final Predicate collectionObjectsPredicate) {
+        Assert.notNull(collectionProperty, "La propriété 'collectionProperty' ne doit pas être nulle.");
+        Assert.notNull(collectionObjectsPredicate, "La propriété 'collectionObjectsPredicate' ne doit pas être nulle.");
         this.collectionProperty = collectionProperty;
         this.collectionObjectsPredicate = collectionObjectsPredicate;
     }
@@ -51,26 +45,20 @@ public class GenericExistingObjectOnCollectionPredicate
      */
     @SuppressWarnings("unchecked")
     @Override
-    public boolean evaluate(final Object object)
-    {
-        final Object propertyAsObject = BeanTool.getPropriete(object,
-                                                              this.collectionProperty);
-        if (propertyAsObject == null
-            || !(propertyAsObject instanceof Collection))
-        {
+    public boolean evaluate(final Object object) {
+        final Object propertyAsObject = BeanTool.getPropriete(object, this.collectionProperty);
+        if ((propertyAsObject == null) || !(propertyAsObject instanceof Collection)) {
             return false;
         }
         final Collection propertyAsCollection = (Collection) propertyAsObject;
-        return CollectionUtils.exists(propertyAsCollection,
-                                      this.collectionObjectsPredicate);
+        return CollectionUtils.exists(propertyAsCollection, this.collectionObjectsPredicate);
     }
 
     /**
      * Getter sur collectionObjectsPredicate.
      * @return Retourne le collectionObjectsPredicate.
      */
-    Predicate getCollectionObjectsPredicate()
-    {
+    Predicate getCollectionObjectsPredicate() {
         return this.collectionObjectsPredicate;
     }
 
@@ -78,8 +66,7 @@ public class GenericExistingObjectOnCollectionPredicate
      * Getter sur collectionProperty.
      * @return Retourne le collectionProperty.
      */
-    String getCollectionProperty()
-    {
+    String getCollectionProperty() {
         return this.collectionProperty;
     }
 
@@ -87,8 +74,7 @@ public class GenericExistingObjectOnCollectionPredicate
      * Setter pour collectionProperty.
      * @param collectionProperty le collectionProperty à écrire.
      */
-    void setCollectionProperty(final String collectionProperty)
-    {
+    void setCollectionProperty(final String collectionProperty) {
         this.collectionProperty = collectionProperty;
     }
 

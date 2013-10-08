@@ -2,11 +2,10 @@ package fr.pharma.eclipse.domain.enums.stock;
 
 /**
  * Enumération représentant la raison d'une sortie.
- 
+ * @author Netapsys
  * @version $Revision$ $Date$
  */
-public enum RaisonSortie
-{
+public enum RaisonSortie {
     /**
      * Fin de l'étude.
      */
@@ -42,8 +41,7 @@ public enum RaisonSortie
      * @param libelle Le libellé du type de mouvement.
      * @param categorie La catégorie du type de mouvement.
      */
-    RaisonSortie(final String libelle)
-    {
+    RaisonSortie(final String libelle) {
         this.libelle = libelle;
     }
 
@@ -51,8 +49,7 @@ public enum RaisonSortie
      * Getter pour libelle.
      * @return Retourne le libelle.
      */
-    public String getLibelle()
-    {
+    public String getLibelle() {
         return this.libelle;
     }
 
@@ -60,8 +57,7 @@ public enum RaisonSortie
      * {@inheritDoc}
      */
     @Override
-    public String toString()
-    {
+    public String toString() {
         return this.getLibelle();
     }
 
