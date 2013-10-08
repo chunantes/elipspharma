@@ -1,68 +1,67 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<flow xmlns="http://www.springframework.org/schema/webflow"
-	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-	xsi:schemaLocation="http://www.springframework.org/schema/webflow
-    http://www.springframework.org/schema/webflow/spring-webflow-2.0.xsd" parent="main">
+<flow xmlns="http://www.springframework.org/schema/webflow" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.springframework.org/schema/webflow
+    http://www.springframework.org/schema/webflow/spring-webflow-2.0.xsd"
+	parent="main">
 
-	<input name="idEssai"/>
+	<input name="idEssai" />
 
 	<!-- Démarrage -->
 	<on-start>
-		<evaluate expression="essaiSearchCriteria.clear()"/>
+		<evaluate expression="essaiSearchCriteria.clear()" />
 		<!-- Initialisation complétion automatique des essais -->
 		<evaluate expression="'numInterne'" result="autoCompleteEssaiManager.searchCriteria.activeOrder" />
-		<evaluate expression="'numInterneOrNomOrPromoteur'" result="autoCompleteEssaiManager.searchCriteriaProperty" />		
-		<evaluate expression="sortieManager.init()"/>
+		<evaluate expression="'numInterneOrNomOrPromoteur'" result="autoCompleteEssaiManager.searchCriteriaProperty" />
+		<evaluate expression="sortieManager.init()" />
 	</on-start>
-	
+
 	<decision-state id="isForEssai">
 		<if then="initEssai" test="idEssai != null" else="stockSortie" />
 	</decision-state>
 
 	<action-state id="initEssai">
-		<evaluate expression="essaiService.get(idEssai)"
-			result="sortieManager.essaiSelected" />
-		<transition to="stockSortie" >
-			<evaluate expression="sortieManager.handleSelectEssai(null)"/>
+		<evaluate expression="essaiService.get(idEssai)" result="sortieManager.essaiSelected" />
+		<transition to="stockSortie">
+			<evaluate expression="sortieManager.handleSelectEssai(null)" />
 		</transition>
-		
+
 	</action-state>
 
 	<!-- Page principale -->
 	<view-state id="stockSortie" view="../../../pages/stock/sortie/stockSortie.xhtml">
 		<transition on="addSortie" to="editSortie">
-			<evaluate expression="sortieManager.addSortie()"/>
+			<evaluate expression="sortieManager.addSortie()" />
 		</transition>
 		<transition on="modifySortie" to="editSortie">
-			<evaluate expression="sortieManager.modifySortie()"/>
+			<evaluate expression="sortieManager.modifySortie()" />
 		</transition>
 		<transition on="delSortie">
-			<evaluate expression="sortieManager.delSortie()"/>
+			<evaluate expression="sortieManager.delSortie()" />
 		</transition>
-		<transition on="cancel" to="viewStockSortie"/>
+		<transition on="cancel" to="viewStockSortie" />
 		<transition on="save" to="recapStockSortie">
 			<!-- Sauvegarde de la sortie -->
-			<evaluate expression="sortieService.save(sortieManager.raisonSortie, sortieManager.commentaireRaison, sortieManager.typeSortie,sortieManager.nomSocieteTransport,sortieManager.referenceEnvoi,sortieManager.commentaire,sortieManager.pharmacieDest,sortieManager.sorties, null)" 
-				result="sortieManager.result"/>
-			<!-- Ajout des documents sur les sorties créées  -->
+			<evaluate
+				expression="sortieService.save(sortieManager.raisonSortie, sortieManager.commentaireRaison, sortieManager.typeSortie,sortieManager.nomSocieteTransport,sortieManager.referenceEnvoi,sortieManager.commentaire,sortieManager.pharmacieDest,sortieManager.sorties, null)"
+				result="sortieManager.result" />
+			<!-- Ajout des documents sur les sorties créées -->
 			<evaluate expression="sortieFileHelper.addDocumentsSortie(sortieManager.typeSortie,sortieManager.result,sortieManager.fileDestruction,sortieManager.fileRetourPromoteur)" />
 		</transition>
-		<transition on="error" to="stockSortie"/>
-		<transition on="submit"/>
-		
+		<transition on="error" to="stockSortie" />
+		<transition on="submit" />
+
 		<transition on="goStockConsultationFluxForEssai" to="consulterFluxForEssai" />
 		<transition on="goStockConsultationForEssai" to="consulterStockForEssai" />
 		<transition on="goStockExtensionPeremptionForEssai" to="extensionPeremptionForEssai" />
-		<transition on="goStockReceptionForEssai" to="receptionForEssai" /> 
+		<transition on="goStockReceptionForEssai" to="receptionForEssai" />
 	</view-state>
-	
+
 	<!-- Edition de sortie -->
 	<subflow-state id="editSortie" subflow="stock/sortie/detail">
-		<transition on="comeback" to="stockSortie"/>
+		<transition on="comeback" to="stockSortie" />
 	</subflow-state>
-	
+
 	<!-- Page récapitulative de sortie de stock -->
 	<view-state id="recapStockSortie" view="../../../pages/stock/sortie/recapStockSortie.xhtml">
 	</view-state>
-	
+
 </flow>

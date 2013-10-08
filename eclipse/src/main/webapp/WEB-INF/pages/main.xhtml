@@ -1,46 +1,52 @@
 <ui:composition xmlns="http://www.w3.org/1999/xhtml"
-     xmlns:ui="http://java.sun.com/jsf/facelets"
-     xmlns:h="http://java.sun.com/jsf/html"
-     xmlns:f="http://java.sun.com/jsf/core"
-     xmlns:p="http://primefaces.prime.com.tr/ui"
-     template="/WEB-INF/pages/template/template.xhtml"
-     xmlns:security="http://www.springframework.org/security/tags">
-     
-     <ui:define name="title">
-		<h:outputFormat value="#{resourceBundle['eclipse.accueil']}"/>
-		<h:outputFormat value="#{label['connexion.title']}"/>
-     </ui:define>
-     
-     <ui:define name="body">
-    	<h:form id="accueilForm" prependId="false">
-    		
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:p="http://primefaces.prime.com.tr/ui"
+	template="/WEB-INF/pages/template/template.xhtml"
+	xmlns:security="http://www.springframework.org/security/tags">
+
+	<ui:define name="title">
+		<h:outputFormat value="#{resourceBundle['eclipse.accueil']}" />
+		<h:outputFormat value="#{label['connexion.title']}" />
+	</ui:define>
+
+	<ui:define name="body">
+		<h:form id="accueilForm" prependId="false">
+
 			<p:outputPanel id="common_outp_msgs"
 				style="display:block;margin-top:10px;">
 				<p:messages />
 			</p:outputPanel>
-    	
-				<!-- Alertes -->
-				<security:authorize
-					ifAnyGranted="ROLE_PHARMACIEN_ATTACHE,ROLE_PHARMACIEN_ASSISTANT,ROLE_PHARMACIEN,ROLE_PHARMACIEN_INTERNE,ROLE_PHARMACIEN_EXTERNE,ROLE_PHARMACIEN_PREPARATEUR,ROLE_PHARMACIEN_TITULAIRE,ROLE_ADMIN">				
-					<ui:include src="/WEB-INF/pages/accueil/alertes.xhtml" />
-					<br />	
+
+			<!-- Alertes -->
+			<security:authorize
+				ifAnyGranted="ROLE_PHARMACIEN_ATTACHE,ROLE_PHARMACIEN_ASSISTANT,ROLE_PHARMACIEN,ROLE_PHARMACIEN_INTERNE,ROLE_PHARMACIEN_EXTERNE,ROLE_PHARMACIEN_PREPARATEUR,ROLE_PHARMACIEN_TITULAIRE,ROLE_ADMIN">
+				<ui:include src="/WEB-INF/pages/accueil/alertes.xhtml" />
 				<br />
-				</security:authorize>
-				<!-- Evenements -->
-				<ui:include src="/WEB-INF/pages/accueil/evenements.xhtml" />
-				
-	    		<!-- Actualites -->
-				<br />		
-				<ui:include src="/WEB-INF/pages/accueil/actualites.xhtml" />    	
-    		
-    		<!-- Boutons caches redirection -->
-			<div style="display:none;">
-				<p:commandButton id="editEssaiButton" action="editEssai" ajax="false"/>
-				<p:commandButton id="editEssaiFromEvenementButton" action="editEssaiFromEvenement" ajax="false"/>
-			</div>    		
-    	
-    	</h:form>
-    	
-     </ui:define>
-     
+				<br />
+			</security:authorize>
+			<!-- Evenements -->
+			<ui:include src="/WEB-INF/pages/accueil/evenements.xhtml" />
+
+			<!-- Actualites -->
+			<br />
+			<ui:include src="/WEB-INF/pages/accueil/actualites.xhtml" />
+
+			<!-- Boutons caches redirection -->
+			<div style="display: none;">
+				<p:commandButton id="editEssaiButton" action="editEssai"
+					ajax="false" />
+				<p:commandButton id="editEssaiFromEvenementButton"
+					action="editEssaiFromEvenement" ajax="false" />
+				<p:commandButton id="editEssaiFromActualiteButton"
+					action="editEssaiFromActualite" ajax="false" />
+			</div>
+
+		</h:form>
+
+	</ui:define>
+	
+
+	
 </ui:composition>

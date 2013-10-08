@@ -20,12 +20,10 @@ import fr.pharma.eclipse.utils.EssaiUtils;
 
 /**
  * Test de la classe CroSeeker.
- 
+ * @author Netapsys
  * @version $Revision$ $Date$
  */
-public class CroSeekerTest
-    extends AbstractEclipseJUnitTest
-{
+public class CroSeekerTest extends AbstractEclipseJUnitTest {
     /**
      * Elément testé.
      */
@@ -46,8 +44,7 @@ public class CroSeekerTest
      */
     @SuppressWarnings("unchecked")
     @Override
-    public void setUp()
-    {
+    public void setUp() {
         this.mockedBeanFactory = Mockito.mock(BeanFactory.class);
         this.mockedService = Mockito.mock(GenericService.class);
         this.seeker = new CroSeeker();
@@ -59,8 +56,7 @@ public class CroSeekerTest
      * {@inheritDoc}
      */
     @Override
-    public void tearDown()
-    {
+    public void tearDown() {
         this.seeker = null;
         this.mockedBeanFactory = null;
         this.mockedService = null;
@@ -70,21 +66,17 @@ public class CroSeekerTest
      * {@inheritDoc}
      */
     @Override
-    public void testInit()
-    {
+    public void testInit() {
         Assert.assertNotNull(this.seeker);
-        Assert.assertEquals(this.mockedBeanFactory,
-                            this.seeker.getBeanFactory());
-        Assert.assertEquals(this.mockedService,
-                            this.seeker.getService());
+        Assert.assertEquals(this.mockedBeanFactory, this.seeker.getBeanFactory());
+        Assert.assertEquals(this.mockedService, this.seeker.getService());
     }
 
     /**
      * Test de la méthode supports.
      */
     @Test
-    public void testSupports()
-    {
+    public void testSupports() {
         this.verifySupports(Arrays.asList(TypeContact.CRO));
     }
 
@@ -92,12 +84,9 @@ public class CroSeekerTest
      * Méthode de vérification du support.
      * @param expectedSupports Liste des supports attendus.
      */
-    private void verifySupports(final List<TypeContact> expectedSupports)
-    {
-        for (final TypeContact typeContact : TypeContact.values())
-        {
-            Assert.assertEquals(expectedSupports.contains(typeContact),
-                                this.seeker.supports(typeContact));
+    private void verifySupports(final List<TypeContact> expectedSupports) {
+        for (final TypeContact typeContact : TypeContact.values()) {
+            Assert.assertEquals(expectedSupports.contains(typeContact), this.seeker.supports(typeContact));
         }
     }
 
@@ -105,32 +94,25 @@ public class CroSeekerTest
      * Test de la méthode getContacts.
      */
     @Test
-    public void testGetContacts()
-    {
+    public void testGetContacts() {
         long id = 1;
         final Essai essai = EssaiUtils.makeEssaiTest(id++);
         final String expectedBeanName = "personneCriteria";
 
         final Cro personne1 = Mockito.mock(Cro.class);
         final Cro personne2 = Mockito.mock(Cro.class);
-        final List<Cro> expectedList = Arrays.asList(personne1,
-                                                     personne2);
+        final List<Cro> expectedList = Arrays.asList(personne1, personne2);
 
-        final PersonneSearchCriteria expectedCriteria =
-            Mockito.mock(PersonneSearchCriteria.class);
-        Mockito
-                .when(this.mockedBeanFactory.getBean(expectedBeanName))
-                .thenReturn(expectedCriteria);
+        final PersonneSearchCriteria expectedCriteria = Mockito.mock(PersonneSearchCriteria.class);
+        Mockito.when(this.mockedBeanFactory.getBean(expectedBeanName)).thenReturn(expectedCriteria);
         Mockito.when(this.mockedService.getAll(expectedCriteria)).thenReturn(expectedList);
 
         final List<Personne> res = this.seeker.getContacts(essai);
         Mockito.verify(this.mockedBeanFactory).getBean(expectedBeanName);
         Mockito.verify(expectedCriteria).setTypePersonne(TypePersonne.CRO);
         Mockito.verify(this.mockedService).getAll(expectedCriteria);
-        Assert.assertEquals(expectedList.size(),
-                            res.size());
-        for (final Personne expectedPersonne : expectedList)
-        {
+        Assert.assertEquals(expectedList.size(), res.size());
+        for (final Personne expectedPersonne : expectedList) {
             Assert.assertTrue(res.contains(expectedPersonne));
         }
     }

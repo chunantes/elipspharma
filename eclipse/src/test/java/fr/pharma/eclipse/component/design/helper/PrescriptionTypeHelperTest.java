@@ -16,12 +16,10 @@ import fr.pharma.eclipse.utils.AbstractEclipseJUnitTest;
 
 /**
  * Test du helper PrescriptionTypeHelper.
- 
+ * @author Netapsys
  * @version $Revision$ $Date$
  */
-public class PrescriptionTypeHelperTest
-    extends AbstractEclipseJUnitTest
-{
+public class PrescriptionTypeHelperTest extends AbstractEclipseJUnitTest {
 
     /**
      * Helper à tester.
@@ -32,8 +30,7 @@ public class PrescriptionTypeHelperTest
      * {@inheritDoc}
      */
     @Override
-    public void setUp()
-    {
+    public void setUp() {
         this.helper = new PrescriptionTypeHelper();
     }
 
@@ -41,8 +38,7 @@ public class PrescriptionTypeHelperTest
      * {@inheritDoc}
      */
     @Override
-    public void tearDown()
-    {
+    public void tearDown() {
         this.helper = null;
     }
 
@@ -51,8 +47,7 @@ public class PrescriptionTypeHelperTest
      */
     @Override
     @Test
-    public void testInit()
-    {
+    public void testInit() {
         Assert.assertNotNull(this.helper);
     }
 
@@ -60,15 +55,12 @@ public class PrescriptionTypeHelperTest
      * Test de la méthode buildResume avec un prescriptionType vide.
      */
     @Test
-    public void testNotSet()
-    {
-        Assert.assertEquals("",
-                            this.helper.buildResume(new PrescriptionType()));
+    public void testNotSet() {
+        Assert.assertEquals("", this.helper.buildResume(new PrescriptionType()));
     }
 
     @Test
-    public void testNumTraitement()
-    {
+    public void testNumTraitement() {
         final Conditionnement conditionnement = new Conditionnement();
         conditionnement.setModePrescription(ModePrescription.NUM_TRAITEMENT);
         final PrescriptionType prescription = new PrescriptionType();
@@ -87,14 +79,11 @@ public class PrescriptionTypeHelperTest
         duree.setUnite(UniteTemps.JOUR);
         prescription.setDuree(duree);
 
-        Assert
-                .assertEquals("Prescription : Par numéro de traitement, 1 fois par jour(s) à partir de j0 pendant 10 jour(s)",
-                              this.helper.buildResume(prescription));
+        Assert.assertEquals("Prescription : Par numéro de traitement, 1 fois par jour(s) à partir de j0 pendant 10 jour(s)", this.helper.buildResume(prescription));
     }
 
     @Test
-    public void testCondPrimaire()
-    {
+    public void testCondPrimaire() {
         final Conditionnement conditionnement = new Conditionnement();
         conditionnement.setUnitePrescription("cp");
         conditionnement.setModePrescription(ModePrescription.CONDITIONNEMENT_PRIMAIRE);
@@ -115,14 +104,11 @@ public class PrescriptionTypeHelperTest
         duree.setUnite(UniteTemps.JOUR);
         prescription.setDuree(duree);
 
-        Assert
-                .assertEquals("Prescription : 5 cp, 1 fois par jour(s) à partir de j0 pendant 10 jour(s)",
-                              this.helper.buildResume(prescription));
+        Assert.assertEquals("Prescription : 5 cp, 1 fois par jour(s) à partir de j0 pendant 10 jour(s)", this.helper.buildResume(prescription));
     }
 
     @Test
-    public void testGanelique()
-    {
+    public void testGanelique() {
         final Conditionnement conditionnement = new Conditionnement();
         conditionnement.setUnitePrescription("cp");
         conditionnement.setModePrescription(ModePrescription.FORME_GALENIQUE);
@@ -143,14 +129,11 @@ public class PrescriptionTypeHelperTest
         duree.setUnite(UniteTemps.JOUR);
         prescription.setDuree(duree);
 
-        Assert
-                .assertEquals("Prescription : 5 comprimés/gélules, 1 fois par jour(s) à partir de j0 pendant 10 jour(s)",
-                              this.helper.buildResume(prescription));
+        Assert.assertEquals("Prescription : 5 comprimés/gélules, 1 fois par jour(s) à partir de j0 pendant 10 jour(s)", this.helper.buildResume(prescription));
     }
 
     @Test
-    public void testDose()
-    {
+    public void testDose() {
         final Conditionnement conditionnement = new Conditionnement();
         conditionnement.setModePrescription(ModePrescription.DOSE);
         final PrescriptionType prescription = new PrescriptionType();
@@ -172,8 +155,6 @@ public class PrescriptionTypeHelperTest
         duree.setUnite(UniteTemps.JOUR);
         prescription.setDuree(duree);
 
-        Assert
-                .assertEquals("Prescription : 5 fois 10 mg, 1 fois par jour(s) à partir de j0 pendant 10 jour(s)",
-                              this.helper.buildResume(prescription));
+        Assert.assertEquals("Prescription : 5 fois 10 mg, 1 fois par jour(s) à partir de j0 pendant 10 jour(s)", this.helper.buildResume(prescription));
     }
 }

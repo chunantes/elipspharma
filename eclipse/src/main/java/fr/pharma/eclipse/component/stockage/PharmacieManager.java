@@ -29,12 +29,10 @@ import fr.pharma.eclipse.utils.constants.EclipseConstants;
 
 /**
  * Manager de Pharmacie.
- 
+ * @author Netapsys
  * @version $Revision$ $Date$
  */
-public class PharmacieManager
-    extends BeanManager<Pharmacie>
-{
+public class PharmacieManager extends BeanManager<Pharmacie> {
     /**
      * Serial ID.
      */
@@ -115,20 +113,16 @@ public class PharmacieManager
      */
     protected static final Map<String, Integer> INFOS_ONGLETS = new HashMap<String, Integer>();
     {
-        PharmacieManager.INFOS_ONGLETS.put("ONG_DESCRIPTION",
-                                           0);
-        PharmacieManager.INFOS_ONGLETS.put("ONG_STOCKAGE",
-                                           1);
-        PharmacieManager.INFOS_ONGLETS.put("ONG_PHARMACIEN",
-                                           2);
+        PharmacieManager.INFOS_ONGLETS.put("ONG_DESCRIPTION", 0);
+        PharmacieManager.INFOS_ONGLETS.put("ONG_STOCKAGE", 1);
+        PharmacieManager.INFOS_ONGLETS.put("ONG_PHARMACIEN", 2);
     };
 
     /**
      * Constructeur.
      * @param pharmacieService Service de gestion de pharmacie.
      */
-    public PharmacieManager(final PharmacieService pharmacieService)
-    {
+    public PharmacieManager(final PharmacieService pharmacieService) {
         super(pharmacieService);
         this.pharmacieService = pharmacieService;
     }
@@ -137,40 +131,35 @@ public class PharmacieManager
      * Getter sur sitesSelectable.
      * @return Retourne le sitesSelectable.
      */
-    public List<Site> getSitesSelectable()
-    {
+    public List<Site> getSitesSelectable() {
         // Récupération de l'établissement
         final Pharmacie pharmacie = this.getBean();
         final SiteSearchCriteria siteCriteria = new SiteSearchCriteria();
         siteCriteria.setActiveOrder("nom");
-        if (pharmacie.getEtablissement() != null)
-        {
+        if (pharmacie.getEtablissement() != null) {
             siteCriteria.setEtablissement(pharmacie.getEtablissement());
         }
         this.sitesSelectable = this.siteService.getAll(siteCriteria);
         final SortedSet<Site> sitesPharma = pharmacie.getSites();
 
-        // Valorisation du champ Selected en fonction des sites actuels associés à la pharmacie
-        this.getHelper().updateSelectable(sitesPharma,
-                                          this.sitesSelectable);
+        // Valorisation du champ Selected en fonction des sites actuels associés
+        // à la pharmacie
+        this.getHelper().updateSelectable(sitesPharma, this.sitesSelectable);
         return this.sitesSelectable;
     }
 
     /**
      * Méthode en charge de mettre à jour les sites de la pharmacie.
      */
-    public void updateSites()
-    {
+    public void updateSites() {
         final Pharmacie pharmacie = this.getBean();
-        this.getHelper().updateSelected(pharmacie.getSites(),
-                                        this.sitesSelectable);
+        this.getHelper().updateSelected(pharmacie.getSites(), this.sitesSelectable);
     }
 
     /**
      * Méthode en charge de vider la liste des sites de la pharmacie.
      */
-    public void clearSites()
-    {
+    public void clearSites() {
         this.getBean().getSites().clear();
     }
 
@@ -178,21 +167,15 @@ public class PharmacieManager
      * Getter pour root.
      * @return Le root
      */
-    public TreeNode getRoot()
-    {
+    public TreeNode getRoot() {
         // Construction des données de l'arbre
         this.root = this.stockageHelper.buildTree(this.getBean());
 
         // Construction de la liste des noeuds à expanded pour l'affichage
-        if (this.stockageDisplay != null)
-        {
-            this.idsNodesToExpand =
-                this.stockageHelper.calculateNodesToExpand(this.root,
-                                                           this.stockageDisplay);
+        if (this.stockageDisplay != null) {
+            this.idsNodesToExpand = this.stockageHelper.calculateNodesToExpand(this.root, this.stockageDisplay);
             this.reverseIdsNodesToExpand();
-        }
-        else
-        {
+        } else {
             this.idsNodesToExpand = null;
         }
 
@@ -203,8 +186,7 @@ public class PharmacieManager
      * Listener appelé lorsque l'utilisateur change d'onglet.
      * @param event Evénement remonté par le composant primeFaces.
      */
-    public void onOngletChange(final TabChangeEvent event)
-    {
+    public void onOngletChange(final TabChangeEvent event) {
         final String tabId = event.getTab().getId();
         this.setIndexOngletCourant(PharmacieManager.INFOS_ONGLETS.get(tabId));
     }
@@ -213,21 +195,16 @@ public class PharmacieManager
      * Méthode en charge d'ajouter un stockage avec parent.
      * @param event Evénement.
      */
-    public void addStockage(final ActionEvent event)
-    {
-        final Stockage stockageParent =
-            (Stockage) event.getComponent().getAttributes().get("stockageParent");
+    public void addStockage(final ActionEvent event) {
+        final Stockage stockageParent = (Stockage) event.getComponent().getAttributes().get("stockageParent");
         final Stockage stockage = new Stockage();
         stockage.setPharmacie(this.getBean());
         stockage.setParent(stockageParent);
         this.stockageCurrent = stockage;
         this.actionStockageCurrent = "ADD";
-        if (stockageParent == null)
-        {
+        if (stockageParent == null) {
             this.stockageDisplay = null;
-        }
-        else
-        {
+        } else {
             stockage.setConservation(stockageParent.getConservation());
             this.stockageDisplay = this.stockageCurrent;
         }
@@ -237,10 +214,8 @@ public class PharmacieManager
      * Méthode en charge d'éditer un stockage.
      * @param event Evénement.
      */
-    public void editStockage(final ActionEvent event)
-    {
-        final Stockage stockage =
-            (Stockage) event.getComponent().getAttributes().get("stockageCurrent");
+    public void editStockage(final ActionEvent event) {
+        final Stockage stockage = (Stockage) event.getComponent().getAttributes().get("stockageCurrent");
         this.stockageCurrent = stockage;
         this.actionStockageCurrent = "EDIT";
         this.stockageDisplay = this.stockageCurrent;
@@ -250,72 +225,52 @@ public class PharmacieManager
      * Méthode en charge de supprimer un stockage.
      * @param event Evénement.
      */
-    public void delStockage(final ActionEvent event)
-    {
-        final Stockage stockage =
-            (Stockage) event.getComponent().getAttributes().get("stockageToDelete");
-        try
-        {
-            this.pharmacieService.removeStockage(this.getBean(),
-                                                 stockage);
-            if (stockage.getParent() != null)
-            {
+    public void delStockage(final ActionEvent event) {
+        final Stockage stockage = (Stockage) event.getComponent().getAttributes().get("stockageToDelete");
+        try {
+            this.pharmacieService.removeStockage(this.getBean(), stockage);
+            if (stockage.getParent() != null) {
                 this.stockageDisplay = stockage.getParent();
-            }
-            else
-            {
+            } else {
                 this.stockageDisplay = null;
             }
-        }
-        catch (final ValidationException e)
-        {
-            this.facesUtils.addMessage(FacesMessage.SEVERITY_ERROR,
-                                       e.getErrorCode()
-                                               + "."
-                                               + e.getValues()[0]);
+        } catch (final ValidationException e) {
+            this.facesUtils.addMessage(FacesMessage.SEVERITY_ERROR, e.getErrorCode() + "." + e.getValues()[0]);
         }
     }
 
     /**
-     * Méthode en charge de mettre à jour la liste des stockages de la pharmacie.
+     * Méthode en charge de mettre à jour la liste des stockages de la
+     * pharmacie.
      */
-    public void updateStockages()
-    {
+    public void updateStockages() {
         // Validation du stockage
-        final boolean valid =
-            this.stockageValidator.validateStockage(this.stockageCurrent);
+        final boolean valid = this.stockageValidator.validateStockage(this.stockageCurrent);
 
-        if (valid)
-        {
+        if (valid) {
             final SortedSet<Stockage> stockagesRoot = this.getBean().getStockages();
 
-            // Dans le cas d'un ajout de stockage => ajout à la liste des stockages de la
+            // Dans le cas d'un ajout de stockage => ajout à la liste des
+            // stockages de la
             // pharmacie
-            if ("ADD".equals(this.actionStockageCurrent))
-            {
-                if (this.stockageCurrent.getParent() == null)
-                {
+            if ("ADD".equals(this.actionStockageCurrent)) {
+                if (this.stockageCurrent.getParent() == null) {
                     stockagesRoot.add(this.stockageCurrent);
-                }
-                else
-                {
+                } else {
                     final Stockage stockageParent = this.stockageCurrent.getParent();
                     stockageParent.getEnfants().add(this.stockageCurrent);
                     stockagesRoot.add(this.stockageCurrent);
                 }
 
                 this.setStockageCurrent(this.stockageService.save(this.stockageCurrent));
-            }
-            else
-            {
-                // MAJ du stockage
-                this.setStockageCurrent(this.stockageService.save(this.stockageCurrent));
+            } else {
 
-                // NB : nous somme obligés de setter les valeurs manuellement, car pour une raison
-                // qui nous échappe (sans doute un bug du composant primefaces "treeTable"), nous
+                // NB : nous somme obligés de setter les valeurs manuellement,
+                // car pour une raison
+                // qui nous échappe (sans doute un bug du composant primefaces
+                // "treeTable"), nous
                 // perdons la référence sur le stockage courant.
-                this.updateStockageEdit(stockagesRoot,
-                                        this.stockageCurrent);
+              this.updateStockageEdit(stockagesRoot, this.stockageCurrent);
             }
         }
     }
@@ -326,29 +281,20 @@ public class PharmacieManager
      * @param stockageCurrent
      */
     protected void updateStockageEdit(final SortedSet<Stockage> stockages,
-                                      final Stockage stockageCurrent)
-    {
-        for (final Stockage stockage : stockages)
-        {
-            if (stockage.getId() == null
-                || stockage.getId().longValue() == stockageCurrent.getId().longValue())
-            {
+                                      final Stockage stockageCurrent) {
+        for (final Stockage stockage : stockages) {
+            if ((stockage.getId() == null) || (stockage.getId().longValue() == stockageCurrent.getId().longValue())) {
                 stockage.setId(stockageCurrent.getId());
                 stockage.setNom(stockageCurrent.getNom());
                 stockage.setConservation(stockageCurrent.getConservation());
                 stockage.setIdentifiantStockage(stockageCurrent.getIdentifiantStockage());
                 stockage.setIdentifiantSondeTemp(stockageCurrent.getIdentifiantSondeTemp());
-                stockage.setIdentifiantEnregistreurTemp(stockageCurrent
-                        .getIdentifiantEnregistreurTemp());
+                stockage.setIdentifiantEnregistreurTemp(stockageCurrent.getIdentifiantEnregistreurTemp());
 
                 break;
-            }
-            else
-            {
-                if (stockage.getEnfants().size() > 0)
-                {
-                    this.updateStockageEdit(stockage.getEnfants(),
-                                            stockageCurrent);
+            } else {
+                if (stockage.getEnfants().size() > 0) {
+                    this.updateStockageEdit(stockage.getEnfants(), stockageCurrent);
                 }
             }
         }
@@ -357,18 +303,15 @@ public class PharmacieManager
     /**
      * Méthode en charge d'afficher un message de confirmation d'inclusion.
      */
-    public void confirmEnregistrement()
-    {
-        this.facesUtils.addMessage(FacesMessage.SEVERITY_INFO,
-                                   "pharmacie.enregistrement.ok");
+    public void confirmEnregistrement() {
+        this.facesUtils.addMessage(FacesMessage.SEVERITY_INFO, "pharmacie.enregistrement.ok");
     }
 
     /**
      * Getter pour stockageCurrent.
      * @return Le stockageCurrent
      */
-    public Stockage getStockageCurrent()
-    {
+    public Stockage getStockageCurrent() {
         return this.stockageCurrent;
     }
 
@@ -376,8 +319,7 @@ public class PharmacieManager
      * Setter pour stockageCurrent.
      * @param stockageCurrent Le stockageCurrent à écrire.
      */
-    public void setStockageCurrent(final Stockage stockageCurrent)
-    {
+    public void setStockageCurrent(final Stockage stockageCurrent) {
         this.stockageCurrent = stockageCurrent;
     }
 
@@ -385,31 +327,24 @@ public class PharmacieManager
      * Getter pour idsNodesToExpand.
      * @return Le idsNodesToExpand
      */
-    public String getIdsNodesToExpand()
-    {
+    public String getIdsNodesToExpand() {
         return this.idsNodesToExpand;
     }
 
     /**
      * Méthode en charge de faire le reverse des noeuds à ouvrir.
      */
-    public void reverseIdsNodesToExpand()
-    {
-        if (StringUtils.isNotEmpty(this.idsNodesToExpand))
-        {
+    public void reverseIdsNodesToExpand() {
+        if (StringUtils.isNotEmpty(this.idsNodesToExpand)) {
             final String[] tab = this.idsNodesToExpand.split(EclipseConstants.COMMA);
             String newString = StringUtils.EMPTY;
 
-            for (int i = tab.length - 1; i >= 0; i--)
-            {
-                newString += tab[i]
-                             + EclipseConstants.COMMA;
+            for (int i = tab.length - 1; i >= 0; i--) {
+                newString += tab[i] + EclipseConstants.COMMA;
             }
 
-            if (newString.length() > 0)
-            {
-                newString = newString.substring(0,
-                                                newString.length() - 1);
+            if (newString.length() > 0) {
+                newString = newString.substring(0, newString.length() - 1);
             }
 
             this.idsNodesToExpand = newString;
@@ -420,8 +355,7 @@ public class PharmacieManager
      * Setter pour idsNodesToExpand.
      * @param idsNodesToExpand Le idsNodesToExpand à écrire.
      */
-    public void setIdsNodesToExpand(final String idsNodesToExpand)
-    {
+    public void setIdsNodesToExpand(final String idsNodesToExpand) {
         //
     }
 
@@ -429,8 +363,7 @@ public class PharmacieManager
      * Setter pour stockageDisplay.
      * @param stockageDisplay Le stockageDisplay à écrire.
      */
-    public void setStockageDisplay(final Stockage stockageDisplay)
-    {
+    public void setStockageDisplay(final Stockage stockageDisplay) {
         this.stockageDisplay = stockageDisplay;
     }
 
@@ -438,8 +371,7 @@ public class PharmacieManager
      * Setter pour stockageValidator.
      * @param stockageValidator Le stockageValidator à écrire.
      */
-    public void setStockageValidator(final StockageValidator stockageValidator)
-    {
+    public void setStockageValidator(final StockageValidator stockageValidator) {
         this.stockageValidator = stockageValidator;
     }
 
@@ -447,8 +379,7 @@ public class PharmacieManager
      * Getter pour indexOngletCourant.
      * @return Le indexOngletCourant
      */
-    public int getIndexOngletCourant()
-    {
+    public int getIndexOngletCourant() {
         return this.indexOngletCourant;
     }
 
@@ -456,8 +387,7 @@ public class PharmacieManager
      * Setter pour indexOngletCourant.
      * @param indexOngletCourant Le indexOngletCourant à écrire.
      */
-    public void setIndexOngletCourant(final int indexOngletCourant)
-    {
+    public void setIndexOngletCourant(final int indexOngletCourant) {
         this.indexOngletCourant = indexOngletCourant;
     }
 
@@ -465,8 +395,7 @@ public class PharmacieManager
      * Setter pour siteService.
      * @param siteService le siteService à écrire.
      */
-    public void setSiteService(final SiteService siteService)
-    {
+    public void setSiteService(final SiteService siteService) {
         this.siteService = siteService;
     }
 
@@ -474,8 +403,7 @@ public class PharmacieManager
      * Setter pour sitesSelectable.
      * @param sitesSelectable le sitesSelectable à écrire.
      */
-    public void setSitesSelectable(final List<Site> sitesSelectable)
-    {
+    public void setSitesSelectable(final List<Site> sitesSelectable) {
         this.sitesSelectable = sitesSelectable;
     }
 
@@ -483,8 +411,7 @@ public class PharmacieManager
      * Setter pour stockageHelper.
      * @param stockageHelper Le stockageHelper à écrire.
      */
-    public void setStockageHelper(final TreeStockageHelper stockageHelper)
-    {
+    public void setStockageHelper(final TreeStockageHelper stockageHelper) {
         this.stockageHelper = stockageHelper;
     }
 
@@ -492,8 +419,7 @@ public class PharmacieManager
      * Setter pour actionStockageCurrent.
      * @param actionStockageCurrent Le actionStockageCurrent à écrire.
      */
-    public void setActionStockageCurrent(final String actionStockageCurrent)
-    {
+    public void setActionStockageCurrent(final String actionStockageCurrent) {
         this.actionStockageCurrent = actionStockageCurrent;
     }
 
@@ -501,8 +427,7 @@ public class PharmacieManager
      * Setter pour facesUtils.
      * @param facesUtils le facesUtils à écrire.
      */
-    public void setFacesUtils(final FacesUtils facesUtils)
-    {
+    public void setFacesUtils(final FacesUtils facesUtils) {
         this.facesUtils = facesUtils;
     }
 
@@ -510,8 +435,7 @@ public class PharmacieManager
      * Setter pour stockageService.
      * @param stockageService Le stockageService à écrire.
      */
-    public void setStockageService(final StockageService stockageService)
-    {
+    public void setStockageService(final StockageService stockageService) {
         this.stockageService = stockageService;
     }
 

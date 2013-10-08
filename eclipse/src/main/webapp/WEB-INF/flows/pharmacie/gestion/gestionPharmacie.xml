@@ -1,46 +1,45 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<flow xmlns="http://www.springframework.org/schema/webflow"
-	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-	xsi:schemaLocation="http://www.springframework.org/schema/webflow
-    http://www.springframework.org/schema/webflow/spring-webflow-2.0.xsd" parent="main">
+<flow xmlns="http://www.springframework.org/schema/webflow" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.springframework.org/schema/webflow
+    http://www.springframework.org/schema/webflow/spring-webflow-2.0.xsd"
+	parent="main">
 
 	<!-- Démarrage -->
 	<on-start>
-		<evaluate expression="pharmacieSearchCriteria.clear()"/>
-		<evaluate expression="etablissementSearchCriteria.clear()"/>
-		<evaluate expression="pharmacieService.getAll(pharmacieSearchCriteria)" result="pharmaciesManager.beans"/>
-		<evaluate expression="etablissementService.getAll(etablissementSearchCriteria)" result="etablissementsManager.beans"/>
+		<evaluate expression="pharmacieSearchCriteria.clear()" />
+		<evaluate expression="etablissementSearchCriteria.clear()" />
+		<evaluate expression="pharmacieService.getAll(pharmacieSearchCriteria)" result="pharmaciesManager.beans" />
+		<evaluate expression="etablissementService.getAll(etablissementSearchCriteria)" result="etablissementsManager.beans" />
 	</on-start>
 
 	<!-- Page principale -->
 	<view-state id="gestionPharmacie" view="../../../pages/pharmacie/gestion/gestionPharmacie.xhtml">
-		<transition on="search" to="search"/>
-		<transition on="delete" to="delete"/>
+		<transition on="search" to="search" />
+		<transition on="delete" to="delete" />
 		<transition on="edit" to="edit">
 			<set name="flashScope.idPharmacie" value="pharmaciesManager.beanSelected.id" type="java.lang.Long" />
-			<evaluate expression="null" result="pharmaciesManager.beanSelected"/>		
+			<evaluate expression="null" result="pharmaciesManager.beanSelected" />
 		</transition>
-		<transition on="add" to="edit"/>
-		<transition on="error" to="gestionPharmacie"/>
+		<transition on="add" to="edit" />
+		<transition on="error" to="gestionPharmacie" />
 	</view-state>
-	
+
 	<!-- Recherche -->
 	<action-state id="search">
-		<evaluate expression="pharmacieService.getAll(pharmacieSearchCriteria)" result="pharmaciesManager.beans"/>
-		<transition to="gestionPharmacie"/>
+		<evaluate expression="pharmacieService.getAll(pharmacieSearchCriteria)" result="pharmaciesManager.beans" />
+		<transition to="gestionPharmacie" />
 	</action-state>
-	
+
 	<!-- Suppression -->
 	<action-state id="delete">
-		<evaluate expression="pharmacieService.remove(pharmaciesManager.beansSelected)"/>
-		<transition on="error" to="search"/>
-		<transition to="search"/>
+		<evaluate expression="pharmacieService.remove(pharmaciesManager.beansSelected)" />
+		<transition to="search" />
+		<transition on="error" to="search" />
 	</action-state>
-	
+
 	<!-- Edition -->
 	<subflow-state id="edit" subflow="pharmacie/edit">
-		<input name="idPharmacie" value="flashScope.idPharmacie"/>
-		<transition to="search"/>
+		<input name="idPharmacie" value="flashScope.idPharmacie" />
+		<transition to="search" />
 	</subflow-state>
-	
+
 </flow>

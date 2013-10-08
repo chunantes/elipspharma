@@ -145,6 +145,11 @@
 	<bean id="dispensationSearchCriteriaMaker" class="fr.pharma.eclipse.dictionary.maker.dispensation.DispensationSearchCriteriaMaker"/>
 	
 	<!-- ============================= -->
+	<!-- REPRISE PASSIF	               -->
+	<!-- ============================= -->		
+	<bean id="reprisePassifSearchCriteriaMaker" class="fr.pharma.eclipse.dictionary.maker.reprisePassif.ReprisePassifSearchCriteriaMaker"/>
+		
+	<!-- ============================= -->
 	<!-- DOTATION    	               -->
 	<!-- ============================= -->		
 	<bean id="dotationSearchCriteriaMaker" class="fr.pharma.eclipse.dictionary.maker.dotation.DotationSearchCriteriaMaker"/>
@@ -203,5 +208,10 @@
 	<!-- PRODUIT PRESCRIT 					   -->
 	<!-- ===================================== -->
 	<bean id="produitPrescritSearchCriteriaMaker" class="fr.pharma.eclipse.dictionary.maker.prescription.ProduitPrescritSearchCriteriaMaker"/>
+	
+	<!-- ===================================== -->
+	<!-- LIGNE STOCK    					   -->
+	<!-- ===================================== -->
+	<bean id="ligneStockSearchCriteriaMaker" class="fr.pharma.eclipse.dictionary.maker.stock.LigneStockSearchCriteriaMaker"/>
 
 </beans>

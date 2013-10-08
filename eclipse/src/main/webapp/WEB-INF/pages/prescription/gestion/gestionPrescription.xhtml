@@ -26,7 +26,7 @@
 									for="patientAutoCom" />
 								<p:autoComplete immediate="true" 
 									id="patientAutoCom" rendered="#{droitAccesHelper.isPatientVisible()}"
-									value="#{prescriptionsManager.searchCriteria.patient}" 
+									value="#{prescriptionDTOManager.searchCriteria.patient}" 
 									completeMethod="#{autoCompletePatientManager.complete}"
 									forceSelection="true" var="patient"
 									onSelectUpdate="@this" style="width : 200px;"
@@ -39,20 +39,20 @@
 									value="#{resourceBundle['gestionPrescription.essai']}"
 									for="essaiAutoCom" />
 					            <p:autoComplete immediate="true" 
-									id="essaiAutoCom" value="#{prescriptionsManager.searchCriteria.essai}"
-									completeMethod="#{autoCompleteEssaiManager.complete}"
+									id="essaiAutoCom" value="#{prescriptionDTOManager.searchCriteria.essaiDTO}"
+									completeMethod="#{essaiService.autoCompleteEssai}"
 									onSelectUpdate="@this" style="width : 200px;"
 									forceSelection="true" var="essai"
-									itemLabel="#{essai.numInterne} #{essai.nom} #{essai.promoteur.raisonSociale}"
-									itemValue="#{essai}" converter="#{essaiConverter}" />	     					
+									itemLabel="#{essai.numInterne} #{essai.nom} - #{essai.raisonSociale}"
+									itemValue="#{essai.id}" converter="#{essaiDtoConverter}" />	     					
 	     					</h:panelGrid>
 		     				<!-- Dispense -->
 		     				<h:panelGrid columns="1"
 								columnClasses="panelCol_100 selectRadio">
-								<h:outputLabel for="dispenseBool"
+								<h:outputLabel for="traitee"
 									style="text-align:left;"
 									value="#{resourceBundle['gestionPrescription.dispense']}" />
-								<h:selectOneMenu style="width:200px;" id="traitee" value="#{prescriptionsManager.searchCriteria.dispense}">
+								<h:selectOneMenu style="width:200px;" id="traitee" value="#{prescriptionDTOManager.searchCriteria.dispense}">
 					             	<f:selectItem noSelectionOption="true" itemLabel="" itemValue=""/>
 					             	<f:selectItem noSelectionOption="true" itemLabel="#{resourceBundle['boolean.oui']}" itemValue="true"/>
 					             	<f:selectItem noSelectionOption="true" itemLabel="#{resourceBundle['boolean.non']}" itemValue="false"/>
@@ -103,28 +103,28 @@
 					<p:messages/>
 			    	<fieldset>
 			    	
-			    		<p:dataTable id="prescriptions" value="#{prescriptionsManager.beans}" var="prescription" emptyMessage="#{resourceBundle['results.none']}"
-								selection="#{prescriptionsManager.beanSelected}" selectionMode="single" onselectComplete="javascript:document.getElementById('recapButton').click();"	
-							update="prescriptions">
+			    		<p:dataTable id="prescriptions" value="#{prescriptionDTOManager.beans}" var="prescription" emptyMessage="#{resourceBundle['results.none']}"
+								selection="#{prescriptionDTOManager.beanSelected}" selectionMode="single" onselectComplete="javascript:document.getElementById('recapButton').click();"	
+							update="prescriptions" onRowSelectStart="showWait();">
 			    		
 			    			<p:column id="essai" >
 			    				<f:facet name="header">
 			    					<h:outputText value="#{resourceBundle['gestionPrescription.essai']}"/>
 			    				</f:facet>
-			    				<h:outputText value="#{prescription.inclusion.essai.nom} #{prescription.inclusion.essai.codePromoteur}"/>
+			    				<h:outputText value="#{prescription.nomEssai} #{prescription.codePromoteur}"/>
 			    			</p:column>
 			    			<p:column id="patient">
 			    				<f:facet name="header">
 			    					<h:outputText value="#{resourceBundle['gestionPrescription.patient']}"/>
 			    				</f:facet>
-			    				<h:outputText value="#{prescription.inclusion.patient.prenom} #{prescription.inclusion.patient.nom}" rendered="#{droitAccesHelper.isPatientVisible()}"/>
-			    				<h:outputText value="#{prescription.inclusion.patient.initiales}" rendered="#{!droitAccesHelper.isPatientVisible()}"/>
+			    				<h:outputText value="#{prescription.prenomPatient} #{prescription.nomPatient}" rendered="#{droitAccesHelper.isPatientVisible()}"/>
+			    				<h:outputText value="#{prescription.initialesPatient}" rendered="#{!droitAccesHelper.isPatientVisible()}"/>
 			    			</p:column>
 			    	 		<p:column id="numero" style="text-align:center;"> 
 			    				<f:facet name="header">
 			    					<h:outputText value="#{resourceBundle['gestionPrescription.numInclusion']}"/>
 			    				</f:facet>
-			    				<h:outputText value="#{prescription.inclusion.numInclusion}"/>
+			    				<h:outputText value="#{prescription.numInclusion}"/>
 			    			</p:column> 
 			    			<p:column id="numeroPre" style="text-align:center;"> 
 			    				<f:facet name="header"> 
@@ -145,10 +145,7 @@
 			    					<h:outputText value="#{resourceBundle['prescription.recap']}"/>
 			    				</f:facet>
 			    				<div align="center">
-				    				<h:commandLink action="recap" title="#{resourceBundle['prescription.recap']}">
-										<f:param name="id" value="#{prescription.id}" />
-										<h:graphicImage library="images" name="modify.gif" />
-				    				</h:commandLink>
+			    					<img id="imgRecap#{prescription.id}" src="#{facesContext.externalContext.requestContextPath}/resources/images/modify.gif" />
 			    				</div>
 			    			</p:column>
 			    			
@@ -157,7 +154,7 @@
 			    					<h:outputText value="#{resourceBundle['editPrescription.choix']}"/>
 			    				</f:facet>
 			    				<div align="center">
-				    				<h:commandLink action="delete" title="#{resourceBundle['prescription.remove']}" rendered="#{prescription.dispensations.size() eq 0}">
+				    				<h:commandLink action="delete" title="#{resourceBundle['prescription.remove']}" rendered="#{prescription.nbDispensations eq 0}">
 										<f:param name="id" value="#{prescription.id}" />
 										<h:graphicImage library="images" name="del.gif" />
 				    				</h:commandLink>
@@ -167,7 +164,9 @@
 			    		<br />
 				    	
 				    	<div style="display:none;">
+				    		<input id="idPrescription" name="idPrescription" />
 						    <p:commandButton id="recapButton" action="recapFromClicSurLigne" ajax="false"/>
+						    <h:commandButton id="recapImgButton" action="recapFromClicSurImg" ajax="false"/>
 						</div>			
 				    	
 	    			</fieldset>
@@ -176,8 +175,26 @@
    				</div>
     		</h:form>
    		</p:outputPanel>
+   		
+	<script  type="text/javascript">
+	
+		jQuery(document).ready(function() {
+			jQuery('img[id^="imgRecap"]').each(function(index) {
+				var $imgRecap = jQuery(this); 
+				$imgRecap.click(function() {
+					var idPrescription = $imgRecap.attr("id").substring(8);
+					jQuery("#idPrescription").val(idPrescription);
+					jQuery("#recapImgButton").click();
+					showWait();
+				});
+			});
+		});
+		
+   	</script>	
      	
      </ui:define>
+     
+     
      
      
 </ui:composition>

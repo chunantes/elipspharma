@@ -18,12 +18,10 @@ import fr.pharma.eclipse.service.common.GenericService;
 
 /**
  * Classe en charge de rechercher les DRC sélectionnables pour l'essai.
- 
+ * @author Netapsys
  * @version $Revision$ $Date$
  */
-public class DRCSeeker
-    implements SelectableContactsSeeker, BeanFactoryAware
-{
+public class DRCSeeker implements SelectableContactsSeeker, BeanFactoryAware {
 
     /**
      * Serial ID.
@@ -44,18 +42,15 @@ public class DRCSeeker
      * {@inheritDoc}
      */
     @Override
-    public boolean supports(final TypeContact typeContact)
-    {
-        return TypeContact.DIRECTION_RECHERCHE_ADMINISTRATIF.equals(typeContact)
-               || TypeContact.DIRECTION_RECHERCHE_PHARMACOVIGILANT.equals(typeContact);
+    public boolean supports(final TypeContact typeContact) {
+        return TypeContact.DIRECTION_RECHERCHE_ADMINISTRATIF.equals(typeContact) || TypeContact.DIRECTION_RECHERCHE_PHARMACOVIGILANT.equals(typeContact);
     }
 
     /**
      * {@inheritDoc}
      */
     @Override
-    public List<Personne> getContacts(final Essai essai)
-    {
+    public List<Personne> getContacts(final Essai essai) {
         return new ArrayList<Personne>(this.service.getAll(this.getSearchCriteria(essai)));
     }
 
@@ -65,10 +60,8 @@ public class DRCSeeker
      * @param essai Essai pour lequel on souhaite ajouter des contacts.
      * @return Le critère de recherche qui permet de récupérer les contacts.
      */
-    private PersonneSearchCriteria getSearchCriteria(final Essai essai)
-    {
-        final PersonneSearchCriteria criteria =
-            (PersonneSearchCriteria) this.beanFactory.getBean("personneCriteria");
+    private PersonneSearchCriteria getSearchCriteria(final Essai essai) {
+        final PersonneSearchCriteria criteria = (PersonneSearchCriteria) this.beanFactory.getBean("personneCriteria");
         criteria.setTypePersonne(TypePersonne.DIRECTION_RECHERCHE);
         return criteria;
     }
@@ -77,9 +70,7 @@ public class DRCSeeker
      * {@inheritDoc}
      */
     @Override
-    public void setBeanFactory(final BeanFactory beanFactory)
-        throws BeansException
-    {
+    public void setBeanFactory(final BeanFactory beanFactory) throws BeansException {
         this.beanFactory = beanFactory;
     }
 
@@ -87,8 +78,7 @@ public class DRCSeeker
      * Getter sur beanFactory.
      * @return Retourne le beanFactory.
      */
-    BeanFactory getBeanFactory()
-    {
+    BeanFactory getBeanFactory() {
         return this.beanFactory;
     }
 
@@ -96,8 +86,7 @@ public class DRCSeeker
      * Getter sur service.
      * @return Retourne le service.
      */
-    GenericService<DirectionRecherche> getService()
-    {
+    GenericService<DirectionRecherche> getService() {
         return this.service;
     }
 
@@ -105,8 +94,7 @@ public class DRCSeeker
      * Setter pour service.
      * @param service le service à écrire.
      */
-    public void setService(final GenericService<DirectionRecherche> service)
-    {
+    public void setService(final GenericService<DirectionRecherche> service) {
         this.service = service;
     }
 

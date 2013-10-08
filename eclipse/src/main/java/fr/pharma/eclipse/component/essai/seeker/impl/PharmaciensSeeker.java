@@ -19,12 +19,10 @@ import fr.pharma.eclipse.service.common.GenericService;
 
 /**
  * Classe en charge de rechercher les pharmaciens sélectionnables pour l'essai.
- 
+ * @author Netapsys
  * @version $Revision$ $Date$
  */
-public class PharmaciensSeeker
-    implements SelectableContactsSeeker, BeanFactoryAware
-{
+public class PharmaciensSeeker implements SelectableContactsSeeker, BeanFactoryAware {
 
     /**
      * Serial ID.
@@ -45,8 +43,7 @@ public class PharmaciensSeeker
      * {@inheritDoc}
      */
     @Override
-    public boolean supports(final TypeContact typeContact)
-    {
+    public boolean supports(final TypeContact typeContact) {
         return TypeContact.PHARMACIEN.equals(typeContact);
     }
 
@@ -54,8 +51,7 @@ public class PharmaciensSeeker
      * {@inheritDoc}
      */
     @Override
-    public List<Personne> getContacts(final Essai essai)
-    {
+    public List<Personne> getContacts(final Essai essai) {
         return new ArrayList<Personne>(this.service.getAll(this.getSearchCriteria(essai)));
     }
 
@@ -65,10 +61,8 @@ public class PharmaciensSeeker
      * @param essai Essai pour lequel on souhaite ajouter des contacts.
      * @return Le critère de recherche qui permet de récupérer les contacts.
      */
-    private PersonneSearchCriteria getSearchCriteria(final Essai essai)
-    {
-        final PharmacienSearchCriteria criteria =
-            (PharmacienSearchCriteria) this.beanFactory.getBean("pharmacienCriteria");
+    private PersonneSearchCriteria getSearchCriteria(final Essai essai) {
+        final PharmacienSearchCriteria criteria = (PharmacienSearchCriteria) this.beanFactory.getBean("pharmacienCriteria");
         final List<Pharmacie> pharmacies = new ArrayList<Pharmacie>();
         pharmacies.add(essai.getPharmaciePrincipale());
         pharmacies.addAll(essai.getDetailDonneesPharma().getPharmacies());
@@ -80,9 +74,7 @@ public class PharmaciensSeeker
      * {@inheritDoc}
      */
     @Override
-    public void setBeanFactory(final BeanFactory beanFactory)
-        throws BeansException
-    {
+    public void setBeanFactory(final BeanFactory beanFactory) throws BeansException {
         this.beanFactory = beanFactory;
     }
 
@@ -90,8 +82,7 @@ public class PharmaciensSeeker
      * Getter sur beanFactory.
      * @return Retourne le beanFactory.
      */
-    BeanFactory getBeanFactory()
-    {
+    BeanFactory getBeanFactory() {
         return this.beanFactory;
     }
 
@@ -99,8 +90,7 @@ public class PharmaciensSeeker
      * Getter sur service.
      * @return Retourne le service.
      */
-    GenericService<Pharmacien> getService()
-    {
+    GenericService<Pharmacien> getService() {
         return this.service;
     }
 
@@ -108,8 +98,7 @@ public class PharmaciensSeeker
      * Setter pour service.
      * @param service le service à écrire.
      */
-    public void setService(final GenericService<Pharmacien> service)
-    {
+    public void setService(final GenericService<Pharmacien> service) {
         this.service = service;
     }
 }

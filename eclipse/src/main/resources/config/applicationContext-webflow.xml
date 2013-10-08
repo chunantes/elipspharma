@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<beans:beans xmlns="http://www.springframework.org/schema/webflow-config"
+<beans:beans 
+	xmlns="http://www.springframework.org/schema/webflow-config"
 	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
 	xmlns:beans="http://www.springframework.org/schema/beans"
 	xmlns:faces="http://www.springframework.org/schema/faces"
@@ -12,6 +13,7 @@
 		<flow-execution-listeners>
 			<listener ref="facesContextListener"/>
 			<listener ref="securityListener"/>
+			<listener ref="webFlowProfilerListener"/>
 		</flow-execution-listeners>
 	</flow-executor>
 
@@ -23,10 +25,19 @@
 	<!-- Configures the Spring Web Flow JSF integration -->
 	<faces:flow-builder-services id="flowBuilderServices" development="true" />
 
+	<!-- A listener to logs flow lifecycle info -->
+	<beans:bean id="webFlowProfilerListener" class="fr.pharma.eclipse.profiling.WebFlowProfilerListener"/>
+	
 	<!-- A listener to create and release a FacesContext -->
 	<beans:bean id="facesContextListener" class="org.springframework.faces.webflow.FlowFacesContextLifecycleListener"/>
 
 	<!-- A listener to apply Spring Security authorities -->
 	<beans:bean id="securityListener" class="org.springframework.webflow.security.SecurityFlowExecutionListener" />
 	
+	<!-- Configure conversation lock timeout -->
+    <beans:bean id="webFlowHelper" class="fr.pharma.eclipse.utils.WebFlowHelper">
+		<beans:constructor-arg index="0" ref="flowExecutor" />
+   		<beans:property name="lockTimeoutSeconds" value="80"/>
+   	</beans:bean>
+
 </beans:beans>

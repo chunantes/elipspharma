@@ -14,11 +14,10 @@ import fr.pharma.eclipse.service.stockage.PharmacieService;
 
 /**
  * Classe en charge de tester le converter générique.
- 
+ * @author Netapsys
  * @version $Revision$ $Date$
  */
-public class GenericConverterTest
-{
+public class GenericConverterTest {
 
     /**
      * GenericConverter à tester.
@@ -34,8 +33,7 @@ public class GenericConverterTest
      * Méthode en charge d'initialiser les données de test.
      */
     @Before
-    public void init()
-    {
+    public void init() {
         this.mockService = Mockito.mock(PharmacieService.class);
         this.converter = new GenericConverter<Pharmacie>(this.mockService);
     }
@@ -44,8 +42,7 @@ public class GenericConverterTest
      * Méthode en charge de purger les données de test.
      */
     @After
-    public void end()
-    {
+    public void end() {
         this.mockService = null;
         this.converter = null;
     }
@@ -54,8 +51,7 @@ public class GenericConverterTest
      * Méthode en charge de tester l'initialisation des données de test.
      */
     @Test
-    public void testInit()
-    {
+    public void testInit() {
         Assert.assertNotNull(this.mockService);
         Assert.assertNotNull(this.converter);
     }
@@ -64,13 +60,10 @@ public class GenericConverterTest
      * Test de la méthode permettant de récupérer l'objet (bean métier).
      */
     @Test
-    public void testGetAsObjectValueNull()
-    {
+    public void testGetAsObjectValueNull() {
         final UIComponent component = Mockito.mock(UIComponent.class);
         final FacesContext facesContext = Mockito.mock(FacesContext.class);
-        final Object result = this.converter.getAsObject(facesContext,
-                                                         component,
-                                                         null);
+        final Object result = this.converter.getAsObject(facesContext, component, null);
         Assert.assertNull(result);
     }
 
@@ -78,13 +71,10 @@ public class GenericConverterTest
      * Test de la méthode permettant de récupérer l'objet (bean métier).
      */
     @Test
-    public void testGetAsObjectValueEmpty()
-    {
+    public void testGetAsObjectValueEmpty() {
         final UIComponent component = Mockito.mock(UIComponent.class);
         final FacesContext facesContext = Mockito.mock(FacesContext.class);
-        final Object result = this.converter.getAsObject(facesContext,
-                                                         component,
-                                                         "");
+        final Object result = this.converter.getAsObject(facesContext, component, "");
         Assert.assertNull(result);
     }
 
@@ -92,83 +82,67 @@ public class GenericConverterTest
      * Test de la méthode permettant de récupérer l'objet (bean métier).
      */
     @Test
-    public void testGetAsObjectValue()
-    {
+    public void testGetAsObjectValue() {
         final UIComponent component = Mockito.mock(UIComponent.class);
         final FacesContext facesContext = Mockito.mock(FacesContext.class);
         final String value = "1";
         final Pharmacie pharmacieExpected = new Pharmacie();
         pharmacieExpected.setId(1L);
         Mockito.when(this.mockService.get(Long.valueOf(value))).thenReturn(pharmacieExpected);
-        final Object result = this.converter.getAsObject(facesContext,
-                                                         component,
-                                                         value);
-        Assert.assertEquals(pharmacieExpected,
-                            result);
+        final Object result = this.converter.getAsObject(facesContext, component, value);
+        Assert.assertEquals(pharmacieExpected, result);
     }
 
     /**
      * Test de la méthode permettant de récupérer l'objet (bean métier).
      */
     @Test
-    public void testGetAsObjectValueException()
-    {
+    public void testGetAsObjectValueException() {
         final UIComponent component = Mockito.mock(UIComponent.class);
         final FacesContext facesContext = Mockito.mock(FacesContext.class);
         final String value = "1";
         final Pharmacie pharmacieExpected = new Pharmacie();
         pharmacieExpected.setId(1L);
-        Mockito
-                .when(this.mockService.get(Long.valueOf(value)))
-                .thenThrow(new NumberFormatException());
-        final Object result = this.converter.getAsObject(facesContext,
-                                                         component,
-                                                         value);
+        Mockito.when(this.mockService.get(Long.valueOf(value))).thenThrow(new NumberFormatException());
+        final Object result = this.converter.getAsObject(facesContext, component, value);
         Assert.assertNull(result);
     }
 
     /**
-     * Test de la méthode permettant de récupérant l'id technique de l'objet (bean métier).
+     * Test de la méthode permettant de récupérant l'id technique de l'objet
+     * (bean métier).
      */
     @Test
-    public void testGetAsStringNull()
-    {
+    public void testGetAsStringNull() {
         final UIComponent component = Mockito.mock(UIComponent.class);
         final FacesContext facesContext = Mockito.mock(FacesContext.class);
-        final String result = this.converter.getAsString(facesContext,
-                                                         component,
-                                                         null);
+        final String result = this.converter.getAsString(facesContext, component, null);
         Assert.assertNull(result);
     }
 
     /**
-     * Test de la méthode permettant de récupérant l'id technique de l'objet (bean métier).
+     * Test de la méthode permettant de récupérant l'id technique de l'objet
+     * (bean métier).
      */
     @Test
-    public void testGetAsStringNotNull()
-    {
+    public void testGetAsStringNotNull() {
         final UIComponent component = Mockito.mock(UIComponent.class);
         final FacesContext facesContext = Mockito.mock(FacesContext.class);
         final Pharmacie pharmacie = new Pharmacie();
         pharmacie.setId(1L);
-        final String result = this.converter.getAsString(facesContext,
-                                                         component,
-                                                         pharmacie);
-        Assert.assertEquals("1",
-                            result);
+        final String result = this.converter.getAsString(facesContext, component, pharmacie);
+        Assert.assertEquals("1", result);
     }
 
     /**
-     * Test de la méthode permettant de récupérant l'id technique de l'objet (bean métier).
+     * Test de la méthode permettant de récupérant l'id technique de l'objet
+     * (bean métier).
      */
     @Test
-    public void testGetAsStringException()
-    {
+    public void testGetAsStringException() {
         final UIComponent component = Mockito.mock(UIComponent.class);
         final FacesContext facesContext = Mockito.mock(FacesContext.class);
-        final String result = this.converter.getAsString(facesContext,
-                                                         component,
-                                                         "1");
+        final String result = this.converter.getAsString(facesContext, component, "1");
         Assert.assertNull(result);
     }
 

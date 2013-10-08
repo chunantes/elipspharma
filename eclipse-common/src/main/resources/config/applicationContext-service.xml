@@ -79,6 +79,7 @@
 				<entry key="ONG_SURCOUTS" value-ref="detailSurcoutSuiviWithParentFactory" />
 			</map>
 		</property>
+		<property name="essaiSearchDao" ref="essaiSearchDao"/>
 	</bean>
 	
 	<!-- ============================= -->
@@ -260,7 +261,9 @@
 	<!-- ============================= -->
 	<!-- STOCK                         -->
 	<!-- ============================= -->	
-	<bean id="stockService" class="fr.pharma.eclipse.service.stock.impl.StockServiceImpl"/>
+	<bean id="stockService" class="fr.pharma.eclipse.service.stock.impl.StockServiceImpl">
+		<constructor-arg index="0" ref="ligneStockDao" />
+	</bean>
 	
 	<!-- ============================= -->
 	<!-- ETAT STOCK                    -->
@@ -277,7 +280,7 @@
 	<!-- ============================= -->	
 	<bean id="approvisionnementService" class="fr.pharma.eclipse.service.stock.impl.ApprovisionnementServiceImpl">
 		<constructor-arg index="0" ref="approvisionnementDao" />
-		<property name="approFactorys">
+		<property name="approFactories">
 			<map>
 				<entry key-ref="TYPE_MOUVEMENT_PREPARATION_ENTREE" value-ref="preparationEntreeFactory"/>
 				<entry key-ref="TYPE_MOUVEMENT_APPROVISIONNEMENT" value-ref="approvisionnementFactory"/>
@@ -543,6 +546,13 @@
 	<!-- =========================================== -->		
 	<bean id="ordonnancierFabReconstService" class="fr.pharma.eclipse.service.ordonnancier.impl.OrdonnancierFabReconstServiceImpl">
 		<constructor-arg index="0" ref="ordonnancierFabReconstDao"/>
+	</bean>
+	
+	<!-- =========================================== -->
+	<!-- REPRISE PASSIF   -->
+	<!-- =========================================== -->		
+	<bean id="reprisePassifService" class="fr.pharma.eclipse.service.reprisePassif.impl.ReprisePassifServiceImpl">
+		<constructor-arg index="0" ref="reprisePassifDao"/>
 	</bean>
 	
 	<!-- ============================= -->

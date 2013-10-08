@@ -1,57 +1,56 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<flow xmlns="http://www.springframework.org/schema/webflow"
-	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-	xsi:schemaLocation="http://www.springframework.org/schema/webflow
-    http://www.springframework.org/schema/webflow/spring-webflow-2.0.xsd" parent="main">
+<flow xmlns="http://www.springframework.org/schema/webflow" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.springframework.org/schema/webflow
+    http://www.springframework.org/schema/webflow/spring-webflow-2.0.xsd"
+	parent="main">
 
 	<!-- Variable d'entrée -->
 	<input name="idPole" />
-	
+
 	<on-start>
-		<evaluate expression="etablissementSearchCriteria.clear()"/>
-		<evaluate expression="etablissementService.getAll(etablissementSearchCriteria)" result="etablissementsManager.beans"/>
+		<evaluate expression="etablissementSearchCriteria.clear()" />
+		<evaluate expression="etablissementService.getAll(etablissementSearchCriteria)" result="etablissementsManager.beans" />
 	</on-start>
 
 	<decision-state id="createOrEdit">
-		<if test="idPole==null" then="create" else="edit"/>
+		<if test="idPole==null" then="create" else="edit" />
 	</decision-state>
-	
+
 	<!-- Création -->
 	<action-state id="create">
-		<evaluate expression="poleManager.setBean(poleFactory.getInitializedObject())"/>
-		<transition to="editPole"/>
+		<evaluate expression="poleManager.setBean(poleFactory.getInitializedObject())" />
+		<transition to="editPole" />
 	</action-state>
-	
+
 	<!-- Modification -->
 	<action-state id="edit">
-		<evaluate expression="poleManager.setBean(poleService.get(idPole))"/>
-		<transition to="editPole"/>
+		<evaluate expression="poleManager.setBean(poleService.get(idPole))" />
+		<transition to="editPole" />
 	</action-state>
 
 	<!-- Page principale -->
 	<view-state id="editPole" view="../../../pages/pole/edit/editPole.xhtml">
-		<transition on="cancel" to="createOrEdit"/>
+		<transition on="cancel" to="createOrEdit" />
 		<transition on="save" to="comeback">
-			<evaluate expression="poleService.save(poleManager.bean)"/>
+			<evaluate expression="poleService.save(poleManager.bean)" />
 		</transition>
-					
-			<!--  Edition d'un service -->
+
+		<!-- Edition d'un service -->
 		<transition on="editService" to="editService">
 			<set name="flashScope.idService" value="servicesManager.beanSelected.id" type="java.lang.Long" />
-			<evaluate expression="null" result="servicesManager.beanSelected"/>	
+			<evaluate expression="null" result="servicesManager.beanSelected" />
 		</transition>
-		
-		<transition on="comeback" to="comeback"/>
-		<transition on="error" to="editPole"/>
+
+		<transition on="comeback" to="comeback" />
+		<transition on="error" to="editPole" />
 	</view-state>
-	
-	<!-- Edition d'une pharamcie-->
+
+	<!-- Edition d'une pharamcie -->
 	<subflow-state id="editService" subflow="service/edit">
-		<attribute name="idService" value="flashScope.idService"/>
-		<transition to="editPole"/>
-	</subflow-state>	
-	
+		<attribute name="idService" value="flashScope.idService" />
+		<transition to="editPole" />
+	</subflow-state>
+
 	<!-- Etat final -->
-	<end-state id="comeback"/>
-	
+	<end-state id="comeback" />
+
 </flow>

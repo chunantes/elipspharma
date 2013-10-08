@@ -20,12 +20,10 @@ import fr.pharma.eclipse.utils.FacesUtils;
 
 /**
  * Manager de la classe métier ProduitPrescrit.
- 
+ * @author Netapsys
  * @version $Revision$ $Date$
  */
-public class ProduitPrescritManager
-    extends BeanManager<ProduitPrescrit>
-{
+public class ProduitPrescritManager extends BeanManager<ProduitPrescrit> {
 
     /**
      * SerialVersionUID.
@@ -75,16 +73,14 @@ public class ProduitPrescritManager
      * Constructeur.
      * @param service Service.
      */
-    public ProduitPrescritManager(final GenericService<ProduitPrescrit> service)
-    {
+    public ProduitPrescritManager(final GenericService<ProduitPrescrit> service) {
         super(service);
     }
 
     /**
      * Methode d'initialisation du manager.
      */
-    public void init()
-    {
+    public void init() {
         this.setBean(null);
         this.action = "";
         this.setResume(null);
@@ -95,32 +91,28 @@ public class ProduitPrescritManager
      * Méthode en charge d'ajouter un nouveau produit prescrit.
      * @param prescription La prescription.
      */
-    public void createProduitPrescrit(final Prescription prescription)
-    {
+    public void createProduitPrescrit(final Prescription prescription) {
         this.setBean(this.produitPrescritFactory.getInitializedObject(prescription));
         this.action = "ADD";
     }
     /**
      * Méthode en charge d'initialiser le bean.
      */
-    public void initProduitPrescrit()
-    {
+    public void initProduitPrescrit() {
         this.setBean(this.produitPrescritFactory.getInitializedObject());
         this.action = "ADD";
     }
 
     /**
-     * Methode en charge d'intialiser le bean avec le produit contenu dans l'evenement.
+     * Methode en charge d'intialiser le bean avec le produit contenu dans
+     * l'evenement.
      * @param event Evenement.
      */
-    public void editProduitPrescrit(final ActionEvent event)
-    {
-        final ProduitPrescrit produit =
-            (ProduitPrescrit) event.getComponent().getAttributes().get("produitCurrent");
+    public void editProduitPrescrit(final ActionEvent event) {
+        final ProduitPrescrit produit = (ProduitPrescrit) event.getComponent().getAttributes().get("produitCurrent");
         this.setBean(produit);
         this.buildResume();
-        this.setResumeConditionnement(this.conditionnementHelper.buildResume(produit
-                .getConditionnement()));
+        this.setResumeConditionnement(this.conditionnementHelper.buildResume(produit.getConditionnement()));
         this.action = "EDIT";
 
     }
@@ -128,54 +120,40 @@ public class ProduitPrescritManager
     /**
      * Méthode en charge de construire le résumé de la prescription du produit.
      */
-    public void buildResume()
-    {
+    public void buildResume() {
         this.setResume(this.produitPrescritHelper.buildResume(this.getBean()));
     }
 
     /**
-     * Méthode en charge d'ajouter un produitPrescrit à la prescription courante.
+     * Méthode en charge d'ajouter un produitPrescrit à la prescription
+     * courante.
      * @param prod Le produit prescrit à ajouter.
      */
-    public void addProduitPrescrit(final Prescription prescription)
-    {
-        if (this.action.equals("ADD"))
-        {
+    public void addProduitPrescrit(final Prescription prescription) {
+        if (this.action.equals("ADD")) {
             this.getBean().setPrescription(prescription);
-            try
-            {
-                if (!prescription.getProduitsPrescrits().contains(this.getBean()))
-                {
+            try {
+                if (!prescription.getProduitsPrescrits().contains(this.getBean())) {
                     prescription.getProduitsPrescrits().add(this.getBean());
-                }
-                else
-                {
+                } else {
 
-                    this.facesUtils.addMessage(FacesMessage.SEVERITY_ERROR,
-                                               "dispensation.produitPrescrit.exist");
+                    this.facesUtils.addMessage(FacesMessage.SEVERITY_ERROR, "dispensation.produitPrescrit.exist");
                 }
-            }
-            catch (final ValidationException e)
-            {
-                this.facesUtils.addMessage(FacesMessage.SEVERITY_ERROR,
-                                           e.getErrorCode()
-                                                   + e.getValues()[0]);
+            } catch (final ValidationException e) {
+                this.facesUtils.addMessage(FacesMessage.SEVERITY_ERROR, e.getErrorCode() + e.getValues()[0]);
             }
         }
     }
 
     /**
-     * Retourne <true> si le mode de prescription du conditionnement sélectionné est du type de
-     * celui en paramètre.
+     * Retourne <true> si le mode de prescription du conditionnement sélectionné
+     * est du type de celui en paramètre.
      * @param mode Mode de prescription.
-     * @return <true> si le mode de prescription du conditionnement sélectionné est du type de
-     * celui en paramètre.
+     * @return <true> si le mode de prescription du conditionnement sélectionné
+     * est du type de celui en paramètre.
      */
-    public boolean isModePrescription(final ModePrescription mode)
-    {
-        return this.getBean() != null
-               && this.getBean().getConditionnement() != null
-               && this.getBean().getConditionnement().getModePrescription() != null
+    public boolean isModePrescription(final ModePrescription mode) {
+        return (this.getBean() != null) && (this.getBean().getConditionnement() != null) && (this.getBean().getConditionnement().getModePrescription() != null)
                && this.getBean().getConditionnement().getModePrescription().equals(mode);
     }
 
@@ -183,8 +161,7 @@ public class ProduitPrescritManager
      * Méthode appelée par l'IHM lors de la sélection d'un conditionnement.
      * @param event Evenement JSF.
      */
-    public void handleConditionnement(final AjaxBehaviorEvent event)
-    {
+    public void handleConditionnement(final AjaxBehaviorEvent event) {
         final HtmlSelectOneMenu menu = (HtmlSelectOneMenu) event.getSource();
         final Conditionnement conditionnement = (Conditionnement) menu.getLocalValue();
         this.getBean().setConditionnement(conditionnement);
@@ -195,8 +172,7 @@ public class ProduitPrescritManager
      * Setter pour produitPrescritFactory.
      * @param produitPrescritFactory le produitPrescritFactory à écrire.
      */
-    public void setProduitPrescritFactory(final ProduitPrescritFactory produitPrescritFactory)
-    {
+    public void setProduitPrescritFactory(final ProduitPrescritFactory produitPrescritFactory) {
         this.produitPrescritFactory = produitPrescritFactory;
     }
 
@@ -204,8 +180,7 @@ public class ProduitPrescritManager
      * Getter sur resume.
      * @return Retourne le resume.
      */
-    public String getResume()
-    {
+    public String getResume() {
         return this.resume;
     }
 
@@ -213,8 +188,7 @@ public class ProduitPrescritManager
      * Getter sur resumeConditionnement.
      * @return Retourne le resumeConditionnement.
      */
-    public String getResumeConditionnement()
-    {
+    public String getResumeConditionnement() {
         return this.resumeConditionnement;
     }
 
@@ -222,8 +196,7 @@ public class ProduitPrescritManager
      * Setter pour resume.
      * @param resume le resume à écrire.
      */
-    public void setResume(final String resume)
-    {
+    public void setResume(final String resume) {
         this.resume = resume;
     }
 
@@ -231,8 +204,7 @@ public class ProduitPrescritManager
      * Setter pour resumeConditionnement.
      * @param resumeConditionnement le resumeConditionnement à écrire.
      */
-    public void setResumeConditionnement(final String resumeConditionnement)
-    {
+    public void setResumeConditionnement(final String resumeConditionnement) {
         this.resumeConditionnement = resumeConditionnement;
     }
 
@@ -240,8 +212,7 @@ public class ProduitPrescritManager
      * Setter pour conditionnementHelper.
      * @param conditionnementHelper le conditionnementHelper à écrire.
      */
-    public void setConditionnementHelper(final ConditionnementHelper conditionnementHelper)
-    {
+    public void setConditionnementHelper(final ConditionnementHelper conditionnementHelper) {
         this.conditionnementHelper = conditionnementHelper;
     }
 
@@ -249,8 +220,7 @@ public class ProduitPrescritManager
      * Setter pour produitPrescritHelper.
      * @param produitPrescritHelper le produitPrescritHelper à écrire.
      */
-    public void setProduitPrescritHelper(final ProduitPrescritHelper produitPrescritHelper)
-    {
+    public void setProduitPrescritHelper(final ProduitPrescritHelper produitPrescritHelper) {
         this.produitPrescritHelper = produitPrescritHelper;
     }
 
@@ -258,8 +228,7 @@ public class ProduitPrescritManager
      * Setter pour facesUtils.
      * @param facesUtils Le facesUtils à écrire.
      */
-    public void setFacesUtils(final FacesUtils facesUtils)
-    {
+    public void setFacesUtils(final FacesUtils facesUtils) {
         this.facesUtils = facesUtils;
     }
 

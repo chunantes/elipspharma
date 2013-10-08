@@ -13,13 +13,12 @@ import fr.pharma.eclipse.domain.model.essai.detail.design.DetailDesign;
 import fr.pharma.eclipse.exception.common.CommonException;
 
 /**
- * Classe en charge de convertir un detaikl design en JSON afin d'afficher l'arbre chronologique
- * des designs.
- 
+ * Classe en charge de convertir un detaikl design en JSON afin d'afficher
+ * l'arbre chronologique des designs.
+ * @author Netapsys
  * @version $Revision$ $Date$
  */
-public class DesignConverter
-{
+public class DesignConverter {
 
     /**
      * Converter de bras en JSON.
@@ -34,19 +33,12 @@ public class DesignConverter
      * @return Le tableau de JSONObjet.
      */
     public JSONArray convert(final DetailDesign detailDesign,
-                             final Calendar date)
-    {
+                             final Calendar date) {
         final JSONArray array = new JSONArray();
 
-        for (final Bras bras : detailDesign.getBras())
-        {
-            if (this.brasConverter.support(bras)
-                && !this.isAlreadyPresent(array,
-                                          bras))
-            {
-                this.addToArray(array,
-                                this.brasConverter.convert(bras,
-                                                           date));
+        for (final Bras bras : detailDesign.getBras()) {
+            if (this.brasConverter.support(bras) && !this.isAlreadyPresent(array, bras)) {
+                this.addToArray(array, this.brasConverter.convert(bras, date));
             }
         }
         return array;
@@ -59,45 +51,33 @@ public class DesignConverter
      * @return <true> si le bras est déja présent.
      */
     private boolean isAlreadyPresent(final JSONArray array,
-                                     final Bras bras)
-    {
-        try
-        {
-            for (int i = 0; i < array.length(); i++)
-            {
-                if (((JSONObject) array.get(i)).getLong("id") == bras.getId().longValue())
-                {
+                                     final Bras bras) {
+        try {
+            for (int i = 0; i < array.length(); i++) {
+                if (((JSONObject) array.get(i)).getLong("id") == bras.getId().longValue()) {
                     return true;
                 }
             }
-        }
-        catch (final JSONException e)
-        {
-            throw new CommonException("Erreur lors de la generation des blocs.",
-                                      e);
+        } catch (final JSONException e) {
+            throw new CommonException("Erreur lors de la generation des blocs.", e);
         }
         return false;
     }
 
     /**
-     * Méthode en charge d'ajouter tous les Objets contenu dans le arrayToAdd dans le array.
+     * Méthode en charge d'ajouter tous les Objets contenu dans le arrayToAdd
+     * dans le array.
      * @param array Tableau destination.
      * @param arrayToAdd Tableau source.
      */
     private void addToArray(final JSONArray array,
-                            final JSONArray arrayToAdd)
-    {
-        try
-        {
-            for (int i = 0; i < arrayToAdd.length(); i++)
-            {
+                            final JSONArray arrayToAdd) {
+        try {
+            for (int i = 0; i < arrayToAdd.length(); i++) {
                 array.put(arrayToAdd.get(i));
             }
-        }
-        catch (final JSONException e)
-        {
-            throw new CommonException("Impossible de convertir le bras.",
-                                      e);
+        } catch (final JSONException e) {
+            throw new CommonException("Impossible de convertir le bras.", e);
         }
     }
 
@@ -105,8 +85,7 @@ public class DesignConverter
      * Setter pour brasConverter.
      * @param brasConverter le brasConverter à écrire.
      */
-    public void setBrasConverter(final BrasToJSONConverter brasConverter)
-    {
+    public void setBrasConverter(final BrasToJSONConverter brasConverter) {
         this.brasConverter = brasConverter;
     }
 }

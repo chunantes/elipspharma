@@ -1,7 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<flow xmlns="http://www.springframework.org/schema/webflow"
-	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-	xsi:schemaLocation="http://www.springframework.org/schema/webflow
+<flow xmlns="http://www.springframework.org/schema/webflow" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.springframework.org/schema/webflow
     http://www.springframework.org/schema/webflow/spring-webflow-2.0.xsd"
 	parent="main">
 
@@ -9,9 +7,9 @@
 	<input name="idPatient" />
 
 	<on-start>
-		<evaluate expression="patientManager.reinit()"/>
-		<evaluate expression="prescriptionSearchCriteria.clear()"/>
-		<evaluate expression="dispensationSearchCriteria.clear()"/>
+		<evaluate expression="patientManager.reinit()" />
+		<evaluate expression="prescriptionSearchCriteria.clear()" />
+		<evaluate expression="dispensationSearchCriteria.clear()" />
 	</on-start>
 
 	<decision-state id="createOrEdit">
@@ -20,105 +18,79 @@
 
 	<!-- Création -->
 	<action-state id="create">
-		<evaluate
-			expression="patientManager.setBean(patientFactory.getInitializedObject())" />
+		<evaluate expression="patientManager.setBean(patientFactory.getInitializedObject())" />
 		<transition to="editPatient" />
 	</action-state>
 
 	<!-- Modification -->
 	<action-state id="edit">
 		<evaluate expression="patientManager.setBean(patientService.get(idPatient))" />
-		<transition to="initInclusion" />
+		<set name="retoursPatientManager.beans" value="patientManager.bean.retours" />
+		<set name="patientManager.listeHistoriquePatient" value="patientManager.bean.historiquePatient" />
+		<evaluate expression="patientService.getInclusionCourante(patientManager.bean)" result="patientManager.inclusionCourante" />
+		<set name="prescriptionSearchCriteria.patient" value="patientManager.bean" />
+		<set name="dispensationSearchCriteria.patient" value="patientManager.bean" />
+		<evaluate expression="prescriptionService.getAll(prescriptionSearchCriteria)" result="patientManager.prescriptions" />
+		<evaluate expression="dispensationService.getAll(dispensationSearchCriteria)" result="patientManager.dispensations">
+			<!-- il faut conserver cet attribut sur la dernière evaluation de l'action-state + le on="last.success" ci après, cf. http://mattuseytech.wordpress.com/2011/07/26/spring-webflow-action-states -->
+			<attribute name="name" value="last" />
+		</evaluate>
+		<transition on="last.success" to="editPatient" />
 	</action-state>
-	
-	<!-- Initialisation de l'inclusion dans le manager pour l'affichage -->
-	<action-state id="initInclusion">
-		<evaluate expression="patientService.getInclusionCourante(patientManager.bean)" result="patientManager.inclusionCourante"/>
-		<transition to="initPrescriptionSearchCriteria" />
-	</action-state>
-	
-	<action-state id="initPrescriptionSearchCriteria">
-		<set name="prescriptionSearchCriteria.patient" value="patientManager.bean"/>
-		<transition to="initDispensationSearchCriteria" />
-	</action-state>
-	
-	<action-state id="initDispensationSearchCriteria">
-		<set name="dispensationSearchCriteria.patient" value="patientManager.bean"/>
-		<transition to="initSearchPrescriptions" />
-	</action-state>
-	
-	<action-state id="initSearchPrescriptions">
-			<evaluate expression="prescriptionService.getAll(prescriptionSearchCriteria)" result="patientManager.prescriptions"/>
-			<transition to="initSearchDispensations"/>
-	</action-state>
-	
-	<action-state id="initSearchDispensations" >
-		<evaluate expression="dispensationService.getAll(dispensationSearchCriteria)" result="patientManager.dispensations"/>
-		<transition to="editPatient"/>
-	</action-state>
-	
 
 	<!-- Page principale -->
-	<view-state id="editPatient"
-		view="../../../pages/patient/edit/editPatient.xhtml">
-		<on-render>
-			<evaluate expression="patientService.reattach(patientManager.bean)" result="patientManager.bean"/>
-			<evaluate expression="prescriptionService.reattachAll(patientManager.prescriptions)" result="patientManager.prescriptions"/>
-			<evaluate expression="dispensationService.reattachAll(patientManager.dispensations)" result="patientManager.dispensations"/>
-		</on-render>
-		
+	<view-state id="editPatient" view="../../../pages/patient/edit/editPatient.xhtml">
+
 		<!-- Edition d'une prescription -->
 		<transition on="editPrescription" to="editPrescription">
 			<set name="flashScope.idPrescription" value="prescriptionsManager.beanSelected.id" type="java.lang.Long" />
-			<evaluate expression="null" result="prescriptionsManager.beanSelected"/>		
+			<evaluate expression="null" result="prescriptionsManager.beanSelected" />
 		</transition>
-		
+
 		<!-- Edition d'une prescription -->
 		<transition on="editDispensation" to="editDispensation">
 			<set name="flashScope.idDispensation" value="dispensationsManager.beanSelected.id" type="java.lang.Long" />
-			<evaluate expression="null" result="dispensationsManager.beanSelected"/>		
 		</transition>
-		
+
 		<!-- Desinclure le patient -->
 		<transition on="desinclure" to="comeback">
-			<evaluate expression="patientService.desinclure(patientManager.bean)"/>
+			<evaluate expression="patientService.desinclure(patientManager.bean)" />
 		</transition>
-		
-		<!-- Edition d'un retour patient -->	
+
+		<!-- Edition d'un retour patient -->
 		<transition on="editRetour" to="editRetour">
 			<set name="flashScope.idRetourPatient" value="retoursPatientManager.beanSelected.id" type="java.lang.Long" />
-			<evaluate expression="null" result="retoursPatientManager.beanSelected"/>		
+			<evaluate expression="null" result="retoursPatientManager.beanSelected" />
 		</transition>
-		
-		
+
+
 		<transition on="cancel" to="createOrEdit" />
 		<transition on="save" to="comeback">
 			<evaluate expression="patientService.save(patientManager.bean)" />
 		</transition>
-		<transition on="comeback" to="comeback" >
-			<set name="patientManager.bean" value="null"/>
+		<transition on="comeback" to="comeback">
+			<set name="patientManager.bean" value="null" />
 		</transition>
 		<transition on="error" to="editPatient" />
 	</view-state>
-	
-		<!-- Edition d'une prescription readonly -->
+
+	<!-- Edition d'une prescription readonly -->
 	<subflow-state id="editPrescription" subflow="prescription/edit">
-		<attribute name="idPrescription" value="flashScope.idPrescription"/>
-		<transition to="editPatient"/>
-	</subflow-state>	
-	
-		<!-- Edition d'une dispensation readonly -->
+		<attribute name="idPrescription" value="flashScope.idPrescription" />
+		<transition to="edit" />
+	</subflow-state>
+
+	<!-- Edition d'une dispensation readonly -->
 	<subflow-state id="editDispensation" subflow="dispensation/edit">
-		<attribute name="idDispensation" value="flashScope.idDispensation"/>
-		<transition to="editPatient"/>
-	</subflow-state>	
-	
+		<attribute name="idDispensation" value="flashScope.idDispensation" />
+		<transition to="edit" />
+	</subflow-state>
+
 	<subflow-state id="editRetour" subflow="stock/retourPatient/edit">
-		<input name="idRetourPatient" value="flashScope.idRetourPatient"/>
-		<transition to="editPatient"/>
-	</subflow-state>	
-	
-	
+		<input name="idRetourPatient" value="flashScope.idRetourPatient" />
+		<transition to="edit" />
+	</subflow-state>
+
 
 	<!-- Etat final -->
 	<end-state id="comeback" />

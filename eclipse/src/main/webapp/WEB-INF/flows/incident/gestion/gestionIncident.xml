@@ -1,44 +1,43 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<flow xmlns="http://www.springframework.org/schema/webflow"
-	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-	xsi:schemaLocation="http://www.springframework.org/schema/webflow
-    http://www.springframework.org/schema/webflow/spring-webflow-2.0.xsd" parent="main">
+<flow xmlns="http://www.springframework.org/schema/webflow" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.springframework.org/schema/webflow
+    http://www.springframework.org/schema/webflow/spring-webflow-2.0.xsd"
+	parent="main">
 
 	<!-- Démarrage -->
 	<on-start>
 		<!-- Initialisation complétion automatique des essais -->
-		<evaluate expression="essaiSearchCriteria.clear()"/>
+		<evaluate expression="essaiSearchCriteria.clear()" />
 		<evaluate expression="'numInterne'" result="autoCompleteEssaiManager.searchCriteria.activeOrder" />
 		<evaluate expression="'numInterneOrNomOrPromoteur'" result="autoCompleteEssaiManager.searchCriteriaProperty" />
 		<!-- Purge du critère de recherche -->
-		<evaluate expression="incidentSearchCriteria.clear()"/>
+		<evaluate expression="incidentSearchCriteria.clear()" />
 		<!-- Purge des résultats -->
-		<evaluate expression="new java.util.ArrayList()" result="incidentsManager.beans"/>		
+		<evaluate expression="new java.util.ArrayList()" result="incidentsManager.beans" />
 	</on-start>
 
 	<!-- Page principale -->
 	<view-state id="gestionIncident" view="../../../pages/incident/gestion/gestionIncident.xhtml">
-		<transition on="search" to="search"/>
-		<transition on="delete" to="delete"/>
+		<transition on="search" to="search" />
+		<transition on="delete" to="delete" />
 		<transition on="edit" to="edit">
 			<set name="flashScope.idIncident" value="incidentsManager.beanSelected.id" type="java.lang.Long" />
-			<evaluate expression="null" result="incidentsManager.beanSelected"/>
+			<evaluate expression="null" result="incidentsManager.beanSelected" />
 		</transition>
-		<transition on="add" to="edit"/>
-		<transition on="error" to="gestionIncident"/>
+		<transition on="add" to="edit" />
+		<transition on="error" to="gestionIncident" />
 	</view-state>
-	
+
 	<!-- Recherche -->
 	<action-state id="search">
-		<evaluate expression="incidentService.getAll(incidentSearchCriteria)" result="incidentsManager.beans"/>
-		<transition to="gestionIncident"/>
+		<evaluate expression="incidentService.getAll(incidentSearchCriteria)" result="incidentsManager.beans" />
+		<transition to="gestionIncident" />
 	</action-state>
-	
+
 	<!-- Suppression -->
 	<action-state id="delete">
-		<evaluate expression="incidentService.remove(incidentsManager.beansSelected)"/>
-		<transition on="error" to="search"/>
-		<transition to="search"/>
+		<evaluate expression="incidentService.remove(incidentsManager.beansSelected)" />
+		<transition on="error" to="search" />
+		<transition to="search" />
 	</action-state>
-	
+
 </flow>

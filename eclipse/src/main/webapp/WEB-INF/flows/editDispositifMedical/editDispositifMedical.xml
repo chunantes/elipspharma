@@ -1,7 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<flow xmlns="http://www.springframework.org/schema/webflow"
-	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-	xsi:schemaLocation="http://www.springframework.org/schema/webflow
+<flow xmlns="http://www.springframework.org/schema/webflow" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.springframework.org/schema/webflow
     http://www.springframework.org/schema/webflow/spring-webflow-2.0.xsd"
 	parent="main">
 
@@ -10,9 +8,8 @@
 
 	<on-start>
 		<evaluate expression="pharmacieSearchCriteria.clear()" />
-		<evaluate expression="pharmacieService.getAll(pharmacieSearchCriteria, true)"
-			result="pharmaciesManager.beans" />
-		<evaluate expression="dispositifMedicalManager.init()"/>
+		<evaluate expression="pharmacieService.getAll(pharmacieSearchCriteria)" result="pharmaciesManager.beans" />
+		<evaluate expression="dispositifMedicalManager.init()" />
 	</on-start>
 
 	<decision-state id="createOrEdit">
@@ -21,91 +18,82 @@
 
 	<!-- Création From Scratch -->
 	<action-state id="createFromScratch">
-		<evaluate
-			expression="dispositifMedicalManager.setBean(dispositifMedicalFactory.getInitializedObject(essaiManager.getBean()))" />
+		<evaluate expression="dispositifMedicalManager.setBean(dispositifMedicalFactory.getInitializedObject(essaiManager.getBean()))" />
 		<transition to="initServices" />
 	</action-state>
 
 	<!-- Modification -->
 	<action-state id="edit">
-		<evaluate
-			expression="dispositifMedicalManager.setBean(dispositifMedicalFactory.getInitializedObjectFromEssai(essaiManager.getBean(), idDm))" />
+		<evaluate expression="dispositifMedicalManager.setBean(dispositifMedicalFactory.getInitializedObjectFromEssai(essaiManager.getBean(), idDm))" />
 		<transition to="initServices" />
 	</action-state>
 
 	<!-- Initialisation des listes de services -->
 	<action-state id="initServices">
-		<evaluate expression="'nom'"
-			result="servicesProduitGlobalManager.searchCriteria.activeOrder" />
+		<evaluate expression="'nom'" result="servicesProduitGlobalManager.searchCriteria.activeOrder" />
 		<transition to="applyGetAll" />
 	</action-state>
 	<action-state id="applyGetAll">
-		<evaluate
-			expression="selectableBeanFactory.getInitializedObjects(serviceService.getAll(servicesProduitGlobalManager.searchCriteria))"
-			result="servicesProduitGlobalManager.beans" result-type="java.util.List" />
+		<evaluate expression="selectableBeanFactory.getInitializedObjects(serviceService.getAll(servicesProduitGlobalManager.searchCriteria))" result="servicesProduitGlobalManager.beans" result-type="java.util.List" />
 		<transition to="prepareSelected" />
 	</action-state>
 	<action-state id="prepareSelected">
-		<evaluate
-			expression="beanManagerHelper.updateSelectableWrapped(dispositifMedicalManager.bean.services, servicesProduitGlobalManager.beans)" />
+		<evaluate expression="beanManagerHelper.updateSelectableWrapped(dispositifMedicalManager.bean.services, servicesProduitGlobalManager.beans)" />
 		<transition to="editDispositifMedical" />
 	</action-state>
 
 	<!-- Page principale -->
-	<view-state id="editDispositifMedical"
-		view="../../pages/editDispositifMedical/editDispositifMedical.xhtml">
+	<view-state id="editDispositifMedical" view="../../pages/editDispositifMedical/editDispositifMedical.xhtml">
 
 		<on-render>
-			<evaluate expression="dispositifMedicalService.reattach(dispositifMedicalManager.bean)"
-				result="dispositifMedicalManager.bean" />
+			<evaluate expression="dispositifMedicalService.reattach(dispositifMedicalManager.bean)" result="dispositifMedicalManager.bean" />
 		</on-render>
 
-		<!--  Annuler -->
+		<!-- Annuler -->
 		<transition on="cancel" to="createOrEdit" />
-		
+
 		<transition on="submit" to="editDispositifMedical" />
 
 		<!-- Sauvegarde de l'essai en restant sur le produit -->
 		<transition on="save" to="editDispositifMedical">
-			<evaluate expression="produitsManager.addToEssaiCollection(essaiManager.bean, dispositifMedicalManager.bean)"/>
+			<evaluate expression="produitsManager.addToEssaiCollection(essaiManager.bean, dispositifMedicalManager.bean)" />
 			<evaluate expression="dispositifMedicalManager.setIndexOngletCourant(0)" />
 			<evaluate expression="essaiService.save(essaiManager.bean)" result="essaiManager.bean" />
-			<evaluate expression="essaiManager.getProduitByName(dispositifMedicalManager.bean)" result="dispositifMedicalManager.bean"/>
+			<evaluate expression="essaiManager.getProduitByName(dispositifMedicalManager.bean)" result="dispositifMedicalManager.bean" />
 			<set name="dispositifMedicalManager.enregistre" value="true" />
 		</transition>
-		
+
 		<!-- Sauvegarde de l'essai et retour sur la page de l'essai -->
 		<transition on="saveAndReturn" to="comeback">
-			<evaluate expression="produitsManager.addToEssaiCollection(essaiManager.bean, dispositifMedicalManager.bean)"/>
+			<evaluate expression="produitsManager.addToEssaiCollection(essaiManager.bean, dispositifMedicalManager.bean)" />
 			<evaluate expression="dispositifMedicalManager.setIndexOngletCourant(0)" />
 			<evaluate expression="essaiService.save(essaiManager.bean)" result="essaiManager.bean" />
-			<evaluate expression="essaiManager.getProduitByName(dispositifMedicalManager.bean)" result="dispositifMedicalManager.bean"/>
+			<evaluate expression="essaiManager.getProduitByName(dispositifMedicalManager.bean)" result="dispositifMedicalManager.bean" />
 			<set name="dispositifMedicalManager.enregistre" value="true" />
 		</transition>
 
 		<!-- Retour à l'essai -->
-		<transition on="comeback" to="comeback"/>
+		<transition on="comeback" to="comeback" />
 
-		<!-- Initilisation du detail de stockage retour  -->
+		<!-- Initilisation du detail de stockage retour -->
 		<transition on="initDetailStockageRetour" to="editDispositifMedical">
-			<evaluate
-				expression="detailStockageManager.setBean(detailStockageFactory.getInitializedObject(dispositifMedicalManager.bean, RETOUR))" />
+			<evaluate expression="detailStockageManager.setBean(detailStockageFactory.getInitializedObject(dispositifMedicalManager.bean, RETOUR))" />
 			<set name="detailsStockagesManager.editRetourFlag" value="true"></set>
 		</transition>
 
 
-		<!--  Erreur -->
+		<!-- Erreur -->
 		<transition on="error" to="editDispositifMedical" />
 	</view-state>
 
 
-<!--	 Retour à l'essai -->
-<!--	<subflow-state id="comeback" subflow="editEssai">-->
-<!--		<input name="idEssai" required="true" value="essaiManager.bean.id" />-->
-<!--		<input name="idOnglet" required="true" value="'ONG_PRODUITS'" />-->
-<!--	</subflow-state>-->
+	<!-- Retour à l'essai -->
+	<!-- <subflow-state id="comeback" subflow="editEssai"> -->
+	<!-- <input name="idEssai" required="true" value="essaiManager.bean.id" /> -->
+	<!-- <input name="idOnglet" required="true" value="'ONG_PRODUITS'" /> -->
+	<!-- </subflow-state> -->
 
-<end-state id="comeback"/>
+	<end-state id="comeback" />
 
 
 </flow>

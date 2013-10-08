@@ -18,12 +18,10 @@ import fr.pharma.eclipse.utils.FacesUtils;
 
 /**
  * Test de SequenceValidator.
- 
+ * @author Netapsys
  * @version $Revision$ $Date$
  */
-public class SequenceValidatorTest
-    extends AbstractEclipseJUnitTest
-{
+public class SequenceValidatorTest extends AbstractEclipseJUnitTest {
 
     /**
      * Validator.
@@ -44,8 +42,7 @@ public class SequenceValidatorTest
      * {@inheritDoc}
      */
     @Override
-    public void setUp()
-    {
+    public void setUp() {
         this.facesUtils = Mockito.mock(FacesUtils.class);
         this.helper = Mockito.mock(TimeHelper.class);
         this.validator = new SequenceValidator();
@@ -57,8 +54,7 @@ public class SequenceValidatorTest
      * {@inheritDoc}
      */
     @Override
-    public void tearDown()
-    {
+    public void tearDown() {
         this.facesUtils = null;
         this.validator = null;
     }
@@ -67,8 +63,7 @@ public class SequenceValidatorTest
      * {@inheritDoc}
      */
     @Override
-    public void testInit()
-    {
+    public void testInit() {
         Assert.assertNotNull(this.facesUtils);
         Assert.assertNotNull(this.validator);
     }
@@ -77,8 +72,7 @@ public class SequenceValidatorTest
      * Test de validateSequence.
      */
     @Test
-    public void testValidateSequenceFalse()
-    {
+    public void testValidateSequenceFalse() {
         final TempsPrescription t = new TempsPrescription();
         t.setNb(1);
         t.setUnite(UniteTemps.JOUR);
@@ -111,18 +105,15 @@ public class SequenceValidatorTest
         bras.getSequences().add(sequence2);
         bras.getSequences().add(sequence3);
         Mockito.when(this.helper.getFin(Matchers.anyCollection())).thenReturn(t1);
-        Assert.assertFalse(this.validator.validateSequence(prescription,
-                                                           sequence));
-        Mockito.verify(this.facesUtils).addMessage(FacesMessage.SEVERITY_ERROR,
-                                                   "sequence.chevauchement");
+        Assert.assertFalse(this.validator.validateSequence(prescription, sequence));
+        Mockito.verify(this.facesUtils).addMessage(FacesMessage.SEVERITY_ERROR, "sequence.chevauchement");
     }
 
     /**
      * Test de validateSequence.
      */
     @Test
-    public void testValidateSequenceTrue()
-    {
+    public void testValidateSequenceTrue() {
         final TempsPrescription t = new TempsPrescription();
         t.setNb(1);
         t.setUnite(UniteTemps.JOUR);
@@ -154,10 +145,7 @@ public class SequenceValidatorTest
         bras.getSequences().add(sequence);
         bras.getSequences().add(sequence2);
         bras.getSequences().add(sequence3);
-        Assert.assertTrue(this.validator.validateSequence(prescription,
-                                                          sequence));
-        Mockito.verify(this.facesUtils,
-                       Mockito.never()).addMessage(FacesMessage.SEVERITY_ERROR,
-                                                   "sequence.chevauchement");
+        Assert.assertTrue(this.validator.validateSequence(prescription, sequence));
+        Mockito.verify(this.facesUtils, Mockito.never()).addMessage(FacesMessage.SEVERITY_ERROR, "sequence.chevauchement");
     }
 }

@@ -51,7 +51,7 @@
 		         
 		         <!-- Liste des pharmacies liees -->
 		         <p:panel header="#{resourceBundle['gestionEtablissement.pharmacies']}" style="width:100%;">
-		         	<p:dataTable style="width:100%;" id="pharmacies" styleClass="tabContacts" value="#{etablissementManager.getList('pharmacies', false)}" var="pharmacie" emptyMessage="#{resourceBundle['results.none']}" 
+		         	<p:dataTable style="width:100%;" id="pharmacies" styleClass="tabContacts" value="#{etablissementManager.getList('pharmacies', true)}" var="pharmacie" emptyMessage="#{resourceBundle['results.none']}" 
 						selection="#{pharmaciesManager.beanSelected}" selectionMode="single" update="pharmacies"
 						onselectComplete="javascript:document.forms['hiddenForm'].editPharmacie.click();">	   
 				       	<p:column id="nom" styleClass="panelCol_30">

@@ -12,12 +12,10 @@ import fr.pharma.eclipse.utils.introspection.BeanTool;
 
 /**
  * Validateur de couts variables.
- 
+ * @author Netapsys
  * @version $Revision$ $Date$
  */
-public class CoutVariableValidator
-    implements Serializable
-{
+public class CoutVariableValidator implements Serializable {
 
     /**
      * SerialVersionUID.
@@ -35,30 +33,23 @@ public class CoutVariableValidator
      * @param regle La regle à valider.
      * @return <true> si la règle est valide.
      */
-    public boolean validate(final Regle regle)
-    {
+    public boolean validate(final Regle regle) {
         boolean valid = true;
 
         // mode.
-        if (regle.getMode() == null)
-        {
-            this.facesUtils.addMessage(FacesMessage.SEVERITY_ERROR,
-                                       "regle.mode.notEmpty");
+        if (regle.getMode() == null) {
+            this.facesUtils.addMessage(FacesMessage.SEVERITY_ERROR, "regle.mode.notEmpty");
             valid = false;
-        }
-        else
-        {
-            valid = this.applyValidator(regle,
-                                        "min",
-                                        "max",
-                                        "montant");
+        } else {
+            valid = this.applyValidator(regle, "min", "max", "montant");
         }
 
         return valid;
     }
 
     /**
-     * Méthode en charge d'effectuer la validation sur une règle et les champs en paramètre.
+     * Méthode en charge d'effectuer la validation sur une règle et les champs
+     * en paramètre.
      * @param regle La règle.
      * @param min Le champs min.
      * @param max Le champs max.
@@ -68,40 +59,26 @@ public class CoutVariableValidator
     private boolean applyValidator(final Regle regle,
                                    final String min,
                                    final String max,
-                                   final String montant)
-    {
+                                   final String montant) {
         boolean valid = true;
 
-        final Integer minValue = (Integer) BeanTool.getPropriete(regle,
-                                                                 min);
-        final Integer maxValue = (Integer) BeanTool.getPropriete(regle,
-                                                                 max);
-        final BigDecimal montantValue = (BigDecimal) BeanTool.getPropriete(regle,
-                                                                           montant);
+        final Integer minValue = (Integer) BeanTool.getPropriete(regle, min);
+        final Integer maxValue = (Integer) BeanTool.getPropriete(regle, max);
+        final BigDecimal montantValue = (BigDecimal) BeanTool.getPropriete(regle, montant);
 
         // si c'est du lot forfaitaire
-        if (montantValue == null)
-        {
+        if (montantValue == null) {
 
-            this.facesUtils.addMessage(FacesMessage.SEVERITY_ERROR,
-                                       "regle.montant.notEmpty");
+            this.facesUtils.addMessage(FacesMessage.SEVERITY_ERROR, "regle.montant.notEmpty");
             valid = false;
         }
-        if (minValue == null
-            && maxValue == null)
-        {
+        if ((minValue == null) && (maxValue == null)) {
 
-            this.facesUtils.addMessage(FacesMessage.SEVERITY_ERROR,
-                                       "regle.borne.notEmpty");
+            this.facesUtils.addMessage(FacesMessage.SEVERITY_ERROR, "regle.borne.notEmpty");
             valid = false;
-        }
-        else if (minValue != null
-                 && maxValue != null
-                 && minValue > maxValue)
-        {
+        } else if ((minValue != null) && (maxValue != null) && (minValue > maxValue)) {
 
-            this.facesUtils.addMessage(FacesMessage.SEVERITY_ERROR,
-                                       "regle.borne.incoherent");
+            this.facesUtils.addMessage(FacesMessage.SEVERITY_ERROR, "regle.borne.incoherent");
             valid = false;
         }
 
@@ -112,8 +89,7 @@ public class CoutVariableValidator
      * Setter pour facesUtils.
      * @param facesUtils le facesUtils à écrire.
      */
-    public void setFacesUtils(final FacesUtils facesUtils)
-    {
+    public void setFacesUtils(final FacesUtils facesUtils) {
         this.facesUtils = facesUtils;
     }
 

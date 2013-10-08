@@ -12,13 +12,11 @@ import fr.pharma.eclipse.service.common.GenericService;
 /**
  * Classe de converter générique.
  * @param <BEAN> Bean Objet Métier.
- 
+ * @author Netapsys
  * @version $Revision$ $Date$
  */
 
-public class GenericConverter<BEAN extends BeanObject>
-    implements Converter
-{
+public class GenericConverter<BEAN extends BeanObject> implements Converter {
     /**
      * Service associé au bean.
      */
@@ -28,8 +26,7 @@ public class GenericConverter<BEAN extends BeanObject>
      * Constructeur.
      * @param service Service de gestion du BEAN.
      */
-    public GenericConverter(final GenericService<BEAN> service)
-    {
+    public GenericConverter(final GenericService<BEAN> service) {
         this.service = service;
     }
 
@@ -39,16 +36,11 @@ public class GenericConverter<BEAN extends BeanObject>
     @Override
     public Object getAsObject(final FacesContext context,
                               final UIComponent component,
-                              final String value)
-    {
-        if (StringUtils.isNotEmpty(value))
-        {
-            try
-            {
+                              final String value) {
+        if (StringUtils.isNotEmpty(value)) {
+            try {
                 return this.service.get(Long.valueOf(value));
-            }
-            catch (final NumberFormatException e)
-            {
+            } catch (final NumberFormatException e) {
                 return null;
             }
         }
@@ -62,17 +54,12 @@ public class GenericConverter<BEAN extends BeanObject>
     @SuppressWarnings("unchecked")
     public String getAsString(final FacesContext context,
                               final UIComponent component,
-                              final Object value)
-    {
-        if (value != null)
-        {
-            try
-            {
+                              final Object value) {
+        if (value != null) {
+            try {
                 final BEAN bean = (BEAN) value;
                 return bean.getId().toString();
-            }
-            catch (final ClassCastException e)
-            {
+            } catch (final ClassCastException e) {
                 return null;
             }
         }

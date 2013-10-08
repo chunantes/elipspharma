@@ -24,12 +24,10 @@ import fr.pharma.eclipse.utils.FacesUtils;
 
 /**
  * Manager en charge de la gestion des demandes de dotations.
- 
+ * @author Netapsys
  * @version $Revision$ $Date$
  */
-public class DemandeDotationManager
-    implements Serializable
-{
+public class DemandeDotationManager implements Serializable {
     /**
      * Serial ID.
      */
@@ -101,8 +99,7 @@ public class DemandeDotationManager
     /**
      * Méthode d'initialisation.
      */
-    public void init()
-    {
+    public void init() {
         this.setServices(null);
         this.setProduits(null);
         this.setEssaiSelected(null);
@@ -116,14 +113,12 @@ public class DemandeDotationManager
      * Méthode appelée via la couche IHM lorsqu'un essai est sélectionné.
      * @param event Evénement remonté via la couche IHM.
      */
-    public void handleSelectEssai(final SelectEvent event)
-    {
+    public void handleSelectEssai(final SelectEvent event) {
         // Récupération de l'essai sélectionné
         final Essai essai = (Essai) event.getObject();
 
         // Calcul des produits de l'essai + pharmacie
-        this.setProduits(this.produitService.getProduits(essai,
-                                                         essai.getPharmaciePrincipale()));
+        this.setProduits(this.produitService.getProduits(essai, essai.getPharmaciePrincipale()));
 
         // Récupération des services de l'essai
         this.setServices(new ArrayList<Service>(essai.getServices()));
@@ -134,22 +129,18 @@ public class DemandeDotationManager
     /**
      * Méthode appelée pour ajouter une nouvelle dotation.
      */
-    public void addDotation()
-    {
-        final Dotation dotation =
-            this.dotationFactory.getInitializedObject(this.getEssaiSelected(),
-                                                      this.getServiceSelected());
+    public void addDotation() {
+        final Dotation dotation = this.dotationFactory.getInitializedObject(this.getEssaiSelected(), this.getServiceSelected());
         this.dotationCurrent = dotation;
         this.actionDotationCurrent = "ADD";
     }
 
     /**
-     * Méthode en charge d'ajouter dans la liste des dotations la dotation courante.
+     * Méthode en charge d'ajouter dans la liste des dotations la dotation
+     * courante.
      */
-    public void addDotationToDotations()
-    {
-        if ("ADD".equals(this.actionDotationCurrent))
-        {
+    public void addDotationToDotations() {
+        if ("ADD".equals(this.actionDotationCurrent)) {
             this.dotations.add(this.dotationCurrent);
         }
     }
@@ -158,15 +149,13 @@ public class DemandeDotationManager
      * Méthode appelée via la couche IHM lorsqu'un produit est sélectionné.
      * @param event Event.
      */
-    public void handleSelectProduit(final AjaxBehaviorEvent event)
-    {
+    public void handleSelectProduit(final AjaxBehaviorEvent event) {
         final HtmlSelectOneMenu select = (HtmlSelectOneMenu) event.getSource();
         final Produit produit = this.produitService.reattach((Produit) select.getLocalValue());
 
         // Calcul des conditionnements sélectionnables
         final List<Conditionnement> listConditionnements = new ArrayList<Conditionnement>();
-        if (produit != null)
-        {
+        if (produit != null) {
             listConditionnements.addAll(produit.getConditionnements());
         }
         this.setConditionnements(listConditionnements);
@@ -178,21 +167,17 @@ public class DemandeDotationManager
     /**
      * Méthode appelée lors de la modification d'une dotation.
      */
-    public void modifyDotation()
-    {
+    public void modifyDotation() {
         this.actionDotationCurrent = "EDIT";
     }
 
     /**
      * Méthode en charge de supprimer une dotation de la liste.
      */
-    public void delDotation()
-    {
+    public void delDotation() {
         final Iterator<Dotation> it = this.getDotations().iterator();
-        while (it.hasNext())
-        {
-            if (it.next() == this.getDotationToDelete())
-            {
+        while (it.hasNext()) {
+            if (it.next() == this.getDotationToDelete()) {
                 it.remove();
             }
         }
@@ -201,38 +186,28 @@ public class DemandeDotationManager
     /**
      * Méthode en charge de valider les informations d'une dotation.
      */
-    public void validate()
-    {
+    public void validate() {
         // Récupération de la quantité autorisée en dotation
-        final Integer quantiteAutorise =
-            this.getDotationCurrent().getProduit().getDetailLogistique().getQuantiteAutorise();
+        final Integer quantiteAutorise = this.getDotationCurrent().getProduit().getDetailLogistique().getQuantiteAutorise();
 
-        if ((quantiteAutorise != null)
-            && (quantiteAutorise < this.getDotationCurrent().getQuantite()))
-        {
-            throw new ValidationException("quantiteDotation.autorisee",
-                                          new String[]
-                                          {"superieure" },
-                                          this.getDotationCurrent());
+        if ((quantiteAutorise != null) && (quantiteAutorise < this.getDotationCurrent().getQuantite())) {
+            throw new ValidationException("quantiteDotation.autorisee", new String[]{"superieure" }, this.getDotationCurrent());
         }
     }
 
     /**
-     * Méthode en charge d'afficher un message de confirmation sur l'enregistrement de la demande
-     * de dotation.
+     * Méthode en charge d'afficher un message de confirmation sur
+     * l'enregistrement de la demande de dotation.
      */
-    public void addMessageConfirm()
-    {
-        this.facesUtils.addMessage(FacesMessage.SEVERITY_INFO,
-                                   "demandeDotation.confirmMsg");
+    public void addMessageConfirm() {
+        this.facesUtils.addMessage(FacesMessage.SEVERITY_INFO, "demandeDotation.confirmMsg");
     }
 
     /**
      * Getter pour essaiSelected.
      * @return Le essaiSelected
      */
-    public Essai getEssaiSelected()
-    {
+    public Essai getEssaiSelected() {
         return this.essaiSelected;
     }
 
@@ -240,8 +215,7 @@ public class DemandeDotationManager
      * Setter pour essaiSelected.
      * @param essaiSelected Le essaiSelected à écrire.
      */
-    public void setEssaiSelected(final Essai essaiSelected)
-    {
+    public void setEssaiSelected(final Essai essaiSelected) {
         this.essaiSelected = essaiSelected;
     }
 
@@ -249,8 +223,7 @@ public class DemandeDotationManager
      * Getter pour produits.
      * @return Le produits
      */
-    public List<Produit> getProduits()
-    {
+    public List<Produit> getProduits() {
         return this.produits;
     }
 
@@ -258,8 +231,7 @@ public class DemandeDotationManager
      * Setter pour produits.
      * @param produits Le produits à écrire.
      */
-    public void setProduits(final List<Produit> produits)
-    {
+    public void setProduits(final List<Produit> produits) {
         this.produits = produits;
     }
 
@@ -267,8 +239,7 @@ public class DemandeDotationManager
      * Getter pour dotations.
      * @return Le dotations
      */
-    public List<Dotation> getDotations()
-    {
+    public List<Dotation> getDotations() {
         return this.dotations;
     }
 
@@ -276,8 +247,7 @@ public class DemandeDotationManager
      * Setter pour dotations.
      * @param dotations Le dotations à écrire.
      */
-    public void setDotations(final List<Dotation> dotations)
-    {
+    public void setDotations(final List<Dotation> dotations) {
         this.dotations = dotations;
     }
 
@@ -285,8 +255,7 @@ public class DemandeDotationManager
      * Setter pour produitService.
      * @param produitService Le produitService à écrire.
      */
-    public void setProduitService(final ProduitService<Produit> produitService)
-    {
+    public void setProduitService(final ProduitService<Produit> produitService) {
         this.produitService = produitService;
     }
 
@@ -294,8 +263,7 @@ public class DemandeDotationManager
      * Getter pour serviceSelected.
      * @return Le serviceSelected
      */
-    public Service getServiceSelected()
-    {
+    public Service getServiceSelected() {
         return this.serviceSelected;
     }
 
@@ -303,8 +271,7 @@ public class DemandeDotationManager
      * Setter pour serviceSelected.
      * @param serviceSelected Le serviceSelected à écrire.
      */
-    public void setServiceSelected(final Service serviceSelected)
-    {
+    public void setServiceSelected(final Service serviceSelected) {
         this.serviceSelected = serviceSelected;
     }
 
@@ -312,8 +279,7 @@ public class DemandeDotationManager
      * Setter pour dotationFactory.
      * @param dotationFactory Le dotationFactory à écrire.
      */
-    public void setDotationFactory(final DotationFactory dotationFactory)
-    {
+    public void setDotationFactory(final DotationFactory dotationFactory) {
         this.dotationFactory = dotationFactory;
     }
 
@@ -321,8 +287,7 @@ public class DemandeDotationManager
      * Getter pour dotationCurrent.
      * @return Le dotationCurrent
      */
-    public Dotation getDotationCurrent()
-    {
+    public Dotation getDotationCurrent() {
         return this.dotationCurrent;
     }
 
@@ -330,8 +295,7 @@ public class DemandeDotationManager
      * Setter pour dotationCurrent.
      * @param dotationCurrent Le dotationCurrent à écrire.
      */
-    public void setDotationCurrent(final Dotation dotationCurrent)
-    {
+    public void setDotationCurrent(final Dotation dotationCurrent) {
         this.dotationCurrent = dotationCurrent;
     }
 
@@ -339,8 +303,7 @@ public class DemandeDotationManager
      * Getter pour actionDotationCurrent.
      * @return Le actionDotationCurrent
      */
-    public String getActionDotationCurrent()
-    {
+    public String getActionDotationCurrent() {
         return this.actionDotationCurrent;
     }
 
@@ -348,8 +311,7 @@ public class DemandeDotationManager
      * Setter pour actionDotationCurrent.
      * @param actionDotationCurrent Le actionDotationCurrent à écrire.
      */
-    public void setActionDotationCurrent(final String actionDotationCurrent)
-    {
+    public void setActionDotationCurrent(final String actionDotationCurrent) {
         this.actionDotationCurrent = actionDotationCurrent;
     }
 
@@ -357,8 +319,7 @@ public class DemandeDotationManager
      * Getter pour conditionnements.
      * @return Le conditionnements
      */
-    public List<Conditionnement> getConditionnements()
-    {
+    public List<Conditionnement> getConditionnements() {
         return this.conditionnements;
     }
 
@@ -366,8 +327,7 @@ public class DemandeDotationManager
      * Setter pour conditionnements.
      * @param conditionnements Le conditionnements à écrire.
      */
-    public void setConditionnements(final List<Conditionnement> conditionnements)
-    {
+    public void setConditionnements(final List<Conditionnement> conditionnements) {
         this.conditionnements = conditionnements;
     }
 
@@ -375,8 +335,7 @@ public class DemandeDotationManager
      * Getter pour services.
      * @return Le services
      */
-    public List<Service> getServices()
-    {
+    public List<Service> getServices() {
         return this.services;
     }
 
@@ -384,8 +343,7 @@ public class DemandeDotationManager
      * Setter pour services.
      * @param services Le services à écrire.
      */
-    public void setServices(final List<Service> services)
-    {
+    public void setServices(final List<Service> services) {
         this.services = services;
     }
 
@@ -393,8 +351,7 @@ public class DemandeDotationManager
      * Getter pour dotationToDelete.
      * @return Le dotationToDelete
      */
-    public Dotation getDotationToDelete()
-    {
+    public Dotation getDotationToDelete() {
         return this.dotationToDelete;
     }
 
@@ -402,8 +359,7 @@ public class DemandeDotationManager
      * Setter pour dotationToDelete.
      * @param dotationToDelete Le dotationToDelete à écrire.
      */
-    public void setDotationToDelete(final Dotation dotationToDelete)
-    {
+    public void setDotationToDelete(final Dotation dotationToDelete) {
         this.dotationToDelete = dotationToDelete;
     }
 
@@ -411,8 +367,7 @@ public class DemandeDotationManager
      * Setter pour facesUtils.
      * @param facesUtils Le facesUtils à écrire.
      */
-    public void setFacesUtils(final FacesUtils facesUtils)
-    {
+    public void setFacesUtils(final FacesUtils facesUtils) {
         this.facesUtils = facesUtils;
     }
 

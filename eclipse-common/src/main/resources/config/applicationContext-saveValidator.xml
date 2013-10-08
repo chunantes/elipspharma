@@ -69,7 +69,9 @@
 	<!-- ==================================== -->
 	<!-- PATIENT : VALIDATOR          		  -->
 	<!-- ==================================== -->					
-	<bean id="patientSaveValidator" class="fr.pharma.eclipse.validator.save.impl.PatientSaveValidator"/>
+	<bean id="patientSaveValidator" class="fr.pharma.eclipse.validator.save.impl.PatientSaveValidator">
+		<property name="ippRegex" value="${patient.ipp.regex}" />
+	</bean>
 	
 	<!-- ==================================== -->
 	<!-- Pole : VALIDATOR          		  	-->

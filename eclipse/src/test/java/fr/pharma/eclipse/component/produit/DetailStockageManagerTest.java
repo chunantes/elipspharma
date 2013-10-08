@@ -15,11 +15,10 @@ import fr.pharma.eclipse.service.common.GenericService;
 
 /**
  * Classe en charge de tester le manager de detailStockage.
- 
+ * @author Netapsys
  * @version $Revision$ $Date$
  */
-public class DetailStockageManagerTest
-{
+public class DetailStockageManagerTest {
     /**
      * ProduitManager à tester.
      */
@@ -40,8 +39,7 @@ public class DetailStockageManagerTest
      */
     @Before
     @SuppressWarnings("unchecked")
-    public void init()
-    {
+    public void init() {
         this.mockDetailStockageService = Mockito.mock(GenericService.class);
         this.manager = new DetailStockageManager(this.mockDetailStockageService);
         this.mockTreeStockageHelper = Mockito.mock(TreeStockageHelper.class);
@@ -52,8 +50,7 @@ public class DetailStockageManagerTest
      * Méthode en charge de purger les données de test.
      */
     @After
-    public void end()
-    {
+    public void end() {
         this.mockDetailStockageService = null;
         this.manager = null;
         this.mockTreeStockageHelper = null;
@@ -63,19 +60,18 @@ public class DetailStockageManagerTest
      * Méthode en charge de tester l'initialisation des données de test.
      */
     @Test
-    public void testInit()
-    {
+    public void testInit() {
         Assert.assertNotNull(this.manager);
         Assert.assertNotNull(this.mockDetailStockageService);
         Assert.assertNotNull(this.mockTreeStockageHelper);
     }
 
     /**
-     * Méthode en charge de tester la méthode de mise à jour de sélection de pharmacie.
+     * Méthode en charge de tester la méthode de mise à jour de sélection de
+     * pharmacie.
      */
     @Test
-    public void testMajPharmacie()
-    {
+    public void testMajPharmacie() {
         final DetailStockage stock = new DetailStockage();
         this.manager.setBean(stock);
         this.manager.majPharmacie();
@@ -87,8 +83,7 @@ public class DetailStockageManagerTest
      * Méthode en charge de tester la mise à jour du stockage.
      */
     @Test
-    public void testUpdateStockageNodeSelectedNull()
-    {
+    public void testUpdateStockageNodeSelectedNull() {
         final DetailStockage stock = new DetailStockage();
         this.manager.setBean(stock);
         this.manager.setNodeSelected(null);
@@ -101,8 +96,7 @@ public class DetailStockageManagerTest
      * Méthode en charge de tester la mise à jour du stockage.
      */
     @Test
-    public void testUpdateStockageNodeSelectedNotNull()
-    {
+    public void testUpdateStockageNodeSelectedNotNull() {
         final DetailStockage stock = new DetailStockage();
         this.manager.setBean(stock);
         final TreeNode nodeSelected = Mockito.mock(TreeNode.class);
@@ -112,16 +106,14 @@ public class DetailStockageManagerTest
         this.manager.setNodeSelected(nodeSelected);
         this.manager.updateStockage();
         Assert.assertNotNull(stock.getStockage());
-        Assert.assertEquals(stockage,
-                            stock.getStockage());
+        Assert.assertEquals(stockage, stock.getStockage());
     }
 
     /**
      * Méthode en charge de tester la récupération des stockages.
      */
     @Test
-    public void testGetStockagesSelectableWithPharmaNull()
-    {
+    public void testGetStockagesSelectableWithPharmaNull() {
         final DetailStockage stock = new DetailStockage();
         this.manager.setBean(stock);
         Assert.assertNull(this.manager.getStockagesSelectable());
@@ -131,8 +123,7 @@ public class DetailStockageManagerTest
      * Méthode en charge de tester la récupération des stockages.
      */
     @Test
-    public void testGetStockagesSelectableWithPharmaNotNull()
-    {
+    public void testGetStockagesSelectableWithPharmaNotNull() {
         final DetailStockage stock = Mockito.mock(DetailStockage.class);
         final Pharmacie pharmacie = Mockito.mock(Pharmacie.class);
         Mockito.when(stock.getPharmacie()).thenReturn(pharmacie);

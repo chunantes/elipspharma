@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<beans 
+    xmlns="http://www.springframework.org/schema/beans" 
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd">
+
+	<!-- =============================== -->
+	<!-- CONTROLLER : FILE DOWNLOAD	     -->
+	<!-- =============================== -->
+	<bean id="fileDwdController" class="fr.pharma.eclipse.controller.file.DocumentDownloadController">
+		<property name="fileInStreamFactory" ref="ioStreamsFactory" />
+		<property name="streamedContentFactory" ref="defaultStreamContentFactory" />
+		<property name="docService" ref="documentService" />
+		<property name="library" ref="documentLibrary"/>
+	</bean>
+	
+	<!-- ==================================== -->
+	<!-- Bibliothèque des documents statiques -->
+	<!-- ==================================== -->
+	<bean id="documentLibrary" class="fr.pharma.eclipse.controller.file.DocumentLibrary">
+		<property name="library">
+			<map>
+				<entry key-ref="DOCUMENT_LETTRE_AR" value="${document.lettre.ar}"/>
+				<entry key-ref="DOCUMENT_CESSION_PUI" value="${document.cession.pui}"/>
+			</map>
+		</property>
+	</bean>
+	
+	<!-- =================================== -->
+	<!-- CONTROLLER : JASPER REPORT DOWNLOAD -->
+	<!-- =================================== -->
+	<bean id="jasperReportDwdController" class="fr.pharma.eclipse.controller.report.JasperReportDownloadController">
+		<property name="streamedContentFactory" ref="defaultStreamContentFactory" />
+		<property name="buildManagers" ref="jasperReportsMapManagers" />
+	</bean>
+        
+	<!-- =================================== -->
+	<!-- CONTROLLER : Init APP -->
+	<!-- =================================== -->
+        <bean id="applicationController" class="fr.pharma.eclipse.controller.ApplicationController">
+            <property name="environnement" value="${environnement}"/>
+            <property name="reprisePassif" value="${module_active_reprisepassif}"/>
+            <property name="erreurMailto" value="${erreur.mailto}"/>
+            <property name="logo" value="${webapp_logo_chu}"/>
+        </bean>
+	
+	
+</beans>

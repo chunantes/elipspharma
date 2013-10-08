@@ -23,14 +23,14 @@
 			       		<!-- Essai Promoteur -->
 			       		<div><label>#{resourceBundle['gestionIncident.essaiPromoteur']}</label></div>
 			           	<div>
- 							<p:autoComplete id="essai" value="#{incidentsManager.searchCriteria.essai}" 
+ 							<p:autoComplete id="essai" value="#{incidentsManager.searchCriteria.essaiDTO}" 
  								immediate="true"
- 								completeMethod="#{autoCompleteEssaiManager.complete}"
+ 								completeMethod="#{essaiService.autoCompleteEssai}"
  								forceSelection="true"
  								var="essai"
- 								itemLabel="#{essai.numInterne} #{essai.nom} - #{essai.promoteur.raisonSociale}"
- 								itemValue="#{essai}"
- 								converter="#{essaiConverter}" />
+ 								itemLabel="#{essai.numInterne} #{essai.nom} - #{essai.raisonSociale}"
+ 								itemValue="#{essai.id}"
+ 								converter="#{essaiDtoConverter}" />
 			           	</div>
 			           	
 			           	<!-- Prevu du -->

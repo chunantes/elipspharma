@@ -4,14 +4,10 @@
     xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
     xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd">
 	
-			
- 	<import resource="classpath:/config/spring-config.xml" />
 	<import resource="classpath:/config/applicationContext-comparator.xml" />
 	<import resource="classpath:/config/applicationContext-criteriaDictionary.xml" />
 	<import resource="classpath:/config/applicationContext-criteriaMaker.xml" />
 	<import resource="classpath:/config/applicationContext-dao.xml" />
-    <import resource="classpath:/config/applicationContext-jdbc.xml" />
-    <import resource="classpath:/config/applicationContext-jpa.xml" />
     <import resource="classpath:/config/applicationContext-service.xml" />
     <import resource="classpath:/config/applicationContext-commonValidator.xml" />
     <import resource="classpath:/config/applicationContext-service-docs.xml" />
@@ -25,7 +21,6 @@
     <import resource="classpath:/config/applicationContext-enums.xml" />
     <import resource="classpath:/config/applicationContext-message.xml" />
     <import resource="classpath:/config/applicationContext-beanConverter.xml" />
-    <import resource="classpath:/config/applicationContext-handler.xml" />
     <import resource="classpath:/config/applicationContext-jasperReport.xml" />
     <import resource="classpath:/config/applicationContext-conseilDispensation.xml"/>
     <import resource="classpath:/config/applicationContext-surcout.xml" />

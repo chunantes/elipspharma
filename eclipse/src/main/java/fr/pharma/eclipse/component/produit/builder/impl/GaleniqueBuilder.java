@@ -6,14 +6,12 @@ import fr.pharma.eclipse.component.produit.builder.UnitePrescriptionBuilder;
 import fr.pharma.eclipse.domain.model.produit.Conditionnement;
 
 /**
- * Classe en charge de construire l'unité de prescription pour un conditionnement ayant comme mode
- * de prescription : Numero de traitement.
- 
+ * Classe en charge de construire l'unité de prescription pour un
+ * conditionnement ayant comme mode de prescription : Numero de traitement.
+ * @author Netapsys
  * @version $Revision$ $Date$
  */
-public class GaleniqueBuilder
-    implements UnitePrescriptionBuilder, Serializable
-{
+public class GaleniqueBuilder implements UnitePrescriptionBuilder, Serializable {
 
     /**
      * SerialVersionUID.
@@ -24,8 +22,7 @@ public class GaleniqueBuilder
      * {@inheritDoc}
      */
     @Override
-    public void build(final Conditionnement conditionnement)
-    {
+    public void build(final Conditionnement conditionnement) {
         conditionnement.setUnitePrescription("Galénique");
     }
 

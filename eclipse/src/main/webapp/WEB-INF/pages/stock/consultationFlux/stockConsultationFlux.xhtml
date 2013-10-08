@@ -23,13 +23,13 @@
 			       		<!-- Essai Promoteur -->
 			       		<div><label>#{resourceBundle['stockConsultation.essaiPromoteur']}</label></div>
 			           	<div>
- 							<p:autoComplete id="essai" value="#{mouvementsStockManager.searchCriteria.essai}" 
- 								completeMethod="#{autoCompleteEssaiManager.complete}"
+ 							<p:autoComplete id="essai" value="#{mouvementsStockManager.searchCriteria.essaiDTO}" 
+ 								completeMethod="#{essaiService.autoCompleteEssai}"
  								forceSelection="true"
  								var="essai"
- 								itemLabel="#{essai.numInterne} #{essai.nom} - #{essai.promoteur.raisonSociale}"
- 								itemValue="#{essai}"
- 								converter="#{essaiConverter}"/>
+ 								itemLabel="#{essai.numInterne} #{essai.nom} - #{essai.raisonSociale}"
+ 								itemValue="#{essai.id}"
+ 								converter="#{essaiDtoConverter}"/>
 			           	</div>
 			           	
 						<!-- Pharmacie -->

@@ -19,18 +19,15 @@ import fr.pharma.eclipse.domain.model.stock.DispensationGlobale;
 import fr.pharma.eclipse.domain.model.stock.LigneStock;
 import fr.pharma.eclipse.domain.model.stock.Sortie;
 import fr.pharma.eclipse.domain.model.stockage.Pharmacie;
-import fr.pharma.eclipse.service.stock.MvtStockService;
 import fr.pharma.eclipse.service.stock.StockService;
 import fr.pharma.eclipse.utils.AbstractEclipseJUnitTest;
 
 /**
  * Test GlobaleFinder.
- 
+ * @author Netapsys
  * @version $Revision$ $Date$
  */
-public class GlobaleFinderTest
-    extends AbstractEclipseJUnitTest
-{
+public class GlobaleFinderTest extends AbstractEclipseJUnitTest {
 
     /**
      * Finder.
@@ -40,45 +37,41 @@ public class GlobaleFinderTest
     /**
      * Service.
      */
-    private MvtStockService<DispensationGlobale> mvtService;
+    private StockService stockService;
 
     /**
      * {@inheritDoc}
      */
     @Override
-    public void setUp()
-    {
+    public void setUp() {
         this.finder = new GlobaleFinder();
-        this.mvtService = Mockito.mock(MvtStockService.class);
-        this.finder.setMvtStockService(this.mvtService);
+        this.stockService = Mockito.mock(StockService.class);
+        this.finder.setStockService(this.stockService);
     }
 
     /**
      * {@inheritDoc}
      */
     @Override
-    public void tearDown()
-    {
+    public void tearDown() {
         this.finder = null;
-        this.mvtService = null;
+        this.stockService = null;
     }
 
     /**
      * {@inheritDoc}
      */
     @Override
-    public void testInit()
-    {
+    public void testInit() {
         Assert.assertNotNull(this.finder);
-        Assert.assertNotNull(this.mvtService);
+        Assert.assertNotNull(this.stockService);
     }
 
     /**
      * Test de la méthode initLignesStocks.
      */
     @Test
-    public void testInitLignesStocks()
-    {
+    public void testInitLignesStocks() {
         final SortieManager sortieManager = new SortieManager();
         final Sortie sortieCurrent = new Sortie();
         sortieCurrent.setMvtSortie(new DispensationGlobale());
@@ -92,37 +85,26 @@ public class GlobaleFinderTest
         final Conditionnement conditionnement = new Conditionnement();
         conditionnement.setModePrescription(ModePrescription.CONDITIONNEMENT_PRIMAIRE);
 
-        final List<DispensationGlobale> dispensations = new ArrayList<DispensationGlobale>();
-        final DispensationGlobale d = new DispensationGlobale();
+        final List<LigneStock> dispensations = new ArrayList<LigneStock>();
+
+        final LigneStock d = new LigneStock();
         d.setNumLot("numLot");
         d.setNumTraitement("numTraitement");
-        d.setQuantite(2);
-        d.setQuantiteDispensee(1);
+        d.setQteGlobalStock(2);
+        d.setQteDispensationGlobal(1);
         d.setPharmacie(new Pharmacie());
         d.setEssai(new Essai());
         d.setProduit(produit);
         d.setConditionnement(conditionnement);
         dispensations.add(d);
 
-        Mockito.when(this.mvtService.getAll(Matchers.any(SearchCriteria.class)))
-                .thenReturn(dispensations);
+        Mockito.when(this.stockService.getAll(Matchers.any(SearchCriteria.class))).thenReturn(dispensations);
 
         this.finder.initLignesStocks(sortieManager);
 
-        Assert.assertEquals("numLot",
-                            sortieManager.getSortieCurrent().getLignesStock().get(0).getNumLot());
-        Assert.assertEquals("numTraitement",
-                            sortieManager
-                                    .getSortieCurrent()
-                                    .getLignesStock()
-                                    .get(0)
-                                    .getNumTraitement());
-        Assert.assertEquals(new Integer(1),
-                            sortieManager
-                                    .getSortieCurrent()
-                                    .getLignesStock()
-                                    .get(0)
-                                    .getQteEnStock());
+        Assert.assertEquals("numLot", sortieManager.getSortieCurrent().getLignesStock().get(0).getNumLot());
+        Assert.assertEquals("numTraitement", sortieManager.getSortieCurrent().getLignesStock().get(0).getNumTraitement());
+        Assert.assertEquals(new Integer(1), sortieManager.getSortieCurrent().getLignesStock().get(0).getQteEnStock());
 
     }
 }

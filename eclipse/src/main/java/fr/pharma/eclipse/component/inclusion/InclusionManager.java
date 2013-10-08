@@ -17,13 +17,10 @@ import fr.pharma.eclipse.utils.FacesUtils;
 
 /**
  * Manager de Inclusion.
- 
+ * @author Netapsys
  * @version $Revision$ $Date$
  */
-public class InclusionManager
-    extends BeanManager<Inclusion>
-    implements Serializable
-{
+public class InclusionManager extends BeanManager<Inclusion> implements Serializable {
 
     /**
      * Serial ID.
@@ -61,51 +58,38 @@ public class InclusionManager
      * Constructeur.
      * @param service Service.
      */
-    public InclusionManager(final GenericService<Inclusion> service)
-    {
+    public InclusionManager(final GenericService<Inclusion> service) {
         super(service);
     }
 
     /**
      * Méthode d'initialisation.
      */
-    public void init()
-    {
+    public void init() {
         this.setEssaiSelected(null);
         this.setPatientSelected(null);
         this.setValid(false);
     }
 
     /**
-     * Méthode en charge de vérifier que le patient n'est pas déjà inclu dans un essai
-     * actuellement. Sinon il affiche une erreur.
+     * Méthode en charge de vérifier que le patient n'est pas déjà inclu dans un
+     * essai actuellement. Sinon il affiche une erreur.
      * @param event Evenement JSF.
      */
-    public void handleSelectPatient(final SelectEvent event)
-    {
-        if (null != this.patientService.getInclusionCourante((Patient) event.getObject()))
-        {
+    public void handleSelectPatient(final SelectEvent event) {
+        if (null != this.patientService.getInclusionCourante((Patient) event.getObject())) {
             this.valid = false;
-            this.facesUtils.addMessage(FacesMessage.SEVERITY_ERROR,
-                                       "patient.inclu.error");
-        }
-        else
-        {
+            this.facesUtils.addMessage(FacesMessage.SEVERITY_ERROR, "patient.inclu.error");
+        } else {
             this.valid = true;
         }
     }
 
-    public void handleSelectNewPatient(final Patient patient)
-    {
-        if (null != patient
-            && null != this.patientService.getInclusionCourante(patient))
-        {
+    public void handleSelectNewPatient(final Patient patient) {
+        if ((null != patient) && (null != this.patientService.getInclusionCourante(patient))) {
             this.valid = false;
-            this.facesUtils.addMessage(FacesMessage.SEVERITY_ERROR,
-                                       "patient.inclu.error");
-        }
-        else
-        {
+            this.facesUtils.addMessage(FacesMessage.SEVERITY_ERROR, "patient.inclu.error");
+        } else {
             this.valid = true;
         }
     }
@@ -113,10 +97,8 @@ public class InclusionManager
     /**
      * Méthode en charge d'afficher un message de confirmation d'inclusion.
      */
-    public void confirmInclusion()
-    {
-        this.facesUtils.addMessage(FacesMessage.SEVERITY_INFO,
-                                   "patient.inclu.ok");
+    public void confirmInclusion() {
+        this.facesUtils.addMessage(FacesMessage.SEVERITY_INFO, "patient.inclu.ok");
         this.init();
     }
 
@@ -124,8 +106,7 @@ public class InclusionManager
      * Getter pour essaiSelected.
      * @return Le essaiSelected
      */
-    public Essai getEssaiSelected()
-    {
+    public Essai getEssaiSelected() {
         return this.essaiSelected;
     }
 
@@ -133,8 +114,7 @@ public class InclusionManager
      * Setter pour essaiSelected.
      * @param essaiSelected Le essaiSelected à écrire.
      */
-    public void setEssaiSelected(final Essai essaiSelected)
-    {
+    public void setEssaiSelected(final Essai essaiSelected) {
         this.essaiSelected = essaiSelected;
     }
 
@@ -142,8 +122,7 @@ public class InclusionManager
      * Getter sur patientSelected.
      * @return Retourne le patientSelected.
      */
-    public Patient getPatientSelected()
-    {
+    public Patient getPatientSelected() {
         return this.patientSelected;
     }
 
@@ -151,8 +130,7 @@ public class InclusionManager
      * Setter pour patientSelected.
      * @param patientSelected le patientSelected à écrire.
      */
-    public void setPatientSelected(final Patient patientSelected)
-    {
+    public void setPatientSelected(final Patient patientSelected) {
         this.patientSelected = patientSelected;
     }
 
@@ -160,8 +138,7 @@ public class InclusionManager
      * Setter pour patientService.
      * @param patientService le patientService à écrire.
      */
-    public void setPatientService(final PatientService patientService)
-    {
+    public void setPatientService(final PatientService patientService) {
         this.patientService = patientService;
     }
 
@@ -169,8 +146,7 @@ public class InclusionManager
      * Setter pour facesUtils.
      * @param facesUtils le facesUtils à écrire.
      */
-    public void setFacesUtils(final FacesUtils facesUtils)
-    {
+    public void setFacesUtils(final FacesUtils facesUtils) {
         this.facesUtils = facesUtils;
     }
 
@@ -178,8 +154,7 @@ public class InclusionManager
      * Getter sur valid.
      * @return Retourne le valid.
      */
-    public Boolean getValid()
-    {
+    public Boolean getValid() {
         return this.valid;
     }
 
@@ -187,8 +162,7 @@ public class InclusionManager
      * Setter pour valid.
      * @param valid le valid à écrire.
      */
-    public void setValid(final Boolean valid)
-    {
+    public void setValid(final Boolean valid) {
         this.valid = valid;
     }
 

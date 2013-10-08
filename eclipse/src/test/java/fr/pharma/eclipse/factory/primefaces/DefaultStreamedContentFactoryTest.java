@@ -15,11 +15,10 @@ import fr.pharma.eclipse.utils.file.FileHelper;
 
 /**
  * Test de la classe DefaultStreamedContentFactory.
- 
+ * @author Netapsys
  * @version $Revision$ $Date$
  */
-public class DefaultStreamedContentFactoryTest
-{
+public class DefaultStreamedContentFactoryTest {
     /**
      * Fabrique testée.
      */
@@ -44,14 +43,12 @@ public class DefaultStreamedContentFactoryTest
      * Méthode d'initialisation.
      */
     @Before
-    public void setUp()
-    {
+    public void setUp() {
         this.mockedFileHelper = Mockito.mock(FileHelper.class);
         this.factory = new DefaultStreamedContentFactory();
         this.factory.setFileHelper(this.mockedFileHelper);
         final SortedMap<String, String> dicoExtensions = new TreeMap<String, String>();
-        dicoExtensions.put(DefaultStreamedContentFactoryTest.KEY_EXTENSION,
-                           DefaultStreamedContentFactoryTest.VALUE_EXTENSION);
+        dicoExtensions.put(DefaultStreamedContentFactoryTest.KEY_EXTENSION, DefaultStreamedContentFactoryTest.VALUE_EXTENSION);
         this.factory.setDicoExtensions(dicoExtensions);
     }
 
@@ -59,24 +56,18 @@ public class DefaultStreamedContentFactoryTest
      * Test de l'initialisation du test.
      */
     @Test
-    public void testInit()
-    {
+    public void testInit() {
         Assert.assertNotNull(this.factory);
         Assert.assertNotNull(this.factory.getDicoExtensions());
-        Assert.assertEquals(DefaultStreamedContentFactoryTest.VALUE_EXTENSION,
-                            this.factory
-                                    .getDicoExtensions()
-                                    .get(DefaultStreamedContentFactoryTest.KEY_EXTENSION));
-        Assert.assertEquals(this.mockedFileHelper,
-                            this.factory.getFileHelper());
+        Assert.assertEquals(DefaultStreamedContentFactoryTest.VALUE_EXTENSION, this.factory.getDicoExtensions().get(DefaultStreamedContentFactoryTest.KEY_EXTENSION));
+        Assert.assertEquals(this.mockedFileHelper, this.factory.getFileHelper());
     }
 
     /**
      * Méthode de finalisation.
      */
     @After
-    public void tearDown()
-    {
+    public void tearDown() {
         this.factory = null;
         this.mockedFileHelper = null;
     }
@@ -85,48 +76,37 @@ public class DefaultStreamedContentFactoryTest
      * Test de la méthode getInitializedObject.
      */
     @Test
-    public void testGetInitializedObject()
-    {
+    public void testGetInitializedObject() {
         final InputStream stream = Mockito.mock(InputStream.class);
         final String fileName = "file.txt";
 
-        Mockito
-                .when(this.mockedFileHelper.getExtension(fileName))
-                .thenReturn(DefaultStreamedContentFactoryTest.KEY_EXTENSION);
-        final DefaultStreamedContent res = this.factory.getInitializedObject(stream,
-                                                                             fileName);
+        Mockito.when(this.mockedFileHelper.getExtension(fileName)).thenReturn(DefaultStreamedContentFactoryTest.KEY_EXTENSION);
+        final DefaultStreamedContent res = this.factory.getInitializedObject(stream, fileName);
         Mockito.verify(this.mockedFileHelper).getExtension(fileName);
         Assert.assertNotNull(res);
-        Assert.assertEquals(stream,
-                            res.getStream());
+        Assert.assertEquals(stream, res.getStream());
     }
 
     /**
      * Test de la méthode getInitializedObject - extension non gérée.
      */
     @Test
-    public void testGetInitializedObjectBadExtension()
-    {
+    public void testGetInitializedObjectBadExtension() {
         final InputStream stream = Mockito.mock(InputStream.class);
         final String fileName = "file.txt";
 
-        Mockito
-                .when(this.mockedFileHelper.getExtension(fileName))
-                .thenReturn(DefaultStreamedContentFactoryTest.KEY_EXTENSION.concat("_badPart"));
-        final DefaultStreamedContent res = this.factory.getInitializedObject(stream,
-                                                                             fileName);
+        Mockito.when(this.mockedFileHelper.getExtension(fileName)).thenReturn(DefaultStreamedContentFactoryTest.KEY_EXTENSION.concat("_badPart"));
+        final DefaultStreamedContent res = this.factory.getInitializedObject(stream, fileName);
         Mockito.verify(this.mockedFileHelper).getExtension(fileName);
         Assert.assertNotNull(res);
-        Assert.assertEquals(stream,
-                            res.getStream());
+        Assert.assertEquals(stream, res.getStream());
     }
 
     /**
      * Test de la méthode getInitializedObjectInError.
      */
     @Test
-    public void testGetInitializedObjectInError()
-    {
+    public void testGetInitializedObjectInError() {
         final DefaultStreamedContent res = this.factory.getInitializedObjectInError();
         Assert.assertNotNull(res);
         Assert.assertNotNull(res.getStream());

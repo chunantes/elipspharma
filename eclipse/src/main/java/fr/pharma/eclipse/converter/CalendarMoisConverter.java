@@ -12,13 +12,12 @@ import fr.pharma.eclipse.utils.Utils;
 import fr.pharma.eclipse.utils.constants.EclipseConstants;
 
 /**
- * Classe de converter pour les objets java Calendar capable d'interprêter le pattern mm/YYYY
- 
+ * Classe de converter pour les objets java Calendar capable d'interprêter le
+ * pattern mm/YYYY
+ * @author Netapsys
  * @version $Revision$ $Date$
  */
-public class CalendarMoisConverter
-    extends CalendarConverter
-{
+public class CalendarMoisConverter extends CalendarConverter {
 
     /**
      * serialVersionUID.
@@ -30,26 +29,18 @@ public class CalendarMoisConverter
     @Override
     public Object getAsObject(final FacesContext context,
                               final UIComponent component,
-                              final String value)
-    {
-        if (!StringUtils.hasText(value))
-        {
+                              final String value) {
+        if (!StringUtils.hasText(value)) {
             return null;
         }
 
         Calendar result = null;
 
-        try
-        {
-            result = Utils.parseDate(value,
-                                     EclipseConstants.PATTERN_SIMPLE_MOIS);
-            result.set(Calendar.DAY_OF_MONTH,
-                       result.getActualMaximum(Calendar.DAY_OF_MONTH));
-            return Utils.parseDate(value,
-                                   EclipseConstants.PATTERN_SIMPLE);
-        }
-        catch (final ParseException e)
-        {
+        try {
+            result = Utils.parseDate(value, EclipseConstants.PATTERN_SIMPLE_MOIS);
+            result.set(Calendar.DAY_OF_MONTH, result.getActualMaximum(Calendar.DAY_OF_MONTH));
+            return Utils.parseDate(value, EclipseConstants.PATTERN_SIMPLE);
+        } catch (final ParseException e) {
             return result;
         }
     }

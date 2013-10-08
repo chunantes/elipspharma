@@ -7,35 +7,30 @@ import org.junit.Test;
 import org.mockito.Mockito;
 import org.primefaces.context.RequestContext;
 
-import fr.pharma.eclipse.utils.message.EclipseMessageBuilder;
+import fr.pharma.eclipse.utils.message.MessageBuilder;
 
 /**
- * Classe en charge de tester les méthodes accédant à la requête Primefaces, dans la classe
- * utilitaire Faces.
- 
+ * Classe en charge de tester les méthodes accédant à la requête Primefaces,
+ * dans la classe utilitaire Faces.
+ * @author Netapsys
  * @version $Revision$ $Date$
  */
-public class FacesUtilsWithRequestContextTest
-    extends RequestContextUtils
-{
+public class FacesUtilsWithRequestContextTest extends RequestContextUtils {
     /**
      * FacesUtils à tester.
      */
     private FacesUtils facesUtils;
 
-    /**
-     * EclipseMessageBuilder mocké.
-     */
-    private EclipseMessageBuilder mockMessageBuilder;
+    /***/
+    private MessageBuilder mockMessageBuilder;
 
     /**
      * Méthode en charge d'initialiser les données de test.
      */
     @Before
-    public void init()
-    {
+    public void init() {
         this.facesUtils = new FacesUtils();
-        this.mockMessageBuilder = Mockito.mock(EclipseMessageBuilder.class);
+        this.mockMessageBuilder = Mockito.mock(MessageBuilder.class);
         this.facesUtils.setMessageBuilder(this.mockMessageBuilder);
     }
 
@@ -43,8 +38,7 @@ public class FacesUtilsWithRequestContextTest
      * Méthode en charge de purger les données de test.
      */
     @After
-    public void end()
-    {
+    public void end() {
         this.facesUtils = null;
         this.mockMessageBuilder = null;
     }
@@ -53,8 +47,7 @@ public class FacesUtilsWithRequestContextTest
      * Méthode en charge de tester l'initialisation des données de test.
      */
     @Test
-    public void testInit()
-    {
+    public void testInit() {
         Assert.assertNotNull(this.facesUtils);
         Assert.assertNotNull(this.mockMessageBuilder);
     }
@@ -63,29 +56,24 @@ public class FacesUtilsWithRequestContextTest
      * Test de la méthode putCallbackParam.
      */
     @Test
-    public void testPutCallbackParam()
-    {
+    public void testPutCallbackParam() {
         final RequestContext requestContext = Mockito.mock(RequestContext.class);
         super.setRequestContext(requestContext);
         final String paramName = "paramName";
         final String paramValue = "paramValue";
-        this.facesUtils.putCallbackParam(paramName,
-                                         paramValue);
-        Mockito.verify(requestContext).addCallbackParam(paramName,
-                                                        paramValue);
+        this.facesUtils.putCallbackParam(paramName, paramValue);
+        Mockito.verify(requestContext).addCallbackParam(paramName, paramValue);
     }
 
     /**
      * Test de la méthode putCallbackValidityParam.
      */
     @Test
-    public void testPutCallbackValidityParam()
-    {
+    public void testPutCallbackValidityParam() {
         final RequestContext requestContext = Mockito.mock(RequestContext.class);
         super.setRequestContext(requestContext);
         final boolean isValid = false;
         this.facesUtils.putCallbackValidityParam(isValid);
-        Mockito.verify(requestContext).addCallbackParam("isValid",
-                                                        isValid);
+        Mockito.verify(requestContext).addCallbackParam("isValid", isValid);
     }
 }

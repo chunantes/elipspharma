@@ -14,16 +14,15 @@ import fr.pharma.eclipse.utils.constants.EclipseConstants;
 import fr.pharma.eclipse.utils.introspection.BeanTool;
 
 /**
- * Classe générique en charge de gérer les documents liés aux protocoles sur un essai clinique.
+ * Classe générique en charge de gérer les documents liés aux protocoles sur un
+ * essai clinique.
  * @param <DOC> Type générique de document d'essai.
- * @param <PARENT> Type dérivé de {@link BeanObject} représentant le parent du document.
- 
+ * @param <PARENT> Type dérivé de {@link BeanObject} représentant le parent du
+ * document.
+ * @author Netapsys
  * @version $Revision$ $Date$
  */
-public class DocumentProtocoleManager<DOC extends DocumentProtocole, PARENT extends BeanObject>
-    extends GenericDocumentEssaiManager<DOC, PARENT>
-    implements Serializable
-{
+public class DocumentProtocoleManager<DOC extends DocumentProtocole, PARENT extends BeanObject> extends GenericDocumentEssaiManager<DOC, PARENT> implements Serializable {
 
     /**
      * Serial ID.
@@ -48,35 +47,26 @@ public class DocumentProtocoleManager<DOC extends DocumentProtocole, PARENT exte
     /**
      * Constructeur.
      * @param typeDocumentsName Nom du type des documents managés.
-     * @throws IllegalArgumentException Si typeDocumentsName ne correspond pas à une valeur de
-     * l'énumération {@link TypeDocumentEssai}.
+     * @throws IllegalArgumentException Si typeDocumentsName ne correspond pas à
+     * une valeur de l'énumération {@link TypeDocumentEssai}.
      */
-    public DocumentProtocoleManager(final String typeDocumentsName)
-    {
+    public DocumentProtocoleManager(final String typeDocumentsName) {
         super(typeDocumentsName);
     }
 
     @Override
     @SuppressWarnings("unchecked")
-    public DOC createDocument(final Essai essai)
-    {
+    public DOC createDocument(final Essai essai) {
         // Document BDD.
-        final PARENT parent =
-            (PARENT) BeanTool.getPropriete(essai,
-                                           this.getTypeDocuments()
-                                                   .getDocumentsParentPropertyFromEssai());
-        final DOC doc = this.getFactory().getInitializedObject(parent,
-                                                               this.getFichier(),
-                                                               this.getCommentaire().trim());
+        final PARENT parent = (PARENT) BeanTool.getPropriete(essai, this.getTypeDocuments().getDocumentsParentPropertyFromEssai());
+        final DOC doc = this.getFactory().getInitializedObject(parent, this.getFichier(), this.getCommentaire().trim());
 
         doc.setDateMaj(this.date);
         doc.setTypeDocumentProtocole(this.typeDocumentProtocole);
         doc.setVersion(this.version);
 
         // Document Physique.
-        this.getDocService().saveOnDisk(essai,
-                                        doc,
-                                        this.getFichier());
+        this.getDocService().saveOnDisk(essai, doc, this.getFichier());
 
         this.resetFormDatas();
         return doc;
@@ -86,17 +76,16 @@ public class DocumentProtocoleManager<DOC extends DocumentProtocole, PARENT exte
      * {@inheritDoc}
      */
     @Override
-    public boolean canCreateDocument()
-    {
+    public boolean canCreateDocument() {
         return true;
     }
 
     /**
-     * Méthode de réinitialisation des données du formulaire (fichier + commentaire).
+     * Méthode de réinitialisation des données du formulaire (fichier +
+     * commentaire).
      */
     @Override
-    public void resetFormDatas()
-    {
+    public void resetFormDatas() {
         super.resetFormDatas();
         this.version = StringUtils.EMPTY;
         this.typeDocumentProtocole = null;
@@ -106,8 +95,7 @@ public class DocumentProtocoleManager<DOC extends DocumentProtocole, PARENT exte
      * Getter pour version.
      * @return Le version
      */
-    public String getVersion()
-    {
+    public String getVersion() {
         return this.version;
     }
 
@@ -115,8 +103,7 @@ public class DocumentProtocoleManager<DOC extends DocumentProtocole, PARENT exte
      * Setter pour version.
      * @param version Le version à écrire.
      */
-    public void setVersion(final String version)
-    {
+    public void setVersion(final String version) {
         this.version = version;
     }
 
@@ -124,8 +111,7 @@ public class DocumentProtocoleManager<DOC extends DocumentProtocole, PARENT exte
      * Getter pour typeDocumentProtocole.
      * @return Le typeDocumentProtocole
      */
-    public TypeDocumentProtocole getTypeDocumentProtocole()
-    {
+    public TypeDocumentProtocole getTypeDocumentProtocole() {
         return this.typeDocumentProtocole;
     }
 
@@ -133,8 +119,7 @@ public class DocumentProtocoleManager<DOC extends DocumentProtocole, PARENT exte
      * Setter pour typeDocumentProtocole.
      * @param typeDocumentProtocole Le typeDocumentProtocole à écrire.
      */
-    public void setTypeDocumentProtocole(final TypeDocumentProtocole typeDocumentProtocole)
-    {
+    public void setTypeDocumentProtocole(final TypeDocumentProtocole typeDocumentProtocole) {
         this.typeDocumentProtocole = typeDocumentProtocole;
     }
 
@@ -142,8 +127,7 @@ public class DocumentProtocoleManager<DOC extends DocumentProtocole, PARENT exte
      * Getter pour date.
      * @return Le date
      */
-    public Calendar getDate()
-    {
+    public Calendar getDate() {
         return this.date;
     }
 
@@ -151,8 +135,7 @@ public class DocumentProtocoleManager<DOC extends DocumentProtocole, PARENT exte
      * Setter pour date.
      * @param date Le date à écrire.
      */
-    public void setDate(final Calendar date)
-    {
+    public void setDate(final Calendar date) {
         this.date = date;
     }
 

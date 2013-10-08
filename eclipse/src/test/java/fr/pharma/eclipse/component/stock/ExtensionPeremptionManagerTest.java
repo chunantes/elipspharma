@@ -31,11 +31,10 @@ import fr.pharma.eclipse.utils.constants.EclipseConstants;
 
 /**
  * Classe en charge de tester le manager d'extension de péremption.
- 
+ * @author Netapsys
  * @version $Revision$ $Date$
  */
-public class ExtensionPeremptionManagerTest
-{
+public class ExtensionPeremptionManagerTest {
     /**
      * ExtensionPeremptionManager à tester.
      */
@@ -66,8 +65,7 @@ public class ExtensionPeremptionManagerTest
      */
     @Before
     @SuppressWarnings("unchecked")
-    public void init()
-    {
+    public void init() {
         this.criteria = Mockito.mock(ExtensionPeremptionSearchCriteria.class);
         this.manager = new ExtensionPeremptionManager(this.criteria);
         this.mockProduitService = Mockito.mock(ProduitService.class);
@@ -82,8 +80,7 @@ public class ExtensionPeremptionManagerTest
      * Méthode en charge de purger les données de test.
      */
     @After
-    public void end()
-    {
+    public void end() {
         this.manager = null;
         this.mockProduitService = null;
         this.mockDocumentService = null;
@@ -94,32 +91,29 @@ public class ExtensionPeremptionManagerTest
      * Méthode en charge de tester l'initialisation des données de test.
      */
     @Test
-    public void testInitData()
-    {
+    public void testInitData() {
         Assert.assertNotNull(this.manager);
         Assert.assertNotNull(this.mockProduitService);
         Assert.assertNotNull(this.mockDocumentService);
         Assert.assertNotNull(this.mockManagerDocAppro);
-        Assert.assertNotNull(this.manager.getManagerDocAppro());
     }
 
     /**
      * Méthode en charge de tester la méthode init.
      */
     @Test
-    public void testInit()
-    {
+    public void testInit() {
         this.manager.init();
         Assert.assertNull(this.manager.getProduits());
         Assert.assertNull(this.manager.getConditionnements());
     }
 
     /**
-     * Méthode en charge de tester la méthode appelée via l'IHM quand un essai est sélectionné..
+     * Méthode en charge de tester la méthode appelée via l'IHM quand un essai
+     * est sélectionné..
      */
     @Test
-    public void testHandleSelectEssai()
-    {
+    public void testHandleSelectEssai() {
         final SelectEvent mockSelectEvent = Mockito.mock(SelectEvent.class);
         final Essai essai = Mockito.mock(Essai.class);
         Mockito.when(mockSelectEvent.getObject()).thenReturn(essai);
@@ -129,18 +123,16 @@ public class ExtensionPeremptionManagerTest
 
         this.manager.handleSelectEssai(mockSelectEvent);
 
-        Mockito.verify(this.mockProduitService).getProduits(essai,
-                                                            pharmacie);
+        Mockito.verify(this.mockProduitService).getProduits(essai, pharmacie);
         Assert.assertNull(this.criteria.getConditionnement());
     }
 
     /**
-     * Méthode en charge de tester la méthode appelée via l'IHM quand une pharmacie est
-     * sélectionnée.
+     * Méthode en charge de tester la méthode appelée via l'IHM quand une
+     * pharmacie est sélectionnée.
      */
     @Test
-    public void testHandleSelectPharmacieWithEssaiNull()
-    {
+    public void testHandleSelectPharmacieWithEssaiNull() {
         final AjaxBehaviorEvent event = Mockito.mock(AjaxBehaviorEvent.class);
         final HtmlSelectOneMenu select = Mockito.mock(HtmlSelectOneMenu.class);
         Mockito.when(event.getSource()).thenReturn(select);
@@ -150,18 +142,16 @@ public class ExtensionPeremptionManagerTest
         Mockito.when(this.criteria.getEssai()).thenReturn(null);
 
         this.manager.handleSelectPharmacie(event);
-        Assert.assertEquals(0,
-                            this.manager.getProduits().size());
+        Assert.assertEquals(0, this.manager.getProduits().size());
         Assert.assertNull(this.criteria.getConditionnement());
     }
 
     /**
-     * Méthode en charge de tester la méthode appelée via l'IHM quand une pharmacie est
-     * sélectionnée.
+     * Méthode en charge de tester la méthode appelée via l'IHM quand une
+     * pharmacie est sélectionnée.
      */
     @Test
-    public void testHandleSelectPharmacieWithEssaiNotNull()
-    {
+    public void testHandleSelectPharmacieWithEssaiNotNull() {
         final AjaxBehaviorEvent event = Mockito.mock(AjaxBehaviorEvent.class);
         final HtmlSelectOneMenu select = Mockito.mock(HtmlSelectOneMenu.class);
         Mockito.when(event.getSource()).thenReturn(select);
@@ -174,18 +164,17 @@ public class ExtensionPeremptionManagerTest
 
         this.manager.handleSelectPharmacie(event);
 
-        Mockito.verify(this.mockProduitService).getProduits(essai,
-                                                            pharmacie);
+        Mockito.verify(this.mockProduitService).getProduits(essai, pharmacie);
 
         Assert.assertNull(this.criteria.getConditionnement());
     }
 
     /**
-     * Méthode en charge de tester la méthode appelée via l'IHM quand un produit est sélectionné.
+     * Méthode en charge de tester la méthode appelée via l'IHM quand un produit
+     * est sélectionné.
      */
     @Test
-    public void testHandleSelectProduitNull()
-    {
+    public void testHandleSelectProduitNull() {
         final AjaxBehaviorEvent event = Mockito.mock(AjaxBehaviorEvent.class);
         final HtmlSelectOneMenu select = Mockito.mock(HtmlSelectOneMenu.class);
         Mockito.when(event.getSource()).thenReturn(select);
@@ -196,17 +185,16 @@ public class ExtensionPeremptionManagerTest
 
         this.manager.handleSelectProduit(event);
 
-        Assert.assertEquals(0,
-                            this.manager.getConditionnements().size());
+        Assert.assertEquals(0, this.manager.getConditionnements().size());
         Assert.assertNull(this.criteria.getConditionnement());
     }
 
     /**
-     * Méthode en charge de tester la méthode appelée via l'IHM quand un produit est sélectionné.
+     * Méthode en charge de tester la méthode appelée via l'IHM quand un produit
+     * est sélectionné.
      */
     @Test
-    public void testHandleSelectProduitNotNull()
-    {
+    public void testHandleSelectProduitNotNull() {
         final AjaxBehaviorEvent event = Mockito.mock(AjaxBehaviorEvent.class);
         final HtmlSelectOneMenu select = Mockito.mock(HtmlSelectOneMenu.class);
         Mockito.when(event.getSource()).thenReturn(select);
@@ -221,12 +209,11 @@ public class ExtensionPeremptionManagerTest
     }
 
     /**
-     * Méthode en charge de tester le calcul de l'atteinte du délai d'alerte avant la date
-     * d'expiration d'un produit.
+     * Méthode en charge de tester le calcul de l'atteinte du délai d'alerte
+     * avant la date d'expiration d'un produit.
      */
     @Test
-    public void testDelaiAlerteAvantExpirationAtteintWithDatePeremptionNull()
-    {
+    public void testDelaiAlerteAvantExpirationAtteintWithDatePeremptionNull() {
         final Approvisionnement appro = new Approvisionnement();
         final Produit produit = new Medicament();
         final DetailLogistique detailLogistique = new DetailLogistique();
@@ -237,14 +224,12 @@ public class ExtensionPeremptionManagerTest
     }
 
     /**
-     * Méthode en charge de tester le calcul de l'atteinte du délai d'alerte avant la date
-     * d'expiration d'un produit.
+     * Méthode en charge de tester le calcul de l'atteinte du délai d'alerte
+     * avant la date d'expiration d'un produit.
      * @throws ParseException Exception de parsing.
      */
     @Test
-    public void testDelaiAlerteAvantExpirationAtteintWithDelaiNull()
-        throws ParseException
-    {
+    public void testDelaiAlerteAvantExpirationAtteintWithDelaiNull() throws ParseException {
         final Approvisionnement appro = new Approvisionnement();
         final SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
         final Date datePeremption = sdf.parse("30/12/2010");
@@ -261,14 +246,12 @@ public class ExtensionPeremptionManagerTest
     }
 
     /**
-     * Méthode en charge de tester le calcul de l'atteinte du délai d'alerte avant la date
-     * d'expiration d'un produit.
+     * Méthode en charge de tester le calcul de l'atteinte du délai d'alerte
+     * avant la date d'expiration d'un produit.
      * @throws ParseException Exception de parsing.
      */
     @Test
-    public void testDelaiAlerteAvantExpirationAtteintTrue()
-        throws ParseException
-    {
+    public void testDelaiAlerteAvantExpirationAtteintTrue() throws ParseException {
         final Approvisionnement appro = new Approvisionnement();
         final SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
         final Date datePeremption = sdf.parse("30/12/2010");
@@ -286,18 +269,15 @@ public class ExtensionPeremptionManagerTest
     }
 
     /**
-     * Méthode en charge de tester le calcul de l'atteinte du délai d'alerte avant la date
-     * d'expiration d'un produit.
+     * Méthode en charge de tester le calcul de l'atteinte du délai d'alerte
+     * avant la date d'expiration d'un produit.
      * @throws ParseException Exception de parsing.
      */
     @Test
-    public void testDelaiAlerteAvantExpirationAtteintFalse()
-        throws ParseException
-    {
+    public void testDelaiAlerteAvantExpirationAtteintFalse() throws ParseException {
         final Approvisionnement appro = new Approvisionnement();
         final Calendar calDatePeremption = Calendar.getInstance(EclipseConstants.LOCALE);
-        calDatePeremption.add(Calendar.DAY_OF_MONTH,
-                              2 + 1);
+        calDatePeremption.add(Calendar.DAY_OF_MONTH, 2 + 1);
         appro.setDatePeremption(calDatePeremption);
 
         final Produit produit = new Medicament();
@@ -313,8 +293,7 @@ public class ExtensionPeremptionManagerTest
      * Méthode en charge de tester la méthode d'ajout de document d'appro.
      */
     @Test
-    public void testAddDocApproKO()
-    {
+    public void testAddDocApproKO() {
         Mockito.when(this.mockManagerDocAppro.canCreateDocument()).thenReturn(Boolean.FALSE);
         this.manager.addDocAppro();
         Mockito.verify(this.mockManagerDocAppro).resetFormDatas();
@@ -324,23 +303,21 @@ public class ExtensionPeremptionManagerTest
      * Méthode en charge de tester la méthode d'ajout de document d'appro.
      */
     @Test
-    public void testAddDocApproOK()
-    {
+    public void testAddDocApproOK() {
         Mockito.when(this.mockManagerDocAppro.canCreateDocument()).thenReturn(Boolean.TRUE);
         final Approvisionnement approvisionnement = Mockito.mock(Approvisionnement.class);
         this.manager.setBeanSelected(approvisionnement);
         final DocumentStock documentStock = new DocumentAppro();
-        Mockito.when(this.mockManagerDocAppro.createDocument(approvisionnement))
-                .thenReturn(documentStock);
+        Mockito.when(this.mockManagerDocAppro.createDocument(approvisionnement)).thenReturn(documentStock);
         this.manager.addDocAppro();
     }
 
     /**
-     * Méthode en charge de tester la méthode de suppression de document d'appro.
+     * Méthode en charge de tester la méthode de suppression de document
+     * d'appro.
      */
     @Test
-    public void testDelDocApproSansId()
-    {
+    public void testDelDocApproSansId() {
         final ActionEvent event = Mockito.mock(ActionEvent.class);
         final DocumentAppro documentAppro = new DocumentAppro();
         final Approvisionnement approvisionnement = new Approvisionnement();
@@ -351,11 +328,11 @@ public class ExtensionPeremptionManagerTest
     }
 
     /**
-     * Méthode en charge de tester la méthode de suppression de document d'appro.
+     * Méthode en charge de tester la méthode de suppression de document
+     * d'appro.
      */
     @Test
-    public void testDelDocApproWithId()
-    {
+    public void testDelDocApproWithId() {
         final ActionEvent event = Mockito.mock(ActionEvent.class);
         final DocumentAppro documentAppro = new DocumentAppro();
         final Approvisionnement approvisionnement = new Approvisionnement();

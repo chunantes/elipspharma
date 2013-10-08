@@ -285,7 +285,7 @@
 			    	<p:column colspan="1">
 						<c:choose>
 							<c:when test="#{lastDocProto != null}">
-								<h:outputText value="#{lastDocProto.typeDocumentProtocole.libelle} (Version : #{lastDocProto.version} du " />
+								<h:outputText value="#{lastDocProto.typeDocumentProtocole.libelle} (Version : #{lastDocProto.versionDoc} du " />
 								<h:outputText value="#{lastDocProto.dateMaj.time}">
 									<f:convertDateTime pattern="#{resourceBundle['date.pattern.default']}"/>
 								</h:outputText>
@@ -344,7 +344,7 @@
 			    	<p:column colspan="1">
 						<c:choose>
 							<c:when test="#{lastDocBro!= null}">
-								<h:outputText value="#{lastDocBro.typeDocumentBrochure.libelle} (Version : #{lastDocBro.version} du " />
+								<h:outputText value="#{lastDocBro.typeDocumentBrochure.libelle} (Version : #{lastDocBro.versionDoc} du " />
 								<h:outputText value="#{lastDocBro.dateMaj.time}">
 									<f:convertDateTime pattern="#{resourceBundle['date.pattern.default']}"/>
 								</h:outputText>

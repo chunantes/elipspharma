@@ -2,40 +2,21 @@
 	<modelVersion>4.0.0</modelVersion>
 
 	<!--  Project Information -->
-	<name>Projet ECLIPSE - IHM</name>
-	<description>Essais Cliniques sur les Produits de Sante Experimentaux - Partie IHM</description>
-	<url>www.chu-nantes.fr</url>
-	<inceptionYear>2010</inceptionYear>
-	<organization>
-		<name>PHARMA-ECLIPSE</name>
-		<url>http://www.chu-nantes.fr</url>
-	</organization>
-	<groupId>fr.pharma.eclipse</groupId>
-	<artifactId>eclipse</artifactId>
+	<name>Projet ELIPS - IHM</name>
+	<artifactId>elips</artifactId>
 	<parent> 
-		<groupId>fr.pharma.eclipse</groupId>
-		<artifactId>eclipse-principal</artifactId>
-		<version>1.23-SNAPSHOT</version>
+		<groupId>fr.pharma.elips</groupId>
+		<artifactId>elips-principal</artifactId>
+		<version>1.34-SNAPSHOT</version>
 	</parent>
 
 	<packaging>war</packaging>
 
-	<properties>
-		<urlRacineSite>http://www.chunantes.fr/mavensite/eclipse/eclipse</urlRacineSite>
-	</properties>
-	
-	<distributionManagement>
-		<site>
-			<id>deploy site</id>
-			<url>file:///var/www/mavensite/eclipse/eclipse</url>
-		</site>
-	</distributionManagement>
-
 	<dependencies>
 		<!-- DEPENDANCES ECLIPSE-COMMON -->
 	    <dependency>
-			<groupId>fr.pharma.eclipse</groupId>
-			<artifactId>eclipse-common</artifactId>
+			<groupId>${project.groupId}</groupId>
+			<artifactId>elips-common</artifactId>
 			<version>${project.version}</version>   
 	    </dependency>	
 		<!-- DEPENDANCES Projet -->
@@ -47,9 +28,15 @@
 			<groupId>aopalliance</groupId>
 			<artifactId>aopalliance</artifactId>
 		</dependency>
+<!-- 
 		<dependency>
 			<groupId>c3p0</groupId>
 			<artifactId>c3p0</artifactId>
+		</dependency>
+ -->
+ 		<dependency>
+			<groupId>commons-dbcp</groupId>
+			<artifactId>commons-dbcp</artifactId>
 		</dependency>
 		<dependency>
 			<groupId>com.sun.xml.bind</groupId>
@@ -67,6 +54,10 @@
 			<groupId>commons-collections</groupId>
 			<artifactId>commons-collections</artifactId>
 		</dependency>
+		<dependency>
+			<groupId>net.sourceforge.collections</groupId>
+			<artifactId>collections-generic</artifactId>
+	    </dependency>
 		<dependency>
 			<groupId>commons-fileupload</groupId>
 			<artifactId>commons-fileupload</artifactId>
@@ -92,10 +83,6 @@
 			<artifactId>dom4j</artifactId>
 		</dependency>
 		<dependency>
-			<groupId>net.sf.ehcache</groupId>
-			<artifactId>ehcache</artifactId>
-		</dependency>
-		<dependency>
 			<groupId>javassist</groupId>
 			<artifactId>javassist</artifactId>
 		</dependency>
@@ -106,10 +93,6 @@
 		<dependency>
 			<groupId>javax.annotation</groupId>
 			<artifactId>jsr250-api</artifactId>
-		</dependency>
-		<dependency>
-			<groupId>org.hibernate.javax.persistence</groupId>
-			<artifactId>hibernate-jpa-2.0-api</artifactId>
 		</dependency>
 		<dependency>
 			<groupId>javax.servlet</groupId>
@@ -123,6 +106,14 @@
 			<groupId>javax.transaction</groupId>
 			<artifactId>jta</artifactId>
 		</dependency>
+		<dependency>
+   			<groupId>cglib</groupId>
+			<artifactId>cglib</artifactId>
+		</dependency>
+		<dependency>
+			<groupId>joda-time</groupId>
+			<artifactId>joda-time</artifactId>
+		</dependency>				
 		<dependency>
 			<groupId>javax.validation</groupId>
 			<artifactId>validation-api</artifactId>
@@ -144,14 +135,6 @@
 			<artifactId>hibernate-entitymanager</artifactId>
 		</dependency>
 		<dependency>
-			<groupId>org.hibernate</groupId>
-			<artifactId>hibernate-core</artifactId>
-		</dependency>
-		<dependency>
-			<groupId>org.hibernate</groupId>
-			<artifactId>hibernate-annotations</artifactId>
-		</dependency>
-		<dependency>
 			<groupId>org.mockito</groupId>
 			<artifactId>mockito-all</artifactId>
 		</dependency>
@@ -162,6 +145,10 @@
 		<dependency>
 			<groupId>org.slf4j</groupId>
 			<artifactId>slf4j-api</artifactId>
+		</dependency>
+		<dependency>
+			<groupId>org.slf4j</groupId>
+			<artifactId>jul-to-slf4j</artifactId>
 		</dependency>
 		<dependency>
 			<groupId>org.slf4j</groupId>
@@ -240,6 +227,10 @@
 			<artifactId>spring-faces</artifactId>
 		</dependency>
 		<dependency>
+			<groupId>org.springframework</groupId>
+			<artifactId>spring-aspects</artifactId>
+		</dependency>
+		<dependency>
 			<groupId>postgresql</groupId>
 			<artifactId>postgresql</artifactId>
 		</dependency>
@@ -270,79 +261,31 @@
 	</dependencies>
 
 	<build>
-		<extensions>
-			<extension>
-				<groupId>com.netapsys</groupId>
-				<artifactId>netapsys-build-support</artifactId>
-				<version>${netapsys-build-support-version}</version>
-			</extension>
-		</extensions>
-		<filters>
-			<filter>src/main/filters/filter-${env}.properties </filter>
-		</filters>
-		<resources>
-			<resource>
-				<directory>src/main/resources</directory>
-				<filtering>true</filtering>
-				<includes>
-					<include>log4j.xml</include>
-					<include>config/hibernate.properties</include>
-					<include>config/dispatcher-servlet.xml</include>
-					<include>config/project.properties</include>
-				</includes>
-			</resource>
-			<resource>
-				<directory>src/main/resources</directory>
-				<filtering>false</filtering>
-				<includes>
-					<include>**/*.sql</include>
-					<include>**/*.properties</include>
-					<include>**/*.xml</include>
-					<include>**/*.xls</include>
-					<include>**/*.rptdesign</include>
-				</includes>
-			</resource>
-		</resources>
-		
-		<plugins>
-			<plugin>
-				<groupId>org.apache.maven.plugins</groupId>
-				<artifactId>maven-antrun-plugin</artifactId>	
-		    </plugin>
-		    <plugin>
-				<!-- Les builds non-dev utilsent les ressources dans le sous-répertoire 'templates'. -->
-				<!-- Ce script ant copie ces fichiers 'templates' dans le répertoire 'resources' -->
-		        <!-- Si une copie existe déjà dans 'resources', le script ne l'ecrase pas -->
-	    	    <!-- Ca donne au dev la possibilité d'utiliser une version 'dev' du fichier de propriété -->
-	            <artifactId>maven-antrun-plugin</artifactId>
-	            <executions>
-		           <execution>
-			           <id>create-property-files</id>
-			           <phase>initialize</phase>
-		    	       <goals>
-		        	      <goal>run</goal>
-					   </goals>
-		               <configuration>
-		                <tasks>
-			                <copy todir="${basedir}/src/main/resources/" overwrite="false">
-			                  <fileset dir="${basedir}/src/main/resources/templates">
-			                    <include name="*" />
-			                    <exclude name="*-example*" />
-			                  </fileset>
-			                </copy>
-			                <copy todir="${basedir}/src/main/resources/config/" overwrite="false">
-			                  <fileset dir="${basedir}/src/main/resources/config/templates">
-			                    <include name="*" />
-			                    <exclude name="*-example*" />
-			                  </fileset>
-			                </copy>
-		                </tasks>
-		             </configuration>
-		           </execution>
-		         </executions>
-	       </plugin>
-		    
-		</plugins>
-		
+	    <plugins>
+		<!--   <plugin>
+	           <groupId>com.google.code.maven-replacer-plugin</groupId>
+	           <artifactId>replacer</artifactId>
+	           <version>1.5.2</version>
+	           <executions>
+	               <execution>
+	                   <phase>prepare-package</phase>
+	                   <goals>
+	                       <goal>replace</goal>
+	                   </goals>                   
+	               </execution>
+	           </executions>
+	           <configuration>
+	               <file>./eclipse/target/classes/LabelResources.properties</file>
+	               <encoding>ISO-8859-1</encoding>
+	               <replacements>
+	                   <replacement>
+	                       <token>PROJECT.VERSION</token>
+	                       <value>${project.version} - ${maven.build.timestamp}</value>
+	                   </replacement>
+	               </replacements>
+	           </configuration>
+	       </plugin>-->
+ 	    </plugins>
 	</build>
+
 </project>

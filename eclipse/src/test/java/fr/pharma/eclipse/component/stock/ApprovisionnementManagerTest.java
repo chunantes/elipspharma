@@ -39,11 +39,10 @@ import fr.pharma.eclipse.utils.constants.EclipseConstants;
 
 /**
  * Classe en charge de tester le manager de Approvisionnement.
- 
+ * @author Netapsys
  * @version $Revision$ $Date$
  */
-public class ApprovisionnementManagerTest
-{
+public class ApprovisionnementManagerTest {
     /**
      * ApprovisionnementManager à tester.
      */
@@ -79,8 +78,7 @@ public class ApprovisionnementManagerTest
      */
     @Before
     @SuppressWarnings("unchecked")
-    public void init()
-    {
+    public void init() {
         this.mockAppoService = Mockito.mock(MvtStockService.class);
         this.manager = new ApprovisionnementManager();
         this.mockProduitService = Mockito.mock(ProduitService.class);
@@ -88,10 +86,8 @@ public class ApprovisionnementManagerTest
         this.mockApproFactory = Mockito.mock(ApprovisionnementFactory.class);
         this.mockAutoSaisieNumTraitement = Mockito.mock(AutoSaisieNumTraitement.class);
         this.manager.setAutoSaisieNumTraitement(this.mockAutoSaisieNumTraitement);
-        final Map<TypeMvtStock, ApproFactory<Approvisionnement>> factories =
-            new HashMap<TypeMvtStock, ApproFactory<Approvisionnement>>();
-        factories.put(TypeMvtStock.APPROVISIONNEMENT,
-                      this.mockApproFactory);
+        final Map<TypeMvtStock, ApproFactory<Approvisionnement>> factories = new HashMap<TypeMvtStock, ApproFactory<Approvisionnement>>();
+        factories.put(TypeMvtStock.APPROVISIONNEMENT, this.mockApproFactory);
         this.manager.setApproFactorys(factories);
         this.mockEssaiService = Mockito.mock(EssaiService.class);
         this.manager.setEssaiService(this.mockEssaiService);
@@ -101,8 +97,7 @@ public class ApprovisionnementManagerTest
      * Méthode en charge de purger les données de test.
      */
     @After
-    public void end()
-    {
+    public void end() {
         this.mockAppoService = null;
         this.manager = null;
         this.mockProduitService = null;
@@ -115,8 +110,7 @@ public class ApprovisionnementManagerTest
      * Méthode en charge de tester l'initialisation des données de test.
      */
     @Test
-    public void testInitData()
-    {
+    public void testInitData() {
         Assert.assertNotNull(this.mockAppoService);
         Assert.assertNotNull(this.manager);
         Assert.assertNotNull(this.mockProduitService);
@@ -129,26 +123,22 @@ public class ApprovisionnementManagerTest
      * Méthode en charge de tester la méthode init.
      */
     @Test
-    public void testInit()
-    {
+    public void testInit() {
         this.manager.init();
         Assert.assertNull(this.manager.getEssaiSelected());
         Assert.assertNull(this.manager.getPharmacieSelected());
         Assert.assertNull(this.manager.getProduits());
         Assert.assertNull(this.manager.getReceptionCurrent());
-        Assert.assertEquals(0,
-                            this.manager.getReceptionLots().size());
-        Assert.assertEquals(0,
-                            this.manager.getPharmacies().size());
+        Assert.assertEquals(0, this.manager.getReceptionLots().size());
+        Assert.assertEquals(0, this.manager.getPharmacies().size());
     }
 
     /**
-     * Méthode en charge de tester la maj des pharmacies et produits suite à la sélection d'un
-     * essai.
+     * Méthode en charge de tester la maj des pharmacies et produits suite à la
+     * sélection d'un essai.
      */
     @Test
-    public void testHandleSelectEssaiPharmaSize1()
-    {
+    public void testHandleSelectEssaiPharmaSize1() {
         final SelectEvent mockSelectEvent = Mockito.mock(SelectEvent.class);
         final Essai essai = Mockito.mock(Essai.class);
         Mockito.when(mockSelectEvent.getObject()).thenReturn(essai);
@@ -161,17 +151,15 @@ public class ApprovisionnementManagerTest
         this.manager.handleSelectEssai(mockSelectEvent);
         Mockito.verify(this.mockEssaiService).getAllPharmaciesOfUser(essai);
         Assert.assertNotNull(this.manager.getPharmacieSelected());
-        Mockito.verify(this.mockProduitService).getProduits(essai,
-                                                            pharmacie);
+        Mockito.verify(this.mockProduitService).getProduits(essai, pharmacie);
     }
 
     /**
-     * Méthode en charge de tester la maj des pharmacies et produits suite à la sélection d'un
-     * essai.
+     * Méthode en charge de tester la maj des pharmacies et produits suite à la
+     * sélection d'un essai.
      */
     @Test
-    public void testHandleSelectEssaiPharmaSizeNot1()
-    {
+    public void testHandleSelectEssaiPharmaSizeNot1() {
         final SelectEvent mockSelectEvent = Mockito.mock(SelectEvent.class);
         final Essai essai = Mockito.mock(Essai.class);
         Mockito.when(mockSelectEvent.getObject()).thenReturn(essai);
@@ -187,16 +175,15 @@ public class ApprovisionnementManagerTest
         this.manager.handleSelectEssai(mockSelectEvent);
         Mockito.verify(this.mockEssaiService).getAllPharmaciesOfUser(essai);
         Assert.assertNull(this.manager.getPharmacieSelected());
-        Mockito.verify(this.mockProduitService).getProduits(essai,
-                                                            null);
+        Mockito.verify(this.mockProduitService).getProduits(essai, null);
     }
 
     /**
-     * Méthode en charge de tester la maj des produits suite à la sélection d'une pharmacie.
+     * Méthode en charge de tester la maj des produits suite à la sélection
+     * d'une pharmacie.
      */
     @Test
-    public void testHandleSelectPharmacie()
-    {
+    public void testHandleSelectPharmacie() {
         final AjaxBehaviorEvent event = Mockito.mock(AjaxBehaviorEvent.class);
         final HtmlSelectOneMenu select = Mockito.mock(HtmlSelectOneMenu.class);
         Mockito.when(event.getSource()).thenReturn(select);
@@ -207,19 +194,17 @@ public class ApprovisionnementManagerTest
         this.manager.setEssaiSelected(essai);
         this.manager.handleSelectPharmacie(event);
         Assert.assertNotNull(this.manager.getPharmacieSelected());
-        Mockito.verify(this.mockProduitService).getProduits(essai,
-                                                            pharmacie);
+        Mockito.verify(this.mockProduitService).getProduits(essai, pharmacie);
     }
 
     /**
-     * Méthode en charge de tester la maj des conditionnements suite à la sélection d'un produit.
+     * Méthode en charge de tester la maj des conditionnements suite à la
+     * sélection d'un produit.
      */
     @Test
-    public void testHandleSelectProduit()
-    {
+    public void testHandleSelectProduit() {
         final Produit produit = Mockito.mock(Produit.class);
-        final SortedSet<Conditionnement> conditionnements =
-            new TreeSet<Conditionnement>(new EclipseListComparator());
+        final SortedSet<Conditionnement> conditionnements = new TreeSet<Conditionnement>(new EclipseListComparator());
         produit.getConditionnements().addAll(conditionnements);
         final AjaxBehaviorEvent event = Mockito.mock(AjaxBehaviorEvent.class);
         final HtmlSelectOneMenu select = Mockito.mock(HtmlSelectOneMenu.class);
@@ -237,11 +222,11 @@ public class ApprovisionnementManagerTest
     }
 
     /**
-     * Méthode en charge de tester la gestion de la saisie automatique des numéros de traitement.
+     * Méthode en charge de tester la gestion de la saisie automatique des
+     * numéros de traitement.
      */
     @Test
-    public void testHandleSaisieAutoNumsTraitements()
-    {
+    public void testHandleSaisieAutoNumsTraitements() {
         final List<NumTraitement> numsTraitements = new ArrayList<NumTraitement>();
         final ReceptionLot receptionLot = new ReceptionLot();
         receptionLot.setNumsTraitements(numsTraitements);
@@ -254,8 +239,7 @@ public class ApprovisionnementManagerTest
      * Méthode en charge de tester l'ajout d'une réception de lot.
      */
     @Test
-    public void testAddReceptionLot()
-    {
+    public void testAddReceptionLot() {
         final Approvisionnement appro = new Approvisionnement();
         final Essai essai = new Essai();
         essai.setId(1L);
@@ -269,37 +253,29 @@ public class ApprovisionnementManagerTest
         appro.setDateReception(dateReception);
         final Calendar dateArriveeColis = Calendar.getInstance(EclipseConstants.LOCALE);
         appro.setDateArriveeColis(dateArriveeColis);
-        Mockito.when(this.mockApproFactory.getInitializedObject(essai,
-                                                                pharmacie,
-                                                                dateReception,
-                                                                dateArriveeColis))
-                .thenReturn(appro);
+        Mockito.when(this.mockApproFactory.getInitializedObject(essai, pharmacie, dateReception, dateArriveeColis)).thenReturn(appro);
         this.manager.setEssaiSelected(essai);
         this.manager.setPharmacieSelected(pharmacie);
         this.manager.addReceptionLot();
-        Assert.assertEquals("ADD",
-                            this.manager.getActionReceptionCurrent());
+        Assert.assertEquals("ADD", this.manager.getActionReceptionCurrent());
     }
 
     /**
      * Méthode en charge de tester la modification d'une réception de lot.
      */
     @Test
-    public void testModifyReceptionLot()
-    {
+    public void testModifyReceptionLot() {
         this.manager.modifyReceptionLot();
-        Assert.assertEquals("EDIT",
-                            this.manager.getActionReceptionCurrent());
+        Assert.assertEquals("EDIT", this.manager.getActionReceptionCurrent());
     }
 
     /**
-     * Méthode en charge de tester l'ajout d'une réception de lot à la liste des réceptions de
-     * lot.
+     * Méthode en charge de tester l'ajout d'une réception de lot à la liste des
+     * réceptions de lot.
      */
     @Test
     @SuppressWarnings("unchecked")
-    public void testAddReceptionLotToListAdd()
-    {
+    public void testAddReceptionLotToListAdd() {
         this.manager.setActionReceptionCurrent("ADD");
         final List<ReceptionLot> receptionLots = Mockito.mock(List.class);
         this.manager.setReceptionLots(receptionLots);
@@ -308,19 +284,17 @@ public class ApprovisionnementManagerTest
     }
 
     /**
-     * Méthode en charge de tester l'ajout d'une réception de lot à la liste des réceptions de
-     * lot.
+     * Méthode en charge de tester l'ajout d'une réception de lot à la liste des
+     * réceptions de lot.
      */
     @Test
     @SuppressWarnings("unchecked")
-    public void testAddReceptionLotToListEdit()
-    {
+    public void testAddReceptionLotToListEdit() {
         this.manager.setActionReceptionCurrent("EDIT");
         final List<ReceptionLot> receptionLots = Mockito.mock(List.class);
         this.manager.setReceptionLots(receptionLots);
         this.manager.addReceptionToReceptions();
-        Mockito.verify(receptionLots,
-                       Mockito.times(0)).add((ReceptionLot) Matchers.any());
+        Mockito.verify(receptionLots, Mockito.times(0)).add((ReceptionLot) Matchers.any());
     }
 
     /**
@@ -328,8 +302,7 @@ public class ApprovisionnementManagerTest
      */
     @Test
     @SuppressWarnings("unchecked")
-    public void testDelReception()
-    {
+    public void testDelReception() {
         final List<ReceptionLot> receptionLots = Mockito.mock(List.class);
         final ReceptionLot receptionToDelete = Mockito.mock(ReceptionLot.class);
         this.manager.setReceptionToDelete(receptionToDelete);
@@ -339,11 +312,11 @@ public class ApprovisionnementManagerTest
     }
 
     /**
-     * Méthode en charge de tester le résultat de l'enregistrement de Approvisionnement.
+     * Méthode en charge de tester le résultat de l'enregistrement de
+     * Approvisionnement.
      */
     @Test
-    public void setResultApprovisionnement()
-    {
+    public void setResultApprovisionnement() {
         final ResultApprovisionnement result = new ResultApprovisionnement();
         this.manager.setResult(result);
         Assert.assertNotNull(this.manager.getResult());

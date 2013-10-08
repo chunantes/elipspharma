@@ -21,13 +21,12 @@ import fr.pharma.eclipse.domain.model.stock.document.DocumentRetourPromoteur;
 import fr.pharma.eclipse.service.stock.MvtStockService;
 
 /**
- * Classe en charge de tester la classe de helper pour le traitement des fichiers de sortie de
- * stock.
- 
+ * Classe en charge de tester la classe de helper pour le traitement des
+ * fichiers de sortie de stock.
+ * @author Netapsys
  * @version $Revision$ $Date$
  */
-public class SortieFileHelperTest
-{
+public class SortieFileHelperTest {
 
     /**
      * SortieFileHelper à tester.
@@ -59,8 +58,7 @@ public class SortieFileHelperTest
      */
     @Before
     @SuppressWarnings("unchecked")
-    public void init()
-    {
+    public void init() {
         this.helper = new SortieFileHelper();
         this.mockDestructionService = Mockito.mock(MvtStockService.class);
         this.mockManagerDocDest = Mockito.mock(GenericStockManager.class);
@@ -76,8 +74,7 @@ public class SortieFileHelperTest
      * Méthode en charge de purger les données de test.
      */
     @After
-    public void end()
-    {
+    public void end() {
         this.helper = null;
         this.mockDestructionService = null;
         this.mockManagerDocDest = null;
@@ -89,8 +86,7 @@ public class SortieFileHelperTest
      * Méthode en charge de tester l'initialisation des données de test.
      */
     @Test
-    public void testInitData()
-    {
+    public void testInitData() {
         Assert.assertNotNull(this.helper);
         Assert.assertNotNull(this.mockDestructionService);
         Assert.assertNotNull(this.mockManagerDocDest);
@@ -103,9 +99,7 @@ public class SortieFileHelperTest
      * @throws IOException Exception Input / Output.
      */
     @Test
-    public void testAddDocumentsSortieDestructionOK()
-        throws IOException
-    {
+    public void testAddDocumentsSortieDestructionOK() throws IOException {
         final List<Destruction> mvts = new ArrayList<Destruction>();
         final Destruction destruction = Mockito.mock(Destruction.class);
         mvts.add(destruction);
@@ -114,13 +108,9 @@ public class SortieFileHelperTest
         resultSortie.setMvts(mvts);
 
         final UploadedFile fileDestruction = Mockito.mock(UploadedFile.class);
-        Mockito.when(fileDestruction.getBytes()).thenReturn(new byte[]
-        {0, 1, 0 });
+        Mockito.when(fileDestruction.getBytes()).thenReturn(new byte[]{0, 1, 0 });
 
-        this.helper.addDocumentsSortie(TypeMvtStock.DESTRUCTION,
-                                       resultSortie,
-                                       fileDestruction,
-                                       null);
+        this.helper.addDocumentsSortie(TypeMvtStock.DESTRUCTION, resultSortie, fileDestruction, null);
 
         Mockito.verify(this.mockManagerDocDest).setFile(fileDestruction);
         Mockito.verify(this.mockManagerDocDest).createDocument(destruction);
@@ -132,9 +122,7 @@ public class SortieFileHelperTest
      * @throws IOException Exception Input / Output.
      */
     @Test
-    public void testAddDocumentsSortieDestructionKO()
-        throws IOException
-    {
+    public void testAddDocumentsSortieDestructionKO() throws IOException {
         final List<Destruction> mvts = new ArrayList<Destruction>();
         final Destruction destruction = Mockito.mock(Destruction.class);
         mvts.add(destruction);
@@ -143,13 +131,9 @@ public class SortieFileHelperTest
         resultSortie.setMvts(mvts);
 
         final UploadedFile fileDestruction = Mockito.mock(UploadedFile.class);
-        Mockito.when(fileDestruction.getBytes()).thenReturn(new byte[]
-        {});
+        Mockito.when(fileDestruction.getBytes()).thenReturn(new byte[]{});
 
-        this.helper.addDocumentsSortie(TypeMvtStock.DESTRUCTION,
-                                       resultSortie,
-                                       fileDestruction,
-                                       null);
+        this.helper.addDocumentsSortie(TypeMvtStock.DESTRUCTION, resultSortie, fileDestruction, null);
     }
 
     /**
@@ -157,9 +141,7 @@ public class SortieFileHelperTest
      * @throws IOException Exception Input / Output.
      */
     @Test
-    public void testAddDocumentsSortieSansFichier()
-        throws IOException
-    {
+    public void testAddDocumentsSortieSansFichier() throws IOException {
         final List<Destruction> mvts = new ArrayList<Destruction>();
         final Destruction destruction = Mockito.mock(Destruction.class);
         mvts.add(destruction);
@@ -168,13 +150,9 @@ public class SortieFileHelperTest
         resultSortie.setMvts(mvts);
 
         final UploadedFile fileDestruction = Mockito.mock(UploadedFile.class);
-        Mockito.when(fileDestruction.getBytes()).thenReturn(new byte[]
-        {});
+        Mockito.when(fileDestruction.getBytes()).thenReturn(new byte[]{});
 
-        this.helper.addDocumentsSortie(TypeMvtStock.APPROVISIONNEMENT,
-                                       resultSortie,
-                                       fileDestruction,
-                                       null);
+        this.helper.addDocumentsSortie(TypeMvtStock.APPROVISIONNEMENT, resultSortie, fileDestruction, null);
     }
 
     /**
@@ -182,9 +160,7 @@ public class SortieFileHelperTest
      * @throws IOException Exception Input / Output.
      */
     @Test
-    public void testAddDocumentsSortieRetourPromoteurOK()
-        throws IOException
-    {
+    public void testAddDocumentsSortieRetourPromoteurOK() throws IOException {
         final List<RetourPromoteur> mvts = new ArrayList<RetourPromoteur>();
         final RetourPromoteur retourPromoteur = Mockito.mock(RetourPromoteur.class);
         mvts.add(retourPromoteur);
@@ -193,13 +169,9 @@ public class SortieFileHelperTest
         resultSortie.setMvts(mvts);
 
         final UploadedFile fileRetourPromoteur = Mockito.mock(UploadedFile.class);
-        Mockito.when(fileRetourPromoteur.getBytes()).thenReturn(new byte[]
-        {0, 1, 0 });
+        Mockito.when(fileRetourPromoteur.getBytes()).thenReturn(new byte[]{0, 1, 0 });
 
-        this.helper.addDocumentsSortie(TypeMvtStock.RETOUR_PROMOTEUR,
-                                       resultSortie,
-                                       null,
-                                       fileRetourPromoteur);
+        this.helper.addDocumentsSortie(TypeMvtStock.RETOUR_PROMOTEUR, resultSortie, null, fileRetourPromoteur);
 
         Mockito.verify(this.mockManagerDocRetPromo).setFile(fileRetourPromoteur);
         Mockito.verify(this.mockManagerDocRetPromo).createDocument(retourPromoteur);
@@ -211,9 +183,7 @@ public class SortieFileHelperTest
      * @throws IOException Exception Input / Output.
      */
     @Test
-    public void testAddDocumentsSortieRetourPromoteurKO()
-        throws IOException
-    {
+    public void testAddDocumentsSortieRetourPromoteurKO() throws IOException {
         final List<RetourPromoteur> mvts = new ArrayList<RetourPromoteur>();
         final RetourPromoteur retourPromoteur = Mockito.mock(RetourPromoteur.class);
         mvts.add(retourPromoteur);
@@ -222,13 +192,9 @@ public class SortieFileHelperTest
         resultSortie.setMvts(mvts);
 
         final UploadedFile fileRetourPromoteur = Mockito.mock(UploadedFile.class);
-        Mockito.when(fileRetourPromoteur.getBytes()).thenReturn(new byte[]
-        {});
+        Mockito.when(fileRetourPromoteur.getBytes()).thenReturn(new byte[]{});
 
-        this.helper.addDocumentsSortie(TypeMvtStock.RETOUR_PROMOTEUR,
-                                       resultSortie,
-                                       null,
-                                       fileRetourPromoteur);
+        this.helper.addDocumentsSortie(TypeMvtStock.RETOUR_PROMOTEUR, resultSortie, null, fileRetourPromoteur);
     }
 
 }

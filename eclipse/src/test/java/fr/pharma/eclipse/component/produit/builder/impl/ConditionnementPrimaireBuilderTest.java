@@ -9,12 +9,10 @@ import fr.pharma.eclipse.utils.AbstractEclipseJUnitTest;
 
 /**
  * Test du builder ConditionnementPrimaireBuilder.
- 
+ * @author Netapsys
  * @version $Revision$ $Date$
  */
-public class ConditionnementPrimaireBuilderTest
-    extends AbstractEclipseJUnitTest
-{
+public class ConditionnementPrimaireBuilderTest extends AbstractEclipseJUnitTest {
 
     /**
      * Builder.
@@ -25,8 +23,7 @@ public class ConditionnementPrimaireBuilderTest
      * {@inheritDoc}
      */
     @Override
-    public void setUp()
-    {
+    public void setUp() {
         this.builder = new ConditionnementPrimaireBuilder();
     }
 
@@ -34,8 +31,7 @@ public class ConditionnementPrimaireBuilderTest
      * {@inheritDoc}
      */
     @Override
-    public void tearDown()
-    {
+    public void tearDown() {
         this.builder = null;
     }
 
@@ -44,8 +40,7 @@ public class ConditionnementPrimaireBuilderTest
      */
     @Test
     @Override
-    public void testInit()
-    {
+    public void testInit() {
         Assert.assertNotNull(this.builder);
     }
 
@@ -53,13 +48,11 @@ public class ConditionnementPrimaireBuilderTest
      * Test de la méthode build().
      */
     @Test
-    public void testBuild()
-    {
+    public void testBuild() {
         final Conditionnement conditionnement = new Conditionnement();
         conditionnement.setUniteGestion(UniteGestion.BOITE);
         this.builder.build(conditionnement);
-        Assert.assertEquals("Boîte",
-                            conditionnement.getUnitePrescription());
+        Assert.assertEquals("Boîte", conditionnement.getUnitePrescription());
     }
 
 }

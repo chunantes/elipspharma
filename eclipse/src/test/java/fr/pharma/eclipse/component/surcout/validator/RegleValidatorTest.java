@@ -17,12 +17,10 @@ import fr.pharma.eclipse.utils.FacesUtils;
 
 /**
  * Test du validateur RegleValidator.
- 
+ * @author Netapsys
  * @version $Revision$ $Date$
  */
-public class RegleValidatorTest
-    extends AbstractEclipseJUnitTest
-{
+public class RegleValidatorTest extends AbstractEclipseJUnitTest {
 
     /**
      * Validator à tester.
@@ -43,8 +41,7 @@ public class RegleValidatorTest
      * {@inheritDoc}
      */
     @Override
-    public void setUp()
-    {
+    public void setUp() {
         this.facesUtils = Mockito.mock(FacesUtils.class);
         this.coutVariableValidator = Mockito.mock(CoutVariableValidator.class);
         this.validator = new RegleValidator();
@@ -56,8 +53,7 @@ public class RegleValidatorTest
      * {@inheritDoc}
      */
     @Override
-    public void tearDown()
-    {
+    public void tearDown() {
         this.facesUtils = null;
         this.coutVariableValidator = null;
         this.validator = null;
@@ -68,8 +64,7 @@ public class RegleValidatorTest
      */
     @Override
     @Test
-    public void testInit()
-    {
+    public void testInit() {
         Assert.assertNotNull(this.validator);
         Assert.assertNotNull(this.coutVariableValidator);
         Assert.assertNotNull(this.facesUtils);
@@ -79,12 +74,10 @@ public class RegleValidatorTest
      * Test de la méthode validate.
      */
     @Test
-    public void testValidateFail1()
-    {
+    public void testValidateFail1() {
         final Regle regle = new Regle();
         Assert.assertFalse(this.validator.validate(regle));
-        Mockito.verify(this.facesUtils).addMessage(FacesMessage.SEVERITY_ERROR,
-                                                   "regle.type.notEmpty");
+        Mockito.verify(this.facesUtils).addMessage(FacesMessage.SEVERITY_ERROR, "regle.type.notEmpty");
 
     }
 
@@ -92,15 +85,12 @@ public class RegleValidatorTest
      * Test de la méthode validate.
      */
     @Test
-    public void testValidateFixeFail1()
-    {
+    public void testValidateFixeFail1() {
         final Regle regle = new Regle();
         regle.setType(TypeCout.FIXE);
         Assert.assertFalse(this.validator.validate(regle));
-        Mockito.verify(this.facesUtils).addMessage(FacesMessage.SEVERITY_ERROR,
-                                                   "regle.valeurs.notEmpty");
-        Mockito.verify(this.facesUtils).addMessage(FacesMessage.SEVERITY_ERROR,
-                                                   "regle.perimetre.notEmpty");
+        Mockito.verify(this.facesUtils).addMessage(FacesMessage.SEVERITY_ERROR, "regle.valeurs.notEmpty");
+        Mockito.verify(this.facesUtils).addMessage(FacesMessage.SEVERITY_ERROR, "regle.perimetre.notEmpty");
 
     }
 
@@ -108,16 +98,13 @@ public class RegleValidatorTest
      * Test de la méthode validate.
      */
     @Test
-    public void testValidateFixeFail2()
-    {
+    public void testValidateFixeFail2() {
         final Regle regle = new Regle();
         regle.setType(TypeCout.FIXE);
         regle.setPremiereAnnee(new BigDecimal(0.0));
         Assert.assertFalse(this.validator.validate(regle));
-        Mockito.verify(this.facesUtils).addMessage(FacesMessage.SEVERITY_ERROR,
-                                                   "regle.valeurs.notEmpty");
-        Mockito.verify(this.facesUtils).addMessage(FacesMessage.SEVERITY_ERROR,
-                                                   "regle.perimetre.notEmpty");
+        Mockito.verify(this.facesUtils).addMessage(FacesMessage.SEVERITY_ERROR, "regle.valeurs.notEmpty");
+        Mockito.verify(this.facesUtils).addMessage(FacesMessage.SEVERITY_ERROR, "regle.perimetre.notEmpty");
 
     }
 
@@ -125,16 +112,13 @@ public class RegleValidatorTest
      * Test de la méthode validate.
      */
     @Test
-    public void testValidateFixeFail3()
-    {
+    public void testValidateFixeFail3() {
         final Regle regle = new Regle();
         regle.setType(TypeCout.FIXE);
         regle.setAnneesSuivantes(new BigDecimal(0.0));
         Assert.assertFalse(this.validator.validate(regle));
-        Mockito.verify(this.facesUtils).addMessage(FacesMessage.SEVERITY_ERROR,
-                                                   "regle.valeurs.notEmpty");
-        Mockito.verify(this.facesUtils).addMessage(FacesMessage.SEVERITY_ERROR,
-                                                   "regle.perimetre.notEmpty");
+        Mockito.verify(this.facesUtils).addMessage(FacesMessage.SEVERITY_ERROR, "regle.valeurs.notEmpty");
+        Mockito.verify(this.facesUtils).addMessage(FacesMessage.SEVERITY_ERROR, "regle.perimetre.notEmpty");
 
     }
 
@@ -142,15 +126,13 @@ public class RegleValidatorTest
      * Test de la méthode validate.
      */
     @Test
-    public void testValidateFixeFail4()
-    {
+    public void testValidateFixeFail4() {
         final Regle regle = new Regle();
         regle.setType(TypeCout.FIXE);
         regle.setPremiereAnnee(new BigDecimal(0.0));
         regle.setAnneesSuivantes(new BigDecimal(0.0));
         Assert.assertFalse(this.validator.validate(regle));
-        Mockito.verify(this.facesUtils).addMessage(FacesMessage.SEVERITY_ERROR,
-                                                   "regle.perimetre.notEmpty");
+        Mockito.verify(this.facesUtils).addMessage(FacesMessage.SEVERITY_ERROR, "regle.perimetre.notEmpty");
 
     }
 
@@ -158,8 +140,7 @@ public class RegleValidatorTest
      * Test de la méthode validate.
      */
     @Test
-    public void testValidateFixeOk()
-    {
+    public void testValidateFixeOk() {
         final Regle regle = new Regle();
         regle.setType(TypeCout.FIXE);
         regle.setPremiereAnnee(new BigDecimal(0.0));
@@ -173,14 +154,11 @@ public class RegleValidatorTest
      * Test de la méthode validate.
      */
     @Test
-    public void testValidateVariableFail1()
-    {
+    public void testValidateVariableFail1() {
         final Regle regle = new Regle();
         regle.setType(TypeCout.VARIABLE);
         regle.setPerimetre(PerimetreCout.ESSAI);
-        Mockito
-                .when(this.coutVariableValidator.validate(Matchers.any(Regle.class)))
-                .thenReturn(false);
+        Mockito.when(this.coutVariableValidator.validate(Matchers.any(Regle.class))).thenReturn(false);
         Assert.assertFalse(this.validator.validate(regle));
 
     }
@@ -189,16 +167,12 @@ public class RegleValidatorTest
      * Test de la méthode validate.
      */
     @Test
-    public void testValidateVariableFail2()
-    {
+    public void testValidateVariableFail2() {
         final Regle regle = new Regle();
         regle.setType(TypeCout.VARIABLE);
-        Mockito
-                .when(this.coutVariableValidator.validate(Matchers.any(Regle.class)))
-                .thenReturn(true);
+        Mockito.when(this.coutVariableValidator.validate(Matchers.any(Regle.class))).thenReturn(true);
         Assert.assertFalse(this.validator.validate(regle));
-        Mockito.verify(this.facesUtils).addMessage(FacesMessage.SEVERITY_ERROR,
-                                                   "regle.perimetre.notEmpty");
+        Mockito.verify(this.facesUtils).addMessage(FacesMessage.SEVERITY_ERROR, "regle.perimetre.notEmpty");
 
     }
 
@@ -206,14 +180,11 @@ public class RegleValidatorTest
      * Test de la méthode validate.
      */
     @Test
-    public void testValidateVariableOk()
-    {
+    public void testValidateVariableOk() {
         final Regle regle = new Regle();
         regle.setType(TypeCout.VARIABLE);
         regle.setPerimetre(PerimetreCout.ESSAI);
-        Mockito
-                .when(this.coutVariableValidator.validate(Matchers.any(Regle.class)))
-                .thenReturn(true);
+        Mockito.when(this.coutVariableValidator.validate(Matchers.any(Regle.class))).thenReturn(true);
         Assert.assertTrue(this.validator.validate(regle));
 
     }

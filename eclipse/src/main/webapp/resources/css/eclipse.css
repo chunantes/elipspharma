@@ -131,7 +131,21 @@ legend {
 	padding: 0;
 }
 
-* html .header .banner {
+.header .banner-test
+{
+	background-image:url('../images/testbandeau_head.jpg');
+	background-repeat:no-repeat;
+	background-position:right;
+	width:1000px;
+	height:116px;
+	margin:0 auto;
+	text-align:left;
+	padding:0;
+}
+
+* html .header .banner,
+* html .header .banner-test
+{
 	margin-top: -3px;
 	width: 1200px;
 }
@@ -1012,7 +1026,7 @@ table.popup {
 }
 
 #ui-datepicker-div{
-		display:none;
+	display:none;
 }
 
 .ui-datatable-scrollable .ui-datatable-scrollable-body table, .ui-datatable-scrollable .ui-datatable-scrollable-header table, .ui-datatable-scrollable .ui-datatable-scrollable-footer table {
@@ -1022,3 +1036,14 @@ table.popup {
 #lignesStock table th{
 	white-space: normal;
 }
+
+.ui-datatable-scrollable-header {
+	padding-right: 17px;
+}
+
+.cursor-progress {
+	cursor:progress;
+}
+
+.ui-datatable .ui-datatable-data td, .ui-datatable .ui-datatable-data-empty td{
+	word-wrap: break-word;

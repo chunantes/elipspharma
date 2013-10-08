@@ -48,7 +48,7 @@
 							<p:commandButton value="#{resourceBundle['file.dwd']}"
 								title="#{resourceBundle['file.dwd']}" ajax="false">
 								<p:fileDownload
-									value="#{fileDwdController.downloadDocument(essaiManager.bean, doc_con_pat)}" />
+									value="#{fileDwdController.downloadDocument(detailDonneesPharma.essai, doc_con_pat)}" />
 							</p:commandButton>
 						</c:if>
 					</h:panelGrid>
@@ -75,7 +75,7 @@
 							<p:commandButton value="#{resourceBundle['file.dwd']}"
 								title="#{resourceBundle['file.dwd']}" ajax="false">
 								<p:fileDownload
-									value="#{fileDwdController.downloadDocument(essaiManager.bean, doc_aide_dis)}" />
+									value="#{fileDwdController.downloadDocument(detailDonneesPharma.essai, doc_aide_dis)}" />
 							</p:commandButton>
 						</c:if>
 					</h:panelGrid>

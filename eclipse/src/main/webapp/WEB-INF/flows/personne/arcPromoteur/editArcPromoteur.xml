@@ -1,8 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<flow xmlns="http://www.springframework.org/schema/webflow"
-	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-	xsi:schemaLocation="http://www.springframework.org/schema/webflow
-    http://www.springframework.org/schema/webflow/spring-webflow-2.0.xsd" parent="main">
+<flow xmlns="http://www.springframework.org/schema/webflow" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.springframework.org/schema/webflow
+    http://www.springframework.org/schema/webflow/spring-webflow-2.0.xsd"
+	parent="main">
 
 	<!-- Variable d'entrée -->
 	<input name="idArcPromoteur" />
@@ -14,45 +13,45 @@
 	</on-start>
 
 	<decision-state id="createOrEdit">
-		<if test="idArcPromoteur==null" then="create" else="edit"/>
+		<if test="idArcPromoteur==null" then="create" else="edit" />
 	</decision-state>
-	
+
 	<!-- Création -->
 	<action-state id="create">
-		<evaluate expression="arcPromoteurManager.setBean(arcPromoteurFactory.getInitializedObject())"/>
-		<transition to="editArcPromoteur"/>
+		<evaluate expression="arcPromoteurManager.setBean(arcPromoteurFactory.getInitializedObject())" />
+		<transition to="editArcPromoteur" />
 	</action-state>
-	
+
 	<!-- Modification -->
 	<action-state id="edit">
-		<evaluate expression="arcPromoteurManager.setBean(arcPromoteurService.get(idArcPromoteur))"/>
-		<transition to="editArcPromoteur"/>
+		<evaluate expression="arcPromoteurManager.setBean(arcPromoteurService.get(idArcPromoteur))" />
+		<transition to="editArcPromoteur" />
 	</action-state>
 
 	<!-- Page principale -->
 	<view-state id="editArcPromoteur" view="../../../pages/personne/arcPromoteur/editArcPromoteur.xhtml">
-		<transition on="cancel" to="createOrEdit"/>
+		<transition on="cancel" to="createOrEdit" />
 		<transition on="save" to="comeback">
-			<evaluate expression="arcPromoteurService.save(arcPromoteurManager.bean)"/>
+			<evaluate expression="arcPromoteurService.save(arcPromoteurManager.bean)" />
 		</transition>
 		<transition on="comeback" to="comeback">
-			<set name="arcPromoteurManager.bean" value="null"/>
+			<set name="arcPromoteurManager.bean" value="null" />
 		</transition>
-		
-		<transition on="addPromoteur" to="editPromoteur"/>
-		
-		<transition on="error" to="editArcPromoteur"/>
+
+		<transition on="addPromoteur" to="editPromoteur" />
+
+		<transition on="error" to="editArcPromoteur" />
 	</view-state>
-	
+
 	<!-- Etat final -->
-	<end-state id="comeback"/>
-	
+	<end-state id="comeback" />
+
 	<!-- Edition Promoteur -->
 	<subflow-state id="editPromoteur" subflow="promoteur/edit">
-			<input name="idPromoteur" value="flashScope.idPromoteur"/>	
+		<input name="idPromoteur" value="flashScope.idPromoteur" />
 		<transition to="editArcPromoteur">
-			<set name="arcPromoteurManager.bean.promoteur" value="promoteurManager.bean"/>
+			<set name="arcPromoteurManager.bean.promoteur" value="promoteurManager.bean" />
 		</transition>
 	</subflow-state>
-	
+
 </flow>

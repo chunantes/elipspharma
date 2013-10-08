@@ -12,9 +12,41 @@
 			
 	<tx:annotation-driven/>
     <context:component-scan base-package="fr.pharma.eclipse" />
-    <context:property-placeholder location="classpath:/config/project.properties,classpath:/config/hibernate.properties"/>
-	 
+    
+    <bean id="inetAddress" class="java.net.InetAddress" factory-method="getLocalHost" />
+
+   <bean name="configPath" class="java.lang.String">
+        <constructor-arg value="#{systemProperties['ELIPS_HOME']==null ? 'classpath:META-INF/'+(inetAddress.hostName) :
+        (!(new java.io.File(systemProperties['ELIPS_HOME']+ '/config/project.properties').exists()) ? 
+        'classpath:META-INF/'+(inetAddress.hostName) : 
+        'file:'+systemProperties['ELIPS_HOME']+'/config')}" />
+    </bean>
+
+	
+	<bean class="org.springframework.web.context.support.ServletContextPropertyPlaceholderConfigurer">
+		<property name="ignoreResourceNotFound" value="false" />
+		<property name="ignoreUnresolvablePlaceholders" value="false" />
+		<property name="locations">
+			<list>
+				<value>#{configPath}/project.properties</value>
+				<value>#{configPath}/hibernate.properties</value>
+			</list>
+		</property>
+	</bean>
+	
+	<bean id="log4jInitialization"
+		class="org.springframework.beans.factory.config.MethodInvokingFactoryBean">
+		<property name="targetClass" value="org.springframework.util.Log4jConfigurer" />
+		<property name="targetMethod" value="initLogging" />
+		<property name="arguments">
+			<list>
+				<value>#{configPath}/log4j.xml</value>
+			</list>
+		</property>
+	</bean> 	
+    
 	<import resource="classpath:/config/messages-resources.xml" />
+    <import resource="classpath:/config/applicationContext-persistence.xml" />
 	<import resource="classpath:/config/applicationContext-common.xml" />
 	<import resource="classpath:/config/applicationContext-common-sir.xml" />
 	 

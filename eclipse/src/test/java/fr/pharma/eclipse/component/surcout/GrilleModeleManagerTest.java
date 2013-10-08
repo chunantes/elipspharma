@@ -11,22 +11,22 @@ import org.junit.Test;
 import org.mockito.Matchers;
 import org.mockito.Mockito;
 
+import fr.pharma.eclipse.component.surcout.validator.CategorieValidator;
 import fr.pharma.eclipse.domain.model.surcout.Categorie;
 import fr.pharma.eclipse.domain.model.surcout.Grille;
 import fr.pharma.eclipse.domain.model.surcout.GrilleModele;
 import fr.pharma.eclipse.domain.model.surcout.Theme;
 import fr.pharma.eclipse.factory.common.BeanObjectFactory;
+import fr.pharma.eclipse.predicate.GenericPredicate;
 import fr.pharma.eclipse.service.common.GenericService;
 import fr.pharma.eclipse.utils.AbstractEclipseJUnitTest;
 
 /**
  * Test du GrilleModeleManager.
- 
+ * @author Netapsys
  * @version $Revision$ $Date$
  */
-public class GrilleModeleManagerTest
-    extends AbstractEclipseJUnitTest
-{
+public class GrilleModeleManagerTest extends AbstractEclipseJUnitTest {
 
     /**
      * Manager à tester.
@@ -47,27 +47,28 @@ public class GrilleModeleManagerTest
      * Service grille modele.
      */
     private GenericService<GrilleModele> service;
+    
 
     /**
      * {@inheritDoc}
      */
     @Override
-    public void setUp()
-    {
+    public void setUp() {
         this.service = Mockito.mock(GenericService.class);
         this.categorieFactory = Mockito.mock(BeanObjectFactory.class);
         this.themeFactory = Mockito.mock(BeanObjectFactory.class);
         this.manager = new GrilleModeleManager(this.service);
         this.manager.setThemeFactory(this.themeFactory);
         this.manager.setCategorieFactory(this.categorieFactory);
+        this.manager.setCategorieValidator(Mockito.mock(CategorieValidator.class));
+       
     }
 
     /**
      * {@inheritDoc}
      */
     @Override
-    public void tearDown()
-    {
+    public void tearDown() {
         this.themeFactory = null;
         this.categorieFactory = null;
         this.manager = null;
@@ -78,8 +79,7 @@ public class GrilleModeleManagerTest
      */
     @Override
     @Test
-    public void testInit()
-    {
+    public void testInit() {
         Assert.assertNotNull(this.manager);
         Assert.assertNotNull(this.themeFactory);
         Assert.assertNotNull(this.categorieFactory);
@@ -89,8 +89,7 @@ public class GrilleModeleManagerTest
      * Test de la méthode removeTheme().
      */
     @Test
-    public void testRemoveTheme()
-    {
+    public void testRemoveTheme() {
 
         final GrilleModele bean = new GrilleModele();
         bean.setNom("nom");
@@ -102,22 +101,19 @@ public class GrilleModeleManagerTest
         final ActionEvent event = Mockito.mock(ActionEvent.class);
         final UIComponent component = Mockito.mock(UIComponent.class);
         final Map<String, Object> map = new HashMap<String, Object>();
-        map.put("theme",
-                theme);
+        map.put("theme", theme);
 
         Mockito.when(event.getComponent()).thenReturn(component);
         Mockito.when(component.getAttributes()).thenReturn(map);
         this.manager.removeTheme(event);
-        Assert.assertEquals(0,
-                            this.manager.getBean().getThemes().size());
+        Assert.assertEquals(0, this.manager.getBean().getThemes().size());
     }
 
     /**
      * Test de la méthode removeCategorie().
      */
     @Test
-    public void testRemoveCategorie()
-    {
+    public void testRemoveCategorie() {
 
         final GrilleModele bean = new GrilleModele();
         bean.setNom("nom");
@@ -135,22 +131,19 @@ public class GrilleModeleManagerTest
         final ActionEvent event = Mockito.mock(ActionEvent.class);
         final UIComponent component = Mockito.mock(UIComponent.class);
         final Map<String, Object> map = new HashMap<String, Object>();
-        map.put("categorie",
-                categorie);
+        map.put("categorie", categorie);
 
         Mockito.when(event.getComponent()).thenReturn(component);
         Mockito.when(component.getAttributes()).thenReturn(map);
         this.manager.removeCategorie(event);
-        Assert.assertEquals(0,
-                            categorie.getTheme().getCategories().size());
+        Assert.assertEquals(0, categorie.getTheme().getCategories().size());
     }
 
     /**
      * Test de la méthode initTheme().
      */
     @Test
-    public void testInitTheme()
-    {
+    public void testInitTheme() {
         final ActionEvent event = Mockito.mock(ActionEvent.class);
         final UIComponent component = Mockito.mock(UIComponent.class);
         final Map<String, Object> map = new HashMap<String, Object>();
@@ -166,18 +159,15 @@ public class GrilleModeleManagerTest
      * Test de la méthode initTheme().
      */
     @Test
-    public void testInitThemeEdit()
-    {
+    public void testInitThemeEdit() {
         final ActionEvent event = Mockito.mock(ActionEvent.class);
         final UIComponent component = Mockito.mock(UIComponent.class);
         final Map<String, Object> map = new HashMap<String, Object>();
         Mockito.when(event.getComponent()).thenReturn(component);
         Mockito.when(component.getAttributes()).thenReturn(map);
-        map.put("theme",
-                new Theme());
+        map.put("theme", new Theme());
         this.manager.initTheme(event);
-        Mockito.verify(this.themeFactory,
-                       Mockito.never()).getInitializedObject();
+        Mockito.verify(this.themeFactory, Mockito.never()).getInitializedObject();
         Assert.assertNotNull(this.manager.getTheme());
     }
 
@@ -185,8 +175,7 @@ public class GrilleModeleManagerTest
      * Test de la méthode initCategorie().
      */
     @Test
-    public void testInitCategorie()
-    {
+    public void testInitCategorie() {
         final ActionEvent event = Mockito.mock(ActionEvent.class);
         final UIComponent component = Mockito.mock(UIComponent.class);
         final Map<String, Object> map = new HashMap<String, Object>();
@@ -202,18 +191,15 @@ public class GrilleModeleManagerTest
      * Test de la méthode initCategorie().
      */
     @Test
-    public void testInitCategorieEdit()
-    {
+    public void testInitCategorieEdit() {
         final ActionEvent event = Mockito.mock(ActionEvent.class);
         final UIComponent component = Mockito.mock(UIComponent.class);
         final Map<String, Object> map = new HashMap<String, Object>();
         Mockito.when(event.getComponent()).thenReturn(component);
         Mockito.when(component.getAttributes()).thenReturn(map);
-        map.put("categorie",
-                new Categorie());
+        map.put("categorie", new Categorie());
         this.manager.initCategorie(event);
-        Mockito.verify(this.categorieFactory,
-                       Mockito.never()).getInitializedObject();
+        Mockito.verify(this.categorieFactory, Mockito.never()).getInitializedObject();
         Assert.assertNotNull(this.manager.getCategorie());
     }
 
@@ -221,8 +207,7 @@ public class GrilleModeleManagerTest
      * Test de la méthode addTheme.
      */
     @Test
-    public void testAddTheme()
-    {
+    public void testAddTheme() {
         final Theme theme = new Theme();
         theme.setId(1L);
         theme.setLibelle("theme");
@@ -231,8 +216,7 @@ public class GrilleModeleManagerTest
         this.manager.setBean(new GrilleModele());
         this.manager.addTheme();
 
-        Assert.assertEquals(1,
-                            this.manager.getBean().getThemes().size());
+        Assert.assertEquals(1, this.manager.getBean().getThemes().size());
         Assert.assertNull(this.manager.getTheme());
     }
 
@@ -240,8 +224,7 @@ public class GrilleModeleManagerTest
      * Test de la méthode addTheme.
      */
     @Test
-    public void testAddThemeDejaPresent()
-    {
+    public void testAddThemeDejaPresent() {
         final Theme theme = new Theme();
         theme.setId(1L);
         theme.setLibelle("theme");
@@ -251,8 +234,7 @@ public class GrilleModeleManagerTest
         this.manager.getBean().getThemes().add(theme);
         this.manager.addTheme();
 
-        Assert.assertEquals(1,
-                            this.manager.getBean().getThemes().size());
+        Assert.assertEquals(1, this.manager.getBean().getThemes().size());
         Assert.assertNull(this.manager.getTheme());
     }
 
@@ -260,8 +242,7 @@ public class GrilleModeleManagerTest
      * Test de la méthode addCategorie.
      */
     @Test
-    public void testAddCategorie()
-    {
+    public void testAddCategorie() {
         final Theme theme = new Theme();
         theme.setId(1L);
         theme.setLibelle("theme");
@@ -274,20 +255,20 @@ public class GrilleModeleManagerTest
         categorie.setId(1L);
         categorie.setLibelle("nom");
         this.manager.setCategorie(categorie);
+        categorie.setTheme(theme);
+        
+        Mockito.when(this.manager.getCategorieValidator().validate(this.manager.getCategorie())).thenReturn(true);
+        
         this.manager.addCategorie();
 
-        Assert.assertEquals(1,
-                            this.manager.getBean().getThemes().first().getCategories().size());
-        Assert.assertNull(this.manager.getTheme());
-        Assert.assertNull(this.manager.getCategorie());
+        Assert.assertEquals(1, this.manager.getBean().getThemes().first().getCategories().size());
     }
 
     /**
      * Test de la méthode addTheme.
      */
     @Test
-    public void testAddCategorieDejaPresent()
-    {
+    public void testAddCategorieDejaPresent() {
         final Theme theme = new Theme();
         theme.setId(1L);
         theme.setLibelle("theme");
@@ -300,23 +281,20 @@ public class GrilleModeleManagerTest
         categorie.setLibelle("nom");
         this.manager.getTheme().getCategories().add(categorie);
         this.manager.setCategorie(categorie);
+        CategorieValidator validator = this.manager.getCategorieValidator();
+        Mockito.when(validator.validate(categorie)).thenReturn(true);
         this.manager.addCategorie();
 
-        Assert.assertEquals(1,
-                            this.manager.getBean().getThemes().first().getCategories().size());
-        Assert.assertNull(this.manager.getTheme());
-        Assert.assertNull(this.manager.getCategorie());
+        Assert.assertEquals(1, this.manager.getBean().getThemes().first().getCategories().size());
     }
 
     /**
      * Test de la méthode processEditable.
      */
     @Test
-    public void testProcessEditableTrue()
-    {
+    public void testProcessEditableTrue() {
         this.manager.setBean(new GrilleModele());
-        Mockito.when(this.service.reattach(Matchers.any(GrilleModele.class)))
-                .thenReturn(new GrilleModele());
+        Mockito.when(this.service.reattach(Matchers.any(GrilleModele.class))).thenReturn(new GrilleModele());
         this.manager.processEditable();
         Assert.assertTrue(this.manager.isEditable());
     }
@@ -325,8 +303,7 @@ public class GrilleModeleManagerTest
      * Test de la méthode processEditable.
      */
     @Test
-    public void testProcessEditableTrue2()
-    {
+    public void testProcessEditableTrue2() {
         this.manager.setBean(new GrilleModele());
         final GrilleModele g = new GrilleModele();
         g.setId(1L);
@@ -339,8 +316,7 @@ public class GrilleModeleManagerTest
      * Test de la méthode processEditable.
      */
     @Test
-    public void testProcessEditableFalse()
-    {
+    public void testProcessEditableFalse() {
         this.manager.setBean(new GrilleModele());
         final GrilleModele g = new GrilleModele();
         g.setId(1L);

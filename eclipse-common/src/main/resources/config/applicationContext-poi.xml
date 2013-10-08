@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans 
+    xmlns="http://www.springframework.org/schema/beans" 
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd">
+
+	<!--  Creator -->
+	<bean id="fileCreator" class="fr.pharma.eclipse.poi.FileCreator">
+		<property name="documentsDirectory" value="${files.documents}/essais"/>
+		<property name="builders">
+			<map>
+				<entry key-ref="COUT_PREVISIONNEL" value-ref="previsionnelBuilder"/>
+				<entry key-ref="COUT_REEL" value-ref="reelBuilder"/>
+			</map>
+		</property>
+	</bean>
+	
+	<!-- Builder abstrait -->
+	<bean id="abstractBuilder" abstract="true" class="fr.pharma.eclipse.poi.builder.impl.AbstractSheetBuilder"/>
+	
+	<!-- Builder pour previsionnel -->
+	<bean id="previsionnelBuilder" parent="abstractBuilder" class="fr.pharma.eclipse.poi.builder.impl.PrevisionnelBuilder"/>
+	
+	<!-- Builder pour reel -->
+	<bean id="reelBuilder" parent="abstractBuilder" class="fr.pharma.eclipse.poi.builder.impl.ReelBuilder"/>
+	
+	<!-- LineFormatter pour previsionnel -->
+	<bean id="previsionnelLineFormatter" class="fr.pharma.eclipse.poi.formatter.impl.PrevisionnelLineFormatterImpl" />
+	
+	<!-- LineFormatter pour reel. -->
+	<bean id="reelLineFormatter" class="fr.pharma.eclipse.poi.formatter.impl.ReelLineFormatterImpl" />
+</beans>

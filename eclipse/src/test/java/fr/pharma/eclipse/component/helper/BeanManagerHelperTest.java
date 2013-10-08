@@ -24,11 +24,10 @@ import fr.pharma.eclipse.utils.EssaiUtils;
 
 /**
  * Test de la classe BeanManagerHelper.
- 
+ * @author Netapsys
  * @version $Revision$ $Date$
  */
-public class BeanManagerHelperTest
-{
+public class BeanManagerHelperTest {
     /**
      * Classe testée.
      */
@@ -44,8 +43,7 @@ public class BeanManagerHelperTest
      */
     @SuppressWarnings("unchecked")
     @Before
-    public void setUp()
-    {
+    public void setUp() {
         this.mockedBeanHelper = Mockito.mock(BeanHelper.class);
         this.helper = new BeanManagerHelper<Essai>();
         this.helper.setBeanHelper(this.mockedBeanHelper);
@@ -55,8 +53,7 @@ public class BeanManagerHelperTest
      * Méthode de finalisation.
      */
     @After
-    public void tearDown()
-    {
+    public void tearDown() {
         this.helper = null;
         this.mockedBeanHelper = null;
     }
@@ -65,24 +62,19 @@ public class BeanManagerHelperTest
      * Test de la méthode returnAsDataModel.
      */
     @Test
-    public void testReturnAsDataModel()
-    {
+    public void testReturnAsDataModel() {
         long id = 1;
-        final List<Essai> essais = Arrays.asList(EssaiUtils.makeEssaiTest(id++),
-                                                 EssaiUtils.makeEssaiTest(id++),
-                                                 EssaiUtils.makeEssaiTest(id++));
+        final List<Essai> essais = Arrays.asList(EssaiUtils.makeEssaiTest(id++), EssaiUtils.makeEssaiTest(id++), EssaiUtils.makeEssaiTest(id++));
         final DataModel<Essai> dataModel = this.helper.returnAsDataModel(essais);
         Assert.assertNotNull(dataModel);
-        Assert.assertEquals(essais.size(),
-                            dataModel.getRowCount());
+        Assert.assertEquals(essais.size(), dataModel.getRowCount());
     }
 
     /**
      * Test de la méthode updateSelectable.
      */
     @Test
-    public void testUpdateSelectable()
-    {
+    public void testUpdateSelectable() {
         Long nextId = 1L;
         final String baseNom = "pharma_";
         final Pharmacie pharmacie1 = new Pharmacie();
@@ -91,21 +83,15 @@ public class BeanManagerHelperTest
         pharmacie1.setId(nextId++);
         pharmacie2.setId(nextId++);
         pharmacie3.setId(nextId++);
-        pharmacie1.setNom(baseNom
-                          + pharmacie1.getId());
-        pharmacie2.setNom(baseNom
-                          + pharmacie2.getId());
-        pharmacie3.setNom(baseNom
-                          + pharmacie3.getId());
+        pharmacie1.setNom(baseNom + pharmacie1.getId());
+        pharmacie2.setNom(baseNom + pharmacie2.getId());
+        pharmacie3.setNom(baseNom + pharmacie3.getId());
 
         final SortedSet<Pharmacie> selected = new TreeSet<Pharmacie>(new BeanWithNomComparator());
         selected.add(pharmacie1);
-        final List<Pharmacie> selectable = Arrays.asList(pharmacie1,
-                                                         pharmacie2,
-                                                         pharmacie3);
+        final List<Pharmacie> selectable = Arrays.asList(pharmacie1, pharmacie2, pharmacie3);
 
-        this.helper.updateSelectable(selected,
-                                     selectable);
+        this.helper.updateSelectable(selected, selectable);
 
         Assert.assertTrue(pharmacie1.getSelected());
         Assert.assertFalse(pharmacie2.getSelected());
@@ -117,8 +103,7 @@ public class BeanManagerHelperTest
      */
     @SuppressWarnings("unchecked")
     @Test
-    public void testUpdateSelectableBeans()
-    {
+    public void testUpdateSelectableBeans() {
         Long nextId = 1L;
         final String baseNom = "pharma_";
         final Pharmacie pharmacie1 = new Pharmacie();
@@ -127,24 +112,18 @@ public class BeanManagerHelperTest
         pharmacie1.setId(nextId++);
         pharmacie2.setId(nextId++);
         pharmacie3.setId(nextId++);
-        pharmacie1.setNom(baseNom
-                          + pharmacie1.getId());
-        pharmacie2.setNom(baseNom
-                          + pharmacie2.getId());
-        pharmacie3.setNom(baseNom
-                          + pharmacie3.getId());
+        pharmacie1.setNom(baseNom + pharmacie1.getId());
+        pharmacie2.setNom(baseNom + pharmacie2.getId());
+        pharmacie3.setNom(baseNom + pharmacie3.getId());
 
         final SortedSet<Pharmacie> selected = new TreeSet<Pharmacie>(new BeanWithNomComparator());
         selected.add(pharmacie1);
         final SelectableBean<Pharmacie> wrapper1 = new SelectableBean<Pharmacie>(pharmacie1);
         final SelectableBean<Pharmacie> wrapper2 = new SelectableBean<Pharmacie>(pharmacie2);
         final SelectableBean<Pharmacie> wrapper3 = new SelectableBean<Pharmacie>(pharmacie3);
-        final List<SelectableBean<Pharmacie>> selectable = Arrays.asList(wrapper1,
-                                                                         wrapper2,
-                                                                         wrapper3);
+        final List<SelectableBean<Pharmacie>> selectable = Arrays.asList(wrapper1, wrapper2, wrapper3);
 
-        this.helper.updateSelectableWrapped(selected,
-                                            selectable);
+        this.helper.updateSelectableWrapped(selected, selectable);
 
         Assert.assertFalse(pharmacie1.getSelected());
         Assert.assertFalse(pharmacie2.getSelected());
@@ -158,8 +137,7 @@ public class BeanManagerHelperTest
      * Test de la méthode updateSelected.
      */
     @Test
-    public void testUpdateSelected()
-    {
+    public void testUpdateSelected() {
         Long nextId = 1L;
         final String baseNom = "pharma_";
         final Pharmacie pharmacie1 = new Pharmacie();
@@ -168,16 +146,11 @@ public class BeanManagerHelperTest
         pharmacie1.setId(nextId++);
         pharmacie2.setId(nextId++);
         pharmacie3.setId(nextId++);
-        pharmacie1.setNom(baseNom
-                          + pharmacie1.getId());
-        pharmacie2.setNom(baseNom
-                          + pharmacie2.getId());
-        pharmacie3.setNom(baseNom
-                          + pharmacie3.getId());
+        pharmacie1.setNom(baseNom + pharmacie1.getId());
+        pharmacie2.setNom(baseNom + pharmacie2.getId());
+        pharmacie3.setNom(baseNom + pharmacie3.getId());
 
-        final List<Pharmacie> selectable = Arrays.asList(pharmacie1,
-                                                         pharmacie2,
-                                                         pharmacie3);
+        final List<Pharmacie> selectable = Arrays.asList(pharmacie1, pharmacie2, pharmacie3);
         final SortedSet<Pharmacie> selected = new TreeSet<Pharmacie>(new BeanWithNomComparator());
         selected.add(pharmacie1);
 
@@ -186,13 +159,10 @@ public class BeanManagerHelperTest
         pharmacie3.setSelected(true);
 
         selected.add(pharmacie1);
-        this.helper.updateSelected(selected,
-                                   selectable);
+        this.helper.updateSelected(selected, selectable);
 
-        Assert.assertEquals(1,
-                            selected.size());
-        Assert.assertEquals(pharmacie3,
-                            selected.first());
+        Assert.assertEquals(1, selected.size());
+        Assert.assertEquals(pharmacie3, selected.first());
     }
 
     /**
@@ -200,8 +170,7 @@ public class BeanManagerHelperTest
      */
     @SuppressWarnings("unchecked")
     @Test
-    public void testUpdateSelectedWrapped()
-    {
+    public void testUpdateSelectedWrapped() {
         Long nextId = 1L;
         final String baseNom = "pharma_";
         final Pharmacie pharmacie1 = new Pharmacie();
@@ -210,19 +179,14 @@ public class BeanManagerHelperTest
         pharmacie1.setId(nextId++);
         pharmacie2.setId(nextId++);
         pharmacie3.setId(nextId++);
-        pharmacie1.setNom(baseNom
-                          + pharmacie1.getId());
-        pharmacie2.setNom(baseNom
-                          + pharmacie2.getId());
-        pharmacie3.setNom(baseNom
-                          + pharmacie3.getId());
+        pharmacie1.setNom(baseNom + pharmacie1.getId());
+        pharmacie2.setNom(baseNom + pharmacie2.getId());
+        pharmacie3.setNom(baseNom + pharmacie3.getId());
 
         final SelectableBean<Pharmacie> wrapper1 = new SelectableBean<Pharmacie>(pharmacie1);
         final SelectableBean<Pharmacie> wrapper2 = new SelectableBean<Pharmacie>(pharmacie2);
         final SelectableBean<Pharmacie> wrapper3 = new SelectableBean<Pharmacie>(pharmacie3);
-        final List<SelectableBean<Pharmacie>> selectable = Arrays.asList(wrapper1,
-                                                                         wrapper2,
-                                                                         wrapper3);
+        final List<SelectableBean<Pharmacie>> selectable = Arrays.asList(wrapper1, wrapper2, wrapper3);
         final SortedSet<Pharmacie> selected = new TreeSet<Pharmacie>(new BeanWithNomComparator());
         selected.add(pharmacie1);
 
@@ -231,41 +195,31 @@ public class BeanManagerHelperTest
         wrapper3.setSelected(true);
 
         selected.add(pharmacie1);
-        this.helper.updateSelectedWrapped(selected,
-                                          selectable);
+        this.helper.updateSelectedWrapped(selected, selectable);
 
-        Assert.assertEquals(1,
-                            selected.size());
-        Assert.assertEquals(pharmacie3,
-                            selected.first());
+        Assert.assertEquals(1, selected.size());
+        Assert.assertEquals(pharmacie3, selected.first());
     }
 
     /**
      * Test de la méthode addToCollection.
      */
     @Test
-    public void testAddToCollection()
-    {
+    public void testAddToCollection() {
         long ids = 1;
-        final Essai essai = EssaiUtils.makeEssaiTest(ids++,
-                                                     null);
+        final Essai essai = EssaiUtils.makeEssaiTest(ids++, null);
         final EssaiSuivi suivi = Mockito.mock(EssaiSuivi.class);
         Assert.assertTrue(essai.getModifs().isEmpty());
         final String beanCollectionProperty = "modifs";
-        this.helper.addToCollection(essai,
-                                    beanCollectionProperty,
-                                    suivi);
-        Mockito.verify(this.mockedBeanHelper).addToCollection(essai,
-                                                              beanCollectionProperty,
-                                                              suivi);
+        this.helper.addToCollection(essai, beanCollectionProperty, suivi);
+        Mockito.verify(this.mockedBeanHelper).addToCollection(essai, beanCollectionProperty, suivi);
     }
 
     /**
      * Test de la méthode getFirstOfCollection - pas de premier élément.
      */
     @Test
-    public void testGetFirstOfCollectionKo()
-    {
+    public void testGetFirstOfCollectionKo() {
         Assert.assertNull(this.helper.getFirstOfCollection(null));
         Assert.assertNull(this.helper.getFirstOfCollection(new ArrayList<Essai>()));
     }
@@ -274,23 +228,20 @@ public class BeanManagerHelperTest
      * Test de la méthode getFirstOfCollection.
      */
     @Test
-    public void testGetFirstOfCollectionOk()
-    {
+    public void testGetFirstOfCollectionOk() {
         long ids = 1;
         final List<Essai> essais = new ArrayList<Essai>();
         final Essai expectedEssai = EssaiUtils.makeEssaiTest(ids++);
         essais.add(expectedEssai);
         essais.add(EssaiUtils.makeEssaiTest(ids++));
-        Assert.assertEquals(expectedEssai,
-                            this.helper.getFirstOfCollection(essais));
+        Assert.assertEquals(expectedEssai, this.helper.getFirstOfCollection(essais));
     }
 
     /**
      * Test de la méthode getBeansSelected.
      */
     @Test
-    public void testGetBeansSelected()
-    {
+    public void testGetBeansSelected() {
         long id = 1;
         final Essai essai1 = EssaiUtils.makeEssaiTest(id++);
         final Essai essai2 = EssaiUtils.makeEssaiTest(id++);
@@ -299,12 +250,9 @@ public class BeanManagerHelperTest
         essai2.setSelected(true);
         essai3.setSelected(false);
 
-        final List<Essai> res = this.helper.getBeansSelected(Arrays.asList(essai1,
-                                                                           essai2,
-                                                                           essai3));
+        final List<Essai> res = this.helper.getBeansSelected(Arrays.asList(essai1, essai2, essai3));
         Assert.assertNotNull(res);
-        Assert.assertEquals(1,
-                            res.size());
+        Assert.assertEquals(1, res.size());
         Assert.assertTrue(res.contains(essai2));
         Assert.assertFalse(res.contains(essai1));
         Assert.assertFalse(res.contains(essai3));

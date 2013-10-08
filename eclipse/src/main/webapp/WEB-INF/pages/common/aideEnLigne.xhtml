@@ -1,0 +1,2359 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html>
+<html lang="fr" xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:h="http://java.sun.com/jsf/html">
+
+	
+<head>
+<meta content="text/html; charset=UTF-8" http-equiv="Content-Type" />
+<meta content="IE=8" http-equiv="X-UA-Compatible" />
+<meta content="fr-FR" http-equiv="Content-language" />
+<meta content="Elips'PHARMA" name="copyright" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<meta name="google-site-verification"
+	content="sprWYtvJ6b_jQiNT6W2oRMg7uWa-fWePXNHD22C0WOw" />
+<link rel="Shortcut icon" href="#{facesContext.externalContext.requestContextPath}/resources/images/aideEnLigne/#{'favicon.ico'}" type="image/x-icon" />
+<link type="text/css" rel="stylesheet" href="#{facesContext.externalContext.requestContextPath}/css/#{'bootstrap.min.css'}" />
+<link type="text/css" rel="stylesheet" href="#{facesContext.externalContext.requestContextPath}/resources/css/#{'aideEnLigne.css'}" />
+<title>Elips'PHARMA - Gestion des pharmacies</title>
+<!-- Le HTML5 shim, for IE6-8 support of HTML5 elements -->
+<!--[if lt IE 9]>
+<script src="http://html5shim.googlecode.com/svn/trunk/html5.js"></script>
+<![endif]-->
+</head>
+<body data-spy="scroll" data-target="#navbar">
+	<div class="navbar navbar-inverse navbar-fixed-top">
+		<div id="navbar" class="navbar-inner">
+			<div class="container-fluid">
+				<a class="brand" title="Elips'Pharma" href="./aideEnLigne.html#_Toc365639539">Aide</a>
+				<ul class="nav">
+					<li class="divider-vertical"></li>
+					<li class="dropdown">
+						<a href="#" class="dropdown-toggle" data-toggle="dropdown">Présentation<b class="caret"></b></a>
+						<ul class="dropdown-menu">
+				          <li><a href="./aideEnLigne.html#_Toc365639541">Fenêtre de login / Page d’authentification</a></li>
+				          <li><a href="./aideEnLigne.html#_Toc365639542">Bandeau de menu</a></li>
+				          <li><a href="./aideEnLigne.html#_Toc365639543">Zone de contenu</a></li>
+				        </ul>
+					</li>
+					<li class="divider-vertical"></li>	
+					<li class="dropdown">
+						<a href="#" class="dropdown-toggle" data-toggle="dropdown">Paramétrage<b class="caret"></b></a>
+						<ul class="dropdown-menu">
+				          <li><a href="./aideEnLigne.html#_Toc365639548">Ordre de paramétrage des référentiels décrivant la structure</a></li>
+				          <li><a href="./aideEnLigne.html#_Toc365639551">Sécurisation de l’application</a></li>
+				          <li><a href="./aideEnLigne.html#_Toc365639554">Gestion des personnes</a></li>
+				          <li><a href="./aideEnLigne.html#_Toc365639557">Gestion des pharmacies</a></li>
+				          <li><a href="./aideEnLigne.html#_Toc365639558">Gestion des patients</a></li>
+				          <li><a href="./aideEnLigne.html#_Toc365639561">Gestion des promoteurs</a></li>
+				        </ul>
+					</li>					
+					<li class="divider-vertical"></li>
+					<li class="dropdown">
+						<a href="#" class="dropdown-toggle" data-toggle="dropdown">Cycle vie essai<b class="caret"></b></a>
+						<ul class="dropdown-menu">
+				          <li><a href="./aideEnLigne.html#_Toc365639563">Description du workflow</a></li>
+				          <li><a href="./aideEnLigne.html#_Toc365639564">Création d’un essai</a></li>
+				          <li><a href="./aideEnLigne.html#_Toc365639568">Evènement sur un essai : description de l’agenda</a></li>
+				          <li><a href="./aideEnLigne.html#_Toc365639571">Gestion des incidents</a></li>
+				          <li><a href="./aideEnLigne.html#_Toc365639572">Clôture d’un essai</a></li>
+				        </ul>
+					</li>						
+					<li class="divider-vertical"></li>
+					<li class="dropdown">
+						<a href="#" class="dropdown-toggle" data-toggle="dropdown">Grille surcoût<b class="caret"></b></a>
+						<ul class="dropdown-menu">
+				          <li><a href="./aideEnLigne.html#_Toc365639574">Principe de fonctionnement</a></li>
+				          <li><a href="./aideEnLigne.html#_Toc365639575">Définition du vocabulaire et des méthodes de calculs (éléments décomptés)</a></li>
+				          <li><a href="./aideEnLigne.html#_Toc365639576">Création &amp; Affectation d’une grille &amp; calcul prévisionnel</a></li>
+				          <li><a href="./aideEnLigne.html#_Toc365639579">Génération réelle des surcoûts</a></li>
+				        </ul>
+					</li>						
+					<li class="divider-vertical"></li>
+					<li class="dropdown">
+						<a href="#" class="dropdown-toggle" data-toggle="dropdown">Gestion stocks<b class="caret"></b></a>
+						<ul class="dropdown-menu">
+				          <li><a href="./aideEnLigne.html#_Toc365639581">Etat du stock &amp; Mouvement</a></li>
+				          <li><a href="./aideEnLigne.html#_Toc365639582">Approvisionnement</a></li>
+				          <li><a href="./aideEnLigne.html#_Toc365639583">Mise en quarantaine / Sortie de quarantaine</a></li>
+				          <li><a href="./aideEnLigne.html#_Toc365639587">Prolongation de la date de péremption</a></li>
+				      	  <li><a href="./aideEnLigne.html#_Toc365639588">Sortie de stock</a></li>
+				      	  <li><a href="./aideEnLigne.html#_Toc365639589">Préparation</a></li>
+				      	  <li><a href="./aideEnLigne.html#_Toc365639590">Retour Patient</a></li>
+				      	  <li><a href="./aideEnLigne.html#_Toc365639591">Demande de dotation et dispensation Globale</a></li>
+				        </ul>
+					</li>			
+					<li class="divider-vertical"></li>
+					<li class="dropdown">
+						<a href="#" class="dropdown-toggle" data-toggle="dropdown">Prescription / Dispensation<b class="caret"></b></a>
+						<ul class="dropdown-menu">
+				          <li><a href="./aideEnLigne.html#_Toc365639595">Workflow : inclusion, prescription, dispensation</a></li>
+				          <li><a href="./aideEnLigne.html#_Toc365639596">Description d’une inclusion</a></li>
+				          <li><a href="./aideEnLigne.html#_Toc365639599">Prescription</a></li>
+				          <li><a href="./aideEnLigne.html#_Toc365639602">Dispensation</a></li>
+				        </ul>
+					</li>					
+					<li class="divider-vertical"></li>		
+					<li class="dropdown">
+						<a href="#" class="dropdown-toggle " data-toggle="dropdown">Statistiques<b class="caret"></b></a>
+						<ul class="dropdown-menu last-menu-item">
+				          <li><a href="./aideEnLigne.html#_Toc365639604">Alertes de la page d’accueil</a></li>
+				          <li><a href="./aideEnLigne.html#_Toc365639605">Menu statistiques</a></li>
+				          <li><a href="./aideEnLigne.html#_Toc365639606">Ordonnanciers de dispensation</a></li>
+				          <li><a href="./aideEnLigne.html#_Toc365639609">Ordonnanciers de fabrication/reconstitution</a></li>
+
+				        </ul>
+					</li>								
+				</ul>
+			</div>
+		</div>
+	</div>
+	<!-- HOME-->
+	<div class="bloc container-fluid" id="home">
+		<div class="row-fluid">
+			<div class="span12">
+				<h2>Guide Utilisateur</h2>
+			</div>
+		</div>
+		<br clear="all" />
+		<h2 class="ancre" id="_Toc365639539">1. Avant-Propos</h2>
+		<p align="center">
+			<img width="541" height="355" src="#{facesContext.externalContext.requestContextPath}/resources/images/aideEnLigne/#{'image006.png'}" />
+		</p>			
+		<p>Ce guide a pour objectif de présenter le fonctionnement et les
+			différentes fonctionnalités offertes par Elips. Après une
+			présentation générale des sections types et logos retrouvés dans tout
+			Elips, des conseils de paramétrage de l’application sont proposés. Le
+			cycle de vie d’un essai dans Elips est ensuite présenté ainsi que les
+			fonctionnalités de génération des surcoûts. Puis les fonctionnalités
+			de gestion de stock sont présentées. Sont également décrits les
+			différentes actions pouvant être réalisées pendant le déroulement
+			d’un essai : inclusions de patient dans l’essai, prescription et
+			dispensation à des patients. Enfin, ce guide vous indique les
+			modalités d’édition de statistiques et de gestion des ordonnanciers
+			avec Elips.</p>
+		<h2 class="ancre" id="_Toc365639540">2. Présentation générale de l’IHM</h2>
+			<h4 class="ancre" id="_Toc365639541">a) Fenêtre de login / Page d’authentification</h4>
+		<p>Pour se connecter à Elips, l’utilisateur doit tout d’abord
+			s’authentifier.</p>
+		<p>Cela se fait depuis la page d’authentification où l’utilisateur
+			est invité à saisir son identifiant et son mot de passe.</p>
+		<p align="center">
+			<img width="541" height="355" src="#{facesContext.externalContext.requestContextPath}/resources/images/aideEnLigne/#{'image004.png'}" />
+		</p>
+		<p>En cas d’identifiant et/ou mot de passe non reconnu(s), un
+			message indiquant que les identifiants sont incorrects s’affiche.</p>
+		<h4 class="ancre" id="_Toc365639542">b) Bandeau de menu</h4>
+		<p align="center">
+			<img width="639" height="90" src="#{facesContext.externalContext.requestContextPath}/resources/images/aideEnLigne/#{'image006.png'}" />
+		</p>
+		<p>Un bandeau de menu en haut de l’écran est présent en permanence
+			pendant la navigation de l’utilisateur dans l’application.</p>
+		<p>Ce bandeau de menu comporte 5 onglets donnant accès à
+			différents menus :</p>
+		<p>§ Déroulement des essais : menu de gestion des différentes
+			étapes du cycle de vie des essais,</p>
+		<p>§ Stock : menu de gestion des stocks,</p>
+		<p>§ Répertoire des essais : menu donnant accès à la recherche et
+			création d’essais,</p>
+		<p>§ Gérer les données : menu de gestion des données de
+			l’application,</p>
+		<p>§ Ordonnancier : menu donnant accès la génération et recherche
+			d’ordonnanciers de dispensation ou de fabrication.</p>
+		<h4 class="ancre" id="_Toc365639543">c) Zone de contenu</h4>
+		<h5 class="ancre" id="_Toc365639544">· Ecran de saisie</h5>
+		<p>Les écrans de saisie sont composés de différents types de
+			champs.</p>
+		<p>§ Les champs obligatoires sont identifiés par un astérisque
+			rouge. Cela signifie qu’aucune sauvegarde ne peut être faite sans que
+			ces champs ne soient renseignés.</p>
+		<p>Exemple : Numéro d’inclusion *</p>
+		<p>§ Les champs de type date sont renseignés à l’aide de
+			calendrier apparaissant lorsque l’utilisateur clique sur le champ à
+			remplir. Dans ces calendriers l’utilisateur sélectionne le mois et
+			l’année dans des listes déroulantes et sélectionne le jour en
+			cliquant sur une case du calendrier.</p>
+		<p>§ Certains champs sont grisés. Cela indique que, lorsque
+			l’utilisateur indique dans ce champ une partie de la valeur
+			souhaitée, alors une liste des différentes possibilités de valeurs
+			complètes s’affiche. L’utilisateur peut alors sélectionner la valeur
+			qu’il souhaite.</p>
+		<h5 class="ancre" id="_Toc365639545">· Zone de recherche</h5>
+		<p>Une zone de recherche se compose :</p>
+		<p>- Des critères de recherche : Ce sont des champs à saisir qui
+			peuvent être des listes déroulantes, des champs dans lequel il faut
+			directement écrire la valeur souhaitée ou des dates.</p>
+		<p>- D’un bouton rechercher sur lequel cliquer pour lancer la
+			recherche.</p>
+		<p>Les zones de recherche sont surmontées du titre « Recherche ».
+		</p>
+		<p align="center">
+			<img width="158" height="395" src="#{facesContext.externalContext.requestContextPath}/resources/images/aideEnLigne/#{'image008.jpg'}" />
+		</p>
+		<p>Les résultats de la recherche s’affichent dans une zone de
+			liste appelée « Résultats » :</p>
+		<p align="center">
+			<img width="604" height="84" src="#{facesContext.externalContext.requestContextPath}/resources/images/aideEnLigne/#{'image010.jpg'}" />
+		</p>
+		<h5 class="ancre" id="_Toc365639546">· Zone de liste</h5>
+		<p>Les zones de liste se présentent sous forme de tableaux.</p>
+		<p align="center">
+			<img width="605" height="189" src="#{facesContext.externalContext.requestContextPath}/resources/images/aideEnLigne/#{'image012.jpg'}" />
+		</p>
+		<p>
+			Dans ces tableaux, chaque en-tête de colonne comporte le signe <img
+				width="23" height="21" src="#{facesContext.externalContext.requestContextPath}/resources/images/aideEnLigne/#{'image014.jpg'}" /> . Ce
+			bouton permet de trier le tableau selon la colonne où il est situé
+			soit de façon ascendante soit de façon descendante.
+		</p>
+		<p>
+			Très souvent les tableaux comportent une dernière (ou avant dernière)
+			colonne à droite contenant des cases <img width="26" height="21"
+				src="#{facesContext.externalContext.requestContextPath}/resources/images/aideEnLigne/#{'image015.png'}" /> qui permettent de sélectionner
+			certaines lignes ou toutes les lignes du tableau. Pour sélectionner
+			toutes les lignes, il suffit de cliquer sur la case dans l’en-tête de
+			la dernière colonne.
+		</p>
+		<p>Trois boutons sont présents en haut à droite de chaque tableau
+			:</p>
+		<p>
+			- <img width="33" height="32" src="#{facesContext.externalContext.requestContextPath}/resources/images/aideEnLigne/#{'image016.png'}" /> :
+			Cliquer dessus permet de générer un rapport Excel du tableau,
+		</p>
+		<p>
+			- <img width="33" height="40" src="#{facesContext.externalContext.requestContextPath}/resources/images/aideEnLigne/#{'image017.png'}" /> :
+			Cliquer dessus permet de générer un rapport PDF du tableau,
+		</p>
+		<p>
+			- <img width="35" height="36" src="#{facesContext.externalContext.requestContextPath}/resources/images/aideEnLigne/#{'image018.png'}" /> :
+			Cliquer dessus permet de générer un rapport CSV du tableau,
+		</p>
+		<p>
+			Parfois la dernière colonne du tableau contient le logo <img
+				width="22" height="23" src="#{facesContext.externalContext.requestContextPath}/resources/images/aideEnLigne/#{'image019.png'}" /> dans
+			certaines lignes. Cliquer sur ce logo permet de supprimer la ligne où
+			il se trouve.
+		</p>
+		<h2 class="ancre" id="_Toc365639547">3. Paramétrage de l’application</h2>
+		<h4 class="ancre" id="_Toc365639548">a) Ordre de paramétrage des référentiels
+			décrivant la structure</h4>
+		<p>Voici comment sont ordonnées les différentes structures dans
+			Elips :</p>
+		<p align="center">
+			<img width="490" height="398" src="#{facesContext.externalContext.requestContextPath}/resources/images/aideEnLigne/#{'image020.png'}" />
+		</p>
+		<p>L’établissement constitue la base. Un établissement peut
+			contenir plusieurs pôles et plusieurs sites. Un site peut lui-même
+			contenir plusieurs pharmacies et une pharmacie peut appartenir à
+			plusieurs sites. Un service appartient à un pôle et un site.</p>
+		<p>Les référentiels décrivant la structure doivent donc être
+			paramétrés selon un ordre définit pour que ces données puissent être
+			correctement enregistrées. Ces référentiels doivent être paramétrés
+			dans cet ordre :</p>
+		<p>I. Etablissement</p>
+		<p>II. Site</p>
+		<p>III. Pôle</p>
+		<p>IV. Service</p>
+		<p>V. Pharmacie</p>
+		<h5 class="ancre" id="_Toc365639549">· Exemple de structure</h5>
+		<p>Prenons la pharmacie comme exemple de structure. Une pharmacie
+			appartient obligatoirement à un établissement. Pour paramétrer une
+			pharmacie il est donc nécessaire de paramétrer d’abord
+			l’établissement auquel elle appartient. Une pharmacie peut faire
+			également partie d’un ou plusieurs site(s). Par conséquent, il est
+			nécessaire de paramétrer ce ou ces sites avant de paramétrer la
+			pharmacie.</p>
+		<h5 class="ancre" id="_Toc365639550">· Exemple des saisies (Structure, Site,
+			Service, Etablissement, Pharmacie)</h5>
+		<p>§ Saisie d’un Etablissement</p>
+		<p>Pour saisir un site, cliquer sur « Etablissement» dans l’onglet
+			« Gérer les données ». La page « Gestion des établissements »
+			contient deux blocs :</p>
+		<p>- Un bloc « Recherche » qui permet de chercher un établissement
+			en fonction de son nom.</p>
+		<p>- Un bloc « Résultats » listant tous les établissements
+			existant dans l’application (en absence de critères de recherche).</p>
+		<p align="center">
+			<img width="604" height="268" src="#{facesContext.externalContext.requestContextPath}/resources/images/aideEnLigne/#{'image022.jpg'}" />
+		</p>
+		<p>Il est possible d’accéder au formulaire d’un établissement en
+			cliquant sur son nom. Il est alors possible de modifier les
+			informations de l’établissement et de consulter les informations de
+			chaque pharmacie de l’établissement en cliquant sur leur nom.</p>
+		<p>Il est possible de supprimer un établissement en le
+			sélectionnant en cliquant sur la case au bout de la ligne de
+			l’établissement puis en cliquant sur le bouton « Supprimer » en bas
+			de page.</p>
+		<p>Il est possible de créer un nouvel établissement en cliquant
+			sur le bouton « Ajouter » sous le bloc « Résultats ». Remplir ensuite
+			les différents champs de saisie.</p>
+		<p align="center">
+			<img width="604" height="343" src="#{facesContext.externalContext.requestContextPath}/resources/images/aideEnLigne/#{'image024.jpg'}" />
+		</p>
+		<p>Les pharmacies de l’établissement seront ajoutées lors de la
+			création ou la modification des pharmacies.</p>
+		<p>§ Saisie d’un pôle</p>
+		<p>Pour saisir un Pôle, cliquer sur « Pôle » dans l’onglet « Gérer
+			les données ». La page « Gestion des Pôles » contient deux blocs :</p>
+		<p>- Un bloc « Recherche » qui permet de chercher un pôle en
+			fonction de son nom et/ou de son établissement.</p>
+		<p>- Un bloc « Résultats » listant tous les pôles existant dans
+			l’application (en absence de critères de recherche).</p>
+		<p align="center">
+			<img width="605" height="418" src="#{facesContext.externalContext.requestContextPath}/resources/images/aideEnLigne/#{'image026.jpg'}" />
+		</p>
+		<p>Il est possible d’accéder au formulaire d’un pôle en cliquant
+			sur son nom. Il est alors possible de modifier les informations du
+			pôle et de consulter les informations de chaque service du pôle en
+			cliquant sur leur nom.</p>
+		<p>Il est possible de supprimer un pôle en le sélectionnant en
+			cliquant sur la case au bout de la ligne du pôle puis en cliquant sur
+			le bouton « Supprimer » en bas de page.</p>
+		<p>Il est possible de créer un nouveau pôle en cliquant sur le
+			bouton « Ajouter » sous le bloc « Résultats ». Indiquer ensuite le
+			nom du nouveau pôle et sélectionner son établissement dans la liste
+			déroulante.</p>
+		<p align="center">
+			<img width="605" height="225" src="#{facesContext.externalContext.requestContextPath}/resources/images/aideEnLigne/#{'image028.jpg'}" />
+		</p>
+		<p>Les services du pôle seront ajoutés au moment de la création ou
+			de la modification des services.</p>
+		<p>§ Saisie d’un site</p>
+		<p>Pour saisir un site, cliquer sur « Site» dans l’onglet « Gérer
+			les données ». La page « Gestion des Pôles » contient deux blocs :</p>
+		<p>- Un bloc « Recherche » qui permet de chercher un site en
+			fonction de son nom et/ou de son établissement.</p>
+		<p>- Un bloc « Résultats » listant tous les sites existant dans
+			l’application (en absence de critères de recherche).</p>
+		<p align="center">
+			<img width="605" height="215" src="#{facesContext.externalContext.requestContextPath}/resources/images/aideEnLigne/#{'image030.jpg'}" />
+		</p>
+		<p>Il est possible d’accéder au formulaire d’un site en cliquant
+			sur son nom. Il est alors possible de modifier les informations du
+			site.</p>
+		<p>Il est possible de supprimer un site en le sélectionnant en
+			cliquant sur la case au bout de la ligne du site puis en cliquant sur
+			le bouton « Supprimer » en bas de page.</p>
+		<p>Il est possible de créer un nouveau site en cliquant sur le
+			bouton « Ajouter » sous le bloc « Résultats ». Remplir ensuite les
+			différents champs de saisie et sélectionner l’établissement du site
+			dans la liste déroulante.</p>
+		<p align="center">
+			<img width="605" height="243" src="#{facesContext.externalContext.requestContextPath}/resources/images/aideEnLigne/#{'image032.jpg'}" />
+		</p>
+		<p>§ Saisie d’un service</p>
+		<p>Pour saisir un site, cliquer sur « Service» dans l’onglet «
+			Gérer les données ». La page « Gestion des Services » contient deux
+			blocs :</p>
+		<p>- Un bloc « Recherche » qui permet de chercher un service en
+			fonction de son nom.</p>
+		<p>- Un bloc « Résultats » listant tous les services existant dans
+			l’application (en absence de critères de recherche).</p>
+		<p align="center">
+			<img width="604" height="144" src="#{facesContext.externalContext.requestContextPath}/resources/images/aideEnLigne/#{'image034.jpg'}" />
+		</p>
+		<p>Il est possible d’accéder au formulaire d’un service en
+			cliquant sur son nom. Il est alors possible de modifier les
+			informations du service et de consulter les informations de chaque
+			investigateur du service en cliquant sur leur nom.</p>
+		<p>Il est possible de supprimer un service en le sélectionnant en
+			cliquant sur la case au bout de la ligne du service puis en cliquant
+			sur le bouton « Supprimer » en bas de page.</p>
+		<p>Il est possible de créer un nouveau service en cliquant sur le
+			bouton « Ajouter » sous le bloc « Résultats ». Indiquer le nom du
+			servie, sélectionner le pôle du service dans la liste déroulante et
+			sélectionner le site du service dans la liste déroulante.</p>
+		<p align="center">
+			<img width="605" height="239" src="#{facesContext.externalContext.requestContextPath}/resources/images/aideEnLigne/#{'image036.jpg'}" />
+		</p>
+		<p>Pour ajouter un investigateur à cette pharmacie, rechercher la
+			personne à ajouter à la pharmacie puis ajouter la nouvelle pharmacie
+			dans la liste des pharmacies rattachées à cette personne. Pour cela,
+			cliquer sur « Personne » dans l’onglet « Gérer les données ».
+			Effectuer une recherche pour afficher le nom de la personne à ajouter
+			en tant qu’investigateur dans le service nouvellement créé. Cliquer
+			sur le nom de la personne pour accéder à son formulaire. Cliquer sur
+			« Sélection des services » en bas du formulaire.</p>
+		<p align="center">
+			<img width="579" height="399" src="#{facesContext.externalContext.requestContextPath}/resources/images/aideEnLigne/#{'image038.jpg'}" />
+		</p>
+		<p>Sélectionner ensuite le service dans lequel vous voulez ajouter
+			la personne et valider.</p>
+		<p align="center">
+			<img width="559" height="390" src="#{facesContext.externalContext.requestContextPath}/resources/images/aideEnLigne/#{'image040.jpg'}" />
+		</p>
+		<p>Puis cliquer sur « Enregistrer ».</p>
+		<h4 class="ancre" id="_Toc365639551">b) Sécurisation de l’application</h4>
+		<p>Chaque personne pouvant se connecter à l’application Elips est
+			définit comme un acteur. Chaque acteur peut avoir plusieurs profils
+			métiers au niveau de l’application.</p>
+		<p>Les profils métiers définissent les droits des utilisateurs sur
+			les différentes parties de l’application selon les besoins.</p>
+		<h5 class="ancre" id="_Toc365639552">· Description des profils et des
+			restrictions</h5>
+		<p>Huit profils sont définis dans Elips : Administrateur,
+			Pharmacien, Promoteur, ARC promoteur, Investigateur, ARC
+			investigateur, Direction de la recherche et ARC CRO.</p>
+		<p>Chaque profil est soumis à des restrictions. Il existe 6 types
+			de restrictions :</p>
+		<p>- Droit totaux : l’acteur n’a aucune restriction. Il possède
+			les droits de lecture et modification.</p>
+		<p>- Habilitation active en lecture : l’acteur possède les droits
+			de lecture s’il a été préalablement ajouté dans les contacts actifs
+			de l’essai concerné.</p>
+		<p>- Habilitation essai/actif : Cette habilitation est spécifique
+			aux pharmaciens. Le pharmacien possède les droits en lecture et
+			modification si l’une de ces conditions est remplie :</p>
+		<p>- la pharmacie principale de l’essai concerné fait partie des
+			pharmacies du pharmacien,</p>
+		<p>- une des pharmacies associées de l’essai concerné fait partie
+			des pharmacies du pharmacien,</p>
+		<p>- l’acteur s’il a été préalablement ajouté dans les contacts
+			actifs de l’essai concerné.</p>
+		<p>- Habilitation pharmacie : Cette habilitation est spécifique
+			aux pharmaciens. Le pharmacien ne possède les droits en lecture et
+			modification que si la pharmacie concernée fait partie des pharmacies
+			du pharmacien.</p>
+		<p>- Aucun droit : l’acteur n’a aucun accès.</p>
+		<p>Les droits de chaque profil métier sur les différentes parties
+			de l’application sont détaillés dans le tableau ci-dessous (tableau à
+			vérifier et compléter):</p>
+
+		<p align="center">
+			<img width="900" height="580" src="#{facesContext.externalContext.requestContextPath}/resources/images/aideEnLigne/#{'tableau_droits.png'}" />
+		</p>
+
+		<p>Pour certaines parties de l’application le pharmacien doit
+			posséder deux habilitations pour avoir les droits en lecture et
+			modification : l’habilitation essai/actif et l’habilitation
+			pharmacie. Il est important de noter qu’un pharmacien ne peut avoir
+			une habilitation pharmacie que s’il a l’habilitation essai/actif.</p>
+		<h5 class="ancre" id="_Toc365639553">· Restrictions concernant les différents
+			sous profils de pharmacien</h5>
+		<p>Il existe dans Elips 7 sous profils au sein du profil
+			pharmacien :</p>
+		<p>- Pharmacien interne,</p>
+		<p>- Pharmacien externe,</p>
+		<p>- Pharmacien préparateur,</p>
+		<p>- Pharmacien titulaire,</p>
+		<p>- Pharmacien attaché,</p>
+		<p>- Pharmacien assistant,</p>
+		<p>- Pharmacien interne garde.</p>
+		<p>Certains accès sont restreints dans Elips en fonction du sous
+			profil de pharmacien de l’utilisateur.</p>
+		<p>Les onglets principaux accessibles depuis le bandeau de menu
+			sont différents selon le sous profil de pharmacien, voici des
+			tableaux exposant pour chaque onglet les sous-onglets accessibles en
+			fonction du sous profil :</p>
+		<p align="center">Légende :</p>
+		<div align="center">
+			<table>
+				<tbody>
+					<tr>
+						<td width="209">
+							<p align="center">
+								<strong>SOUS-PROFIL</strong>
+							</p>
+						</td>
+						<td width="75">
+							<p align="center">
+								<strong>LETTRE</strong>
+							</p>
+						</td>
+					</tr>
+					<tr>
+						<td width="209">
+							<p align="center">PHARMACIEN_INTERNE_GARDE</p>
+						</td>
+						<td width="75">
+							<p align="center">A</p>
+						</td>
+					</tr>
+					<tr>
+						<td width="209">
+							<p align="center">PHARMACIEN_ASSISTANT</p>
+						</td>
+						<td width="75">
+							<p align="center">B</p>
+						</td>
+					</tr>
+					<tr>
+						<td width="209">
+							<p align="center">PHARMACIEN_ATTACHE</p>
+						</td>
+						<td width="75">
+							<p align="center">C</p>
+						</td>
+					</tr>
+					<tr>
+						<td width="209">
+							<p align="center">PHARMACIEN_TITULAIRE</p>
+						</td>
+						<td width="75">
+							<p align="center">D</p>
+						</td>
+					</tr>
+					<tr>
+						<td width="209">
+							<p align="center">PHARMACIEN_PREPARATEUR</p>
+						</td>
+						<td width="75">
+							<p align="center">E</p>
+						</td>
+					</tr>
+					<tr>
+						<td width="209">
+							<p align="center">PHARMACIEN_EXTERNE</p>
+						</td>
+						<td width="75">
+							<p align="center">F</p>
+						</td>
+					</tr>
+					<tr>
+						<td width="209">
+							<p align="center">PHARMACIEN_INTERNE</p>
+						</td>
+						<td width="75">
+							<p align="center">G</p>
+						</td>
+					</tr>
+				</tbody>
+			</table>
+		</div>
+		<p align="center">
+			<img width="459" height="680" src="#{facesContext.externalContext.requestContextPath}/resources/images/aideEnLigne/#{'image042.png'}" />
+		</p>
+		<p align="center">
+			<img width="443" height="490" src="#{facesContext.externalContext.requestContextPath}/resources/images/aideEnLigne/#{'image044.png'}" />
+		</p>
+		<p align="center">
+			<img width="467" height="227" src="#{facesContext.externalContext.requestContextPath}/resources/images/aideEnLigne/#{'image046.png'}" />
+		</p>
+		<p align="center">
+			<img width="498" height="605" src="#{facesContext.externalContext.requestContextPath}/resources/images/aideEnLigne/#{'image048.png'}" />
+		</p>
+		<p align="center">
+			<img width="585" height="431" src="#{facesContext.externalContext.requestContextPath}/resources/images/aideEnLigne/#{'image050.png'}" />
+		</p>
+		<p>Les autres restrictions liées aux sous profils de pharmacien
+			sont :</p>
+		<p>- Les pharmaciens attachés, assistants et interne garde ne
+			peuvent pas créer d’alertes dans le sous-onglet « Evénement » d’un
+			essai. (La section « Alertes » n’est pas affichée).</p>
+		<p>- Les pharmaciens externes et préparateurs ne peuvent pas
+			effectuer de recherche dans le l’écran « Gestion des patients »
+			(sous-onglet « Patient » dans l’onglet « Gérer les données »).</p>
+		<p>- Le bouton « Prescrire et dispenser » n’est pas affiché dans
+			l’écran « Effectuer une prescription » pour les pharmaciens attachés,
+			assistants, interne garde (onglet « Déroulement des essais »).</p>
+		<p>- Les alertes ne sont pas affichées sur la page d’accueil pour
+			les pharmaciens internes garde.</p>
+		<h4 class="ancre" id="_Toc365639554">c) Gestion des personnes</h4>
+		<p>Les personnes comprennent :</p>
+		<p>- Les ARC CRO,</p>
+		<p>- Les ARC Investigateur,</p>
+		<p>- Les ARC Promoteur,</p>
+		<p>- Les promoteurs</p>
+		<p>- La direction de la Recherche,</p>
+		<p>- Les investigateurs,</p>
+		<p>- Le personnel pharmaceutique.</p>
+		<p>Pour consulter, ajouter ou modifier une personne, cliquer sur «
+			Personne » dans l’onglet « Gérer les données ».</p>
+		<p>La page « Gestion des Personnes » contient deux blocs :</p>
+		<p>- Un bloc « Recherche » qui permet de cherche une personne en
+			fonction de son nom et/ou de sont profil.</p>
+		<p>- Un bloc « Résultats » Listant toutes les personnes existant
+			dans l’application (en absence de critères de recherche).</p>
+		<p align="center">
+			<img width="563" height="269" src="#{facesContext.externalContext.requestContextPath}/resources/images/aideEnLigne/#{'image052.jpg'}" />
+		</p>
+		<p>Il est possible d’accéder au formulaire d’une personne en
+			cliquant sur son nom. Il est alors possible de modifier les
+			informations de la personne.</p>
+		<p>Il est possible de créer une nouvelle personne en cliquant sur
+			le bouton « Ajouter » sous le bloc « Recherche ».</p>
+		<p>Après avoir cliqué sur ce bouton, choisir le profil de la
+			nouvelle personne dans la liste déroulante qui s’affiche.</p>
+		<p align="center">
+			<img width="605" height="290" src="#{facesContext.externalContext.requestContextPath}/resources/images/aideEnLigne/#{'image054.jpg'}" />
+		</p>
+		<p>Valider.</p>
+		<h5 class="ancre" id="_Toc365639555">· Création en lien l’annuaire SIR</h5>
+		<p>Si cette personne existe dans l’annuaire SIR, il est possible
+			d’indiquer l’utilisateur SIR à utiliser pour créer cette nouvelle
+			personne.</p>
+		<p>Pour cela, rechercher l’utilisateur SIR en indiquant son login
+			et/ou son nom et/ou son prénom et en cliquant sur « Rechercher ».</p>
+		<p align="center">
+			<img width="605" height="316" src="#{facesContext.externalContext.requestContextPath}/resources/images/aideEnLigne/#{'image056.jpg'}" />
+		</p>
+		<p>Cliquer sur l’utilisateur SIR dans les résultats de la
+			recherche.</p>
+		<p align="center">
+			<img width="605" height="371" src="#{facesContext.externalContext.requestContextPath}/resources/images/aideEnLigne/#{'image058.jpg'}" />
+		</p>
+		<p>S’affiche alors le formulaire de création de personne. Il est
+			pré-rempli avec les informations données par l’annuaire SIR. Remplir
+			les éventuelles informations supplémentaires et cliquer sur «
+			Enregistrer ».</p>
+		<h5 class="ancre" id="_Toc365639556">· Création sans lien avec l’annuaire SIR</h5>
+		<p>Dans le cas où la nouvelle personne à créer n’existe pas dans
+			l’annuaire SIR, cliquer sur le bouton « Ajouter dans sélection SIR ».</p>
+		<p align="center">
+			<img width="604" height="315" src="#{facesContext.externalContext.requestContextPath}/resources/images/aideEnLigne/#{'image060.jpg'}" />
+		</p>
+		<p>Compléter ensuite le formulaire de création de personne en
+			remplissant au minimum les champs obligatoires et cliquer sur «
+			Enregistrer ».</p>
+		<p align="center">
+			<img width="487" height="325" src="#{facesContext.externalContext.requestContextPath}/resources/images/aideEnLigne/#{'image062.jpg'}" />
+		</p>
+		<h4 class="ancre" id="_Toc365639557">d) Gestion des pharmacies</h4>
+		<p>Pour consulter, ajouter ou modifier une pharmacie, cliquer sur
+			« Pharmacie » dans l’onglet « Gérer les données ».</p>
+		<p>La page « Gestion des Pharmacies » contient deux blocs :</p>
+		<p>- Un bloc « Recherche » qui permet de cherche une pharmacie en
+			fonction de son nom et/ou de sont établissement.</p>
+		<p>- Un bloc « Résultats » Listant toutes les pharmacies existant
+			dans l’application (en absence de critères de recherche).</p>
+		<p align="center">
+			<img width="605" height="260" src="#{facesContext.externalContext.requestContextPath}/resources/images/aideEnLigne/#{'image064.jpg'}" />
+		</p>
+		<p>A partir de cette page il est possible de créer une nouvelle
+			pharmacie. Pour cela, cliquer sur le bouton « Ajouter ». Le
+			formulaire de création d’une pharmacie s’affiche alors. Il comprend 3
+			onglets :</p>
+		<p>- Pharmacie : onglet où indiquer les informations
+			administratives de la pharmacie,</p>
+		<p>- Stockage : onglet où décrire les lieux de stockage existant
+			dans la pharmacie,</p>
+		<p>- Personnel pharmaceutique : onglet où lister les personnes
+			faisant partie de la pharmacie.</p>
+		<p align="center">
+			<img width="605" height="354" src="#{facesContext.externalContext.requestContextPath}/resources/images/aideEnLigne/#{'image066.jpg'}" />
+		</p>
+		<p>Compléter les onglets « Pharmacie » et « Stockage ». Compléter
+			l’onglet « Pharmacie » avant l’onglet « Stockage ».</p>
+		<p>Dans l’onglet pharmacie, le nom de la pharmacie,
+			l’établissement de la pharmacie et les sites auxquels appartient la
+			pharmacie sont à indiquer obligatoirement.</p>
+		<p>Dans l’onglet stockage, Cliquer sur la croix verte dans la
+			deuxième colonne du tableau pour ajouter un lieu de stockage.</p>
+		<p align="center">
+			<img width="605" height="140" src="#{facesContext.externalContext.requestContextPath}/resources/images/aideEnLigne/#{'image068.jpg'}" />
+		</p>
+		<p>Remplir ensuite le formulaire s’affichant :</p>
+		<p align="center">
+			<img width="604" height="363" src="#{facesContext.externalContext.requestContextPath}/resources/images/aideEnLigne/#{'image070.jpg'}" />
+		</p>
+		<p>Puis valider.</p>
+		<p align="center">
+			<img width="605" height="162" src="#{facesContext.externalContext.requestContextPath}/resources/images/aideEnLigne/#{'image072.jpg'}" />
+		</p>
+		<p>Il est possible de modifier le lieu de stockage en cliquant sur
+			la loupe dans la deuxième colonne du tableau face au nom du lieu de
+			stockage.</p>
+		<p>Il est possible de supprimer le lieu de stockage en cliquant
+			sur la croix rouge dans la deuxième colonne du tableau face au nom du
+			lieu de stockage.</p>
+		<p>Il est possible de subdiviser le lieu de stockage en cliquant
+			sur la croix verte dans la deuxième colonne face au nom du lieu de
+			stockage à subdiviser :</p>
+		<p align="center">
+			<img width="604" height="174" src="#{facesContext.externalContext.requestContextPath}/resources/images/aideEnLigne/#{'image074.jpg'}" />
+		</p>
+		<p>Une fois les sous-divisions créées, il est possible de les
+			visualiser en cliquant sur la flèche à gauche du nom du lieu de
+			stockage subdivisé.</p>
+		<p align="center">
+			<img width="604" height="161" src="#{facesContext.externalContext.requestContextPath}/resources/images/aideEnLigne/#{'image076.jpg'}" />
+		</p>
+		<p>Cliquer sur « Enregistrer ».</p>
+		<p>Pour ajouter le personnel pharmaceutique à cette pharmacie il
+			est ensuite nécessaire de rechercher les personnes à ajouter à la
+			pharmacie et d’ajouter la nouvelle pharmacie dans la liste des
+			pharmacies rattachées à ces personnes. Pour cela, cliquer sur «
+			Personne » dans l’onglet « Gérer les données ». Effectuer une
+			recherche pour afficher le nom de la personne à ajouter dans le
+			personnel pharmaceutique de la pharmacie nouvellement créée. Cliquer
+			sur le nom de la personne pour accéder à son formulaire. Cliquer sur
+			« Sélection des pharmacies » en bas du formulaire.</p>
+		<p align="center">
+			<img width="604" height="556" src="#{facesContext.externalContext.requestContextPath}/resources/images/aideEnLigne/#{'image078.jpg'}" />
+		</p>
+		<p>Sélectionner ensuite la pharmacie dans laquelle vous voulez
+			ajouter la personne et valider.</p>
+		<p align="center">
+			<img width="551" height="514" src="#{facesContext.externalContext.requestContextPath}/resources/images/aideEnLigne/#{'image080.jpg'}" />
+		</p>
+		<p>Puis cliquer sur « Enregistrer ».</p>
+		<h4 class="ancre" id="_Toc365639558">e) Gestion des patients</h4>
+		<p>Pour consulter, ajouter, modifier un patient, cliquer sur «
+			Patient » dans l’onglet « Gérer les données ».</p>
+		<p>La page « Gestion des Patients » contient deux blocs :</p>
+		<p>- Un bloc « Recherche » qui permet de chercher un patient en
+			fonction de différents critères.</p>
+		<p>- Un bloc « Résultats » listant tous les patients existant dans
+			l’application (en absence de critères de recherche).</p>
+		<p align="center">
+			<img width="605" height="279" src="#{facesContext.externalContext.requestContextPath}/resources/images/aideEnLigne/#{'image082.jpg'}" />
+		</p>
+		<p>Il est possible de supprimer un patient en le sélectionnant en
+			cochant la case au bout de sa ligne dans le tableau des résultats
+			puis en cliquant sur « Supprimer ».</p>
+		<p align="center">
+			<img width="508" height="164" src="#{facesContext.externalContext.requestContextPath}/resources/images/aideEnLigne/#{'image084.jpg'}" />
+		</p>
+		<p>Pour accéder au formulaire d’un patient, cliquer sur son nom. A
+			partie de ce formulaire, appelé « fiche patient », il est alors
+			possible de consulter modifier les informations du patient.</p>
+		<h5 class="ancre" id="_Toc365639559">· Description de la fiche patient</h5>
+		<p align="center">
+			<img width="605" height="721" src="#{facesContext.externalContext.requestContextPath}/resources/images/aideEnLigne/#{'image086.jpg'}" />
+		</p>
+		<p>La fiche patient contient :</p>
+		<p>- Les informations administratives sur le patient dans le bloc
+			« Patient »,</p>
+		<p>- L’historique des données médicales du patient dans le bloc «
+			Données médicales »,</p>
+		<p>- L’essai en cours dans lequel est inclus le patient ainsi que
+			la liste des essais dans lesquels il a été inclus dans l’onglet «
+			Essais »,</p>
+		<p>- Les prescriptions effectuées pour ce patient dans l’onglet «
+			Prescriptions »,</p>
+		<p>- Les dispensations effectuées à ce patient dans l’onglet «
+			Dispensations »,</p>
+		<p>- Les retours du patient dans l’onglet « Retours ».</p>
+		<p>Il est possible d’ajouter des données médicales en cliquant sur
+			le bouton « Ajouter » dans le bloc « Données médicales ». Il est
+			également possible d’afficher l’historique des données médicales en
+			cliquant sur le bouton « Afficher l’historique » dans le bloc «
+			Données médicales ».</p>
+		<p align="center">
+			<img width="604" height="103" src="#{facesContext.externalContext.requestContextPath}/resources/images/aideEnLigne/#{'image088.jpg'}" />
+		</p>
+		<p>Il est possible de sortir le patient de l’essai dans lequel il
+			est inclus en cliquant sur le bouton « Sortir le patient de l’essai »
+			dans l’onglet « Essais ».</p>
+		<p align="center">
+			<img width="604" height="378" src="#{facesContext.externalContext.requestContextPath}/resources/images/aideEnLigne/#{'image090.jpg'}" />
+		</p>
+		<p>Attention</p>
+		<p>Un patient ne peut être sorti d’un essai que si toutes les
+			prescriptions pour ce patient ont été dispensées.</p>
+		<h5 class="ancre" id="_Toc365639560">· Créer un patient</h5>
+		<p>Il est possible de créer un nouveau patient en cliquant sur le
+			bouton « Ajouter » en bas de la page de gestion des patients.</p>
+		<p align="center">
+			<img width="604" height="297" src="#{facesContext.externalContext.requestContextPath}/resources/images/aideEnLigne/#{'image092.jpg'}" />
+		</p>
+		<p>Une fiche patient vierge s’affiche alors. Remplir les
+			informations administratives dans le bloc patient puis indiquer les
+			données médicales et valider.</p>
+		<h4 class="ancre" id="_Toc365639561">f) Gestion des promoteurs</h4>
+		<p>Pour consulter, ajouter, modifier un promoteur, cliquer sur «
+			Promoteur» dans l’onglet « Gérer les données ».</p>
+		<p>La page « Gestion des Promoteur» contient deux blocs :</p>
+		<p>- Un bloc « Recherche » qui permet de chercher un promoteur en
+			fonction de sa raison sociale et/ou de son type.</p>
+		<p>- Un bloc « Résultats » listant tous les promoteurs existant
+			dans l’application (en absence de critères de recherche).</p>
+		<p align="center">
+			<img width="605" height="190" src="#{facesContext.externalContext.requestContextPath}/resources/images/aideEnLigne/#{'image094.jpg'}" />
+		</p>
+		<p>Il est possible de supprimer un promoteur en le sélectionnant
+			en cochant la case au bout de sa ligne dans le tableau des résultats
+			puis en cliquant sur « Supprimer ».</p>
+		<p>Pour accéder au formulaire d’un promoteur, cliquer sur son nom.
+			A partie de ce formulaire, il est alors possible de modifier la
+			raison sociale, l’identifiant et le type du promoteur.</p>
+		<p align="center">
+			<img width="605" height="185" src="#{facesContext.externalContext.requestContextPath}/resources/images/aideEnLigne/#{'image096.jpg'}" />
+		</p>
+		<h2 class="ancre" id="_Toc365639562">4. Cycle de vie d’un essai</h2>
+		<h4 class="ancre" id="_Toc365639563">a) Description du workflow</h4>
+		<p>Après sa création un essai suit un cycle de vie qui comprend 8
+			états.</p>
+		<p>§ Immédiatement après sa création, l’essai passe au statut «
+			Non Activé – en évaluation ».</p>
+		<p>Les informations nécessaires à la mise en place de l’essai sont
+			alors indiquées :</p>
+		<p>- Les personnes habilitées pour cet essai dans l’onglet «
+			Contacts »,</p>
+		<p>- Les données pharmaceutiques dans l’onglet « Données pharma »,</p>
+		<p>- Le ou les produits évalué(s) dans l’onglet « Produit »,</p>
+		<p>- Le design avec les bras et séquences de l’essai.</p>
+		<p>Pour passer à l’état suivant, l’étude de faisabilité doit être
+			indiquée comme favorable.</p>
+		<p>§ L’essai passe alors à l’état « Non Activé – En attente de
+			mise en place ».</p>
+		<p>Pour passer à l’état suivant, la convention doit être signée.</p>
+		<p>Les surcoûts prévisionnels doivent également être générés.</p>
+		<p>La visite de monitoring doit également être indiquée comme
+			effectuée.</p>
+		<p>§ Puis après la visite de mise en place de l’essai, celui-ci
+			passe à l’état « Non Activé – Mis en place ».</p>
+		<p>Les patients sont ensuite inclus dans l’essai puis les produits
+			sont prescrit et dispensés.</p>
+		<p>§ Puis, Lorsqu’un premier approvisionnement de produit sera
+			effectué pour cet essai, l’essai passe à l’état « Activé – En cours
+			».</p>
+		<p>Les surcoûts réels peuvent être alors générés régulièrement au
+			cours de l’étude.</p>
+		<p>§ Puis, Une fois toutes les inclusions terminées, l’essai passe
+			à l’état « Activé – En attente de clôture ».</p>
+		<p>Une Visite de pré-clôture est alors réalisée.</p>
+		<p>§ Puis l’état passe à l’essai « Activé – En attente de lettre
+			de clôture ».</p>
+		<p>Une visite de clôture est alors réalisée.</p>
+		<p>Pour passer à l’état suivant, la visite de clôture doit être
+			indiquée comme effectuée.</p>
+		<p>§ Puis l’état passe à l’essai « Désactivé – Clôturé ».</p>
+		<p>L’essai est alors archivé.</p>
+		<p>§ Puis l’état passe à l’essai « Désactivé – Archivé ».</p>
+		<p>Les changements d’état d’un essai se font automatiquement.</p>
+		<p>Pour changer l’état d’un essai manuellement, aller sur la page
+			de consultation de cet essai et cliquer sur le champ orange indiquant
+			l’état actuel de l’essai.</p>
+		<p align="center">
+			<img width="604" height="212" src="#{facesContext.externalContext.requestContextPath}/resources/images/aideEnLigne/#{'image098.jpg'}" />
+		</p>
+		<h4 class="ancre" id="_Toc365639564">b) Création d’un essai</h4>
+		<p align="center">
+			Pour créer un nouvel essai cliquer sur « Créer un nouvel essai » dans
+			l’onglet « Répertoire des essais » dans le bandeau de menu. <img
+				width="639" height="88" src="#{facesContext.externalContext.requestContextPath}/resources/images/aideEnLigne/#{'image100.png'}" />
+		</p>
+		<p>Cliquer ensuite sur le bouton « Créer un essai manuellement »
+			en bas à droite de la page.</p>
+		<p align="center">
+			<img width="639" height="225" src="#{facesContext.externalContext.requestContextPath}/resources/images/aideEnLigne/#{'image102.png'}" />
+		</p>
+		<h5 class="ancre" id="_Toc365639565">· Prérequis</h5>
+		<p>Pour qu’un utilisateur puisse créer un essai, il doit avoir à
+			sa disposition :</p>
+		<p>- Le type, le nom et le code du promoteur,</p>
+		<p>- La pharmacie coordinatrice,</p>
+		<p>- Le ou les services investigateurs.</p>
+		<h5 class="ancre" id="_Toc365639566">· Détail des onglets</h5>
+		<p>Un essai se compose d’un bloc « Informations générales » et
+			d’un bloc « Informations détaillées ».</p>
+		<p>Le bloc « Informations générales » comprends les informations
+			générales du projet comme son numéro interne, le promoteur, la
+			pharmacie, le ou les services investigateur(s) et l’état de l’essai.
+		</p>
+		<p align="center">
+			<img width="639" height="220" src="#{facesContext.externalContext.requestContextPath}/resources/images/aideEnLigne/#{'image104.png'}" />
+		</p>
+		<p>Les champs obligatoires sont :</p>
+		<p>- Le numéro interne de l’essai,</p>
+		<p>- Le nom usuel de l’essai,</p>
+		<p>- Les nom et code du promoteur,</p>
+		<p>- Le service investigateur,</p>
+		<p>- La pharmacie coordinatrice.</p>
+		<p>L’état de l’essai peut être changé en cliquant sur le champ
+			orange indiquant l’état actuel de l’essai.</p>
+		<p align="center">
+			<img width="639" height="220" src="#{facesContext.externalContext.requestContextPath}/resources/images/aideEnLigne/#{'image106.png'}" />
+		</p>
+		<p>Le bloc « Informations détaillés » comprends 11 onglets :</p>
+		<ul>
+			<li>Général</li>
+		</ul>
+		<p>Cet onglet contient les informations générales portant sur le
+			protocole et la recherche effectués dans cet essai. Il contient
+			également trois boutons permettant d’éditer et imprimer le modèle de
+			prescription nominative, la fiche nominative et la fiche d’aide à la
+			dispensation. Ces trois documents sont partiellement automatiquement
+			pré-remplis par l’application. Un commentaire peut être ajouté en
+			cliquant sur « Commentaires ».</p>
+		<p align="center">
+			<img width="605" height="278" src="#{facesContext.externalContext.requestContextPath}/resources/images/aideEnLigne/#{'image108.jpg'}" />
+		</p>
+		<ul>
+			<li>Contacts</li>
+		</ul>
+		<p>Cet onglet liste les acteurs habilités sur l’essai. La colonne
+			« Actif » indique si l’habilitation de l’acteur est active ou
+			passive.</p>
+		<p align="center">
+			<img width="605" height="540" src="#{facesContext.externalContext.requestContextPath}/resources/images/aideEnLigne/#{'image110.jpg'}" />
+		</p>
+		<p>Le personnel pharmaceutique de la pharmacie coordinatrice de
+			l’essai (indiquée dans le bloc « Général ») est automatique ajouté
+			comme personnel pharmaceutique habilité dans cet onglet.</p>
+		<p>ATTENTION</p>
+		<p>SI le personnel de la pharmacie coordinatrice de l’essai est
+			modifié, le personnel pharmaceutique habilité de l’essai, lui, ne
+			sera pas mis à jour. Par exemple si l’essai 1 a comme pharmacie
+			coordinatrice la pharmacie A. SI un utilisateur supprime la personne
+			« Jean Dupont » du personnel pharmaceutique de la pharmacie A, Jean
+			Dupont ne sera pour autant pas supprimé du personnel pharmaceutique
+			habilité sur l’essai 1. Il appartient à l’utilisateur de mettre jour
+			le personnel pharmaceutique habilité sur les essais concernés.</p>
+		<p>Il est possible de désactiver l’habilitation d’un acteur en
+			cochant la case dans la dernière colonne au niveau de la ligne de
+			l’acteur puis en cliquant sur le bouton « Désactiver » en bas de la
+			page.</p>
+		<p align="center">
+			<img width="541" height="419" src="#{facesContext.externalContext.requestContextPath}/resources/images/aideEnLigne/#{'image112.jpg'}" />
+		</p>
+		<p>Il est également possible de créer une personne et de l’ajouter
+			dans les contacts de l’essai en cliquant sur le bouton « Créer une
+			personne » en base de page.</p>
+		<p>Il est possible d’ajouter dans les contacts de l’essai une
+			personne déjà créée dans Elips en cliquant sur « Ajouter » et en
+			sélectionnant le profil de la personne que l’on souhaite ajouter
+			(Seules les personnes appartenant à une structure liée à l’essai sont
+			proposées pour être ajoutées).</p>
+		<p align="center">
+			<img width="511" height="397" src="#{facesContext.externalContext.requestContextPath}/resources/images/aideEnLigne/#{'image114.jpg'}" />
+		</p>
+		<p>Sélectionner ensuite la personne à ajouter en cochant la case
+			au niveau de sa ligne (il est possible de sélectionner plusieurs
+			personnes), puis cliquer sur « Ajouter ».</p>
+		<p align="center">
+			<img width="371" height="229" src="#{facesContext.externalContext.requestContextPath}/resources/images/aideEnLigne/#{'image116.jpg'}" />
+		</p>
+		<p>Remarque : Au moins un investigateur avec habilitation active
+			doit être ajouté sur un essai pour pouvoir prescrire sur cet essai.</p>
+		<p>Pour désigner un investigateur comme investigateur principal
+			sur l’essai, ajouter cet investigateur dans les contacts de l’essai.
+			Cliquer ensuite sur cet investigateur et, dans la fiche qui
+			s’affiche, cliquer sur « Ajouter l’habilitation Investigateur
+			Principal ».</p>
+		<p align="center">
+			<img width="378" height="404" src="#{facesContext.externalContext.requestContextPath}/resources/images/aideEnLigne/#{'image117.png'}" />
+		</p>
+		<p>Puis cliquer sur « Fermer ». Les investigateurs n’ayant pas
+			l’habilitation « Investigateur Principal » ont une habilitation « Co
+			Investigateur ».</p>
+		<p>Pour retirer l’habilitation « Investigateur Principal » à un
+			investigateur, cliquer sur cet investigateur dans les contacts de
+			l’essai et, dans la fiche qui s’affiche, cliquer sur « Enlever
+			l’habilitation Investigateur Principal ». Puis cliquer sur « Fermer
+			».</p>
+		<ul>
+			<li>Etude faisabilité</li>
+		</ul>
+		<p>Cet onglet contient deux blocs.</p>
+		<p align="center">
+			<img width="604" height="258" src="#{facesContext.externalContext.requestContextPath}/resources/images/aideEnLigne/#{'image119.jpg'}" />
+		</p>
+		<p>Le bloc « Conclusion » indique si l’étude de faisabilité est
+			favorable pour l’essai et si la convention a été signée (ainsi que
+			les dates correspondantes). Il est possible d’ajouter des
+			commentaires en cliquant sur « Commentaires ».</p>
+		<p>Le bloc « Détail » indique les prestations particulières
+			réalisées par la pharmacie. Si « oui » est sélectionné face à «
+			Prestations particulières par la pharmacie », différents types de
+			prestations s’affichent et peuvent être sélectionnés en cliquant sur
+			« Oui ». Il est possible d’ajouter des commentaires en cliquant sur «
+			Commentaires ».</p>
+		<p align="center">
+			<img width="605" height="318" src="#{facesContext.externalContext.requestContextPath}/resources/images/aideEnLigne/#{'image121.jpg'}" />
+		</p>
+		<ul>
+			<li>Dates</li>
+		</ul>
+		<p>Cet onglet contient les différentes dates qui peuvent être
+			renseignées sur un essai. Les dates prévisionnelles peuvent être
+			directement saisies. Les date réelles sont déduites et affichées
+			automatiquement à partir de l’agenda de gestion des évènements ou
+			d’actes de l’utilisateur.</p>
+		<p align="center">
+			<img width="605" height="340" src="#{facesContext.externalContext.requestContextPath}/resources/images/aideEnLigne/#{'image123.jpg'}" />
+		</p>
+		<ul>
+			<li>Administratif</li>
+		</ul>
+		<p>Cet onglet contient les informations concernant notamment les
+			accords de l’autorité compétente et du comité de protection des
+			personnes, la convention, l’assurance et l’archivage de l’essai. Pour
+			certaines données il est possible d’indiquer que les informations
+			sont présentes dans le dossier papier de l’essai en cochant « Voir
+			dossier papier ». Il est également possible de joindre des fichiers
+			aux différents blocs d’informations et de consulter les fichiers déjà
+			joints. Pour cela, cliquer sur « Documents associés » ou «
+			Historique/Ajouter ». Pour ajouter un fichier, cliquer sur le bouton
+			de téléchargement du fichier puis cliquer sur « Ajouter ». Pour
+			consulter un fichier déjà joint cliquer sur le nom du fichier.</p>
+		<p align="center">
+			<img width="604" height="129" src="#{facesContext.externalContext.requestContextPath}/resources/images/aideEnLigne/#{'image125.jpg'}" />
+		</p>
+		<p align="center">
+			<img width="604" height="64" src="#{facesContext.externalContext.requestContextPath}/resources/images/aideEnLigne/#{'image127.jpg'}" />
+		</p>
+		<ul>
+			<li>Données pharma</li>
+		</ul>
+		<p>Cet onglet contient toutes les données pharmaceutiques de
+			l’essai dont les stocks (gestion des réceptions, retours et
+			destructions) et dispensations.</p>
+		<p>Il est notamment possible de renseigner dans le champ « Qualité
+			de l’insu » (dans le bloc « Informations générales ») si l’essai est
+			ouvert, en simple aveugle ou en double aveugle. Lorsqu’un essai est
+			indiqué en double aveugle dans ce champ, l’onglet design de l’essai
+			est alors caché des ARC investigateurs, ARC promoteurs, ARC CRO,
+			investigateurs et promoteurs.</p>
+		<p>Il est obligatoire d’indiquer le type de dispensation et les
+			destinataires de la dispensation dans le bloc « Dispensations » de
+			l’onglet pour pouvoir prescrire sur l’essai.</p>
+		<p>Il est possible d’indiquer un « Conseil Patient » qui sera
+			affiché sur la fiche d’informations téléchargeable dans l’onglet «
+			Général » de l’essai. De même il est possible d’indiquer une aide à
+			la dispensation qui sera affiché sur la fiche d’aide à la
+			dispensation téléchargeable dans l’onglet « Général ». Il est
+			possible d’ajouter des documents sous forme de fichiers à certaines
+			parties de cet onglet en cliquer sur « Ajouter un document ».</p>
+		<p align="center">
+			<img width="521" height="379" src="#{facesContext.externalContext.requestContextPath}/resources/images/aideEnLigne/#{'image130.png'}" />
+		</p>
+		<ul>
+			<li>Produits</li>
+		</ul>
+		<p>Cet onglet décrit les produits impliqués dans l’essai. Ils sont
+			séparés en 4 types : Médicament, Dispositifs médicaux, Produits
+			thérapeutiques et Préparations.</p>
+		<p>Il est possible d’ajouter un produit en cliquant sur « Ajouter
+			» puis en sélectionnant le type de produit à Ajouter.</p>
+		<p align="center">
+			<img width="208" height="136" src="#{facesContext.externalContext.requestContextPath}/resources/images/aideEnLigne/#{'image132.jpg'}" />
+		</p>
+		<p>Une fiche produit vierge s’affiche alors.</p>
+		<p>Une fiche produit est composée de deux blocs et trois onglets.
+		</p>
+		<p align="center">
+			<img width="579" height="544" src="#{facesContext.externalContext.requestContextPath}/resources/images/aideEnLigne/#{'image134.jpg'}" />
+		</p>
+		<p>Le bloc « Informations générales sur l’essai » décrit l’essai
+			dans lequel est inclus le produit, il n’est pas modifiable.</p>
+		<p align="center">
+			<img width="605" height="172" src="#{facesContext.externalContext.requestContextPath}/resources/images/aideEnLigne/#{'image136.jpg'}" />
+		</p>
+		<p>C’est la seule partie non modifiable de la fiche produit. Le
+			bloc « Dispositif médical » ou « Médicament » ou « Autre produit
+			thérapeutique » ou « Préparation » décrit les informations
+			principales sur le produit : sa dénomination, son code, son modèle,
+			son fournisseur et si les alertes sont activées sur ce produit.</p>
+		<p align="center">
+			<img width="605" height="103" src="#{facesContext.externalContext.requestContextPath}/resources/images/aideEnLigne/#{'image138.jpg'}" />
+		</p>
+		<p>L’onglet « Informations générales » contient les informations
+			d’identification du produit. Il contient également les informations
+			de gestion du produit. Il est notamment possible dans cet onglet
+			d’imputer le produit à un ou plusieurs services en cliquant sur oui
+			devant « Imputation à un/des services » puis en sélectionnant le ou
+			les services en cliquant sur « Sélection des services investigateurs
+			» dans le nouveau champ « Service(s) d’imputations » qui s’affiche.</p>
+		<p align="center">
+			<img width="611" height="238" src="#{facesContext.externalContext.requestContextPath}/resources/images/aideEnLigne/#{'image140.png'}" />
+		</p>
+		<p>L’onglet « Conditionnements » contient le ou les
+			conditionnements du produit. Il est obligatoire d’indiquer un
+			conditionnement pour pouvoir réceptionner un produit pour un essai
+			dans Elips.</p>
+		<p align="center">
+			<img width="605" height="133" src="#{facesContext.externalContext.requestContextPath}/resources/images/aideEnLigne/#{'image142.jpg'}" />
+		</p>
+		<p>Pour ajouter un conditionnement cliquer sur « Ajouter ».</p>
+		<p align="center">
+			<img width="604" height="440" src="#{facesContext.externalContext.requestContextPath}/resources/images/aideEnLigne/#{'image144.jpg'}" />
+		</p>
+		<p>Remplir les différents champs et cliquer sur « Valider »</p>
+		<p>L’onglet « Logistique » contient les informations de stockage,
+			de gestion et de gestion des retours.</p>
+		<p>Il est obligatoire d’indiquer un lieu de stockage dans la
+			partie « Stockage de l’onglet » pour pouvoir réceptionner un produit
+			pour un essai dans Elips. Indiquer les conditions de conservation et
+			cliquer sur « Ajouter » dans la partie « Stockage » pour ajouter un
+			lieu de stockage.</p>
+		<p align="center">
+			<img width="604" height="194" src="#{facesContext.externalContext.requestContextPath}/resources/images/aideEnLigne/#{'image146.jpg'}" />
+		</p>
+		<p>Indiquer alors la pharmacie, sélectionner le site de stockage
+			(en cliquant sur la loupe) et indiquer éventuellement un identifiant
+			de stockage.</p>
+		<p align="center">
+			<img width="277" height="140" src="#{facesContext.externalContext.requestContextPath}/resources/images/aideEnLigne/#{'image148.jpg'}" />
+		</p>
+		<p>Il est possible d’ajouter plusieurs lieux de stockage pour un
+			même produit.</p>
+		<p>La partie « Gestion » de l’onglet indique notamment si le
+			produit est fournit par le promoteur. Le champ « Quantité autorisée
+			en dotation » indique la quantité maximale autorisée en dotation. Si
+			cette quantité est dépassée sur l’essai alors une alerte sera
+			affichée sur la page d’accueil des personnes habilitées sur l’essai.
+		</p>
+		<p align="center">
+			<img width="604" height="90" src="#{facesContext.externalContext.requestContextPath}/resources/images/aideEnLigne/#{'image150.jpg'}" />
+		</p>
+		<p>Le champ « Stock seuil (plancher) » indique à partir de quelle
+			quantité de ce produit en stock une alerte doit être affichée sur la
+			page d’accueil des personnes habilitées sur l’essai. Le champ « Délai
+			d’alerte avant la date d’expiration (en j) » indique à partir de quel
+			délai en jours avant la date d’expiration du produit une alerte doit
+			être affichée sur la page d’accueil des personnes habilitées sur
+			l’essai.</p>
+		<p>Attention : Ces trois alertes ne seront affichées pour ce
+			produit que si le champ « Alertes » est coché dans le bloc «
+			Dispositif médical » de la fiche produit.</p>
+		<p>La partie « Retours » de l’onglet indique si une comptabilité
+			des traitements retournés pour ce produit est effectuée et les lieux
+			de stockage des traitements retournée. Cliquer sur « Ajouter » dans
+			la partie « Retours » pour ajouter un lieu de stockage des retours.</p>
+		<p align="center">
+			<img width="604" height="153" src="#{facesContext.externalContext.requestContextPath}/resources/images/aideEnLigne/#{'image152.jpg'}" />
+		</p>
+		<p>Indiquer alors la pharmacie, sélectionner le site de stockage
+			(en cliquant sur la loupe) et indiquer éventuellement un identifiant
+			de stockage.</p>
+		<p>Remplir la fiche produit et cliquer sur « Enregistrer et retour
+			» pour enregistrer le nouveau produit et retourner sur l’onglet «
+			Produits » de l’essai.</p>
+		<p>Il est possible de dupliquer un produit en le sélectionnant
+			puis en cliquant sur « Dupliquer ». Le dupliquât sera ajouté dans le
+			même type de produits que le produit dupliqué. Son nom sera composé
+			du nom du produit dupliqué suivi de « - copie ».</p>
+		<p align="center">
+			<img width="533" height="300" src="#{facesContext.externalContext.requestContextPath}/resources/images/aideEnLigne/#{'image154.png'}" />
+		</p>
+		<ul>
+			<li>Design</li>
+		</ul>
+		<p>Cet onglet décrit les différents bras et séquence utilisés pour
+			les prescriptions et dispensation pendant le déroulement de l’essai.
+			Décrire les bras et séquences ici permet une saisie plus facile des
+			prescriptions et dispensations ensuite. Indiquer le type de design
+			(parallèle ou cross-over) puis ajouter un bras en cliquant sur la
+			croix verte.</p>
+		<p align="center">
+			<img width="604" height="170" src="#{facesContext.externalContext.requestContextPath}/resources/images/aideEnLigne/#{'image156.jpg'}" />
+		</p>
+		<p>Sélectionner le type « bras » dans la liste déroulante.</p>
+		<p align="center">
+			<img width="333" height="77" src="#{facesContext.externalContext.requestContextPath}/resources/images/aideEnLigne/#{'image158.jpg'}" />
+		</p>
+		<p>Puis indiquer le nom du bras et sa description. Valider. Le
+			bras est alors affiché dans le tableau décrivant le design.</p>
+		<p align="center">
+			<img width="604" height="181" src="#{facesContext.externalContext.requestContextPath}/resources/images/aideEnLigne/#{'image160.jpg'}" />
+		</p>
+		<p>Il est possible d’ajouter un autre bras en cliquant sur la
+			croix situé dans la ligne d’en-tête du tableau.</p>
+		<p align="center">
+			<img width="605" height="182" src="#{facesContext.externalContext.requestContextPath}/resources/images/aideEnLigne/#{'image162.jpg'}" />
+		</p>
+		<p>Pour ajouter un bras dans un bras, cliquer sur la croix verte
+			située dans la ligne du bras.</p>
+		<p align="center">
+			<img width="605" height="182" src="#{facesContext.externalContext.requestContextPath}/resources/images/aideEnLigne/#{'image164.jpg'}" />
+		</p>
+		<p>Sélectionner alors le type bras. Puis Indiquer le nom du bras
+			et sa description.</p>
+		<p>Pour ajouter une séquence dans un bras, cliquer sur la croix
+			verte située dans la ligne du bras.</p>
+		<p align="center">
+			<img width="605" height="182" src="#{facesContext.externalContext.requestContextPath}/resources/images/aideEnLigne/#{'image165.jpg'}" />
+		</p>
+		<p>Sélectionner alors le type séquence et valider. La fiche
+			d’édition de séquence s’affiche alors.</p>
+		<p align="center">
+			<img width="605" height="454" src="#{facesContext.externalContext.requestContextPath}/resources/images/aideEnLigne/#{'image167.jpg'}" />
+		</p>
+		<p>Le bloc « Essai » affiche les informations de l’essai dans
+			lequel est incluse la séquence. Il n’est pas modifiable.</p>
+		<p>Le bloc « Séquence » contient les informations sur la séquence
+			: son nom, sa description, sa durée et sa composition. Pour ajouter
+			un produit à prescrire dans la séquence, cliquer sur « Ajouter ».</p>
+		<p align="center">
+			<img width="555" height="184" src="#{facesContext.externalContext.requestContextPath}/resources/images/aideEnLigne/#{'image169.jpg'}" />
+		</p>
+		<p>Indiquer ensuite le produit à prescrire et son conditionnement,
+			seuls les produits inclus dans l’onglet « Produits » de l’essai sont
+			proposés dans la liste déroulante.</p>
+		<p align="center">
+			<img width="521" height="305" src="#{facesContext.externalContext.requestContextPath}/resources/images/aideEnLigne/#{'image171.jpg'}" />
+		</p>
+		<p>Puis indiquer la description de la séquence, la fréquence de
+			prescription, le début et la durée de prescription. Puis valider. Une
+			fois tous les produits à prescrire ajoutés, cliquer sur « Enregistrer
+			et retour » dans la fiche d’édition de séquence pour enregistrer la
+			séquence et retourner dans l’onglet « Design » de l’essai.</p>
+		<p align="center">
+			<img width="605" height="197" src="#{facesContext.externalContext.requestContextPath}/resources/images/aideEnLigne/#{'image173.jpg'}" />
+		</p>
+		<p>Les bras sont affichés en gris et les séquences en blanc. Pour
+			afficher ou masquer les séquences d’un bras, cliquer sur la flèche à
+			côté du nom du bras.</p>
+		<p align="center">
+			<img width="605" height="197" src="#{facesContext.externalContext.requestContextPath}/resources/images/aideEnLigne/#{'image175.jpg'}" />
+		</p>
+		<p>Il est possible de visualiser la chronologie du design de
+			l’essai en indiquant une date de début dans le champ « Date de début
+			de la chronologie » puis en cliquant sur « Générer ».</p>
+		<p>Il est obligatoire de créer au moins un bras et une séquence
+			sur un essai pour pouvoir prescrire et dispenser.</p>
+		<ul>
+			<li>GED</li>
+		</ul>
+		<p>Cet onglet contient les documents liés à cet essai et non
+			présents dans les autres onglets. Pour ajouter un document,
+			télécharger le document en cliquant sur le bouton en face de «
+			Fichier », ajouter un commentaire si besoin puis cliquer sur «
+			Ajouter » pour ajouter le document à l’essai. Le fichier est ensuite
+			téléchargeable et consultable par les utilisateurs.</p>
+		<p align="center">
+			<img width="604" height="226" src="#{facesContext.externalContext.requestContextPath}/resources/images/aideEnLigne/#{'image177.jpg'}" />
+		</p>
+		<ul>
+			<li>Surcoûts</li>
+		</ul>
+		<p>Cet onglet contient les surcouts prévisionnels et/ou réels de
+			l’essai sous forme de fichier Excel téléchargeable. Il est possible
+			de générer ces fichiers de surcoûts en choisissant le type de grille
+			à utiliser, enregistrer, en complétant les champs obligatoires puis
+			en cliquant sur « Générer les surcoûts prévisionnels » ou sur «
+			Générer les surcoûts réels ». Pour plus de détails sur la génération
+			des surcoûts, voir la partie 5 de ce guide.</p>
+		<p align="center">
+			<img width="540" height="750" src="#{facesContext.externalContext.requestContextPath}/resources/images/aideEnLigne/#{'image180.png'}" />
+		</p>
+		<p>Il est également possible d’ajouter manuellement un fichier de
+			surcoûts en cliquant sur « Ajouter un document ».</p>
+		<p align="center">
+			<img width="605" height="291" src="#{facesContext.externalContext.requestContextPath}/resources/images/aideEnLigne/#{'image182.jpg'}" />
+		</p>
+		<p>Attention : Il est impossible de changer de grille de surcoûts
+			une fois que l’essai est passé à l’état « Non activé mis en place »
+			ou à un état suivant cet état.</p>
+		<ul>
+			<li>Evènements</li>
+		</ul>
+		<p>Cet onglet liste les alertes générées, les évènements et les
+			incidents s’étant produits lors de l’essai.</p>
+		<p>Les alertes sont détaillées dans la partie 7 de ce guide. Les
+			évènements sont détaillés dans la partie 4 d) de ce guide.</p>
+		<p>Il est possible de consulter et modifier les détails d’un
+			évènement en cliquant sur son libellé.</p>
+		<p>Les incidents sont signalés manuellement par les personnes
+			habilitées sur l’essai au cours de sa mise en place ou son
+			déroulement. Pour signaler un incident, cliquer sur le triangle jaune
+			en haut à droite de la page de consultation/édition de l’essai. Ce
+			triangle jaune apparaît en permanence pendant la navigation d’une
+			personne habilité sur un essai.</p>
+		<p>Seuls les 5 derniers incidents sont listés dans cet onglet.
+			Pour voir tous les incidents de l’essai, cliquer sur « Voir la liste
+			de tous les incidents ».</p>
+		<ul>
+			<li>Consultation des stocks</li>
+		</ul>
+		<p>A tout moment de la navigation dans l’essai, il est possible de
+			consulter les stocks, flux, extensions de péremptions et entrées et
+			sorties de stock concernant l’essai en cours de consultation en
+			cliquant sur Stock en bas à gauche de la page.</p>
+		<p align="center">
+			<img width="607" height="402" src="#{facesContext.externalContext.requestContextPath}/resources/images/aideEnLigne/#{'image184.png'}" />
+		</p>
+		<h5 class="ancre" id="_Toc365639567">· Détail des documents téléchargeables</h5>
+		<p>§ Le modèle de prescription nominative</p>
+		<p>Il est constitué d’un en-tête pré-rempli, d’une étiquette
+			patient, une étiquette service, d’un cadre réservé à l’investigateur
+			et d’un cadre réservé au pharmacien.</p>
+		<p align="center">
+			<img width="460" height="650" src="#{facesContext.externalContext.requestContextPath}/resources/images/aideEnLigne/#{'image185.png'}" />
+		</p>
+		<p>Elips pré-remplit automatiquement dans le cadre réservé à
+			l’investigateur :</p>
+		<p>- le promoteur à partir du promoteur indiqué dans le bloc «
+			Informations générales de l’essai »,</p>
+		<p>- la référence de protocole à partir du numéro interne indiqué
+			dans le bloc « Informations générales de l’essai »,</p>
+		<p>- le nom usuel à partir du nom usuel indiqué dans le bloc «
+			Informations générales de l’essai »</p>
+		<p>- les produits prescrits sont également indiqués lorsque le
+			fichier est téléchargé depuis une prescription,</p>
+		<p>- le numéro d’inclusion du patient et le numéro de traitement
+			prescrit sont également indiqués lorsque le fichier est téléchargé
+			depuis une prescription.</p>
+		<p>§ La fiche d’informations</p>
+		<p>Il s’agit d’une fiche vierge dont l’en-tête décrit les
+			informations principales de l’essai. C’est une fiche pré-formaté pour
+			la diffusion d’information concernait l’essai.</p>
+		<p>Dans cette fiche, le promoteur, le numéro interne, le nom usuel
+			et l’investigateur principal de l’essai sont indiqués.</p>
+		<p align="center">
+			<img width="398" height="559" src="#{facesContext.externalContext.requestContextPath}/resources/images/aideEnLigne/#{'image187.jpg'}" />
+		</p>
+		<p>§ La fiche d’aide à la dispensation</p>
+		<p>Cette fiche, remplie automatiquement par Elips, contient toutes
+			les informations décrites dans l’essai et qui peuvent aider à la
+			dispensation :</p>
+		<p>- Les informations générales sur l’essai (indiquées dans le
+			bloc « Informations générales » de l’essai),</p>
+		<p>- Tous les contacts de l’essai ayant une habilitation active
+			avec leur numéro de téléphone et leur mail (indiquées dans l’onglet «
+			Contacts » de l’essai),</p>
+		<p>- Le design de l’essai (indiquées dans l’onglet « Design » de
+			l’essai),</p>
+		<p>- Les dates importantes (mise en place, activation, date
+			prévisionnelle de fin des inclusions…) (indiquées dans l’onglet «
+			Dates » de l’essai),</p>
+		<p>- Les bras et séquences (indiquées dans l’onglet « Design » de
+			l’essai),</p>
+		<p>- Les produits (indiquées dans l’onglet « Produits » de
+			l’essai),</p>
+		<p>- Les actes pharmaceutiques supplémentaires (indiquées dans
+			l’onglet « Etude faisabilité » de l’essai),</p>
+		<p>- Les informations relatives à la randomisation (indiquées dans
+			l’onglet « Données pharma » de l’essai),</p>
+		<p>- Les informations relatives à la dispensation (indiquées dans
+			l’onglet « Données pharma » de l’essai),</p>
+		<p>- Les informations relatives à la gestion des stocks et des
+			retours (indiquées dans l’onglet « Données pharma » de l’essai),</p>
+		<p>- Les informations relatives à la levée de l’insu (indiquées
+			dans l’onglet « Données pharma » de l’essai).</p>
+		<h4 class="ancre" id="_Toc365639568">c) Evènement sur un essai : description de
+			l’agenda</h4>
+		<h5 class="ancre" id="_Toc365639569">· Description des évènements</h5>
+		<p>Il existe 5 types d’évènements dans Elips :</p>
+		<p>- Les destructions,</p>
+		<p>- Les ré étiquetages,</p>
+		<p>- Les Cessions PUI,</p>
+		<p>- Les tâches (contacter ARC, formation externe, etc.),</p>
+		<p>- Les visites.</p>
+		<p>Il existe 7 types de visite dans Elips :</p>
+		<p>- L’audit interne,</p>
+		<p>- L’audit externe,</p>
+		<p>- La mise en place,</p>
+		<p>- Le monitoring,</p>
+		<p>- La pré clôture,</p>
+		<p>- La sélection,</p>
+		<p>- La clôture.</p>
+		<p>Sur Elips il est ainsi possible de noter dans un agenda tous
+			les évènements se déroulant (ou étant programmé) lors de la mise en
+			place, le déroulement et la clôture d’un essai.</p>
+		<p>Remarque : il est également possible d’ajouter un évènement sur
+			un essai directement lors de la navigation dans cet essai. Pour cela,
+			aller dans l’onglet « Evénements » de l’essai et cliquer sur la croix
+			verte pour ajouter un évènement.</p>
+		<p align="center">
+			<img width="605" height="74" src="#{facesContext.externalContext.requestContextPath}/resources/images/aideEnLigne/#{'image189.jpg'}" />
+		</p>
+		<h5 class="ancre" id="_Toc365639570">· Gestion des évènements</h5>
+		<p>Pour accéder à l’agenda, Cliquer sur « Evénement » dans
+			l’onglet « Déroulement des essais ».</p>
+		<p align="center">
+			<img width="605" height="407" src="#{facesContext.externalContext.requestContextPath}/resources/images/aideEnLigne/#{'image191.jpg'}" />
+		</p>
+		<p>La zone de recherche permet d’afficher dans le calendrier un ou
+			plusieurs évènements en fonction de l’essai concerné, du type
+			d’évènement et de l’intervalle de temps au cours duquel il a eu lieu
+			notamment.</p>
+		<p>A droite l’agenda affiche les évènements dans un calendrier.</p>
+		<p>En haut à droite du calendrier il est possible de modifier
+			l’échelle du calendrier en cliquant sur « mois », « semaine » ou «
+			jour ». Par défaut l’échelle est le mois. En haut à gauche du
+			calendrier des flèches permettent de passer d’une « page » à une
+			autre du calendrier.</p>
+		<p align="center">
+			<img width="432" height="345" src="#{facesContext.externalContext.requestContextPath}/resources/images/aideEnLigne/#{'image193.jpg'}" />
+		</p>
+		<p>La date du jour est colorée en jaune dans le calendrier.</p>
+		<p>Cliquer sur l’évènement pour l’afficher en détail.</p>
+		<p align="center">
+			<img width="605" height="335" src="#{facesContext.externalContext.requestContextPath}/resources/images/aideEnLigne/#{'image195.jpg'}" />
+		</p>
+		<p>Pour Ajouter un évènement sur un essai, cliquer sur le bouton «
+			Ajouter » en bas de page.</p>
+		<p align="center">
+			<img width="319" height="277" src="#{facesContext.externalContext.requestContextPath}/resources/images/aideEnLigne/#{'image197.jpg'}" />
+		</p>
+		<p>Indiquer ensuite l’essai sur lequel ajouter l’évènement et le
+			type de l’évènement.</p>
+		<p align="center">
+			<img width="605" height="149" src="#{facesContext.externalContext.requestContextPath}/resources/images/aideEnLigne/#{'image199.jpg'}" />
+		</p>
+		<p>Remplir ensuite les champs qui s’affichent et cliquer sur «
+			Enregistrer ».</p>
+		<p>Attention</p>
+		<p>Une cession PUI dont la date de réception n’est pas saisie
+			provoque une alerte sur l’essai.</p>
+		<p>Une visite dont le résultat n’est pas saisi provoque une alerte
+			sur l’essai.</p>
+		<h4 class="ancre" id="_Toc365639571">d) Gestion des incidents</h4>
+		<p>Les incidents (erreur d’étiquetage, erreur de saisie, etc.)
+			ayant lieu sur un essai au cours de sa mise en place ou son
+			déroulement peuvent être signalés manuellement par les personnes
+			habilitées à tout moment.</p>
+		<p>Pour signaler un incident, cliquer sur le triangle jaune en
+			haut à droite de la page de consultation/édition de l’essai. Ce
+			triangle jaune apparaît en permanence pendant la navigation d’une
+			personne habilité sur un essai.</p>
+		<p>Les incidents peuvent également être consultés. Pour cela,
+			cliquer sur « Incident » dans l’onglet « Déroulement des essais ».
+			Indiquer alors l’essai et/ou les dates de l’intervalle de temps dans
+			lequel l’incident a été signalé puis cliquer sur « Rechercher ».</p>
+		<p align="center">
+			<img width="605" height="202" src="#{facesContext.externalContext.requestContextPath}/resources/images/aideEnLigne/#{'image201.jpg'}" />
+		</p>
+		<p>L’incident recherché est affiché dans les résultats. Sa date de
+			signalement, l’essai concerné, le libellé et le commentaire de
+			l’incident sont précisés.</p>
+		<p align="center">
+			<img width="605" height="206" src="#{facesContext.externalContext.requestContextPath}/resources/images/aideEnLigne/#{'image203.jpg'}" />
+		</p>
+		<p>Il est possible de supprimer l’incident en le sélectionnant
+			puis en cliquant sur le bouton « Supprimer ».</p>
+		<h4 class="ancre" id="_Toc365639572">e) Clôture d’un essai</h4>
+		<p>Un essai est considéré comme clos une fois la visite de clôture
+			indiquée comme réalisée. L’essai peut ensuite être archivé.</p>
+		<h2 class="ancre" id="_Toc365639573">5. Grille de surcout</h2>
+		<h4 class="ancre" id="_Toc365639574">a) Principe de fonctionnement</h4>
+		<p>Une grille de surcoûts permet de calculer les surcoûts
+			prévisionnels et réels d’un essai. Il existe différentes grille selon
+			l’année ou le type d’étude.</p>
+		<p>Une grille définit, pour un certains nombre d’actes, la règle
+			de calcul à appliquer pour déterminer le surcoût prévisionnel ou réel
+			associé à chaque acte facturé pour cet essai.</p>
+		<p>La colonne « Nature des frais » contient les nom des actes et
+			la colonne « Frais » contient les règles de calcul associées aux
+			actes.</p>
+		<p>Exemple de grille de surcoût :</p>
+		<p align="center">
+			<img width="639" height="533" src="#{facesContext.externalContext.requestContextPath}/resources/images/aideEnLigne/#{'image205.png'}" />
+		</p>
+		<p>A partir de cette grille et des informations données par
+			l’utilisateur l’application Elips sera capable de calculer le montant
+			des surcoûts réels ou prévisionnels pour cet essai et générer un
+			fichier Excel présentant ces surcoûts.</p>
+		<h4 class="ancre" id="_Toc365639575">b) Définition du vocabulaire et des
+			méthodes de calculs (éléments décomptés)</h4>
+		<p>Une catégorie comprend un acte facturé (nature des frais) et
+			une règle de calcul correspondant (frais).</p>
+		<p>Les catégories sont réparties en thèmes pour une meilleure
+			lisibilité de la grille de surcoûts. Exemple de thème : Actes
+			pharmaceutiques supplémentaires, frais spécifiques, prestation
+			standard, etc.</p>
+		<p>Une règle de calcul comprend 4 ou 5 parties. La première partie
+			de la règle est le type de coût. Il peut être fixe (le coût de l’acte
+			ne varie pas en fonction du nombre d’actes effectués) ou variable (le
+			coût de l’acte varie en fonction du nombre d’actes effectués).</p>
+		<p>Si le type de coût est fixe alors les trois autres parties de
+			la règle à indiquer sont :</p>
+		<p>- Le périmètre (le coût est calculé par essai ou par patient),
+		</p>
+		<p>- Le coût de première année (coût de l’acte durant la première
+			année de l’essai),</p>
+		<p>- Le coût d’années suivantes (coût de l’acte durant les années
+			suivantes de l’essai).</p>
+		<p>Si le type de coût est variable alors les quatre autres parties
+			de la règle à indiquer sont :</p>
+		<p>- Le périmètre (le coût est facturé par essai ou par patient),
+		</p>
+		<p>- Le mode de calcul (lot forfaitaire, lot forfaitaire par an,
+			unités par an ou unités).</p>
+		<p>- Le nombre minimal d’actes facturés,</p>
+		<p>- Le nombre maximal d’actes facturés,</p>
+		<p>- Le montant du coût pour un acte.</p>
+		<p>Prenons un exemple :</p>
+		<p>Sur la grille de surcoûts ci-dessous on peut lire à la deuxième
+			ligne : « Cout variable – Pour l’essai – Unité – 1/- - 100.00 euros »
+			en face de « Audits ».</p>
+		<p>Cela signifie : Les actes d’audit ont un coût variable selon le
+			nombre d’actes effectués. Le montant indiqué est un coût à l’acte
+			pour un essai. Le coût de l’acte d’audit est de 100 euros à partir de
+			1 acte d’audit effectué.</p>
+		<p align="center">
+			<img width="639" height="533" src="#{facesContext.externalContext.requestContextPath}/resources/images/aideEnLigne/#{'image205.png'}" />
+		</p>
+		<h4 class="ancre" id="_Toc365639576">c) Création &amp; Affectation d’une grille
+			&amp; calcul prévisionnel</h4>
+		<h5 class="ancre" id="_Toc365639577">· Création d’une grille de surcoûts</h5>
+		<p>Pour créer une grille, Cliquer sur « Grilles de surcoûts » dans
+			l’onglet « Gérer les données ». Cliquer sur Ajouter. Compléter les
+			champs du bloc grille.</p>
+		<p align="center">
+			<img width="639" height="301" src="#{facesContext.externalContext.requestContextPath}/resources/images/aideEnLigne/#{'image207.png'}" />
+		</p>
+		<p>
+			Cliquer sur le logo <img width="21" height="19"
+				src="#{facesContext.externalContext.requestContextPath}/resources/images/aideEnLigne/#{'image208.png'}" /> dans la colonne thème du tableau
+			« Structure de la grille » pour ajouter un thème. Indiquer le nom du
+			thème et valider. Cliquer sur le logo <img width="21" height="19"
+				src="#{facesContext.externalContext.requestContextPath}/resources/images/aideEnLigne/#{'image208.png'}" /> dans la deuxième colonne du
+			tableau « Structure de la grille » pour ajouter une catégorie.
+			Indiquer le nom et l’acte concerné pour la catégorie et valider.
+			Cliquer sur le logo <img width="21" height="19"
+				src="#{facesContext.externalContext.requestContextPath}/resources/images/aideEnLigne/#{'image208.png'}" /> dans la dernière colonne du
+			tableau « Structure de la grille » pour ajouter une règle de calcul.
+			Compléter les champs et valider.
+		</p>
+		<p align="center">
+			<img width="604" height="104" src="#{facesContext.externalContext.requestContextPath}/resources/images/aideEnLigne/#{'image210.jpg'}" />
+		</p>
+		<p>Poursuivre de même pour ajouter d’autres thèmes, catégories,
+			actes et règles dans la grille de surcoûts.</p>
+		<p>Cliquer sur « Enregistrer ».</p>
+		<p>Il est possible de dupliquer la grille de surcoûts en cliquant
+			sur « Dupliquer ». Pour créer une nouvelle grille, il est conseillé
+			de dupliquer une grille existante et de la modifier plutôt que de
+			partir d’une grille vierge.</p>
+		<h5 class="ancre" id="_Toc365639578">· Génération des surcoûts prévisionnels</h5>
+		<p>Pour générer des surcoûts prévisionnels pour un essai, cliquer
+			sur « Rechercher un essai » dans l’onglet « Répertoire des essais ».
+			Faire une recherche et sélectionner l’essai concerné. Sélectionner
+			l’onglet « Surcoûts » dans le bloc « Informations détaillées ».</p>
+		<p>Sélectionner la grille de surcoûts dans la liste déroulante «
+			Grille à utiliser ».</p>
+		<p align="center">
+			<img width="639" height="392" src="#{facesContext.externalContext.requestContextPath}/resources/images/aideEnLigne/#{'image212.png'}" />
+		</p>
+		<p>La grille de surcoût sélectionnée s’affiche alors. Compléter le
+			bloc « Calcul prévisionnel » et cliquer sur « Générer les surcoûts
+			prévisionnels ».</p>
+		<p align="center">
+			<img width="333" height="400" src="#{facesContext.externalContext.requestContextPath}/resources/images/aideEnLigne/#{'image214.png'}" />
+		</p>
+		<br clear="ALL" />
+		<p>Cliquer sur « Télécharger » pour télécharger le fichier Excel
+			des surcoûts généré.</p>
+		<p align="center">
+			<img width="593" height="218" src="#{facesContext.externalContext.requestContextPath}/resources/images/aideEnLigne/#{'image216.png'}" />
+		</p>
+		<h4 class="ancre" id="_Toc365639579">d) Génération réelle des surcoûts</h4>
+		<p>Prérequis : La génération réelle des surcoûts ne peut être
+			effectuée que si la visite de mise en place de l’essai a été
+			réalisée. Si l’utilisateur tente de générer des surcoûts alors que la
+			visite de mise en place de l’essai n’a pas été effectuée, un message
+			apparaitra :</p>
+		<p align="center">
+			<img width="605" height="35" src="#{facesContext.externalContext.requestContextPath}/resources/images/aideEnLigne/#{'image218.jpg'}" />
+		</p>
+		<p>Pour générer des surcoûts prévisionnels pour un essai, cliquer
+			sur « Rechercher un essai » dans l’onglet « Répertoire des essais ».
+			Faire une recherche et sélectionner l’essai concerné. Sélectionner
+			l’onglet « Surcoûts » dans le bloc « Informations détaillées ».</p>
+		<p align="center">
+			<img width="579" height="356" src="#{facesContext.externalContext.requestContextPath}/resources/images/aideEnLigne/#{'image220.png'}" />
+		</p>
+		<p>Sélectionner la grille de surcoûts. Indiquer dans le bloc «
+			Calcul des surcoûts réels » un intervalle de temps pour lequel
+			Générer les surcoûts réels. L’application déterminera ainsi les
+			surcoûts en fonction du nombre de réalisations de chaque acte durant
+			l’intervalle de temps donné. Cliquer sur « Générer les surcoûts réels
+			». Cliquer sur « Télécharger » pour télécharger le fichier Excel des
+			surcoûts généré.</p>
+		<p align="center">
+			<img width="569" height="704" src="#{facesContext.externalContext.requestContextPath}/resources/images/aideEnLigne/#{'grille_surcout.png'}" />
+		</p>
+		<br clear="ALL" />
+		<h2 class="ancre" id="_Toc365639580">6. Gestion des stocks</h2>
+		<h4 class="ancre" id="_Toc365639581">a) Etat du stock &amp; Mouvement</h4>
+		<p>L’état du stock peut être visualisé en cliquant sur «
+			Consultation stock » dans l’onglet « Stock ».Il est alors possible de
+			consulter le stock en fonction de différents paramètres comme la
+			pharmacie, l’essai-promoteur, le produit, etc. Les résultats sont
+			affichés sous forme de tableaux indiquant pour chaque produit la
+			quantité en stock, la pharmacie et le lieu de stockage et l’essai
+			auquel il appartient.</p>
+		<p align="center">
+			<img width="605" height="305" src="#{facesContext.externalContext.requestContextPath}/resources/images/aideEnLigne/#{'image224.jpg'}" />
+		</p>
+		<p>Les mouvements effectués dans le stock peuvent également être
+			visualisés en cliquant sur « Consultation flux » dans l’onglet «
+			Stock ». Il est possible de visualisé les mouvements en fonction de
+			la pharmacie, l’essai-promoteur, le produit, le mouvement, etc. Les
+			résultats sont affichés sous forme de tableaux indiquant pour chaque
+			mouvement la date et heure auquel il a été réalisé, la personne
+			l’ayant réalisé et la pharmacie et l’essai concernés.</p>
+		<p align="center">
+			<img width="604" height="285" src="#{facesContext.externalContext.requestContextPath}/resources/images/aideEnLigne/#{'image226.jpg'}" />
+		</p>
+		<p>Remarque :</p>
+		<p>Il existe 9 types de mouvements :</p>
+		<p>- Approvisionnement,</p>
+		<p>- Cession PUI,</p>
+		<p>- Dispensation,</p>
+		<p>- Destruction,</p>
+		<p>- Dotation,</p>
+		<p>- Retour Promoteur,</p>
+		<p>- Sortie pour préparation,</p>
+		<p>- Entrée de préparation,</p>
+		<p>- Autre sortie.</p>
+		<h4 class="ancre" id="_Toc365639582">b) Approvisionnement</h4>
+		<p>L’approvisionnement du stock se fait dans le menu « Entrée de
+			stock » dans l’onglet Stock ». Arrivé sur la page « Entrée de stock
+			», indiquer l’essai concerné par cet approvisionnement, la pharmacie
+			et si l’entrée est de type « Réception » ou s’il s’agit d’une autre
+			entrée de stock. La date de réception est automatiquement indiquée
+			par l’application à la date de création de l’approvisionnement. Il
+			est également possible d’indiquer la date d’arrivé du colis. Cliquer
+			sur « Ajouter un lot » pour créer un approvisionnement.</p>
+		<p align="center">
+			<img width="639" height="182" src="#{facesContext.externalContext.requestContextPath}/resources/images/aideEnLigne/#{'image228.png'}" />
+		</p>
+		<p>Indiquer ensuite le produit à approvisionner et son
+			conditionnement. Il est également obligatoire d’indiquer le numéro de
+			lot et l’état de la réception (Approuvé ou En Quarantaine). La date
+			de péremption est un champ facultatif. Valider ensuite en cliquant
+			sur « Enregistrer ».</p>
+		<p align="center">
+			<img width="639" height="324" src="#{facesContext.externalContext.requestContextPath}/resources/images/aideEnLigne/#{'image230.png'}" />
+		</p>
+		<p>Il est possible de créer plusieurs approvisionnements pour le
+			même couple même essai-promoteur/pharmacie en re-cliquant sur «
+			ajouter un lot ». Une fois tous les lots ajoutés, cliquer sur «
+			Enregistrer » pour valider les approvisionnements.</p>
+		<h4 class="ancre" id="_Toc365639583">c) Mise en quarantaine / Sortie de
+			quarantaine</h4>
+		<h5 class="ancre" id="_Toc365639584">· Sortie de stock avec mise en quarantaine</h5>
+		<p>La mise en quarantaine se fait depuis le menu « Sortie de Stock
+			» dans l’onglet « Stock ». Indiquer l’essai et la pharmacie concernés
+			par cette sortie et le type de sortie (cession PUI, destruction,
+			retour promoteur ou autre). Indiquer ensuite qu’il s’agit d’une mise
+			en quarantaine en sélectionnant le libellé « Mise en quarantaine :
+			périmé » ou « Mise en quarantaine : retrait de lot » dans la liste
+			déroulante « Raison de la sortie ».</p>
+		<p align="center">
+			<img width="604" height="222" src="#{facesContext.externalContext.requestContextPath}/resources/images/aideEnLigne/#{'image232.jpg'}" />
+		</p>
+		<p>Il est aussi possible d’ajouter un commentaire. Pour valider
+			cette mise en quarantaine, cliquer sur « Ajouter une sortie ».
+			Indiquer ensuite le produit et le conditionnement à mettre en
+			quarantaine. Puis indiquer la quantité à sortir et cliquer sur
+			Enregistrer.</p>
+		<p>Un récapitulatif de la sortie de stock est alors affiché.</p>
+		<p align="center">
+			<img width="604" height="294" src="#{facesContext.externalContext.requestContextPath}/resources/images/aideEnLigne/#{'image234.jpg'}" />
+		</p>
+		<p>La sortie de stock est alors encore modifiable en cliquant sur
+			la loupe. Cliquer sur Enregistrer pour valider la sortie.</p>
+		<h5 class="ancre" id="_Toc365639585">· Entrée de stock avec mise en quarantaine</h5>
+		<p>Si la réception d’un produit n’est pas approuvée, celui-ci peut
+			être mis en quarantaine. Pour effectué une entrée avec mise en
+			quarantaine, Cliquer sur « Entrée de stock » dans l’onglet Stock ».
+			Arrivé sur la page « Entrée de stock », indiquer l’essai concerné par
+			cet approvisionnement, la pharmacie et si l’entrée est de type «
+			Réception » ou s’il s’agit d’une autre entrée de stock. Cliquer sur «
+			Ajouter un lot » pour créer un approvisionnement.</p>
+		<p>Indiquer ensuite le produit à approvisionner, son
+			conditionnement et le numéro de lot. Puis sélectionner « En
+			Quarantaine » dans le champ « Etat de la réception ». Indiquer
+			ensuite le motif de mise en quarantaine et un éventuel commentaire.
+			Valider ensuite en cliquant sur « Enregistrer ».</p>
+		<p align="center">
+			<img width="604" height="333" src="#{facesContext.externalContext.requestContextPath}/resources/images/aideEnLigne/#{'image236.jpg'}" />
+		</p>
+		<h5 class="ancre" id="_Toc365639586">· Levée de quarantaine</h5>
+		<p>L’utilisateur a également la possibilité de levée les
+			quarantaines des lots mis en quarantaine. Pour cela cliquer sur «
+			Consultation Stock » dans l’onglet « Stock ». Rechercher le lot à
+			traiter en complétant un ou plusieurs champs de recherche puis en
+			cliquant sur « Rechercher ».</p>
+		<p>Sélectionner le produit en quarantaine à traiter.</p>
+		<p align="center">
+			<img width="563" height="261" src="#{facesContext.externalContext.requestContextPath}/resources/images/aideEnLigne/#{'image238.png'}" />
+		</p>
+		<p>
+			Les informations détaillées du produit sont alors affichées. Pour
+			lever la quarantaine d’un lot, Cliquer sur le <img width="29"
+				height="22" src="#{facesContext.externalContext.requestContextPath}/resources/images/aideEnLigne/#{'image239.png'}" /> dans la ligne du lot
+			dont la quarantaine doit être levée.
+		</p>
+		<p align="center">
+			<img width="455" height="315" src="#{facesContext.externalContext.requestContextPath}/resources/images/aideEnLigne/#{'image241.png'}" />
+		</p>
+		<h4 class="ancre" id="_Toc365639587">d) Prolongation de la date de péremption</h4>
+		<p>Pour prolonger une date de péremption d’un produit, Cliquer sur
+			« Gestion de la péremption » dans l’onglet « Stock ». Rechercher le
+			produit dont la date de péremption est à prolonger à l’aide des
+			différents critères de recherche. Cliquer sur le produit dont la date
+			de péremption est à prolonger dans la liste des résultats.</p>
+		<p align="center">
+			<img width="605" height="360" src="#{facesContext.externalContext.requestContextPath}/resources/images/aideEnLigne/#{'image243.jpg'}" />
+		</p>
+		<p>Une fiche de gestion de la péremption du produit s’affiche
+			alors. Des informations sur l’essai, l’état de la réception et les
+			produits sont indiquées dans cette fiche. Cette fiche indiqué
+			également si la date de péremption a déjà été reportée et
+			l’historique des extensions de péremption.</p>
+		<p>Indiquer la nouvelle date de péremption souhaitée dans le champ
+			« Nouvelle date de péremption » en ajoutant un commentaire et/ou un
+			certificat d’analyse si besoin. Puis valider.</p>
+		<p align="center">
+			<img width="549" height="516" src="#{facesContext.externalContext.requestContextPath}/resources/images/aideEnLigne/#{'image245.jpg'}" />
+		</p>
+		<h4 class="ancre" id="_Toc365639588">e) Sortie de stock</h4>
+		<p>Les sorties de stock se font depuis le menu « Sortie de Stock »
+			dans l’onglet « Stock ». Arrivé sur la page « Sortie de Stock »,
+			indiquer l’essai et la pharmacie concernés par cette sortie et le
+			type de sortie (cession PUI, destruction, retour promoteur ou autre).
+			Sélectionner ensuite si besoin la raison de la sortie et ajouter si
+			besoin un commentaire. Pour valider cette sortie, cliquer sur «
+			Ajouter une sortie ».</p>
+		<p align="center">
+			<img width="639" height="255" src="#{facesContext.externalContext.requestContextPath}/resources/images/aideEnLigne/#{'image247.png'}" />
+		</p>
+		<h4 class="ancre" id="_Toc365639589">f) Préparation</h4>
+		<p>Le scénario de création et stockage d’une préparation se
+			déroule en 3 parties :</p>
+		<p>- Sortie du stock du produit nécessaire à la préparation,</p>
+		<p>- Réalisation de la préparation,</p>
+		<p>- Entrée en stock de la préparation.</p>
+		<p>Pour effectuer la première étape de sortie du produit
+			nécessaire à la préparation, cliquer sur « Préparation» dans l’onglet
+			« Stock ». Puis indiquer l’essai-promoteur et la pharmacie concernés.
+			Une aide à la dispensation apparaît alors.</p>
+		<p align="center">
+			<img width="639" height="283" src="#{facesContext.externalContext.requestContextPath}/resources/images/aideEnLigne/#{'image249.png'}" />
+		</p>
+		<p>Indiquer le produit à sortir ainsi que le conditionnement
+			souhaité. Un tableau indiquant le numéro de lot, le numéro de
+			traitement, le lieu de stockage et la quantité en stock du produit
+			sélectionné apparaît alors.</p>
+		<p align="center">
+			<img width="605" height="139" src="#{facesContext.externalContext.requestContextPath}/resources/images/aideEnLigne/#{'image251.jpg'}" />
+		</p>
+		<p>Indiquer la quantité de produit à sortir et cliquer sur «
+			Enregistrer ». Un tableau indiquant les produits que vous avez
+			sélectionné pour sortie, leur conditionnement et la quantité à sortir
+			s’affiche alors.</p>
+		<p align="center">
+			<img width="639" height="329" src="#{facesContext.externalContext.requestContextPath}/resources/images/aideEnLigne/#{'image253.png'}" />
+		</p>
+		<p>Il est possible de modifier pour chaque sortie le produit, le
+			conditionnement et la quantité en cliquant sur la loupe.</p>
+		<p align="center">
+			<img width="604" height="67" src="#{facesContext.externalContext.requestContextPath}/resources/images/aideEnLigne/#{'image255.jpg'}" />
+		</p>
+		<p>Des produits supplémentaires nécessaires à la préparation
+			peuvent être sorti du stock à leur tour en cliquant sur « Ajouter une
+			sortie » et en procédant ensuite comme indiquer pour la sortie du
+			premier produit.</p>
+		<p>Cliquer sur suivant une fois que tous les produits nécessaires
+			à la préparation sont ajoutés.</p>
+		<p>La page « PREPARATION ENTREE DE STOCK » s’affiche alors. Le
+			formulaire est pré-rempli afin de pouvoir ajouter en stock la
+			préparation constituée à l’aide des produits sortie à l’étape
+			précédente.</p>
+		<p>Les informations indiquées dans le formulaire peuvent être
+			modifiées par l’utilisateur.</p>
+		<p align="center">
+			<img width="639" height="245" src="#{facesContext.externalContext.requestContextPath}/resources/images/aideEnLigne/#{'image257.png'}" />
+		</p>
+		<p>Cliquer sur « Ajouter un lot » pour ajouter la préparation en
+			stock. Un bloc apparaît alors permettant d’indiquer le nom du produit
+			préparé, le conditionnement, le numéro de lot et la date de
+			péremption.</p>
+		<p align="center">
+			<img width="639" height="174" src="#{facesContext.externalContext.requestContextPath}/resources/images/aideEnLigne/#{'image259.png'}" />
+		</p>
+		<p>Remplir ces champs et cliquer sur « Enregistrer ». Un tableau
+			est affiché, récapitulant les produits préparé.</p>
+		<p align="center">
+			<img width="639" height="293" src="#{facesContext.externalContext.requestContextPath}/resources/images/aideEnLigne/#{'image261.png'}" />
+		</p>
+		<p>Il est possible de modifier pour chaque entrée le produit, le
+			conditionnement et la quantité en cliquant sur la loupe.</p>
+		<p align="center">
+			<img width="604" height="54" src="#{facesContext.externalContext.requestContextPath}/resources/images/aideEnLigne/#{'image263.jpg'}" />
+		</p>
+		<p>Cliquer sur enregistrer. Un récapitulatif du processus de
+			création et stockage de la préparation s’affiche. Il indique :</p>
+		<p>- l’essai le promoteur et la pharmacie concernés,</p>
+		<p>- La personne ayant réalisé la préparation,</p>
+		<p>- La date de réalisation de la préparation,</p>
+		<p>- Les modalités de réception des traitements,</p>
+		<p>- Tous les produits sortis du stock pour effectuer cette
+			préparation,</p>
+		<p>- La ou les préparations réalisées.</p>
+		<p align="center">
+			<img width="639" height="397" src="#{facesContext.externalContext.requestContextPath}/resources/images/aideEnLigne/#{'image265.png'}" />
+		</p>
+		<h4 class="ancre" id="_Toc365639590">g) Retour Patient</h4>
+		<p>Les retours patient peuvent être consultés, créés et modifiés à
+			partie du menu « Retour patient » dans l’onglet « Stock ».</p>
+		<p>La visualisation des retours peut être faite en fonction du
+			numéro essai-promoteur, du patient et de l’état du retour patient.
+			Après avoir renseigné ces paramètres, cliquer sur « Rechercher » pour
+			afficher les retours patients correspondants.</p>
+		<p align="center">
+			<img width="605" height="191" src="#{facesContext.externalContext.requestContextPath}/resources/images/aideEnLigne/#{'image267.jpg'}" />
+		</p>
+		<p>Pour modifier l’état d’un retour patient, sélectionner un
+			retour patient et cliquer sur « Modifier l’état » en bas de page.</p>
+		<p align="center">
+			<img width="509" height="127" src="#{facesContext.externalContext.requestContextPath}/resources/images/aideEnLigne/#{'image269.jpg'}" />
+		</p>
+		<p>Indiquer ensuite le nouvel état à attribuer au retour patient
+			en ajoutant la date et un commentaire si nécessaire.</p>
+		<p align="center">
+			<img width="409" height="187" src="#{facesContext.externalContext.requestContextPath}/resources/images/aideEnLigne/#{'image271.jpg'}" />
+		</p>
+		<p>Pour afficher (pour impression ou non) le récapitulatif d’un
+			retour patient, cliquer sur la loupe dans la ligne du patient.</p>
+		<p align="center">
+			<img width="503" height="81" src="#{facesContext.externalContext.requestContextPath}/resources/images/aideEnLigne/#{'image273.jpg'}" />
+		</p>
+		<p>Pour ajouter un retour patient cliquer sur « Ajouter » en bas
+			de page. Compléter les champs et enregistrer.</p>
+		<p align="center">
+			<img width="547" height="375" src="#{facesContext.externalContext.requestContextPath}/resources/images/aideEnLigne/#{'image275.jpg'}" />
+		</p>
+		<h4 class="ancre" id="_Toc365639591">h) Demande de dotation et dispensation
+			Globale</h4>
+		<p>Pour les essais ayant un type de dispensation global, des
+			demandes de dotations peuvent être effectuées.</p>
+		<h5 class="ancre" id="_Toc365639592">· Créer une demande de dotation</h5>
+		<p>Pour faire une demande de dotation, Cliquer sur « Demande de
+			dotation » dans l’onglet « Déroulement des essais ». Indiquer alors
+			l’essai et/ou le service concerné par cette demande puis cliquer sur
+			« Ajouter une demande de dotation ».</p>
+		<p align="center">
+			<img width="605" height="143" src="#{facesContext.externalContext.requestContextPath}/resources/images/aideEnLigne/#{'image277.jpg'}" />
+		</p>
+		<p>Le formulaire de création de demande de dotation s’affiche
+			alors.</p>
+		<p align="center">
+			<img width="605" height="242" src="#{facesContext.externalContext.requestContextPath}/resources/images/aideEnLigne/#{'image279.jpg'}" />
+		</p>
+		<p>Indiquer ensuite le produit, le conditionnement et quantité à
+			doter. Un commentaire peut être également ajouté. Cliquer sur «
+			Enregistrer ».</p>
+		<p>Un récapitulatif de la demande de dotation s’affiche alors.</p>
+		<p align="center">
+			<img width="605" height="215" src="#{facesContext.externalContext.requestContextPath}/resources/images/aideEnLigne/#{'image281.jpg'}" />
+		</p>
+		<p>
+			Il est ensuite possible de modifier cette demande de dotation en
+			cliquant sur <img width="18" height="16"
+				src="#{facesContext.externalContext.requestContextPath}/resources/images/aideEnLigne/#{'image282.png'}" /> ou de supprimer la demande de
+			dotation en cliquant sur <img width="17" height="17"
+				src="#{facesContext.externalContext.requestContextPath}/resources/images/aideEnLigne/#{'image284.png'}" /> .
+		</p>
+		<p>Cliquer sur « Enregistrer ». Un message confirme alors que la
+			demande de dotation est enregistrée.</p>
+		<p align="center">
+			<img width="605" height="74" src="#{facesContext.externalContext.requestContextPath}/resources/images/aideEnLigne/#{'image286.jpg'}" />
+		</p>
+		<p>Attention :</p>
+		<p>Un produit doit posséder un lieu de stockage (cf. 4) b) ) pour
+			être inclus dans une demande de dotation.</p>
+		<h5 class="ancre" id="_Toc365639593">· Traiter une demande de dotation</h5>
+		<p>Pour traiter une demande de dotation, cliquer sur «
+			Dispensation globale » dans l’onglet « Déroulement des essais ».</p>
+		<p>Puis indiquer dans le bloc « Recherche » les caractéristiques
+			de la demande à traiter (essai, pharmacie, service, produit, à
+			traiter) et cliquer sur « Rechercher ».</p>
+		<p align="center">
+			<img width="605" height="290" src="#{facesContext.externalContext.requestContextPath}/resources/images/aideEnLigne/#{'image288.jpg'}" />
+		</p>
+		<p>Cliquer alors sur la demande de dotation à traiter affichée
+			dans les résultats.</p>
+		<p>Le formulaire de traitement de la demande de dotation s’affiche
+			alors.</p>
+		<p>Si la quantité du produit à doter est nulle dans le stock,
+			alors un message l’indique et il n’est pas possible de traiter la
+			demande de dotation.</p>
+		<p align="center">
+			<img width="605" height="298" src="#{facesContext.externalContext.requestContextPath}/resources/images/aideEnLigne/#{'image290.jpg'}" />
+		</p>
+		<p>Si le produit à doter est présent en stock, indiquer la
+			quantité de produit à doter pour cette demande dans le champ «
+			Quantité à sortir ».</p>
+		<p align="center">
+			<img width="604" height="324" src="#{facesContext.externalContext.requestContextPath}/resources/images/aideEnLigne/#{'image292.jpg'}" />
+		</p>
+		<p>Cliquer ensuite sur « Enregistrer ».</p>
+		<h2 class="ancre" id="_Toc365639594">7. Prescription / dispensation</h2>
+		<h4 class="ancre" id="_Toc365639595">a) Workflow : inclusion,
+			prescription,dispensation</h4>
+		<p>Le workflow d’inclusion, prescription, dispensation se déroule
+			en 3 étapes dont l’ordre ne peut pas être modifié :</p>
+		<p>- L’inclusion du patient dans l’essai,</p>
+		<p>- La prescription de produits à ce patient dans le cadre de
+			l’essai,</p>
+		<h4 class="ancre" id="_Toc365639596">b) Description d’une inclusion</h4>
+		<p>Pour effectuer une inclusion, cliquer sur « Inclusion » dans
+			l’onglet « Déroulement des essais ». Il est possible alors de :</p>
+		<p>- Rechercher un patient et l’inclure dans l’essai,</p>
+		<p>- Créer un patient et l’inclure dans l’essai.</p>
+		<h5 class="ancre" id="_Toc365639597">· Recherche et Inclusion</h5>
+		<p>
+			Pour rechercher un patient, remplir le champ « Nom-IPP ». s <img
+				width="605" height="171" src="#{facesContext.externalContext.requestContextPath}/resources/images/aideEnLigne/#{'image294.jpg'}" />
+		</p>
+		<p>Si ce patient est déjà inclus dans un essai, un message
+			l’indique immédiatement. Il est possible de consulter la fiche du
+			patient en cliquant sur « Consulter la fiche patient ».</p>
+		<p align="center">
+			<img width="605" height="167" src="#{facesContext.externalContext.requestContextPath}/resources/images/aideEnLigne/#{'image296.jpg'}" />
+		</p>
+		<p>Si le patient n’est pas déjà inclus dans un essai, indiquer
+			l’essai-promoteur dans lequel inclure ce patient ainsi que le numéro
+			d’inclusion puis cliquer sur « Inclure le patient dans l’essai ».</p>
+		<h5 class="ancre" id="_Toc365639598">· Création et Inclusion</h5>
+		<p>Pour créer un patient cliquer sur « Créer un patient ».</p>
+		<p align="center">
+			<img width="604" height="162" src="#{facesContext.externalContext.requestContextPath}/resources/images/aideEnLigne/#{'image298.jpg'}" />
+		</p>
+		<p>Une Fiche Patient vierge s’affiche alors.</p>
+		<p align="center">
+			<img width="604" height="559" src="#{facesContext.externalContext.requestContextPath}/resources/images/aideEnLigne/#{'image300.jpg'}" />
+		</p>
+		<p>Compléter les champs du bloc « Patient ».</p>
+		<p>Pour compléter les données médicales du patient cliquer sur «
+			Ajouter » dans le bloc « Données médicales ».</p>
+		<p align="center">
+			<img width="604" height="96" src="#{facesContext.externalContext.requestContextPath}/resources/images/aideEnLigne/#{'image302.jpg'}" />
+		</p>
+		<p>Une fiche d’édition des données médicales s’affiche alors.</p>
+		<p align="center">
+			<img width="308" height="201" src="#{facesContext.externalContext.requestContextPath}/resources/images/aideEnLigne/#{'image304.jpg'}" />
+		</p>
+		<p>
+			Il est possible d’afficher la surface corporelle du patient (selon la
+			formule de Dubois et Dubois<sup>2</sup>) en complétant le poids et la
+			taille du patient puis en cliquant sur le bouton « Calculer la
+			surface corporelle ».
+		</p>
+		<p>Compléter les champs puis cliquer sur le bouton « Valider »
+			pour retourner sur la fiche patient.</p>
+		<p>Une fois les blocs « Patient » et « Données médicales »
+			remplis, cliquer sur « Enregistrer » (Les onglets « Essais », «
+			Prescriptions », « Dispensations » et « Retours » ne sont accessible
+			qu’une fois le patient inclus dans un essai).</p>
+		<p>La page d’inclusion est alors ré-affichée avec, cette fois, le
+			champ « Nom – IPP » pré-rempli avec celui du patient créé à l’étape
+			précédente. Indiquer alors le numéro essai-promoteur de l’essai dans
+			lequel inclure le patient et un numéro d’inclusion.</p>
+		<p align="center">
+			<img width="605" height="172" src="#{facesContext.externalContext.requestContextPath}/resources/images/aideEnLigne/#{'image306.jpg'}" />
+		</p>
+		<p>Cliquer ensuite sur « Inclure le patient dans l’essai ». Un
+			message de confirmation s’affiche alors indiquant que le patient a
+			été inclus avec succès.</p>
+		<h4 class="ancre" id="_Toc365639599">c) Prescription</h4>
+		<h5 class="ancre" id="_Toc365639600">· Consultation des Prescriptions</h5>
+		<p>Les prescriptions peuvent être consultées en cliquant sur «
+			Liste des prescriptions » dans l’onglet « Déroulement des essais ».
+			Les prescriptions peuvent être visualisées en fonction du patient, du
+			numéro essai-promoteur et de son affectation à une dispensation. Pour
+			visualiser les prescriptions, remplir au moins un de ces champs et
+			cliquer sur « Rechercher ».</p>
+		<p align="center">
+			<img width="639" height="260" src="#{facesContext.externalContext.requestContextPath}/resources/images/aideEnLigne/#{'image308.png'}" />
+		</p>
+		<p>Il est possible d’afficher un récapitulatif détaillé de la
+			prescription en cliquant sur la loupe.</p>
+		<p align="center">
+			<img width="604" height="280" src="#{facesContext.externalContext.requestContextPath}/resources/images/aideEnLigne/#{'image310.jpg'}" />
+		</p>
+		<h5 class="ancre" id="_Toc365639601">· Création d’une Prescription</h5>
+		<p>Pour créer une prescription, cliquer sur « Effectuer une
+			prescription » dans l’onglet « Déroulement des essais ».</p>
+		<p align="center">
+			<img width="605" height="115" src="#{facesContext.externalContext.requestContextPath}/resources/images/aideEnLigne/#{'image312.jpg'}" />
+		</p>
+		<p>Indiquer alors :</p>
+		<p>- soit le Nom et numéro IPP du patient pour lequel effectuer la
+			prescription,</p>
+		<p>- soit le numéro essai-promoteur de l’essai dans lequel est
+			inclus le patient pour lequel effectuer la prescription, puis le Nom
+			et numéro IPP de ce patient.</p>
+		<p>Dans les deux cas, trois blocs s’affichent :</p>
+		<p>- Un bloc « Patient » décrivant les informations générales du
+			patient et contenant un bouton « Consulter la fiche patient » (qui
+			permet d’accéder à la fiche patient du patient),</p>
+		<p>- Un bloc « Essai clinique » décrivant l’essai, la date de
+			début de traitement et le bras et séquence associé.</p>
+		<p>- Un bloc « Prescription » décrivant la date de prescription et
+			les produits prescrits associés au bras et à la séquence</p>
+		<p align="center">
+			<img width="604" height="405" src="#{facesContext.externalContext.requestContextPath}/resources/images/aideEnLigne/#{'image314.jpg'}" />
+		</p>
+		<p>Compléter les champs du bloc « Essai clinique ». Sélectionner
+			la séquence à prescrire en cliquant sur la loupe devant « Bras et
+			séquence » dans le bloc « Essai clinique ».</p>
+		<p align="center">
+			<img width="440" height="166" src="#{facesContext.externalContext.requestContextPath}/resources/images/aideEnLigne/#{'image316.jpg'}" />
+		</p>
+		<p>Les bras de l’essai s’affichent alors. Cliquer sur la croix à
+			côté du bras pour afficher ses séquences.</p>
+		<p align="center">
+			<img width="264" height="74" src="#{facesContext.externalContext.requestContextPath}/resources/images/aideEnLigne/#{'image318.jpg'}" />
+		</p>
+		<p>Sélectionner ensuite la séquence souhaitée et cliquer sur «
+			Valider ».</p>
+		<p align="center">
+			<img width="287" height="93" src="#{facesContext.externalContext.requestContextPath}/resources/images/aideEnLigne/#{'image320.jpg'}" />
+		</p>
+		<p>Le bras et la séquence choisis sont alors affiché dans le bloc
+			« Essai clinique » et le ou les produits inclus dans la séquence
+			sélectionnées sont affichés dans le tableau « Produits prescrits »
+			dans le bloc « Prescription ».</p>
+		<p align="center">
+			<img width="397" height="342" src="#{facesContext.externalContext.requestContextPath}/resources/images/aideEnLigne/#{'image322.jpg'}" />
+		</p>
+		<p>Il est possible de modifier le bras et la séquence prescrits en
+			cliquant sur la loue à côté du nom de la séquence dans le bloc «
+			Essai clinique ».</p>
+		<p align="center">
+			<img width="322" height="121" src="#{facesContext.externalContext.requestContextPath}/resources/images/aideEnLigne/#{'image324.jpg'}" />
+		</p>
+		<p>En absence de bras et séquence sur l’essai ou si des produits
+			supplémentaires sont à prescrire, il est possible d’ajouter
+			directement les produits dans la prescription en cliquant sur «
+			Ajouter » dans le bloc prescription. Compléter alors les champs dans
+			la fiche de prescription de produit qui s’affiche puis cliquer sur «
+			Valider ».</p>
+		<p align="center">
+			<img width="355" height="229" src="#{facesContext.externalContext.requestContextPath}/resources/images/aideEnLigne/#{'image326.jpg'}" />
+		</p>
+		<p>Il est possible de modifier les produits prescrits et leurs
+			modalités de prescription en cliquant sur la loupe dans la ligne du
+			produit à modifier.</p>
+		<p>Un commentaire peut être ajouté dans le champ « Commentaire ».
+			Ce commentaire sera affiché lors de la dispensation de la
+			prescription en tant que « Commentaire de prescription ».</p>
+		<p>
+			---------------------------------------------------------------------------------------------
+		</p>
+		<p>Attention : Dans le cas d’un essai en double aveugle, il n’est
+			pas possible de choisir le produit à prescrire au patient.</p>
+		<p align="center">
+			<img width="605" height="403" src="#{facesContext.externalContext.requestContextPath}/resources/images/aideEnLigne/#{'image328.jpg'}" />
+		</p>
+		<p>
+			----------------------------------------------------------------------------------------------------
+		</p>
+		<p>Pour prescrire les produits au patient cliquer sur « Prescrire
+			». Le récapitulatif de la prescription s’affiche alors. Il est
+			possible de l’imprimer en cliquant sur l’imprimante en haut à droite
+			de la page.</p>
+		<p>Il est aussi possible de télécharger un modèle de prescription
+			nominative pré-rempli en cliquant sur le bouton « Modèle de
+			prescription nominative » dans le formulaire de prescription ou dans
+			le récapitulatif de la prescription.</p>
+		<p>Remarque : Il est possible de dispenser le traitement
+			directement après la prescription en cliquant sur « Prescrire et
+			dispenser » au lieu de « Prescrire » au moment de la prescription. Le
+			formulaire de dispensation s’affichera alors directement après
+			l’enregistrement de la prescription.</p>
+		<p align="center">
+			<img width="405" height="232" src="#{facesContext.externalContext.requestContextPath}/resources/images/aideEnLigne/#{'image330.jpg'}" />
+		</p>
+		<h4 class="ancre" id="_Toc365639602">d) Dispensation</h4>
+		<p>Pour réaliser une dispensation, cliquer sur « Effectuer une
+			dispensation » dans l’onglet « Déroulement des essais ». La
+			prescription à dispenser doit ensuite être recherchée. Pour cela
+			indiquer le patient et /ou le numéro essai-promoteur concernés par la
+			prescription et si cette prescription a déjà été dispensée.</p>
+		<p align="center">
+			<img width="604" height="243" src="#{facesContext.externalContext.requestContextPath}/resources/images/aideEnLigne/#{'image332.jpg'}" />
+		</p>
+		<p>Cliquer sur « Rechercher ». Les prescriptions correspondant aux
+			critères de recherches sont alors affichées. Cliquer sur la
+			prescription à dispenser. Trois blocs s’affichent :</p>
+		<p>- Un bloc « Patient » décrivant les informations générales du
+			patient et contenant un bouton « Consulter la fiche patient » (qui
+			permet d’accéder à la fiche patient du patient),</p>
+		<p>- Un bloc « Essai clinique » décrivant l’essai et les
+			informations d’inclusion du patient. Le bras et la séquence
+			sélectionnés dans le bloc « Dispensations » sont affichés dans ce
+			bloc également.</p>
+		<p>- Un bloc « Dispensations » contenant les informations de
+			dispensation réparties dans deux onglets : « Informations » et «
+			Produits prescrits ».</p>
+		<p>Dans l’onglet « Informations », la pharmacie est à indiquer
+			obligatoirement pour effectuer une dispensation. Si un commentaire a
+			été indiqué lors de la prescription, celui-ci est affiché dans le
+			champ « Commentaire à la prescription ». Si un conseil patient a été
+			indiqué dans l’onglet « Données pharma » de l’essai alors ce conseil
+			patient est affiché ici dans le champ « Conseil patient ». Si un
+			document avait été joint, il est également téléchargeable ici. De
+			même, si une aide à la dispensation avait été indiquée dans l’onglet
+			« Données pharma » de l’essai alors cette aide à la dispensation est
+			affichée ici dans le champ « Aide à la dispensation ». Là encore si
+			un document avait été joint, il est également téléchargeable ici.</p>
+		<p align="center">
+			<img width="605" height="470" src="#{facesContext.externalContext.requestContextPath}/resources/images/aideEnLigne/#{'image334.jpg'}" />
+		</p>
+		<p>Remplir les champs de l’onglet « Informations » du bloc «
+			Dispensations » si nécessaire.</p>
+		<p>Aller dans l’onglet « Produits prescrits ».</p>
+		<p>Dans le cas d’un essai ouvert ou en simple aveugle, une
+			séquence a été indiquée lors de la prescription.</p>
+		<p>
+			------------------------------------------------------------------------------------
+		</p>
+		<p>§ Dans le cas d’un essai en double aveugle, aucune séquence à
+			prescrire n’avait été sélectionnée lors de la prescription. Une étape
+			supplémentaire est donc nécessaire lors de la dispensation</p>
+		<p>Il est nécessaire de sélectionner une séquence lors de la
+			création de la dispensation sur Elips.</p>
+		<p>Pour cela, dans l’onglet « Produits prescrits sélectionner le
+			bras et la séquence à dispenser en cliquant sur la loupe face au
+			libellé « Bras et séquence* ».</p>
+		<p align="center">
+			<img width="604" height="219" src="#{facesContext.externalContext.requestContextPath}/resources/images/aideEnLigne/#{'image336.jpg'}" />
+		</p>
+		<p>Le ou les bras de l’essai s’affichent alors.</p>
+		<p align="center">
+			<img width="311" height="90" src="#{facesContext.externalContext.requestContextPath}/resources/images/aideEnLigne/#{'image338.jpg'}" />
+		</p>
+		<p>Cliquer sur la croix devant le bras à dispenser pour visualiser
+			les séquences disponibles.</p>
+		<p align="center">
+			<img width="328" height="122" src="#{facesContext.externalContext.requestContextPath}/resources/images/aideEnLigne/#{'image340.jpg'}" />
+		</p>
+		<p>Cliquer sur la séquence à dispenser puis cliquer sur « Valider
+			» pour valider le choix et revenir à la page de dispensation.</p>
+		<p>
+			----------------------------------------------------------------------------------------------------------
+		</p>
+		<p>On retrouve dans l’onglet « Produits prescrits » les
+			informations sur la séquence prescrite : le produit prescrit, la
+			durée du traitement, le mode de prescription et la posologie.</p>
+		<p align="center">
+			<img width="431" height="317" src="#{facesContext.externalContext.requestContextPath}/resources/images/aideEnLigne/#{'image342.jpg'}" />
+		</p>
+		<p>Un commentaire concernant la dispensation peut être ajouté dans
+			le champ « Commentaire ».</p>
+		<p>Cliquer sur « Sortir du stock » pour sortir du stock le produit
+			à dispenser.</p>
+		<p align="center">
+			<img width="605" height="350" src="#{facesContext.externalContext.requestContextPath}/resources/images/aideEnLigne/#{'image344.jpg'}" />
+		</p>
+		<p>Les produits à dispenser disponibles en stock sont alors
+			affichés.</p>
+		<p>
+			Si le délai restant avant la date de péremption est supérieure de
+			moins de 15 jours à la durée du traitement à dispenser, alors le
+			signe <img width="36" height="33" src="#{facesContext.externalContext.requestContextPath}/resources/images/aideEnLigne/#{'image345.png'}" />
+			est affiché dans la colonne « Quantité en stock ».
+		</p>
+		<p align="center">
+			<img width="566" height="316" src="#{facesContext.externalContext.requestContextPath}/resources/images/aideEnLigne/#{'image346.png'}" />
+		</p>
+		<p>Indiqué la quantité à sortir dans la ligne du lot à dispenser
+			et cliquer sur « Enregistrer » pour valider et revenir à la page de
+			dispensation.</p>
+		<p align="center">
+			<img width="432" height="251" src="#{facesContext.externalContext.requestContextPath}/resources/images/aideEnLigne/#{'image348.jpg'}" />
+		</p>
+		<p>Il est possible de consulter les sorties de stock effectuée
+			pour la dispensation en cliquant sur le bouton « Voir les sorties de
+			stock » dans l’onglet « Produits prescrits ».</p>
+		<p align="center">
+			<img width="339" height="251" src="#{facesContext.externalContext.requestContextPath}/resources/images/aideEnLigne/#{'image350.jpg'}" />
+		</p>
+		<p>Cliquer ensuite sur le bouton « Dispenser » en bas de page pour
+			enregistrer la dispensation. Un récapitulatif imprimable de la
+			dispensation s’affiche alors.</p>
+		<p align="center">
+			<img width="515" height="288" src="#{facesContext.externalContext.requestContextPath}/resources/images/aideEnLigne/#{'image352.jpg'}" />
+		</p>
+		<h2 class="ancre" id="_Toc365639603">8. Statistiques &amp; ordonnanciers</h2>
+		<h4 class="ancre" id="_Toc365639604">a) Alertes de la page d’accueil</h4>
+		<p>Voici les différentes alertes pouvant êtres affichées sur la
+			page d’accueil quand un utilisateur se connecte :</p>
+		<p>§ La demande de dotation du service xxx (le xxx) est à traiter
+		</p>
+		<p>Alerte signalant les demandes de dotation de services qui n’ont
+			pas encore été traitées.</p>
+		<p>§ La date de fin de l'essai (le xxx) est atteinte</p>
+		<p>Alerte s’affichant pour un essai lorsque la date de fin de
+			l’étude indiquée dans l’onglet « Dates » est atteinte.</p>
+		<p>§ Le résultat de la visite " xxx " du xxx n'a pas été saisi</p>
+		<p>Alerte s’affichant lorsqu’une visite ajoutée dans l’agenda d’un
+			essai a un résultat non saisi.</p>
+		<p>§ L'essai peut être mis en destruction (15 ans après la visite
+			de clôture)</p>
+		<p>Alerte s’affichant 15 ans après la visite de clôture indiquée
+			dans l’agenda de l’essai.</p>
+		<p>§ La date de péremption du produit xxx est atteinte.
+			[Conditionnement : xxx / Numéro de lot : xxx / Numéro de traitement :
+			xxx]</p>
+		<p>Alerte signalant les produits dont le délai d’alerte avant la
+			date de péremption (indiqué dans l’onglet « Logistique » des fiches
+			des produits utilisé dans l’essai) est atteint</p>
+		<p>§ Le stock seuil pour le produit xxx est atteint.
+			[Conditionnement : xxx]</p>
+		<p>Alerte signalant les produits dont le stock seuil (indiqué dans
+			l’onglet « Logistique » des fiches médicaments des produits utilisé
+			dans l’essai) est atteint</p>
+		<p>§ Une cession PUI a été effectuée il y a plus de xxx jours et
+			sa réception n'a pas été confirmée :</p>
+		<p>Alerte signalant une cession PUI indiquée dans l’agenda d’un
+			essai et dont la date de réception n’est pas saisie.</p>
+		<p>Les alertes sont affichées en fonction de chaque utilisateur.
+			Seules les alertes concernant des essais et pharmacies accessibles à
+			l’utilisateur sont affichées.</p>
+		<p>Il est possible de désactiver ou activer les alertes pour
+			chaque essai. Pour cela, aller sur la page de l’essai et cocher ou
+			décocher le champ « Alertes activées sur l’essai ».</p>
+		<p align="center">
+			<img width="604" height="473" src="#{facesContext.externalContext.requestContextPath}/resources/images/aideEnLigne/#{'image354.jpg'}" />
+		</p>
+		<p>Si les alertes sont désactivées, aucune alerte ne s’affichera
+			pour cet essai pour tous les contacts habilités sur l’essai.</p>
+		<p>Par défaut, les alertes sont activées sur les essais.</p>
+		<h4 class="ancre" id="_Toc365639605">b) Menu statistiques</h4>
+		<p>Il est possible de visualiser un certains nombre de
+			statistiques décrivant l’historique d’une pharmacie. Pour cela
+			cliquer sur « Indicateurs » dans l’onglet « Déroulement des essais ».
+			Indiquer ensuite la pharmacie et/ou la date de début et de fin de la
+			période à analyser.</p>
+		<p align="center">
+			<img width="639" height="183" src="#{facesContext.externalContext.requestContextPath}/resources/images/aideEnLigne/#{'image356.png'}" />
+		</p>
+		<p>Cliquer ensuite sur générer.</p>
+		<p align="center">
+			<img width="639" height="444" src="#{facesContext.externalContext.requestContextPath}/resources/images/aideEnLigne/#{'image358.png'}" />
+		</p>
+		<h4 class="ancre" id="_Toc365639606">c) Ordonnanciers de dispensation</h4>
+		<h5 class="ancre" id="_Toc365639607">· Création d’un ordonnancier de
+			dispensation</h5>
+		<p>Pour créer un ordonnancier de dispensation, cliquer sur «
+			Dispensation » dans l’onglet « Ordonnancier ».</p>
+		<p>Sélectionner ensuite la pharmacie. L’intervalle de dates de
+			génération de l’ordonnancier est également affiché. Il n’est pas
+			modifiable. La date de début correspond au premier jour du mois
+			suivant la date de génération du précédent ordonnancier généré pour
+			cette pharmacie. La date de fin correspond à la date du jour.</p>
+		<p align="center">
+			<img width="605" height="112" src="#{facesContext.externalContext.requestContextPath}/resources/images/aideEnLigne/#{'image360.jpg'}" />
+		</p>
+		<p>Cliquer ensuite sur le bouton « Générer l’ordonnancier » pour
+			générer et afficher l’ordonnancier.</p>
+		<p align="center">
+			<img width="605" height="171" src="#{facesContext.externalContext.requestContextPath}/resources/images/aideEnLigne/#{'image362.jpg'}" />
+		</p>
+		<p>L’ordonnancier contient toutes les dispensations effectuées par
+			la pharmacie sélectionnée dans l’intervalle de dates indiqué. Pour
+			chaque dispensation, sont indiqués le numéro ordonnancier de la
+			dispensation, la date de dispensation, les initiales du patient, la
+			référence essai-promoteur, les produits dispensé, le nom et prénom de
+			la personne ayant réalisé la dispensation et le nom et prénom de
+			l’investigateur.</p>
+		<p>
+			L’ordonnancier peut être imprimé en cliquant sur le logo <img
+				width="41" height="35" src="#{facesContext.externalContext.requestContextPath}/resources/images/aideEnLigne/#{'image363.png'}" /> en haut à
+			droite de la page.
+		</p>
+		<p>Un ordonnancier ne peut être généré qu’une seule fois.</p>
+		<h5 class="ancre" id="_Toc365639608">· Création des duplicata d’ordonnancier</h5>
+		<p>Pour consulter les ordonnanciers précédemment générés et les
+			imprimer, cliquer sur « Duplicata Dispensation » dans l’onglet «
+			Ordonnancier ».</p>
+		<p align="center">
+			<img width="605" height="113" src="#{facesContext.externalContext.requestContextPath}/resources/images/aideEnLigne/#{'image365.jpg'}" />
+		</p>
+		<p>Sélectionner la pharmacie et l’intervalle de dates de
+			l’ordonnancier recherché (Ces deux critères sont obligatoires).</p>
+		<p>Sélectionner le type de données patients à afficher :</p>
+		<p>- Soit anonymisé c’est-à-dire avec affichage des initiales des
+			patients seulement,</p>
+		<p>- Soit non anonymisé c’est-à-dire avec affichage du nom, prénom
+			et numéro IPP des patients.</p>
+		<p>Puis cliquer sur « Obtenir un duplicata ».</p>
+		<p>Exemple de duplicata d’ordonnancier avec données patients de
+			type anonymisé :</p>
+		<p align="center">
+			<img width="605" height="259" src="#{facesContext.externalContext.requestContextPath}/resources/images/aideEnLigne/#{'image367.jpg'}" />
+		</p>
+		<p>Exemple de duplicata d’ordonnancier avec données patients de
+			type non anonymisé :</p>
+		<p align="center">
+			<img width="605" height="303" src="#{facesContext.externalContext.requestContextPath}/resources/images/aideEnLigne/#{'image369.jpg'}" />
+		</p>
+		<p>
+			Le duplicata d’ordonnancier peut être imprimé en cliquant sur le logo
+			<img width="41" height="35" src="#{facesContext.externalContext.requestContextPath}/resources/images/aideEnLigne/#{'image363.png'}" /> en
+			haut à droite de la page.
+		</p>
+		<h4 class="ancre" id="_Toc365639609">d) Ordonnanciers de
+			fabrication/reconstitution</h4>
+		<h5 class="ancre" id="_Toc365639610">· Création d’un ordonnancier de
+			fabrication/reconstitution</h5>
+		<p>Pour créer un ordonnancier de fabrication/reconstitution,
+			cliquer sur « Fabrication/Reconstitution» dans l’onglet «
+			Ordonnancier ».</p>
+		<p>Sélectionner ensuite la pharmacie. L’intervalle de dates de
+			génération de l’ordonnancier est également affiché. Il n’est pas
+			modifiable. La date de début correspond au premier jour du mois
+			suivant la date de génération du précédent ordonnancier de
+			fabrication/reconstitution généré pour cette pharmacie. La date de
+			fin correspond à la date du jour.</p>
+		<p align="center">
+			<img width="604" height="113" src="#{facesContext.externalContext.requestContextPath}/resources/images/aideEnLigne/#{'image371.jpg'}" />
+		</p>
+		<p>Cliquer ensuite sur le bouton « Générer l’ordonnancier » pour
+			générer et afficher l’ordonnancier.</p>
+		<p align="center">
+			<img width="605" height="182" src="#{facesContext.externalContext.requestContextPath}/resources/images/aideEnLigne/#{'image373.jpg'}" />
+		</p>
+		<p>L’ordonnancier contient toutes les préparations effectuées par
+			la pharmacie sélectionnée dans l’intervalle de dates indiqué. Pour
+			chaque préparation, sont indiqués le numéro ordonnancier de la
+			préparation, la date de préparation, la référence essai-promoteur, le
+			produit préparé et les produits utilisés, le nom de la personne ayant
+			renseigné la préparation dans Elips.</p>
+		<p>
+			L’ordonnancier peut être imprimé en cliquant sur le logo <img
+				width="41" height="35" src="#{facesContext.externalContext.requestContextPath}/resources/images/aideEnLigne/#{'image363.png'}" /> en haut à
+			droite de la page.
+		</p>
+		<p>Un ordonnancier ne peut être généré qu’une seule fois.</p>
+		<h5 class="ancre" id="_Toc365639611">· Création des duplicata d’ordonnancier</h5>
+		<p>Pour consulter les ordonnanciers précédemment générés et les
+			imprimer, cliquer sur « Duplicata Fabric/Reconst » dans l’onglet «
+			Ordonnancier ».</p>
+		<p align="center">
+			<img width="604" height="111" src="#{facesContext.externalContext.requestContextPath}/resources/images/aideEnLigne/#{'image375.jpg'}" />
+		</p>
+		<p>Sélectionner la pharmacie et l’intervalle de dates de
+			l’ordonnancier recherché (Ces deux critères sont obligatoires) et
+			cliquer sur « Obtenir un duplicata ».</p>
+		<p align="center">
+		<img width="604" height="225" src="#{facesContext.externalContext.requestContextPath}/resources/images/aideEnLigne/#{'image377.jpg'}" />
+			<!-- <img width="604" height="225" src="#{facesContext.externalContext.requestContextPath}/resources/images/aideEnLigne/#{'image377.jpg'}" /> -->
+		</p>
+		<p>
+			Le duplicata d’ordonnancier peut être imprimé en cliquant sur le logo
+			<img width="41" height="35" src="#{facesContext.externalContext.requestContextPath}/resources/images/aideEnLigne/#{'image363.png'}" /> en
+			haut à droite de la page.
+		</p>
+	</div>
+
+
+	<!-- <script type="text/javascript" src="../../resources/js/jquery-1.9.0.min.js"></script> -->
+	<h:outputScript library="js" name="jquery-1.9.0.min.js"/>
+	<!-- <script type="text/javascript" src="../../resources/js/bootstrap.min.js"></script> -->
+	<h:outputScript library="js" name="bootstrap.min.js"/>
+	<script type="text/javascript">
+		$('.carousel').carousel();
+		var _gaq = _gaq || [];
+		_gaq.push([ '_setAccount', 'UA-37579679-1' ]);
+		_gaq.push([ '_trackPageview' ]);
+
+		(function() {
+			var ga = document.createElement('script');
+			ga.type = 'text/javascript';
+			ga.async = true;
+			ga.src = ('https:' == document.location.protocol ? 'https://ssl'
+					: 'http://www')
+					+ '.google-analytics.com/ga.js';
+			var s = document.getElementsByTagName('script')[0];
+			s.parentNode.insertBefore(ga, s);
+		})();
+	</script>
+</body>
+
+</html>
+
+

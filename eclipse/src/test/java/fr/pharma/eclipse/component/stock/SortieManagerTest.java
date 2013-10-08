@@ -35,11 +35,10 @@ import fr.pharma.eclipse.service.stockage.PharmacieService;
 
 /**
  * Classe en charge de tester le manager de sortie.
- 
+ * @author Netapsys
  * @version $Revision$ $Date$
  */
-public class SortieManagerTest
-{
+public class SortieManagerTest {
     /**
      * SortieManager à tester.
      */
@@ -68,8 +67,7 @@ public class SortieManagerTest
     /**
      * Map des factories par type de mouvement.
      */
-    private final Map<TypeMvtStock, MvtStockFactory<MvtStock>> mapFactories =
-        new HashMap<TypeMvtStock, MvtStockFactory<MvtStock>>();
+    private final Map<TypeMvtStock, MvtStockFactory<MvtStock>> mapFactories = new HashMap<TypeMvtStock, MvtStockFactory<MvtStock>>();
 
     /**
      * Factory de retour de promoteur mocké.
@@ -81,8 +79,7 @@ public class SortieManagerTest
      */
     @Before
     @SuppressWarnings("unchecked")
-    public void init()
-    {
+    public void init() {
         this.manager = new SortieManager();
         this.pharmacieService = Mockito.mock(PharmacieService.class);
         this.mockEssaiService = Mockito.mock(EssaiService.class);
@@ -92,8 +89,7 @@ public class SortieManagerTest
         this.manager.setProduitService(this.mockProduitService);
         this.manager.setStockService(this.mockStockService);
         this.mockRetourPromoteurFactory = Mockito.mock(MvtStockFactory.class);
-        this.mapFactories.put(TypeMvtStock.RETOUR_PROMOTEUR,
-                              this.mockRetourPromoteurFactory);
+        this.mapFactories.put(TypeMvtStock.RETOUR_PROMOTEUR, this.mockRetourPromoteurFactory);
         this.manager.setMapFactories(this.mapFactories);
     }
 
@@ -101,8 +97,7 @@ public class SortieManagerTest
      * Méthode en charge de purger les données de test.
      */
     @After
-    public void end()
-    {
+    public void end() {
         this.manager = null;
         this.mockEssaiService = null;
         this.mockProduitService = null;
@@ -114,8 +109,7 @@ public class SortieManagerTest
      * Méthode en charge de tester l'initialisation des données de test.
      */
     @Test
-    public void testInitData()
-    {
+    public void testInitData() {
         Assert.assertNotNull(this.manager);
         Assert.assertNotNull(this.mockEssaiService);
         Assert.assertNotNull(this.mockProduitService);
@@ -129,18 +123,15 @@ public class SortieManagerTest
      * Méthode en charge de tester la méthode init.
      */
     @Test
-    public void testInit()
-    {
+    public void testInit() {
         this.manager.init();
         Assert.assertNull(this.manager.getProduits());
         Assert.assertNull(this.manager.getEssaiSelected());
-        Assert.assertEquals(0,
-                            this.manager.getPharmacies().size());
+        Assert.assertEquals(0, this.manager.getPharmacies().size());
         Assert.assertNull(this.manager.getPharmacieSelected());
         Assert.assertNull(this.manager.getTypeSortie());
         Assert.assertNull(this.manager.getSortieCurrent());
-        Assert.assertEquals(0,
-                            this.manager.getSorties().size());
+        Assert.assertEquals(0, this.manager.getSorties().size());
         Assert.assertNull(this.manager.getCommentaire());
         Assert.assertNull(this.manager.getReferenceEnvoi());
         Assert.assertNull(this.manager.getNomSocieteTransport());
@@ -149,11 +140,11 @@ public class SortieManagerTest
     }
 
     /**
-     * Méthode en charge de tester la méthode appelée via l'IHM quand un essai est sélectionné.
+     * Méthode en charge de tester la méthode appelée via l'IHM quand un essai
+     * est sélectionné.
      */
     @Test
-    public void testHandleSelectEssaiWithPharmaEmpty()
-    {
+    public void testHandleSelectEssaiWithPharmaEmpty() {
         final SelectEvent mockSelectEvent = Mockito.mock(SelectEvent.class);
         final Essai essai = Mockito.mock(Essai.class);
         Mockito.when(mockSelectEvent.getObject()).thenReturn(essai);
@@ -164,17 +155,16 @@ public class SortieManagerTest
         this.manager.handleSelectEssai(mockSelectEvent);
 
         Assert.assertNull(this.manager.getPharmacieSelected());
-        Mockito.verify(this.mockProduitService).getProduitsWithPreparations(essai,
-                                                                            null);
+        Mockito.verify(this.mockProduitService).getProduitsWithPreparations(essai, null);
     }
 
     /**
-     * Méthode en charge de tester la méthode appelée via l'IHM quand un essai est sélectionné.
+     * Méthode en charge de tester la méthode appelée via l'IHM quand un essai
+     * est sélectionné.
      */
     @Test
     @SuppressWarnings("unchecked")
-    public void testHandleSelectEssaiWithPharmaSize1()
-    {
+    public void testHandleSelectEssaiWithPharmaSize1() {
         final SelectEvent mockSelectEvent = Mockito.mock(SelectEvent.class);
         final Essai essai = Mockito.mock(Essai.class);
         this.manager.setEssaiSelected(essai);
@@ -189,16 +179,14 @@ public class SortieManagerTest
         this.manager.handleSelectEssai(mockSelectEvent);
 
         Assert.assertNotNull(this.manager.getPharmacieSelected());
-        Mockito.verify(this.mockProduitService).getProduitsWithPreparations(essai,
-                                                                            pharmacie);
+        Mockito.verify(this.mockProduitService).getProduitsWithPreparations(essai, pharmacie);
     }
     /**
-     * Méthode en charge de tester la méthode appelée via l'IHM suite à la sélection d'une
-     * pharmacie.
+     * Méthode en charge de tester la méthode appelée via l'IHM suite à la
+     * sélection d'une pharmacie.
      */
     @Test
-    public void testHandleSelectPharmacie()
-    {
+    public void testHandleSelectPharmacie() {
         final AjaxBehaviorEvent event = Mockito.mock(AjaxBehaviorEvent.class);
         final HtmlSelectOneMenu select = Mockito.mock(HtmlSelectOneMenu.class);
         Mockito.when(event.getSource()).thenReturn(select);
@@ -209,29 +197,24 @@ public class SortieManagerTest
         this.manager.setEssaiSelected(essai);
         this.manager.handleSelectPharmacie(event);
         Assert.assertNotNull(this.manager.getPharmacieSelected());
-        Mockito.verify(this.mockProduitService).getProduitsWithPreparations(essai,
-                                                                            pharmacie);
+        Mockito.verify(this.mockProduitService).getProduitsWithPreparations(essai, pharmacie);
     }
 
     /**
-     * Méthode en charge de tester la méthode appelée via l'IHM suite à la sélection d'un type de
-     * sortie.
+     * Méthode en charge de tester la méthode appelée via l'IHM suite à la
+     * sélection d'un type de sortie.
      */
     @Test
-    public void testHandleSelectTypeSortieCessionPUI()
-    {
+    public void testHandleSelectTypeSortieCessionPUI() {
         final AjaxBehaviorEvent event = Mockito.mock(AjaxBehaviorEvent.class);
         final HtmlSelectOneMenu select = Mockito.mock(HtmlSelectOneMenu.class);
         Mockito.when(event.getSource()).thenReturn(select);
         this.manager.setPharmaciesDest(new ArrayList<Pharmacie>());
         final TypeMvtStock typeSortie = TypeMvtStock.CESSION_PUI;
         Mockito.when(select.getLocalValue()).thenReturn(typeSortie);
-        Mockito.when(this.pharmacieService.getAll(Matchers.any(SearchCriteria.class),
-                                                  Matchers.anyBoolean()))
-                .thenReturn(new ArrayList<Pharmacie>());
+        Mockito.when(this.pharmacieService.getAll(Matchers.any(SearchCriteria.class))).thenReturn(new ArrayList<Pharmacie>());
         this.manager.handleSelectTypeSortie(event);
-        Assert.assertEquals(TypeMvtStock.CESSION_PUI,
-                            this.manager.getTypeSortie());
+        Assert.assertEquals(TypeMvtStock.CESSION_PUI, this.manager.getTypeSortie());
         Assert.assertNull(this.manager.getReferenceEnvoi());
         Assert.assertNull(this.manager.getNomSocieteTransport());
         Assert.assertNull(this.manager.getFileRetourPromoteur());
@@ -239,12 +222,11 @@ public class SortieManagerTest
     }
 
     /**
-     * Méthode en charge de tester la méthode appelée via l'IHM suite à la sélection d'un type de
-     * sortie.
+     * Méthode en charge de tester la méthode appelée via l'IHM suite à la
+     * sélection d'un type de sortie.
      */
     @Test
-    public void testHandleSelectTypeSortieRetourPromoteur()
-    {
+    public void testHandleSelectTypeSortieRetourPromoteur() {
         final AjaxBehaviorEvent event = Mockito.mock(AjaxBehaviorEvent.class);
         final HtmlSelectOneMenu select = Mockito.mock(HtmlSelectOneMenu.class);
         Mockito.when(event.getSource()).thenReturn(select);
@@ -253,19 +235,18 @@ public class SortieManagerTest
         this.manager.setReferenceEnvoi("referenceEnvoi");
         this.manager.setNomSocieteTransport("nomSocieteTransport");
         this.manager.handleSelectTypeSortie(event);
-        Assert.assertEquals(TypeMvtStock.RETOUR_PROMOTEUR,
-                            this.manager.getTypeSortie());
+        Assert.assertEquals(TypeMvtStock.RETOUR_PROMOTEUR, this.manager.getTypeSortie());
         Assert.assertNotNull(this.manager.getReferenceEnvoi());
         Assert.assertNotNull(this.manager.getNomSocieteTransport());
         Assert.assertNull(this.manager.getFileDestruction());
     }
 
     /**
-     * Méthode en charge de tester la méthode appelée via l'IHM lors de la sélection d'un produit.
+     * Méthode en charge de tester la méthode appelée via l'IHM lors de la
+     * sélection d'un produit.
      */
     @Test
-    public void testHandleSelectProduitNull()
-    {
+    public void testHandleSelectProduitNull() {
         final AjaxBehaviorEvent event = Mockito.mock(AjaxBehaviorEvent.class);
         final HtmlSelectOneMenu select = Mockito.mock(HtmlSelectOneMenu.class);
         Mockito.when(event.getSource()).thenReturn(select);
@@ -277,17 +258,16 @@ public class SortieManagerTest
         sortie.setMvtSortie(mvtSortie);
         this.manager.setSortieCurrent(sortie);
         this.manager.handleSelectProduit(event);
-        Assert.assertEquals(0,
-                            this.manager.getSortieCurrent().getConditionnements().size());
+        Assert.assertEquals(0, this.manager.getSortieCurrent().getConditionnements().size());
         Assert.assertNull(this.manager.getSortieCurrent().getMvtSortie().getConditionnement());
     }
 
     /**
-     * Méthode en charge de tester la méthode appelée via l'IHM lors de la sélection d'un produit.
+     * Méthode en charge de tester la méthode appelée via l'IHM lors de la
+     * sélection d'un produit.
      */
     @Test
-    public void testHandleSelectProduit()
-    {
+    public void testHandleSelectProduit() {
         final AjaxBehaviorEvent event = Mockito.mock(AjaxBehaviorEvent.class);
         final HtmlSelectOneMenu select = Mockito.mock(HtmlSelectOneMenu.class);
         Mockito.when(event.getSource()).thenReturn(select);
@@ -299,19 +279,17 @@ public class SortieManagerTest
         sortie.setMvtSortie(mvtSortie);
         this.manager.setSortieCurrent(sortie);
         this.manager.handleSelectProduit(event);
-        Assert.assertEquals(0,
-                            this.manager.getSortieCurrent().getConditionnements().size());
+        Assert.assertEquals(0, this.manager.getSortieCurrent().getConditionnements().size());
         Assert.assertNull(this.manager.getSortieCurrent().getMvtSortie().getConditionnement());
     }
 
     /**
-     * Méthode en charge de tester la méthode appelée via l'IHM suite à la sélection d'un
-     * conditionnement.
+     * Méthode en charge de tester la méthode appelée via l'IHM suite à la
+     * sélection d'un conditionnement.
      */
     @Test
     @SuppressWarnings("unchecked")
-    public void testHandleSelectConditionnement()
-    {
+    public void testHandleSelectConditionnement() {
         final AjaxBehaviorEvent event = Mockito.mock(AjaxBehaviorEvent.class);
         final HtmlSelectOneMenu select = Mockito.mock(HtmlSelectOneMenu.class);
         Mockito.when(event.getSource()).thenReturn(select);
@@ -320,11 +298,7 @@ public class SortieManagerTest
 
         final List<LigneStock> lignesStock = Matchers.anyList();
 
-        Mockito.when(this.mockStockService.getLinesStock((Essai) Matchers.any(),
-                                                         (Pharmacie) Matchers.any(),
-                                                         (Produit) Matchers.any(),
-                                                         conditionnement,
-                                                         Matchers.anyBoolean()))
+        Mockito.when(this.mockStockService.getAllLignesStock((Essai) Matchers.any(), (Pharmacie) Matchers.any(), (Produit) Matchers.any(), conditionnement, Matchers.anyBoolean()))
                 .thenReturn(lignesStock);
 
         final Sortie sortie = new Sortie();
@@ -333,56 +307,50 @@ public class SortieManagerTest
         this.manager.setSortieCurrent(sortie);
         this.manager.handleSelectConditionnement(event);
 
-        Assert.assertEquals(lignesStock,
-                            sortie.getLignesStock());
+        Assert.assertEquals(lignesStock, sortie.getLignesStock());
     }
 
     /**
-     * Méthode en charge de tester l'ajout d'une sortie dans la liste des sorties.
+     * Méthode en charge de tester l'ajout d'une sortie dans la liste des
+     * sorties.
      */
     @Test
-    public void testAddSortieWithTypeSortieNull()
-    {
+    public void testAddSortieWithTypeSortieNull() {
         this.manager.setTypeSortie(null);
         this.manager.addSortie();
     }
 
     /**
-     * Méthode en charge de tester l'ajout d'une sortie dans la liste des sorties.
+     * Méthode en charge de tester l'ajout d'une sortie dans la liste des
+     * sorties.
      */
     @Test
-    public void testAddSortieWithTypeSortieNotNull()
-    {
+    public void testAddSortieWithTypeSortieNotNull() {
         final TypeMvtStock typeSortie = TypeMvtStock.RETOUR_PROMOTEUR;
         this.manager.setTypeSortie(typeSortie);
 
         final MvtStock retourPromoteur = new RetourPromoteur();
-        Mockito.when(this.mockRetourPromoteurFactory.getInitializedObject())
-                .thenReturn(retourPromoteur);
+        Mockito.when(this.mockRetourPromoteurFactory.getInitializedObject()).thenReturn(retourPromoteur);
 
         this.manager.addSortie();
         Assert.assertNotNull(this.manager.getSortieCurrent());
-        Assert.assertEquals("ADD",
-                            this.manager.getActionSortieCurrent());
+        Assert.assertEquals("ADD", this.manager.getActionSortieCurrent());
     }
 
     /**
      * Méthode en charge de tester la modification d'une sortie.
      */
     @Test
-    public void testModifySortie()
-    {
+    public void testModifySortie() {
         this.manager.modifySortie();
-        Assert.assertEquals("EDIT",
-                            this.manager.getActionSortieCurrent());
+        Assert.assertEquals("EDIT", this.manager.getActionSortieCurrent());
     }
 
     /**
      * Méthode en charge de tester la suppression de sortie.
      */
     @Test
-    public void testDelSortie()
-    {
+    public void testDelSortie() {
         final Sortie sortieToDelete = new Sortie();
         this.manager.setSortieToDelete(sortieToDelete);
 
@@ -391,30 +359,26 @@ public class SortieManagerTest
         this.manager.setSorties(sorties);
 
         this.manager.delSortie();
-        Assert.assertEquals(0,
-                            this.manager.getSorties().size());
+        Assert.assertEquals(0, this.manager.getSorties().size());
     }
 
     /**
      * Méthode en charge de tester l'ajout d'une sortie.
      */
     @Test
-    public void testAddSortieToSortiesEdit()
-    {
+    public void testAddSortieToSortiesEdit() {
         final List<Sortie> sorties = new ArrayList<Sortie>();
         this.manager.setActionSortieCurrent("EDIT");
         this.manager.setSorties(sorties);
         this.manager.addSortieToSorties();
-        Assert.assertEquals(0,
-                            this.manager.getSorties().size());
+        Assert.assertEquals(0, this.manager.getSorties().size());
     }
 
     /**
      * Méthode en charge de tester l'ajout d'une sortie.
      */
     @Test
-    public void testAddSortieToSortiesAdd()
-    {
+    public void testAddSortieToSortiesAdd() {
         final List<Sortie> sorties = new ArrayList<Sortie>();
         this.manager.setActionSortieCurrent("ADD");
 
@@ -423,16 +387,14 @@ public class SortieManagerTest
         this.manager.setSorties(sorties);
 
         this.manager.addSortieToSorties();
-        Assert.assertEquals(1,
-                            this.manager.getSorties().size());
+        Assert.assertEquals(1, this.manager.getSorties().size());
     }
 
     /**
      * Méthode en charge de tester l'affectation de résultat.
      */
     @Test
-    public void testSetResult()
-    {
+    public void testSetResult() {
         final ResultSortie resultSortie = new ResultSortie();
         this.manager.setResult(resultSortie);
         Assert.assertNotNull(this.manager.getResult());

@@ -11,12 +11,10 @@ import org.slf4j.LoggerFactory;
 
 /**
  * Classe en charge de gérer les redirections.
- 
+ * @author Netapsys
  * @version $Revision$ $Date$
  */
-public class RedirectHandler
-    implements Serializable
-{
+public class RedirectHandler implements Serializable {
 
     /**
      * Serial ID.
@@ -29,23 +27,18 @@ public class RedirectHandler
     private final Logger log = LoggerFactory.getLogger(RedirectHandler.class);
 
     /**
-     * Méthode en charge de lancer une redirection à partir de l'url de redirection fournit en
-     * paramètre.
+     * Méthode en charge de lancer une redirection à partir de l'url de
+     * redirection fournit en paramètre.
      * @param urlRedirect URL de redirection.
      */
-    public void redirect(final String urlRedirect)
-    {
+    public void redirect(final String urlRedirect) {
         final FacesContext facesContext = FacesContext.getCurrentInstance();
         final ExternalContext externalContext = facesContext.getExternalContext();
-        try
-        {
+        try {
             externalContext.redirect(urlRedirect);
             facesContext.responseComplete();
-        }
-        catch (final IOException e)
-        {
-            this.log.error("Erreur lors de la redirection sur url : "
-                           + urlRedirect);
+        } catch (final IOException e) {
+            this.log.error("Erreur lors de la redirection sur url : " + urlRedirect);
         }
     }
 

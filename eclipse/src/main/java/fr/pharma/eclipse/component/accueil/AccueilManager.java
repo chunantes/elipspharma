@@ -11,6 +11,7 @@ import org.hibernate.HibernateException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import fr.pharma.eclipse.domain.model.actualite.Actualite;
 import fr.pharma.eclipse.domain.model.alerte.Alerte;
 import fr.pharma.eclipse.domain.model.essai.Essai;
 import fr.pharma.eclipse.domain.model.evenement.Evenement;
@@ -21,12 +22,10 @@ import fr.pharma.eclipse.utils.FacesUtils;
 
 /**
  * Manager de gestion de la page d'accueil (actualités / alertes / événements).
- 
+ * @author Netapsys
  * @version $Revision$ $Date$
  */
-public class AccueilManager
-    implements Serializable
-{
+public class AccueilManager implements Serializable {
     /**
      * Serial ID.
      */
@@ -40,7 +39,7 @@ public class AccueilManager
     /**
      * Liste des essais des actualités.
      */
-    private List<Essai> essaisActualites = new ArrayList<Essai>();
+    private List<Actualite> essaisActualites = new ArrayList<Actualite>();
 
     /**
      * Liste des prochains événements.
@@ -51,6 +50,11 @@ public class AccueilManager
      * Liste des alertes.
      */
     private List<Alerte> alertes = new ArrayList<Alerte>();
+
+    /**
+     * Actualité sélectionnée.
+     */
+    private Actualite actualiteSelected;
 
     /**
      * Essai sélectionné.
@@ -89,58 +93,28 @@ public class AccueilManager
     /**
      * Méthode en charge de construire les informations de la page d'accueil.
      */
-    public void buildInfosAccueil()
-    {
-        try
-        {
-            // Construction des alertes uniquement pour le profil Pharmacien et Admin
-            this.buildAlertes();
-
-            // Construction des actualités
-            this.buildActualites();
+    public void buildInfosAccueil() {
+        try {
+            // Construction des alertes
+            // Uniquement pour le profil Pharmacien et Admin
+            this.setAlertes(this.alerteService.getAlertes());
 
             // Construction des prochains événements
-            this.buildNextEvenements();
+            this.setEvenements(this.evenementService.getNextEvenements());
+
+            // Construction des actualités
+            this.setEssaisActualites(this.actualiteService.getLastEssais());
+        } catch (final HibernateException e) {
+            this.log.error("Erreur lors du chargement des données de l'accueil", e);
+            this.facesUtils.addMessage(FacesMessage.SEVERITY_ERROR, "accueil.chargement.ko");
         }
-        catch (final HibernateException e)
-        {
-            this.log.error("Erreur lors du chargement des données de l'accueil",
-                           e);
-            this.facesUtils.addMessage(FacesMessage.SEVERITY_ERROR,
-                                       "accueil.chargement.ko");
-        }
-    }
-
-    /**
-     * Méthode en charge de construire les informations des actualités.
-     */
-    private void buildActualites()
-    {
-        this.setEssaisActualites(this.actualiteService.getLastEssais());
-    }
-
-    /**
-     * Méthode en charge de construire les prochains événements.
-     */
-    private void buildNextEvenements()
-    {
-        this.setEvenements(this.evenementService.getNextEvenements());
-    }
-
-    /**
-     * Méthode en charge de construire les alertes.
-     */
-    private void buildAlertes()
-    {
-        this.setAlertes(this.alerteService.getAlertes());
     }
 
     /**
      * Setter pour actualiteService.
      * @param actualiteService Le actualiteService à écrire.
      */
-    public void setActualiteService(final ActualiteService actualiteService)
-    {
+    public void setActualiteService(final ActualiteService actualiteService) {
         this.actualiteService = actualiteService;
     }
 
@@ -148,8 +122,7 @@ public class AccueilManager
      * Getter pour essaisActualites.
      * @return Le essaisActualites
      */
-    public List<Essai> getEssaisActualites()
-    {
+    public List<Actualite> getEssaisActualites() {
         return this.essaisActualites;
     }
 
@@ -157,35 +130,15 @@ public class AccueilManager
      * Setter pour essaisActualites.
      * @param essaisActualites Le essaisActualites à écrire.
      */
-    public void setEssaisActualites(final List<Essai> essaisActualites)
-    {
+    public void setEssaisActualites(final List<Actualite> essaisActualites) {
         this.essaisActualites = essaisActualites;
-    }
-
-    /**
-     * Getter pour essaiSelected.
-     * @return Le essaiSelected
-     */
-    public Essai getEssaiSelected()
-    {
-        return this.essaiSelected;
-    }
-
-    /**
-     * Setter pour essaiSelected.
-     * @param essaiSelected Le essaiSelected à écrire.
-     */
-    public void setEssaiSelected(final Essai essaiSelected)
-    {
-        this.essaiSelected = essaiSelected;
     }
 
     /**
      * Getter pour evenements.
      * @return Le evenements
      */
-    public List<Evenement> getEvenements()
-    {
+    public List<Evenement> getEvenements() {
         return this.evenements;
     }
 
@@ -193,8 +146,7 @@ public class AccueilManager
      * Setter pour evenements.
      * @param evenements Le evenements à écrire.
      */
-    public void setEvenements(final List<Evenement> evenements)
-    {
+    public void setEvenements(final List<Evenement> evenements) {
         this.evenements = evenements;
     }
 
@@ -202,8 +154,7 @@ public class AccueilManager
      * Setter pour evenementService.
      * @param evenementService Le evenementService à écrire.
      */
-    public void setEvenementService(final EvenementService evenementService)
-    {
+    public void setEvenementService(final EvenementService evenementService) {
         this.evenementService = evenementService;
     }
 
@@ -211,8 +162,7 @@ public class AccueilManager
      * Getter pour evenementSelected.
      * @return Le evenementSelected
      */
-    public Evenement getEvenementSelected()
-    {
+    public Evenement getEvenementSelected() {
         return this.evenementSelected;
     }
 
@@ -220,8 +170,7 @@ public class AccueilManager
      * Setter pour evenementSelected.
      * @param evenementSelected Le evenementSelected à écrire.
      */
-    public void setEvenementSelected(final Evenement evenementSelected)
-    {
+    public void setEvenementSelected(final Evenement evenementSelected) {
         this.evenementSelected = evenementSelected;
     }
 
@@ -229,8 +178,7 @@ public class AccueilManager
      * Setter pour alerteService.
      * @param alerteService Le alerteService à écrire.
      */
-    public void setAlerteService(final AlerteService alerteService)
-    {
+    public void setAlerteService(final AlerteService alerteService) {
         this.alerteService = alerteService;
     }
 
@@ -238,8 +186,7 @@ public class AccueilManager
      * Getter pour alertes.
      * @return Le alertes
      */
-    public List<Alerte> getAlertes()
-    {
+    public List<Alerte> getAlertes() {
         return this.alertes;
     }
 
@@ -247,8 +194,7 @@ public class AccueilManager
      * Setter pour alertes.
      * @param alertes Le alertes à écrire.
      */
-    public void setAlertes(final List<Alerte> alertes)
-    {
+    public void setAlertes(final List<Alerte> alertes) {
         this.alertes = alertes;
     }
 
@@ -256,9 +202,40 @@ public class AccueilManager
      * Setter pour facesUtils.
      * @param facesUtils Le facesUtils à écrire.
      */
-    public void setFacesUtils(final FacesUtils facesUtils)
-    {
+    public void setFacesUtils(final FacesUtils facesUtils) {
         this.facesUtils = facesUtils;
+    }
+
+    /**
+     * Getter pour actualiteSelected.
+     * @return Le actualiteSelected
+     */
+    public Actualite getActualiteSelected() {
+        return this.actualiteSelected;
+    }
+
+    /**
+     * Setter pour actualiteSelected.
+     * @param actualiteSelected Le actualiteSelected à écrire.
+     */
+    public void setActualiteSelected(final Actualite actualiteSelected) {
+        this.actualiteSelected = actualiteSelected;
+    }
+
+    /**
+     * Getter pour essaiSelected.
+     * @return Le essaiSelected
+     */
+    public Essai getEssaiSelected() {
+        return this.essaiSelected;
+    }
+
+    /**
+     * Setter pour essaiSelected.
+     * @param essaiSelected Le essaiSelected à écrire.
+     */
+    public void setEssaiSelected(final Essai essaiSelected) {
+        this.essaiSelected = essaiSelected;
     }
 
 }

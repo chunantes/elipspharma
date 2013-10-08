@@ -9,12 +9,10 @@ import fr.pharma.eclipse.domain.model.stockage.Pharmacie;
 
 /**
  * Manager lié aux indicateurs.
- 
+ * @author Netapsys
  * @version $Revision$ $Date$
  */
-public class IndicateurManager
-    implements Serializable
-{
+public class IndicateurManager implements Serializable {
 
     /**
      * serialVersionUID.
@@ -44,8 +42,7 @@ public class IndicateurManager
     /**
      * Méthode d'initialisation du manager.
      */
-    public void init()
-    {
+    public void init() {
         this.indicateurs = null;
         this.pharmacie = null;
         this.dateDebut = null;
@@ -56,8 +53,7 @@ public class IndicateurManager
      * Getter pour pharmacie.
      * @return Le pharmacie
      */
-    public Pharmacie getPharmacie()
-    {
+    public Pharmacie getPharmacie() {
         return this.pharmacie;
     }
 
@@ -65,8 +61,7 @@ public class IndicateurManager
      * Setter pour pharmacie.
      * @param pharmacie Le pharmacie à écrire.
      */
-    public void setPharmacie(final Pharmacie pharmacie)
-    {
+    public void setPharmacie(final Pharmacie pharmacie) {
         this.pharmacie = pharmacie;
     }
 
@@ -74,8 +69,7 @@ public class IndicateurManager
      * Getter pour dateDebut.
      * @return Le dateDebut
      */
-    public Calendar getDateDebut()
-    {
+    public Calendar getDateDebut() {
         return this.dateDebut;
     }
 
@@ -83,8 +77,7 @@ public class IndicateurManager
      * Setter pour dateDebut.
      * @param dateDebut Le dateDebut à écrire.
      */
-    public void setDateDebut(final Calendar dateDebut)
-    {
+    public void setDateDebut(final Calendar dateDebut) {
         this.dateDebut = dateDebut;
     }
 
@@ -92,8 +85,7 @@ public class IndicateurManager
      * Getter pour dateFin.
      * @return Le dateFin
      */
-    public Calendar getDateFin()
-    {
+    public Calendar getDateFin() {
         return this.dateFin;
     }
 
@@ -101,8 +93,7 @@ public class IndicateurManager
      * Setter pour dateFin.
      * @param dateFin Le dateFin à écrire.
      */
-    public void setDateFin(final Calendar dateFin)
-    {
+    public void setDateFin(final Calendar dateFin) {
         this.dateFin = dateFin;
     }
 
@@ -110,8 +101,7 @@ public class IndicateurManager
      * Getter pour indicateurs.
      * @return Le indicateurs
      */
-    public Collection<Indicateur> getIndicateurs()
-    {
+    public Collection<Indicateur> getIndicateurs() {
         return this.indicateurs;
     }
 
@@ -119,8 +109,7 @@ public class IndicateurManager
      * Setter pour indicateurs.
      * @param indicateurs Le indicateurs à écrire.
      */
-    public void setIndicateurs(final Collection<Indicateur> indicateurs)
-    {
+    public void setIndicateurs(final Collection<Indicateur> indicateurs) {
         this.indicateurs = indicateurs;
     }
 

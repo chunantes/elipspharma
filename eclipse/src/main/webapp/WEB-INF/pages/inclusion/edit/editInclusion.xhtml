@@ -61,7 +61,7 @@
 						<h:panelGroup />
 						<h:panelGroup />
 
-						<!-- Nom protocole -->
+						<!-- Num inclusion -->
 						<h:outputLabel id="labelNumInclusion" for="num_inclusion"
 							styleClass="mandatory"
 							value="#{resourceBundle['editPrescription.numInclusion']}" />
@@ -73,20 +73,19 @@
 					</h:panelGrid></td>
 				</tr>
 			</table> 
-
-		
-
 			</fieldset>
+			
 			<div class="actionButton">
 			<p:commandButton oncomplete="document.forms['formPatient'].hideSaveButton.click();"
 				disabled="#{not inclusionManager.valid}" id="inclure"
 				value="#{resourceBundle['btn.inclure']}"
-				title="#{resourceBundle['btn.inclure']}" /></div> 
-				<div class="basicButton">
+				title="#{resourceBundle['btn.inclure']}" />
+			</div> 
 				
-				           	<p:commandButton id="ajoutPatient" oncomplete="document.forms['formPatient'].hideAddButton.click();" 
-								value="#{resourceBundle['btn.creerPatient']}"
-								title="#{resourceBundle['btn.creerPatient']}"/>
+			<div class="basicButton">
+           	<p:commandButton id="ajoutPatient" oncomplete="document.forms['formPatient'].hideAddButton.click();" 
+				value="#{resourceBundle['btn.creerPatient']}"
+				title="#{resourceBundle['btn.creerPatient']}"/>
 			</div>	
 		</h:form>
 		<div style="display: none;">

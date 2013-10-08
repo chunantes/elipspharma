@@ -6,7 +6,7 @@ import javax.faces.event.AjaxBehaviorEvent;
 
 import org.apache.commons.lang.StringUtils;
 
-import fr.pharma.eclipse.component.BeansManager;
+import fr.pharma.eclipse.component.BeanListManager;
 import fr.pharma.eclipse.domain.criteria.acteur.PersonneSearchCriteria;
 import fr.pharma.eclipse.domain.criteria.common.SearchCriteria;
 import fr.pharma.eclipse.domain.enums.TypePersonne;
@@ -18,12 +18,10 @@ import fr.pharma.eclipse.service.acteur.PersonneService;
 
 /**
  * Manager sur les beans de gestion de Personne.
- 
+ * @author Netapsys
  * @version $Revision$ $Date$
  */
-public class PersonnesManager
-    extends BeansManager<Personne>
-{
+public class PersonnesManager extends BeanListManager<Personne> {
     /**
      * Serial ID.
      */
@@ -50,46 +48,38 @@ public class PersonnesManager
      * Constructeur.
      * @param searchCriteria Critère de recherche.
      */
-    public PersonnesManager(final SearchCriteria searchCriteria)
-    {
+    public PersonnesManager(final SearchCriteria searchCriteria) {
         super(searchCriteria);
     }
 
     /**
-     * Méthode en charge de savoir si les informations obligatoires de la personne sont toutes
-     * remplies.
+     * Méthode en charge de savoir si les informations obligatoires de la
+     * personne sont toutes remplies.
      * @param personne Informations de la personne.
      * @return résultat du test.
      */
-    public boolean isComplete(final Personne personne)
-    {
-        // Le contrôle est fait pour les investigateurs et les arc investigateurs
+    public boolean isComplete(final Personne personne) {
+        // Le contrôle est fait pour les investigateurs et les arc
+        // investigateurs
         final TypePersonne typePersonne = personne.getType();
 
-        if (TypePersonne.ARC_INVESTIGATEUR.equals(typePersonne))
-        {
-            final ArcInvestigateur arcInvestigateur =
-                this.arcInvestService.reattach((ArcInvestigateur) personne);
-            return StringUtils.isNotEmpty(arcInvestigateur.getNom())
-                   && !arcInvestigateur.getServices().isEmpty();
-        }
-        else if (TypePersonne.INVESTIGATEUR.equals(typePersonne))
-        {
-            final Investigateur investigateur =
-                this.investService.reattach((Investigateur) personne);
-            return StringUtils.isNotEmpty(investigateur.getNom())
-                   && !investigateur.getServices().isEmpty();
+        if (TypePersonne.ARC_INVESTIGATEUR.equals(typePersonne)) {
+            final ArcInvestigateur arcInvestigateur = this.arcInvestService.reattach((ArcInvestigateur) personne);
+            return StringUtils.isNotEmpty(arcInvestigateur.getNom()) && !arcInvestigateur.getServices().isEmpty();
+        } else if (TypePersonne.INVESTIGATEUR.equals(typePersonne)) {
+            final Investigateur investigateur = this.investService.reattach((Investigateur) personne);
+            return StringUtils.isNotEmpty(investigateur.getNom()) && !investigateur.getServices().isEmpty();
         }
 
         return true;
     }
 
     /**
-     * Méthode appelée via la couche IHM lorsqu'une type de personne est sélectionné.
+     * Méthode appelée via la couche IHM lorsqu'une type de personne est
+     * sélectionné.
      * @param event Evénement remonté via la couche IHM.
      */
-    public void handleSelectTypePersonne(final AjaxBehaviorEvent event)
-    {
+    public void handleSelectTypePersonne(final AjaxBehaviorEvent event) {
         // Récupération du type de personne sélectionné.
         final HtmlSelectOneMenu select = (HtmlSelectOneMenu) event.getSource();
         final TypePersonne typePersonne = (TypePersonne) select.getLocalValue();
@@ -99,26 +89,15 @@ public class PersonnesManager
     /**
      * Méthode en charge de valider les données du critère de recherche.
      */
-    public void validCriteria()
-    {
+    public void validCriteria() {
         final PersonneSearchCriteria criteria = (PersonneSearchCriteria) this.getSearchCriteria();
 
-        if (criteria.getEssai() != null)
-        {
-            if (criteria.getDateDebut() == null
-                || criteria.getDateFin() == null)
-            {
-                throw new ValidationException("gestionPersonne.date",
-                                              new String[]
-                                              {"notEmpty", });
-            }
-            else
-            {
-                if (criteria.getDateFin().before(criteria.getDateDebut()))
-                {
-                    throw new ValidationException("gestionPersonne.date",
-                                                  new String[]
-                                                  {"order", });
+        if (criteria.getEssai() != null) {
+            if ((criteria.getDateDebut() == null) || (criteria.getDateFin() == null)) {
+                throw new ValidationException("gestionPersonne.date", new String[]{"notEmpty", });
+            } else {
+                if (criteria.getDateFin().before(criteria.getDateDebut())) {
+                    throw new ValidationException("gestionPersonne.date", new String[]{"order", });
                 }
             }
         }
@@ -128,8 +107,7 @@ public class PersonnesManager
      * Getter sur profilAjout.
      * @return Retourne le profilAjout.
      */
-    public TypePersonne getProfilAjout()
-    {
+    public TypePersonne getProfilAjout() {
         return this.profilAjout;
     }
 
@@ -137,8 +115,7 @@ public class PersonnesManager
      * Setter pour profilAjout.
      * @param profilAjout le profilAjout à écrire.
      */
-    public void setProfilAjout(final TypePersonne profilAjout)
-    {
+    public void setProfilAjout(final TypePersonne profilAjout) {
         this.profilAjout = profilAjout;
     }
 
@@ -146,8 +123,7 @@ public class PersonnesManager
      * Setter pour arcInvestService.
      * @param arcInvestService Le arcInvestService à écrire.
      */
-    public void setArcInvestService(final PersonneService<ArcInvestigateur> arcInvestService)
-    {
+    public void setArcInvestService(final PersonneService<ArcInvestigateur> arcInvestService) {
         this.arcInvestService = arcInvestService;
     }
 
@@ -155,8 +131,7 @@ public class PersonnesManager
      * Setter pour investService.
      * @param investService Le investService à écrire.
      */
-    public void setInvestService(final PersonneService<Investigateur> investService)
-    {
+    public void setInvestService(final PersonneService<Investigateur> investService) {
         this.investService = investService;
     }
 

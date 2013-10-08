@@ -15,12 +15,10 @@ import fr.pharma.eclipse.utils.AbstractEclipseJUnitTest;
 
 /**
  * Test de la classe SequenceToJSONCOnverter.
- 
+ * @author Netapsys
  * @version $Revision$ $Date$
  */
-public class SequenceToJSONConverterTest
-    extends AbstractEclipseJUnitTest
-{
+public class SequenceToJSONConverterTest extends AbstractEclipseJUnitTest {
 
     /**
      * Converter.
@@ -33,23 +31,20 @@ public class SequenceToJSONConverterTest
     private TimeHelper helper;
 
     @Override
-    public void setUp()
-    {
+    public void setUp() {
         this.helper = Mockito.mock(TimeHelper.class);
         this.converter = new SequenceToJSONConverter();
         this.converter.setTimehelper(this.helper);
     }
 
     @Override
-    public void tearDown()
-    {
+    public void tearDown() {
         this.helper = null;
         this.converter = null;
     }
 
     @Override
-    public void testInit()
-    {
+    public void testInit() {
         Assert.assertNotNull(this.helper);
         Assert.assertNotNull(this.converter);
     }
@@ -60,8 +55,7 @@ public class SequenceToJSONConverterTest
      * .
      */
     @Test
-    public void testSupportFalse()
-    {
+    public void testSupportFalse() {
         final Sequence sequence = new Sequence();
         Assert.assertFalse(this.converter.support(sequence));
     }
@@ -72,8 +66,7 @@ public class SequenceToJSONConverterTest
      * .
      */
     @Test
-    public void testSupportFalse2()
-    {
+    public void testSupportFalse2() {
         final Sequence sequence = new Sequence();
         sequence.setDebut(new TempsPrescription());
         sequence.getDebut().setNb(1);
@@ -87,8 +80,7 @@ public class SequenceToJSONConverterTest
      * .
      */
     @Test
-    public void testSupportFalse3()
-    {
+    public void testSupportFalse3() {
         final Sequence sequence = new Sequence();
         sequence.setDebut(new TempsPrescription());
         sequence.getDebut().setUnite(UniteTemps.JOUR);
@@ -101,8 +93,7 @@ public class SequenceToJSONConverterTest
      * .
      */
     @Test
-    public void testSupportFalse4()
-    {
+    public void testSupportFalse4() {
         final Sequence sequence = new Sequence();
         sequence.setDebut(new TempsPrescription());
         Assert.assertFalse(this.converter.support(sequence));
@@ -114,8 +105,7 @@ public class SequenceToJSONConverterTest
      * .
      */
     @Test
-    public void testSupportFalse5()
-    {
+    public void testSupportFalse5() {
         final Sequence sequence = new Sequence();
         sequence.setDebut(new TempsPrescription());
         sequence.getDebut().setNb(1);
@@ -130,8 +120,7 @@ public class SequenceToJSONConverterTest
      * .
      */
     @Test
-    public void testSupportFalse6()
-    {
+    public void testSupportFalse6() {
         final Sequence sequence = new Sequence();
         sequence.setDebut(new TempsPrescription());
         sequence.getDebut().setNb(1);
@@ -147,8 +136,7 @@ public class SequenceToJSONConverterTest
      * .
      */
     @Test
-    public void testSupportTrue()
-    {
+    public void testSupportTrue() {
         final Sequence sequence = new Sequence();
         sequence.setDebut(new TempsPrescription());
         sequence.getDebut().setNb(1);
@@ -165,8 +153,7 @@ public class SequenceToJSONConverterTest
      * .
      */
     @Test
-    public void testConvert()
-    {
+    public void testConvert() {
         final Sequence sequence = new Sequence();
         sequence.setDebut(new TempsPrescription());
         sequence.getDebut().setNb(1);
@@ -174,10 +161,7 @@ public class SequenceToJSONConverterTest
         sequence.setFin(new TempsPrescription());
         sequence.getFin().setNb(1);
         sequence.getFin().setUnite(UniteTemps.JOUR);
-        Mockito.when(this.helper.convertTime(Matchers.any(Calendar.class),
-                                             Matchers.any(TempsPrescription.class)))
-                .thenReturn(Calendar.getInstance());
-        Assert.assertNotNull(this.converter.convert(sequence,
-                                                    Calendar.getInstance()));
+        Mockito.when(this.helper.convertTime(Matchers.any(Calendar.class), Matchers.any(TempsPrescription.class))).thenReturn(Calendar.getInstance());
+        Assert.assertNotNull(this.converter.convert(sequence, Calendar.getInstance()));
     }
 }

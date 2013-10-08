@@ -16,4 +16,7 @@
     	</locale-config>
     </application>
     
+    <lifecycle>
+    	<phase-listener>fr.pharma.eclipse.profiling.JsfProfilerPhaseListener</phase-listener>
+    </lifecycle>
 </faces-config>

@@ -20,12 +20,10 @@ import fr.pharma.eclipse.utils.FacesUtils;
 
 /**
  * Test de la classe ConditionnementRemoveValidator.
- 
+ * @author Netapsys
  * @version $Revision$ $Date$
  */
-public class ConditionnementRemoveValidatorTest
-    extends AbstractEclipseJUnitTest
-{
+public class ConditionnementRemoveValidatorTest extends AbstractEclipseJUnitTest {
 
     /**
      * Validator.
@@ -51,8 +49,7 @@ public class ConditionnementRemoveValidatorTest
      * {@inheritDoc}
      */
     @Override
-    public void setUp()
-    {
+    public void setUp() {
         this.facesUtils = Mockito.mock(FacesUtils.class);
         this.produitPrescritService = Mockito.mock(GenericService.class);
         this.prescriptionTypeService = Mockito.mock(GenericService.class);
@@ -66,8 +63,7 @@ public class ConditionnementRemoveValidatorTest
      * {@inheritDoc}
      */
     @Override
-    public void tearDown()
-    {
+    public void tearDown() {
         this.facesUtils = null;
         this.prescriptionTypeService = null;
         this.produitPrescritService = null;
@@ -79,8 +75,7 @@ public class ConditionnementRemoveValidatorTest
      */
     @Override
     @Test
-    public void testInit()
-    {
+    public void testInit() {
         Assert.assertNotNull(this.facesUtils);
         Assert.assertNotNull(this.prescriptionTypeService);
         Assert.assertNotNull(this.produitPrescritService);
@@ -91,73 +86,57 @@ public class ConditionnementRemoveValidatorTest
      * Tes de la méthode validate.
      */
     @Test
-    public void validateIdNull()
-    {
+    public void validateIdNull() {
         final Conditionnement conditionnement = new Conditionnement();
         Assert.assertTrue(this.validator.validate(conditionnement));
-        Mockito.verify(this.facesUtils,
-                       Mockito.never()).addMessage(FacesMessage.SEVERITY_ERROR,
-                                                   "remove.impossible");
+        Mockito.verify(this.facesUtils, Mockito.never()).addMessage(FacesMessage.SEVERITY_ERROR, "remove.impossible");
     }
 
     /**
      * Tes de la méthode validate.
      */
     @Test
-    public void validatePrescriptionPrescritEmpty()
-    {
+    public void validatePrescriptionPrescritEmpty() {
         final Conditionnement conditionnement = new Conditionnement();
         conditionnement.setId(1L);
         final List<PrescriptionType> prescriptions = new ArrayList<PrescriptionType>();
         final List<ProduitPrescrit> produitPrescrits = new ArrayList<ProduitPrescrit>();
-        Mockito.when(this.prescriptionTypeService.getAll(Matchers.any(SearchCriteria.class)))
-                .thenReturn(prescriptions);
-        Mockito.when(this.produitPrescritService.getAll(Matchers.any(SearchCriteria.class)))
-                .thenReturn(produitPrescrits);
+        Mockito.when(this.prescriptionTypeService.getAll(Matchers.any(SearchCriteria.class))).thenReturn(prescriptions);
+        Mockito.when(this.produitPrescritService.getAll(Matchers.any(SearchCriteria.class))).thenReturn(produitPrescrits);
         Assert.assertTrue(this.validator.validate(conditionnement));
-        Mockito.verify(this.facesUtils,
-                       Mockito.never()).addMessage(FacesMessage.SEVERITY_ERROR,
-                                                   "remove.impossible");
+        Mockito.verify(this.facesUtils, Mockito.never()).addMessage(FacesMessage.SEVERITY_ERROR, "remove.impossible");
     }
 
     /**
      * Tes de la méthode validate.
      */
     @Test
-    public void validatePrescriptionEmpty()
-    {
+    public void validatePrescriptionEmpty() {
         final Conditionnement conditionnement = new Conditionnement();
         conditionnement.setId(1L);
         final List<PrescriptionType> prescriptions = new ArrayList<PrescriptionType>();
         final List<ProduitPrescrit> produitPrescrits = new ArrayList<ProduitPrescrit>();
         produitPrescrits.add(new ProduitPrescrit());
-        Mockito.when(this.prescriptionTypeService.getAll(Matchers.any(SearchCriteria.class)))
-                .thenReturn(prescriptions);
-        Mockito.when(this.produitPrescritService.getAll(Matchers.any(SearchCriteria.class)))
-                .thenReturn(produitPrescrits);
+        Mockito.when(this.prescriptionTypeService.getAll(Matchers.any(SearchCriteria.class))).thenReturn(prescriptions);
+        Mockito.when(this.produitPrescritService.getAll(Matchers.any(SearchCriteria.class))).thenReturn(produitPrescrits);
         Assert.assertFalse(this.validator.validate(conditionnement));
-        Mockito.verify(this.facesUtils).addMessage(FacesMessage.SEVERITY_ERROR,
-                                                   "remove.impossible");
+        Mockito.verify(this.facesUtils).addMessage(FacesMessage.SEVERITY_ERROR, "remove.impossible");
     }
 
     /**
      * Tes de la méthode validate.
      */
     @Test
-    public void validatePrescritEmpty()
-    {
+    public void validatePrescritEmpty() {
         final Conditionnement conditionnement = new Conditionnement();
         conditionnement.setId(1L);
         final List<PrescriptionType> prescriptions = new ArrayList<PrescriptionType>();
         prescriptions.add(new PrescriptionType());
         final List<ProduitPrescrit> produitPrescrits = new ArrayList<ProduitPrescrit>();
-        Mockito.when(this.prescriptionTypeService.getAll(Matchers.any(SearchCriteria.class)))
-                .thenReturn(prescriptions);
-        Mockito.when(this.produitPrescritService.getAll(Matchers.any(SearchCriteria.class)))
-                .thenReturn(produitPrescrits);
+        Mockito.when(this.prescriptionTypeService.getAll(Matchers.any(SearchCriteria.class))).thenReturn(prescriptions);
+        Mockito.when(this.produitPrescritService.getAll(Matchers.any(SearchCriteria.class))).thenReturn(produitPrescrits);
         Assert.assertFalse(this.validator.validate(conditionnement));
-        Mockito.verify(this.facesUtils).addMessage(FacesMessage.SEVERITY_ERROR,
-                                                   "remove.impossible");
+        Mockito.verify(this.facesUtils).addMessage(FacesMessage.SEVERITY_ERROR, "remove.impossible");
     }
 
 }

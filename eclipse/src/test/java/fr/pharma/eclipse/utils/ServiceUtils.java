@@ -4,16 +4,14 @@ import fr.pharma.eclipse.domain.model.localisation.Service;
 
 /**
  * Classe utilitaire pour la création de jeux de données Service.
- 
+ * @author Netapsys
  * @version $Revision$ $Date$
  */
-public final class ServiceUtils
-{
+public final class ServiceUtils {
     /**
      * Constructeur privé.
      */
-    private ServiceUtils()
-    {
+    private ServiceUtils() {
         super();
     }
 
@@ -22,11 +20,8 @@ public final class ServiceUtils
      * @param id Identifiant du test.
      * @return Service.
      */
-    public static Service makeServiceTest(final long id)
-    {
-        return ServiceUtils.makeServiceTest(id,
-                                            "service_"
-                                                    + id);
+    public static Service makeServiceTest(final long id) {
+        return ServiceUtils.makeServiceTest(id, "service_" + id);
     }
 
     /**
@@ -36,8 +31,7 @@ public final class ServiceUtils
      * @return Service.
      */
     public static Service makeServiceTest(final long id,
-                                          final String nom)
-    {
+                                          final String nom) {
         final Service service = new Service();
         service.setId(id);
         service.setNom(nom);

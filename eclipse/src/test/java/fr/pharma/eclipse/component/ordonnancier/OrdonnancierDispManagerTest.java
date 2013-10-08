@@ -26,11 +26,10 @@ import fr.pharma.eclipse.service.stockage.PharmacieService;
 
 /**
  * Classe en charge de tester le manager de l'ordonnancier des dispensations.
- 
+ * @author Netapsys
  * @version $Revision$ $Date$
  */
-public class OrdonnancierDispManagerTest
-{
+public class OrdonnancierDispManagerTest {
     /**
      * OrdonnancierDispManager à tester.
      */
@@ -56,8 +55,7 @@ public class OrdonnancierDispManagerTest
      */
     @Before
     @SuppressWarnings("unchecked")
-    public void init()
-    {
+    public void init() {
         this.criteria = Mockito.mock(OrdonnancierSearchCriteria.class);
         this.manager = new OrdonnancierDispManager(this.criteria);
         this.mockPharmacieService = Mockito.mock(PharmacieService.class);
@@ -70,8 +68,7 @@ public class OrdonnancierDispManagerTest
      * Méthode en charge de purger les données de test.
      */
     @After
-    public void end()
-    {
+    public void end() {
         this.criteria = null;
         this.manager = null;
         this.mockPharmacieService = null;
@@ -82,8 +79,7 @@ public class OrdonnancierDispManagerTest
      * Méthode en charge de tester l'initialisation des données de test.
      */
     @Test
-    public void testInitData()
-    {
+    public void testInitData() {
         Assert.assertNotNull(this.criteria);
         Assert.assertNotNull(this.manager);
         Assert.assertNotNull(this.mockPharmacieService);
@@ -94,13 +90,11 @@ public class OrdonnancierDispManagerTest
      * Méthode en charge de tester la méthode init.
      */
     @Test
-    public void testInitWithPharma()
-    {
+    public void testInitWithPharma() {
         final List<Pharmacie> pharmacies = new ArrayList<Pharmacie>();
         final Pharmacie pharmacie = Mockito.mock(Pharmacie.class);
         pharmacies.add(pharmacie);
-        Mockito.when(this.mockPharmacieService.getAll((SearchCriteria) Matchers.any()))
-                .thenReturn(pharmacies);
+        Mockito.when(this.mockPharmacieService.getAll((SearchCriteria) Matchers.any())).thenReturn(pharmacies);
 
         this.manager.init();
         Mockito.verify(this.mockOrdonnancierDispService).getDateDebut(pharmacie);
@@ -111,25 +105,21 @@ public class OrdonnancierDispManagerTest
      * Méthode en charge de tester la méthode init.
      */
     @Test
-    public void testInitWithEmptyPharma()
-    {
+    public void testInitWithEmptyPharma() {
         final List<Pharmacie> pharmacies = new ArrayList<Pharmacie>();
-        Mockito.when(this.mockPharmacieService.getAll((SearchCriteria) Matchers.any()))
-                .thenReturn(pharmacies);
+        Mockito.when(this.mockPharmacieService.getAll((SearchCriteria) Matchers.any())).thenReturn(pharmacies);
 
         this.manager.init();
-        Mockito.verify(this.mockOrdonnancierDispService,
-                       Mockito.times(0)).getDateDebut((Pharmacie) Matchers.any());
+        Mockito.verify(this.mockOrdonnancierDispService, Mockito.times(0)).getDateDebut((Pharmacie) Matchers.any());
         Mockito.verify(this.mockOrdonnancierDispService).getDateFin();
     }
 
     /**
-     * Méthode en charge de tester la méthode appelée via l'IHM suite à la sélection d'une
-     * pharmacie.
+     * Méthode en charge de tester la méthode appelée via l'IHM suite à la
+     * sélection d'une pharmacie.
      */
     @Test
-    public void testHandleSelectPharmacie()
-    {
+    public void testHandleSelectPharmacie() {
         final AjaxBehaviorEvent event = Mockito.mock(AjaxBehaviorEvent.class);
         final HtmlSelectOneMenu select = Mockito.mock(HtmlSelectOneMenu.class);
         Mockito.when(event.getSource()).thenReturn(select);
@@ -144,8 +134,7 @@ public class OrdonnancierDispManagerTest
      * Méthode en charge de tester la récupération des initiales patient.
      */
     @Test
-    public void testGetInitialesPatient()
-    {
+    public void testGetInitialesPatient() {
         final Dispensation dispensation = new Dispensation();
         final Prescription prescription = new Prescription();
         final Inclusion inclusion = new Inclusion();
@@ -156,54 +145,48 @@ public class OrdonnancierDispManagerTest
         prescription.setInclusion(inclusion);
         dispensation.setPrescription(prescription);
         final String initiales = this.manager.getInitialesPatient(dispensation);
-        Assert.assertEquals("C G",
-                            initiales);
+        Assert.assertEquals("C G", initiales);
     }
 
     /**
      * Méthode en charge de tester le set sur Pharmacies.
      */
     @Test
-    public void testSetPharmacies()
-    {
+    public void testSetPharmacies() {
         final List<Pharmacie> pharmacies = new ArrayList<Pharmacie>();
         this.manager.setPharmacies(pharmacies);
         Assert.assertNotNull(this.manager.getPharmacies());
     }
 
     /**
-     * Méthode en charge de tester la récupération des dispensations d'un ordonnancier.
+     * Méthode en charge de tester la récupération des dispensations d'un
+     * ordonnancier.
      */
     @Test
-    public void testGetListDispensationsWithOrdoNull()
-    {
+    public void testGetListDispensationsWithOrdoNull() {
         this.manager.setOrdonnancier(null);
-        Assert.assertEquals(0,
-                            this.manager.getListDispensations().size());
+        Assert.assertEquals(0, this.manager.getListDispensations().size());
     }
 
     /**
-     * Méthode en charge de tester la récupération des dispensations d'un ordonnancier.
+     * Méthode en charge de tester la récupération des dispensations d'un
+     * ordonnancier.
      */
     @Test
-    public void testGetListDispensationsWithOrdo()
-    {
+    public void testGetListDispensationsWithOrdo() {
         final OrdonnancierDisp ordonnancier = new OrdonnancierDisp();
         this.manager.setOrdonnancier(ordonnancier);
-        Assert.assertEquals(0,
-                            this.manager.getListDispensations().size());
+        Assert.assertEquals(0, this.manager.getListDispensations().size());
     }
 
     /**
-     * Méthode en charge de tester la récupération des dispensations de produit d'une
-     * dispensation.
+     * Méthode en charge de tester la récupération des dispensations de produit
+     * d'une dispensation.
      */
     @Test
-    public void testGetListDispensationsProduit()
-    {
+    public void testGetListDispensationsProduit() {
         final Dispensation dispensation = new Dispensation();
-        Assert.assertEquals(0,
-                            this.manager.getListDispensationsProduit(dispensation).size());
+        Assert.assertEquals(0, this.manager.getListDispensationsProduit(dispensation).size());
     }
 
 }

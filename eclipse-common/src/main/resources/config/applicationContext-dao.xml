@@ -19,6 +19,13 @@
 	</bean>
 
 	<!-- ============================= -->
+	<!-- DOCUMENT	                   -->
+	<!-- ============================= -->
+	<bean id="ligneStockDao" parent="commonDao">
+		<constructor-arg index="0" value="fr.pharma.eclipse.domain.model.stock.LigneStock"/>
+	</bean>	
+
+	<!-- ============================= -->
 	<!-- PHARMACIE	                   -->
 	<!-- ============================= -->
 	<bean id="pharmacieDao" parent="commonDao">
@@ -66,6 +73,17 @@
 	<bean id="detailRechercheDao" parent="commonDao">
 		<constructor-arg index="0" value="fr.pharma.eclipse.domain.model.essai.detail.recherche.DetailRecherche" />
 	</bean>
+	
+	<!-- ============================= -->
+	<!-- RECHERCHE PRESCRIPTION  	   -->
+	<!-- ============================= -->
+	<bean id="prescriptionSearchDao" class="fr.pharma.eclipse.dao.search.PrescriptionSearchDao"/>
+		
+	<!-- ============================= -->
+	<!-- RECHERCHE DISPENSATION  	   -->
+	<!-- ============================= -->
+	<bean id="dispensationSearchDao" class="fr.pharma.eclipse.dao.search.DispensationSearchDao"/>
+	
 	
 	<!-- ============================= -->
 	<!-- PERSONNE                      -->
@@ -205,6 +223,11 @@
 	<!-- ============================= -->
 	<bean id="mouvementStockDao" parent="commonDao">
 		<constructor-arg index="0" value="fr.pharma.eclipse.domain.model.stock.MvtStock"/>
+	</bean>
+	
+	<!--  -->
+	<bean id="etatStockDao" parent="commonDao">
+		<constructor-arg index="0" value="fr.pharma.eclipse.domain.model.stock.EtatStock"/>
 	</bean>
 	
 	<!-- ============================= -->
@@ -380,6 +403,13 @@
 	<!-- ========================================= -->
 	<bean id="ordonnancierFabReconstDao" parent="commonDao">
 		<constructor-arg index="0" value="fr.pharma.eclipse.domain.model.ordonnancier.OrdonnancierFabReconst"/>
+	</bean>
+	
+	<!-- ========================================= -->
+	<!-- REPRISE PASSIF   -->
+	<!-- ========================================= -->
+	<bean id="reprisePassifDao" parent="commonDao">
+		<constructor-arg index="0" value="fr.pharma.eclipse.domain.model.reprisePassif.ReprisePassif"/>
 	</bean>
 	
 	<!-- ============================= -->

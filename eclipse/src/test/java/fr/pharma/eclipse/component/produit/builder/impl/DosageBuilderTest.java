@@ -9,12 +9,10 @@ import fr.pharma.eclipse.utils.AbstractEclipseJUnitTest;
 
 /**
  * Test du builder DosageBuilder.
- 
+ * @author Netapsys
  * @version $Revision$ $Date$
  */
-public class DosageBuilderTest
-    extends AbstractEclipseJUnitTest
-{
+public class DosageBuilderTest extends AbstractEclipseJUnitTest {
 
     /**
      * Builder.
@@ -25,8 +23,7 @@ public class DosageBuilderTest
      * {@inheritDoc}
      */
     @Override
-    public void setUp()
-    {
+    public void setUp() {
         this.builder = new DosageBuilder();
     }
 
@@ -34,8 +31,7 @@ public class DosageBuilderTest
      * {@inheritDoc}
      */
     @Override
-    public void tearDown()
-    {
+    public void tearDown() {
         this.builder = null;
     }
 
@@ -44,8 +40,7 @@ public class DosageBuilderTest
      */
     @Test
     @Override
-    public void testInit()
-    {
+    public void testInit() {
         Assert.assertNotNull(this.builder);
     }
 
@@ -53,13 +48,11 @@ public class DosageBuilderTest
      * Test de la méthode build().
      */
     @Test
-    public void testBuild()
-    {
+    public void testBuild() {
         final Conditionnement conditionnement = new Conditionnement();
         conditionnement.setUniteDosage(UniteDosage.COMPRIME);
         this.builder.build(conditionnement);
-        Assert.assertEquals("cp",
-                            conditionnement.getUnitePrescription());
+        Assert.assertEquals("cp", conditionnement.getUnitePrescription());
     }
 
 }

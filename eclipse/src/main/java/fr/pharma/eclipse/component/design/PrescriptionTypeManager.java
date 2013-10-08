@@ -19,12 +19,10 @@ import fr.pharma.eclipse.service.helper.design.TimeHelper;
 
 /**
  * Manager pour le bean PrescriptionType.
- 
+ * @author Netapsys
  * @version $Revision$ $Date$
  */
-public class PrescriptionTypeManager
-    extends BeanManager<PrescriptionType>
-{
+public class PrescriptionTypeManager extends BeanManager<PrescriptionType> {
 
     /**
      * SerialVersionUID.
@@ -69,8 +67,7 @@ public class PrescriptionTypeManager
      * Constructeur.
      * @param service Service attaché.
      */
-    public PrescriptionTypeManager(final GenericService<PrescriptionType> service)
-    {
+    public PrescriptionTypeManager(final GenericService<PrescriptionType> service) {
         super(service);
     }
 
@@ -78,14 +75,10 @@ public class PrescriptionTypeManager
      * Méthode en charge de préparer l'édition d'une prescription.
      * @param event Evenement.
      */
-    public void editPrescription(final ActionEvent event)
-    {
-        final PrescriptionType prescription =
-            (PrescriptionType) event.getComponent().getAttributes().get("prescriptionToEdit");
+    public void editPrescription(final ActionEvent event) {
+        final PrescriptionType prescription = (PrescriptionType) event.getComponent().getAttributes().get("prescriptionToEdit");
         this.setBean(prescription);
-        this.setResumeConditionnement(this.conditionnementHelper.buildResume(this
-                .getBean()
-                .getConditionnement()));
+        this.setResumeConditionnement(this.conditionnementHelper.buildResume(this.getBean().getConditionnement()));
         this.setResume(this.helper.buildResume(prescription));
 
     }
@@ -93,8 +86,7 @@ public class PrescriptionTypeManager
     /**
      * Méthode en charge de reinitialiser les données du mananger.
      */
-    public void reinit()
-    {
+    public void reinit() {
         this.setBean(null);
         this.setResumeConditionnement(null);
         this.setResume(null);
@@ -104,29 +96,26 @@ public class PrescriptionTypeManager
      * Méthode en charge d'ajouter un prescription à la séquence.
      * @param event Evenement.
      */
-    public void addPrescription(final ActionEvent event)
-    {
+    public void addPrescription(final ActionEvent event) {
         final Sequence seq = (Sequence) event.getComponent().getAttributes().get("sequence");
-        if (this.sequenceValidator.validateSequence(this.getBean(),
-                                                    seq))
-        {
+        if (this.sequenceValidator.validateSequence(this.getBean(), seq)) {
             this.getBean().setSequence(seq);
-            if (!seq.getPrescriptions().contains(this.getBean()))
-            {
+            if (!seq.getPrescriptions().contains(this.getBean())) {
                 seq.getPrescriptions().add(this.getBean());
             }
             this.majDebutFin(seq);
         }
     }
     /**
-     * Méthode en charge de mettre à jour les propriétés debut et fin de la sequence en paramètre.
+     * Méthode en charge de mettre à jour les propriétés debut et fin de la
+     * sequence en paramètre.
      * @param seq La séquence.
      */
-    private void majDebutFin(final Sequence seq)
-    {
+    private void majDebutFin(final Sequence seq) {
         seq.setDebut(this.timeHelper.getDebut(seq.getPrescriptions()));
 
-        // La fin n'est plus calculé à partir des prescription mais à partir de la durée saisie
+        // La fin n'est plus calculé à partir des prescription mais à partir de
+        // la durée saisie
         // par l'utilisateur sur la séquence.
         // seq.setFin(this.timeHelper.getFin(seq.getPrescriptions()));
 
@@ -136,30 +125,26 @@ public class PrescriptionTypeManager
      * Méthode en charge de supprimer la prescription.
      * @param event Evenement.
      */
-    public void removePrescription(final ActionEvent event)
-    {
-        final PrescriptionType prescription =
-            (PrescriptionType) event.getComponent().getAttributes().get("prescriptionToDelete");
+    public void removePrescription(final ActionEvent event) {
+        final PrescriptionType prescription = (PrescriptionType) event.getComponent().getAttributes().get("prescriptionToDelete");
         prescription.getSequence().getPrescriptions().remove(prescription);
     }
 
     /**
-     * Retourne <true> si le dosage est visible ( si le produit sélectionné est un médicament).
-     * @return <true> si le dosage est visible ( si le produit sélectionné est un médicament).
+     * Retourne <true> si le dosage est visible ( si le produit sélectionné est
+     * un médicament).
+     * @return <true> si le dosage est visible ( si le produit sélectionné est
+     * un médicament).
      */
-    public boolean isDosageVisible()
-    {
-        return null != this.getBean()
-               && this.getBean().getProduit() != null
-               && this.getBean().getProduit().getType().equals(TypeProduit.MEDICAMENT);
+    public boolean isDosageVisible() {
+        return (null != this.getBean()) && (this.getBean().getProduit() != null) && this.getBean().getProduit().getType().equals(TypeProduit.MEDICAMENT);
     }
 
     /**
      * Méthode appelée par l'IHM lors de la sélection d'un conditionnement.
      * @param event Evenement JSF.
      */
-    public void handleConditionnement(final AjaxBehaviorEvent event)
-    {
+    public void handleConditionnement(final AjaxBehaviorEvent event) {
         final HtmlSelectOneMenu menu = (HtmlSelectOneMenu) event.getSource();
         final Conditionnement conditionnement = (Conditionnement) menu.getLocalValue();
         this.getBean().setConditionnement(conditionnement);
@@ -167,22 +152,18 @@ public class PrescriptionTypeManager
     }
 
     /**
-     * Retourne <true> si le mode de prescription du conditionnement sélectionné est du type de
-     * celui en paramètre.
+     * Retourne <true> si le mode de prescription du conditionnement sélectionné
+     * est du type de celui en paramètre.
      * @param mode Mode de prescription.
-     * @return <true> si le mode de prescription du conditionnement sélectionné est du type de
-     * celui en paramètre.
+     * @return <true> si le mode de prescription du conditionnement sélectionné
+     * est du type de celui en paramètre.
      */
-    public boolean isModePrescription(final ModePrescription mode)
-    {
-        return this.getBean() != null
-               && this.getBean().getConditionnement() != null
-               && this.getBean().getConditionnement().getModePrescription() != null
+    public boolean isModePrescription(final ModePrescription mode) {
+        return (this.getBean() != null) && (this.getBean().getConditionnement() != null) && (this.getBean().getConditionnement().getModePrescription() != null)
                && this.getBean().getConditionnement().getModePrescription().equals(mode);
     }
 
-    public void buildResume()
-    {
+    public void buildResume() {
         this.setResume(this.helper.buildResume(this.getBean()));
     }
 
@@ -190,8 +171,7 @@ public class PrescriptionTypeManager
      * Setter pour timeHelper.
      * @param timeHelper le timeHelper à écrire.
      */
-    public void setTimeHelper(final TimeHelper timeHelper)
-    {
+    public void setTimeHelper(final TimeHelper timeHelper) {
         this.timeHelper = timeHelper;
     }
 
@@ -199,8 +179,7 @@ public class PrescriptionTypeManager
      * Setter pour sequenceValidator.
      * @param sequenceValidator le sequenceValidator à écrire.
      */
-    public void setSequenceValidator(final SequenceValidator sequenceValidator)
-    {
+    public void setSequenceValidator(final SequenceValidator sequenceValidator) {
         this.sequenceValidator = sequenceValidator;
     }
 
@@ -208,8 +187,7 @@ public class PrescriptionTypeManager
      * Setter pour conditionnementHelper.
      * @param conditionnementHelper le conditionnementHelper à écrire.
      */
-    public void setConditionnementHelper(final ConditionnementHelper conditionnementHelper)
-    {
+    public void setConditionnementHelper(final ConditionnementHelper conditionnementHelper) {
         this.conditionnementHelper = conditionnementHelper;
     }
 
@@ -217,8 +195,7 @@ public class PrescriptionTypeManager
      * Getter sur resumeConditionnement.
      * @return Retourne le resumeConditionnement.
      */
-    public String getResumeConditionnement()
-    {
+    public String getResumeConditionnement() {
         return this.resumeConditionnement;
     }
 
@@ -226,8 +203,7 @@ public class PrescriptionTypeManager
      * Setter pour resumeConditionnement.
      * @param resumeConditionnement le resumeConditionnement à écrire.
      */
-    public void setResumeConditionnement(final String resumeConditionnement)
-    {
+    public void setResumeConditionnement(final String resumeConditionnement) {
         this.resumeConditionnement = resumeConditionnement;
     }
 
@@ -235,8 +211,7 @@ public class PrescriptionTypeManager
      * Setter pour helper.
      * @param helper le helper à écrire.
      */
-    public void setHelper(final PrescriptionTypeHelper helper)
-    {
+    public void setHelper(final PrescriptionTypeHelper helper) {
         this.helper = helper;
     }
 
@@ -244,8 +219,7 @@ public class PrescriptionTypeManager
      * Getter sur resume.
      * @return Retourne le resume.
      */
-    public String getResume()
-    {
+    public String getResume() {
         return this.resume;
     }
 
@@ -253,8 +227,7 @@ public class PrescriptionTypeManager
      * Setter pour resume.
      * @param resume le resume à écrire.
      */
-    public void setResume(final String resume)
-    {
+    public void setResume(final String resume) {
         this.resume = resume;
     }
 

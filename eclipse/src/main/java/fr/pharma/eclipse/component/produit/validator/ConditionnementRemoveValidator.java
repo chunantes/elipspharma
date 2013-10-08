@@ -15,12 +15,10 @@ import fr.pharma.eclipse.utils.FacesUtils;
 
 /**
  * Classe de validation de suppression d'un objet Conditionnement.
- 
+ * @author Netapsys
  * @version $Revision$ $Date$
  */
-public class ConditionnementRemoveValidator
-    implements Serializable
-{
+public class ConditionnementRemoveValidator implements Serializable {
     /**
      * Serial ID.
      */
@@ -47,31 +45,24 @@ public class ConditionnementRemoveValidator
     /**
      * {@inheritDoc}
      */
-    public boolean validate(final Conditionnement conditionnement)
-    {
-        if (conditionnement.getId() == null)
-        {
+    public boolean validate(final Conditionnement conditionnement) {
+        if (conditionnement.getId() == null) {
             return true;
         }
         final boolean result = true;
-        final PrescriptionTypeSearchCriteria criteriaPrescriptionType =
-            new PrescriptionTypeSearchCriteria();
+        final PrescriptionTypeSearchCriteria criteriaPrescriptionType = new PrescriptionTypeSearchCriteria();
         criteriaPrescriptionType.setConditionnement(conditionnement);
 
-        if (!this.prescriptionTypeService.getAll(criteriaPrescriptionType).isEmpty())
-        {
-            this.facesUtils.addMessage(FacesMessage.SEVERITY_ERROR,
-                                       "remove.impossible");
+        if (!this.prescriptionTypeService.getAll(criteriaPrescriptionType).isEmpty()) {
+            this.facesUtils.addMessage(FacesMessage.SEVERITY_ERROR, "remove.impossible");
             return false;
         }
 
         final ProduitPrescritSearchCriteria crit = new ProduitPrescritSearchCriteria();
         crit.setConditionnement(conditionnement);
 
-        if (!this.produitPrescritTypeService.getAll(crit).isEmpty())
-        {
-            this.facesUtils.addMessage(FacesMessage.SEVERITY_ERROR,
-                                       "remove.impossible");
+        if (!this.produitPrescritTypeService.getAll(crit).isEmpty()) {
+            this.facesUtils.addMessage(FacesMessage.SEVERITY_ERROR, "remove.impossible");
             return false;
         }
         return result;
@@ -82,8 +73,7 @@ public class ConditionnementRemoveValidator
      * Setter pour prescriptionTypeService.
      * @param prescriptionTypeService Le prescriptionTypeService à écrire.
      */
-    public void setPrescriptionTypeService(final GenericService<PrescriptionType> prescriptionTypeService)
-    {
+    public void setPrescriptionTypeService(final GenericService<PrescriptionType> prescriptionTypeService) {
         this.prescriptionTypeService = prescriptionTypeService;
     }
 
@@ -91,8 +81,7 @@ public class ConditionnementRemoveValidator
      * Setter pour produitPrescritTypeService.
      * @param produitPrescritTypeService Le produitPrescritTypeService à écrire.
      */
-    public void setProduitPrescritTypeService(final GenericService<ProduitPrescrit> produitPrescritTypeService)
-    {
+    public void setProduitPrescritTypeService(final GenericService<ProduitPrescrit> produitPrescritTypeService) {
         this.produitPrescritTypeService = produitPrescritTypeService;
     }
 
@@ -100,8 +89,7 @@ public class ConditionnementRemoveValidator
      * Setter pour facesUtils.
      * @param facesUtils Le facesUtils à écrire.
      */
-    public void setFacesUtils(final FacesUtils facesUtils)
-    {
+    public void setFacesUtils(final FacesUtils facesUtils) {
         this.facesUtils = facesUtils;
     }
 

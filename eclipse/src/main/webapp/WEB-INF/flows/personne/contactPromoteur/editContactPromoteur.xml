@@ -1,8 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<flow xmlns="http://www.springframework.org/schema/webflow"
-	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-	xsi:schemaLocation="http://www.springframework.org/schema/webflow
-    http://www.springframework.org/schema/webflow/spring-webflow-2.0.xsd" parent="main">
+<flow xmlns="http://www.springframework.org/schema/webflow" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.springframework.org/schema/webflow
+    http://www.springframework.org/schema/webflow/spring-webflow-2.0.xsd"
+	parent="main">
 
 	<!-- Variable d'entrée -->
 	<input name="idContactPromoteur" />
@@ -14,32 +13,32 @@
 	</on-start>
 
 	<decision-state id="createOrEdit">
-		<if test="idContactPromoteur==null" then="create" else="edit"/>
+		<if test="idContactPromoteur==null" then="create" else="edit" />
 	</decision-state>
-	
+
 	<!-- Création -->
 	<action-state id="create">
-		<evaluate expression="contactPromoteurManager.setBean(contactPromoteurFactory.getInitializedObject())"/>
-		<transition to="editContactPromoteur"/>
+		<evaluate expression="contactPromoteurManager.setBean(contactPromoteurFactory.getInitializedObject())" />
+		<transition to="editContactPromoteur" />
 	</action-state>
-	
+
 	<!-- Modification -->
 	<action-state id="edit">
-		<evaluate expression="contactPromoteurManager.setBean(contactPromoteurService.get(idContactPromoteur))"/>
-		<transition to="editContactPromoteur"/>
+		<evaluate expression="contactPromoteurManager.setBean(contactPromoteurService.get(idContactPromoteur))" />
+		<transition to="editContactPromoteur" />
 	</action-state>
 
 	<!-- Page principale -->
 	<view-state id="editContactPromoteur" view="../../../pages/personne/contactPromoteur/editContactPromoteur.xhtml">
-		<transition on="cancel" to="createOrEdit"/>
+		<transition on="cancel" to="createOrEdit" />
 		<transition on="save" to="comeback">
-			<evaluate expression="contactPromoteurService.save(contactPromoteurManager.bean)"/>
+			<evaluate expression="contactPromoteurService.save(contactPromoteurManager.bean)" />
 		</transition>
-		<transition on="comeback" to="comeback"/>
-		<transition on="error" to="editContactPromoteur"/>
+		<transition on="comeback" to="comeback" />
+		<transition on="error" to="editContactPromoteur" />
 	</view-state>
-	
+
 	<!-- Etat final -->
-	<end-state id="comeback"/>
-	
+	<end-state id="comeback" />
+
 </flow>

@@ -11,30 +11,63 @@
             http://www.springframework.org/schema/tx http://www.springframework.org/schema/tx/spring-tx.xsd
             http://www.springframework.org/schema/aop http://www.springframework.org/schema/aop/spring-aop.xsd">			
 			
-	<tx:annotation-driven/>
+    <tx:annotation-driven/>
     <context:component-scan base-package="fr.pharma.eclipse" />
-    <context:property-placeholder location="classpath:/config/project.properties,classpath:/config/hibernate.properties"/>
+    
+    <bean id="inetAddress" class="java.net.InetAddress" factory-method="getLocalHost" />
 
-	<!-- =============== -->
-	<!-- PARTIE COMMUNE  -->
-	<!-- =============== -->	 
-	<import resource="classpath:/config/applicationContext-common.xml" />	 
-	<import resource="classpath:/config/applicationContext-common-sir.xml" />	 
+    <bean name="configPath" class="java.lang.String">
+        <constructor-arg value="#{systemProperties['ELIPS_HOME']==null ? 'classpath:META-INF/'+(inetAddress.hostName) :
+        (!(new java.io.File(systemProperties['ELIPS_HOME']+ '/config/project.properties').exists()) ? 
+        'classpath:META-INF/'+(inetAddress.hostName) : 
+        'file:'+systemProperties['ELIPS_HOME']+'/config')}" />
+    </bean>
+	
+    <bean class="org.springframework.web.context.support.ServletContextPropertyPlaceholderConfigurer">
+        <property name="ignoreResourceNotFound" value="false" />
+        <property name="ignoreUnresolvablePlaceholders" value="false" />
+        <property name="locations">
+            <list>
+                <value>#{configPath}/project.properties</value>
+                <value>#{configPath}/hibernate.properties</value>
+            </list>
+        </property>
+    </bean>	  
+	
 
-	<!-- ================= -->
-	<!-- PARTIE ECLIPSE    -->
-	<!-- ================= -->
-	<import resource="classpath:/config/applicationContext-security.xml" />
-	<import resource="classpath:/config/applicationContext-authentication.xml" />
-	<import resource="classpath:/config/applicationContext-flow.xml" />
-	<import resource="classpath:/config/applicationContext-utils.xml" />
-	<import resource="classpath:/config/applicationContext-manager.xml" />
-	<import resource="classpath:/config/applicationContext-controller.xml" />
-	<import resource="classpath:/config/applicationContext-converter.xml" />
-	<import resource="classpath:/config/applicationContext-validator.xml" />
-	<import resource="classpath:/config/applicationContext-eclipse-criteria.xml" />
-	<import resource="classpath:/config/applicationContext-eclipse-factory.xml" />
-	<import resource="classpath:/config/applicationContext-eclipse-helper.xml" />
-	<import resource="classpath:/config/messages-resources-eclipse.xml" />
+    <bean id="log4jInitialization"
+          class="org.springframework.beans.factory.config.MethodInvokingFactoryBean">
+        <property name="targetClass" value="org.springframework.util.Log4jConfigurer" />
+        <property name="targetMethod" value="initLogging" />
+        <property name="arguments">
+            <list>
+                <value>#{configPath}/log4j.xml</value>
+            </list>
+        </property>
+    </bean> 	
+
+    <!-- =============== -->
+    <!-- PARTIE COMMUNE  -->
+    <!-- =============== -->	 
+    <import resource="classpath:/config/applicationContext-persistence.xml" />
+    <import resource="classpath:/config/applicationContext-common.xml" />	 
+    <import resource="classpath:/config/applicationContext-common-sir.xml" />	 
+
+    <!-- ================= -->
+    <!-- PARTIE ECLIPSE    -->
+    <!-- ================= -->
+    <import resource="classpath:/config/applicationContext-aop.xml" />
+    <import resource="classpath:/config/applicationContext-security.xml" />
+    <import resource="classpath:/config/applicationContext-authentication.xml" />
+    <import resource="classpath:/config/applicationContext-flow.xml" />
+    <import resource="classpath:/config/applicationContext-utils.xml" />
+    <import resource="classpath:/config/applicationContext-manager.xml" />
+    <import resource="classpath:/config/applicationContext-controller.xml" />
+    <import resource="classpath:/config/applicationContext-converter.xml" />
+    <import resource="classpath:/config/applicationContext-validator.xml" />
+    <import resource="classpath:/config/applicationContext-eclipse-criteria.xml" />
+    <import resource="classpath:/config/applicationContext-eclipse-factory.xml" />
+    <import resource="classpath:/config/applicationContext-eclipse-helper.xml" />
+    <import resource="classpath:/config/messages-resources-eclipse.xml" />
 
 </beans>

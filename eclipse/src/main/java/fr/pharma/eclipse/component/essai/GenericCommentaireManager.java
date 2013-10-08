@@ -13,15 +13,16 @@ import fr.pharma.eclipse.factory.common.BeanObjectWithParentFactory;
 import fr.pharma.eclipse.utils.introspection.BeanTool;
 
 /**
- * Classe générique en charge de gérer la création d'un nouveau commentaire sur un essai.
- * @param <COMMENT> Type dérivé de {@link CommentaireEssai} représentant le commentaire managé.
- * @param <PARENT> Type dérivé de {@link BeanObject} représentant le parent du commentaire.
- 
+ * Classe générique en charge de gérer la création d'un nouveau commentaire sur
+ * un essai.
+ * @param <COMMENT> Type dérivé de {@link CommentaireEssai} représentant le
+ * commentaire managé.
+ * @param <PARENT> Type dérivé de {@link BeanObject} représentant le parent du
+ * commentaire.
+ * @author Netapsys
  * @version $Revision$ $Date$
  */
-public class GenericCommentaireManager<COMMENT extends CommentaireEssai, PARENT extends BeanObject>
-    implements Serializable
-{
+public class GenericCommentaireManager<COMMENT extends CommentaireEssai, PARENT extends BeanObject> implements Serializable {
 
     /**
      * Serial ID.
@@ -51,11 +52,11 @@ public class GenericCommentaireManager<COMMENT extends CommentaireEssai, PARENT 
     /**
      * Constructeur.
      * @param typeCommentaireEssaiName Nom du type de commentaire managé.
-     * @throws IllegalArgumentException Si typeCommentaireEssaiName ne correspond pas à une valeur
-     * de l'énumération {@link TypeCommentaireEssai}.
+     * @throws IllegalArgumentException Si typeCommentaireEssaiName ne
+     * correspond pas à une valeur de l'énumération {@link TypeCommentaireEssai}
+     * .
      */
-    public GenericCommentaireManager(final String typeCommentaireEssaiName)
-    {
+    public GenericCommentaireManager(final String typeCommentaireEssaiName) {
         this.typeCommentaire = TypeCommentaireEssai.valueOf(typeCommentaireEssaiName);
     }
 
@@ -63,8 +64,7 @@ public class GenericCommentaireManager<COMMENT extends CommentaireEssai, PARENT 
      * Méthode qui indique si un commentaire peut être créé.
      * @return true ssi la méthode createCommentaire peut être appelée.
      */
-    public boolean canCreateCommentaire()
-    {
+    public boolean canCreateCommentaire() {
         return StringUtils.hasText(this.libelle);
     }
 
@@ -76,12 +76,8 @@ public class GenericCommentaireManager<COMMENT extends CommentaireEssai, PARENT 
      * @return Un nouveau CommentaireEssai.
      */
     @SuppressWarnings("unchecked")
-    public COMMENT createCommentaire(final Essai essai)
-    {
-        final PARENT parent =
-            (PARENT) BeanTool.getPropriete(essai,
-                                           this.typeCommentaire
-                                                   .getCommentairesParentPropertyFromEssai());
+    public COMMENT createCommentaire(final Essai essai) {
+        final PARENT parent = (PARENT) BeanTool.getPropriete(essai, this.typeCommentaire.getCommentairesParentPropertyFromEssai());
         final COMMENT beanCommentaire = this.factory.getInitializedObject(parent);
         beanCommentaire.setLibelle(this.libelle.trim());
         this.resetLibelle();
@@ -91,8 +87,7 @@ public class GenericCommentaireManager<COMMENT extends CommentaireEssai, PARENT 
     /**
      * Méthode de réinitialisation du libellé.
      */
-    public void resetLibelle()
-    {
+    public void resetLibelle() {
         this.libelle = org.apache.commons.lang.StringUtils.EMPTY;
     }
 
@@ -101,15 +96,10 @@ public class GenericCommentaireManager<COMMENT extends CommentaireEssai, PARENT 
      * @param essai Essai.
      */
     @SuppressWarnings("unchecked")
-    public void initLastCommentaire(final Essai essai)
-    {
+    public void initLastCommentaire(final Essai essai) {
         this.resetLastCommentaire();
-        final SortedSet<COMMENT> commentaires =
-            (SortedSet<COMMENT>) BeanTool
-                    .getPropriete(essai,
-                                  this.typeCommentaire.getCommentairesPropertyFromEssai());
-        if (commentaires.isEmpty())
-        {
+        final SortedSet<COMMENT> commentaires = (SortedSet<COMMENT>) BeanTool.getPropriete(essai, this.typeCommentaire.getCommentairesPropertyFromEssai());
+        if (commentaires.isEmpty()) {
             return;
         }
         this.setLastCommentaire(commentaires.first());
@@ -118,8 +108,7 @@ public class GenericCommentaireManager<COMMENT extends CommentaireEssai, PARENT 
     /**
      * Méthode de réinitialisation du dernier commentaire mémorisé.
      */
-    private void resetLastCommentaire()
-    {
+    private void resetLastCommentaire() {
         this.lastCommentaire = null;
     }
 
@@ -127,8 +116,7 @@ public class GenericCommentaireManager<COMMENT extends CommentaireEssai, PARENT 
      * Getter sur lastCommentaire.
      * @return Retourne le lastCommentaire.
      */
-    public COMMENT getLastCommentaire()
-    {
+    public COMMENT getLastCommentaire() {
         return this.lastCommentaire;
     }
 
@@ -136,8 +124,7 @@ public class GenericCommentaireManager<COMMENT extends CommentaireEssai, PARENT 
      * Setter pour lastCommentaire.
      * @param lastCommentaire le lastCommentaire à écrire.
      */
-    public void setLastCommentaire(final COMMENT lastCommentaire)
-    {
+    public void setLastCommentaire(final COMMENT lastCommentaire) {
         this.lastCommentaire = lastCommentaire;
     }
 
@@ -145,8 +132,7 @@ public class GenericCommentaireManager<COMMENT extends CommentaireEssai, PARENT 
      * Getter sur libelle.
      * @return Retourne le libelle.
      */
-    public String getLibelle()
-    {
+    public String getLibelle() {
         return this.libelle;
     }
 
@@ -154,8 +140,7 @@ public class GenericCommentaireManager<COMMENT extends CommentaireEssai, PARENT 
      * Setter pour libelle.
      * @param libelle le libelle à écrire.
      */
-    public void setLibelle(final String libelle)
-    {
+    public void setLibelle(final String libelle) {
         this.libelle = libelle;
     }
 
@@ -163,8 +148,7 @@ public class GenericCommentaireManager<COMMENT extends CommentaireEssai, PARENT 
      * Setter pour factory.
      * @param factory le factory à écrire.
      */
-    public void setFactory(final BeanObjectWithParentFactory<COMMENT, PARENT> factory)
-    {
+    public void setFactory(final BeanObjectWithParentFactory<COMMENT, PARENT> factory) {
         this.factory = factory;
     }
 
@@ -172,8 +156,7 @@ public class GenericCommentaireManager<COMMENT extends CommentaireEssai, PARENT 
      * Getter sur typeCommentaire.
      * @return Retourne le typeCommentaire.
      */
-    public TypeCommentaireEssai getTypeCommentaire()
-    {
+    public TypeCommentaireEssai getTypeCommentaire() {
         return this.typeCommentaire;
     }
 }

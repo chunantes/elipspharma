@@ -1,3 +1,4 @@
 /webstatic/.project
 
 /webstatic/.settings/*
+/dist/

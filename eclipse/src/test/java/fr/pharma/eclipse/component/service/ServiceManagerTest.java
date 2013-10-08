@@ -16,12 +16,10 @@ import fr.pharma.eclipse.utils.AbstractEclipseJUnitTest;
 
 /**
  * Test de la classe ServiceManager.
- 
+ * @author Netapsys
  * @version $Revision$ $Date$
  */
-public class ServiceManagerTest
-    extends AbstractEclipseJUnitTest
-{
+public class ServiceManagerTest extends AbstractEclipseJUnitTest {
 
     /**
      * Manager.
@@ -37,8 +35,7 @@ public class ServiceManagerTest
      * {@inheritDoc}
      */
     @Override
-    public void setUp()
-    {
+    public void setUp() {
         this.service = Mockito.mock(ServiceService.class);
         this.manager = new ServiceManager(this.service);
     }
@@ -47,8 +44,7 @@ public class ServiceManagerTest
      * {@inheritDoc}
      */
     @Override
-    public void tearDown()
-    {
+    public void tearDown() {
         this.manager = null;
         this.service = null;
     }
@@ -58,8 +54,7 @@ public class ServiceManagerTest
      */
     @Override
     @Test
-    public void testInit()
-    {
+    public void testInit() {
         Assert.assertNotNull(this.service);
     }
 
@@ -67,8 +62,7 @@ public class ServiceManagerTest
      * Test de la méthode findPersonnes().
      */
     @Test
-    public void findPersonnes()
-    {
+    public void findPersonnes() {
         final Service service = new Service();
         final ArcInvestigateur arc = new ArcInvestigateur();
         arc.setNom("nom21");
@@ -78,16 +72,14 @@ public class ServiceManagerTest
         service.getInvestigateurs().add(investigateur);
         this.manager.setBean(service);
         final List<Personne> personnes = this.manager.findPersonnes();
-        Assert.assertEquals(2,
-                            personnes.size());
+        Assert.assertEquals(2, personnes.size());
     }
 
     /**
      * Test des getter et setter sur Personne.
      */
     @Test
-    public void testGetSetPersonnes()
-    {
+    public void testGetSetPersonnes() {
         this.manager.setPersonnes(new ArrayList<Personne>());
         Assert.assertNotNull(this.manager.getPersonnes());
     }

@@ -1,15 +1,12 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<flow xmlns="http://www.springframework.org/schema/webflow"
-	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-	xsi:schemaLocation="http://www.springframework.org/schema/webflow
+<flow xmlns="http://www.springframework.org/schema/webflow" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.springframework.org/schema/webflow
     http://www.springframework.org/schema/webflow/spring-webflow-2.0.xsd"
 	parent="main">
 
 	<!-- Démarrage -->
 	<on-start>
 		<evaluate expression="pharmacieSearchCriteria.clear()" />
-		<evaluate expression="pharmacieService.getAll(pharmacieSearchCriteria)"
-			result="pharmaciesManager.beans" />
+		<evaluate expression="pharmacieService.getAll(pharmacieSearchCriteria)" result="pharmaciesManager.beans" />
 		<evaluate expression="indicateurManager.init()" />
 	</on-start>
 
@@ -17,9 +14,7 @@
 
 		<!-- Generer -->
 		<transition on="generer" to="indicateurView">
-			<evaluate
-				expression="indicateurService.generateIndicateur(indicateurManager.pharmacie, indicateurManager.dateDebut, indicateurManager.dateFin)"
-				result="indicateurManager.indicateurs" />
+			<evaluate expression="indicateurService.generateIndicateur(indicateurManager.pharmacie, indicateurManager.dateDebut, indicateurManager.dateFin)" result="indicateurManager.indicateurs" />
 		</transition>
 
 		<!-- Retour -->

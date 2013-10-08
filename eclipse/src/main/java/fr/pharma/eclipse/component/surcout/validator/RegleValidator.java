@@ -11,12 +11,10 @@ import fr.pharma.eclipse.utils.FacesUtils;
 
 /**
  * Validateur des regles de calcul de cout.
- 
+ * @author Netapsys
  * @version $Revision$ $Date$
  */
-public class RegleValidator
-    implements Serializable
-{
+public class RegleValidator implements Serializable {
 
     /**
      * SerialVersionUID.
@@ -40,34 +38,22 @@ public class RegleValidator
      * @param regle La règle à valider.
      * @return <true> si la règle est valide.
      */
-    public boolean validate(final Regle regle)
-    {
+    public boolean validate(final Regle regle) {
         boolean valid = true;
-        if (regle.getType() == null)
-        {
-            this.facesUtils.addMessage(FacesMessage.SEVERITY_ERROR,
-                                       "regle.type.notEmpty");
+        if (regle.getType() == null) {
+            this.facesUtils.addMessage(FacesMessage.SEVERITY_ERROR, "regle.type.notEmpty");
             valid = false;
-        }
-        else if (regle.getType().equals(TypeCout.FIXE))
-        {
-            if (regle.getAnneesSuivantes() == null
-                || regle.getPremiereAnnee() == null)
-            {
-                this.facesUtils.addMessage(FacesMessage.SEVERITY_ERROR,
-                                           "regle.valeurs.notEmpty");
+        } else if (regle.getType().equals(TypeCout.FIXE)) {
+            if ((regle.getAnneesSuivantes() == null) || (regle.getPremiereAnnee() == null)) {
+                this.facesUtils.addMessage(FacesMessage.SEVERITY_ERROR, "regle.valeurs.notEmpty");
                 valid = false;
             }
-        }
-        else if (regle.getType().equals(TypeCout.VARIABLE))
-        {
+        } else if (regle.getType().equals(TypeCout.VARIABLE)) {
             valid = this.coutVariableValidator.validate(regle);
         }
 
-        if (regle.getPerimetre() == null)
-        {
-            this.facesUtils.addMessage(FacesMessage.SEVERITY_ERROR,
-                                       "regle.perimetre.notEmpty");
+        if (regle.getPerimetre() == null) {
+            this.facesUtils.addMessage(FacesMessage.SEVERITY_ERROR, "regle.perimetre.notEmpty");
             valid = false;
         }
         // Valorisation du paramètre de retour dans la requête.
@@ -78,16 +64,14 @@ public class RegleValidator
      * Setter pour facesUtils.
      * @param facesUtils le facesUtils à écrire.
      */
-    public void setFacesUtils(final FacesUtils facesUtils)
-    {
+    public void setFacesUtils(final FacesUtils facesUtils) {
         this.facesUtils = facesUtils;
     }
     /**
      * Setter pour coutVariableValidator.
      * @param coutVariableValidator le coutVariableValidator à écrire.
      */
-    public void setCoutVariableValidator(final CoutVariableValidator coutVariableValidator)
-    {
+    public void setCoutVariableValidator(final CoutVariableValidator coutVariableValidator) {
         this.coutVariableValidator = coutVariableValidator;
     }
 }

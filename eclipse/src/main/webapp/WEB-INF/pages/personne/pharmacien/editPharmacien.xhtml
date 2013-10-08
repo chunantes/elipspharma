@@ -32,15 +32,14 @@
 		         
 		         	 <h:outputLabel id="categorieLabel" for="categorie" value="#{resourceBundle['gestionPharmacien.categorie']}"/>
 		         	 <h:selectOneMenu immediate="true" id="categorie" value="#{pharmacienManager.bean.typePharmacien}" 
-		         	 	styleClass="selectRadio" required="true" requiredMessage="#{resourceBundle['pharmacien.categorie.notEmpty']}">
+		         	 	styleClass="selectRadio" required="true" requiredMessage="#{resourceBundle['pharmacien.categorie.notEmpty']}" >
 			           	<f:selectItem noSelectionOption="true"/>
 			           	<f:selectItems value="#{enumManager.getValues('TypePharmacien')}"/>
-			           	<f:ajax execute="@this" immediate="true" render="@form" listener="#{pharmacienManager.handleSelectCategPharmacien}"/>
 			         </h:selectOneMenu>
 		         
-		        	 <h:outputLabel id="isAdminLabel" for="isAdmin" value="#{resourceBundle['gestionPharmacien.administrateur']}" rendered="#{pharmacienManager.bean.typePharmacien == 'TITULAIRE'}"/>
-		         	 <h:selectBooleanCheckbox id="isAdmin" value="#{pharmacienManager.bean.isAdmin}" rendered="#{pharmacienManager.bean.typePharmacien == 'TITULAIRE'}"/>
-		         
+		        	 <h:outputLabel id="isAdminLabel" for="isAdmin" value="#{resourceBundle['gestionPharmacien.administrateur']}"/>
+		         	 <h:selectBooleanCheckbox id="isAdmin" value="#{pharmacienManager.bean.isAdmin}"/>
+								         
 		             <h:outputLabel id="nomLabel" for="nom" value="#{resourceBundle['gestionPharmacien.nom']}"/>
 		             <h:inputText id="nom" value="#{pharmacienManager.bean.nom}" required="true" requiredMessage="#{resourceBundle['pharmacien.nom.notEmpty']}"/>
 		             
@@ -297,6 +296,29 @@
 		</h:form>
 	</p:dialog>
      
+	<script  type="text/javascript">
+	
+		// Fonction gérant l'affichage de la zone admin 
+		function displayZoneAdmin() {
+			if (jQuery('#categorie').val() == 'TITULAIRE') {
+				jQuery('#isAdmin').css("display", "inline");
+				jQuery('#isAdminLabel').css("display", "inline");
+			} else {
+				jQuery('#isAdmin').attr('checked', false);
+				jQuery('#isAdmin').css("display", "none"); 
+				jQuery('#isAdminLabel').css("display", "none");
+			}
+		}
+		
+		jQuery('#categorie').change(function() {
+			displayZoneAdmin();
+		});
+	
+		jQuery(document).ready(function() {
+			displayZoneAdmin();
+			
+		});
+	</script>
 	   	
      </ui:define>
      

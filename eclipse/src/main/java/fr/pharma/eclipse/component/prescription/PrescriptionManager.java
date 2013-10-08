@@ -43,13 +43,10 @@ import fr.pharma.eclipse.validator.prescription.ProduitPrescritValidator;
 
 /**
  * Manager de Prescription.
- 
+ * @author Netapsys
  * @version $Revision$ $Date$
  */
-public class PrescriptionManager
-    extends BeanManager<Prescription>
-    implements Serializable
-{
+public class PrescriptionManager extends BeanManager<Prescription> implements Serializable {
     /**
      * Serial ID.
      */
@@ -64,11 +61,6 @@ public class PrescriptionManager
      * Patient sélectionné.
      */
     private Patient patientSelected;
-
-    /**
-     * Flag d'édition d'une prescription.
-     */
-    private Boolean editPrescription;
 
     /**
      * FacesUtils.
@@ -128,8 +120,8 @@ public class PrescriptionManager
     private PrescriptionManagerHelper prescriptionManagerHelper;
 
     /**
-     * Flag déterminant si les données saisies permettent de saisir une prescription. (patient
-     * inclu dans un essai).
+     * Flag déterminant si les données saisies permettent de saisir une
+     * prescription. (patient inclu dans un essai).
      */
     private Boolean valid;
 
@@ -137,12 +129,6 @@ public class PrescriptionManager
      * ReadOnly : consultation via patient.
      */
     private Boolean readOnly;
-
-    /**
-     * Validator de l'ajout d'un produit prescrit à la prescription.
-     */
-    @Resource(name = "produitPrescritValidator")
-    private ProduitPrescritValidator validator;
 
     /**
      * Service.
@@ -153,16 +139,14 @@ public class PrescriptionManager
      * Constructeur.
      * @param service Service.
      */
-    public PrescriptionManager(final GenericService<Prescription> service)
-    {
+    public PrescriptionManager(final GenericService<Prescription> service) {
         super(service);
     }
 
     /**
      * Méthode d'initialisation.
      */
-    public void init()
-    {
+    public void init() {
         this.setEssaiSelected(null);
         this.setPatientSelected(null);
         this.setValid(false);
@@ -172,41 +156,25 @@ public class PrescriptionManager
     }
 
     /**
-     * Méthode en charge de vérifier que le patient n'est pas déjà inclu dans un essai
-     * actuellement. Sinon il affiche une erreur.
+     * Méthode en charge de vérifier que le patient n'est pas déjà inclu dans un
+     * essai actuellement. Sinon il affiche une erreur.
      * @param event Evenement JSF.
      */
-    public void handleSelectPatient(final SelectEvent event)
-    {
-        final Inclusion inclusion =
-            this.patientService.getInclusionCourante((Patient) event.getObject());
+    public void handleSelectPatient(final SelectEvent event) {
+        final Inclusion inclusion = this.patientService.getInclusionCourante((Patient) event.getObject());
         this.handleInclusion(inclusion);
     }
 
-    public void handleInclusion(final Inclusion inclusion)
-    {
-        if (null == inclusion)
-        {
+    public void handleInclusion(final Inclusion inclusion) {
+        if (null == inclusion) {
             this.valid = false;
-            this.facesUtils.addMessage(FacesMessage.SEVERITY_ERROR,
-                                       "patient.non.inclu.error");
-        }
-        else if (this.getInvestigateur(inclusion.getEssai()).size() == 0)
-        {
+            this.facesUtils.addMessage(FacesMessage.SEVERITY_ERROR, "patient.non.inclu.error");
+        } else if (this.getInvestigateur(inclusion.getEssai()).size() == 0) {
             this.valid = false;
-            this.facesUtils.addMessage(FacesMessage.SEVERITY_ERROR,
-                                       "investigateur.non.present.error");
-        }
-        else
-        {
-            final TypeDispensation typeDispensation =
-                inclusion
-                        .getEssai()
-                        .getDetailDonneesPharma()
-                        .getInfosDispensations()
-                        .getTypeDispensation();
-            if (typeDispensation != null)
-            {
+            this.facesUtils.addMessage(FacesMessage.SEVERITY_ERROR, "investigateur.non.present.error");
+        } else {
+            final TypeDispensation typeDispensation = inclusion.getEssai().getDetailDonneesPharma().getInfosDispensations().getTypeDispensation();
+            if (typeDispensation != null) {
                 // recherche des prescriptions
                 final PrescriptionSearchCriteria crit = new PrescriptionSearchCriteria();
                 crit.setInclusion(inclusion);
@@ -214,23 +182,17 @@ public class PrescriptionManager
                 crit.setAscending(false);
 
                 final List<Prescription> liste = this.getService().getAll(crit);
-                if (liste.isEmpty())
-                {
+                if (liste.isEmpty()) {
                     this.setBean(this.factory.getInitializedObject(inclusion));
-                }
-                else
-                {
+                } else {
                     this.setBean(this.factory.getInitializedObject(liste.get(0)));
                 }
                 this.produits.addAll(inclusion.getEssai().getDetailProduit().getProduits());
                 this.services.addAll(inclusion.getEssai().getServices());
                 this.valid = true;
-            }
-            else
-            {
+            } else {
                 this.valid = false;
-                this.facesUtils.addMessage(FacesMessage.SEVERITY_ERROR,
-                                           "essai.dispensation.null.error");
+                this.facesUtils.addMessage(FacesMessage.SEVERITY_ERROR, "essai.dispensation.null.error");
             }
         }
     }
@@ -238,39 +200,33 @@ public class PrescriptionManager
     /**
      * Initialisation des services.
      */
-    public void initServices()
-    {
+    public void initServices() {
         this.services.addAll(this.getBean().getEssai().getServices());
     }
 
     /**
-     * Méthode en charge de récupérer la liste des investigateurs liés à l'essai de la
-     * prescription.
+     * Méthode en charge de récupérer la liste des investigateurs liés à l'essai
+     * de la prescription.
      * @return a liste des investigateurs liés à un essai.
      */
     @SuppressWarnings("unchecked")
-    public Collection<Personne> getInvestigateurs()
-    {
+    public Collection<Personne> getInvestigateurs() {
         return this.getInvestigateur(this.getBean().getInclusion().getEssai());
     }
     /**
-     * Méthode en charge de retrouner les investigateurs pour l'essai en paramètre.
+     * Méthode en charge de retrouner les investigateurs pour l'essai en
+     * paramètre.
      * @param essai L'essai
      * @return La collection d'investigateur.
      */
-    private Collection<Personne> getInvestigateur(final Essai essai)
-    {
+    private Collection<Personne> getInvestigateur(final Essai essai) {
         final List<Droit> droits = new ArrayList<Droit>();
         droits.add(Droit.INVESTIGATEUR_CO);
         droits.add(Droit.INVESTIGATEUR_PRINCIPAL);
 
-        final Collection habilitations =
-            new ArrayList(this.habilitationHelper.getHabilitations(essai,
-                                                                   droits,
-                                                                   true));
+        final Collection habilitations = new ArrayList(this.habilitationHelper.getHabilitations(essai, droits, true));
 
-        CollectionUtils.transform(habilitations,
-                                  new GenericTransformer("personne"));
+        CollectionUtils.transform(habilitations, new GenericTransformer("personne"));
 
         return habilitations;
     }
@@ -278,22 +234,16 @@ public class PrescriptionManager
     /**
      * Méthode en charge de mettre à jour le design.
      */
-    public void updateDesign()
-    {
-        if (this.getNodeSelected() != null)
-        {
+    public void updateDesign() {
+        if (this.getNodeSelected() != null) {
             final Designable designable = (Designable) this.getNodeSelected().getData();
 
             // si ce n'est pas une sequence alors on affiche une erreur.
-            if (designable instanceof Sequence)
-            {
+            if (designable instanceof Sequence) {
                 this.getBean().setSequence((Sequence) designable);
                 this.prescriptionManagerHelper.initProduitsPrescrits(this.getBean());
-            }
-            else
-            {
-                this.facesUtils.addMessage(FacesMessage.SEVERITY_ERROR,
-                                           "prescription.designable.sequence");
+            } else {
+                this.facesUtils.addMessage(FacesMessage.SEVERITY_ERROR, "prescription.designable.sequence");
                 this.nodeSelected = null;
             }
         }
@@ -303,23 +253,12 @@ public class PrescriptionManager
      * Getter pour designablesSelectable.
      * @return Le designablesSelectable.
      */
-    public TreeNode getDesignablesSelectable()
-    {
+    public TreeNode getDesignablesSelectable() {
         // Récupération de la pharmacie sélectionnée
-        if (this.getBean() != null
-            && this.getBean().getInclusion() != null
-            && this.getBean().getInclusion().getEssai() != null)
-        {
-            this.designablesSelectable =
-                this.treeDesignHelper.buildTree(this.essaiService.get(this
-                        .getBean()
-                        .getInclusion()
-                        .getEssai()
-                        .getId()));
+        if ((this.getBean() != null) && (this.getBean().getInclusion() != null) && (this.getBean().getInclusion().getEssai() != null)) {
+            this.designablesSelectable = this.treeDesignHelper.buildTree(this.essaiService.get(this.getBean().getInclusion().getEssai().getId()));
             return this.designablesSelectable;
-        }
-        else
-        {
+        } else {
             return null;
         }
     }
@@ -328,28 +267,23 @@ public class PrescriptionManager
      * Méthode en charge de supprimer un ProduitPrescrit.
      * @param event Evénement.
      */
-    public void delProduitPrescrit(final ActionEvent event)
-    {
-        final ProduitPrescrit produit =
-            (ProduitPrescrit) event.getComponent().getAttributes().get("produitToDelete");
+    public void delProduitPrescrit(final ActionEvent event) {
+        final ProduitPrescrit produit = (ProduitPrescrit) event.getComponent().getAttributes().get("produitToDelete");
         this.getBean().getProduitsPrescrits().remove(produit);
     }
 
     /**
      * Méthode en charge d'afficher un message de confirmation.
      */
-    public void confirm()
-    {
-        this.facesUtils.addMessage(FacesMessage.SEVERITY_INFO,
-                                   "prescription.ok");
+    public void confirm() {
+        this.facesUtils.addMessage(FacesMessage.SEVERITY_INFO, "prescription.ok");
     }
 
     /**
      * Getter pour essaiSelected.
      * @return Le essaiSelected
      */
-    public Essai getEssaiSelected()
-    {
+    public Essai getEssaiSelected() {
         return this.essaiSelected;
     }
 
@@ -357,8 +291,7 @@ public class PrescriptionManager
      * Setter pour essaiSelected.
      * @param essaiSelected Le essaiSelected à écrire.
      */
-    public void setEssaiSelected(final Essai essaiSelected)
-    {
+    public void setEssaiSelected(final Essai essaiSelected) {
         this.essaiSelected = essaiSelected;
     }
 
@@ -366,8 +299,7 @@ public class PrescriptionManager
      * Getter sur patientSelected.
      * @return Retourne le patientSelected.
      */
-    public Patient getPatientSelected()
-    {
+    public Patient getPatientSelected() {
         return this.patientSelected;
     }
 
@@ -375,8 +307,7 @@ public class PrescriptionManager
      * Setter pour patientSelected.
      * @param patientSelected le patientSelected à écrire.
      */
-    public void setPatientSelected(final Patient patientSelected)
-    {
+    public void setPatientSelected(final Patient patientSelected) {
         this.patientSelected = patientSelected;
     }
 
@@ -384,8 +315,7 @@ public class PrescriptionManager
      * Setter pour patientService.
      * @param patientService le patientService à écrire.
      */
-    public void setPatientService(final PatientService patientService)
-    {
+    public void setPatientService(final PatientService patientService) {
         this.patientService = patientService;
     }
 
@@ -393,8 +323,7 @@ public class PrescriptionManager
      * Getter sur valid.
      * @return Retourne le valid.
      */
-    public Boolean getValid()
-    {
+    public Boolean getValid() {
         return this.valid;
     }
 
@@ -402,8 +331,7 @@ public class PrescriptionManager
      * Setter pour valid.
      * @param valid le valid à écrire.
      */
-    public void setValid(final Boolean valid)
-    {
+    public void setValid(final Boolean valid) {
         this.valid = valid;
     }
 
@@ -411,8 +339,7 @@ public class PrescriptionManager
      * Setter pour facesUtils.
      * @param facesUtils le facesUtils à écrire.
      */
-    public void setFacesUtils(final FacesUtils facesUtils)
-    {
+    public void setFacesUtils(final FacesUtils facesUtils) {
         this.facesUtils = facesUtils;
     }
 
@@ -420,8 +347,7 @@ public class PrescriptionManager
      * Setter pour factory.
      * @param factory le factory à écrire.
      */
-    public void setFactory(final PrescriptionFactory factory)
-    {
+    public void setFactory(final PrescriptionFactory factory) {
         this.factory = factory;
     }
 
@@ -429,8 +355,7 @@ public class PrescriptionManager
      * Setter pour habilitationHelper.
      * @param habilitationHelper le habilitationHelper à écrire.
      */
-    public void setHabilitationHelper(final HabilitationsHelper habilitationHelper)
-    {
+    public void setHabilitationHelper(final HabilitationsHelper habilitationHelper) {
         this.habilitationHelper = habilitationHelper;
     }
 
@@ -438,8 +363,7 @@ public class PrescriptionManager
      * Getter sur nodeSelected.
      * @return Retourne le nodeSelected.
      */
-    public TreeNode getNodeSelected()
-    {
+    public TreeNode getNodeSelected() {
         return this.nodeSelected;
     }
 
@@ -447,8 +371,7 @@ public class PrescriptionManager
      * Setter pour nodeSelected.
      * @param nodeSelected le nodeSelected à écrire.
      */
-    public void setNodeSelected(final TreeNode nodeSelected)
-    {
+    public void setNodeSelected(final TreeNode nodeSelected) {
         this.nodeSelected = nodeSelected;
     }
 
@@ -456,8 +379,7 @@ public class PrescriptionManager
      * Setter pour treeDesignHelper.
      * @param treeDesignHelper le treeDesignHelper à écrire.
      */
-    public void setTreeDesignHelper(final TreeDesignHelper treeDesignHelper)
-    {
+    public void setTreeDesignHelper(final TreeDesignHelper treeDesignHelper) {
         this.treeDesignHelper = treeDesignHelper;
     }
 
@@ -465,8 +387,7 @@ public class PrescriptionManager
      * Setter pour prescriptionManagerHelper.
      * @param prescriptionManagerHelper le prescriptionManagerHelper à écrire.
      */
-    public void setPrescriptionManagerHelper(final PrescriptionManagerHelper prescriptionManagerHelper)
-    {
+    public void setPrescriptionManagerHelper(final PrescriptionManagerHelper prescriptionManagerHelper) {
         this.prescriptionManagerHelper = prescriptionManagerHelper;
     }
 
@@ -474,8 +395,7 @@ public class PrescriptionManager
      * Getter sur produits.
      * @return Retourne le produits.
      */
-    public SortedSet<Produit> getProduits()
-    {
+    public SortedSet<Produit> getProduits() {
         return this.produits;
     }
 
@@ -483,8 +403,7 @@ public class PrescriptionManager
      * Setter pour produits.
      * @param produits le produits à écrire.
      */
-    public void setProduits(final SortedSet<Produit> produits)
-    {
+    public void setProduits(final SortedSet<Produit> produits) {
         this.produits = produits;
     }
 
@@ -492,8 +411,7 @@ public class PrescriptionManager
      * Getter sur readOnly.
      * @return Retourne le readOnly.
      */
-    public Boolean getReadOnly()
-    {
+    public Boolean getReadOnly() {
         return this.readOnly;
     }
 
@@ -501,8 +419,7 @@ public class PrescriptionManager
      * Setter pour readOnly.
      * @param readOnly le readOnly à écrire.
      */
-    public void setReadOnly(final Boolean readOnly)
-    {
+    public void setReadOnly(final Boolean readOnly) {
         this.readOnly = readOnly;
     }
 
@@ -510,17 +427,14 @@ public class PrescriptionManager
      * Setter pour validator.
      * @param validator le validator à écrire.
      */
-    public void setValidator(final ProduitPrescritValidator validator)
-    {
-        this.validator = validator;
+    public void setValidator(final ProduitPrescritValidator validator) {
     }
 
     /**
      * Setter pour essaiService.
      * @param essaiService le essaiService à écrire.
      */
-    public void setEssaiService(final EssaiService essaiService)
-    {
+    public void setEssaiService(final EssaiService essaiService) {
         this.essaiService = essaiService;
     }
 
@@ -528,8 +442,7 @@ public class PrescriptionManager
      * Getter pour services.
      * @return Le services
      */
-    public Collection<Service> getServices()
-    {
+    public Collection<Service> getServices() {
         return this.services;
     }
 
@@ -537,8 +450,7 @@ public class PrescriptionManager
      * Setter pour services.
      * @param services Le services à écrire.
      */
-    public void setServices(final Collection<Service> services)
-    {
+    public void setServices(final Collection<Service> services) {
         this.services = services;
     }
 

@@ -18,12 +18,10 @@ import fr.pharma.eclipse.utils.AbstractEclipseJUnitTest;
 
 /**
  * Test de la classe FluxStock.
- 
+ * @author Netapsys
  * @version $Revision$ $Date$
  */
-public class FluxStockTest
-    extends AbstractEclipseJUnitTest
-{
+public class FluxStockTest extends AbstractEclipseJUnitTest {
     /**
      * FluxStock.
      */
@@ -33,8 +31,7 @@ public class FluxStockTest
      * {@inheritDoc}
      */
     @Override
-    public void setUp()
-    {
+    public void setUp() {
         this.fluxStock = new FluxStock();
     }
 
@@ -42,8 +39,7 @@ public class FluxStockTest
      * {@inheritDoc}
      */
     @Override
-    public void tearDown()
-    {
+    public void tearDown() {
         this.fluxStock = null;
     }
 
@@ -52,8 +48,7 @@ public class FluxStockTest
      */
     @Override
     @Test
-    public void testInit()
-    {
+    public void testInit() {
         Assert.assertNotNull(this.fluxStock);
     }
 
@@ -61,111 +56,93 @@ public class FluxStockTest
      * Test numlot.
      */
     @Test
-    public void testGetSetNumLot()
-    {
+    public void testGetSetNumLot() {
         this.fluxStock.setNumLot("dfg");
-        Assert.assertEquals("dfg",
-                            this.fluxStock.getNumLot());
+        Assert.assertEquals("dfg", this.fluxStock.getNumLot());
     }
 
     /**
      * Test date.
      */
     @Test
-    public void testGetSetDate()
-    {
+    public void testGetSetDate() {
         final Calendar date = Calendar.getInstance();
         this.fluxStock.setDate(date);
-        Assert.assertEquals(date,
-                            this.fluxStock.getDate());
+        Assert.assertEquals(date, this.fluxStock.getDate());
     }
 
     /**
      * Test essai.
      */
     @Test
-    public void testGetSetEssai()
-    {
+    public void testGetSetEssai() {
 
         final Essai essai = Mockito.mock(Essai.class);
         this.fluxStock.setEssai(essai);
-        Assert.assertEquals(essai,
-                            this.fluxStock.getEssai());
+        Assert.assertEquals(essai, this.fluxStock.getEssai());
     }
 
     /**
      * Test mvt.
      */
     @Test
-    public void testGetSetMvt()
-    {
+    public void testGetSetMvt() {
 
         final List<MvtStock> mvts = new ArrayList<MvtStock>();
         this.fluxStock.setMvts(mvts);
-        Assert.assertEquals(mvts,
-                            this.fluxStock.getMvts());
+        Assert.assertEquals(mvts, this.fluxStock.getMvts());
     }
 
     /**
      * Test personne.
      */
     @Test
-    public void testGetSetPersonne()
-    {
+    public void testGetSetPersonne() {
 
         final Personne personne = Mockito.mock(Personne.class);
         this.fluxStock.setPersonne(personne);
-        Assert.assertEquals(personne,
-                            this.fluxStock.getPersonne());
+        Assert.assertEquals(personne, this.fluxStock.getPersonne());
     }
 
     /**
      * Test pharmacie.
      */
     @Test
-    public void testGetSetPharmacie()
-    {
+    public void testGetSetPharmacie() {
 
         final Pharmacie pharmacie = Mockito.mock(Pharmacie.class);
         this.fluxStock.setPharmacie(pharmacie);
-        Assert.assertEquals(pharmacie,
-                            this.fluxStock.getPharmacie());
+        Assert.assertEquals(pharmacie, this.fluxStock.getPharmacie());
     }
 
     /**
      * Test produit.
      */
     @Test
-    public void testGetSetProduit()
-    {
+    public void testGetSetProduit() {
 
         final Produit produit = Mockito.mock(Produit.class);
         this.fluxStock.setProduit(produit);
-        Assert.assertEquals(produit,
-                            this.fluxStock.getProduit());
+        Assert.assertEquals(produit, this.fluxStock.getProduit());
     }
 
     /**
      * Test produit.
      */
     @Test
-    public void testGetSetQuantite()
-    {
+    public void testGetSetQuantite() {
 
         this.fluxStock.setQuantite(5);
-        Assert.assertEquals(new Integer(5),
-                            this.fluxStock.getQuantite());
+        Assert.assertEquals(new Integer(5), this.fluxStock.getQuantite());
     }
 
     /**
      * Test produit.
      */
     @Test
-    public void testGetSetType()
-    {
+    public void testGetSetType() {
 
         this.fluxStock.setType(TypeMvtStock.APPROVISIONNEMENT);
-        Assert.assertEquals(TypeMvtStock.APPROVISIONNEMENT,
-                            this.fluxStock.getType());
+        Assert.assertEquals(TypeMvtStock.APPROVISIONNEMENT, this.fluxStock.getType());
     }
 }

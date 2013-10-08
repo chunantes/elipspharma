@@ -12,7 +12,7 @@ import javax.faces.event.AjaxBehaviorEvent;
 import org.apache.commons.lang.StringUtils;
 
 import fr.pharma.eclipse.comparator.GenericComparator;
-import fr.pharma.eclipse.component.BeansManager;
+import fr.pharma.eclipse.component.BeanListManager;
 import fr.pharma.eclipse.domain.criteria.ordonnancier.OrdonnancierSearchCriteria;
 import fr.pharma.eclipse.domain.criteria.stockage.PharmacieSearchCriteria;
 import fr.pharma.eclipse.domain.model.dispensation.ElementToCheck;
@@ -26,12 +26,10 @@ import fr.pharma.eclipse.utils.constants.EclipseConstants;
 
 /**
  * Manager de gestion des ordonnanciers de fabrications/reconstitutions.
- 
+ * @author Netapsys
  * @version $Revision$ $Date$
  */
-public class OrdonnancierFabReconstManager
-    extends BeansManager<OrdonnancierFabReconst>
-{
+public class OrdonnancierFabReconstManager extends BeanListManager<OrdonnancierFabReconst> {
     /**
      * Serial ID.
      */
@@ -60,7 +58,8 @@ public class OrdonnancierFabReconstManager
     private OrdonnancierService<OrdonnancierFabReconst> ordoService;
 
     /**
-     * Ordonnancier de fabrication / reconstitution (résultat de la génération de l'ordonnancier).
+     * Ordonnancier de fabrication / reconstitution (résultat de la génération
+     * de l'ordonnancier).
      */
     private OrdonnancierFabReconst ordonnancier;
 
@@ -68,8 +67,7 @@ public class OrdonnancierFabReconstManager
      * Constructeur.
      * @param criteria Critère de recherche.
      */
-    public OrdonnancierFabReconstManager(final OrdonnancierSearchCriteria criteria)
-    {
+    public OrdonnancierFabReconstManager(final OrdonnancierSearchCriteria criteria) {
         super(criteria);
         this.criteria = criteria;
     }
@@ -77,14 +75,12 @@ public class OrdonnancierFabReconstManager
     /**
      * Méthode en charge d'initialiser les données de pharmacies.
      */
-    public void init()
-    {
+    public void init() {
         final PharmacieSearchCriteria critPharma = new PharmacieSearchCriteria();
         critPharma.setActiveOrder("nom");
         this.pharmacies = this.pharmacieService.getAll(critPharma);
 
-        if (this.pharmacies.size() >= 1)
-        {
+        if (this.pharmacies.size() >= 1) {
             final Pharmacie pharmacie = this.pharmacies.get(0);
             this.criteria.setPharmacie(pharmacie);
             this.getCriteria().setDateDebut(this.ordoService.getDateDebut(pharmacie));
@@ -100,8 +96,7 @@ public class OrdonnancierFabReconstManager
      * Méthode appelée via la couche IHM lorsqu'une pharmacie est sélectionnée.
      * @param event Evénement remonté via la couche IHM.
      */
-    public void handleSelectPharmacie(final AjaxBehaviorEvent event)
-    {
+    public void handleSelectPharmacie(final AjaxBehaviorEvent event) {
         // Récupération de la pharmacie sélectionnée
         final HtmlSelectOneMenu select = (HtmlSelectOneMenu) event.getSource();
         final Pharmacie pharmacie = (Pharmacie) select.getLocalValue();
@@ -110,21 +105,16 @@ public class OrdonnancierFabReconstManager
     }
 
     /**
-     * Méthode en charge de retourner les initiales du patient associées à un ElementToCheck.
+     * Méthode en charge de retourner les initiales du patient associées à un
+     * ElementToCheck.
      * @param elementToCheck ElementToCheck.
      * @return Initiales du patient.
      */
-    public String getInitialesPatient(final ElementToCheck elementToCheck)
-    {
+    public String getInitialesPatient(final ElementToCheck elementToCheck) {
         String result = StringUtils.EMPTY;
 
-        final Patient patient =
-            elementToCheck.getDispensation().getPrescription().getInclusion().getPatient();
-        result += patient.getPrenom().substring(0,
-                                                1).toUpperCase()
-                  + EclipseConstants.SPACE
-                  + patient.getNom().substring(0,
-                                               1).toUpperCase();
+        final Patient patient = elementToCheck.getDispensation().getPrescription().getInclusion().getPatient();
+        result += patient.getPrenom().substring(0, 1).toUpperCase() + EclipseConstants.SPACE + patient.getNom().substring(0, 1).toUpperCase();
 
         return result;
     }
@@ -133,8 +123,7 @@ public class OrdonnancierFabReconstManager
      * Getter pour pharmacies.
      * @return Le pharmacies
      */
-    public List<Pharmacie> getPharmacies()
-    {
+    public List<Pharmacie> getPharmacies() {
         return this.pharmacies;
     }
 
@@ -142,8 +131,7 @@ public class OrdonnancierFabReconstManager
      * Setter pour pharmacies.
      * @param pharmacies Le pharmacies à écrire.
      */
-    public void setPharmacies(final List<Pharmacie> pharmacies)
-    {
+    public void setPharmacies(final List<Pharmacie> pharmacies) {
         this.pharmacies = pharmacies;
     }
 
@@ -151,8 +139,7 @@ public class OrdonnancierFabReconstManager
      * Setter pour pharmacieService.
      * @param pharmacieService Le pharmacieService à écrire.
      */
-    public void setPharmacieService(final PharmacieService pharmacieService)
-    {
+    public void setPharmacieService(final PharmacieService pharmacieService) {
         this.pharmacieService = pharmacieService;
     }
 
@@ -160,8 +147,7 @@ public class OrdonnancierFabReconstManager
      * Getter pour criteria.
      * @return Le criteria
      */
-    public OrdonnancierSearchCriteria getCriteria()
-    {
+    public OrdonnancierSearchCriteria getCriteria() {
         return this.criteria;
     }
 
@@ -169,8 +155,7 @@ public class OrdonnancierFabReconstManager
      * Getter pour ordonnancier.
      * @return Le ordonnancier
      */
-    public OrdonnancierFabReconst getOrdonnancier()
-    {
+    public OrdonnancierFabReconst getOrdonnancier() {
         return this.ordonnancier;
     }
 
@@ -178,8 +163,7 @@ public class OrdonnancierFabReconstManager
      * Setter pour ordonnancier.
      * @param ordonnancier Le ordonnancier à écrire.
      */
-    public void setOrdonnancier(final OrdonnancierFabReconst ordonnancier)
-    {
+    public void setOrdonnancier(final OrdonnancierFabReconst ordonnancier) {
         this.ordonnancier = ordonnancier;
     }
 
@@ -187,8 +171,7 @@ public class OrdonnancierFabReconstManager
      * Setter pour ordoService.
      * @param ordoService Le ordoService à écrire.
      */
-    public void setOrdoService(final OrdonnancierService<OrdonnancierFabReconst> ordoService)
-    {
+    public void setOrdoService(final OrdonnancierService<OrdonnancierFabReconst> ordoService) {
         this.ordoService = ordoService;
     }
 
@@ -196,15 +179,10 @@ public class OrdonnancierFabReconstManager
      * Méthode en charge de retourner les elementsToCheck de l'ordonnancier.
      * @return Liste des elementsToCheck.
      */
-    public List<PreparationEntree> getListElementsToCheck()
-    {
-        final SortedSet<PreparationEntree> result =
-            new TreeSet<PreparationEntree>(new GenericComparator<PreparationEntree>("numOrdonnancier"));
-        if (this.getOrdonnancier() != null)
-        {
-            result.addAll(this.ordoService
-                    .get(this.getOrdonnancier().getId())
-                    .getElementsToCheck());
+    public List<PreparationEntree> getListElementsToCheck() {
+        final SortedSet<PreparationEntree> result = new TreeSet<PreparationEntree>(new GenericComparator<PreparationEntree>("numOrdonnancier"));
+        if (this.getOrdonnancier() != null) {
+            result.addAll(this.ordoService.get(this.getOrdonnancier().getId()).getElementsToCheck());
         }
         return new ArrayList<PreparationEntree>(result);
     }

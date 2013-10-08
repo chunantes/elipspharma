@@ -23,11 +23,10 @@ import fr.pharma.eclipse.service.stockage.PharmacieService;
 /**
  * Classe en charge de tester le manager de duplicata d'ordonnancier de
  * fabrication/reconstitution.
- 
+ * @author Netapsys
  * @version $Revision$ $Date$
  */
-public class DuplicataOrdonnancierFabReconstManagerTest
-{
+public class DuplicataOrdonnancierFabReconstManagerTest {
     /**
      * DuplicataOrdonnancierFabReconstManager à tester.
      */
@@ -53,8 +52,7 @@ public class DuplicataOrdonnancierFabReconstManagerTest
      */
     @Before
     @SuppressWarnings("unchecked")
-    public void init()
-    {
+    public void init() {
         this.criteria = Mockito.mock(OrdonnancierSearchCriteria.class);
         this.manager = new DuplicataOrdonnancierFabReconstManager(this.criteria);
         this.mockPharmacieService = Mockito.mock(PharmacieService.class);
@@ -67,8 +65,7 @@ public class DuplicataOrdonnancierFabReconstManagerTest
      * Méthode en charge de purger les données de test.
      */
     @After
-    public void end()
-    {
+    public void end() {
         this.criteria = null;
         this.manager = null;
         this.mockPharmacieService = null;
@@ -79,8 +76,7 @@ public class DuplicataOrdonnancierFabReconstManagerTest
      * Méthode en charge de tester l'initialisation des données de test.
      */
     @Test
-    public void testInitData()
-    {
+    public void testInitData() {
         Assert.assertNotNull(this.criteria);
         Assert.assertNotNull(this.manager);
         Assert.assertNotNull(this.manager.getCriteria());
@@ -92,16 +88,13 @@ public class DuplicataOrdonnancierFabReconstManagerTest
      * Méthode en charge de tester la méthode d'init du manager.
      */
     @Test
-    public void testInitWithPharmaSizeOne()
-    {
+    public void testInitWithPharmaSizeOne() {
         final List<Pharmacie> pharmacies = new ArrayList<Pharmacie>();
         final Pharmacie pharmacie = Mockito.mock(Pharmacie.class);
         pharmacies.add(pharmacie);
-        Mockito.when(this.mockPharmacieService.getAll((SearchCriteria) Matchers.any()))
-                .thenReturn(pharmacies);
+        Mockito.when(this.mockPharmacieService.getAll((SearchCriteria) Matchers.any())).thenReturn(pharmacies);
         this.manager.init();
-        Mockito.verify(this.mockOrdonnancierFabReconstService)
-                .getAll((SearchCriteria) Matchers.any());
+        Mockito.verify(this.mockOrdonnancierFabReconstService).getAll((SearchCriteria) Matchers.any());
         Assert.assertNull(this.manager.getOrdonnancierSelected());
     }
 
@@ -109,24 +102,20 @@ public class DuplicataOrdonnancierFabReconstManagerTest
      * Méthode en charge de tester la méthode d'init du manager.
      */
     @Test
-    public void testInitWithPharmaSizeNotOne()
-    {
+    public void testInitWithPharmaSizeNotOne() {
         final List<Pharmacie> pharmacies = new ArrayList<Pharmacie>();
-        Mockito.when(this.mockPharmacieService.getAll((SearchCriteria) Matchers.any()))
-                .thenReturn(pharmacies);
+        Mockito.when(this.mockPharmacieService.getAll((SearchCriteria) Matchers.any())).thenReturn(pharmacies);
         this.manager.init();
-        Mockito.verify(this.mockOrdonnancierFabReconstService,
-                       Mockito.times(0)).getAll((SearchCriteria) Matchers.any());
+        Mockito.verify(this.mockOrdonnancierFabReconstService, Mockito.times(0)).getAll((SearchCriteria) Matchers.any());
         Assert.assertNull(this.manager.getOrdonnancierSelected());
     }
 
     /**
-     * Méthode en charge de tester la méthode appelée via l'IHM suite à la sélection d'une
-     * pharmacie.
+     * Méthode en charge de tester la méthode appelée via l'IHM suite à la
+     * sélection d'une pharmacie.
      */
     @Test
-    public void testHandleSelectPharmacieNotNull()
-    {
+    public void testHandleSelectPharmacieNotNull() {
         final AjaxBehaviorEvent event = Mockito.mock(AjaxBehaviorEvent.class);
         final HtmlSelectOneMenu select = Mockito.mock(HtmlSelectOneMenu.class);
         Mockito.when(event.getSource()).thenReturn(select);
@@ -134,18 +123,16 @@ public class DuplicataOrdonnancierFabReconstManagerTest
         Mockito.when(select.getLocalValue()).thenReturn(pharmacie);
 
         this.manager.handleSelectPharmacie(event);
-        Mockito.verify(this.mockOrdonnancierFabReconstService)
-                .getAll((SearchCriteria) Matchers.any());
+        Mockito.verify(this.mockOrdonnancierFabReconstService).getAll((SearchCriteria) Matchers.any());
         Assert.assertNull(this.manager.getOrdonnancierSelected());
     }
 
     /**
-     * Méthode en charge de tester la méthode appelée via l'IHM suite à la sélection d'une
-     * pharmacie.
+     * Méthode en charge de tester la méthode appelée via l'IHM suite à la
+     * sélection d'une pharmacie.
      */
     @Test
-    public void testHandleSelectPharmacieNull()
-    {
+    public void testHandleSelectPharmacieNull() {
         final AjaxBehaviorEvent event = Mockito.mock(AjaxBehaviorEvent.class);
         final HtmlSelectOneMenu select = Mockito.mock(HtmlSelectOneMenu.class);
         Mockito.when(event.getSource()).thenReturn(select);
@@ -160,34 +147,31 @@ public class DuplicataOrdonnancierFabReconstManagerTest
      * Méthode en charge de tester le set sur Pharmacies.
      */
     @Test
-    public void testSetPharmacies()
-    {
+    public void testSetPharmacies() {
         final List<Pharmacie> pharmacies = new ArrayList<Pharmacie>();
         this.manager.setPharmacies(pharmacies);
         Assert.assertNotNull(this.manager.getPharmacies());
     }
 
     /**
-     * Méthode en charge de tester la récupération des elementsToCheck d'un ordonnancier.
+     * Méthode en charge de tester la récupération des elementsToCheck d'un
+     * ordonnancier.
      */
     @Test
-    public void testGetListElementsToCheckWithOrdoNull()
-    {
+    public void testGetListElementsToCheckWithOrdoNull() {
         this.manager.setOrdonnancierSelected(null);
-        Assert.assertEquals(0,
-                            this.manager.getListElementsToCheck().size());
+        Assert.assertEquals(0, this.manager.getListElementsToCheck().size());
     }
 
     /**
-     * Méthode en charge de tester la récupération des elementsToCheck d'un ordonnancier.
+     * Méthode en charge de tester la récupération des elementsToCheck d'un
+     * ordonnancier.
      */
     @Test
-    public void testGetListElementsToCheckWithOrdo()
-    {
+    public void testGetListElementsToCheckWithOrdo() {
         final OrdonnancierFabReconst ordonnancier = new OrdonnancierFabReconst();
         this.manager.setOrdonnancierSelected(ordonnancier);
-        Assert.assertEquals(0,
-                            this.manager.getListElementsToCheck().size());
+        Assert.assertEquals(0, this.manager.getListElementsToCheck().size());
     }
 
 }

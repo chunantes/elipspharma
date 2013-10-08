@@ -17,11 +17,10 @@ import fr.pharma.eclipse.service.common.GenericService;
 
 /**
  * Test de la classe AutoCompleteBeansManager.
- 
+ * @author Netapsys
  * @version $Revision$ $Date$
  */
-public class AutoCompleteBeansManagerTest
-{
+public class AutoCompleteBeansManagerTest {
     /**
      * Manager testé.
      */
@@ -47,8 +46,7 @@ public class AutoCompleteBeansManagerTest
      */
     @SuppressWarnings("unchecked")
     @Before
-    public void setUp()
-    {
+    public void setUp() {
         this.mockedService = Mockito.mock(GenericService.class);
         this.essaiSearchCriteria = new EssaiSearchCriteria();
         this.manager = new AutoCompleteBeansManager<Essai>();
@@ -61,8 +59,7 @@ public class AutoCompleteBeansManagerTest
      * Méthode de finalisation.
      */
     @After
-    public void tearDown()
-    {
+    public void tearDown() {
         this.manager = null;
         this.essaiSearchCriteria = null;
         this.mockedService = null;
@@ -72,8 +69,7 @@ public class AutoCompleteBeansManagerTest
      * Méthode en charge de tester l'initialisation des données de test.
      */
     @Test
-    public void testInit()
-    {
+    public void testInit() {
         Assert.assertNotNull(this.manager);
         Assert.assertNotNull(this.manager.getSearchCriteria());
     }
@@ -82,40 +78,31 @@ public class AutoCompleteBeansManagerTest
      * Test de la méthode complete.
      */
     @Test
-    public void testComplete()
-    {
+    public void testComplete() {
         final Essai essai1 = new Essai();
         final Essai essai2 = new Essai();
         essai1.setId(1L);
         essai2.setId(2L);
-        final List<Essai> expectedResults = Arrays.asList(essai1,
-                                                          essai2);
+        final List<Essai> expectedResults = Arrays.asList(essai1, essai2);
 
         final String requete = "no";
         final Answer<List<Essai>> answerGetAll = new Answer<List<Essai>>() {
 
             @Override
-            public List<Essai> answer(final InvocationOnMock invocation)
-                throws Throwable
-            {
-                final EssaiSearchCriteria criteria =
-                    (EssaiSearchCriteria) invocation.getArguments()[0];
-                Assert.assertEquals(AutoCompleteBeansManagerTest.this.essaiSearchCriteria,
-                                    criteria);
-                Assert.assertEquals(requete,
-                                    criteria.getNom());
+            public List<Essai> answer(final InvocationOnMock invocation) throws Throwable {
+                final EssaiSearchCriteria criteria = (EssaiSearchCriteria) invocation.getArguments()[0];
+                Assert.assertEquals(AutoCompleteBeansManagerTest.this.essaiSearchCriteria, criteria);
+                Assert.assertEquals(requete, criteria.getNom());
                 return expectedResults;
             }
         };
-        Mockito.when(this.mockedService.getAll(this.essaiSearchCriteria))
-                .thenAnswer(answerGetAll);
+        Mockito.when(this.mockedService.getAll(this.essaiSearchCriteria)).thenAnswer(answerGetAll);
 
         Assert.assertNull(this.essaiSearchCriteria.getNom());
         final List<Essai> results = this.manager.complete(requete);
 
         Mockito.verify(this.mockedService).getAll(this.essaiSearchCriteria);
-        Assert.assertEquals(expectedResults,
-                            results);
+        Assert.assertEquals(expectedResults, results);
     }
 
 }

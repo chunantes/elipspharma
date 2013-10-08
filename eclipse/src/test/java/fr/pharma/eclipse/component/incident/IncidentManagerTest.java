@@ -20,12 +20,10 @@ import fr.pharma.eclipse.utils.AbstractEclipseJUnitTest;
 
 /**
  * Test de la classe IncidentManager
- 
+ * @author Netapsys
  * @version $Revision$ $Date$
  */
-public class IncidentManagerTest
-    extends AbstractEclipseJUnitTest
-{
+public class IncidentManagerTest extends AbstractEclipseJUnitTest {
 
     /**
      * Manager en test.
@@ -51,8 +49,7 @@ public class IncidentManagerTest
      * {@inheritDoc}
      */
     @Override
-    public void setUp()
-    {
+    public void setUp() {
         this.helper = Mockito.mock(BeanManagerHelper.class);
         this.incidentService = Mockito.mock(IncidentService.class);
         this.incidentFactory = Mockito.mock(IncidentFactory.class);
@@ -65,8 +62,7 @@ public class IncidentManagerTest
      * {@inheritDoc}
      */
     @Override
-    public void tearDown()
-    {
+    public void tearDown() {
         this.incidentManager = null;
         this.incidentFactory = null;
         this.incidentService = null;
@@ -77,8 +73,7 @@ public class IncidentManagerTest
      */
     @Override
     @Test
-    public void testInit()
-    {
+    public void testInit() {
         Assert.assertNotNull(this.incidentFactory);
         Assert.assertNotNull(this.incidentService);
         Assert.assertNotNull(this.incidentManager);
@@ -88,8 +83,7 @@ public class IncidentManagerTest
      * Test de la méthode init().
      */
     @Test
-    public void testInitMethodEssaiNull()
-    {
+    public void testInitMethodEssaiNull() {
         Mockito.when(this.incidentFactory.getInitializedObject()).thenReturn(new Incident());
         this.incidentManager.init(null);
         Assert.assertNotNull(this.incidentManager.getBean());
@@ -99,58 +93,47 @@ public class IncidentManagerTest
      * Test de la méthode init().
      */
     @Test
-    public void testInitMethodEssaiNotNull()
-    {
+    public void testInitMethodEssaiNotNull() {
         final Essai essai = Mockito.mock(Essai.class);
         final Incident incident = new Incident();
         incident.setEssai(essai);
         Mockito.when(this.incidentFactory.getInitializedObject(essai)).thenReturn(incident);
         this.incidentManager.init(essai);
         Assert.assertNotNull(this.incidentManager.getBean());
-        Assert.assertEquals(this.incidentManager.getBean().getEssai(),
-                            essai);
+        Assert.assertEquals(this.incidentManager.getBean().getEssai(), essai);
     }
 
     /**
      * Test de la méthode findIncidentsForEssai.
      */
     @Test
-    public void testFindIncidentsForEssai()
-    {
+    public void testFindIncidentsForEssai() {
         final Essai essai = Mockito.mock(Essai.class);
         Mockito.when(essai.getId()).thenReturn(null);
-        Mockito.when(this.incidentService.getAll(Matchers.any(SearchCriteria.class)))
-                .thenReturn(new ArrayList<Incident>());
-        Mockito.when(this.helper.returnAsDataModel(Matchers.anyCollection()))
-                .thenReturn(new SerializableListDataModel());
+        Mockito.when(this.incidentService.getAll(Matchers.any(SearchCriteria.class))).thenReturn(new ArrayList<Incident>());
+        Mockito.when(this.helper.returnAsDataModel(Matchers.anyCollection())).thenReturn(new SerializableListDataModel());
         final DataModel<Incident> incidents = this.incidentManager.findIncidentsForEssai(essai);
-        Mockito.verify(this.incidentService,
-                       Mockito.never()).getAll(Matchers.any(SearchCriteria.class));
+        Mockito.verify(this.incidentService, Mockito.never()).getAll(Matchers.any(SearchCriteria.class));
     }
 
     /**
      * Test de la méthode findIncidentsForEssai.
      */
     @Test
-    public void testFindIncidentsForEssaiok()
-    {
+    public void testFindIncidentsForEssaiok() {
         final Essai essai = Mockito.mock(Essai.class);
         Mockito.when(essai.getId()).thenReturn(1L);
-        Mockito.when(this.incidentService.getAll(Matchers.any(SearchCriteria.class)))
-                .thenReturn(new ArrayList<Incident>());
-        Mockito.when(this.helper.returnAsDataModel(Matchers.anyCollection()))
-                .thenReturn(new SerializableListDataModel());
+        Mockito.when(this.incidentService.getAll(Matchers.any(SearchCriteria.class))).thenReturn(new ArrayList<Incident>());
+        Mockito.when(this.helper.returnAsDataModel(Matchers.anyCollection())).thenReturn(new SerializableListDataModel());
         final DataModel<Incident> incidents = this.incidentManager.findIncidentsForEssai(essai);
-        Mockito.verify(this.incidentService,
-                       Mockito.times(1)).getAll(Matchers.any(SearchCriteria.class));
+        Mockito.verify(this.incidentService, Mockito.times(1)).getAll(Matchers.any(SearchCriteria.class));
     }
 
     /**
      * Test de la méthode ajouterIncident.
      */
     @Test
-    public void testAjouterIncident()
-    {
+    public void testAjouterIncident() {
         final Incident incident = Mockito.mock(Incident.class);
         this.incidentManager.setBean(incident);
         this.incidentManager.ajouterIncident();
@@ -161,8 +144,7 @@ public class IncidentManagerTest
      * Test de la méthode reinit().
      */
     @Test
-    public void testReinit()
-    {
+    public void testReinit() {
         this.incidentManager.setBean(new Incident());
         this.incidentManager.reinit();
         Assert.assertNull(this.incidentManager.getBean());
