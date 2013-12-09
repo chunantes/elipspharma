@@ -15,5 +15,4 @@ Il a été initié début 2011. A ce titre, il répond aux dernières exigences 
 * Capacité d’échange avec d’autres outils
  
 
- 
 L'équipe Elips'Pharma.
