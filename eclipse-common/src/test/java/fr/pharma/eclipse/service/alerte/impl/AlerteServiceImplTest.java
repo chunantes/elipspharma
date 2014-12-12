@@ -10,6 +10,8 @@ import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
 import org.mockito.Mockito;
+import org.mockito.invocation.InvocationOnMock;
+import org.mockito.stubbing.Answer;
 
 import fr.pharma.eclipse.domain.enums.EtatEssai;
 import fr.pharma.eclipse.domain.enums.RolePersonne;
@@ -132,15 +134,23 @@ public class AlerteServiceImplTest {
         Mockito.when(userSecurity.getRole()).thenReturn(RolePersonne.ADMIN);
 
         // mock de la liste des essais
-        final List essais = Mockito.mock(List.class);
+        @SuppressWarnings("unchecked")
+        final List<EssaiAlerte> essais = Mockito.mock(List.class);
         // creation d'un essaiAlerte
         final EssaiAlerte essai = new EssaiAlerte();
         essai.setId(1L);
-        // Ajout de l'essai à la liste
         essais.add(essai);
+
+        // Création d'un answer pour mieux gérer le type de liste
+        final Answer<List<EssaiAlerte>> answer = new Answer<List<EssaiAlerte>>() {
+            public List<EssaiAlerte> answer(final InvocationOnMock invocation) throws Throwable {
+                return essais;
+            }
+        };
+
         // verfication que liste des essais est bien trouvée
-        Mockito.when(this.mockEssaiService.executeSQLQuery(AlerteServiceImpl.SELECT_ESSAIS_FOR_ADMIN, null, AlerteServiceImpl.ESSAI_COLS, EssaiAlerte.class,
-                                                           AlerteServiceImpl.scalars)).thenReturn(essais);
+        Mockito.when(this.mockEssaiService.executeSQLQuery(AlerteServiceImpl.SELECT_ALERTES_FOR_ADMIN, null, AlerteServiceImpl.ESSAI_COLS, EssaiAlerte.class,
+                                                           AlerteServiceImpl.scalars)).thenAnswer(answer);
 
         // definition de la liste des pharmacies
         final List<Pharmacie> pharmacies = new ArrayList<Pharmacie>();

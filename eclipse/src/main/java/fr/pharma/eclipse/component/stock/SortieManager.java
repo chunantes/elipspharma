@@ -308,7 +308,7 @@ public class SortieManager implements Serializable {
         final MvtStock mvt = this.sortieCurrent.getMvtSortie();
 
         // Valorisation des lignes de stock possibles pour une sortie
-        final List<LigneStock> lignesStock = this.stockService.getAllLignesStock(mvt.getEssai(), mvt.getPharmacie(), mvt.getProduit(), conditionnement, false);
+        final List<LigneStock> lignesStock = this.stockService.getLignesStockPharmacie(mvt.getEssai(), mvt.getPharmacie(), mvt.getProduit(), conditionnement);
         this.sortieCurrent.setLignesStock(lignesStock);
     }
 

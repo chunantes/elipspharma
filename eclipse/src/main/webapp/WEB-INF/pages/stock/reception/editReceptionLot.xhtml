@@ -264,7 +264,7 @@
 
 		   	<div class="actionButton" style="margin-right:36px;">
     			<p:commandButton id="saveButton" action="save" ajax="false" value="#{resourceBundle['btn.enregistrer']}" title="#{resourceBundle['btn.enregistrer']}"/>
-    			<p:commandButton id="cancelButton" ajax="false" type="reset" value="#{resourceBundle['btn.annuler']}" title="#{resourceBundle['btn.annuler']}"/>
+    			<p:commandButton id="cancelButton" immediate="true" onclick="document.forms['formReturn'].hideReturnButton.click();" value="#{resourceBundle['btn.annuler']}" title="#{resourceBundle['btn.annuler']}"/>
 		   	</div>
 		   	
 		   	<div class="basicButton">

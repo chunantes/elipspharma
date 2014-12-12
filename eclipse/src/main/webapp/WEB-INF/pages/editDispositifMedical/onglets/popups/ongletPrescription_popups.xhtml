@@ -182,7 +182,7 @@
 
 
 			<div class="popupButton"><p:commandButton id="submitButton" 
-				value="#{resourceBundle['btn.valider']}" update="conditionnements errors" ajax="true" process="@form" actionListener="#{conditionnementListManager.add(dispositifMedicalManager.bean, conditionnementManager.bean)}"
+				value="#{resourceBundle['btn.valider']}" update="conditionnements errors" ajax="true" process="idPopupEditionCondDm editDispositifMedical" actionListener="#{conditionnementListManager.add(dispositifMedicalManager.bean, conditionnementManager.bean)}"
 				oncomplete="closePopup(xhr, status, args, popupEdition);"/></div>
 			
 		</h:form>

@@ -20,6 +20,7 @@ import fr.pharma.eclipse.jasper.engine.filler.impl.modelprescription.helper.Prod
 import fr.pharma.eclipse.jasper.engine.helper.ReportNameBuildHelper;
 import fr.pharma.eclipse.jasper.engine.helper.SourceCheckingHandler;
 import fr.pharma.eclipse.jasper.exception.JasperReportBuildException;
+import fr.pharma.eclipse.service.common.GenericService;
 
 /**
  * Classe en charge de constuire les données pour le rapport Jasper de type
@@ -60,6 +61,8 @@ public class ModelePrescNominativeDatasBuilder implements JasperReportDatasBuild
      */
     @Resource(name = "produitPrescritFillerHelper")
     private ProduitPrescritFillerHelper helper;
+    
+    private GenericService<Essai> service;
 
     /**
      * {@inheritDoc}
@@ -74,6 +77,7 @@ public class ModelePrescNominativeDatasBuilder implements JasperReportDatasBuild
             prescription = (Prescription) source;
             essai = prescription.getEssai();
         }
+        service.save(essai);
 
         // Conctruction du bean.
         final JRBeanModelePrescNominative dataSource = new JRBeanModelePrescNominative();
@@ -141,75 +145,47 @@ public class ModelePrescNominativeDatasBuilder implements JasperReportDatasBuild
 
     }
 
-    /**
-     * Getter sur reportNameHelper.
-     * @return Retourne le reportNameHelper.
-     */
     ReportNameBuildHelper getReportNameHelper() {
         return this.reportNameHelper;
     }
 
-    /**
-     * Setter pour reportNameHelper.
-     * @param reportNameHelper le reportNameHelper à écrire.
-     */
     public void setReportNameHelper(final ReportNameBuildHelper reportNameHelper) {
         this.reportNameHelper = reportNameHelper;
     }
 
-    /**
-     * Getter sur jrDataSourceFactory.
-     * @return Retourne le jrDataSourceFactory.
-     */
     JRDataSourceFactory getJrDataSourceFactory() {
         return this.jrDataSourceFactory;
     }
 
-    /**
-     * Setter pour jrDataSourceFactory.
-     * @param jrDataSourceFactory le jrDataSourceFactory à écrire.
-     */
     public void setJrDataSourceFactory(final JRDataSourceFactory jrDataSourceFactory) {
         this.jrDataSourceFactory = jrDataSourceFactory;
     }
 
-    /**
-     * Getter sur checkHandler.
-     * @return Retourne le checkHandler.
-     */
     SourceCheckingHandler getCheckHandler() {
         return this.checkHandler;
     }
 
-    /**
-     * Setter pour checkHandler.
-     * @param checkHandler le checkHandler à écrire.
-     */
     public void setCheckHandler(final SourceCheckingHandler checkHandler) {
         this.checkHandler = checkHandler;
     }
 
-    /**
-     * Getter sur headerBuilder.
-     * @return Retourne le headerBuilder.
-     */
     JRBeanHeaderBuilder getHeaderBuilder() {
-        return this.headerBuilder;
+    	return headerBuilder;
     }
 
-    /**
-     * Setter pour headerBuilder.
-     * @param headerBuilder le headerBuilder à écrire.
-     */
     public void setHeaderBuilder(final JRBeanHeaderBuilder headerBuilder) {
         this.headerBuilder = headerBuilder;
     }
-    /**
-     * Setter pour helper.
-     * @param helper Le helper à écrire.
-     */
     public void setHelper(final ProduitPrescritFillerHelper helper) {
         this.helper = helper;
     }
 
+    public void setService(GenericService<Essai> service) {
+        this.service = service;
+    }
+
+    public GenericService<Essai> getService() {
+        return service;
+    }
+    
 }

@@ -36,6 +36,7 @@ public class ProduitComparator implements Comparator<Produit>, Serializable {
     private String buildKey(final Produit p) {
         final StringBuilder builder = new StringBuilder();
         builder.append(p.getDenomination());
+        builder.append(p.getType());
         return builder.toString();
     }
 }

@@ -95,19 +95,41 @@ public class AccueilManager implements Serializable {
      */
     public void buildInfosAccueil() {
         try {
-            // Construction des alertes
-            // Uniquement pour le profil Pharmacien et Admin
-            this.setAlertes(this.alerteService.getAlertes());
+            // Construction des alertes uniquement pour le profil Pharmacien et
+            // Admin
+                this.buildAlertes();
+            
 
             // Construction des prochains événements
-            this.setEvenements(this.evenementService.getNextEvenements());
+            this.buildNextEvenements();
 
             // Construction des actualités
-            this.setEssaisActualites(this.actualiteService.getLastEssais());
+            this.buildActualites();
         } catch (final HibernateException e) {
             this.log.error("Erreur lors du chargement des données de l'accueil", e);
             this.facesUtils.addMessage(FacesMessage.SEVERITY_ERROR, "accueil.chargement.ko");
         }
+    }
+
+    /**
+     * Méthode en charge de construire les informations des actualités.
+     */
+    private void buildActualites() {
+        this.setEssaisActualites(this.actualiteService.getLastEssais());
+    }
+
+    /**
+     * Méthode en charge de construire les prochains événements.
+     */
+    private void buildNextEvenements() {
+        this.setEvenements(this.evenementService.getNextEvenements());
+    }
+
+    /**
+     * Méthode en charge de construire les alertes.
+     */
+    private void buildAlertes() {
+        this.setAlertes(this.alerteService.getAlertes());
     }
 
     /**

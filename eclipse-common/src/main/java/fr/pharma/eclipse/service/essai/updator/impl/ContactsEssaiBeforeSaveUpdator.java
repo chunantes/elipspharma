@@ -52,7 +52,7 @@ public class ContactsEssaiBeforeSaveUpdator implements EssaiBeforeSaveUpdator, B
     public void update(final Essai essai,
                        final EssaiService service) {
         // Ne fait rien si l'essai existe déjà en base.
-        if (essai.getId() != null) {
+        if (essai.getId() != null | essai.getPharmaciePrincipale()==null) {
             return;
         }
 

@@ -14,7 +14,6 @@ import fr.pharma.eclipse.domain.model.stock.LigneStock;
 import fr.pharma.eclipse.domain.model.stock.MvtStock;
 import fr.pharma.eclipse.domain.model.stock.Sortie;
 import fr.pharma.eclipse.domain.model.stockage.Pharmacie;
-import fr.pharma.eclipse.exception.common.CommonException;
 import fr.pharma.eclipse.service.common.GenericService;
 
 /**
@@ -36,20 +35,19 @@ public interface StockService extends GenericService<LigneStock> {
     List<LigneStock> initialiseTableLigneStock();
 
     /**
-     * Méthode en charge de retourner les lignes de stock concernant une
-     * pharmacie, un produit et un conditionnement.
+     * Retourner les lignes de stock avec du stock à la pharmacie (hors le stock
+     * en dotation)
      * @param essai Essai.
      * @param pharmacie Pharmacie.
      * @param produit Produit.
      * @param conditionnement Conditionnement.
-     * @param dotations Comptabilise-t-on les dotations ?
-     * @return Lignes de stock.
+     * @return Lignes de stock avec une quantité à la pharmacie (hors stock en
+     * dotation)
      */
-    List<LigneStock> getAllLignesStock(final Essai essai,
-                                   final Pharmacie pharmacie,
-                                   final Produit produit,
-                                   final Conditionnement conditionnement,
-                                   final Boolean dotations);
+    List<LigneStock> getLignesStockPharmacie(final Essai essai,
+                                             final Pharmacie pharmacie,
+                                             final Produit produit,
+                                             final Conditionnement conditionnement);
 
     @Override
     List<LigneStock> getAll(final SearchCriteria criteria);
@@ -95,15 +93,13 @@ public interface StockService extends GenericService<LigneStock> {
      * @param mvtStock Mouvement de stock.
      * @return Clé.
      */
-    public String getKeyMvtStock(final MvtStock mvtStock,
+    String getKeyMvtStock(final MvtStock mvtStock,
                                  final boolean datesPeremptionFusionnees);
 
     /**
-     * Récupérer une ligne de stock répondant à la clé fonctionnelle du mvt.
-     * Créer une nouvelle ligne si elle n'existe pas.
-     * @param mvt mouvement de stock
-     * @return ligne de stock associée au mvt
-     * @throws CommonException si plusieurs lignes existent pour le mvt
+     * @return ligneStock qui corresponde au MvtStock en entrée ; NO_LIGNESTOCK
+     * sinon
      */
-    public LigneStock getLigneStock(final MvtStock mvt);
+	LigneStock getLigneStock(MvtStock mvt);
+
 }

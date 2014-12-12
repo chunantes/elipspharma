@@ -7,7 +7,7 @@
 	<on-start>
 		<!-- Calcul des lignes de stock disponibles pour la dotation -->
 		<evaluate
-			expression="stockService.getAllLignesStock(dispensationGlobaleManager.beanSelected.essai,dispensationGlobaleManager.beanSelected.pharmacie,dispensationGlobaleManager.beanSelected.produit,dispensationGlobaleManager.beanSelected.conditionnement, false)"
+			expression="stockService.getLignesStockPharmacie(dispensationGlobaleManager.beanSelected.essai,dispensationGlobaleManager.beanSelected.pharmacie,dispensationGlobaleManager.beanSelected.produit,dispensationGlobaleManager.beanSelected.conditionnement)"
 			result="dispensationGlobaleManager.lignesStockForDotation" />
 	</on-start>
 

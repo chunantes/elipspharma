@@ -79,16 +79,16 @@
 			           	<div><label>#{resourceBundle['stockConsultation.numLot']}</label></div>
 			           	<h:inputText value="#{stockManager.searchCriteria.numLot}"/>
 			           	
-			           	<!-- A la date du -->
+			           	<!-- A la date du : Cacher : PHARMA-617 
 			           	<div><label>#{resourceBundle['stockConsultation.aLaDateDu']}</label></div>
-  						<p:calendar id="date" value="#{stockManager.searchCriteria.date}" 
-  							effect="#{resourceBundle['effect.calendar']}" locale="#{resourceBundle['date.locale']}" showButtonPanel="true" navigator="true" 
-  							converter="#{calendarConverter}" />				           	
+  						
+  						<input type="text" onclick="popupWarning.show();" class="ui-inputfield ui-widget ui-state-default ui-corner-all ui-state-focus" name="date_input" id="date_input">
+  						</input>			-->           	
 			           	
-			           	<!-- Heure Minute -->
+			           	<!-- Heure Minute  : Cacher : PHARMA-617
 			           	<div><label>#{resourceBundle['stockConsultation.AHeure']}</label></div>
-			           	<h:inputText value="#{stockManager.searchCriteria.heuresMinutes}" />
-			           	
+			           	<h:inputText value="#{stockManager.searchCriteria.heuresMinutes}" onclick="popupWarning.show();" />
+			           	-->
 			           	<br />
 			           	<p:commandButton id="searchButton" action="search" ajax="false"
 			     			value="#{resourceBundle['btn.rechercher']}" title="#{resourceBundle['btn.rechercher']}">

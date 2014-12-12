@@ -2,6 +2,7 @@ package fr.pharma.eclipse.component.essai;
 
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Calendar;
 import java.util.Collection;
 import java.util.List;
 import java.util.SortedMap;
@@ -44,6 +45,7 @@ import fr.pharma.eclipse.service.common.GenericService;
 import fr.pharma.eclipse.service.document.DocumentService;
 import fr.pharma.eclipse.service.essai.EssaiService;
 import fr.pharma.eclipse.utils.FacesUtils;
+import fr.pharma.eclipse.utils.constants.EclipseConstants;
 import fr.pharma.eclipse.utils.introspection.BeanTool;
 
 /**
@@ -584,11 +586,22 @@ public class EssaiManager extends BeanManager<Essai> {
      * Méthode en charge de gérer le changement d'état d'un essai.
      */
     public void ajouterDetailEtatEssai() {
+    	
+    	boolean wasInactivate = false;
+    	if(getBean().getEtat().equals(EtatEssai.EN_ATTENTE_MISE_EN_PLACE) || getBean().getEtat().equals(EtatEssai.MISE_EN_PLACE) || getBean().getEtat().equals(EtatEssai.EN_EVALUATION)){
+    		wasInactivate = true;
+    	}
+    	
         // Mise à jour de l'état actuel de l'essai
         getBean().setEtat(getEtatChgtEtat());
 
         // Ajout d'un nouveau DetailEtatEssai à l'essai
         ((EssaiService) getService()).addDetailEtatEssai(getBean(), getEtatChgtEtat(), getCommentaireChgtEtat());
+        
+        //Mise à jour de la date d'activation de l'essai si l'essai passe de désactivé à activé
+        if(wasInactivate && getEtatChgtEtat().equals(EtatEssai.EN_COURS)){
+        	getBean().getDetailDates().setActivation(Calendar.getInstance(EclipseConstants.LOCALE));
+        }
     }
 
     /**

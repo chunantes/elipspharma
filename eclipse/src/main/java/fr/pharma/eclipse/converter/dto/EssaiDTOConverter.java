@@ -42,7 +42,6 @@ public class EssaiDTOConverter implements Converter {
      * {@inheritDoc}
      */
     @Override
-    @SuppressWarnings("unchecked")
     public String getAsString(final FacesContext context,
                               final UIComponent component,
                               final Object value) {

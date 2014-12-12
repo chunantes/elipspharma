@@ -12,6 +12,7 @@ import javax.annotation.Resource;
 import org.apache.commons.collections15.CollectionUtils;
 import org.apache.commons.collections15.Predicate;
 import org.apache.commons.collections15.functors.NotPredicate;
+import org.hibernate.Hibernate;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.transaction.annotation.Propagation;
@@ -35,14 +36,14 @@ import fr.pharma.eclipse.domain.model.stock.MvtStock;
 import fr.pharma.eclipse.domain.model.stock.Sortie;
 import fr.pharma.eclipse.domain.model.stockage.Pharmacie;
 import fr.pharma.eclipse.domain.model.stockage.Stockage;
-import fr.pharma.eclipse.exception.common.CommonException;
 import fr.pharma.eclipse.predicate.stock.LigneStockEnQuarantainePredicate;
-import fr.pharma.eclipse.predicate.stock.LigneStockNonEpuisePredicate;
+import fr.pharma.eclipse.predicate.stock.LigneStockPharmacieNonEpuisePredicate;
 import fr.pharma.eclipse.service.common.impl.GenericServiceImpl;
 import fr.pharma.eclipse.service.produit.ProduitService;
 import fr.pharma.eclipse.service.stock.ApprovisionnementService;
 import fr.pharma.eclipse.service.stock.MvtStockService;
 import fr.pharma.eclipse.service.stock.StockService;
+import fr.pharma.eclipse.utils.message.MessageBuilder;
 
 /**
  * Classe d'implémentation du service de gestion de stock.
@@ -50,27 +51,19 @@ import fr.pharma.eclipse.service.stock.StockService;
  * @version $Revision$ $Date$
  */
 public class StockServiceImpl extends GenericServiceImpl<LigneStock> implements StockService {
-    /**
-     * serialVersionUID.
-     */
-    private static final long serialVersionUID = 2491613712582659369L;
+    public static final LigneStock NO_LIGNESTOCK = new LigneStock();
 
-    /**
-     * Logger.
-     */
+    private static final long serialVersionUID = 2491613712582659369L;
     private final Logger log = LoggerFactory.getLogger(StockServiceImpl.class);
 
-    /**
-     * Service de gestion des mouvements de stock.
-     */
     @Resource(name = "mouvementStockService")
     private MvtStockService<MvtStock> mvtStockService;
 
-    /**
-     * Service de gestion des produits.
-     */
     @Resource(name = "produitService")
     private ProduitService<Produit> produitService;
+
+    @Resource(name = "messageBuilder")
+    private MessageBuilder messageBuilder;
 
     @Resource(name = "approvisionnementService")
     private ApprovisionnementService<Approvisionnement> approService;
@@ -80,19 +73,23 @@ public class StockServiceImpl extends GenericServiceImpl<LigneStock> implements 
      */
     @Override
     @Transactional
-    public void etendrePeremption(final Approvisionnement approDto) {
+    public void etendrePeremption(final Approvisionnement approNewDate) {
 
-        final Approvisionnement appro = this.approService.get(approDto.getId());
+        final Approvisionnement approOldDate = this.approService.get(approNewDate.getId());
+        final Calendar oldDatePeremption = approOldDate.getDatePeremption();       
+        final Calendar newDatePeremption = approNewDate.getDatePeremption();
+        final String commentaire = approNewDate.getCommentaireExtensionPeremption();
 
-        // Récupération de la ligne de stock associé à l'approvisionnement
-        final LigneStock ligneStock = this.getLigneStock(appro);
-        final Calendar newDatePeremption = approDto.getDatePeremption();
-        final String commentaire = approDto.getCommentaireExtensionPeremption();
-
-        this.updateDatePeremptionDesMvtStocks(appro, newDatePeremption, commentaire);
-        this.updateLigneStock(appro, ligneStock);
+        if (!this.datesEqual(oldDatePeremption, newDatePeremption)) {
+        	//AG - update de la ligne stock avant l'update du mouvement stock nécessaire sinon impossible de retrouver la ligne
+        	//Stock correspondant à l'ancien mouvement stock
+        	this.updateLigneStock(approOldDate, approNewDate);
+	        this.updateDatePeremptionDesMvtStocks(approOldDate, newDatePeremption, commentaire);
+	        
+        }
     }
-    /**
+
+	/**
      * Mettre à jour la date de peremption des MvtStock associés à
      * l'approvisionnement. Si le MvtStock est du type "ENTREE" il faut mettre à
      * jour aussi :
@@ -100,55 +97,61 @@ public class StockServiceImpl extends GenericServiceImpl<LigneStock> implements 
      * <li>l'historique
      * <li>le commentaire sur l'extension de péremption
      * </ul>
-     * @param approIn l'approvisionnement choisi par l'utilisateur
+     * @param approOldDate l'approvisionnement choisi par l'utilisateur
      */
-    protected void updateDatePeremptionDesMvtStocks(final Approvisionnement approIn,
+    protected void updateDatePeremptionDesMvtStocks(final Approvisionnement approOldDate,
                                                     final Calendar newDatePeremption,
                                                     final String commentaire) {
-        final LigneStockSearchCriteria criteria = this.buildCriteria(approIn);
-        final List<MvtStock> allMvts = this.mvtStockService.getAll(criteria);
-        for (final MvtStock mvt : allMvts) {
-
-            // Il est fonctionnellement bizarre mais pas impossible d'avoir
-            // plusieurs appros dans cette liste.
-            if (Arrays.asList(TypeMvtStock.ENTREES).contains(mvt.getType())) {
-                final Approvisionnement appro = (Approvisionnement) mvt;
-                this.approService.updateDatePeremption(appro, newDatePeremption);
-                appro.setCommentaireExtensionPeremption(commentaire);
-            } else {
-                mvt.setDatePeremption(newDatePeremption);
-            }
-        }
-        this.mvtStockService.saveAll(allMvts);
+    
+    	// Récupération de tous les types de mouvement associés à la clé
+    	// fonctionelle pour mise à jour de la date
+    	final LigneStockSearchCriteria criteria = this.buildCriteria(approOldDate);
+    	final List<MvtStock> allMvts = this.mvtStockService.getAll(criteria);
+    	for (final MvtStock mvtStock : allMvts) {
+    		if (Arrays.asList(TypeMvtStock.ENTREES).contains(mvtStock.getType())) {
+    			this.approService.updateDatePeremption((Approvisionnement) mvtStock, newDatePeremption, commentaire);
+    		} else {
+    			mvtStock.setDatePeremption(newDatePeremption);
+    		}	
+    	}	
+    	this.mvtStockService.saveAll(allMvts);
     }
+	        
 
     /**
      * Création ou mise à jour d'une ligne stock après la mise à jour de la date
      * de péremption d'un approvisionnement.
      * @param appro l'approvisionnement avec la date à jour
-     * @param oldLigneStock la ligne de stock associée à l'ancienne date de
-     * péremption
      */
-    protected void updateLigneStock(final Approvisionnement appro,
-                                    final LigneStock oldLigneStock) {
-        // Deuxième recherche après la MAJ de la date de péremption de
-        // l'appro
-        final LigneStock newLineStock = this.getLigneStock(appro);
-
-        // Si ID est null, la ligne a été créée par getLigneStock
-        if (newLineStock.getId() == null) {
-            // Sauvegarde de la ligne
-            oldLigneStock.setDatePeremption(appro.getDatePeremption());
-            this.save(oldLigneStock);
+    private void updateLigneStock(Approvisionnement approOldDate, Approvisionnement approNewDate) {
+    	final LigneStock ligneStockOldDate = this.getOrCreateLigneStock(approOldDate);
+    	final LigneStock ligneStockNewDate = this.getLigneStock(approNewDate);
+    	
+    	if (NO_LIGNESTOCK.equals(ligneStockNewDate)) {
+    		ligneStockOldDate.setDatePeremption(approNewDate.getDatePeremption());
+    		save(ligneStockOldDate);
+    	} else {
+    		// Fusion avec la ligne stock qui existe déjà
+    		ligneStockOldDate.setQtePharmacie(ligneStockOldDate.getQtePharmacie() + ligneStockOldDate.getQtePharmacie());
+    		ligneStockOldDate.setQteDispensationGlobal(ligneStockOldDate.getQteDispensationGlobal() + ligneStockOldDate.getQteDispensationGlobal());
+    		this.save(ligneStockOldDate);
+    		// Suppression de la ligne de stock
+    		this.remove(ligneStockNewDate);
+    	}
+    }
+    
+    /**
+     * @return true si les dates sont égales
+     */
+    boolean datesEqual(final Calendar date1,
+                       final Calendar date2) {
+        if ((date1 == null) && (date2 == null)) {
+            return true;
+        } else if (date1 == null) {
+            return false;
         } else {
-            // Fusion avec celle qui existe déjà
-            newLineStock.setQteGlobalStock(newLineStock.getQteGlobalStock() + oldLigneStock.getQteGlobalStock());
-            newLineStock.setQteDispensationGlobal(newLineStock.getQteDispensationGlobal() + oldLigneStock.getQteDispensationGlobal());
-            this.save(newLineStock);
-            // Suppression de la ligne de stock
-            this.remove(oldLigneStock);
+            return date1.equals(date2);
         }
-
     }
 
     /**
@@ -158,7 +161,7 @@ public class StockServiceImpl extends GenericServiceImpl<LigneStock> implements 
     @Transactional(propagation = Propagation.MANDATORY)
     public <MVT extends MvtStock> void update(final List<MVT> mvtStocks) {
 
-        final List<LigneStock> ligneStocks = new ArrayList<LigneStock>();
+        final List<LigneStock> lignesStocks = new ArrayList<LigneStock>();
 
         for (final MvtStock mvtStock : mvtStocks) {
             final TypeMvtStock typeMvtStock = mvtStock.getType();
@@ -166,35 +169,57 @@ public class StockServiceImpl extends GenericServiceImpl<LigneStock> implements 
                 case APPROVISIONNEMENT :
                 case ENTREE_CORRECTIVE :
                 case PREPARATION_ENTREE :
-                    ligneStocks.add(this.updateAppro((Approvisionnement) mvtStock));
+                    lignesStocks.add(this.updateAppro((Approvisionnement) mvtStock));
                     break;
                 case PREPARATION_SORTIE :
                 case RETOUR_PROMOTEUR :
                 case CESSION_PUI :
                 case DESTRUCTION :
                 case AUTRE_SORTIE :
-                    ligneStocks.add(this.updateSortie(mvtStock));
+                    final LigneStock ligneStock = this.updateSortie(mvtStock);
+                    if (!StockServiceImpl.NO_LIGNESTOCK.equals(ligneStock)) {
+                        lignesStocks.add(ligneStock);
+                    }
                     break;
             }
         }
-        this.saveAll(ligneStocks);
+        this.saveAll(lignesStocks);
     }
 
     /**
-     * {@inheritDoc}
+     * Saufgarder ou supprimer si les stocks sont à 0 ou negatifs ; MAJ lieu de
+     * stockage aussi
+     * @return la valeur enregistrer ou null si les stocks sont à 0
      */
     @Override
     public LigneStock save(final LigneStock ligneStock) {
-        // Log de sauvegarde de quantité négative
-        if ((ligneStock != null) && (ligneStock.getQteEnStock() != null) && (ligneStock.getQteDispensationGlobal() != null)
-            && ((ligneStock.getQteEnStock() < 0) || (ligneStock.getQteDispensationGlobal() < 0))) {
-            this.log.error("ERREUR dans le stock (quantitites negatives) : LigneStock (id=" + ligneStock.getId() + ")");
-        }
-        final LigneStock saved = super.save(ligneStock);
-        // On ne garde pas la ligne de stock si les quantités sont à 0
-        if ((saved != null) && (saved.getQteGlobalStock() != null) && (saved.getQteDispensationGlobal() != null) && Integer.valueOf(0).equals(saved.getQteGlobalStock())
-            && Integer.valueOf(0).equals(saved.getQteDispensationGlobal())) {
-            this.remove(ligneStock);
+        LigneStock saved = null;
+        if (ligneStock != null) {
+
+            // Correction des quantités négatives
+            if ((ligneStock.getQtePharmacie() == null) || (ligneStock.getQtePharmacie() < 0)) {
+                this.log.error("Erreur LigneStock id " + ligneStock.getId() + "; quantitite stock negative : " + ligneStock.getQtePharmacie());
+                ligneStock.setQtePharmacie(0);
+            }
+            if ((ligneStock.getQteDispensationGlobal() == null) || (ligneStock.getQteDispensationGlobal() < 0)) {
+                this.log.error("Erreur LigneStock id " + ligneStock.getId() + "; quantitite dispensation negative : " + ligneStock.getQteDispensationGlobal());
+                ligneStock.setQteDispensationGlobal(0);
+            }
+
+            // MAJ lieu de stockage
+            // Le lieu de stockage dans lignestock est une copie ; on profite de
+            // l'enregistrement
+            // pour le mettre à jour s'il a changé
+            this.updateLieuStockage(ligneStock);
+
+            saved = super.save(ligneStock);
+
+            // On ne garde pas la ligne de stock si les quantités sont à 0
+            if ((saved != null) && (saved.getQtePharmacie() != null) && (saved.getQteDispensationGlobal() != null) && Integer.valueOf(0).equals(saved.getQtePharmacie())
+                && Integer.valueOf(0).equals(saved.getQteDispensationGlobal())) {
+                this.remove(ligneStock);
+                saved = null;
+            }
         }
         return saved;
     }
@@ -207,20 +232,19 @@ public class StockServiceImpl extends GenericServiceImpl<LigneStock> implements 
     private LigneStock updateAppro(final Approvisionnement appro) {
 
         // Récupération de la ligne de stock associée au mouvement
-        final LigneStock ligneStock = this.getLigneStock(appro);
+        final LigneStock ligneStock = this.getOrCreateLigneStock(appro);
 
-        // Valorisation du lieu de stockage
-        if (Boolean.FALSE.equals(appro.getApproApprouve())) {
-            ligneStock.setStockage(LigneStock.EN_QUARANTAINE);
-        } else {
-            // Récupération du lieu de stockage pour le produit et la
-            // pharmacie
-            final Produit produit = this.produitService.get(appro.getProduit().getId());
-            final Stockage stockage = this.produitService.getStockageProduitPharma(produit, appro.getPharmacie());
-            ligneStock.setStockage(stockage.getNomComplet());
+        if (ligneStock != null) {
+            // Valorisation du lieu de stockage
+            if (Boolean.FALSE.equals(appro.getApproApprouve())) {
+                ligneStock.setStockage(LigneStock.EN_QUARANTAINE);
+            } else {
+                // MAJ du lieu de stockage pour le produit et la
+                // pharmacie
+                this.updateLieuStockage(ligneStock);
+            }
+            ligneStock.setQtePharmacie(ligneStock.getQtePharmacie() + appro.getQuantite());
         }
-        ligneStock.setQteGlobalStock(ligneStock.getQteGlobalStock() + appro.getQuantite());
-
         return ligneStock;
     }
 
@@ -232,30 +256,83 @@ public class StockServiceImpl extends GenericServiceImpl<LigneStock> implements 
     private LigneStock updateSortie(final MvtStock sortie) {
         // Récupération de la ligne de stock associée au mouvement
         final LigneStock ligneStock = this.getLigneStock(sortie);
-        ligneStock.setQteGlobalStock(ligneStock.getQteGlobalStock() - sortie.getQuantite());
-
+        if (!StockServiceImpl.NO_LIGNESTOCK.equals(ligneStock) && (ligneStock != null)) {
+            ligneStock.setQtePharmacie(ligneStock.getQtePharmacie() - sortie.getQuantite());
+        }
         return ligneStock;
     }
 
     /**
-     * {@inheritDoc}
+     * Tentative de MAJ de lieu de stockage. Si les entités sont null ou
+     * non-initialisées, la MAJ ne se fait pas.
      */
-    public LigneStock getLigneStock(final MvtStock mvt) {
+    private void updateLieuStockage(final LigneStock ligneStock) {
+        // Pas de MAJ si stock en quarantaine
+        if (LigneStock.EN_QUARANTAINE.equals(ligneStock.getStockage())) {
+            return;
+        }
 
-        final LigneStockSearchCriteria criteria = this.buildCriteria(mvt);
-        final List<LigneStock> result = this.getAll(criteria);
-        // 1 résultat sur la clé fonctionnelle
-        if (result.size() == 1) {
-            return result.get(0);
-        } else if (result.isEmpty()) {
+        if ((ligneStock.getProduit() != null) && Hibernate.isInitialized(ligneStock.getProduit()) 
+            && (ligneStock.getPharmacie() != null) && Hibernate.isInitialized(ligneStock.getPharmacie())) {
+            final Produit produit = this.produitService.get(ligneStock.getProduit().getId());
+            final Stockage stockage = this.produitService.getStockageProduitPharma(produit, ligneStock.getPharmacie());
+            ligneStock.setStockage((stockage == null) ? "" : stockage.getNomComplet());
+        }
+    }
+
+    /**
+     * Récupérer une ligne de stock répondant à la clé fonctionnelle
+     * @return Ligne de stock; new LigneStock si elle n'existe pas; null s'il y
+     * a plusieurs lignes qui correspondent
+     */
+    protected LigneStock getOrCreateLigneStock(final MvtStock mvt) {
+        final LigneStock result = this.getLigneStock(mvt);
+
+        if (StockServiceImpl.NO_LIGNESTOCK.equals(result)) {
             return new LigneStock(mvt.getEssai(), mvt.getPharmacie(), mvt.getProduit(), mvt.getConditionnement(), mvt.getApproApprouve(), mvt.getDatePeremption(), mvt.getNumLot(),
                                   mvt.getNumTraitement());
         } else {
-            final String msg = "Il y a plusieurs lignes de stock associées au mvt " + mvt;
-            this.log.error(msg);
-            throw new CommonException(msg);
+            return result;
         }
     }
+
+    /**
+     * @return ligneStock qui corresponde au MvtStock en entrée ; NO_LIGNESTOCK
+     * sinon
+     */
+    @Override
+    public LigneStock getLigneStock(final MvtStock mvt) {
+        final LigneStockSearchCriteria criteria = this.buildCriteria(mvt);
+        final List<LigneStock> results = this.getAll(criteria);
+        // 1 résultat sur la clé fonctionnelle
+        if (results.size() > 1) {
+            return this.fusion(results);
+        } else if (results.size() == 1) {
+            return results.get(0);
+        } else {
+            return StockServiceImpl.NO_LIGNESTOCK;
+        }
+    }
+
+    /**
+     * Fusionner les N lignes qui correspondent à un MvtStock
+     * @return LigneStock après la fusion
+     */
+    protected LigneStock fusion(final List<LigneStock> lignesStocks) {
+        Integer qtePharmacie = 0;
+        Integer qteDispensationGlobal = 0;
+        for (final LigneStock ligne : lignesStocks) {
+            qtePharmacie += ligne.getQtePharmacie();
+            qteDispensationGlobal += ligne.getQteDispensationGlobal();
+        }
+
+        final LigneStock result = lignesStocks.get(0);
+        result.setQtePharmacie(qtePharmacie);
+        result.setQteDispensationGlobal(qteDispensationGlobal);
+
+        return result;
+    }
+
     /**
      * Méthode en charge de construire le critère de recherche fonctionnel sur
      * la clé complète pour la récupération des lignes de stock <br/>
@@ -296,7 +373,7 @@ public class StockServiceImpl extends GenericServiceImpl<LigneStock> implements 
 
             final MvtStockSearchCriteria criteria = new MvtStockSearchCriteria();
             criteria.setWithAcl(Boolean.FALSE);
-
+            
             // Construction des lignes de stock à partir des entrées
             this.buildFromMvtTypeEntree(criteria, mapLines);
 
@@ -317,23 +394,18 @@ public class StockServiceImpl extends GenericServiceImpl<LigneStock> implements 
      * {@inheritDoc}
      */
     @Override
-    public List<LigneStock> getAllLignesStock(final Essai essai,
-                                              final Pharmacie pharmacie,
-                                              final Produit produit,
-                                              final Conditionnement conditionnement,
-                                              final Boolean dotations) {
+    public List<LigneStock> getLignesStockPharmacie(final Essai essai,
+                                                    final Pharmacie pharmacie,
+                                                    final Produit produit,
+                                                    final Conditionnement conditionnement) {
         final MvtStockSearchCriteria criteria = new MvtStockSearchCriteria();
         criteria.setEssai(essai);
         criteria.setPharmacie(pharmacie);
         criteria.setProduit(produit);
         criteria.setConditionnement(conditionnement);
-        final List<LigneStock> resultWithNullStock = super.getAll(criteria);
+        final List<LigneStock> result = super.getAll(criteria);
 
-        for (final LigneStock ligneStock : resultWithNullStock) {
-            ligneStock.setDotation(dotations);
-        }
-
-        return new ArrayList<LigneStock>(CollectionUtils.select(resultWithNullStock, new LigneStockNonEpuisePredicate()));
+        return new ArrayList<LigneStock>(CollectionUtils.select(result, new LigneStockPharmacieNonEpuisePredicate()));
     }
 
     /**
@@ -369,7 +441,7 @@ public class StockServiceImpl extends GenericServiceImpl<LigneStock> implements 
         ligneStock.setNumLot(mvt.getNumLot());
         ligneStock.setNumTraitement(mvt.getNumTraitement());
         ligneStock.setDatePeremption(mvt.getDatePeremption());
-        ligneStock.setQteGlobalStock(mvt.getQuantite());
+        ligneStock.setQtePharmacie(mvt.getQuantite());
         return ligneStock;
     }
 
@@ -398,7 +470,7 @@ public class StockServiceImpl extends GenericServiceImpl<LigneStock> implements 
             if (appro.getApproApprouve()) {
                 final Produit prod = this.produitService.reattach(appro.getProduit());
                 final Stockage stockage = this.produitService.getStockageProduitPharma(prod, appro.getPharmacie());
-                ligneStock.setStockage(stockage.getNomComplet());
+                ligneStock.setStockage((stockage == null) ? "??" : stockage.getNomComplet());
             } else {
                 ligneStock.setStockage(LigneStock.EN_QUARANTAINE);
             }
@@ -408,7 +480,7 @@ public class StockServiceImpl extends GenericServiceImpl<LigneStock> implements 
             // Une entrée existe déjà => cumul des quantités saisies
             if (mapLines.get(key) != null) {
                 final LigneStock l = mapLines.get(key);
-                l.setQteGlobalStock(l.getQteGlobalStock() + ligneStock.getQteGlobalStock());
+                l.setQtePharmacie(l.getQtePharmacie() + ligneStock.getQtePharmacie());
             } else {
                 mapLines.put(key, ligneStock);
             }
@@ -448,9 +520,9 @@ public class StockServiceImpl extends GenericServiceImpl<LigneStock> implements 
             final String key = this.getKeyMvtStock(mvtStock, false);
             if (mapLines.containsKey(key)) {
                 final LigneStock ligneStock = mapLines.get(key);
-                this.log.debug("Key: " + key + " objec: " + ligneStock);
+                this.log.debug("Sortie Key: " + key + " objec: " + ligneStock);
                 // Mise à jour de la quantité réelle en stock
-                ligneStock.setQteGlobalStock(ligneStock.getQteGlobalStock() - mvtStock.getQuantite());
+                ligneStock.setQtePharmacie(ligneStock.getQtePharmacie() - mvtStock.getQuantite());
             } else {
                 this.log.error("Aucun Mvt d'entrée correspondant à la sortie - idMvt " + mvtStock.getId());
             }
@@ -555,32 +627,12 @@ public class StockServiceImpl extends GenericServiceImpl<LigneStock> implements 
     private void initLignesStockDispensationNominative(final Sortie sortie) {
         final MvtStock mvt = sortie.getMvtSortie();
 
-        final List<LigneStock> lignesStock = this.getAllLignesStock(mvt.getEssai(), mvt.getPharmacie(), mvt.getProduit(), mvt.getConditionnement(), false);
+        final List<LigneStock> lignesStock = this.getLignesStockPharmacie(mvt.getEssai(), mvt.getPharmacie(), mvt.getProduit(), mvt.getConditionnement());
 
         // Filtre des stocks en quarantaine.
         org.apache.commons.collections15.CollectionUtils.filter(lignesStock, new NotPredicate<LigneStock>(new LigneStockEnQuarantainePredicate()));
 
         sortie.setLignesStock(lignesStock);
-    }
-
-    /**
-     * Setter pour mvtStockService.
-     * @param mvtStockService Le mvtStockService à écrire.
-     */
-    public void setMvtStockService(final MvtStockService<MvtStock> mvtStockService) {
-        this.mvtStockService = mvtStockService;
-    }
-
-    /**
-     * Setter pour produitService.
-     * @param produitService Le produitService à écrire.
-     */
-    public void setProduitService(final ProduitService<Produit> produitService) {
-        this.produitService = produitService;
-    }
-
-    public void setApproService(final ApprovisionnementService<Approvisionnement> approService) {
-        this.approService = approService;
     }
 
 }

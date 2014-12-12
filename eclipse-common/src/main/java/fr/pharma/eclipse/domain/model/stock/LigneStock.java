@@ -99,18 +99,19 @@ public class LigneStock extends BeanObject implements BeanParentDocument, Serial
     private Calendar datePeremption;
 
     /**
-     * Quantité en dispensation Global (doté à un service mais on dispensé).
+     * Quantité en dotation (aka dispensation global) ; stock doté à un service
+     * mais non dispensé.
      */
     @Column(name = "quantite_dispensation_en_stock")
     @NotNull
     private Integer qteDispensationGlobal = 0;
 
     /**
-     * Quantité hors dispensation Global.
+     * Quantité à la pharmacie (hors dispensation global).
      */
     @Column(name = "quantite_global")
     @NotNull
-    private Integer qteGlobalStock = 0;
+    private Integer qtePharmacie = 0;
 
     @Transient
     private Boolean dotation = false;
@@ -232,7 +233,7 @@ public class LigneStock extends BeanObject implements BeanParentDocument, Serial
         if (Boolean.TRUE.equals(this.dotation)) {
             return this.qteDispensationGlobal;
         } else {
-            return this.qteGlobalStock;
+            return this.qtePharmacie;
         }
     }
 
@@ -381,19 +382,26 @@ public class LigneStock extends BeanObject implements BeanParentDocument, Serial
     }
 
     /**
-     * Getter pour qteGlobalStock.
-     * @return Le qteGlobalStock
+     * Utiliser getQtePharmacie
      */
+    @Deprecated
     public Integer getQteGlobalStock() {
-        return this.qteGlobalStock;
+        return this.qtePharmacie;
+    }
+    public Integer getQtePharmacie() {
+        return this.qtePharmacie;
     }
 
     /**
-     * Setter pour qteGlobalStock.
+     * Utiliser setQtePharmacie
      * @param qteGlobalStock Le qteGlobalStock à écrire.
      */
+    @Deprecated
     public void setQteGlobalStock(final Integer qteGlobalStock) {
-        this.qteGlobalStock = qteGlobalStock;
+        this.qtePharmacie = qteGlobalStock;
+    }
+    public void setQtePharmacie(final Integer qte) {
+        this.qtePharmacie = qte;
     }
 
     /**
@@ -422,7 +430,7 @@ public class LigneStock extends BeanObject implements BeanParentDocument, Serial
         final StringBuilder sb = new StringBuilder();
         sb.append(this.getEssai().getId()).append(this.getPharmacie().getId()).append(this.getProduit().getId()).append(this.getConditionnement().getId()).append(this.getNumLot())
                 .append(this.getNumTraitement()).append(this.getApproApprouve());
-        if (!datesPeremptionFusionnees && this.getDatePeremption() != null) {
+        if (!datesPeremptionFusionnees && (this.getDatePeremption() != null)) {
             final StringBuilder datePeremptionAsString = new StringBuilder();
 
             datePeremptionAsString.append(this.getDatePeremption().get(Calendar.YEAR)).append(this.getDatePeremption().get(Calendar.MONTH))
@@ -443,6 +451,17 @@ public class LigneStock extends BeanObject implements BeanParentDocument, Serial
         final StringBuilder sb = new StringBuilder();
         sb.append(this.getEssai().getId()).append(this.getPharmacie().getId()).append(this.getProduit().getId()).append(this.getConditionnement().getId())
                 .append(this.getApproApprouve());
+        return sb.toString();
+    }
+
+    @Override
+    public String toString() {
+        final StringBuilder sb = new StringBuilder("LigneStock: ");
+        sb.append(this.getId()).append(", ");
+        sb.append("Essai: ").append((this.essai != null) ? this.essai.getId() : "0").append(", ");
+        sb.append("Produit: ").append((this.produit != null) ? this.produit.getId() : "0").append(", ");
+        sb.append("Date peremption: ").append((this.datePeremption == null) ? "0" : this.datePeremption.getTimeInMillis());
+
         return sb.toString();
     }
 }

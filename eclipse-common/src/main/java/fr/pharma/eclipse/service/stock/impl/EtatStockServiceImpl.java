@@ -74,7 +74,7 @@ public class EtatStockServiceImpl implements EtatStockService {
             if (etat.getEtatsLignesStock().containsKey(ligneStock.getKeyLigneStock(datesPeremptionFusionnees))) {
                 final EtatLigneStock etatLigneSotck = etat.getEtatsLignesStock().get(ligneStock.getKeyLigneStock(datesPeremptionFusionnees));
                 etatLigneSotck.setQteEnStock(etatLigneSotck.getQteEnStock() + ligneStock.getQteEnStock());
-                ligneStock.setQteGlobalStock(Integer.SIZE);
+                ligneStock.setQtePharmacie(Integer.SIZE);
             } else {
                 etat.getEtatsLignesStock()
                         .put(ligneStock.getKeyLigneStock(datesPeremptionFusionnees),

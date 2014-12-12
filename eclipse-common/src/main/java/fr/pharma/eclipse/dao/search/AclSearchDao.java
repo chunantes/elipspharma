@@ -161,7 +161,7 @@ public class AclSearchDao extends CommonSearchDao implements Serializable {
     public void saveAclsEssaisForPharmacien(final Long idPersonne,
                                             final List<Long> idsPharmacies) {
         final String requete =
-            "INSERT INTO acl_essai (id_essai, id_personne) SELECT DISTINCT e.id, {0} FROM essai e, essai_detail_pharma_pharmacie ep WHERE (e.id_pharma IN ({1}) OR (e.id=ep.id_detail_pharma and ep.id_pharmacie in ({2})))";
+            "INSERT INTO acl_essai (id_essai, id_personne) SELECT DISTINCT e.id, {0} FROM essai e left join essai_detail_pharma_pharmacie ep on (e.id=ep.id_detail_pharma) WHERE (e.id_pharma IN ({1}) OR ep.id_pharmacie in ({2}))";
         final String paramIdsPharmacies = Arrays.toString(idsPharmacies.toArray(new Object[idsPharmacies.size()])).replace("[", "").replace("]", "");
         final String paramIdPersonne = "" + idPersonne;
 

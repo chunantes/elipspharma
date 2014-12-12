@@ -33,8 +33,7 @@ public class NominativeFinder implements Serializable, LigneStockFinder {
         final MvtStock mvt = sortieManager.getSortieCurrent().getMvtSortie();
 
         // on recherche les conditionnements du produit correspondant au mode de
-        // prescription du
-        // produi prescrit.
+        // prescription du produit prescrit.
 
         @SuppressWarnings("unchecked")
         final List<Conditionnement> conditionnements =
@@ -48,7 +47,7 @@ public class NominativeFinder implements Serializable, LigneStockFinder {
             // Valorisation des lignes de stock possibles pour une sortie
             // booleen sur les dotations déterminé par le contexte de la
             // dispensation.
-            final List<LigneStock> lignesStock = sortieManager.getStockService().getAllLignesStock(mvt.getEssai(), mvt.getPharmacie(), mvt.getProduit(), conditionnement, false);
+            final List<LigneStock> lignesStock = sortieManager.getStockService().getLignesStockPharmacie(mvt.getEssai(), mvt.getPharmacie(), mvt.getProduit(), conditionnement);
             // Filtre des stocks en quarantaine.
             CollectionUtils.filter(lignesStock, new NotPredicate(new BeanPropertyValueEqualsPredicate("stockage", "En quarantaine")));
 

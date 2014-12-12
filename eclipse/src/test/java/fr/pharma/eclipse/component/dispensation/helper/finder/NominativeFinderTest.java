@@ -86,13 +86,13 @@ public class NominativeFinderTest extends AbstractEclipseJUnitTest {
 
         final List<LigneStock> liste = new ArrayList<LigneStock>();
 
-        Mockito.when(stockService.getAllLignesStock(Matchers.any(Essai.class), Matchers.any(Pharmacie.class), Matchers.any(Produit.class), Matchers.any(Conditionnement.class),
-                                                Matchers.anyBoolean())).thenReturn(liste);
+        Mockito.when(stockService.getLignesStockPharmacie(Matchers.any(Essai.class), Matchers.any(Pharmacie.class), Matchers.any(Produit.class),
+                                                          Matchers.any(Conditionnement.class))).thenReturn(liste);
 
         this.finder.initLignesStocks(sortieManager);
 
-        Mockito.verify(stockService, Mockito.times(1)).getAllLignesStock(Matchers.any(Essai.class), Matchers.any(Pharmacie.class), Matchers.any(Produit.class),
-                                                                     Matchers.any(Conditionnement.class), Matchers.anyBoolean());
+        Mockito.verify(stockService, Mockito.times(1)).getLignesStockPharmacie(Matchers.any(Essai.class), Matchers.any(Pharmacie.class), Matchers.any(Produit.class),
+                                                                               Matchers.any(Conditionnement.class));
 
     }
 }

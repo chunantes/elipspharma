@@ -183,7 +183,6 @@ public class ExtensionPeremptionManager extends BeanListManager<Approvisionnemen
     }
 
     /**
-     * Ajouter le document "Certificat d'analyse" à l'approvisionnement
      */
     public void addDocAppro() {
         if (!this.managerDocAppro.canCreateDocument()) {

@@ -39,11 +39,13 @@ public interface ApprovisionnementService<MVT extends Approvisionnement> extends
     List<MVT> getAllApprovisionnementAvecStockPositif(final ExtensionPeremptionSearchCriteria criteria);
 
     /**
-     * Il faut historiser la dérniere date de péremption avant de la mettre à
-     * jour. L'histoire est gardée dans un String avec une ligne par changement.
+     * Mettre à jour la date de peremption.<br>
+     * L'historique des mises à jour est gardée dans un String avec une ligne par changement.<br>
      * Nous mettons à jour aussi le boolean "extensionPeremption" si la nouvelle
      * date est après l'originale.
+     * Un commentaire peut être ajouté pendant la mise à jour.
      */
     void updateDatePeremption(final Approvisionnement appro,
-                              Calendar newDatePeremption);
+                              Calendar newDatePeremption,
+                              String commentaire);
 }

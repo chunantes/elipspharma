@@ -260,12 +260,13 @@ public class ApprovisionnementServiceImplTest {
         Mockito.when(this.messageBuilder.getMessage(Matchers.anyString())).thenReturn("Test");
 
         // Test
-        this.approvisionnementService.updateDatePeremption(appro, newDatePeremption);
+        this.approvisionnementService.updateDatePeremption(appro, newDatePeremption, "TEST");
 
         // Verify
         Assert.assertEquals(newDatePeremption, appro.getDatePeremption());
         Assert.assertTrue(appro.getExtensionPeremption());
         Assert.assertFalse(StringUtils.isEmpty(appro.getHistoriqueExtensionPeremption()));
+        Assert.assertEquals("TEST", appro.getCommentaireExtensionPeremption());
     }
 
     /** Nouvelle date peremption avant date actuelle */
@@ -281,12 +282,13 @@ public class ApprovisionnementServiceImplTest {
         Mockito.when(this.messageBuilder.getMessage(Matchers.anyString())).thenReturn("Test");
 
         // Test
-        this.approvisionnementService.updateDatePeremption(appro, newDatePeremption);
+        this.approvisionnementService.updateDatePeremption(appro, newDatePeremption, "TEST2");
 
         // Verify
         Assert.assertEquals(newDatePeremption, appro.getDatePeremption());
         Assert.assertFalse(appro.getExtensionPeremption());
         Assert.assertFalse(StringUtils.isEmpty(appro.getHistoriqueExtensionPeremption()));
+        Assert.assertEquals("TEST2", appro.getCommentaireExtensionPeremption());
     }
 
 }
