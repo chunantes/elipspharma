@@ -49,7 +49,7 @@ public class JasperReportBuildManager implements Serializable {
      * Type du rapport Jasper supporté.
      */
     private final TypeRapportJasper typeRapport;
-
+    
     /**
      * Constructeur.
      * @param typeRapportName Type du rapport Jasper supporté sous forme de

@@ -74,17 +74,17 @@ public class AlerteServiceImpl implements AlerteService, Serializable {
      * Requête SQL récupérant les essais entrant dans le calcul des alertes pour
      * un admin.
      */
-    protected static final String SELECT_ESSAIS_FOR_ADMIN = "select e.id, e.numInterne, e.nom, d.finEtude, d.cloture from essai e, essai_detail_dates d" + " where e.id=d.id_essai"
+    protected static final String SELECT_ALERTES_FOR_ADMIN = "select e.id, e.numInterne, e.nom, d.finEtude, d.cloture from essai e, essai_detail_dates d" + " where e.id=d.id_essai"
                                                             + " and e.alerteActive is true and etat<>'" + EtatEssai.ARCHIVE.name() + "'";
 
     /**
      * Requête SQL récupérant les essais entrant dans le calcul des alertes pour
      * un pharmacien.
      */
-    private static final String SELECT_ESSAIS_FOR_PHARMACIEN = "select distinct(e.id), e.numInterne, e.nom, d.finEtude, d.cloture, e.id_pharma "
-                                                               + "from essai e, essai_detail_dates d, pharmacien_pharmacie p, essai_detail_pharma_pharmacie ep "
+    private static final String SELECT_ALERTES_FOR_PHARMACIEN = "select distinct(e.id), e.numInterne, e.nom, d.finEtude, d.cloture, e.id_pharma "
+                                                               + "from essai e, essai_detail_dates d, pharmacien_pharmacie p, essai_detail_pharma_pharmacie ep, essai_detail_pharma ed "
                                                                + "where e.id=d.id_essai and e.alerteActive is true and etat<>'" + EtatEssai.ARCHIVE.name() + "'"
-                                                               + "and (e.id_pharma = p.id_pharmacie or (e.id=ep.id_detail_pharma and p.id_pharmacie=ep.id_pharmacie)) "
+                                                               + "and (e.id_pharma = p.id_pharmacie or (e.id=ed.id_essai and ed.id=ep.id_detail_pharma and p.id_pharmacie=ep.id_pharmacie)) "
                                                                + "and (p.id_pharmacien = ?)";
 
     /**
@@ -101,14 +101,14 @@ public class AlerteServiceImpl implements AlerteService, Serializable {
 
             @SuppressWarnings("unchecked")
             final List<EssaiAlerte> eaTemp =
-                (List<EssaiAlerte>) this.essaiService.executeSQLQuery(AlerteServiceImpl.SELECT_ESSAIS_FOR_ADMIN, null, AlerteServiceImpl.ESSAI_COLS, EssaiAlerte.class,
+                (List<EssaiAlerte>) this.essaiService.executeSQLQuery(AlerteServiceImpl.SELECT_ALERTES_FOR_ADMIN, null, AlerteServiceImpl.ESSAI_COLS, EssaiAlerte.class,
                                                                       AlerteServiceImpl.scalars);
             essaisAlerte = eaTemp;
 
         } else {
             @SuppressWarnings("unchecked")
             final List<EssaiAlerte> eaTemp =
-                (List<EssaiAlerte>) this.essaiService.executeSQLQuery(AlerteServiceImpl.SELECT_ESSAIS_FOR_PHARMACIEN, new Object[]{personne.getId() },
+                (List<EssaiAlerte>) this.essaiService.executeSQLQuery(AlerteServiceImpl.SELECT_ALERTES_FOR_PHARMACIEN, new Object[]{personne.getId() },
                                                                       AlerteServiceImpl.ESSAI_COLS, EssaiAlerte.class, AlerteServiceImpl.scalars);
             essaisAlerte = eaTemp;
         }

@@ -63,8 +63,9 @@
 				
 		   		<div style="width:960px;">
 					<!-- Bouton generation ordonnancier -->
+					<h:outputFormat value="#{resourceBundle['ordonnancierDisp.warning']}"/>
 				   	<div class="actionButton" style="margin-bottom:6px;margin-top:1px;">
-						<p:commandButton id="calculerOrdonnancierDispButton" action="calculerOrdonnancierDisp" ajax="false" 
+						<p:commandButton id="calculerOrdonnancierDispButton" onclick="showWait()" action="calculerOrdonnancierDisp" ajax="false" 
 							value="#{resourceBundle['btn.genererOrdonnancier']}" title="#{resourceBundle['btn.genererOrdonnancier']}" />
 				 	</div>
 			 	</div>				

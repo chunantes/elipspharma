@@ -246,7 +246,8 @@ public class Sequence extends BeanObject implements Designable {
      */
     @Override
     public String getNomComplet() {
-        final StringBuffer buff = new StringBuffer(this.getParent().getNomComplet()).append(EclipseConstants.DASH).append(this.getNom());
+        final StringBuilder buff = new StringBuilder((parent == null) ? "" : this.getParent().getNomComplet());
+        buff.append(EclipseConstants.DASH).append(this.getNom());
         return buff.toString();
     }
 

@@ -7,7 +7,7 @@
 	<parent> 
 		<groupId>fr.pharma.elips</groupId>
 		<artifactId>elips-principal</artifactId>
-		<version>1.34-SNAPSHOT</version>
+        <version>1.40.1</version>
 	</parent>
 
 	<packaging>war</packaging>
@@ -57,7 +57,7 @@
 		<dependency>
 			<groupId>net.sourceforge.collections</groupId>
 			<artifactId>collections-generic</artifactId>
-	    </dependency>
+		</dependency>
 		<dependency>
 			<groupId>commons-fileupload</groupId>
 			<artifactId>commons-fileupload</artifactId>
@@ -262,7 +262,7 @@
 
 	<build>
 	    <plugins>
-		<!--   <plugin>
+		   <plugin>
 	           <groupId>com.google.code.maven-replacer-plugin</groupId>
 	           <artifactId>replacer</artifactId>
 	           <version>1.5.2</version>
@@ -284,7 +284,7 @@
 	                   </replacement>
 	               </replacements>
 	           </configuration>
-	       </plugin>-->
+	       </plugin>
  	    </plugins>
 	</build>
 

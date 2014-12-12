@@ -14,7 +14,7 @@
 	</on-start>
 
 	<decision-state id="createOrEdit">
-		<if test="idPharmacie==null" then="create" else="edit" />
+		<if test="null==idPharmacie" then="create" else="edit" />
 	</decision-state>
 
 	<!-- Création -->
@@ -28,17 +28,19 @@
 		<evaluate expression="pharmacieManager.setBean(pharmacieService.get(idPharmacie))" />
 		<transition to="editPharmacie" />
 	</action-state>
+	<!-- Dans le cas de l'annulation d'un edit, on re-set l'idservice avec l'id du service en cours d'édition (PHARMA-648)-->
+	<action-state id="cancelAndEdit">
+		<set name="flashScope.idPharmacie" value="pharmacieManager.bean.id" />
+		<transition to="edit" />
+        </action-state>
 
-	<!-- Page principale -->
+        <!-- Page principale -->
 	<view-state id="editPharmacie" view="../../../pages/pharmacie/edit/editPharmacie.xhtml">
 		<on-render>
 			<evaluate expression="pharmacieService.reattach(pharmacieManager.bean)" result="pharmacieManager.bean" />
 		</on-render>
 
-		<transition on="cancel" to="createOrEdit">
-			<set name="idPharmacie" value="pharmacieManager.bean.id" type="java.lang.Long" />
-			<evaluate expression="pharmacieService.dettach(pharmacieManager.bean)" />
-		</transition>
+                <transition on="cancel" to="cancelAndCreateOrEdit" />
 		<transition on="save">
 			<evaluate expression="pharmacieService.save(pharmacieManager.bean)" result="pharmacieManager.bean" />
 			<evaluate expression="pharmacieManager.confirmEnregistrement()" />
@@ -54,11 +56,15 @@
 		<transition on="error" to="editPharmacie" />
 	</view-state>
 
+	<!-- decision sur annulation en fonction de l'existence d'un id pharmacie -->
+	<decision-state id="cancelAndCreateOrEdit">
+		<if test="pharmacieManager.bean.id==null" then="create" else="cancelAndEdit" />
+	</decision-state>
 	<!-- Edition d'un pharamcien -->
 	<subflow-state id="editPharmacien" subflow="personne/pharmacien">
 		<attribute name="idPharmacien" value="flashScope.idPharmacien" />
 		<transition to="editPharmacie">
-			<evaluate expression="pharmacieService.get(pharmacieManager.bean.id)" result="pharmacieManager.bean" />
+			<evaluate expression="pharmacieService.get(idPharmacie)" result="pharmacieManager.bean" />
 		</transition>
 	</subflow-state>
 

@@ -1,6 +1,7 @@
 package fr.pharma.eclipse.component.design.validator;
 
 import javax.faces.application.FacesMessage;
+import javax.faces.context.FacesContext;
 
 import org.junit.Assert;
 import org.junit.Test;
@@ -23,19 +24,8 @@ import fr.pharma.eclipse.utils.FacesUtils;
  */
 public class SequenceValidatorTest extends AbstractEclipseJUnitTest {
 
-    /**
-     * Validator.
-     */
     private SequenceValidator validator;
-
-    /**
-     * Time helper.
-     */
     private TimeHelper helper;
-
-    /**
-     * Faces Utils.
-     */
     private FacesUtils facesUtils;
 
     /**
@@ -73,6 +63,7 @@ public class SequenceValidatorTest extends AbstractEclipseJUnitTest {
      */
     @Test
     public void testValidateSequenceFalse() {
+    	// Prepare
         final TempsPrescription t = new TempsPrescription();
         t.setNb(1);
         t.setUnite(UniteTemps.JOUR);
@@ -105,6 +96,10 @@ public class SequenceValidatorTest extends AbstractEclipseJUnitTest {
         bras.getSequences().add(sequence2);
         bras.getSequences().add(sequence3);
         Mockito.when(this.helper.getFin(Matchers.anyCollection())).thenReturn(t1);
+        
+        FacesContextMock.mockFacesContext();
+                
+        // Test & Verify
         Assert.assertFalse(this.validator.validateSequence(prescription, sequence));
         Mockito.verify(this.facesUtils).addMessage(FacesMessage.SEVERITY_ERROR, "sequence.chevauchement");
     }

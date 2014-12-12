@@ -173,5 +173,11 @@
 	        </div>  
 	    </h:form>  
 	</p:dialog>
+	
+	<p:dialog id="dialogWarningDate" widgetVar="popupWarning" header="#{resourceBundle['stockConsultation.warning.title']}" resizable="true" modal="true" width="#{resourceBundle['popup.stockage.site.width']}">
+		<h:form id="formPopupWarning" prependId="false">
+			<h:outputText value="#{resourceBundle['stockConsultation.warning']}" />
+		</h:form>
+	</p:dialog>
 
 </ui:composition>

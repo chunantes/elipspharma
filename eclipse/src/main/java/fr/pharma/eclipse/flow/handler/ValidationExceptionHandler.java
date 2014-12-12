@@ -17,13 +17,24 @@ import fr.pharma.eclipse.exception.ValidationException;
  */
 public class ValidationExceptionHandler implements ExceptionHandler {
 
+    private Throwable scanException(Throwable ex) {
+
+        if (ex.getCause() instanceof ValidationException) {
+            return ex.getCause();
+        } else if (ex.getCause()==null){
+            return ex;
+            
+        }else {
+            return scanException(ex.getCause());
+        }
+    }
     /**
      * {@inheritDoc}
      */
     @Override
     public void handle(final Exception exception,
                        final RequestControlContext context) {
-        final ValidationException exValidation = (ValidationException) exception.getCause();
+        final ValidationException exValidation = (ValidationException) scanException(exception);
         // Construction de la clé du message.
         final StringBuilder strToResolve = new StringBuilder();
         strToResolve.append(exValidation.getErrorCode());

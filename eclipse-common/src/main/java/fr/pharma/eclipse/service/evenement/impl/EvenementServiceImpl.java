@@ -1,17 +1,5 @@
 package fr.pharma.eclipse.service.evenement.impl;
 
-import java.text.MessageFormat;
-import java.util.Arrays;
-import java.util.Calendar;
-import java.util.Date;
-import java.util.List;
-
-import javax.annotation.Resource;
-
-import org.apache.commons.lang.StringUtils;
-import org.joda.time.DateMidnight;
-import org.springframework.beans.factory.annotation.Autowired;
-
 import fr.pharma.eclipse.dao.common.GenericDao;
 import fr.pharma.eclipse.dao.search.AclSearchDao;
 import fr.pharma.eclipse.domain.criteria.common.SearchCriteria;
@@ -28,13 +16,25 @@ import fr.pharma.eclipse.service.essai.EssaiService;
 import fr.pharma.eclipse.service.evenement.EvenementService;
 import fr.pharma.eclipse.service.evenement.updator.EvenementBeforeSaveUpdator;
 import fr.pharma.eclipse.utils.constants.EclipseConstants;
+import java.text.MessageFormat;
+import java.util.Arrays;
+import java.util.Calendar;
+import java.util.Date;
+import java.util.Iterator;
+import java.util.List;
+import javax.annotation.Resource;
+import org.apache.commons.lang.StringUtils;
+import org.joda.time.DateMidnight;
+import org.springframework.beans.factory.annotation.Autowired;
 
 /**
  * Classe d'implémentation du service de gestion des événements.
+ *
  * @author Netapsys
  * @version $Revision$ $Date$
  */
 public class EvenementServiceImpl extends GenericServiceImpl<Evenement> implements EvenementService {
+
     /**
      * Serial ID.
      */
@@ -73,10 +73,11 @@ public class EvenementServiceImpl extends GenericServiceImpl<Evenement> implemen
      * Requête de récupération des événements.
      */
     protected static final String SELECT_EVENEMENTS = "select evt.* from essai e, evenement evt" + " where e.id=evt.id_essai" + " and evt.dateDebut>=? and evt.dateDebut<=? and e.id in {0}"
-                                             + " order by dateDebut";
+            + " order by dateDebut";
 
     /**
      * Constructeur.
+     *
      * @param evenementDao Dao de gestion des événements.
      */
     public EvenementServiceImpl(final GenericDao<Evenement> evenementDao) {
@@ -162,7 +163,7 @@ public class EvenementServiceImpl extends GenericServiceImpl<Evenement> implemen
         final List<Long> idsEssais = this.aclSearchDao.findIdsEssais();
         final String paramIdsEssais = Arrays.toString(idsEssais.toArray(new Object[idsEssais.size()])).replace("[", "(").replace("]", ")");
 
-        final List<Evenement> result = this.executeSQLQuery(MessageFormat.format(EvenementServiceImpl.SELECT_EVENEMENTS, paramIdsEssais), new Object[]{dateDebut, dateFin });
+        final List<Evenement> result = this.executeSQLQuery(MessageFormat.format(EvenementServiceImpl.SELECT_EVENEMENTS, paramIdsEssais), new Object[]{dateDebut, dateFin});
 
         // Chargement des essais pour eviter un LazyLoadingException dans
         // evenements.xhtml
@@ -172,9 +173,11 @@ public class EvenementServiceImpl extends GenericServiceImpl<Evenement> implemen
 
         return result;
     }
+
     /**
      * Méthode en charge de gérer une exception sur le traitement des heures
      * minutes.
+     *
      * @param calendar Calendar ayant provoqué une exception.
      */
     private void handleExceptionHeures(final Calendar calendar) {
@@ -182,7 +185,7 @@ public class EvenementServiceImpl extends GenericServiceImpl<Evenement> implemen
         calendar.set(Calendar.HOUR_OF_DAY, 0);
         calendar.set(Calendar.MINUTE, 0);
 
-        throw new ValidationException("evenement.heure", new String[]{"incorrect" });
+        throw new ValidationException("evenement.heure", new String[]{"incorrect"});
     }
 
     /**
@@ -208,12 +211,26 @@ public class EvenementServiceImpl extends GenericServiceImpl<Evenement> implemen
     @Override
     public List<Evenement> getAll(final SearchCriteria criteria) {
         final EvenementSearchCriteria evenementSearchCriteria = (EvenementSearchCriteria) criteria;
-        evenementSearchCriteria.setIdsEssais(this.aclSearchDao.findIdsEssais());
+
+        if (evenementSearchCriteria.getIdsEssais()==null || evenementSearchCriteria.getIdsEssais().isEmpty()) {
+            evenementSearchCriteria.setIdsEssais(this.aclSearchDao.findIdsEssais());
+        } else {
+            List<Long> idACL = this.aclSearchDao.findIdsEssais();
+            Iterator<Long> idsEssaisIT = evenementSearchCriteria.getIdsEssais().iterator();
+            while (idsEssaisIT.hasNext()) {
+                Long id = idsEssaisIT.next();
+                if (!idACL.contains(id)) {
+                    evenementSearchCriteria.getIdsEssais().remove(id);
+                }
+            }
+        }
+
         return super.getAll(evenementSearchCriteria);
     }
 
     /**
      * Setter pour evtSuiviFactory.
+     *
      * @param evtSuiviFactory Le evtSuiviFactory à écrire.
      */
     public void setEvtSuiviFactory(final SuiviFactory<EvenementSuivi> evtSuiviFactory) {
@@ -222,6 +239,7 @@ public class EvenementServiceImpl extends GenericServiceImpl<Evenement> implemen
 
     /**
      * Setter pour essaiService.
+     *
      * @param essaiService Le essaiService à écrire.
      */
     public void setEssaiService(final EssaiService essaiService) {
@@ -230,6 +248,7 @@ public class EvenementServiceImpl extends GenericServiceImpl<Evenement> implemen
 
     /**
      * Getter sur updators.
+     *
      * @return Retourne le updators.
      */
     public List<EvenementBeforeSaveUpdator> getUpdators() {
@@ -238,6 +257,7 @@ public class EvenementServiceImpl extends GenericServiceImpl<Evenement> implemen
 
     /**
      * Setter pour updators.
+     *
      * @param updators le updators à écrire.
      */
     public void setUpdators(final List<EvenementBeforeSaveUpdator> updators) {
@@ -246,6 +266,7 @@ public class EvenementServiceImpl extends GenericServiceImpl<Evenement> implemen
 
     /**
      * Getter sur essaiService.
+     *
      * @return Retourne le essaiService.
      */
     public EssaiService getEssaiService() {
@@ -254,6 +275,7 @@ public class EvenementServiceImpl extends GenericServiceImpl<Evenement> implemen
 
     /**
      * Setter pour aclSearchDao.
+     *
      * @param aclSearchDao Le aclSearchDao à écrire.
      */
     public void setAclSearchDao(final AclSearchDao aclSearchDao) {

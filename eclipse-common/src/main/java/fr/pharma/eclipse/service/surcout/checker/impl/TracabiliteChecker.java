@@ -26,14 +26,16 @@ public class TracabiliteChecker implements SurcoutChecker, Serializable {
     @Override
     public boolean check(final Essai essai) {
 
-        for (final Produit m : essai.getDetailProduit().getProduits()) {
-            if (m instanceof Medicament) {
-                if (((Medicament) m).getMds() || ((Medicament) m).getStupefiant()) {
+        for (final Produit p : essai.getDetailProduit().getProduits()) {
+            if (p instanceof Medicament) {
+                final Medicament m = (Medicament) p;
+                if (m.getMds() || m.getStupefiant()) {
                     return true;
                 }
             }
-            if (m instanceof ProduitTherapeutique) {
-                if (((ProduitTherapeutique) m).getMds() || ((ProduitTherapeutique) m).getStupefiant()) {
+            if (p instanceof ProduitTherapeutique) {
+                final ProduitTherapeutique pt = (ProduitTherapeutique) p;
+                if (pt.getMds() || pt.getStupefiant()) {
                     return true;
                 }
             }

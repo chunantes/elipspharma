@@ -98,7 +98,7 @@ h1 {
                         <div>
                             <h:outputLink value="mailto:${applicationController.erreurMailto}">
                                 <f:param name="subject" value="ELIPS'PHARMA - Erreur technique" />
-                                <f:param name="body" value="Une erreur technique est survenue le + ${session.lastAccessedTime}%20${requestScope['javax.servlet.error.exception'].message}%20${elips:getFullStackTrace(requestScope['javax.servlet.error.exception'])}" />
+                                <f:param name="body" value="Une erreur technique est survenue le + ${session.lastAccessedTime}%20${requestScope['javax.servlet.error.exception'].message}" />
                                 <h:outputText value="Cliquez-ici pour envoyer l'erreur par mail" />
                             </h:outputLink>
 

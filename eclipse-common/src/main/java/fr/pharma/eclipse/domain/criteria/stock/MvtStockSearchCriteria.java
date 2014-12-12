@@ -19,508 +19,509 @@ import fr.pharma.eclipse.domain.model.stockage.Pharmacie;
  * @version $Revision$ $Date$
  */
 public class MvtStockSearchCriteria extends AbstractSearchCriteria {
-    /**
-     * Serial ID.
-     */
-    private static final long serialVersionUID = 2232057249429158451L;
-
-    /**
-     * Type de mouvement.
-     */
-    private TypeMvtStock typeMouvement;
-
-    /**
-     * Types de mouvements.
-     */
-    private TypeMvtStock[] typesMouvement;
-
-    /**
-     * Essai.
-     */
-    private Essai essai;
-
-    /**
-     * Essai DTO.
-     */
-    private EssaiDTO essaiDTO;
-
-    /**
-     * Stérile.
-     */
-    private Boolean sterile;
-
-    /**
-     * Pharmacie.
-     */
-    private Pharmacie pharmacie;
-
-    /**
-     * Produit.
-     */
-    private Produit produit;
-
-    /**
-     * Conditionnement.
-     */
-    private Conditionnement conditionnement;
-
-    /**
-     * Date de début.
-     */
-    private Calendar dateDebut;
-
-    /**
-     * Date de fin.
-     */
-    private Calendar dateFin;
-
-    /**
-     * Date de péremption.
-     */
-    private Calendar datePeremption;
-
-    private boolean datePeremptionIsNull;
-
-    /**
-     * Numéro de lot.
-     */
-    private String numLot;
-
-    /**
-     * Dénomination du produit.
-     */
-    private String denominationProduit;
-
-    /**
-     * Mode de prescription.
-     */
-    private ModePrescription modePrescription;
-
-    /**
-     * Service.
-     */
-    private Service service;
-
-    /**
-     * Utilisé pour les mouvements de type DispensationGlobale pour savoir si la
-     * quantité totale a été dispensée nominativement.
-     */
-    private Boolean dispenseNominativement;
-
-    /**
-     * Numéro de traitement.
-     */
-    private String numTraitement;
-
-    /**
-     * Stockage.
-     */
-    private DetailStockage stockage;
-
-    /**
-     * Le numéro d'ordonnancier doit être présent.
-     */
-    private Boolean notNullNumOrdonnancier;
-
-    /**
-     * La recherche doit elle être de type similar-to ? par opposition à une
-     * recherche stricte (notamment sur les n° de lot, n° de traitement, etc.).
-     */
-    private boolean similarToEnabled = false;
-
-    /**
-     * Boolean indiquant l'approbation (quarantaine).
-     */
-    private Boolean approApprouve;
-
-    /**
-     * Boolean indiquant la prise en compte des acls.
-     */
-    private Boolean withAcl = true;
-
-    /**
-     * {@inheritDoc}
-     */
-    @Override
-    public void clear() {
-        this.stockage = null;
-        this.setEssai(null);
-        this.setTypeMouvement(null);
-        this.setPharmacie(null);
-        this.setProduit(null);
-        this.setConditionnement(null);
-        this.setTypesMouvement(null);
-        this.setDateDebut(null);
-        this.setDatePeremption(null);
-        this.setNotNullNumOrdonnancier(null);
-        this.setDateFin(null);
-        this.setNumLot(null);
-        this.setDenominationProduit(null);
-        this.setModePrescription(null);
-        this.setService(null);
-        this.setDispenseNominativement(null);
-        this.setSimilarToEnabled(false);
-        this.setApproApprouve(null);
-    }
-
-    /**
-     * Getter pour typeMouvement.
-     * @return Le typeMouvement
-     */
-    public TypeMvtStock getTypeMouvement() {
-        return this.typeMouvement;
-    }
-
-    /**
-     * Setter pour typeMouvement.
-     * @param typeMouvement Le typeMouvement à écrire.
-     */
-    public void setTypeMouvement(final TypeMvtStock typeMouvement) {
-        this.typeMouvement = typeMouvement;
-    }
-
-    /**
-     * Getter pour essai.
-     * @return Le essai
-     */
-    public Essai getEssai() {
-        return this.essai;
-    }
-
-    /**
-     * Setter pour essai.
-     * @param essai Le essai à écrire.
-     */
-    public void setEssai(final Essai essai) {
-        this.essai = essai;
-    }
-
-    /**
-     * Getter pour pharmacie.
-     * @return Le pharmacie
-     */
-    public Pharmacie getPharmacie() {
-        return this.pharmacie;
-    }
-
-    /**
-     * Setter pour pharmacie.
-     * @param pharmacie Le pharmacie à écrire.
-     */
-    public void setPharmacie(final Pharmacie pharmacie) {
-        this.pharmacie = pharmacie;
-    }
-
-    /**
-     * Getter pour produit.
-     * @return Le produit
-     */
-    public Produit getProduit() {
-        return this.produit;
-    }
-
-    /**
-     * Setter pour produit.
-     * @param produit Le produit à écrire.
-     */
-    public void setProduit(final Produit produit) {
-        this.produit = produit;
-    }
-
-    /**
-     * Getter pour conditionnement.
-     * @return Le conditionnement
-     */
-    public Conditionnement getConditionnement() {
-        return this.conditionnement;
-    }
-
-    /**
-     * Setter pour conditionnement.
-     * @param conditionnement Le conditionnement à écrire.
-     */
-    public void setConditionnement(final Conditionnement conditionnement) {
-        this.conditionnement = conditionnement;
-    }
-
-    /**
-     * Getter pour typesMouvement.
-     * @return Le typesMouvement
-     */
-    public TypeMvtStock[] getTypesMouvement() {
-        return this.typesMouvement;
-    }
-
-    /**
-     * Setter pour typesMouvement.
-     * @param typesMouvement Le typesMouvement à écrire.
-     */
-    public void setTypesMouvement(final TypeMvtStock[] typesMouvement) {
-        this.typesMouvement = typesMouvement;
-    }
-
-    /**
-     * Getter pour dateDebut.
-     * @return Le dateDebut
-     */
-    public Calendar getDateDebut() {
-        return this.dateDebut;
-    }
-
-    /**
-     * Setter pour dateDebut.
-     * @param dateDebut Le dateDebut à écrire.
-     */
-    public void setDateDebut(final Calendar dateDebut) {
-        this.dateDebut = dateDebut;
-    }
-
-    /**
-     * Getter pour dateFin.
-     * @return Le dateFin
-     */
-    public Calendar getDateFin() {
-        return this.dateFin;
-    }
-
-    /**
-     * Setter pour dateFin.
-     * @param dateFin Le dateFin à écrire.
-     */
-    public void setDateFin(final Calendar dateFin) {
-        this.dateFin = dateFin;
-    }
-
-    /**
-     * Getter pour numLot.
-     * @return Le numLot
-     */
-    public String getNumLot() {
-        return this.numLot;
-    }
-
-    /**
-     * Setter pour numLot.
-     * @param numLot Le numLot à écrire.
-     */
-    public void setNumLot(final String numLot) {
-        this.numLot = numLot;
-    }
-
-    /**
-     * Getter pour denominationProduit.
-     * @return Le denominationProduit
-     */
-    public String getDenominationProduit() {
-        return this.denominationProduit;
-    }
-
-    /**
-     * Setter pour denominationProduit.
-     * @param denominationProduit Le denominationProduit à écrire.
-     */
-    public void setDenominationProduit(final String denominationProduit) {
-        this.denominationProduit = denominationProduit;
-    }
-
-    /**
-     * Getter sur modePrescription.
-     * @return Retourne le modePrescription.
-     */
-    public ModePrescription getModePrescription() {
-        return this.modePrescription;
-    }
-
-    /**
-     * Setter pour modePrescription.
-     * @param modePrescription le modePrescription à écrire.
-     */
-    public void setModePrescription(final ModePrescription modePrescription) {
-        this.modePrescription = modePrescription;
-    }
-
-    /**
-     * Getter pour service.
-     * @return Le service
-     */
-    public Service getService() {
-        return this.service;
-    }
-
-    /**
-     * Setter pour service.
-     * @param service Le service à écrire.
-     */
-    public void setService(final Service service) {
-        this.service = service;
-    }
-
-    /**
-     * Getter pour dispenseNominativement.
-     * @return Le dispenseNominativement
-     */
-    public Boolean getDispenseNominativement() {
-        return this.dispenseNominativement;
-    }
-
-    /**
-     * Getter pour stockage.
-     * @return Le stockage
-     */
-    public DetailStockage getStockage() {
-        return this.stockage;
-    }
-
-    /**
-     * Setter pour stockage.
-     * @param stockage Le stockage à écrire.
-     */
-    public void setStockage(final DetailStockage stockage) {
-        this.stockage = stockage;
-    }
-
-    /**
-     * Setter pour dispenseNominativement.
-     * @param dispenseNominativement Le dispenseNominativement à écrire.
-     */
-    public void setDispenseNominativement(final Boolean dispenseNominativement) {
-        this.dispenseNominativement = dispenseNominativement;
-    }
-
-    /**
-     * Getter pour numTraitement.
-     * @return Le numTraitement
-     */
-    public String getNumTraitement() {
-        return this.numTraitement;
-    }
-
-    /**
-     * Setter pour numTraitement.
-     * @param numTraitement Le numTraitement à écrire.
-     */
-    public void setNumTraitement(final String numTraitement) {
-        this.numTraitement = numTraitement;
-    }
-
-    /**
-     * Getter pour notNullNumOrdonnancier.
-     * @return Le notNullNumOrdonnancier
-     */
-    public Boolean getNotNullNumOrdonnancier() {
-        return this.notNullNumOrdonnancier;
-    }
-
-    /**
-     * Setter pour notNullNumOrdonnancier.
-     * @param notNullNumOrdonnancier Le notNullNumOrdonnancier à écrire.
-     */
-    public void setNotNullNumOrdonnancier(final Boolean notNullNumOrdonnancier) {
-        this.notNullNumOrdonnancier = notNullNumOrdonnancier;
-    }
-
-    /**
-     * Getter pour sterile.
-     * @return Le sterile
-     */
-    public Boolean getSterile() {
-        return this.sterile;
-    }
-
-    /**
-     * Setter pour sterile.
-     * @param sterile Le sterile à écrire.
-     */
-    public void setSterile(final Boolean sterile) {
-        this.sterile = sterile;
-    }
-
-    /**
-     * Getter pour datePeremption.
-     * @return Le datePeremption
-     */
-    public Calendar getDatePeremption() {
-        return this.datePeremption;
-    }
-
-    /**
-     * Setter pour datePeremption.
-     * @param datePeremption Le datePeremption à écrire.
-     */
-    public void setDatePeremption(final Calendar datePeremption) {
-        this.datePeremption = datePeremption;
-    }
-
-    /**
-     * Getter pour datePeremptionIsNull.
-     * @return Le datePeremptionIsNull
-     */
-    public boolean isDatePeremptionIsNull() {
-        return this.datePeremptionIsNull;
-    }
-
-    /**
-     * Setter pour datePeremptionIsNull.
-     * @param datePeremptionIsNull Le datePeremptionIsNull à écrire.
-     */
-    public void setDatePeremptionIsNull(final boolean datePeremptionIsNull) {
-        this.datePeremptionIsNull = datePeremptionIsNull;
-    }
-
-    public boolean isSimilarToEnabled() {
-        return this.similarToEnabled;
-    }
-
-    public void setSimilarToEnabled(final boolean includeSimilarToMatches) {
-        this.similarToEnabled = includeSimilarToMatches;
-    }
-
-    /**
-     * Getter pour approApprouve.
-     * @return Le approApprouve
-     */
-    public Boolean getApproApprouve() {
-        return this.approApprouve;
-    }
-
-    /**
-     * Setter pour approApprouve.
-     * @param approApprouve Le approApprouve à écrire.
-     */
-    public void setApproApprouve(final Boolean approApprouve) {
-        this.approApprouve = approApprouve;
-    }
-
-    /**
-     * Getter pour essaiDTO.
-     * @return Le essaiDTO
-     */
-    public EssaiDTO getEssaiDTO() {
-        return this.essaiDTO;
-    }
-
-    /**
-     * Setter pour essaiDTO.
-     * @param essaiDTO Le essaiDTO à écrire.
-     */
-    public void setEssaiDTO(final EssaiDTO essaiDTO) {
-        this.essaiDTO = essaiDTO;
-    }
-
-    /**
-     * Getter pour withAcl.
-     * @return Le withAcl
-     */
-    public Boolean getWithAcl() {
-        return this.withAcl;
-    }
-
-    /**
-     * Setter pour withAcl.
-     * @param withAcl Le withAcl à écrire.
-     */
-    public void setWithAcl(final Boolean withAcl) {
-        this.withAcl = withAcl;
-    }
+	/**
+	 * Serial ID.
+	 */
+	private static final long serialVersionUID = 2232057249429158451L;
+
+	/**
+	 * Type de mouvement.
+	 */
+	private TypeMvtStock typeMouvement;
+
+	/**
+	 * Types de mouvements.
+	 */
+	private TypeMvtStock[] typesMouvement;
+
+	/**
+	 * Essai.
+	 */
+	private Essai essai;
+
+	/**
+	 * Essai DTO.
+	 */
+	private EssaiDTO essaiDTO;
+
+	/**
+	 * Stérile.
+	 */
+	private Boolean sterile;
+
+	/**
+	 * Pharmacie.
+	 */
+	private Pharmacie pharmacie;
+
+	/**
+	 * Produit.
+	 */
+	private Produit produit;
+
+	/**
+	 * Conditionnement.
+	 */
+	private Conditionnement conditionnement;
+
+	/**
+	 * Date de début.
+	 */
+	private Calendar dateDebut;
+
+	/**
+	 * Date de fin.
+	 */
+	private Calendar dateFin;
+
+	/**
+	 * Date de péremption.
+	 */
+	private Calendar datePeremption;
+
+	private boolean datePeremptionIsNull;
+
+	/**
+	 * Numéro de lot.
+	 */
+	private String numLot;
+
+	/**
+	 * Dénomination du produit.
+	 */
+	private String denominationProduit;
+
+	/**
+	 * Mode de prescription.
+	 */
+	private ModePrescription modePrescription;
+
+	/**
+	 * Service.
+	 */
+	private Service service;
+
+	/**
+	 * Utilisé pour les mouvements de type DispensationGlobale pour savoir si la quantité totale a été dispensée
+	 * nominativement.
+	 */
+	private Boolean dispenseNominativement;
+
+	/**
+	 * Numéro de traitement.
+	 */
+	private String numTraitement;
+
+	/**
+	 * Stockage.
+	 */
+	private DetailStockage stockage;
+
+	/**
+	 * Le numéro d'ordonnancier doit être présent.
+	 */
+	private Boolean notNullNumOrdonnancier;
+
+	/**
+	 * La recherche doit elle être de type similar-to ? par opposition à une recherche stricte (notamment sur les n° de
+	 * lot, n° de traitement, etc.).
+	 */
+	private boolean similarToEnabled = false;
+
+	/**
+	 * Boolean indiquant l'approbation (quarantaine).
+	 */
+	private Boolean approApprouve;
+
+	/**
+	 * Boolean indiquant la prise en compte des acls.
+	 */
+	private Boolean withAcl = true;
+
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public void clear() {
+		this.stockage = null;
+		this.setEssai(null);
+		this.setTypeMouvement(null);
+		this.setPharmacie(null);
+		this.setProduit(null);
+		this.setConditionnement(null);
+		this.setTypesMouvement(null);
+		this.setDateDebut(null);
+		this.setDatePeremption(null);
+		this.setNotNullNumOrdonnancier(null);
+		this.setDateFin(null);
+		this.setNumLot(null);
+		this.setDenominationProduit(null);
+		this.setModePrescription(null);
+		this.setService(null);
+		this.setDispenseNominativement(null);
+		this.setSimilarToEnabled(false);
+		this.setApproApprouve(null);
+		this.setEssaiDTO(null);
+	}
+
+	/**
+	 * Getter pour typeMouvement.
+	 * @return Le typeMouvement
+	 */
+	public TypeMvtStock getTypeMouvement() {
+		return this.typeMouvement;
+	}
+
+	/**
+	 * Setter pour typeMouvement.
+	 * @param typeMouvement Le typeMouvement à écrire.
+	 */
+	public void setTypeMouvement(final TypeMvtStock typeMouvement) {
+		this.typeMouvement = typeMouvement;
+	}
+
+	/**
+	 * Getter pour essai.
+	 * @return Le essai
+	 */
+	public Essai getEssai() {
+		return this.essai;
+	}
+
+	/**
+	 * Setter pour essai.
+	 * @param essai Le essai à écrire.
+	 */
+	public void setEssai(final Essai essai) {
+		this.essai = essai;
+	}
+
+	/**
+	 * Getter pour pharmacie.
+	 * @return Le pharmacie
+	 */
+	public Pharmacie getPharmacie() {
+		return this.pharmacie;
+	}
+
+	/**
+	 * Setter pour pharmacie.
+	 * @param pharmacie Le pharmacie à écrire.
+	 */
+	public void setPharmacie(final Pharmacie pharmacie) {
+		this.pharmacie = pharmacie;
+	}
+
+	/**
+	 * Getter pour produit.
+	 * @return Le produit
+	 */
+	public Produit getProduit() {
+		return this.produit;
+	}
+
+	/**
+	 * Setter pour produit.
+	 * @param produit Le produit à écrire.
+	 */
+	public void setProduit(final Produit produit) {
+		this.produit = produit;
+	}
+
+	/**
+	 * Getter pour conditionnement.
+	 * @return Le conditionnement
+	 */
+	public Conditionnement getConditionnement() {
+		return this.conditionnement;
+	}
+
+	/**
+	 * Setter pour conditionnement.
+	 * @param conditionnement Le conditionnement à écrire.
+	 */
+	public void setConditionnement(final Conditionnement conditionnement) {
+		this.conditionnement = conditionnement;
+	}
+
+	/**
+	 * Getter pour typesMouvement.
+	 * @return Le typesMouvement
+	 */
+	public TypeMvtStock[] getTypesMouvement() {
+		return this.typesMouvement;
+	}
+
+	/**
+	 * Setter pour typesMouvement.
+	 * @param typesMouvement Le typesMouvement à écrire.
+	 */
+	public void setTypesMouvement(final TypeMvtStock[] typesMouvement) {
+		this.typesMouvement = typesMouvement;
+	}
+
+	/**
+	 * Getter pour dateDebut.
+	 * @return Le dateDebut
+	 */
+	public Calendar getDateDebut() {
+		return this.dateDebut;
+	}
+
+	/**
+	 * Setter pour dateDebut.
+	 * @param dateDebut Le dateDebut à écrire.
+	 */
+	public void setDateDebut(final Calendar dateDebut) {
+		this.dateDebut = dateDebut;
+	}
+
+	/**
+	 * Getter pour dateFin.
+	 * @return Le dateFin
+	 */
+	public Calendar getDateFin() {
+		return this.dateFin;
+	}
+
+	/**
+	 * Setter pour dateFin.
+	 * @param dateFin Le dateFin à écrire.
+	 */
+	public void setDateFin(final Calendar dateFin) {
+		this.dateFin = dateFin;
+	}
+
+	/**
+	 * Getter pour numLot.
+	 * @return Le numLot
+	 */
+	public String getNumLot() {
+		return this.numLot;
+	}
+
+	/**
+	 * Setter pour numLot.
+	 * @param numLot Le numLot à écrire.
+	 */
+	public void setNumLot(final String numLot) {
+		this.numLot = numLot;
+	}
+
+	/**
+	 * Getter pour denominationProduit.
+	 * @return Le denominationProduit
+	 */
+	public String getDenominationProduit() {
+		return this.denominationProduit;
+	}
+
+	/**
+	 * Setter pour denominationProduit.
+	 * @param denominationProduit Le denominationProduit à écrire.
+	 */
+	public void setDenominationProduit(final String denominationProduit) {
+		this.denominationProduit = denominationProduit;
+	}
+
+	/**
+	 * Getter sur modePrescription.
+	 * @return Retourne le modePrescription.
+	 */
+	public ModePrescription getModePrescription() {
+		return this.modePrescription;
+	}
+
+	/**
+	 * Setter pour modePrescription.
+	 * @param modePrescription le modePrescription à écrire.
+	 */
+	public void setModePrescription(final ModePrescription modePrescription) {
+		this.modePrescription = modePrescription;
+	}
+
+	/**
+	 * Getter pour service.
+	 * @return Le service
+	 */
+	public Service getService() {
+		return this.service;
+	}
+
+	/**
+	 * Setter pour service.
+	 * @param service Le service à écrire.
+	 */
+	public void setService(final Service service) {
+		this.service = service;
+	}
+
+	/**
+	 * Getter pour dispenseNominativement.
+	 * @return Le dispenseNominativement
+	 */
+	public Boolean getDispenseNominativement() {
+		return this.dispenseNominativement;
+	}
+
+	/**
+	 * Getter pour stockage.
+	 * @return Le stockage
+	 */
+	public DetailStockage getStockage() {
+		return this.stockage;
+	}
+
+	/**
+	 * Setter pour stockage.
+	 * @param stockage Le stockage à écrire.
+	 */
+	public void setStockage(final DetailStockage stockage) {
+		this.stockage = stockage;
+	}
+
+	/**
+	 * Setter pour dispenseNominativement.
+	 * @param dispenseNominativement Le dispenseNominativement à écrire.
+	 */
+	public void setDispenseNominativement(final Boolean dispenseNominativement) {
+		this.dispenseNominativement = dispenseNominativement;
+	}
+
+	/**
+	 * Getter pour numTraitement.
+	 * @return Le numTraitement
+	 */
+	public String getNumTraitement() {
+		return this.numTraitement;
+	}
+
+	/**
+	 * Setter pour numTraitement.
+	 * @param numTraitement Le numTraitement à écrire.
+	 */
+	public void setNumTraitement(final String numTraitement) {
+		this.numTraitement = numTraitement;
+	}
+
+	/**
+	 * Getter pour notNullNumOrdonnancier.
+	 * @return Le notNullNumOrdonnancier
+	 */
+	public Boolean getNotNullNumOrdonnancier() {
+		return this.notNullNumOrdonnancier;
+	}
+
+	/**
+	 * Setter pour notNullNumOrdonnancier.
+	 * @param notNullNumOrdonnancier Le notNullNumOrdonnancier à écrire.
+	 */
+	public void setNotNullNumOrdonnancier(final Boolean notNullNumOrdonnancier) {
+		this.notNullNumOrdonnancier = notNullNumOrdonnancier;
+	}
+
+	/**
+	 * Getter pour sterile.
+	 * @return Le sterile
+	 */
+	public Boolean getSterile() {
+		return this.sterile;
+	}
+
+	/**
+	 * Setter pour sterile.
+	 * @param sterile Le sterile à écrire.
+	 */
+	public void setSterile(final Boolean sterile) {
+		this.sterile = sterile;
+	}
+
+	/**
+	 * Getter pour datePeremption.
+	 * @return Le datePeremption
+	 */
+	public Calendar getDatePeremption() {
+		return this.datePeremption;
+	}
+
+	/**
+	 * Setter pour datePeremption.
+	 * @param datePeremption Le datePeremption à écrire.
+	 */
+	public void setDatePeremption(final Calendar datePeremption) {
+		this.datePeremption = datePeremption;
+	}
+
+	/**
+	 * Getter pour datePeremptionIsNull.
+	 * @return Le datePeremptionIsNull
+	 */
+	public boolean isDatePeremptionIsNull() {
+		return this.datePeremptionIsNull;
+	}
+
+	/**
+	 * Setter pour datePeremptionIsNull.
+	 * @param datePeremptionIsNull Le datePeremptionIsNull à écrire.
+	 */
+	public void setDatePeremptionIsNull(final boolean datePeremptionIsNull) {
+		this.datePeremptionIsNull = datePeremptionIsNull;
+	}
+
+	public boolean isSimilarToEnabled() {
+		return this.similarToEnabled;
+	}
+
+	public void setSimilarToEnabled(final boolean includeSimilarToMatches) {
+		this.similarToEnabled = includeSimilarToMatches;
+	}
+
+	/**
+	 * Getter pour approApprouve.
+	 * @return Le approApprouve
+	 */
+	public Boolean getApproApprouve() {
+		return this.approApprouve;
+	}
+
+	/**
+	 * Setter pour approApprouve.
+	 * @param approApprouve Le approApprouve à écrire.
+	 */
+	public void setApproApprouve(final Boolean approApprouve) {
+		this.approApprouve = approApprouve;
+	}
+
+	/**
+	 * Getter pour essaiDTO.
+	 * @return Le essaiDTO
+	 */
+	public EssaiDTO getEssaiDTO() {
+		return this.essaiDTO;
+	}
+
+	/**
+	 * Setter pour essaiDTO.
+	 * @param essaiDTO Le essaiDTO à écrire.
+	 */
+	public void setEssaiDTO(final EssaiDTO essaiDTO) {
+		this.essaiDTO = essaiDTO;
+	}
+
+	/**
+	 * Getter pour withAcl.
+	 * @return Le withAcl
+	 */
+	public Boolean getWithAcl() {
+		return this.withAcl;
+	}
+
+	/**
+	 * Setter pour withAcl.
+	 * @param withAcl Le withAcl à écrire.
+	 */
+	public void setWithAcl(final Boolean withAcl) {
+		this.withAcl = withAcl;
+	}
 
 }

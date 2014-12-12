@@ -45,6 +45,8 @@
 								<h:outputLabel id="labelDateDebut" for="dateDebut"
 									value="#{resourceBundle['indicateur.dateDebut']}" />
 								<p:calendar id="dateDebut"
+									required="true"
+									requiredMessage="#{resourceBundle['indicateur.date.debut.notEmpty']}"
 									value="#{indicateurManager.dateDebut}"
 									effect="#{resourceBundle['effect.calendar']}"
 									locale="#{resourceBundle['date.locale']}"
@@ -57,6 +59,8 @@
 								<h:outputLabel id="labelDateFin" for="dateFin"
 									value="#{resourceBundle['indicateur.dateFin']}" />
 								<p:calendar id="dateFin" value="#{indicateurManager.dateFin}"
+									required="true"
+									requiredMessage="#{resourceBundle['indicateur.date.fin.notEmpty']}"
 									effect="#{resourceBundle['effect.calendar']}"
 									locale="#{resourceBundle['date.locale']}"
 									showButtonPanel="true" navigator="true"

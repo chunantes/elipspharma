@@ -2,15 +2,18 @@ package fr.pharma.eclipse.service.stock.impl;
 
 import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.Calendar;
 import java.util.List;
 
 import org.junit.After;
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
+import org.mockito.ArgumentCaptor;
+import org.mockito.InjectMocks;
 import org.mockito.Matchers;
+import org.mockito.Mock;
 import org.mockito.Mockito;
+import org.mockito.MockitoAnnotations;
 import org.mockito.invocation.InvocationOnMock;
 import org.mockito.stubbing.Answer;
 
@@ -23,17 +26,12 @@ import fr.pharma.eclipse.domain.model.produit.Conditionnement;
 import fr.pharma.eclipse.domain.model.produit.Medicament;
 import fr.pharma.eclipse.domain.model.produit.Produit;
 import fr.pharma.eclipse.domain.model.stock.Approvisionnement;
-import fr.pharma.eclipse.domain.model.stock.CessionPui;
-import fr.pharma.eclipse.domain.model.stock.DispensationProduit;
 import fr.pharma.eclipse.domain.model.stock.LigneStock;
 import fr.pharma.eclipse.domain.model.stock.MvtStock;
-import fr.pharma.eclipse.domain.model.stock.PreparationEntree;
-import fr.pharma.eclipse.domain.model.stock.RetourPromoteur;
 import fr.pharma.eclipse.domain.model.stock.Sortie;
 import fr.pharma.eclipse.domain.model.stockage.Pharmacie;
 import fr.pharma.eclipse.domain.model.stockage.Stockage;
 import fr.pharma.eclipse.service.produit.ProduitService;
-import fr.pharma.eclipse.service.stock.ApprovisionnementService;
 import fr.pharma.eclipse.service.stock.MvtStockService;
 
 /**
@@ -45,24 +43,18 @@ public class StockServiceImplTest {
     /**
      * StockService à tester.
      */
+    @InjectMocks
     private StockServiceImpl service;
 
     /**
-     * Dao de gestion des mouvements de stock.
+     * Mocks
      */
+    @Mock
     private GenericDao<LigneStock> mockDao;
-
-    /**
-     * Service de gestion des mouvements de stock mocké.
-     */
+    @Mock
     private MvtStockService<MvtStock> mvtStockServiceMock;
-
-    /**
-     * Service de gestion des produits mocké.
-     */
+    @Mock
     private ProduitService<Produit> produitServiceMock;
-
-    private ApprovisionnementService<Approvisionnement> approServiceMock;
 
     /**
      * Méthode en charge d'initialiser les données de test.
@@ -72,26 +64,14 @@ public class StockServiceImplTest {
     public void init() {
         this.mockDao = Mockito.mock(GenericDao.class);
         this.service = new StockServiceImpl(this.mockDao);
-
-        this.mvtStockServiceMock = Mockito.mock(MvtStockService.class);
-        this.service.setMvtStockService(this.mvtStockServiceMock);
-
-        this.produitServiceMock = Mockito.mock(ProduitService.class);
-        this.service.setProduitService(this.produitServiceMock);
-
-        this.approServiceMock = Mockito.mock(ApprovisionnementService.class);
-        this.service.setApproService(this.approServiceMock);
+        MockitoAnnotations.initMocks(this);
     }
-
     /**
      * Méthode en charge de purger les données de test.
      */
     @After
     public void end() {
         this.service = null;
-        this.mvtStockServiceMock = null;
-        this.produitServiceMock = null;
-        this.approServiceMock = null;
     }
 
     /**
@@ -102,63 +82,27 @@ public class StockServiceImplTest {
         Assert.assertNotNull(this.service);
         Assert.assertNotNull(this.mvtStockServiceMock);
         Assert.assertNotNull(this.produitServiceMock);
-        Assert.assertNotNull(this.approServiceMock);
     }
 
-    /**
-     * Méthode en charge de tester la récupération des lignes de stock.
-     */
     @Test
-    public void testGetAllLignesStock() {
+    public void testInitialiseTableLigneStock() {
+        // Prepare
         final List<MvtStock> appros = new ArrayList<MvtStock>();
-        final Approvisionnement appro1 = new Approvisionnement();
-        appro1.setEssai(this.getEssai());
-        appro1.setPharmacie(this.getPharmacie());
-        appro1.setProduit(this.getProduit());
-        appro1.setConditionnement(this.getConditionnement());
-        appro1.setApproApprouve(Boolean.TRUE);
-        appro1.setNumLot("numLot1");
-        appro1.setQuantite(2);
-        appros.add(appro1);
-
-        final Approvisionnement appro2 = new Approvisionnement();
-        appro2.setEssai(this.getEssai());
-        appro2.setPharmacie(this.getPharmacie());
-        appro2.setProduit(this.getProduit());
-        appro2.setConditionnement(this.getConditionnement());
-        appro2.setNumLot("numLot2");
-        appro2.setQuantite(1);
-        appro2.setApproApprouve(Boolean.FALSE);
-        appros.add(appro2);
+        appros.add(this.getMvtStock(TypeMvtStock.APPROVISIONNEMENT, "numLot1", 2, true));
+        appros.add(this.getMvtStock(TypeMvtStock.APPROVISIONNEMENT, "numLot2", 1, false));
 
         final List<MvtStock> sorties = new ArrayList<MvtStock>();
-        final RetourPromoteur retourPromoteur = new RetourPromoteur();
-        retourPromoteur.setEssai(this.getEssai());
-        retourPromoteur.setPharmacie(this.getPharmacie());
-        retourPromoteur.setProduit(this.getProduit());
-        retourPromoteur.setConditionnement(this.getConditionnement());
-        retourPromoteur.setNumLot("numLot1");
-        retourPromoteur.setType(TypeMvtStock.RETOUR_PROMOTEUR);
-        retourPromoteur.setQuantite(1);
-        retourPromoteur.setApproApprouve(true);
-        sorties.add(retourPromoteur);
-
-        final CessionPui cessionPui = new CessionPui();
-        cessionPui.setEssai(this.getEssai());
-        cessionPui.setPharmacie(this.getPharmacie());
-        cessionPui.setProduit(this.getProduit());
-        cessionPui.setConditionnement(this.getConditionnement());
-        cessionPui.setNumLot("numLot2");
-        cessionPui.setQuantite(1);
-        cessionPui.setType(TypeMvtStock.CESSION_PUI);
-        cessionPui.setApproApprouve(false);
-        sorties.add(cessionPui);
+        sorties.add(this.getMvtStock(TypeMvtStock.RETOUR_PROMOTEUR, "numLot1", 1, true));
+        sorties.add(this.getMvtStock(TypeMvtStock.CESSION_PUI, "numLot2", 1, false));
 
         final Stockage stockage = new Stockage();
         stockage.setNom("stockage");
+
         Mockito.when(this.produitServiceMock.reattach(this.getProduit())).thenReturn(this.getProduit());
         Mockito.when(this.produitServiceMock.getStockageProduitPharma(this.getProduit(), this.getPharmacie())).thenReturn(stockage);
 
+        // Ignorer le warning : devoir remplacer thenReturn(a,b,c) avec
+        // thenReturn(a), thenReturn(b), ... mais le test ne marche plus !
         Mockito.when(this.mvtStockServiceMock.getAll((SearchCriteria) Matchers.any())).thenReturn(appros, sorties, new ArrayList<MvtStock>());
 
         Mockito.when(this.mockDao.save(Matchers.any(LigneStock.class))).thenAnswer(new Answer<LigneStock>() {
@@ -170,61 +114,35 @@ public class StockServiceImplTest {
             }
         });
 
+        // Test
         final List<LigneStock> lignesBdd = this.service.initialiseTableLigneStock();
 
         Mockito.when(this.mockDao.getAll((SearchCriteria) Matchers.any())).thenReturn(lignesBdd);
-        final List<LigneStock> result = this.service.getAllLignesStock(this.getEssai(), this.getPharmacie(), this.getProduit(), this.getConditionnement(), false);
+        final List<LigneStock> result = this.service.getLignesStockPharmacie(this.getEssai(), this.getPharmacie(), this.getProduit(), this.getConditionnement());
+
+        // Verifier
         Assert.assertEquals(1, result.size());
-        final LigneStock ligneResult = result.get(0);
-        Assert.assertEquals(1, ligneResult.getQteEnStock().intValue());
-
+        final LigneStock ligne = result.get(0);
+        Assert.assertEquals(1, ligne.getQteEnStock().intValue());
     }
 
-    /**
-     * Méthode en charge de tester la récupération des lignes de stock.
-     */
     @Test
-    public void testGetAllLignesStockWithApproFoncIdentiques() {
+    public void testInitialiseTableLigneStockWithApproFoncIdentiques() {
+        // Prepare
         final List<MvtStock> appros = new ArrayList<MvtStock>();
-        final Approvisionnement appro1 = new Approvisionnement();
-        appro1.setEssai(this.getEssai());
-        appro1.setPharmacie(this.getPharmacie());
-        appro1.setProduit(this.getProduit());
-        appro1.setConditionnement(this.getConditionnement());
-        appro1.setApproApprouve(Boolean.TRUE);
-        appro1.setType(TypeMvtStock.APPROVISIONNEMENT);
-        appro1.setNumLot("numLot1");
-        appro1.setQuantite(2);
-        appros.add(appro1);
-
-        final Approvisionnement appro2 = new Approvisionnement();
-        appro2.setEssai(this.getEssai());
-        appro2.setPharmacie(this.getPharmacie());
-        appro2.setProduit(this.getProduit());
-        appro2.setConditionnement(this.getConditionnement());
-        appro2.setNumLot("numLot1");
-        appro2.setType(TypeMvtStock.APPROVISIONNEMENT);
-        appro2.setQuantite(1);
-        appro2.setApproApprouve(Boolean.TRUE);
-        appros.add(appro2);
+        appros.add(this.getMvtStock(TypeMvtStock.APPROVISIONNEMENT, "numLot1", 2, true));
+        appros.add(this.getMvtStock(TypeMvtStock.APPROVISIONNEMENT, "numLot1", 1, true));
 
         final List<MvtStock> sorties = new ArrayList<MvtStock>();
-        final RetourPromoteur retourPromoteur = new RetourPromoteur();
-        retourPromoteur.setEssai(this.getEssai());
-        retourPromoteur.setPharmacie(this.getPharmacie());
-        retourPromoteur.setProduit(this.getProduit());
-        retourPromoteur.setConditionnement(this.getConditionnement());
-        retourPromoteur.setNumLot("numLot1");
-        retourPromoteur.setType(TypeMvtStock.RETOUR_PROMOTEUR);
-        retourPromoteur.setQuantite(1);
-        retourPromoteur.setApproApprouve(true);
-        sorties.add(retourPromoteur);
+        sorties.add(this.getMvtStock(TypeMvtStock.RETOUR_PROMOTEUR, "numLot1", 1, true));
 
         final Stockage stockage = new Stockage();
         stockage.setNom("stockage");
         Mockito.when(this.produitServiceMock.reattach(this.getProduit())).thenReturn(this.getProduit());
         Mockito.when(this.produitServiceMock.getStockageProduitPharma(this.getProduit(), this.getPharmacie())).thenReturn(stockage);
 
+        // Ignorer le warning : devoir remplacer thenReturn(a,b,c) avec
+        // thenReturn(a), thenReturn(b), ... mais le test ne marche plus !
         Mockito.when(this.mvtStockServiceMock.getAll((SearchCriteria) Matchers.any())).thenReturn(appros, sorties, new ArrayList<MvtStock>());
         Mockito.when(this.mockDao.save(Matchers.any(LigneStock.class))).thenAnswer(new Answer<LigneStock>() {
 
@@ -235,11 +153,13 @@ public class StockServiceImplTest {
             }
         });
 
+        // Test
         final List<LigneStock> lignesBdd = this.service.initialiseTableLigneStock();
 
         Mockito.when(this.mockDao.getAll((SearchCriteria) Matchers.any())).thenReturn(lignesBdd);
+        final List<LigneStock> result = this.service.getLignesStockPharmacie(this.getEssai(), this.getPharmacie(), this.getProduit(), this.getConditionnement());
 
-        final List<LigneStock> result = this.service.getAllLignesStock(this.getEssai(), this.getPharmacie(), this.getProduit(), this.getConditionnement(), false);
+        // Verifier
         Assert.assertEquals(1, result.size());
         final LigneStock ligneResult = result.get(0);
         Assert.assertEquals(2, ligneResult.getQteEnStock().intValue());
@@ -264,14 +184,14 @@ public class StockServiceImplTest {
         sortie.setMvtSortie(mvtStock);
 
         final LigneStock ligne1 = new LigneStock(this.getEssai(), this.getPharmacie(), this.getProduit(), this.getConditionnement(), true);
-        ligne1.setQteGlobalStock(12);
+        ligne1.setQtePharmacie(12);
 
         final LigneStock ligne2 = new LigneStock(this.getEssai(), this.getPharmacie(), this.getProduit(), this.getConditionnement(), true);
-        ligne2.setQteGlobalStock(24);
+        ligne2.setQtePharmacie(24);
         ligne2.setStockage(LigneStock.EN_QUARANTAINE);
 
         final LigneStock ligne3 = new LigneStock(this.getEssai(), this.getPharmacie(), this.getProduit(), this.getConditionnement(), true);
-        ligne3.setQteGlobalStock(0);
+        ligne3.setQtePharmacie(0);
 
         Mockito.when(this.mockDao.getAll(Matchers.any(SearchCriteria.class))).thenReturn(Arrays.asList(ligne1, ligne2, ligne3));
 
@@ -284,11 +204,8 @@ public class StockServiceImplTest {
         Assert.assertEquals(ligne1, sortie.getLignesStock().get(0));
     }
 
-    /**
-     * Classe en charge de tester la méthode de sauvegarde de ligne de stock
-     */
     @Test
-    public void testSave() {
+    public void testSaveNoStock() {
         final LigneStock l1 = new LigneStock();
         l1.setId(1L);
         Mockito.when(this.mockDao.save(l1)).thenReturn(l1);
@@ -296,16 +213,22 @@ public class StockServiceImplTest {
         this.service.save(l1);
         Mockito.verify(this.mockDao).save(l1);
         Mockito.verify(this.mockDao).remove(l1);
+    }
 
+    @Test
+    public void testSaveWithPharmacieStock() {
         final LigneStock l2 = new LigneStock();
         l2.setId(2L);
-        l2.setQteGlobalStock(2);
+        l2.setQtePharmacie(2);
         Mockito.when(this.mockDao.save(l2)).thenReturn(l2);
         Mockito.when(this.mockDao.reattach(l2)).thenReturn(l2);
         this.service.save(l2);
         Mockito.verify(this.mockDao).save(l2);
-        Mockito.verify(this.mockDao, Mockito.times(0)).remove(l2);
+        Mockito.verify(this.mockDao, Mockito.never()).remove(l2);
+    }
 
+    @Test
+    public void testSaveWithDispGlobal() {
         final LigneStock l3 = new LigneStock();
         l3.setId(3L);
         l3.setQteDispensationGlobal(2);
@@ -313,151 +236,222 @@ public class StockServiceImplTest {
         Mockito.when(this.mockDao.reattach(l3)).thenReturn(l3);
         this.service.save(l3);
         Mockito.verify(this.mockDao).save(l3);
-        Mockito.verify(this.mockDao, Mockito.times(0)).remove(l3);
+        Mockito.verify(this.mockDao, Mockito.never()).remove(l3);
+    }
 
+    @Test
+    public void testSaveWithStockPharmacieNegative() {
         final LigneStock l4 = new LigneStock();
         l4.setId(4L);
-        l4.setQteGlobalStock(-1);
+        l4.setQtePharmacie(-1);
+
         Mockito.when(this.mockDao.save(l4)).thenReturn(l4);
         Mockito.when(this.mockDao.reattach(l4)).thenReturn(l4);
         this.service.save(l4);
         Mockito.verify(this.mockDao).save(l4);
-        Mockito.verify(this.mockDao, Mockito.times(0)).remove(l4);
+        Mockito.verify(this.mockDao).remove(l4);
     }
 
     @Test
-    public void testEtendrePeremptionBasic() {
+    public void testSaveWithMAJStockage() {
         // Prepare
-        final Calendar newDatePeremption = Calendar.getInstance();
-        final List<MvtStock> mvts = this.prepareTestEtendrePeremption(newDatePeremption);
+        final LigneStock l4 = new LigneStock();
+        l4.setId(4L);
+        l4.setQtePharmacie(10);
+        l4.setStockage("Lieu 1");
+        l4.setProduit(this.getProduit());
+        l4.setPharmacie(this.getPharmacie());
 
-        final Approvisionnement approTmp = new Approvisionnement();
-        approTmp.setId(1L);
-        approTmp.setDatePeremption(newDatePeremption);
+        final Stockage stockage = new Stockage();
+        stockage.setNom("Lieu 2");
+        Mockito.when(this.produitServiceMock.getStockageProduitPharma(Matchers.any(Produit.class), Matchers.any(Pharmacie.class))).thenReturn(stockage);
+
+        Mockito.when(this.mockDao.save(l4)).thenReturn(l4);
+        Mockito.when(this.mockDao.reattach(l4)).thenReturn(l4);
 
         // Test
-        this.service.etendrePeremption(approTmp);
+        this.service.save(l4);
 
         // Verify
-        for (final MvtStock mvt : mvts) {
-            Assert.assertEquals(newDatePeremption, mvt.getDatePeremption());
-        }
+        final ArgumentCaptor<LigneStock> argument = ArgumentCaptor.forClass(LigneStock.class);
+        Mockito.verify(this.mockDao).save(argument.capture());
+        Assert.assertEquals("Lieu 2", argument.getValue().getStockage());
+
+        Mockito.verify(this.mockDao, Mockito.never()).remove(l4);
     }
 
-    /**
-     * Création d'une liste de MvtStock ; preparer les réponses des mocks
-     * @return la liste de MvtStock
-     */
-    private List<MvtStock> prepareTestEtendrePeremption(final Calendar newDatePeremption) {
-        final Approvisionnement approBase = new Approvisionnement();
-        approBase.setId(1L);
-        final Calendar origDatePeremption = Calendar.getInstance();
-        approBase.setDatePeremption(origDatePeremption);
+    @Test
+    public void testGetLigneStockEmpty() {
+        // Prepare
+        final List<LigneStock> lignes = new ArrayList<LigneStock>();
+        Mockito.when(this.mockDao.getAll(Matchers.any(SearchCriteria.class))).thenReturn(lignes);
 
-        final Approvisionnement entreeCorrective = new Approvisionnement();
-        entreeCorrective.setType(TypeMvtStock.ENTREE_CORRECTIVE);
-        entreeCorrective.setId(2L);
-        entreeCorrective.setDatePeremption(origDatePeremption);
+        // Test
+        final LigneStock result = this.service.getLigneStock(Mockito.mock(MvtStock.class));
 
-        final PreparationEntree entree = new PreparationEntree();
-        entree.setId(3L);
-        entree.setDatePeremption(Calendar.getInstance());
+        // Verify
+        Assert.assertEquals(StockServiceImpl.NO_LIGNESTOCK, result);
+    }
 
-        final DispensationProduit mvtStockBase = new DispensationProduit();
+    @Test
+    public void testGetLigneStock() {
+        // Prepare
+        final LigneStock ligne = Mockito.mock(LigneStock.class);
+        final List<LigneStock> lignes = new ArrayList<LigneStock>();
+        lignes.add(ligne);
+        Mockito.when(this.mockDao.getAll(Matchers.any(SearchCriteria.class))).thenReturn(lignes);
 
+        // Test
+        final LigneStock result = this.service.getLigneStock(Mockito.mock(MvtStock.class));
+
+        // Verify
+        Assert.assertEquals(ligne, result);
+    }
+
+    @Test
+    public void testGetLigneStockFusion() {
+        // Prepare
+        final LigneStock ligne1 = new LigneStock();
+        ligne1.setQtePharmacie(3);
+        ligne1.setQteDispensationGlobal(5);
+
+        final LigneStock ligne2 = new LigneStock();
+        ligne2.setQtePharmacie(7);
+        ligne2.setQteDispensationGlobal(11);
+
+        final List<LigneStock> lignes = new ArrayList<LigneStock>();
+        lignes.add(ligne1);
+        lignes.add(ligne2);
+        Mockito.when(this.mockDao.getAll(Matchers.any(SearchCriteria.class))).thenReturn(lignes);
+
+        // Test
+        final LigneStock result = this.service.getLigneStock(Mockito.mock(MvtStock.class));
+
+        // Verify
+        Assert.assertEquals(new Integer(10), result.getQtePharmacie());
+        Assert.assertEquals(new Integer(16), result.getQteDispensationGlobal());
+    }
+
+    @Test
+    public void testRetrieveLigneStockNoMatch() {
+        // Prepare
+        final List<LigneStock> lignes = new ArrayList<LigneStock>();
+        Mockito.when(this.mockDao.getAll(Matchers.any(SearchCriteria.class))).thenReturn(lignes);
+
+        final MvtStock mvt = Mockito.mock(MvtStock.class);
+        Mockito.when(mvt.getEssai()).thenReturn(this.getEssai());
+        Mockito.when(mvt.getPharmacie()).thenReturn(this.getPharmacie());
+        Mockito.when(mvt.getProduit()).thenReturn(this.getProduit());
+
+        // Test
+        final LigneStock result = this.service.getOrCreateLigneStock(mvt);
+
+        // Verify
+        Assert.assertEquals(mvt.getEssai(), result.getEssai());
+        Assert.assertEquals(mvt.getPharmacie(), result.getPharmacie());
+        Assert.assertEquals(mvt.getProduit(), result.getProduit());
+        Assert.assertNull(result.getId());
+    }
+
+    @Test
+    public void testUpdateAppro() {
+        final int APPRO = 5;
+        final int STOCK = 3;
+
+        // Prepare
         final List<MvtStock> mvts = new ArrayList<MvtStock>();
-        mvts.add(approBase);
-        mvts.add(entreeCorrective);
-        mvts.add(entree);
-        mvts.add(mvtStockBase);
+        mvts.add(this.getMvtStock(TypeMvtStock.APPROVISIONNEMENT, "numLot", APPRO, true));
 
-        Mockito.when(this.approServiceMock.get(1L)).thenReturn(approBase);
-        Mockito.when(this.mvtStockServiceMock.getAll((SearchCriteria) Matchers.any())).thenReturn(mvts);
+        final Stockage stockage = new Stockage();
+        stockage.setNom("Lieu 2");
+        Mockito.when(this.produitServiceMock.getStockageProduitPharma(Matchers.any(Produit.class), Matchers.any(Pharmacie.class))).thenReturn(stockage);
 
-        return mvts;
+        final LigneStock ligne = new LigneStock();
+        ligne.setProduit(this.getProduit());
+        ligne.setPharmacie(this.getPharmacie());
+        ligne.setQtePharmacie(STOCK);
+        ligne.setStockage("Lieu 1");
+
+        final List<LigneStock> lignes = new ArrayList<LigneStock>();
+        lignes.add(ligne);
+        Mockito.when(this.mockDao.getAll(Matchers.any(SearchCriteria.class))).thenReturn(lignes);
+
+        // Test
+        this.service.update(mvts);
+
+        // Verify
+        Assert.assertEquals(new Integer(APPRO + STOCK), ligne.getQteEnStock());
+        Assert.assertEquals("Lieu 2", ligne.getStockage());
     }
 
     @Test
-    public void testUpdateDatePeremptionDesMvtStocks() throws InterruptedException {
+    public void testUpdateApproNewLigneStock() {
+        final Integer APPRO = 5;
+
         // Prepare
-        final Calendar newDatePeremption = Calendar.getInstance();
-        Thread.sleep(1);
-        final List<MvtStock> mvts = this.prepareTestEtendrePeremption(newDatePeremption);
+        final List<MvtStock> mvts = new ArrayList<MvtStock>();
+        mvts.add(this.getMvtStock(TypeMvtStock.APPROVISIONNEMENT, "numLot", APPRO, false));
 
-        final Approvisionnement approTmp = new Approvisionnement();
-        approTmp.setId(1L);
-        approTmp.setDatePeremption(newDatePeremption);
-
-        final String commentaire = "TEST";
+        final Stockage stockage = new Stockage();
+        stockage.setIdentifiantStockage("STOCK");
+        Mockito.when(this.produitServiceMock.getStockageProduitPharma(Matchers.any(Produit.class), Matchers.any(Pharmacie.class))).thenReturn(stockage);
 
         // Test
-        this.service.updateDatePeremptionDesMvtStocks(approTmp, newDatePeremption, commentaire);
+        this.service.update(mvts);
 
         // Verify
-        // Les mvts de type "ENTREE" n'ont pas de date à jour parce que cette
-        // manipulation est fait dans une autre méthode
-        for (final MvtStock mvt : mvts) {
-            if (Arrays.asList(TypeMvtStock.ENTREES).contains(mvt.getType())) {
-                Assert.assertEquals(commentaire, ((Approvisionnement) mvt).getCommentaireExtensionPeremption());
-            } else {
-                Assert.assertEquals(newDatePeremption, mvt.getDatePeremption());
-            }
-        }
-
-        Mockito.verify(this.approServiceMock, Mockito.times(3)).updateDatePeremption((Approvisionnement) Matchers.any(), (Calendar) Matchers.any());
+        final ArgumentCaptor<LigneStock> argument = ArgumentCaptor.forClass(LigneStock.class);
+        Mockito.verify(this.mockDao).save(argument.capture());
+        Assert.assertEquals(APPRO, argument.getValue().getQteEnStock());
     }
 
-    /**
-     * Update lignestock; pas de fusion avec une autre ligne
-     */
     @Test
-    public void testUpdateLigneStockNonFusion() {
-        // Prepare
-        final Approvisionnement appro = new Approvisionnement();
-        appro.setDatePeremption(Calendar.getInstance());
-        final LigneStock oldLigneStock = new LigneStock();
+    public void testUpdateSortie() {
+        final int SORTIE = 5;
+        final int STOCK = 7;
 
-        Mockito.when(this.mockDao.getAll((SearchCriteria) Matchers.any())).thenReturn(new ArrayList<LigneStock>());
+        // Prepare
+        final List<MvtStock> mvts = new ArrayList<MvtStock>();
+        mvts.add(this.getMvtStock(TypeMvtStock.PREPARATION_SORTIE, "numLot", SORTIE, false));
+
+        final Stockage stockage = new Stockage();
+        stockage.setIdentifiantStockage("STOCK");
+        Mockito.when(this.produitServiceMock.getStockageProduitPharma(Matchers.any(Produit.class), Matchers.any(Pharmacie.class))).thenReturn(stockage);
+
+        final LigneStock ligne = new LigneStock();
+        ligne.setQtePharmacie(STOCK);
+        final List<LigneStock> lignes = new ArrayList<LigneStock>();
+        lignes.add(ligne);
+        Mockito.when(this.mockDao.getAll(Matchers.any(SearchCriteria.class))).thenReturn(lignes);
 
         // Test
-        this.service.updateLigneStock(appro, oldLigneStock);
+        this.service.update(mvts);
 
         // Verify
-        Assert.assertEquals(appro.getDatePeremption(), oldLigneStock.getDatePeremption());
+        Assert.assertEquals(new Integer(STOCK - SORTIE), ligne.getQteEnStock());
     }
 
-    /**
-     * Fusionner lignestock avec stock déjà en base
-     * @throws InterruptedException
-     */
     @Test
-    public void testUpdateLigneStockFusion() throws InterruptedException {
+    public void testUpdateSortieNoLigneStock() {
+        final Integer SORTIE = 5;
+
         // Prepare
-        final Approvisionnement appro = new Approvisionnement();
-        appro.setDatePeremption(Calendar.getInstance());
+        final List<MvtStock> mvts = new ArrayList<MvtStock>();
+        mvts.add(this.getMvtStock(TypeMvtStock.PREPARATION_SORTIE, "numLot", SORTIE, false));
 
-        final LigneStock newLigneStock = new LigneStock();
-        newLigneStock.setId(1L);
-        Thread.sleep(1);
-        newLigneStock.setDatePeremption(Calendar.getInstance());
-
-        final List<LigneStock> lignesStock = new ArrayList<LigneStock>();
-        lignesStock.add(newLigneStock);
-
-        Mockito.when(this.mockDao.getAll((SearchCriteria) Matchers.any())).thenReturn(lignesStock);
-
-        final LigneStock oldLigneStock = new LigneStock();
+        final Stockage stockage = new Stockage();
+        stockage.setIdentifiantStockage("STOCK");
+        Mockito.when(this.produitServiceMock.getStockageProduitPharma(Matchers.any(Produit.class), Matchers.any(Pharmacie.class))).thenReturn(stockage);
 
         // Test
-        this.service.updateLigneStock(appro, oldLigneStock);
+        this.service.update(mvts);
 
         // Verify
-        Assert.assertNotEquals(appro.getDatePeremption(), oldLigneStock.getDatePeremption());
+        Mockito.verify(this.mockDao, Mockito.never()).save((LigneStock) Matchers.any());
     }
 
     /**
-     * Construction d'un objet Essai de test.
-     * @return Essai.
+     * @return Essai de test
      */
     private Essai getEssai() {
         final Essai essai = new Essai();
@@ -466,8 +460,7 @@ public class StockServiceImplTest {
     }
 
     /**
-     * Construction d'un objet Pharmacie de test.
-     * @return Pharmacie.
+     * @return Pharmacie de test
      */
     private Pharmacie getPharmacie() {
         final Pharmacie pharmacie = new Pharmacie();
@@ -476,8 +469,7 @@ public class StockServiceImplTest {
     }
 
     /**
-     * Construction d'un objet Produit de test.
-     * @return Produit.
+     * @return Produit de test
      */
     private Produit getProduit() {
         final Produit produit = new Medicament();
@@ -486,12 +478,32 @@ public class StockServiceImplTest {
     }
 
     /**
-     * Construction d'un objet Conditionnement de test.
-     * @return Conditionnement.
+     * @return Conditionnement de test
      */
     private Conditionnement getConditionnement() {
         final Conditionnement conditionnement = new Conditionnement();
         conditionnement.setId(1L);
         return conditionnement;
     }
+
+    /**
+     * @return MvtStock de test avec les attributes donnés
+     */
+    private MvtStock getMvtStock(final TypeMvtStock type,
+                                 final String numLot,
+                                 final Integer quantite,
+                                 final Boolean isApprouve) {
+        final Approvisionnement mvt = new Approvisionnement();
+        mvt.setEssai(this.getEssai());
+        mvt.setPharmacie(this.getPharmacie());
+        mvt.setProduit(this.getProduit());
+        mvt.setConditionnement(this.getConditionnement());
+        mvt.setType(type);
+        mvt.setNumLot(numLot);
+        mvt.setQuantite(quantite);
+        mvt.setApproApprouve(isApprouve);
+
+        return mvt;
+    }
+
 }

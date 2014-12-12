@@ -85,7 +85,7 @@ public class DetailProduit extends BeanObjectSuivi {
     @OneToMany(mappedBy = "detailProduit", cascade = CascadeType.ALL, orphanRemoval = true)
     @LazyCollection(LazyCollectionOption.FALSE)
     @Sort(type = SortType.COMPARATOR, comparator = ProduitComparator.class)
-    private final SortedSet<Produit> produits = new TreeSet<Produit>(new ProduitComparator());
+    private SortedSet<Produit> produits = new TreeSet<Produit>(new ProduitComparator());
 
     /**
      * Liste des modifications du détail.
@@ -176,26 +176,20 @@ public class DetailProduit extends BeanObjectSuivi {
         this.modifs = modifs;
     }
 
-    /**
-     * Getter pour produits.
-     * @return Le produits
-     */
+    /***/
     public SortedSet<Produit> getProduits() {
         return this.produits;
     }
+    /***/
+    public void setProduits(final SortedSet<Produit> p) {
+        this.produits = p;
+    }
 
-    /**
-     * Getter pour preparations.
-     * @return Le preparations
-     */
+    /***/
     public SortedSet<Produit> getPreparations() {
         return this.preparations;
     }
-
-    /**
-     * Setter pour preparations.
-     * @param preparations Le preparations à écrire.
-     */
+    /***/
     public void setPreparations(final SortedSet<Produit> preparations) {
         this.preparations = preparations;
     }

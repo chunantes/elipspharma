@@ -215,10 +215,10 @@
 			</p:tabView></fieldset>
 
 			<!--			 Suivi des modifications -->
-			<p:panel id="def_suivi_prod" styleClass="panelSuivi"
-				rendered="#{beanManagerHelper.getFirstOfCollection(dispositifMedicalManager.bean.modifs)!=null}">
-				<c:set var="lastModif"
-					value="#{beanManagerHelper.getFirstOfCollection(dispositifMedicalManager.bean.modifs)}" />
+				<p:panel id="def_suivi_prod" styleClass="panelSuivi"
+				rendered="#{beanManagerHelper.getFirstOfCollection(dispositifMedicalManager.getListReattach('modifs'))!=null}">
+					<c:set var="lastModif"
+					value="#{beanManagerHelper.getFirstOfCollection(dispositifMedicalManager.getListReattach('modifs'))}" />
 				<h:outputText value="#{resourceBundle['suivi.part1']} " />
 				<h:outputText value="#{lastModif.dateMaj.time}">
 					<f:convertDateTime

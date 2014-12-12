@@ -21,10 +21,16 @@
 		<evaluate expression="etablissementManager.setBean(etablissementService.get(idEtablissement))" />
 		<transition to="editEtablissement" />
 	</action-state>
+	
+	<!-- Dans le cas de l'annulation d'un edit, on re-set l'idEtablissement avec l'id de l'établissement en cours d'édition (PHARMA-648)-->
+	<action-state id="cancelAndEdit">
+		<set name="flashScope.idEtablissement" value="etablissementManager.bean.id" />
+		<transition to="edit" />
+	</action-state>
 
 	<!-- Page principale -->
 	<view-state id="editEtablissement" view="../../../pages/etablissement/edit/editEtablissement.xhtml">
-		<transition on="cancel" to="createOrEdit" />
+		<transition on="cancel" to="cancelAndCreateOrEdit" />
 		<transition on="save" to="comeback">
 			<evaluate expression="etablissementService.save(etablissementManager.bean)" />
 		</transition>
@@ -38,6 +44,11 @@
 		<transition on="error" to="editEtablissement" />
 		<transition on="comeback" to="comeback" />
 	</view-state>
+	
+	<!-- decision sur annulation en fonction de l'existence d'un id établissement -->
+	<decision-state id="cancelAndCreateOrEdit">
+		<if test="etablissementManager.bean.id==null" then="create" else="cancelAndEdit" />
+	</decision-state>
 
 	<!-- Edition d'une pharamcie -->
 	<subflow-state id="editPharmacie" subflow="pharmacie/edit">

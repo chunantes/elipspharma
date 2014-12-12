@@ -159,7 +159,7 @@ public class ProduitTherapeutique extends Produit {
     public Boolean getStupefiant() {
         if (this.stupefiant == null) {
             return false;
-        }        
+        }
         return this.stupefiant;
     }
 
@@ -178,7 +178,7 @@ public class ProduitTherapeutique extends Produit {
     public Boolean getMds() {
         if (this.mds == null) {
             return false;
-        }        
+        }
         return this.mds;
     }
 

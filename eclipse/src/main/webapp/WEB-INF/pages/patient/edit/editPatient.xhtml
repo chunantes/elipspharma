@@ -42,7 +42,7 @@
 					<h:outputLabel styleClass="mandatory" id="labelcivilite"
 						for="civilite"
 						value="#{resourceBundle['gestionPatient.civilite']}" />
-					<h:selectOneRadio id="civilite"
+                                        <h:selectOneRadio id="civilite" required="true" requiredMessage="#{resourceBundle['patient.civilite.notEmpty']}"
 						value="#{patientManager.bean.civilite }">
 						<f:selectItems value="#{enumManager.getValues('Civilite')}" />
 					</h:selectOneRadio>

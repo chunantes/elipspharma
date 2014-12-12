@@ -22,6 +22,7 @@ import fr.pharma.eclipse.jasper.engine.factory.JRDataSourceFactory;
 import fr.pharma.eclipse.jasper.engine.helper.ReportNameBuildHelper;
 import fr.pharma.eclipse.jasper.engine.helper.SourceCheckingHandler;
 import fr.pharma.eclipse.jasper.exception.JasperReportBuildException;
+import fr.pharma.eclipse.service.common.GenericService;
 import fr.pharma.eclipse.utils.AbstractEclipseJUnitTest;
 import fr.pharma.eclipse.utils.EssaiUtils;
 import fr.pharma.eclipse.utils.PersonneUtils;
@@ -37,24 +38,10 @@ public class ModelePrescNominativeDatasBuilderTest extends AbstractEclipseJUnitT
      */
     private ModelePrescNominativeDatasBuilder builder;
 
-    /**
-     * Helper mocké.
-     */
+    // Services mockés
     private ReportNameBuildHelper mockedHelper;
-
-    /**
-     * Handler mocké.
-     */
     private SourceCheckingHandler mockedHandler;
-
-    /**
-     * Fabrique de JRDataSource mockée.
-     */
     private JRDataSourceFactory mockedJrDsFactory;
-
-    /**
-     * Helper mocké pour la construction de l'en-tête.
-     */
     private JRBeanHeaderBuilder mockedHeaderBuilder;
 
     /**
@@ -179,6 +166,10 @@ public class ModelePrescNominativeDatasBuilderTest extends AbstractEclipseJUnitT
      */
     @Test
     public void testBuildDataSource() {
+        @SuppressWarnings("unchecked")
+        GenericService<Essai> mockedGenericService = Mockito.mock(GenericService.class);
+        this.builder.setService(mockedGenericService);
+        
         long id = 1;
         final Essai essai = EssaiUtils.makeEssaiTest(id++);
         essai.setNumInterne("essai-002");

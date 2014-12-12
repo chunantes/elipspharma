@@ -117,7 +117,7 @@ public class ApprovisionnementServiceImpl<MVT extends Approvisionnement> extends
             final Essai essai = this.essaiService.get(appro.getEssai().getId());
             essai.getDetailDates().setReception(appro.getDateReception());
             if ((essai.getDetailDates().getDebutEtude() == null) || essai.getDetailDates().getDebutEtude().before(appro.getDateReception())) {
-                essai.getDetailDates().setActivation(appro.getDateReception());
+               
                 this.essaiService.save(essai);
             }
         }
@@ -274,8 +274,8 @@ public class ApprovisionnementServiceImpl<MVT extends Approvisionnement> extends
             @Override
             public boolean evaluate(final Object object) {
                 final Approvisionnement appro = (Approvisionnement) object;
-                final LigneStock ligneStock = ApprovisionnementServiceImpl.this.stockService.getLigneStock(appro);
-                return (ligneStock.getQteGlobalStock() > 0);
+                final LigneStock ligneStock = stockService.getLigneStock(appro);
+                return (ligneStock.getQtePharmacie() > 0);
             }
         });
 
@@ -287,7 +287,8 @@ public class ApprovisionnementServiceImpl<MVT extends Approvisionnement> extends
      */
     @Override
     public void updateDatePeremption(final Approvisionnement appro,
-                                     final Calendar newDatePeremption) {
+                                     final Calendar newDatePeremption,
+                                     final String commentaire) {
         final StringBuilder historique = new StringBuilder();
 
         if (appro.getHistoriqueExtensionPeremption() != null) {
@@ -310,6 +311,7 @@ public class ApprovisionnementServiceImpl<MVT extends Approvisionnement> extends
             appro.setExtensionPeremption(true);
         }
         appro.setDatePeremption(newDatePeremption);
+        appro.setCommentaireExtensionPeremption(commentaire);
     }
 
     public void setProduitService(final ProduitService<Produit> produitService) {

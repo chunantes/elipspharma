@@ -212,7 +212,7 @@ public class SortieManagerTest {
         this.manager.setPharmaciesDest(new ArrayList<Pharmacie>());
         final TypeMvtStock typeSortie = TypeMvtStock.CESSION_PUI;
         Mockito.when(select.getLocalValue()).thenReturn(typeSortie);
-        Mockito.when(this.pharmacieService.getAll(Matchers.any(SearchCriteria.class))).thenReturn(new ArrayList<Pharmacie>());
+        Mockito.when(this.pharmacieService.getAll()).thenReturn(new ArrayList<Pharmacie>());
         this.manager.handleSelectTypeSortie(event);
         Assert.assertEquals(TypeMvtStock.CESSION_PUI, this.manager.getTypeSortie());
         Assert.assertNull(this.manager.getReferenceEnvoi());
@@ -298,7 +298,7 @@ public class SortieManagerTest {
 
         final List<LigneStock> lignesStock = Matchers.anyList();
 
-        Mockito.when(this.mockStockService.getAllLignesStock((Essai) Matchers.any(), (Pharmacie) Matchers.any(), (Produit) Matchers.any(), conditionnement, Matchers.anyBoolean()))
+        Mockito.when(this.mockStockService.getLignesStockPharmacie((Essai) Matchers.any(), (Pharmacie) Matchers.any(), (Produit) Matchers.any(), conditionnement))
                 .thenReturn(lignesStock);
 
         final Sortie sortie = new Sortie();

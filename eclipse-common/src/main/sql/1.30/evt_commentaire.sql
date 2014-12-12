@@ -1,0 +1,1 @@
+alter table evenement alter column commentaire set type text;

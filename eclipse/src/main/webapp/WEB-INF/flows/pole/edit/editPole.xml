@@ -14,6 +14,12 @@
 	<decision-state id="createOrEdit">
 		<if test="idPole==null" then="create" else="edit" />
 	</decision-state>
+	
+	<!-- Dans le cas de l'annulation d'un edit, on re-set l'idPole avec l'id du pôle en cours d'édition (PHARMA-648)-->
+	<action-state id="cancelAndEdit">
+		<set name="flashScope.idPole" value="poleManager.bean.id" />
+		<transition to="edit" />
+	</action-state>
 
 	<!-- Création -->
 	<action-state id="create">
@@ -29,7 +35,7 @@
 
 	<!-- Page principale -->
 	<view-state id="editPole" view="../../../pages/pole/edit/editPole.xhtml">
-		<transition on="cancel" to="createOrEdit" />
+		<transition on="cancel" to="cancelAndCreateOrEdit" />
 		<transition on="save" to="comeback">
 			<evaluate expression="poleService.save(poleManager.bean)" />
 		</transition>
@@ -43,6 +49,11 @@
 		<transition on="comeback" to="comeback" />
 		<transition on="error" to="editPole" />
 	</view-state>
+	
+	<!-- decision sur annulation en fonction de l'existence d'un id pole -->
+	<decision-state id="cancelAndCreateOrEdit">
+		<if test="poleManager.bean.id==null" then="create" else="cancelAndEdit" />
+	</decision-state>
 
 	<!-- Edition d'une pharamcie -->
 	<subflow-state id="editService" subflow="service/edit">

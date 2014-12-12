@@ -1,6 +1,21 @@
 <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
     <modelVersion>4.0.0</modelVersion>
 
+    <groupId>fr.pharma.elips</groupId>
+    <artifactId>elips-principal</artifactId>
+    <version>1.40.1</version>
+    <packaging>pom</packaging>
+
+    <prerequisites>
+        <maven>2.2.1</maven>
+    </prerequisites>
+
+    <modules>
+        <module>eclipse-common</module>
+        <module>eclipse</module>
+        <module>dist</module>
+    </modules>
+
     <!-- Project Information -->
     <name>Projet Elips’Pharma</name>
     <description>Essais Cliniques sur les Produits de Sante Experimentaux</description>
@@ -9,21 +24,6 @@
         <name>Elips’Pharma</name>
         <url>http://www.chu-nantes.fr</url>
     </organization>
-    <groupId>fr.pharma.elips</groupId>
-    <artifactId>elips-principal</artifactId>
-    <version>1.34-SNAPSHOT</version>
-
-    <issueManagement>
-        <system>JIRA</system>
-        <url>http://intranet.netapsys.fr/jira/</url>
-    </issueManagement>
-    <scm>
-        <connection>
-            scm:svn:https://atlantique-svn.netapsys.fr/svn/pharma/trunk
-        </connection>
-    </scm>
-
-    <packaging>pom</packaging>
 
     <properties>
 
@@ -64,7 +64,7 @@
         <hibernate-validator-version>4.3.1.Final</hibernate-validator-version>
 
         <!-- PostgresSql -->
-        <postgresql-version>8.3-605.jdbc4</postgresql-version>
+        <postgresql-version>8.3-606.jdbc4</postgresql-version>
 
         <log4j-version>1.2.17</log4j-version>
         <servlet-api-version>2.5</servlet-api-version>
@@ -101,7 +101,7 @@
         <maven-jxr-plugin-version>2.1</maven-jxr-plugin-version>
         <maven-pmd-plugin-version>2.5</maven-pmd-plugin-version>
         <maven-project-info-reports-plugin-version>2.2</maven-project-info-reports-plugin-version>
-        <maven-release-plugin-version>2.1</maven-release-plugin-version>
+        <maven-release-plugin-version>2.3.2</maven-release-plugin-version>
         <maven-resources-plugin-version>2.4.3</maven-resources-plugin-version>
         <maven-site-plugin-version>2.1.1</maven-site-plugin-version> <!-- 2.1.1 -->
         <maven-scm-plugin-version>1.2</maven-scm-plugin-version> <!-- 2.1.1 -->
@@ -141,12 +141,6 @@
         <!-- JSON -->
         <json-version>20090211</json-version>
     </properties>
-
-    <modules>
-        <module>eclipse-common</module>
-        <module>eclipse</module>
-        <!--<module>dist</module>-->
-    </modules>
 
     <dependencyManagement>
         <dependencies>
@@ -857,19 +851,4 @@
         </pluginManagement>
     </build>
 
-    <prerequisites>
-        <maven>2.2.1</maven>
-    </prerequisites>
-
-    <distributionManagement>
-        <repository>
-            <id>netapsys</id>
-            <name>Netapsys Repository</name>
-            <url>http://atlantique.netapsys.fr/artifactory2/livraisons</url>
-        </repository>
-        <site>
-            <id>deploy site</id>
-            <url>file:///var/www/mavensite/eclipse</url>
-        </site>
-    </distributionManagement>
 </project>
