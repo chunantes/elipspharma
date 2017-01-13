@@ -36,6 +36,7 @@ import fr.pharma.eclipse.service.evenement.EvenementService;
 import fr.pharma.eclipse.service.stock.MvtStockService;
 import fr.pharma.eclipse.service.stock.StockService;
 import fr.pharma.eclipse.service.user.UserService;
+import fr.pharma.eclipse.utils.CacheUtils;
 
 /**
  * Classe en charge de tester le service de sortie.
@@ -137,6 +138,11 @@ public class SortieServiceImplTest {
      * Dictionary Mocké.
      */
     private DocumentMakerDictionary dictionary;
+    
+    /**
+     * CacheUtils
+     */
+    private CacheUtils cacheUtils;
 
     /**
      * Méthode en charge d'initialiser les données de test.
@@ -156,9 +162,11 @@ public class SortieServiceImplTest {
         this.mockDestructionFactory = Mockito.mock(MvtStockFactory.class);
         this.mockAutreSortieService = Mockito.mock(MvtStockService.class);
         this.mockAutreSortieFactory = Mockito.mock(MvtStockFactory.class);
+        this.mockAutreSortieFactory = Mockito.mock(MvtStockFactory.class);
         this.stockService = Mockito.mock(StockService.class);
         this.mockDispensationProduitFactory = Mockito.mock(DispensationProduitFactory.class);
         this.mockUserService = Mockito.mock(UserService.class);
+        this.cacheUtils = Mockito.mock(CacheUtils.class);
         this.sortieService.setRetourService(this.mockRetourService);
         this.sortieService.setRetourFactory(this.mockRetourFactory);
         this.sortieService.setCessionPuiService(this.mockCessionPuiService);
@@ -173,6 +181,7 @@ public class SortieServiceImplTest {
         this.sortieService.setDispensationProduitFactory(this.mockDispensationProduitFactory);
         this.sortieService.setUserService(this.mockUserService);
         this.sortieService.setStockService(this.stockService);
+        this.sortieService.setCacheUtils(this.cacheUtils);
         this.essai = Mockito.mock(Essai.class);
         this.pharmacie = Mockito.mock(Pharmacie.class);
         this.produit = Mockito.mock(Produit.class);

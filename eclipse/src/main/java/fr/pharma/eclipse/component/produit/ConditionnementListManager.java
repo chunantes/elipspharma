@@ -11,8 +11,10 @@ import fr.pharma.eclipse.domain.criteria.common.SearchCriteria;
 import fr.pharma.eclipse.domain.enums.produit.TypeProduit;
 import fr.pharma.eclipse.domain.model.produit.Conditionnement;
 import fr.pharma.eclipse.domain.model.produit.Produit;
+import fr.pharma.eclipse.predicate.GenericPredicate;
 import fr.pharma.eclipse.service.produit.ProduitService;
 import fr.pharma.eclipse.utils.FacesUtils;
+import org.apache.commons.collections.CollectionUtils;
 
 /**
  * Manager sur les beans de gestion de Conditionnement.
@@ -79,17 +81,31 @@ public class ConditionnementListManager extends BeanListManager<Conditionnement>
      */
     public void add(final Produit produit,
                     final Conditionnement conditionnement) {
-        if (produit.getConditionnements().contains(conditionnement)) {
-            if (this.action.equals("ADD")) {
-                this.facesUtils.addMessage(FacesMessage.SEVERITY_ERROR, "conditionnement.alreadyExist");
+    	
+    	//Si c'est un ajout d'un nouveau conditionnement 
+    	if(conditionnement.getId() == null){
+    		//Si le produit contient déjà un conditionnement avec le même libellé, on renvoie une erreur
+    		if (produit.getConditionnements().contains(conditionnement)) {
+                    this.facesUtils.addMessage(FacesMessage.SEVERITY_ERROR, "conditionnement.alreadyExist");
+                    this.facesUtils.putCallbackValidityParam(false);
+                    return;
+            }
+    	}
+    	//Si c'est une modification d'un conditionnement
+    	else{
+    		//Si le produit contient déjà un conditionnement avec le même libellé, on renvoie une erreur
+            if (produit.getConditionnements().contains(conditionnement)) {
+            	this.facesUtils.addMessage(FacesMessage.SEVERITY_ERROR, "conditionnement.alreadyExist");
                 this.facesUtils.putCallbackValidityParam(false);
                 return;
-            }
-            produit.getConditionnements().remove(conditionnement);
-        }
-        this.facesUtils.putCallbackValidityParam(true);
-        produit.getConditionnements().add(conditionnement);
-        this.reinit();
+            }        
+            final Conditionnement c = (Conditionnement) CollectionUtils.find(produit.getConditionnements(), new GenericPredicate("id", conditionnement.getId()));    		   		
+            produit.getConditionnements().remove(c);
+    	}
+    	produit.getConditionnements().add(conditionnement);
+    	this.facesUtils.putCallbackValidityParam(true);
+    	this.reinit();
+        
     }
 
     public void addAndSave(final Produit produit,

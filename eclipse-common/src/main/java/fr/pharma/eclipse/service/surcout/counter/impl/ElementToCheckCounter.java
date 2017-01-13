@@ -47,7 +47,7 @@ public abstract class ElementToCheckCounter implements ActeCounter, Serializable
         crit.setDateDebut(dateDebut);
         crit.setEssai(essai);
         crit.setDateFin(dateFin);
-        return this.elementToCheckService.getAll(crit).size();
+        return this.elementToCheckService.count(crit).intValue();
     }
 
     /**

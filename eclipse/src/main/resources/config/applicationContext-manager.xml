@@ -467,7 +467,6 @@
 	<!-- ================== -->
 	<bean id="designsManager" class="fr.pharma.eclipse.component.design.DesignsManager"
 		scope="conversation" lazy-init="true">
-		<property name="essaiManager" ref="essaiManager" />
 	</bean>
 
 

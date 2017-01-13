@@ -140,6 +140,9 @@ public class AlerteServiceImplTest {
         final EssaiAlerte essai = new EssaiAlerte();
         essai.setId(1L);
         essais.add(essai);
+        final EssaiAlerte essai2 = new EssaiAlerte();
+        essai2.setId(null);
+        essais.add(essai2);
 
         // Création d'un answer pour mieux gérer le type de liste
         final Answer<List<EssaiAlerte>> answer = new Answer<List<EssaiAlerte>>() {

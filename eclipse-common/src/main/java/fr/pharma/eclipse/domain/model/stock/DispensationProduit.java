@@ -27,6 +27,16 @@ public class DispensationProduit extends MvtStock implements Serializable {
      */
     private static final long serialVersionUID = -7316343047965720470L;
 
+    public DispensationProduit() {
+        super();
+    }
+
+    public DispensationProduit(ProduitPrescrit produitPrescrit, Dispensation dispensation) {
+        this.produitPrescrit = produitPrescrit;
+        this.dispensation = dispensation;
+    }
+    
+
     /**
      * Produit Prescrit.
      */

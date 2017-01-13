@@ -4,10 +4,10 @@
     xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
     xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd">
 	
-	<import resource="classpath:/config/applicationContext-comparator.xml" />
-	<import resource="classpath:/config/applicationContext-criteriaDictionary.xml" />
-	<import resource="classpath:/config/applicationContext-criteriaMaker.xml" />
-	<import resource="classpath:/config/applicationContext-dao.xml" />
+    <import resource="classpath:/config/applicationContext-comparator.xml" />
+    <import resource="classpath:/config/applicationContext-criteriaDictionary.xml" />
+    <import resource="classpath:/config/applicationContext-criteriaMaker.xml" />
+    <import resource="classpath:/config/applicationContext-dao.xml" />
     <import resource="classpath:/config/applicationContext-service.xml" />
     <import resource="classpath:/config/applicationContext-commonValidator.xml" />
     <import resource="classpath:/config/applicationContext-service-docs.xml" />
@@ -26,5 +26,6 @@
     <import resource="classpath:/config/applicationContext-surcout.xml" />
     <import resource="classpath:/config/applicationContext-poi.xml" />
     <import resource="classpath:/config/applicationContext-indicateur.xml" />
+    <import resource="classpath:/config/applicationContext-cache.xml" />
 			
 </beans>

@@ -16,6 +16,7 @@ import org.mockito.Mockito;
 import fr.pharma.eclipse.component.stock.SortieManager;
 import fr.pharma.eclipse.domain.enums.TypeElementToCheck;
 import fr.pharma.eclipse.domain.enums.produit.ModePrescription;
+import fr.pharma.eclipse.domain.enums.produit.TypeProduit;
 import fr.pharma.eclipse.domain.model.acteur.Personne;
 import fr.pharma.eclipse.domain.model.dispensation.Dispensation;
 import fr.pharma.eclipse.domain.model.dispensation.ElementToCheck;
@@ -311,7 +312,12 @@ public class DispensationManagerTest extends AbstractEclipseJUnitTest {
         p1.setId(1L);
         final ProduitPrescrit p2 = new ProduitPrescrit();
         p2.setId(2L);
-
+        final Medicament produit = new Medicament();
+        produit.setDenomination("test");
+        d1.setProduit(produit);
+        d2.setProduit(produit);
+        d3.setProduit(produit);
+        
         d1.setProduitPrescrit(p1);
         d2.setProduitPrescrit(p2);
         d3.setProduitPrescrit(p2);

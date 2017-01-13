@@ -62,6 +62,7 @@ public class DispensationSearchCriteria extends AbstractSearchCriteria {
     public void clear() {
         this.patient = null;
         this.essai = null;
+        this.essaiDTO = null;
         this.dispense = null;
         this.dateDebut = null;
         this.dateFin = null;

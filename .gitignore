@@ -1,4 +1,20 @@
-/webstatic/.project
+**/target
+**/.settings
+**/bin
+**/.classpath
+**/.project
 
-/webstatic/.settings/*
-/dist/
+# Dois mettre .projet/.settings aussi parce que **/.projet ne marche pas
+.project
+.settings
+
+/eclipse/src/main/webapp/META-INF/context.xml
+/eclipse-common/src/main/resources/META-INF/sgl-Vostro-3560/
+**/nb-configuration.xml
+/nb-configuration.xml
+/eclipse-common/src/main/resources/META-INF/NANTES-18p/
+/eclipse-common/D:
+/eclipse-common/tmp/log/eclipse/eclipse.log
+**/faces-config.NavData
+/eclipse/src/main/resources/META-INF
+/eclipse-common/src/main/resources/META-INF/NANTES42P-PC/

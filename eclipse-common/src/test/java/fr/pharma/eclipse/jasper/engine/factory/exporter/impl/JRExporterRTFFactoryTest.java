@@ -1,12 +1,11 @@
 package fr.pharma.eclipse.jasper.engine.factory.exporter.impl;
 
-import net.sf.jasperreports.engine.JRExporter;
-import net.sf.jasperreports.engine.export.JRRtfExporter;
-
 import org.junit.Assert;
 import org.junit.Test;
 
 import fr.pharma.eclipse.utils.AbstractEclipseJUnitTest;
+import net.sf.jasperreports.engine.JRExporter;
+import net.sf.jasperreports.engine.export.JRRtfExporter;
 
 /**
  * Test de la classe JRExporterRTFFactory.

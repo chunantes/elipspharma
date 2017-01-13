@@ -45,7 +45,7 @@ public class DicoSuivisEssai implements Serializable {
         this.derniersHistoriques.put(TypeHistoriqueEssai.ONG_ADMIN_REG, this.helper.getFirstOfCollection(essai.getDetailAdministratif().getModifs()));
         this.derniersHistoriques.put(TypeHistoriqueEssai.ONG_PRODUITS, this.helper.getFirstOfCollection(essai.getDetailProduit().getModifs()));
         this.derniersHistoriques.put(TypeHistoriqueEssai.ONG_DATA_PHARMA, this.helper.getFirstOfCollection(essai.getDetailDonneesPharma().getModifs()));
-        this.derniersHistoriques.put(TypeHistoriqueEssai.ONG_DESIGN, this.helper.getFirstOfCollection(essai.getDetailDesign().getModifs()));
+//        this.derniersHistoriques.put(TypeHistoriqueEssai.ONG_DESIGN, this.helper.getFirstOfCollection(essai.getDetailDesign().getModifs()));
         this.derniersHistoriques.put(TypeHistoriqueEssai.ONG_AUTRES_DOCS, this.helper.getFirstOfCollection(essai.getDetailAutresDocuments().getModifs()));
     }
 

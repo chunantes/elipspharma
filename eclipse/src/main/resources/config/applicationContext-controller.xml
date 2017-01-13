@@ -43,6 +43,8 @@
             <property name="reprisePassif" value="${module_active_reprisepassif}"/>
             <property name="erreurMailto" value="${erreur.mailto}"/>
             <property name="logo" value="${webapp_logo_chu}"/>
+            <property name="moduleImportExterne" value="${import.externe.active}"/>
+            <property name="strasbourg" value="false"/>
         </bean>
 	
 	

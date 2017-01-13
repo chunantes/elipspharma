@@ -1,349 +1,357 @@
 <ui:composition xmlns="http://www.w3.org/1999/xhtml"
-	xmlns:ui="http://java.sun.com/jsf/facelets"
-	xmlns:h="http://java.sun.com/jsf/html"
-	xmlns:f="http://java.sun.com/jsf/core"
-	xmlns:p="http://primefaces.prime.com.tr/ui"
-	xmlns:c="http://java.sun.com/jsp/jstl/core"
-	xmlns:sf="http://www.springframework.org/tags/faces"
-	xmlns:security="http://www.springframework.org/security/tags">
+                xmlns:ui="http://java.sun.com/jsf/facelets"
+                xmlns:h="http://java.sun.com/jsf/html"
+                xmlns:f="http://java.sun.com/jsf/core"
+                xmlns:p="http://primefaces.prime.com.tr/ui"
+                xmlns:c="http://java.sun.com/jsp/jstl/core"
+                xmlns:sf="http://www.springframework.org/tags/faces"
+                xmlns:security="http://www.springframework.org/security/tags">
 
-	<!-- le passage a la version superieure de primefaces a casse le theme du menu, par manque de temps, le menu a ete dupliquer, les liens des menus html pointent version les boutons generes par primefaces -->
+    <!-- le passage a la version superieure de primefaces a casse le theme du menu, par manque de temps, le menu a ete dupliquer, les liens des menus html pointent version les boutons generes par primefaces -->
 
-<h:form id="menuForm">
-		<div class="menuBarre">
-			<div
-				class="ui-menubar ui-widget ui-widget-content yui-module yui-overlay visible"
-				id="menuForm:j_idt27"
-				style="z-index: 0; position: static; display: block; visibility: visible;">
-				<div class="bd">
-					<ul class="ui-state-default first-of-type">
-					<security:authorize
-					ifAnyGranted="ROLE_INVESTIGATEUR,ROLE_PHARMACIEN_PREPARATEUR,ROLE_ARC_INVESTIGATEUR,ROLE_ARC_PROMOTEUR,ROLE_DIRECTION_RECHERCHE,ROLE_PHARMACIEN_INTERNE,ROLE_PHARMACIEN_INTERNE_GARDE,ROLE_PHARMACIEN_EXTERNE,ROLE_PHARMACIEN_PREPARATEUR,ROLE_PHARMACIEN_TITULAIRE,ROLE_PHARMACIEN_ATTACHE,ROLE_PHARMACIEN_ASSISTANT,ROLE_ADMIN">
-						<li><a href="#"><h:outputText value="#{resourceBundle['menu.deroulementEssais']}" /></a>
-							<div
-								class="ui-menu ui-widget ui-widget-content ui-corner-all yui-module yui-overlay"
-								id="menuForm:j_idt28"
-								style="position: absolute; visibility: hidden; z-index: 1;">
-								<div class="bd">
-									<ul class="first-of-type">
-									
-									<security:authorize ifAnyGranted="ROLE_INVESTIGATEUR,ROLE_PHARMACIEN_INTERNE,ROLE_PHARMACIEN_INTERNE_GARDE,ROLE_PHARMACIEN_TITULAIRE,ROLE_PHARMACIEN_ASSISTANT,ROLE_PHARMACIEN_ATTACHE,ROLE_ADMIN">
-										<li>
-											<a href="#{request.contextPath}/flows/inclusion/edit" class="submenuItem" >
-												<h:outputText value="#{resourceBundle['menu.inclusion']}" />
-											</a>
-										</li>
-									</security:authorize>
-										
-									<security:authorize ifAnyGranted="ROLE_INVESTIGATEUR,ROLE_ARC_INVESTIGATEUR,ROLE_ARC_PROMOTEUR,ROLE_PHARMACIEN_INTERNE,ROLE_PHARMACIEN_INTERNE_GARDE,ROLE_PHARMACIEN_TITULAIRE,ROLE_PHARMACIEN_ASSISTANT,ROLE_PHARMACIEN_ATTACHE,ROLE_ADMIN">
-										<li>
-											<a href="#{request.contextPath}/flows/prescription/gestion" class="submenuItem" >
-												<h:outputText value="#{resourceBundle['menu.consulterPrescription']}" />
-											</a>
-										</li>
-									</security:authorize>
-									
-									<security:authorize ifAnyGranted="ROLE_INVESTIGATEUR,ROLE_PHARMACIEN_INTERNE,ROLE_PHARMACIEN_INTERNE_GARDE,ROLE_PHARMACIEN_TITULAIRE,ROLE_PHARMACIEN_ASSISTANT,ROLE_PHARMACIEN_ATTACHE,ROLE_ADMIN">		
-										<li>
-											<a href="#{request.contextPath}/flows/prescription/edit" class="submenuItem" >
-												<h:outputText value="#{resourceBundle['menu.effectuerPrescription']}" />
-											</a>
-										</li>
-									</security:authorize>
+    <h:form id="menuForm">
+        <div class="menuBarre">
+            <div
+                class="ui-menubar ui-widget ui-widget-content yui-module yui-overlay visible"
+                id="menuForm:j_idt27"
+                style="z-index: 0; position: static; display: block; visibility: visible;">
+                <div class="bd">
+                    <ul class="ui-state-default first-of-type">
+                        <security:authorize
+                            ifAnyGranted="ROLE_INVESTIGATEUR,ROLE_PHARMACIEN_PREPARATEUR,ROLE_ARC_INVESTIGATEUR,ROLE_ARC_PROMOTEUR,ROLE_DIRECTION_RECHERCHE,ROLE_PHARMACIEN_INTERNE,ROLE_PHARMACIEN_INTERNE_GARDE,ROLE_PHARMACIEN_EXTERNE,ROLE_PHARMACIEN_PREPARATEUR,ROLE_PHARMACIEN_TITULAIRE,ROLE_PHARMACIEN_ATTACHE,ROLE_PHARMACIEN_ASSISTANT,ROLE_ADMIN">
+                            <li><a href="#"><h:outputText value="#{resourceBundle['menu.deroulementEssais']}" /></a>
+                                <div
+                                    class="ui-menu ui-widget ui-widget-content ui-corner-all yui-module yui-overlay"
+                                    id="menuForm:j_idt28"
+                                    style="position: absolute; visibility: hidden; z-index: 1;">
+                                    <div class="bd">
+                                        <ul class="first-of-type">
 
-									<security:authorize ifAnyGranted="ROLE_ARC_PROMOTEUR,ROLE_PHARMACIEN_PREPARATEUR,ROLE_PHARMACIEN_INTERNE,ROLE_PHARMACIEN_INTERNE_GARDE,ROLE_PHARMACIEN_TITULAIRE,ROLE_PHARMACIEN_ASSISTANT,ROLE_PHARMACIEN_ATTACHE,ROLE_ADMIN">
-										<li>
-											<a href="#{request.contextPath}/flows/dispensation/gestion" class="submenuItem" >
-												<h:outputText value="#{resourceBundle['menu.dispensation']}" />
-											</a>
-										</li>
-									</security:authorize>
-												
-									<security:authorize ifAnyGranted="ROLE_ARC_PROMOTEUR,ROLE_PHARMACIEN_PREPARATEUR,ROLE_PHARMACIEN_INTERNE,ROLE_PHARMACIEN_INTERNE_GARDE,ROLE_PHARMACIEN_TITULAIRE,ROLE_PHARMACIEN_ASSISTANT,ROLE_PHARMACIEN_ATTACHE,ROLE_ADMIN">
-										<li>
-											<a href="#{request.contextPath}/flows/dispensation/prescription" class="submenuItem" >
-												<h:outputText value="#{resourceBundle['menu.effectuerdispensation']}" />
-											</a>
-										</li>
-									</security:authorize>
-									
-									<security:authorize ifAnyGranted="ROLE_ARC_PROMOTEUR,ROLE_PHARMACIEN_INTERNE,ROLE_PHARMACIEN_INTERNE_GARDE,ROLE_PHARMACIEN_TITULAIRE,ROLE_PHARMACIEN_ASSISTANT,ROLE_PHARMACIEN_ATTACHE,ROLE_ADMIN">			
-										<li>
-											<a href="#{request.contextPath}/flows/dotation/dispensation" class="submenuItem" >
-												<h:outputText value="#{resourceBundle['menu.dispensationGlobale']}" />
-											</a>
-										</li>
-									</security:authorize>
-									
-									<security:authorize ifAnyGranted="ROLE_INVESTIGATEUR,ROLE_PHARMACIEN_INTERNE,ROLE_PHARMACIEN_INTERNE_GARDE,ROLE_PHARMACIEN_TITULAIRE,ROLE_PHARMACIEN_ASSISTANT,ROLE_PHARMACIEN_ATTACHE,ROLE_ADMIN">	
-										<li>
-											<a href="#{request.contextPath}/flows/dotation/demande" class="submenuItem" >
-												<h:outputText value="#{resourceBundle['menu.demandeDotation']}" />
-											</a>
-										</li>
-									</security:authorize>
-									
-									<security:authorize ifAnyGranted="ROLE_ARC_INVESTIGATEUR,ROLE_ARC_PROMOTEUR,ROLE_DIRECTION_RECHERCHE,ROLE_PHARMACIEN_INTERNE,ROLE_PHARMACIEN_INTERNE_GARDE,ROLE_PHARMACIEN_EXTERNE,ROLE_PHARMACIEN_PREPARATEUR,ROLE_PHARMACIEN_TITULAIRE,ROLE_PHARMACIEN_ASSISTANT,ROLE_PHARMACIEN_ATTACHE,ROLE_ADMIN">			
-										<li>
-											<a href="#{request.contextPath}/flows/evenement/gestion" class="submenuItem" >
-												<h:outputText value="#{resourceBundle['menu.evenement']}" />
-											</a>
-										</li>
-									</security:authorize>
-									
-									<security:authorize ifAnyGranted="ROLE_ARC_INVESTIGATEUR,ROLE_ARC_PROMOTEUR,ROLE_DIRECTION_RECHERCHE,ROLE_PHARMACIEN_INTERNE,ROLE_PHARMACIEN_INTERNE_GARDE,ROLE_PHARMACIEN_EXTERNE,ROLE_PHARMACIEN_PREPARATEUR,ROLE_PHARMACIEN_TITULAIRE,ROLE_PHARMACIEN_ASSISTANT,ROLE_PHARMACIEN_ATTACHE,ROLE_ADMIN">			
-										<li>
-											<a href="#{request.contextPath}/flows/incident/gestion" class="submenuItem" >
-												<h:outputText value="#{resourceBundle['menu.incident']}" />
-											</a>
-										</li>
-									</security:authorize>
-									<security:authorize ifAnyGranted="ROLE_PHARMACIEN_INTERNE,ROLE_PHARMACIEN_INTERNE_GARDE,ROLE_PHARMACIEN_TITULAIRE,ROLE_PHARMACIEN_ASSISTANT,ROLE_PHARMACIEN_ATTACHE,ROLE_ADMIN">			
-										<li>
-											<a href="#{request.contextPath}/flows/indicateur" class="submenuItem" >
-												<h:outputText value="#{resourceBundle['menu.indicateur']}" />
-											</a>
-										</li>
-									</security:authorize>			
-									</ul>
-								</div>
-							</div></li>
-						</security:authorize>	
-						<security:authorize ifAnyGranted="ROLE_ARC_PROMOTEUR,ROLE_DIRECTION_RECHERCHE,ROLE_PHARMACIEN_INTERNE,ROLE_PHARMACIEN_INTERNE_GARDE,ROLE_PHARMACIEN_EXTERNE,ROLE_PHARMACIEN_PREPARATEUR,ROLE_PHARMACIEN_TITULAIRE,ROLE_PHARMACIEN_ASSISTANT,ROLE_PHARMACIEN_ATTACHE,ROLE_ADMIN">
-						<li><a href="#"><h:outputText value="#{resourceBundle['menu.stock']}" /></a>
-							<div
-								class="ui-menu ui-widget ui-widget-content ui-corner-all yui-module yui-overlay"
-								id="menuForm:j_idt39"
-								style="position: absolute; visibility: hidden; z-index: 1;">
-								<div class="bd">
-									<ul class="first-of-type">
-										<security:authorize ifAnyGranted="ROLE_ARC_PROMOTEUR,ROLE_DIRECTION_RECHERCHE,ROLE_PHARMACIEN_INTERNE,ROLE_PHARMACIEN_INTERNE_GARDE,ROLE_PHARMACIEN_EXTERNE,ROLE_PHARMACIEN_PREPARATEUR,ROLE_PHARMACIEN_TITULAIRE,ROLE_PHARMACIEN_ASSISTANT,ROLE_PHARMACIEN_ATTACHE,ROLE_ADMIN">
-											<li>
-												<a href="#{request.contextPath}/flows/stock/consultationFlux" class="submenuItem" >
-													<h:outputText value="#{resourceBundle['menu.stock.consultationFlux']}" />
-												</a>
-											</li>
-										</security:authorize>
-											
-										<security:authorize ifAnyGranted="ROLE_ARC_PROMOTEUR,ROLE_DIRECTION_RECHERCHE,ROLE_PHARMACIEN_INTERNE,ROLE_PHARMACIEN_INTERNE_GARDE,ROLE_PHARMACIEN_EXTERNE,ROLE_PHARMACIEN_PREPARATEUR,ROLE_PHARMACIEN_TITULAIRE,ROLE_PHARMACIEN_ASSISTANT,ROLE_PHARMACIEN_ATTACHE,ROLE_ADMIN">
-											<li>
-												<a href="#{request.contextPath}/flows/stock/consultation" class="submenuItem" >
-													<h:outputText value="#{resourceBundle['menu.stock.consultation']}" />
-												</a>
-											</li>
-										</security:authorize>
-										
-										<security:authorize ifAnyGranted="ROLE_PHARMACIEN_INTERNE,ROLE_PHARMACIEN_INTERNE_GARDE,ROLE_PHARMACIEN_EXTERNE,ROLE_PHARMACIEN_PREPARATEUR,ROLE_PHARMACIEN_TITULAIRE,ROLE_PHARMACIEN_ASSISTANT,ROLE_PHARMACIEN_ATTACHE,ROLE_ADMIN">
-											<li>
-												<a href="#{request.contextPath}/flows/stock/extensionPeremption" class="submenuItem" >
-													<h:outputText value="#{resourceBundle['menu.stock.extensionPeremption']}" />
-												</a>
-											</li>
-											
-										</security:authorize>
-										
-										<security:authorize ifAnyGranted="ROLE_PHARMACIEN_INTERNE,ROLE_PHARMACIEN_INTERNE_GARDE,ROLE_PHARMACIEN_EXTERNE,ROLE_PHARMACIEN_PREPARATEUR,ROLE_PHARMACIEN_TITULAIRE,ROLE_PHARMACIEN_ASSISTANT,ROLE_PHARMACIEN_ATTACHE,ROLE_ADMIN">
-											<li>
-												<a href="#{request.contextPath}/flows/stock/reception" class="submenuItem" >
-													<h:outputText value="#{resourceBundle['menu.stock.reception']}" />
-												</a>
-											</li>
-										</security:authorize>
-										
-										<security:authorize ifAnyGranted="ROLE_PHARMACIEN_INTERNE,ROLE_PHARMACIEN_INTERNE_GARDE,ROLE_PHARMACIEN_EXTERNE,ROLE_PHARMACIEN_PREPARATEUR,ROLE_PHARMACIEN_TITULAIRE,ROLE_PHARMACIEN_ASSISTANT,ROLE_PHARMACIEN_ATTACHE,ROLE_ADMIN">
-											<li>
-												<a href="#{request.contextPath}/flows/stock/sortie" class="submenuItem" >
-													<h:outputText value="#{resourceBundle['menu.stock.sortie']}" />
-												</a>
-											</li>
-										</security:authorize>
-										
-										<security:authorize ifAnyGranted="ROLE_PHARMACIEN_INTERNE,ROLE_PHARMACIEN_INTERNE_GARDE,ROLE_PHARMACIEN_EXTERNE,ROLE_PHARMACIEN_PREPARATEUR,ROLE_PHARMACIEN_TITULAIRE,ROLE_PHARMACIEN_ASSISTANT,ROLE_PHARMACIEN_ATTACHE,ROLE_ADMIN">
-											<li>
-												<a href="#{request.contextPath}/flows/stock/preparation" class="submenuItem" >
-													<h:outputText value="#{resourceBundle['menu.stock.preparation']}" />
-												</a>
-											</li>
-										</security:authorize>
-										
-										<security:authorize ifAnyGranted="ROLE_ARC_PROMOTEUR,ROLE_PHARMACIEN_INTERNE,ROLE_PHARMACIEN_INTERNE_GARDE,ROLE_PHARMACIEN_EXTERNE,ROLE_PHARMACIEN_PREPARATEUR,ROLE_PHARMACIEN_TITULAIRE,ROLE_PHARMACIEN_ASSISTANT,ROLE_PHARMACIEN_ATTACHE,ROLE_ADMIN">
-											<li>
-												<a href="#{request.contextPath}/flows/stock/retourPatient/gestion" class="submenuItem" >
-													<h:outputText value="#{resourceBundle['menu.stock.retourPatient']}" />
-												</a>
-											</li>
-										</security:authorize>		
-									</ul>
-								</div>
-							</div></li>
-							
-						</security:authorize> 
-						<li class="ui-menubar-item ui-menubar-item-hassubmenu"
-							 groupindex="0" index="2"><a href="#"><h:outputText value="#{resourceBundle['menu.repertoireEssais']}" /></a>
-							<div
-								class="ui-menu ui-widget ui-widget-content ui-corner-all yui-module yui-overlay"
-								id="menuForm:j_idt46"
-								style="position: absolute; visibility: hidden; z-index: 1;">
-								<div class="bd">
-									<ul class="first-of-type">
-										<security:authorize
-											ifAnyGranted="ROLE_CRO,ROLE_INVESTIGATEUR,ROLE_ARC_INVESTIGATEUR,ROLE_PROMOTEUR,ROLE_ARC_PROMOTEUR,ROLE_DIRECTION_RECHERCHE,ROLE_PHARMACIEN_INTERNE_GARDE,ROLE_PHARMACIEN_INTERNE,ROLE_PHARMACIEN_EXTERNE,ROLE_PHARMACIEN_PREPARATEUR,ROLE_PHARMACIEN_TITULAIRE,ROLE_PHARMACIEN_ASSISTANT,ROLE_PHARMACIEN_ATTACHE,ROLE_ADMIN">
-											<li>
-												<a href="#{request.contextPath}/flows/repertoireEssais" class="submenuItem" >
-													<h:outputText value="#{resourceBundle['menu.repertoireEssais.rechercher']}" />
-												</a>
-											</li>
-										</security:authorize>	
-										<security:authorize
-												ifAnyGranted="ROLE_PHARMACIEN_TITULAIRE,ROLE_PHARMACIEN_ATTACHE,ROLE_PHARMACIEN_ASSISTANT,ROLE_ADMIN">
-											<li>
-												<a href="#{request.contextPath}/flows/repertoireEssaisSigrec" class="submenuItem" >
-													<h:outputText value="#{resourceBundle['menu.repertoireEssais.sigrec']}" />
-												</a>
-											</li>
-										</security:authorize>		
-									</ul>
-								</div>
-							</div>
-						</li>
-							
-					<security:authorize
-						ifAnyGranted="ROLE_INVESTIGATEUR,ROLE_ARC_INVESTIGATEUR,ROLE_ARC_PROMOTEUR,ROLE_DIRECTION_RECHERCHE,ROLE_PHARMACIEN_INTERNE,ROLE_PHARMACIEN_INTERNE_GARDE,ROLE_PHARMACIEN_PREPARATEUR,ROLE_PHARMACIEN_TITULAIRE,ROLE_PHARMACIEN_ATTACHE,ROLE_PHARMACIEN_ASSISTANT,ROLE_ADMIN">	
-						<li><a href="#"><h:outputText value="#{resourceBundle['menu.gestionData']}" /></a>
-							<div
-								class="ui-menu ui-widget ui-widget-content ui-corner-all yui-module yui-overlay"
-								id="menuForm:j_idt49"
-								style="position: absolute; visibility: hidden; z-index: 1;">
-								<div class="bd">
-									<ul class="first-of-type">
-									
-										<security:authorize
-											ifAnyGranted="ROLE_PHARMACIEN_ATTACHE,ROLE_PHARMACIEN_TITULAIRE, ROLE_PHARMACIEN_ASSISTANT,ROLE_ADMIN">
-											<li>
-												<a href="#{request.contextPath}/flows/etablissement/gestion" class="submenuItem" >
-													<h:outputText value="#{resourceBundle['menu.gestionEtablissement']}" />
-												</a>
-											</li>
-											
-											<li>
-												<a href="#{request.contextPath}/flows/surcout/grilleModele/gestion" class="submenuItem" >
-													<h:outputText value="#{resourceBundle['menu.gestionGrille']}" />
-												</a>
-											</li>
-										</security:authorize>
-												
-										<security:authorize 
-											ifAnyGranted="ROLE_INVESTIGATEUR,ROLE_ARC_INVESTIGATEUR,ROLE_ARC_PROMOTEUR,ROLE_DIRECTION_RECHERCHE,ROLE_PHARMACIEN_INTERNE,ROLE_PHARMACIEN_INTERNE_GARDE,ROLE_PHARMACIEN_PREPARATEUR,ROLE_PHARMACIEN_TITULAIRE,ROLE_PHARMACIEN_ATTACHE,ROLE_PHARMACIEN_ASSISTANT,ROLE_ADMIN">
-											<li>
-												<a href="#{request.contextPath}/flows/patient/gestion" class="submenuItem" >
-													<h:outputText value="#{resourceBundle['menu.gestionPatient']}" />
-												</a>
-											</li>
-										</security:authorize>	
-										
-										<security:authorize 
-											ifAnyGranted="ROLE_PHARMACIEN_ATTACHE,ROLE_PHARMACIEN_TITULAIRE, ROLE_PHARMACIEN_ASSISTANT,ROLE_ADMIN">	
-											
-											<li>
-												<a href="#{request.contextPath}/flows/personne/gestion" class="submenuItem" >
-													<h:outputText value="#{resourceBundle['menu.gestionPersonne']}" />
-												</a>
-											</li>
-											
-											<li>
-												<a href="#{request.contextPath}/flows/pharmacie/gestion" class="submenuItem" >
-													<h:outputText value="#{resourceBundle['menu.gestionPharmacie']}" />
-												</a>
-											</li>
-												
-											<li>
-												<a href="#{request.contextPath}/flows/pole/gestion" class="submenuItem" >
-													<h:outputText value="#{resourceBundle['menu.gestionPole']}" />
-												</a>
-											</li>
-											
-											<li>
-												<a href="#{request.contextPath}/flows/promoteur/gestion" class="submenuItem" >
-													<h:outputText value="#{resourceBundle['menu.gestionPromoteur']}" />
-												</a>
-											</li>
-											
-											<li>
-												<a href="#{request.contextPath}/flows/service/gestion" class="submenuItem" >
-													<h:outputText value="#{resourceBundle['menu.gestionService']}" />
-												</a>
-											</li>
-											
-											<li>
-												<a href="#{request.contextPath}/flows/site/gestion" class="submenuItem" >
-													<h:outputText value="#{resourceBundle['menu.gestionSite']}" />
-												</a>
-											</li>
-											
-										</security:authorize>		
-									</ul>
-								</div>
-							</div></li>
-						</security:authorize>	
-						<security:authorize 
-							ifAnyGranted="ROLE_PHARMACIEN_INTERNE,ROLE_PHARMACIEN_INTERNE_GARDE, ROLE_PHARMACIEN_EXTERNE,ROLE_PHARMACIEN_PREPARATEUR,ROLE_PHARMACIEN_TITULAIRE,ROLE_PHARMACIEN_ATTACHE,ROLE_PHARMACIEN_ASSISTANT,ROLE_ADMIN">
-							<li><a href="#"><h:outputText value="#{resourceBundle['menu.ordonnancier']}" /></a>
-								<div
-									class="ui-menu ui-widget ui-widget-content ui-corner-all yui-module yui-overlay"
-									id="menuForm:j_idt59"
-									style="position: absolute; visibility: hidden; z-index: 1;">
-									<div class="bd">
-										<ul class="first-of-type">
-											<li>
-												<a href="#{request.contextPath}/flows/ordonnancier/dispensation/impression" class="submenuItem" >
-													<h:outputText value="#{resourceBundle['ordonnancierDisp.menu']}" />
-												</a>
-											</li>
-											
-											<li>
-												<a href="#{request.contextPath}/flows/ordonnancier/dispensation/duplicata" class="submenuItem" >
-													<h:outputText value="#{resourceBundle['duplicataOrdonnancierDisp.menu']}" />
-												</a>
-											</li>
-											
-											<li>
-												<a href="#{request.contextPath}/flows/ordonnancier/fabReconst/impression" class="submenuItem" >
-													<h:outputText value="#{resourceBundle['ordonnancierFabReconst.menu']}" />
-												</a>
-											</li>
-											
-											<li>
-												<a href="#{request.contextPath}/flows/ordonnancier/fabReconst/duplicata" class="submenuItem" >
-													<h:outputText value="#{resourceBundle['duplicataOrdonnancierFabReconst.menu']}" />
-												</a>
-											</li>
-											<c:if test="#{applicationController.reprisePassif}">
-												<li>
-													<a href="#{request.contextPath}/flows/reprisePassif" class="submenuItem" >
-														<h:outputText value="#{resourceBundle['ordonnancierReprisePassif.menu']}" />
-													</a>
-												</li>
-											</c:if>										
-										</ul>
-									</div>
-								</div>
-							</li>
-						</security:authorize>		
-					</ul>
-				</div>
-			</div>
-		</div>
-		<script type="text/javascript">
-			widget_menuForm_j_idt27 = new PrimeFaces.widget.MenuBar(
-					'menuForm:j_idt27', {
-						autosubmenudisplay : false,
-						effect : {
-							effect : YAHOO.widget.ContainerEffect.FADE,
-							duration : 0.25
-						}
-					});
-		</script>
-		
-	</h:form>
+                                            <security:authorize ifAnyGranted="ROLE_INVESTIGATEUR,ROLE_PHARMACIEN_INTERNE,ROLE_PHARMACIEN_INTERNE_GARDE,ROLE_PHARMACIEN_TITULAIRE,ROLE_PHARMACIEN_ASSISTANT,ROLE_PHARMACIEN_ATTACHE,ROLE_ADMIN">
+                                                <li>
+                                                    <a href="#{request.contextPath}/flows/inclusion/edit" class="submenuItem" >
+                                                        <h:outputText value="#{resourceBundle['menu.inclusion']}" />
+                                                    </a>
+                                                </li>
+                                            </security:authorize>
+
+                                            <security:authorize ifAnyGranted="ROLE_INVESTIGATEUR,ROLE_ARC_INVESTIGATEUR,ROLE_ARC_PROMOTEUR,ROLE_PHARMACIEN_INTERNE,ROLE_PHARMACIEN_INTERNE_GARDE,ROLE_PHARMACIEN_TITULAIRE,ROLE_PHARMACIEN_ASSISTANT,ROLE_PHARMACIEN_ATTACHE,ROLE_ADMIN">
+                                                <li>
+                                                    <a href="#{request.contextPath}/flows/prescription/gestion" class="submenuItem" >
+                                                        <h:outputText value="#{resourceBundle['menu.consulterPrescription']}" />
+                                                    </a>
+                                                </li>
+                                            </security:authorize>
+
+                                            <security:authorize ifAnyGranted="ROLE_INVESTIGATEUR,ROLE_PHARMACIEN_INTERNE,ROLE_PHARMACIEN_INTERNE_GARDE,ROLE_PHARMACIEN_TITULAIRE,ROLE_PHARMACIEN_ASSISTANT,ROLE_PHARMACIEN_ATTACHE,ROLE_ADMIN">		
+                                                <li>
+                                                    <a href="#{request.contextPath}/flows/prescription/edit" class="submenuItem" >
+                                                        <h:outputText value="#{resourceBundle['menu.effectuerPrescription']}" />
+                                                    </a>
+                                                </li>
+                                            </security:authorize>
+
+                                            <security:authorize ifAnyGranted="ROLE_ARC_PROMOTEUR,ROLE_PHARMACIEN_PREPARATEUR,ROLE_PHARMACIEN_INTERNE,ROLE_PHARMACIEN_INTERNE_GARDE,ROLE_PHARMACIEN_TITULAIRE,ROLE_PHARMACIEN_ASSISTANT,ROLE_PHARMACIEN_ATTACHE,ROLE_ADMIN">
+                                                <li>
+                                                    <a href="#{request.contextPath}/flows/dispensation/gestion" class="submenuItem" >
+                                                        <h:outputText value="#{resourceBundle['menu.dispensation']}" />
+                                                    </a>
+                                                </li>
+                                            </security:authorize>
+
+                                            <security:authorize ifAnyGranted="ROLE_ARC_PROMOTEUR,ROLE_PHARMACIEN_PREPARATEUR,ROLE_PHARMACIEN_INTERNE,ROLE_PHARMACIEN_INTERNE_GARDE,ROLE_PHARMACIEN_TITULAIRE,ROLE_PHARMACIEN_ASSISTANT,ROLE_PHARMACIEN_ATTACHE,ROLE_ADMIN">
+                                                <li>
+                                                    <a href="#{request.contextPath}/flows/dispensation/prescription" class="submenuItem" >
+                                                        <h:outputText value="#{resourceBundle['menu.effectuerdispensation']}" />
+                                                    </a>
+                                                </li>
+                                            </security:authorize>
+
+                                            <security:authorize ifAnyGranted="ROLE_ARC_PROMOTEUR,ROLE_PHARMACIEN_INTERNE,ROLE_PHARMACIEN_INTERNE_GARDE,ROLE_PHARMACIEN_TITULAIRE,ROLE_PHARMACIEN_ASSISTANT,ROLE_PHARMACIEN_ATTACHE,ROLE_ADMIN">			
+                                                <li>
+                                                    <a href="#{request.contextPath}/flows/dotation/dispensation" class="submenuItem" >
+                                                        <h:outputText value="#{resourceBundle['menu.dispensationGlobale']}" />
+                                                    </a>
+                                                </li>
+                                            </security:authorize>
+
+                                            <security:authorize ifAnyGranted="ROLE_INVESTIGATEUR,ROLE_PHARMACIEN_INTERNE,ROLE_PHARMACIEN_INTERNE_GARDE,ROLE_PHARMACIEN_TITULAIRE,ROLE_PHARMACIEN_ASSISTANT,ROLE_PHARMACIEN_ATTACHE,ROLE_ADMIN">	
+                                                <li>
+                                                    <a href="#{request.contextPath}/flows/dotation/demande" class="submenuItem" >
+                                                        <h:outputText value="#{resourceBundle['menu.demandeDotation']}" />
+                                                    </a>
+                                                </li>
+                                            </security:authorize>
+
+                                            <security:authorize ifAnyGranted="ROLE_ARC_INVESTIGATEUR,ROLE_ARC_PROMOTEUR,ROLE_DIRECTION_RECHERCHE,ROLE_PHARMACIEN_INTERNE,ROLE_PHARMACIEN_INTERNE_GARDE,ROLE_PHARMACIEN_EXTERNE,ROLE_PHARMACIEN_PREPARATEUR,ROLE_PHARMACIEN_TITULAIRE,ROLE_PHARMACIEN_ASSISTANT,ROLE_PHARMACIEN_ATTACHE,ROLE_ADMIN">			
+                                                <li>
+                                                    <a href="#{request.contextPath}/flows/evenement/gestion" class="submenuItem" >
+                                                        <h:outputText value="#{resourceBundle['menu.evenement']}" />
+                                                    </a>
+                                                </li>
+                                            </security:authorize>
+
+                                            <security:authorize ifAnyGranted="ROLE_ARC_INVESTIGATEUR,ROLE_ARC_PROMOTEUR,ROLE_DIRECTION_RECHERCHE,ROLE_PHARMACIEN_INTERNE,ROLE_PHARMACIEN_INTERNE_GARDE,ROLE_PHARMACIEN_EXTERNE,ROLE_PHARMACIEN_PREPARATEUR,ROLE_PHARMACIEN_TITULAIRE,ROLE_PHARMACIEN_ASSISTANT,ROLE_PHARMACIEN_ATTACHE,ROLE_ADMIN">			
+                                                <li>
+                                                    <a href="#{request.contextPath}/flows/incident/gestion" class="submenuItem" >
+                                                        <h:outputText value="#{resourceBundle['menu.incident']}" />
+                                                    </a>
+                                                </li>
+                                            </security:authorize>
+                                            <security:authorize ifAnyGranted="ROLE_PHARMACIEN_INTERNE,ROLE_PHARMACIEN_INTERNE_GARDE,ROLE_PHARMACIEN_TITULAIRE,ROLE_PHARMACIEN_ASSISTANT,ROLE_PHARMACIEN_ATTACHE,ROLE_ADMIN">			
+                                                <li>
+                                                    <a href="#{request.contextPath}/flows/indicateur" class="submenuItem" >
+                                                        <h:outputText value="#{resourceBundle['menu.indicateur']}" />
+                                                    </a>
+                                                </li>
+                                            </security:authorize>			
+                                        </ul>
+                                    </div>
+                                </div></li>
+                        </security:authorize>	
+                        <security:authorize ifAnyGranted="ROLE_ARC_PROMOTEUR,ROLE_DIRECTION_RECHERCHE,ROLE_PHARMACIEN_INTERNE,ROLE_PHARMACIEN_INTERNE_GARDE,ROLE_PHARMACIEN_EXTERNE,ROLE_PHARMACIEN_PREPARATEUR,ROLE_PHARMACIEN_TITULAIRE,ROLE_PHARMACIEN_ASSISTANT,ROLE_PHARMACIEN_ATTACHE,ROLE_ADMIN">
+                            <li><a href="#"><h:outputText value="#{resourceBundle['menu.stock']}" /></a>
+                                <div
+                                    class="ui-menu ui-widget ui-widget-content ui-corner-all yui-module yui-overlay"
+                                    id="menuForm:j_idt39"
+                                    style="position: absolute; visibility: hidden; z-index: 1;">
+                                    <div class="bd">
+                                        <ul class="first-of-type">
+                                            <security:authorize ifAnyGranted="ROLE_ARC_PROMOTEUR,ROLE_DIRECTION_RECHERCHE,ROLE_PHARMACIEN_INTERNE,ROLE_PHARMACIEN_INTERNE_GARDE,ROLE_PHARMACIEN_EXTERNE,ROLE_PHARMACIEN_PREPARATEUR,ROLE_PHARMACIEN_TITULAIRE,ROLE_PHARMACIEN_ASSISTANT,ROLE_PHARMACIEN_ATTACHE,ROLE_ADMIN">
+                                                <li>
+                                                    <a href="#{request.contextPath}/flows/stock/consultationFlux" class="submenuItem" >
+                                                        <h:outputText value="#{resourceBundle['menu.stock.consultationFlux']}" />
+                                                    </a>
+                                                </li>
+                                            </security:authorize>
+
+                                            <security:authorize ifAnyGranted="ROLE_ARC_PROMOTEUR,ROLE_DIRECTION_RECHERCHE,ROLE_PHARMACIEN_INTERNE,ROLE_PHARMACIEN_INTERNE_GARDE,ROLE_PHARMACIEN_EXTERNE,ROLE_PHARMACIEN_PREPARATEUR,ROLE_PHARMACIEN_TITULAIRE,ROLE_PHARMACIEN_ASSISTANT,ROLE_PHARMACIEN_ATTACHE,ROLE_ADMIN">
+                                                <li>
+                                                    <a href="#{request.contextPath}/flows/stock/consultation" class="submenuItem" >
+                                                        <h:outputText value="#{resourceBundle['menu.stock.consultation']}" />
+                                                    </a>
+                                                </li>
+                                            </security:authorize>
+
+                                            <security:authorize ifAnyGranted="ROLE_PHARMACIEN_INTERNE,ROLE_PHARMACIEN_INTERNE_GARDE,ROLE_PHARMACIEN_EXTERNE,ROLE_PHARMACIEN_PREPARATEUR,ROLE_PHARMACIEN_TITULAIRE,ROLE_PHARMACIEN_ASSISTANT,ROLE_PHARMACIEN_ATTACHE,ROLE_ADMIN">
+                                                <li>
+                                                    <a href="#{request.contextPath}/flows/stock/extensionPeremption" class="submenuItem" >
+                                                        <h:outputText value="#{resourceBundle['menu.stock.extensionPeremption']}" />
+                                                    </a>
+                                                </li>
+
+                                            </security:authorize>
+
+                                            <security:authorize ifAnyGranted="ROLE_PHARMACIEN_INTERNE,ROLE_PHARMACIEN_INTERNE_GARDE,ROLE_PHARMACIEN_EXTERNE,ROLE_PHARMACIEN_PREPARATEUR,ROLE_PHARMACIEN_TITULAIRE,ROLE_PHARMACIEN_ASSISTANT,ROLE_PHARMACIEN_ATTACHE,ROLE_ADMIN">
+                                                <li>
+                                                    <a href="#{request.contextPath}/flows/stock/reception" class="submenuItem" >
+                                                        <h:outputText value="#{resourceBundle['menu.stock.reception']}" />
+                                                    </a>
+                                                </li>
+                                            </security:authorize>
+
+                                            <security:authorize ifAnyGranted="ROLE_PHARMACIEN_INTERNE,ROLE_PHARMACIEN_INTERNE_GARDE,ROLE_PHARMACIEN_EXTERNE,ROLE_PHARMACIEN_PREPARATEUR,ROLE_PHARMACIEN_TITULAIRE,ROLE_PHARMACIEN_ASSISTANT,ROLE_PHARMACIEN_ATTACHE,ROLE_ADMIN">
+                                                <li>
+                                                    <a href="#{request.contextPath}/flows/stock/sortie" class="submenuItem" >
+                                                        <h:outputText value="#{resourceBundle['menu.stock.sortie']}" />
+                                                    </a>
+                                                </li>
+                                            </security:authorize>
+
+                                            <security:authorize ifAnyGranted="ROLE_PHARMACIEN_INTERNE,ROLE_PHARMACIEN_INTERNE_GARDE,ROLE_PHARMACIEN_EXTERNE,ROLE_PHARMACIEN_PREPARATEUR,ROLE_PHARMACIEN_TITULAIRE,ROLE_PHARMACIEN_ASSISTANT,ROLE_PHARMACIEN_ATTACHE,ROLE_ADMIN">
+                                                <li>
+                                                    <a href="#{request.contextPath}/flows/stock/preparation" class="submenuItem" >
+                                                        <h:outputText value="#{resourceBundle['menu.stock.preparation']}" />
+                                                    </a>
+                                                </li>
+                                            </security:authorize>
+
+                                            <security:authorize ifAnyGranted="ROLE_ARC_PROMOTEUR,ROLE_PHARMACIEN_INTERNE,ROLE_PHARMACIEN_INTERNE_GARDE,ROLE_PHARMACIEN_EXTERNE,ROLE_PHARMACIEN_PREPARATEUR,ROLE_PHARMACIEN_TITULAIRE,ROLE_PHARMACIEN_ASSISTANT,ROLE_PHARMACIEN_ATTACHE,ROLE_ADMIN">
+                                                <li>
+                                                    <a href="#{request.contextPath}/flows/stock/retourPatient/gestion" class="submenuItem" >
+                                                        <h:outputText value="#{resourceBundle['menu.stock.retourPatient']}" />
+                                                    </a>
+                                                </li>
+                                            </security:authorize>		
+                                        </ul>
+                                    </div>
+                                </div></li>
+
+                        </security:authorize> 
+                        <li class="ui-menubar-item ui-menubar-item-hassubmenu"
+                            groupindex="0" index="2"><a href="#"><h:outputText value="#{resourceBundle['menu.repertoireEssais']}" /></a>
+                            <div
+                                class="ui-menu ui-widget ui-widget-content ui-corner-all yui-module yui-overlay"
+                                id="menuForm:j_idt46"
+                                style="position: absolute; visibility: hidden; z-index: 1;">
+                                <div class="bd">
+                                    <ul class="first-of-type">
+                                        <security:authorize
+                                            ifAnyGranted="ROLE_CRO,ROLE_INVESTIGATEUR,ROLE_ARC_INVESTIGATEUR,ROLE_PROMOTEUR,ROLE_ARC_PROMOTEUR,ROLE_DIRECTION_RECHERCHE,ROLE_PHARMACIEN_INTERNE_GARDE,ROLE_PHARMACIEN_INTERNE,ROLE_PHARMACIEN_EXTERNE,ROLE_PHARMACIEN_PREPARATEUR,ROLE_PHARMACIEN_TITULAIRE,ROLE_PHARMACIEN_ASSISTANT,ROLE_PHARMACIEN_ATTACHE,ROLE_ADMIN">
+                                            <li>
+                                                <a href="#{request.contextPath}/flows/repertoireEssais" class="submenuItem" >
+                                                    <h:outputText value="#{resourceBundle['menu.repertoireEssais.rechercher']}" />
+                                                </a>
+                                            </li>
+                                        </security:authorize>	
+                                        <security:authorize
+                                            ifAnyGranted="ROLE_PHARMACIEN_TITULAIRE,ROLE_PHARMACIEN_ATTACHE,ROLE_PHARMACIEN_ASSISTANT,ROLE_ADMIN">
+                                            <li>
+                                                <a href="#{request.contextPath}/flows/repertoireEssaisSigrec" class="submenuItem" >
+                                                    <h:outputText value="#{resourceBundle['menu.repertoireEssais.sigrec']}" />
+                                                </a>
+                                            </li>
+                                        </security:authorize>		
+                                    </ul>
+                                </div>
+                            </div>
+                        </li>
+
+                        <security:authorize
+                            ifAnyGranted="ROLE_INVESTIGATEUR,ROLE_ARC_INVESTIGATEUR,ROLE_ARC_PROMOTEUR,ROLE_DIRECTION_RECHERCHE,ROLE_PHARMACIEN_INTERNE,ROLE_PHARMACIEN_INTERNE_GARDE,ROLE_PHARMACIEN_PREPARATEUR,ROLE_PHARMACIEN_TITULAIRE,ROLE_PHARMACIEN_ATTACHE,ROLE_PHARMACIEN_ASSISTANT,ROLE_ADMIN">	
+                            <li><a href="#"><h:outputText value="#{resourceBundle['menu.gestionData']}" /></a>
+                                <div
+                                    class="ui-menu ui-widget ui-widget-content ui-corner-all yui-module yui-overlay"
+                                    id="menuForm:j_idt49"
+                                    style="position: absolute; visibility: hidden; z-index: 1;">
+                                    <div class="bd">
+                                        <ul class="first-of-type">
+
+                                            <security:authorize
+                                                ifAnyGranted="ROLE_PHARMACIEN_ATTACHE,ROLE_PHARMACIEN_TITULAIRE, ROLE_PHARMACIEN_ASSISTANT,ROLE_ADMIN">
+                                                <li>
+                                                    <a href="#{request.contextPath}/flows/etablissement/gestion" class="submenuItem" >
+                                                        <h:outputText value="#{resourceBundle['menu.gestionEtablissement']}" />
+                                                    </a>
+                                                </li>
+
+                                                <li>
+                                                    <a href="#{request.contextPath}/flows/surcout/grilleModele/gestion" class="submenuItem" >
+                                                        <h:outputText value="#{resourceBundle['menu.gestionGrille']}" />
+                                                    </a>
+                                                </li>
+                                            </security:authorize>
+
+                                            <security:authorize 
+                                                ifAnyGranted="ROLE_INVESTIGATEUR,ROLE_ARC_INVESTIGATEUR,ROLE_ARC_PROMOTEUR,ROLE_DIRECTION_RECHERCHE,ROLE_PHARMACIEN_INTERNE,ROLE_PHARMACIEN_INTERNE_GARDE,ROLE_PHARMACIEN_PREPARATEUR,ROLE_PHARMACIEN_TITULAIRE,ROLE_PHARMACIEN_ATTACHE,ROLE_PHARMACIEN_ASSISTANT,ROLE_ADMIN">
+                                                <li>
+                                                    <a href="#{request.contextPath}/flows/patient/gestion" class="submenuItem" >
+                                                        <h:outputText value="#{resourceBundle['menu.gestionPatient']}" />
+                                                    </a>
+                                                </li>
+                                            </security:authorize>	
+
+                                            <security:authorize 
+                                                ifAnyGranted="ROLE_PHARMACIEN_ATTACHE,ROLE_PHARMACIEN_TITULAIRE, ROLE_PHARMACIEN_ASSISTANT,ROLE_ADMIN">	
+
+                                                <li>
+                                                    <a href="#{request.contextPath}/flows/personne/gestion" class="submenuItem" >
+                                                        <h:outputText value="#{resourceBundle['menu.gestionPersonne']}" />
+                                                    </a>
+                                                </li>
+
+                                                <li>
+                                                    <a href="#{request.contextPath}/flows/pharmacie/gestion" class="submenuItem" >
+                                                        <h:outputText value="#{resourceBundle['menu.gestionPharmacie']}" />
+                                                    </a>
+                                                </li>
+
+                                                <li>
+                                                    <a href="#{request.contextPath}/flows/pole/gestion" class="submenuItem" >
+                                                        <h:outputText value="#{resourceBundle['menu.gestionPole']}" />
+                                                    </a>
+                                                </li>
+
+                                                <li>
+                                                    <a href="#{request.contextPath}/flows/promoteur/gestion" class="submenuItem" >
+                                                        <h:outputText value="#{resourceBundle['menu.gestionPromoteur']}" />
+                                                    </a>
+                                                </li>
+
+                                                <li>
+                                                    <a href="#{request.contextPath}/flows/service/gestion" class="submenuItem" >
+                                                        <h:outputText value="#{resourceBundle['menu.gestionService']}" />
+                                                    </a>
+                                                </li>
+
+                                                <li>
+                                                    <a href="#{request.contextPath}/flows/site/gestion" class="submenuItem" >
+                                                        <h:outputText value="#{resourceBundle['menu.gestionSite']}" />
+                                                    </a>
+                                                </li>
+                                                <c:if test="#{applicationController.moduleImportExterne}">       
+
+                                                    <li>
+                                                        <a href="/elips-interface/api/resultat" class="submenuItem" >
+                                                            <h:outputText value="#{resourceBundle['menu.resultatSynchro']}" />
+                                                        </a>
+                                                    </li>											
+                                                </c:if>
+
+                                            </security:authorize>		
+                                        </ul>
+                                    </div>
+                                </div></li>
+                        </security:authorize>	
+                        <security:authorize 
+                            ifAnyGranted="ROLE_PHARMACIEN_INTERNE,ROLE_PHARMACIEN_INTERNE_GARDE, ROLE_PHARMACIEN_EXTERNE,ROLE_PHARMACIEN_PREPARATEUR,ROLE_PHARMACIEN_TITULAIRE,ROLE_PHARMACIEN_ATTACHE,ROLE_PHARMACIEN_ASSISTANT,ROLE_ADMIN">
+                            <li><a href="#"><h:outputText value="#{resourceBundle['menu.ordonnancier']}" /></a>
+                                <div
+                                    class="ui-menu ui-widget ui-widget-content ui-corner-all yui-module yui-overlay"
+                                    id="menuForm:j_idt59"
+                                    style="position: absolute; visibility: hidden; z-index: 1;">
+                                    <div class="bd">
+                                        <ul class="first-of-type">
+                                            <li>
+                                                <a href="#{request.contextPath}/flows/ordonnancier/dispensation/impression" class="submenuItem" >
+                                                    <h:outputText value="#{resourceBundle['ordonnancierDisp.menu']}" />
+                                                </a>
+                                            </li>
+
+                                            <li>
+                                                <a href="#{request.contextPath}/flows/ordonnancier/dispensation/duplicata" class="submenuItem" >
+                                                    <h:outputText value="#{resourceBundle['duplicataOrdonnancierDisp.menu']}" />
+                                                </a>
+                                            </li>
+
+                                            <li>
+                                                <a href="#{request.contextPath}/flows/ordonnancier/fabReconst/impression" class="submenuItem" >
+                                                    <h:outputText value="#{resourceBundle['ordonnancierFabReconst.menu']}" />
+                                                </a>
+                                            </li>
+
+                                            <li>
+                                                <a href="#{request.contextPath}/flows/ordonnancier/fabReconst/duplicata" class="submenuItem" >
+                                                    <h:outputText value="#{resourceBundle['duplicataOrdonnancierFabReconst.menu']}" />
+                                                </a>
+                                            </li>
+                                            <c:if test="#{applicationController.reprisePassif}">
+                                                <li>
+                                                    <a href="#{request.contextPath}/flows/reprisePassif" class="submenuItem" >
+                                                        <h:outputText value="#{resourceBundle['ordonnancierReprisePassif.menu']}" />
+                                                    </a>
+                                                </li>
+                                            </c:if>										
+                                        </ul>
+                                    </div>
+                                </div>
+                            </li>
+                        </security:authorize>		
+                    </ul>
+                </div>
+            </div>
+        </div>
+        <script type="text/javascript">
+            widget_menuForm_j_idt27 = new PrimeFaces.widget.MenuBar(
+                    'menuForm:j_idt27', {
+                        autosubmenudisplay: false,
+                        effect: {
+                            effect: YAHOO.widget.ContainerEffect.FADE,
+                            duration: 0.25
+                        }
+                    });
+        </script>
+
+    </h:form>
 
 </ui:composition>

@@ -22,7 +22,7 @@ public class DesignableComparator implements Comparator<Designable>, Serializabl
      */
     @Override
     public int compare(final Designable p1,
-                       final Designable p2) {
+            final Designable p2) {
         final String key1 = this.buildKey(p1);
         final String key2 = this.buildKey(p2);
 
@@ -31,16 +31,20 @@ public class DesignableComparator implements Comparator<Designable>, Serializabl
 
     /**
      * Méthode en charge de construire la clé relative à un Designable
-     * @param p Designable dont on veut construire la clé.
+     * 
+     * @param p
+     *            Designable dont on veut construire la clé.
      * @return La clé du Designable.
      */
     private String buildKey(final Designable p) {
         // Tri par date + nom du produit + dosage + mode de prescription
         final StringBuilder builder = new StringBuilder();
-        if (p.getDebut() != null) {
-            builder.append(String.valueOf(p.getDebut())).append(EclipseConstants.COMMA);
+        if (null != p) {
+            if (p.getDebut() != null) {
+                builder.append(String.valueOf(p.getDebut())).append(EclipseConstants.COMMA);
+            }
+            builder.append(p.getNomComplet()).append(EclipseConstants.COMMA);
         }
-        builder.append(p.getNomComplet()).append(EclipseConstants.COMMA);
         return builder.toString();
     }
 

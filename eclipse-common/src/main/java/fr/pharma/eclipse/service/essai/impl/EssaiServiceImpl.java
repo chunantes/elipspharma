@@ -14,10 +14,10 @@ import org.apache.commons.collections.CollectionUtils;
 import org.apache.commons.collections.Predicate;
 import org.apache.commons.lang.BooleanUtils;
 import org.apache.commons.lang.StringUtils;
+import org.jfree.util.Log;
 import org.springframework.beans.BeansException;
 import org.springframework.beans.factory.BeanFactory;
 import org.springframework.beans.factory.BeanFactoryAware;
-import org.springframework.util.Assert;
 
 import fr.pharma.eclipse.dao.common.GenericDao;
 import fr.pharma.eclipse.dao.search.EssaiSearchDao;
@@ -39,6 +39,7 @@ import fr.pharma.eclipse.domain.model.evenement.Evenement;
 import fr.pharma.eclipse.domain.model.localisation.Site;
 import fr.pharma.eclipse.domain.model.stockage.Pharmacie;
 import fr.pharma.eclipse.domain.model.suivi.common.Suivi;
+import fr.pharma.eclipse.exception.TechnicalException;
 import fr.pharma.eclipse.factory.common.BeanObjectWithParentFactory;
 import fr.pharma.eclipse.factory.suivi.SuiviFactory;
 import fr.pharma.eclipse.predicate.essai.EssaiActifPredicate;
@@ -155,7 +156,7 @@ public class EssaiServiceImpl extends GenericServiceImpl<Essai> implements Essai
 
         // Récupération des résultats et calcul du nombre d'essais sur cette
         // année.
-        final int nbEssais = this.getAll(criteria).size();
+        final int nbEssais = this.count(criteria).intValue();
 
         // Formation du numéro Sigrec.
         final NumberFormat nf = NumberFormat.getIntegerInstance();
@@ -173,29 +174,35 @@ public class EssaiServiceImpl extends GenericServiceImpl<Essai> implements Essai
      */
     @Override
     public Essai save(final Essai essai) {
-        if (this.droitAccesHelper.isEssaiLectureSeule()) {
-            return essai;
-        }
-        // Mise à jour avant validation.
-        for (final EssaiBeforeSaveUpdator updator : this.beforeSaveUpdators) {
-            updator.update(essai, this);
-        }
-
-        // Validation.
-        for (final SaveValidator<Essai> validator : this.saveValidators) {
-            validator.validate(essai, this);
-        }
-
-        // Ajout d'une modification générale.
-        this.addHistorique(essai, TypeHistoriqueEssai.GENERAL);
-
-        // Sauvegarde.
-        final Essai essaiSaved = super.save(essai);
-
-        // Mise à jour des acls.
-        this.aclService.updateAclsEssais(essaiSaved);
-
-        return essaiSaved;
+    	try{
+	        if (this.droitAccesHelper.isEssaiLectureSeule()) {
+	            return essai;
+	        }
+	        // Mise à jour avant validation.
+	        for (final EssaiBeforeSaveUpdator updator : this.beforeSaveUpdators) {
+	            updator.update(essai, this);
+	        }
+	
+	        // Validation.
+	        for (final SaveValidator<Essai> validator : this.saveValidators) {
+	            validator.validate(essai, this);
+	        }
+	
+	        // Ajout d'une modification générale.
+	        this.addHistorique(essai, TypeHistoriqueEssai.GENERAL);
+	
+	        // Sauvegarde.
+	        final Essai essaiSaved = super.save(essai);
+	
+	        // Mise à jour des acls.
+	        this.aclService.updateAclsEssais(essaiSaved);
+	
+	        return essaiSaved;
+    	} catch (RuntimeException e) {
+    		Log.error("Une erreur est survenue lors de la sauvegarde de l'essai", e);
+    		throw new TechnicalException(e);
+    		
+    	}
     }
 
     /**
@@ -427,15 +434,13 @@ public class EssaiServiceImpl extends GenericServiceImpl<Essai> implements Essai
             parent = (BeanObject) BeanTool.getPropriete(essai, typeHistorique.getModifsParentPropertyFromEssai());
         }
 
-        // Création de la nouvelle modification.
-        Assert.isTrue(this.mapFactories.containsKey(typeHistorique.name()),
-                      new StringBuilder("Aucune fabrique pour le type d'historique '").append(typeHistorique.name()).append("' !").toString());
-
+        if (this.mapFactories.get(typeHistorique.name())!=null) {
         @SuppressWarnings("unchecked")
-        final Suivi nouvelleMdif = ((BeanObjectWithParentFactory<Suivi, BeanObject>) this.mapFactories.get(typeHistorique.name())).getInitializedObject(parent);
+            final Suivi nouvelleMdif = ((BeanObjectWithParentFactory<Suivi, BeanObject>) this.mapFactories.get(typeHistorique.name())).getInitializedObject(parent);
 
-        // Ajout de la modification à la collection du parent.
-        this.beanHelper.addToCollection(essai, typeHistorique.getModifsPropertyFromEssai(), nouvelleMdif);
+            // Ajout de la modification à la collection du parent.
+            this.beanHelper.addToCollection(essai, typeHistorique.getModifsPropertyFromEssai(), nouvelleMdif);
+        }
     }
 
     /**
@@ -565,10 +570,14 @@ public class EssaiServiceImpl extends GenericServiceImpl<Essai> implements Essai
     @Override
     public EssaiDTO getEssaiDTO(final Long id) {
 
-        final List<EssaiDTO> essaiDTOs = this.essaiSearchDao.findEssaiDTOById(id);;
-
-        // Renvoie le 1er et seul élément.
-        return essaiDTOs.get(0);
+        final List<EssaiDTO> essaiDTOs = this.essaiSearchDao.findEssaiDTOById(id);
+        // Si la liste est vide on retourne null sinon le premier élément.
+        if(essaiDTOs.isEmpty()){
+            return null;
+        } else {
+            // Renvoie le 1er et seul élément.
+            return essaiDTOs.get(0);
+        }
     }
 
     /**

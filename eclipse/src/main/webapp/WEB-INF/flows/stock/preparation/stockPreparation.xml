@@ -18,19 +18,22 @@
 	<decision-state id="isForEssai">
 		<if then="initEssai" test="idEssai != null" else="stockSortie" />
 	</decision-state>
+	
+	<decision-state id="isUse">
+		<if test="sortieManager.essaiSelectedIsUsed != true" then="editSortie" else="stockSortie"/>
+	</decision-state>
 
 	<action-state id="initEssai">
 		<evaluate expression="essaiService.get(idEssai)" result="sortieManager.essaiSelected" />
 		<transition to="stockSortie">
 			<evaluate expression="sortieManager.handleSelectEssai(null)" />
 		</transition>
-
 	</action-state>
 
 	<!-- Page principale -->
 	<view-state id="stockSortie" view="../../../pages/stock/sortie/stockSortie.xhtml">
-		<transition on="addSortie" to="editSortie">
-			<evaluate expression="sortieManager.addSortie()" />
+		<transition on="addSortie" to="isUse">
+			<evaluate expression="sortieManager.addSortiePourPreparation()" />
 		</transition>
 		<transition on="modifySortie" to="editSortie">
 			<evaluate expression="sortieManager.modifySortie()" />
@@ -38,7 +41,9 @@
 		<transition on="delSortie">
 			<evaluate expression="sortieManager.delSortie()" />
 		</transition>
-		<transition on="cancel" to="viewStockPreparation" />
+		<transition on="cancel" to="viewStockPreparation">
+			<evaluate expression="sortieManager.cacheUtils.clearCacheEssai(sortieManager.essaiSelected.id)" />
+		</transition>
 		<transition on="suivant" to="prepareStockReception" />
 		<transition on="error" to="stockSortie" />
 		<transition on="submit" />
@@ -83,7 +88,9 @@
 		<transition on="delReceptionLot">
 			<evaluate expression="approvisionnementManager.delReception()" />
 		</transition>
-		<transition on="cancel" to="viewStockPreparation" />
+		<transition on="cancel" to="viewStockPreparation">
+			<evaluate expression="sortieManager.cacheUtils.clearCacheEssai(sortieManager.essaiSelected.id)" />
+		</transition>
 		<transition on="save" to="recapStockReception">
 			<!-- Sauvegarde de la sortie -->
 			<evaluate

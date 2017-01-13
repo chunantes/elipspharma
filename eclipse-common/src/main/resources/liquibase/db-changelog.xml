@@ -8,6 +8,7 @@
         http://www.liquibase.org/xml/ns/dbchangelog-ext http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-ext.xsd">
     
     <changeSet id="upgrade_1.30_vers_1.31" author="SGL">
+        <validCheckSum>7:47e853315595994f805062a20b4b2bd7</validCheckSum>
         <preConditions onFail="MARK_RAN" onFailMessage="Structure de base à 1.30 non valide pour migration">
  
             <and>
@@ -55,4 +56,24 @@
         </createTable>
         <addNotNullConstraint tableName="reprise_passif" columnName="numero_ordonnancier"/>
     </changeSet>
+    <changeSet id="update_user_admin_version" author="SGL">
+        <preConditions onFail="MARK_RAN" onFailMessage="RAS">
+                <sqlCheck expectedResult="t">
+                	SELECT count(*) > 0 FROM personne WHERE version IS NULL;
+                </sqlCheck> 
+        </preConditions>
+        <comment>Set the version of the admin user</comment>
+        <sql>
+        	UPDATE personne SET version = 0 WHERE version IS NULL;
+        </sql>
+    </changeSet>
+    <changeSet id="add_external_table" author="SGL">
+        <preConditions onFail="MARK_RAN" onFailMessage="Problème de création de la table essais_externe">
+            <not>
+                <tableExists tableName="essais_externe"/>
+            </not>  
+        </preConditions>
+        <comment>Ajout de la table pour les essais externes</comment>
+        <sqlFile path="liquibase/add_external_table.sql"/>
+    </changeSet>    
 </databaseChangeLog>

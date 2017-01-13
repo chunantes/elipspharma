@@ -94,7 +94,7 @@ public class DesignHelperTest extends AbstractEclipseJUnitTest {
 
         Mockito.when(this.essaiService.reattach(Matchers.any(Essai.class))).thenReturn(essai);
 
-        final Set<Designable> brasRoots = this.helper.getDesignRoots(essai);
+        final Set<Designable> brasRoots = this.helper.getDesignRoots(essai.getDetailDesign());
         Assert.assertNotNull(brasRoots);
         Assert.assertEquals(2, brasRoots.size());
 

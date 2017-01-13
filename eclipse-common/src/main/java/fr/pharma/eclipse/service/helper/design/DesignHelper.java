@@ -13,6 +13,7 @@ import fr.pharma.eclipse.comparator.design.DesignableComparator;
 import fr.pharma.eclipse.domain.model.design.Bras;
 import fr.pharma.eclipse.domain.model.design.Designable;
 import fr.pharma.eclipse.domain.model.essai.Essai;
+import fr.pharma.eclipse.domain.model.essai.detail.design.DetailDesign;
 import fr.pharma.eclipse.service.essai.EssaiService;
 
 /**
@@ -34,8 +35,8 @@ public class DesignHelper implements Serializable {
      * @return Ensemble (trié) des bras root (ceux qui n'ont pas de parent -
      * niveau 1.
      */
-    public Set<Designable> getDesignRoots(final Essai essai) {
-        final SortedSet<Bras> bras = essai.getDetailDesign().getBras();
+    public Set<Designable> getDesignRoots(final DetailDesign design) {
+        final SortedSet<Bras> bras = design.getBras();
 
         // Récupération de tous les sigs qui n'ont pas de parent
         final SortedSet<Designable> designRoot = new TreeSet<Designable>(new DesignableComparator());

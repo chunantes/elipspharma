@@ -83,6 +83,7 @@
                 <prop key="hibernate.generate_statistics">${hibernate.generate_statistics}</prop>
                 <prop key="hibernate.use_sql_comments">${hibernate.use_sql_comments}</prop>
                 <prop key="hibernate.hbm2ddl.auto">${hibernate.hbm2ddl.auto}</prop>
+                <prop key="hibernate.hbm2ddl.import_files">${hibernate.hbm2ddl.import_files:import.sql}</prop>
             </props>
         </property>
     </bean>
@@ -126,7 +127,7 @@
                 <prop key="hibernate.format_sql">${sir.hibernate.format.sql}</prop>
                 <prop key="hibernate.generate_statistics">${sir.hibernate.generate_statistics}</prop>
                 <prop key="hibernate.use_sql_comments">${sir.hibernate.use_sql_comments}</prop>
-                <prop key="hibernate.hbm2ddl.auto">validate</prop>
+                <prop key="hibernate.hbm2ddl.auto">${sir.hibernate.hbm2ddl.auto:validate}</prop>
             </props>
         </property>
     </bean>

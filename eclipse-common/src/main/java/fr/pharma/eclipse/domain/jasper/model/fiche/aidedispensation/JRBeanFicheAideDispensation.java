@@ -1,9 +1,9 @@
 package fr.pharma.eclipse.domain.jasper.model.fiche.aidedispensation;
 
-import net.sf.jasperreports.engine.JRDataSource;
 import fr.pharma.eclipse.domain.jasper.model.common.AbstractJRBeanWithHeader;
 import fr.pharma.eclipse.domain.jasper.model.common.JRBeanHeader;
 import fr.pharma.eclipse.domain.jasper.model.common.JasperReportBean;
+import net.sf.jasperreports.engine.JRDataSource;
 
 /**
  * Classe représentant la source de données principale<br>

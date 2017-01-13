@@ -3,8 +3,6 @@ package fr.pharma.eclipse.jasper.engine.filler.impl.common;
 import java.util.Arrays;
 import java.util.Collection;
 
-import net.sf.jasperreports.engine.JRDataSource;
-
 import org.junit.Assert;
 import org.junit.Test;
 import org.mockito.Matchers;
@@ -19,6 +17,7 @@ import fr.pharma.eclipse.jasper.engine.builder.helper.common.JRBeanBlocWithMoAss
 import fr.pharma.eclipse.jasper.engine.factory.JRDataSourceFactory;
 import fr.pharma.eclipse.utils.AbstractEclipseJUnitTest;
 import fr.pharma.eclipse.utils.EssaiUtils;
+import net.sf.jasperreports.engine.JRDataSource;
 
 /**
  * Test de la classe {@link BlocWithMoAssocieFiller}.

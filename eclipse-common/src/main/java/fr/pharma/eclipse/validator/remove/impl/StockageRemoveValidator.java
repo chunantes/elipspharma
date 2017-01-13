@@ -36,12 +36,12 @@ public class StockageRemoveValidator implements RemoveValidator<Stockage>, Seria
         // Vérification Relation Pole-Service
         final ProduitSearchCriteria criteria = new ProduitSearchCriteria();
         criteria.setStockage(stockage);
-        if (this.produitService.hasResult(criteria)) {
+        if (this.produitService.count(criteria) > 0) {
             throw new ValidationException("remove", new String[]{"impossible" }, stockage);
         }
         criteria.setStockageRetour(stockage);
         criteria.setStockage(null);
-        if (this.produitService.hasResult(criteria)) {
+        if (this.produitService.count(criteria) > 0 ) {
             throw new ValidationException("remove", new String[]{"impossible" }, stockage);
         }
     }

@@ -2,7 +2,6 @@ package fr.pharma.eclipse.jasper.engine.filler.impl.aidedispensation;
 
 import java.util.Collection;
 
-import net.sf.jasperreports.engine.JRDataSource;
 import fr.pharma.eclipse.domain.enums.GroupeContacts;
 import fr.pharma.eclipse.domain.jasper.model.common.JasperReportBean;
 import fr.pharma.eclipse.domain.jasper.model.fiche.aidedispensation.JRBeanContact;
@@ -13,6 +12,7 @@ import fr.pharma.eclipse.jasper.engine.filler.JasperReportBeanFiller;
 import fr.pharma.eclipse.jasper.engine.filler.impl.aidedispensation.helper.ContactsFillerHelper;
 import fr.pharma.eclipse.service.habilitation.helper.HabilitationsHelper;
 import fr.pharma.eclipse.utils.introspection.BeanTool;
+import net.sf.jasperreports.engine.JRDataSource;
 
 /**
  * Filler en charge de construire un attribut de contacts du bean

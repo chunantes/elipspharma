@@ -38,6 +38,19 @@ public class ApplicationController {
     
     private String erreurMailto;
     
+    private Boolean moduleImportExterne;
+    
+    //propriété d'activation du module pour strasbourg
+    private String strasbourg;
+    
+    public String getStrasbourg() {
+		return strasbourg;
+	}
+
+	public void setStrasbourg(String strasbourg) {
+		this.strasbourg = strasbourg;
+	}
+    
     @PostConstruct
     public void initApplication() {
         this.log.info("Début - Initialisation de l'application");
@@ -95,6 +108,14 @@ public class ApplicationController {
 
     public void setErreurMailto(String erreurMailto) {
         this.erreurMailto = erreurMailto;
+    }
+
+    public Boolean getModuleImportExterne() {
+        return moduleImportExterne;
+    }
+
+    public void setModuleImportExterne(Boolean moduleImportExterne) {
+        this.moduleImportExterne = moduleImportExterne;
     }
 
 }

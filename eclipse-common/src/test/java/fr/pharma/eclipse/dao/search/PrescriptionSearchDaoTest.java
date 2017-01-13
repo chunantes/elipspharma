@@ -30,7 +30,7 @@ import fr.pharma.eclipse.utils.ContextSecurityHelper;
  * @version $Revision$ $Date$
  */
 @RunWith(SpringJUnit4ClassRunner.class)
-@ContextConfiguration(locations = {"classpath*:config/applicationContext.xml" })
+@ContextConfiguration(locations = {"classpath*:config/applicationContext-test.xml" })
 @Transactional
 public class PrescriptionSearchDaoTest {
 

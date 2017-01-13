@@ -3,11 +3,14 @@ package fr.pharma.eclipse.component.produit;
 import java.util.ArrayList;
 import java.util.List;
 
+import javax.faces.application.FacesMessage;
+
 import org.junit.Assert;
 import org.junit.Test;
 import org.mockito.Matchers;
 import org.mockito.Mockito;
 
+import fr.pharma.eclipse.comparator.produit.detail.ConditionnementComparator;
 import fr.pharma.eclipse.component.helper.BeanManagerHelper;
 import fr.pharma.eclipse.component.produit.validator.ConditionnementRemoveValidator;
 import fr.pharma.eclipse.domain.criteria.produit.ConditionnementSearchCriteria;
@@ -40,6 +43,11 @@ public class ConditionnementListManagerTest extends AbstractEclipseJUnitTest {
      * Validateur de suppression.
      */
     private ConditionnementRemoveValidator mockedRemoveValidator;
+    
+    /**
+     * Comparateur de conditionnements.
+     */
+    private ConditionnementComparator mockedConditionnementComparator;
 
     /**
      * Manager de conditionnement.
@@ -72,6 +80,7 @@ public class ConditionnementListManagerTest extends AbstractEclipseJUnitTest {
         this.conditionnementManager = Mockito.mock(ConditionnementManager.class);
         this.mcokedRedirectHandler = Mockito.mock(RedirectHandler.class);
         this.mockedHelper = Mockito.mock(BeanManagerHelper.class);
+        this.mockedConditionnementComparator = Mockito.mock(ConditionnementComparator.class);
         this.conditionnementsManager = new ConditionnementListManager(this.criteria);
         this.conditionnementsManager.setConditionnementManager(this.conditionnementManager);
         this.conditionnementsManager.setRemoveValidator(this.mockedRemoveValidator);
@@ -87,6 +96,7 @@ public class ConditionnementListManagerTest extends AbstractEclipseJUnitTest {
     public void tearDown() {
         this.criteria = null;
         this.mockedRemoveValidator = null;
+        this.mockedConditionnementComparator = null;
         this.conditionnementsManager = null;
         this.conditionnementManager = null;
     }
@@ -113,6 +123,31 @@ public class ConditionnementListManagerTest extends AbstractEclipseJUnitTest {
         Assert.assertTrue(produit.getConditionnements().first().getId().equals(conditionnement.getId()));
         Assert.assertNull(this.conditionnementsManager.getBeanSelected());
     }
+    
+    @Test
+    public void testAddWithoutIdWithSameLibelle() {
+    	
+    	//Prepare
+        final Produit produit = this.createProduit();
+        
+        final Conditionnement conditionnement1 = this.createConditionnement();
+        conditionnement1.setId(1L);
+        conditionnement1.setLibelle("libelle");        
+        produit.getConditionnements().add(conditionnement1);
+        
+        final Conditionnement conditionnement2 = this.createConditionnement();
+        conditionnement2.setLibelle("libelle");
+                
+        //Test
+        this.conditionnementsManager.add(produit, conditionnement2);
+        
+        //Verify
+        Assert.assertTrue(produit.getConditionnements().size() == 1);
+        Mockito.verify(this.facesUtils).addMessage(FacesMessage.SEVERITY_ERROR, "conditionnement.alreadyExist");
+               
+    }
+    
+    
     /**
      * Test de la méthode add.
      */
@@ -127,6 +162,45 @@ public class ConditionnementListManagerTest extends AbstractEclipseJUnitTest {
         Assert.assertTrue(produit.getConditionnements().first().getId().equals(conditionnement.getId()));
         Assert.assertNull(this.conditionnementsManager.getBeanSelected());
     }
+    
+    /**
+    * Test de la méthode add.
+    */
+   @Test
+   public void testAddWithIdWithSameLibelle() {
+	   
+	   //Prepare
+       final Produit produit = this.createProduit();
+       
+       final Conditionnement conditionnement1 = this.createConditionnement();
+       conditionnement1.setId(1L);
+       conditionnement1.setLibelle("libelle");
+       conditionnement1.setQuantiteParPatient(0);
+       produit.getConditionnements().add(conditionnement1);
+       
+       final Conditionnement conditionnement2 = this.createConditionnement();
+       conditionnement2.setId(2L);
+       conditionnement2.setLibelle("libelle2");       
+       conditionnement2.setQuantiteParPatient(1);
+       produit.getConditionnements().add(conditionnement2);
+       
+       final Conditionnement conditionnement3 = this.createConditionnement();
+       conditionnement3.setId(2L);
+       conditionnement3.setQuantiteParPatient(3);
+       conditionnement3.setLibelle("libelle");       
+       
+       //Test
+       this.conditionnementsManager.add(produit, conditionnement3);
+       
+       //Verify
+       Assert.assertTrue(produit.getConditionnements().size() == 2);
+       
+       for (Conditionnement c : produit.getConditionnements()) {
+		Assert.assertFalse(c.getQuantiteParPatient() == 3);
+       }
+       
+       Mockito.verify(this.facesUtils).addMessage(FacesMessage.SEVERITY_ERROR, "conditionnement.alreadyExist");
+   }
 
     /**
      * Test de la méthode remove.
@@ -186,4 +260,19 @@ public class ConditionnementListManagerTest extends AbstractEclipseJUnitTest {
 
         return c;
     }
+
+	/**
+	 * @return the mockedConditionnementComparator
+	 */
+	public ConditionnementComparator getMockedConditionnementComparator() {
+		return mockedConditionnementComparator;
+	}
+
+	/**
+	 * @param mockedConditionnementComparator the mockedConditionnementComparator to set
+	 */
+	public void setMockedConditionnementComparator(
+			ConditionnementComparator mockedConditionnementComparator) {
+		this.mockedConditionnementComparator = mockedConditionnementComparator;
+	}
 }

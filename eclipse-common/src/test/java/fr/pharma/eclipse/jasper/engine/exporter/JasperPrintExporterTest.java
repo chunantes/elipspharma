@@ -4,11 +4,6 @@ import java.io.ByteArrayOutputStream;
 import java.util.List;
 import java.util.TreeMap;
 
-import net.sf.jasperreports.engine.JRException;
-import net.sf.jasperreports.engine.JRExporter;
-import net.sf.jasperreports.engine.JRExporterParameter;
-import net.sf.jasperreports.engine.JasperPrint;
-
 import org.junit.Assert;
 import org.junit.Test;
 import org.mockito.Matchers;
@@ -21,6 +16,10 @@ import fr.pharma.eclipse.factory.utils.IOStreamsFactory;
 import fr.pharma.eclipse.jasper.engine.factory.exporter.JRExporterFactory;
 import fr.pharma.eclipse.jasper.exception.JasperReportBuildException;
 import fr.pharma.eclipse.utils.AbstractEclipseJUnitTest;
+import net.sf.jasperreports.engine.JRException;
+import net.sf.jasperreports.engine.JRExporter;
+import net.sf.jasperreports.engine.JRExporterParameter;
+import net.sf.jasperreports.engine.JasperPrint;
 
 /**
  * Test de la classe JasperPrintExporter.

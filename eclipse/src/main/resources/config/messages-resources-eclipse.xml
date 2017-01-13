@@ -5,14 +5,14 @@
 	
 	<!-- Fichier de configuration de ressources du projet -->
 	<bean id="messageSource"
-		class="org.springframework.context.support.ResourceBundleMessageSource">
+		class="org.springframework.context.support.ReloadableResourceBundleMessageSource">
 		<property name="basenames">
 			<list>
-				<value>ErrorResources</value>
-				<value>LabelResources</value>
-				<value>ParametrageIHM</value>
+				<value>classpath:ErrorResources</value>
+				<value>classpath:LabelResources</value>
+				<value>classpath:ParametrageIHM</value>
 				<value>#{configPath}/project</value>
-				<value>version</value>
+				<value>classpath:version</value>
 			</list>
 		</property>
 		<property name="alwaysUseMessageFormat" value="true" />

@@ -9,7 +9,9 @@ import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.transaction.annotation.Transactional;
 
 import fr.pharma.eclipse.dao.common.GenericDao;
+import fr.pharma.eclipse.domain.enums.TypePersonne;
 import fr.pharma.eclipse.domain.model.acteur.Personne;
+import fr.pharma.eclipse.domain.model.habilitation.Habilitation;
 import fr.pharma.eclipse.domain.model.suivi.acteur.PersonneSuivi;
 import fr.pharma.eclipse.exception.ValidationException;
 import fr.pharma.eclipse.factory.suivi.SuiviFactory;
@@ -17,6 +19,7 @@ import fr.pharma.eclipse.service.acl.AclService;
 import fr.pharma.eclipse.service.acteur.PersonneService;
 import fr.pharma.eclipse.service.acteur.helper.PasswordEncoderHelper;
 import fr.pharma.eclipse.service.common.impl.GenericServiceImpl;
+import fr.pharma.eclipse.service.habilitation.HabilitationService;
 import fr.pharma.eclipse.validator.save.SaveValidator;
 import fr.pharma.eclipse.validator.save.impl.PersonneSaveValidator;
 
@@ -67,6 +70,9 @@ public class PersonneServiceImpl<PERSONNE extends Personne> extends GenericServi
 	 */
 	@Autowired
 	private AclService aclService;
+	
+	@Autowired
+    private HabilitationService habilitationService;
 
 	/**
 	 * Constructeur.
@@ -95,6 +101,9 @@ public class PersonneServiceImpl<PERSONNE extends Personne> extends GenericServi
 
 		final PERSONNE personneSaved = this.saveCommon(personne);
 		this.updateAcls(personneSaved);
+		if(TypePersonne.PHARMACIEN.equals(personne.getType())) {
+		    this.updateHabilitation(personneSaved);
+		}
 
 		return personneSaved;
 	}
@@ -108,6 +117,15 @@ public class PersonneServiceImpl<PERSONNE extends Personne> extends GenericServi
 		this.aclService.updateAclsPharmacies(personneSaved);
 		this.aclService.updateAclsEssais(personneSaved);
 	}
+	
+	/**
+     * Méthode en charge de mettre à jour la table habilitation.
+     * @param personneSaved Personne sauvegardée.
+     */
+    @Transactional
+    public void updateHabilitation(final Personne personneSaved) {
+        this.habilitationService.updateHabilitationPersonne(personneSaved);
+    }
 
 	/**
 	 * {@inheritDoc}

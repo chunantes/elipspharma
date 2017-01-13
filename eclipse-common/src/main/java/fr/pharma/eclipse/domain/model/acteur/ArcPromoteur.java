@@ -1,5 +1,6 @@
 package fr.pharma.eclipse.domain.model.acteur;
 
+import javax.persistence.CascadeType;
 import javax.persistence.DiscriminatorValue;
 import javax.persistence.Entity;
 import javax.persistence.JoinColumn;
@@ -10,12 +11,14 @@ import org.hibernate.annotations.Index;
 
 /**
  * Classe métier représentant un ARC Promoteur.
+ * 
  * @author Netapsys
  * @version $Revision$ $Date$
  */
 @Entity
 @DiscriminatorValue("ARC_PROMOTEUR")
 public class ArcPromoteur extends Personne {
+
     /**
      * Serial ID.
      */
@@ -24,7 +27,7 @@ public class ArcPromoteur extends Personne {
     /**
      * Promoteur.
      */
-    @ManyToOne
+    @ManyToOne(cascade = CascadeType.MERGE)
     @JoinColumn(name = "id_promoteur")
     @Index(name = "idx_promo_arcpromo")
     @NotNull
@@ -32,6 +35,7 @@ public class ArcPromoteur extends Personne {
 
     /**
      * Getter sur promoteur.
+     * 
      * @return Retourne le promoteur.
      */
     public Promoteur getPromoteur() {
@@ -40,7 +44,9 @@ public class ArcPromoteur extends Personne {
 
     /**
      * Setter pour promoteur.
-     * @param promoteur le promoteur à écrire.
+     * 
+     * @param promoteur
+     *            le promoteur à écrire.
      */
     public void setPromoteur(final Promoteur promoteur) {
         this.promoteur = promoteur;

@@ -77,7 +77,7 @@ public class PrescriptionCounterTest extends AbstractEclipseJUnitTest {
         Mockito.when(this.prescriptionService.getAll(Matchers.any(MvtStockSearchCriteria.class))).thenReturn(new ArrayList<Prescription>());
 
         Assert.assertEquals(0, this.counter.process(essai, patient, dateDebut, dateFin));
-        Mockito.verify(this.prescriptionService).getAll(Matchers.any(MvtStockSearchCriteria.class));
+        Mockito.verify(this.prescriptionService).count(Matchers.any(MvtStockSearchCriteria.class));
 
     }
 

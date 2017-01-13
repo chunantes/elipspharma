@@ -36,6 +36,7 @@ import fr.pharma.eclipse.service.stock.MvtStockService;
 import fr.pharma.eclipse.service.stock.SortieService;
 import fr.pharma.eclipse.service.stock.StockService;
 import fr.pharma.eclipse.service.user.UserService;
+import fr.pharma.eclipse.utils.CacheUtils;
 import fr.pharma.eclipse.utils.constants.EclipseConstants;
 
 /**
@@ -141,6 +142,12 @@ public class SortieServiceImpl implements SortieService, Serializable {
      */
     @Resource(name = "documentMakerDictionary")
     private DocumentMakerDictionary documentMakerDictionary;
+    
+    /**
+     * Utilitaire de gestion de cache.
+     */
+    @Resource(name = "cacheUtilsPreparation")
+    private CacheUtils cacheUtils;
 
     /**
      * {@inheritDoc}
@@ -191,6 +198,7 @@ public class SortieServiceImpl implements SortieService, Serializable {
             resultSortie.setPharmacie(mvt.getPharmacie());
             resultSortie.setDateSortie(Calendar.getInstance(EclipseConstants.LOCALE));
             resultSortie.setPersonne(this.getUserService().getPersonne());
+            this.cacheUtils.clearCacheEssai(mvt.getEssai().getId());
         }
     }
 
@@ -601,5 +609,11 @@ public class SortieServiceImpl implements SortieService, Serializable {
     public void setStockService(final StockService stockService) {
         this.stockService = stockService;
     }
+
+	public void setCacheUtils(CacheUtils cacheUtils) {
+		this.cacheUtils = cacheUtils;
+	}
+    
+    
 
 }

@@ -58,6 +58,16 @@ public class LigneStockSearchCriteria extends AbstractSearchCriteria {
      * Boolean indiquant l'approbation (quarantaine).
      */
     private Boolean approApprouve;
+    
+    /**
+     * Boolean indiquant si la date de péremption doit être prise en compte.
+     */
+    private Boolean datePeremptionNA;
+    
+    /**
+     * Boolean indiquant si le numéro de traitement doit être prise en compte.
+     */
+    private Boolean numTraitementNA;
 
     /**
      * {@inheritDoc}
@@ -72,6 +82,7 @@ public class LigneStockSearchCriteria extends AbstractSearchCriteria {
         this.setNumLot(null);
         this.setNumTraitement(null);
         this.setApproApprouve(null);
+        this.setDatePeremptionNA(null);
     }
 
     /**
@@ -201,5 +212,33 @@ public class LigneStockSearchCriteria extends AbstractSearchCriteria {
     public void setApproApprouve(final Boolean approApprouve) {
         this.approApprouve = approApprouve;
     }
+
+	/**
+	 * @return the datePeremptionNA
+	 */
+	public Boolean getDatePeremptionNA() {
+		return datePeremptionNA;
+	}
+
+	/**
+	 * @param datePeremptionNA the datePeremptionNA to set
+	 */
+	public void setDatePeremptionNA(Boolean datePeremptionNA) {
+		this.datePeremptionNA = datePeremptionNA;
+	}
+
+	/**
+	 * @return the numTraitementNA
+	 */
+	public Boolean getNumTraitementNA() {
+		return numTraitementNA;
+	}
+
+	/**
+	 * @param numTraitementNA the numTraitementNA to set
+	 */
+	public void setNumTraitementNA(Boolean numTraitementNA) {
+		this.numTraitementNA = numTraitementNA;
+	}
 
 }

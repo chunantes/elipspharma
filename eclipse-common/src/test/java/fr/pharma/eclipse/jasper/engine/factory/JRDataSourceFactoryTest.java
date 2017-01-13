@@ -2,14 +2,13 @@ package fr.pharma.eclipse.jasper.engine.factory;
 
 import java.util.Arrays;
 
-import net.sf.jasperreports.engine.JRDataSource;
-
 import org.junit.Assert;
 import org.junit.Test;
 
 import fr.pharma.eclipse.domain.model.essai.Essai;
 import fr.pharma.eclipse.utils.AbstractEclipseJUnitTest;
 import fr.pharma.eclipse.utils.EssaiUtils;
+import net.sf.jasperreports.engine.JRDataSource;
 
 /**
  * Test de la classe JRDataSourceFactory.

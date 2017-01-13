@@ -2,6 +2,7 @@ package fr.pharma.eclipse.file;
 
 import java.io.IOException;
 
+import org.apache.commons.lang3.ArrayUtils;
 import org.apache.myfaces.custom.fileupload.UploadedFile;
 import org.junit.Assert;
 import org.junit.Test;
@@ -79,7 +80,7 @@ public class FichierFillerTest extends AbstractEclipseJUnitTest {
         Mockito.verify(upFile).getBytes();
         Mockito.verify(upFile).getContentType();
         Mockito.verify(this.mockedFileHelper).extractFileName(filename);
-        Assert.assertEquals(expectedBytes, fichier.getContenu());
+        Assert.assertTrue(ArrayUtils.isEquals(expectedBytes, fichier.getContenu()));
         Assert.assertEquals(expectedFilename, fichier.getNom());
         Assert.assertEquals(expectedContentType, fichier.getTypeFichier());
     }

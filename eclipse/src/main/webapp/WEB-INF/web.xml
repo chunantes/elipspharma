@@ -130,6 +130,12 @@
 		<servlet-name>Spring Web MVC Dispatcher Servlet</servlet-name>
 		<url-pattern>/flows/*</url-pattern>
 	</servlet-mapping>
+		
+	<!-- Map all /flows requests to the Dispatcher Servlet for handling -->
+	<servlet-mapping>
+		<servlet-name>Spring Web MVC Dispatcher Servlet</servlet-name>
+		<url-pattern>/api/*</url-pattern>
+	</servlet-mapping>
 	
 	<!-- Just here so the JSF implementation can initialize, *not* used at runtime -->
 	<servlet>

@@ -30,7 +30,8 @@
 	<!-- Recherche -->
 	<action-state id="search">
 		<evaluate expression="evenementService.getAll(evenementSearchCriteria)" result="evenementsManager.beans" />
-		<transition to="gestionEvenement">
+		<evaluate expression="evenementSearchCriteria.setIdsEssais(null)"/>
+                <transition to="gestionEvenement">
 			<evaluate expression="evenementsManager.initSchedule()" />
 		</transition>
 	</action-state>

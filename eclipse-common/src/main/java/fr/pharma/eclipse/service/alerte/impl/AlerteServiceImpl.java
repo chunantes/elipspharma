@@ -26,6 +26,7 @@ import fr.pharma.eclipse.service.user.UserService;
 
 /**
  * Classe d'implémentation du service de gestion des alertes.
+ *
  * @author Netapsys
  * @version $Revision$ $Date$
  */
@@ -75,17 +76,20 @@ public class AlerteServiceImpl implements AlerteService, Serializable {
      * un admin.
      */
     protected static final String SELECT_ALERTES_FOR_ADMIN = "select e.id, e.numInterne, e.nom, d.finEtude, d.cloture from essai e, essai_detail_dates d" + " where e.id=d.id_essai"
-                                                            + " and e.alerteActive is true and etat<>'" + EtatEssai.ARCHIVE.name() + "'";
+                    + " and e.alerteActive is true and etat<>'" + EtatEssai.ARCHIVE.name() + "'";
 
     /**
      * Requête SQL récupérant les essais entrant dans le calcul des alertes pour
      * un pharmacien.
      */
-    private static final String SELECT_ALERTES_FOR_PHARMACIEN = "select distinct(e.id), e.numInterne, e.nom, d.finEtude, d.cloture, e.id_pharma "
-                                                               + "from essai e, essai_detail_dates d, pharmacien_pharmacie p, essai_detail_pharma_pharmacie ep, essai_detail_pharma ed "
-                                                               + "where e.id=d.id_essai and e.alerteActive is true and etat<>'" + EtatEssai.ARCHIVE.name() + "'"
-                                                               + "and (e.id_pharma = p.id_pharmacie or (e.id=ed.id_essai and ed.id=ep.id_detail_pharma and p.id_pharmacie=ep.id_pharmacie)) "
-                                                               + "and (p.id_pharmacien = ?)";
+    private static final String SELECT_ALERTES_FOR_PHARMACIEN = "select distinct(e.id), e.numInterne, e.nom, d.finEtude, d.cloture, e.id_pharma " +
+                    "from" +
+                    "    essai e" +
+                    "    left join essai_detail_dates d on e.id=d.id_essai" +
+                    "    left join pharmacien_pharmacie p on e.id_pharma = p.id_pharmacie" +
+                    "    left join essai_detail_pharma ed on e.id=ed.id_essai" +
+                    "    left join essai_detail_pharma_pharmacie ep on ed.id=ep.id_detail_pharma " + "where e.id=d.id_essai and e.alerteActive is true and etat<>'" + EtatEssai.ARCHIVE.name() + "'"
+                    + "and (e.id_pharma = p.id_pharmacie or (e.id=ed.id_essai and ed.id=ep.id_detail_pharma and p.id_pharmacie=ep.id_pharmacie)) " + "and (p.id_pharmacien = ?)";
 
     /**
      * {@inheritDoc}
@@ -101,15 +105,15 @@ public class AlerteServiceImpl implements AlerteService, Serializable {
 
             @SuppressWarnings("unchecked")
             final List<EssaiAlerte> eaTemp =
-                (List<EssaiAlerte>) this.essaiService.executeSQLQuery(AlerteServiceImpl.SELECT_ALERTES_FOR_ADMIN, null, AlerteServiceImpl.ESSAI_COLS, EssaiAlerte.class,
-                                                                      AlerteServiceImpl.scalars);
+            (List<EssaiAlerte>) this.essaiService.executeSQLQuery(AlerteServiceImpl.SELECT_ALERTES_FOR_ADMIN, null, AlerteServiceImpl.ESSAI_COLS, EssaiAlerte.class,
+                            AlerteServiceImpl.scalars);
             essaisAlerte = eaTemp;
 
         } else {
             @SuppressWarnings("unchecked")
             final List<EssaiAlerte> eaTemp =
-                (List<EssaiAlerte>) this.essaiService.executeSQLQuery(AlerteServiceImpl.SELECT_ALERTES_FOR_PHARMACIEN, new Object[]{personne.getId() },
-                                                                      AlerteServiceImpl.ESSAI_COLS, EssaiAlerte.class, AlerteServiceImpl.scalars);
+            (List<EssaiAlerte>) this.essaiService.executeSQLQuery(AlerteServiceImpl.SELECT_ALERTES_FOR_PHARMACIEN, new Object[]{personne.getId() },
+                            AlerteServiceImpl.ESSAI_COLS, EssaiAlerte.class, AlerteServiceImpl.scalars);
             essaisAlerte = eaTemp;
         }
 
@@ -142,8 +146,11 @@ public class AlerteServiceImpl implements AlerteService, Serializable {
 
     /**
      * Méthode en charge de calculer les alertes des essais.
-     * @param essais Essais à traiter dans la recherche des alertes.
-     * @param alertes Liste des alertes à compléter.
+     *
+     * @param essais
+     *            Essais à traiter dans la recherche des alertes.
+     * @param alertes
+     *            Liste des alertes à compléter.
      */
     public void calculAlertes(final List<EssaiAlerte> essais,
                               final List<Alerte> alertes) {
@@ -173,7 +180,9 @@ public class AlerteServiceImpl implements AlerteService, Serializable {
 
     /**
      * Setter pour essaiService.
-     * @param essaiService Le essaiService à écrire.
+     *
+     * @param essaiService
+     *            Le essaiService à écrire.
      */
     public void setEssaiService(final EssaiService essaiService) {
         this.essaiService = essaiService;
@@ -181,7 +190,9 @@ public class AlerteServiceImpl implements AlerteService, Serializable {
 
     /**
      * Setter pour pharmacieService.
-     * @param pharmacieService Le pharmacieService à écrire.
+     *
+     * @param pharmacieService
+     *            Le pharmacieService à écrire.
      */
     public void setPharmacieService(final PharmacieService pharmacieService) {
         this.pharmacieService = pharmacieService;
@@ -189,7 +200,9 @@ public class AlerteServiceImpl implements AlerteService, Serializable {
 
     /**
      * Setter pour builders.
-     * @param builders Le builders à écrire.
+     *
+     * @param builders
+     *            Le builders à écrire.
      */
     public void setBuilders(final Map<TypeAlerte, AlerteBuilder> builders) {
         this.builders = builders;
@@ -197,7 +210,9 @@ public class AlerteServiceImpl implements AlerteService, Serializable {
 
     /**
      * Setter pour userService.
-     * @param userService Le userService à écrire.
+     *
+     * @param userService
+     *            Le userService à écrire.
      */
     public void setUserService(final UserService userService) {
         this.userService = userService;

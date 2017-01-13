@@ -11,6 +11,7 @@
 		id="idPopupEditionCondMedoc" closeListener="#{conditionnementListManager.reinit()}"
 		header="#{resourceBundle['editProduit.conditionnement.edit']}"
 		onHide="javascript:forceScrollEditProduitImmediate();"
+		onShow="javascript:prepareMandatory();"
 		resizable="true" modal="true" width="800">
 		
 		
@@ -45,7 +46,7 @@
   						value="#{conditionnementManager.bean.uniteGestion}">
 						<f:selectItem noSelectionOption="true" />
 						<f:selectItems value="#{enumManager.getValues('UniteGestion')}" />
-						<f:ajax render="pane_forme panGrid1 prescriptionGridPan" listener="#{conditionnementManager.handleUniteGestion}" process="@form"/>
+						<f:ajax render="pane_forme panGrid1 prescriptionGridPan" listener="#{conditionnementManager.handleUniteGestion}" process="@form" onevent="prepareMandatory"/>
 					</h:selectOneMenu>
 						
 					<!-- Forme -->
@@ -57,12 +58,12 @@
 							value="#{conditionnementManager.bean.forme}" rendered="#{conditionnementManager.bean.uniteGestion != enumManager.getEnumValue('UniteGestion', 'KIT')}"> 
 							<f:selectItem noSelectionOption="true" />
 							<f:selectItems value="#{enumManager.getValues('FormeConditionnement')}" />
-							<f:ajax render="panGrid1" listener="#{conditionnementManager.handleForme}" process="@form"/>
+							<f:ajax render="panGrid1" listener="#{conditionnementManager.handleForme}" process="@form" onevent="prepareMandatory"/>
 						</h:selectOneMenu>		
 						<h:selectOneMenu id="cond_forme2" required="true" requiredMessage="#{resourceBundle['conditionnement.forme.notEmpty']}" immediate="true"
 							value="#{conditionnementManager.bean.forme}" rendered="#{conditionnementManager.bean.uniteGestion eq enumManager.getEnumValue('UniteGestion', 'KIT')}">
 							<f:selectItems value="#{enumManager.getEnumValueAsSelectItem('FormeConditionnement', 'CONDITIONNEMENT_PRIMAIRE')}" />
-							<f:ajax render="panGrid1" listener="#{conditionnementManager.handleForme}" process="@form"/>
+							<f:ajax render="panGrid1" listener="#{conditionnementManager.handleForme}" process="@form" onevent="prepareMandatory"/>
 						</h:selectOneMenu>		
 					</p:outputPanel>
 				 
@@ -99,7 +100,7 @@
 					
 					
 					<!-- Dosage -->
-					<h:outputLabel id="labelCondDosage1" for="cond_dosage1" 
+					<h:outputLabel id="labelCondDosage1" for="cond_dosage1" styleClass="mandatory"
 						value="#{resourceBundle['editProduit.onglet.prescription.conditionnement.dosage']}" />
 					<h:panelGrid columns="2" width="100%"
 						border="0" cellpadding="5" cellspacing="0"
@@ -165,7 +166,7 @@
 						value="#{conditionnementManager.bean.modePrescription}">
 						<f:selectItem noSelectionOption="true" />
 						<f:selectItems value="#{enumManager.getValues('ModePrescription')}" />
-						<f:ajax render="prescriptionGridPan" listener="#{conditionnementManager.buildUnitePrescription()}"/>
+						<f:ajax render="prescriptionGridPan" listener="#{conditionnementManager.buildUnitePrescription()}" onevent="prepareMandatory"/>
 					</h:selectOneMenu>
 					<h:panelGroup/>
 					<h:panelGroup/>

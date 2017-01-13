@@ -23,6 +23,7 @@ public class EclipseListComparator implements Comparator<BeanObject>, Serializab
     @Override
     public int compare(final BeanObject o1,
                        final BeanObject o2) {
+    	int compare = 0;
         // Récupération des identifiants
         final Long id1 = o1.getId();
         final Long id2 = o2.getId();
@@ -31,32 +32,32 @@ public class EclipseListComparator implements Comparator<BeanObject>, Serializab
         if ((id1 != null) && (id2 != null)) {
             // Les 2 identifiants sont positifs => les 2 enregs sont en base
             if ((id1 > 0) && (id2 > 0)) {
-                return id1.compareTo(id2);
+                compare = id1.compareTo(id2);
             }
 
             // Les 2 identifiants sont négatifs => les 2 enregs ne sont pas en
             // base
             if ((id1 < 0) && (id2 < 0)) {
-                return id2.compareTo(id1);
+            	compare = id2.compareTo(id1);
             }
 
             // Un seul des 2 ids est négatif
             if (id1 <= 0) {
-                return 1;
+            	compare = 1;
             }
             if (id2 <= 0) {
-                return -1;
+            	compare = -1;
             }
         }
 
         if ((id1 != null) && (id2 == null)) {
-            return -1;
+        	compare = -1;
         }
         if ((id1 == null) && (id2 != null)) {
-            return 1;
+        	compare = 1;
         }
 
-        return 0;
+        return compare;
     }
 
 }

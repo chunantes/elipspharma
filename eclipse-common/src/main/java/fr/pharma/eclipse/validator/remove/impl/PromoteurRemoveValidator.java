@@ -35,7 +35,7 @@ public class PromoteurRemoveValidator implements RemoveValidator<Promoteur>, Ser
         // Vérification Relation Promoteur-Essai
         final EssaiSearchCriteria essaiCriteria = new EssaiSearchCriteria();
         essaiCriteria.setPromoteur(promoteur);
-        if (this.essaiService.hasResult(essaiCriteria)) {
+        if (this.essaiService.count(essaiCriteria) > 0) {
             throw new ValidationException("remove", new String[]{"impossible" }, promoteur);
         }
 

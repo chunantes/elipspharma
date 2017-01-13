@@ -91,9 +91,15 @@ public class AlerteResultVisiteBuilder implements AlerteBuilder, Serializable {
             dateVisite.add(Calendar.DAY_OF_MONTH, 1);
 
             if (now.compareTo(dateVisite) >= 0) {
-                final Alerte alerte = new Alerte(TypeAlerte.RESULT_VISITE, evt.getEssai().getNumInterne(), evt.getEssai().getNom());
+                final Alerte alerte;
+                if (evt.getEssai()==null) {
+                    alerte = new Alerte(TypeAlerte.RESULT_VISITE, "Essai inconnu", "Essai inconnu");
+                } else {
+                    alerte = new Alerte(TypeAlerte.RESULT_VISITE, evt.getEssai().getNumInterne(), evt.getEssai().getNom());
+                }
                 alerte.setLibelle(this.messageBuilder.getMessage("alerte.libResultVisite", new Object[]{evt.getLibelle(), sdf.format(evt.getDateDebut().getTime()), }));
                 alertes.add(alerte);
+  
             }
         }
     }

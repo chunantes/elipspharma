@@ -1,0 +1,125 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<beans 
+    xmlns="http://www.springframework.org/schema/beans" 
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xmlns:context="http://www.springframework.org/schema/context" 
+    xmlns:tx="http://www.springframework.org/schema/tx"
+    xsi:schemaLocation="
+            http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd
+            http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context.xsd
+            http://www.springframework.org/schema/tx http://www.springframework.org/schema/tx/spring-tx.xsd
+            http://www.springframework.org/schema/aop http://www.springframework.org/schema/aop/spring-aop.xsd">			
+			
+
+    <bean id="jdbcTemplate" class="org.springframework.jdbc.core.JdbcTemplate" >
+        <constructor-arg type="javax.sql.DataSource">
+            <ref bean="dataSource"></ref>
+        </constructor-arg>
+    </bean>
+    <!-- ============================= -->
+    <!-- ESSAI SIGREC                  -->
+    <!-- ============================= -->		
+    <bean id="essaiExterneService" parent="commonService">
+        <constructor-arg index="0" ref="essaiExterneDao"/>
+    </bean>
+    <bean id="essaiSigrecService" parent="essaiExterneService"/>
+
+    <!-- ============================= -->
+    <!-- ESSAI SIGREC                  -->
+    <!-- ============================= -->		
+    <bean id="essaiExterneDao" class="fr.pharma.eclipse.externe.EssaiExterneDao">
+        <constructor-arg index="0" ref="jdbcTemplate"/>
+    </bean>    
+    <!-- ======================================== -->
+    <!-- CRITERE DE RECHERCHE : ESSAI    SIGREC   -->
+    <!-- ======================================== -->
+    <bean id="essaiExterneSearchCriteria"
+          class="fr.pharma.eclipse.externe.EssaiExterneSearchCriteria"
+          scope="session">
+        <property name="activeOrder" value="nom" />
+    </bean>
+    <bean id="essaiSigrecSearchCriteria" parent="essaiExterneSearchCriteria"/>
+
+    <bean id="pageRepertoireExterne" class="java.lang.String">
+        <constructor-arg value="#{${import.externe.active:false}?'repertoireEssaisExterne':'repertoireEssaisSigrec'}" />
+    </bean> 
+  
+
+      
+    <!-- ####################### -->
+    <!-- 		CONVERTERS		 -->
+    <!-- ####################### -->
+    <!-- Essai -->
+    <bean id="essaiBeanConverter"
+          class="fr.pharma.eclipse.utils.converter.impl.EssaiBeanConverter">
+        <constructor-arg index="0" ref="essaiFetcher" />
+        <constructor-arg index="1" ref="essaiFactory" />
+        <property name="fillers">
+            <list>
+                <ref bean="promoteurFiller" />
+                <ref bean="investigateurFiller" />
+                <ref bean="assuranceFiller" />
+                <ref bean="serviceFiller" />
+            </list>
+        </property>
+    </bean>
+
+    <bean id="serviceFiller" class="fr.pharma.eclipse.externe.ServiceFiller">
+        
+    </bean>
+
+
+    <bean id="essaiFetcher" class="fr.pharma.eclipse.utils.introspection.GenericFetcher">
+        <property name="mapping">
+            <map>
+                <!--  Essai -->
+                <entry value="nom" key="nom" />
+                                
+                <entry value="numIdentificationAC" key="detailAdministratif.infosAC.numIdentAC" />
+                <entry value="codePromoteur" key="codePromoteur" />
+                <entry value="promoteur.type" key="typePromoteur" />
+                <!-- Detail recherche -->
+                <entry value="detailRecherche.titreProtocole" key="detailRecherche.titreProtocole" />
+                <entry value="detailRecherche.numEnregistrement" key="numInterne" />
+                <entry value="detailRecherche.typeRecherche" key="detailRecherche.typeRecherche" />
+                <entry value="detailRecherche.objetRecherche" key="detailRecherche.objetRecherche" />
+                <entry value="detailRecherche.phaseRecherche" key="detailRecherche.phaseRecherche" />
+                <entry value="detailRecherche.natureRecherche" key="detailRecherche.natureRecherche" />
+                <entry value="thematique" key="detailRecherche.thematique"/>
+
+                <!-- Prévision -->
+                <entry value="prevision.dateDebut" key="detailDates.debutEtudePrev" />
+                <entry value="prevision.dateFin" key="detailDates.finEtudePrev" />
+                <entry value="datePrevFinInclusion" key="detailDates.finInclusionPrev" />
+                <entry value="nbPatientPrevLocal" key="detailDonneesPharma.infosGenerales.nbPatientsPrevus"/>
+                <entry value="dureeTotalPrev" key="detailDonneesPharma.infosGenerales.dureeTotalePrevue"/>
+                <entry value="uniteeDureeTotalPrev" key="detailDonneesPharma.infosGenerales.uniteDureeTotalePrevue"/>
+                <entry value="nbPatientPrevusTotal" key="detailDonneesPharma.infosGenerales.nbPatientsPrevusTotal"/>
+                <entry value="numCentre" key="detailDonneesPharma.infosGenerales.numeroCentre"/>
+                <entry value="prevision.nbCentres" key="detailDonneesPharma.infosGenerales.nbCentresPrevus"/>
+                
+                <!-- AC -->
+                <entry value="presenceAC" key="detailAdministratif.infosAC.accordAC" />
+                <entry value="nomAC" key="detailAdministratif.infosAC.nomAC" />
+                <entry value="numEudract" key="detailAdministratif.infosAC.numIdentAC" />
+                <entry value="dateAccordAC" key="detailAdministratif.infosAC.dateAC" />
+                                
+                <!-- CPP -->
+                <entry value="presenceCPP" key="detailAdministratif.infosCPP.accordCPP" />
+                <entry value="nomCPP" key="detailAdministratif.infosCPP.nomCPP" />
+                <entry value="dateAccordCPP" key="detailAdministratif.infosCPP.dateCPP" />
+
+                <!-- Convention signé -->
+                <entry value="conventionSigne" key="detailAdministratif.infosConvention.convSignee" />
+                <entry value="dateConventionSigne" key="dateSignature" /> 
+                <entry value="conventionSigne" key="detailFaisabilite.infosConclusion.convSignee" />
+                                              
+
+                <!-- Assurance avenant -->
+                <entry value="numAvenantAssurance" key="detailAdministratif.infosAssurance.numeroAvenant" />
+ 
+            </map>
+        </property>
+    </bean>
+</beans>

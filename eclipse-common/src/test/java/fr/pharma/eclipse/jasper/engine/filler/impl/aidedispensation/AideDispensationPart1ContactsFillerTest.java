@@ -5,8 +5,6 @@ import java.util.Collection;
 import java.util.SortedSet;
 import java.util.TreeSet;
 
-import net.sf.jasperreports.engine.JRDataSource;
-
 import org.junit.Assert;
 import org.junit.Test;
 import org.mockito.Mockito;
@@ -21,6 +19,7 @@ import fr.pharma.eclipse.jasper.engine.filler.impl.aidedispensation.helper.Conta
 import fr.pharma.eclipse.service.habilitation.helper.HabilitationsHelper;
 import fr.pharma.eclipse.utils.AbstractEclipseJUnitTest;
 import fr.pharma.eclipse.utils.EssaiUtils;
+import net.sf.jasperreports.engine.JRDataSource;
 
 /**
  * Test de la classe {@link AideDispensationPart1ContactsFiller}.

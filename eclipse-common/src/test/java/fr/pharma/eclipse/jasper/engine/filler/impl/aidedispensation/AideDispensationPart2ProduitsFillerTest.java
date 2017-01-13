@@ -4,8 +4,6 @@ import java.util.ArrayList;
 import java.util.Collection;
 import java.util.SortedSet;
 
-import net.sf.jasperreports.engine.JRDataSource;
-
 import org.junit.Assert;
 import org.junit.Test;
 import org.mockito.Mockito;
@@ -19,6 +17,7 @@ import fr.pharma.eclipse.jasper.engine.filler.impl.aidedispensation.helper.Produ
 import fr.pharma.eclipse.utils.AbstractEclipseJUnitTest;
 import fr.pharma.eclipse.utils.EssaiUtils;
 import fr.pharma.eclipse.utils.ProduitUtils;
+import net.sf.jasperreports.engine.JRDataSource;
 
 /**
  * Test de la classe {@link AideDispensationPart2ProduitsFiller}.

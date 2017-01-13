@@ -36,7 +36,7 @@ public class SurcoutFacadeImpl implements SurcoutFacade {
         criteria.setActif(inclu);
         criteria.setDateDebut(dateDebut);
         criteria.setDateFin(dateFin);
-        return this.inclusionService.getAll(criteria).size();
+        return this.inclusionService.count(criteria).intValue();
     }
 
     /**

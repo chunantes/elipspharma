@@ -10,10 +10,7 @@ import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import org.springframework.test.context.transaction.TransactionConfiguration;
 import org.springframework.transaction.annotation.Transactional;
 
-import fr.pharma.eclipse.domain.model.localisation.Etablissement;
-import fr.pharma.eclipse.service.common.GenericService;
 import fr.pharma.eclipse.service.localisation.EtablissementService;
-import fr.pharma.eclipse.service.localisation.impl.EtablissementServiceImpl;
 
 /**
  * Classe en charge de tester les services (déclaration spring).
@@ -29,12 +26,12 @@ public class AllServicesTest {
      * Service de gestion des établissements.
      */
     @Resource(name = "etablissementService")
-    private GenericService<Etablissement> etabService1;
+    private EtablissementService etabService1;
     /**
      * Service de gestion des établissements.
      */
     @Resource(name = "etablissementService")
-    private GenericServiceImpl<Etablissement> etabService2;
+    private EtablissementService etabService2;
     /**
      * Service de gestion des établissements.
      */
@@ -44,7 +41,7 @@ public class AllServicesTest {
      * Service de gestion des établissements.
      */
     @Resource(name = "etablissementService")
-    private EtablissementServiceImpl etabService4;
+    private EtablissementService etabService4;
 
     /**
      * Test de l'initialisation.

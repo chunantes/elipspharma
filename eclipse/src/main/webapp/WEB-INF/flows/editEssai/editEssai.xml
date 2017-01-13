@@ -160,7 +160,7 @@
 
 
 	<action-state id="prepareDesign">
-		<evaluate expression="designsManager.init()" />
+		<evaluate expression="designsManager.init(essaiManager.bean)" />
 		<transition to="initGrille" />
 	</action-state>
 	<action-state id="initGrille">
@@ -178,7 +178,7 @@
 		</on-render>
 		<transition on="save" to="resetContactsManager">
 			<set name="flowScope.currentView" value="requestParameters.currentView" type="java.lang.String" />
-			<evaluate expression="essaiService.save(essaiManager.bean, flowScope.currentView)" result="essaiManager.bean" />
+			<evaluate expression="essaiManager.save()" />
 		</transition>
 		<transition on="submit" to="viewEditEssai" />
 		<transition on="error" to="viewEditEssai" />
@@ -252,27 +252,25 @@
 
 		<!-- Ajouter une sequence -->
 		<transition on="addSequence" to="editSequence">
-			<evaluate expression="essaiService.save(essaiManager.bean, requestParameters.currentView)" result="essaiManager.bean" />
 		</transition>
 
 		<!-- editer une sequence -->
 		<transition on="editSequence" to="editSequence">
-			<evaluate expression="essaiService.save(essaiManager.bean, requestParameters.currentView)" result="essaiManager.bean" />
 			<set name="flashScope.id" value="requestParameters.id" />
 		</transition>
 
 		<!-- Supprimer une sequence -->
 		<transition on="removeSequence" to="viewEditEssai">
-			<evaluate expression="designsManager.removeSequence()" />
+			<evaluate expression="designsManager.removeSequence(essaiManager.bean.detailDesign)" />
 		</transition>
 
 		<!-- Supprimer un bras -->
 		<transition on="removeBras" to="viewEditEssai">
-			<evaluate expression="designsManager.removeBras()" />
+			<evaluate expression="designsManager.removeBras(essaiManager.bean.detailDesign)" />
 		</transition>
 
 		<transition on="initDesignChrono">
-			<evaluate expression="designsManager.initDesignChrono()" />
+			<evaluate expression="designsManager.initDesignChrono(essaiManager.bean.detailDesign)" />
 		</transition>
 
 		<!-- Supprimer un événement -->
@@ -348,7 +346,7 @@
 	<subflow-state id="editMedicament" subflow="editMedicament">
 		<attribute name="idMedicament" value="flashScope.idMedicament" />
 		<transition to="viewEditEssai">
-			<evaluate expression="designsManager.initProduits()" />
+			<evaluate expression="designsManager.initProduits(essaiManager.bean)" />
 		</transition>
 	</subflow-state>
 
@@ -356,7 +354,7 @@
 	<subflow-state id="editDispositifMedical" subflow="editDispositifMedical">
 		<attribute name="idDm" value="flashScope.idDm" />
 		<transition to="viewEditEssai">
-			<evaluate expression="designsManager.initProduits()" />
+			<evaluate expression="designsManager.initProduits(essaiManager.bean)" />
 		</transition>
 	</subflow-state>
 
@@ -364,7 +362,7 @@
 	<subflow-state id="editProduitTherapeutique" subflow="editProduitTherapeutique">
 		<attribute name="idProduitThera" value="flashScope.idProduitThera" />
 		<transition to="viewEditEssai">
-			<evaluate expression="designsManager.initProduits()" />
+			<evaluate expression="designsManager.initProduits(essaiManager.bean)" />
 		</transition>
 	</subflow-state>
 
@@ -372,7 +370,7 @@
 	<subflow-state id="editPreparation" subflow="editPreparation">
 		<attribute name="idPreparation" value="flashScope.idPreparation" />
 		<transition to="viewEditEssai">
-			<evaluate expression="designsManager.initProduits()" />
+			<evaluate expression="designsManager.initProduits(essaiManager.bean)" />
 		</transition>
 	</subflow-state>
 

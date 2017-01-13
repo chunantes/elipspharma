@@ -68,9 +68,9 @@ public class OrdonnancierFabReconstServiceImpl extends OrdonnancierServiceImpl<O
         crit.setNotNullNumOrdonnancier(true);
         crit.setAscending(true);
 
-        final List<PreparationEntree> preparations = this.approvisionnementService.getAll(crit);
+        final Long nombrePreparations = this.approvisionnementService.count(crit);
 
-        if (preparations.isEmpty()) {
+        if (nombrePreparations == 0) {
             throw new ValidationException("ordonnancier.eltsToCheck", new String[]{"empty" });
         } else {
             // Création de l'ordonnancier
@@ -79,6 +79,7 @@ public class OrdonnancierFabReconstServiceImpl extends OrdonnancierServiceImpl<O
             ordonnancier.setDateFin(criteria.getDateFin());
             ordonnancier.setPharmacie(pharmacie);
 
+            final List<PreparationEntree> preparations = this.approvisionnementService.getAll(crit);
             // Ajout des elementsToCheck avec les informations de l'ordonnancier
             for (final PreparationEntree p : preparations) {
                 p.setOrdonnancier(ordonnancier);

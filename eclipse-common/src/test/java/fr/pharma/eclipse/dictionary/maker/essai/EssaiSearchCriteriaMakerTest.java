@@ -76,7 +76,7 @@ public class EssaiSearchCriteriaMakerTest {
         Mockito.when(critDetail.createCriteria("pharmacies", "pharmacies")).thenReturn(critPharmacie);
         this.maker.handleCriteriaPharma(criteria, crit);
         Mockito.verify(criteria).createCriteria("detailDonneesPharma", "detailDonneesPharma");
-        Mockito.verify(critDetail).createCriteria("pharmacies", "aliasPharmacies", CriteriaSpecification.LEFT_JOIN);
+        Mockito.verify(critDetail).createCriteria("pharmacies", "aliasPharmacies", CriteriaSpecification.FULL_JOIN);
     }
 
     /**
@@ -100,7 +100,7 @@ public class EssaiSearchCriteriaMakerTest {
         Mockito.when(critPharmacie.createCriteria("sites", "sites")).thenReturn(critSites);
         this.maker.handleCriteriaPharma(criteria, crit);
         Mockito.verify(criteria).createCriteria("detailDonneesPharma", "detailDonneesPharma");
-        Mockito.verify(critDetail).createCriteria("pharmacies", "aliasPharmacies", CriteriaSpecification.LEFT_JOIN);
+        Mockito.verify(critDetail).createCriteria("pharmacies", "aliasPharmacies", CriteriaSpecification.FULL_JOIN);
 
     }
 }

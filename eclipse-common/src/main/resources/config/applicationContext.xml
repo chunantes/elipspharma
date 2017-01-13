@@ -49,5 +49,6 @@
     <import resource="classpath:/config/applicationContext-persistence.xml" />
 	<import resource="classpath:/config/applicationContext-common.xml" />
 	<import resource="classpath:/config/applicationContext-common-sir.xml" />
+
 	 
 </beans>

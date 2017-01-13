@@ -50,7 +50,7 @@ public class PrescriptionCounter implements ActeCounter, Serializable {
         criteria.setPatient(patient);
         criteria.setDateDebut(dateDebut);
         criteria.setDateFin(dateFin);
-        return this.prescriptionService.getAll(criteria).size();
+        return this.prescriptionService.count(criteria).intValue();
     }
 
     /**

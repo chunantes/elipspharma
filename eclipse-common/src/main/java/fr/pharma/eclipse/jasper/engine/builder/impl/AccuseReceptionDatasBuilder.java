@@ -6,8 +6,6 @@ import java.util.Map;
 
 import javax.annotation.Resource;
 
-import net.sf.jasperreports.engine.JRDataSource;
-
 import org.apache.commons.lang.StringUtils;
 
 import fr.pharma.eclipse.domain.enums.jasper.TypeRapportJasper;
@@ -25,6 +23,7 @@ import fr.pharma.eclipse.jasper.engine.filler.impl.accusereception.helper.Traite
 import fr.pharma.eclipse.jasper.engine.helper.ReportNameBuildHelper;
 import fr.pharma.eclipse.jasper.engine.helper.SourceCheckingHandler;
 import fr.pharma.eclipse.jasper.exception.JasperReportBuildException;
+import net.sf.jasperreports.engine.JRDataSource;
 
 /**
  * Classe en charge de constuire les données pour le rapport Jasper de type

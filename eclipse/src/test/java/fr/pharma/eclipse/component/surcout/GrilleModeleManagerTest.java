@@ -17,7 +17,6 @@ import fr.pharma.eclipse.domain.model.surcout.Grille;
 import fr.pharma.eclipse.domain.model.surcout.GrilleModele;
 import fr.pharma.eclipse.domain.model.surcout.Theme;
 import fr.pharma.eclipse.factory.common.BeanObjectFactory;
-import fr.pharma.eclipse.predicate.GenericPredicate;
 import fr.pharma.eclipse.service.common.GenericService;
 import fr.pharma.eclipse.utils.AbstractEclipseJUnitTest;
 

@@ -254,8 +254,16 @@
 					</p:tab>
 					<p:tab id="ONG_PRODUITS"
 						title="#{resourceBundle['editEssai.onglet.produit.title']}">
+                                            								<c:choose>
+							<c:when test="#{essaiManager.bean.id != null}">
 						<ui:include
-							src="/WEB-INF/pages/editEssai/onglets/ongletProduit.xhtml" />
+							src="/WEB-INF/pages/editEssai/onglets/ongletProduit.xhtml" />							</c:when>
+							<c:otherwise>
+								<ui:include
+									src="/WEB-INF/pages/editEssai/onglets/ongletAttenteSauvegarde.xhtml" />
+							</c:otherwise>
+						</c:choose>	
+
 					</p:tab>
 					<!--  On ne l'affiche pas si double aveugle et INVESTIGATEUR + ARC ou PROMOTEUR CRO ou ARC PRO -->
 					<p:tab id="ONG_DESIGN"
@@ -266,8 +274,17 @@
 								or currentUser.principal.role == 'PROMOTEUR' ) 
 								and essaiManager.bean.detailDonneesPharma.infosGenerales.qualiteInsu == 'ESSAI_DOUBLE_AVEUGLE')}"
 						title="#{resourceBundle['editEssai.onglet.design.title']}">
-						<ui:include
+								<c:choose>
+							<c:when test="#{essaiManager.bean.id != null}">
+								<ui:include
 							src="/WEB-INF/pages/editEssai/onglets/ongletDesign.xhtml" />
+							</c:when>
+							<c:otherwise>
+								<ui:include
+									src="/WEB-INF/pages/editEssai/onglets/ongletAttenteSauvegarde.xhtml" />
+							</c:otherwise>
+						</c:choose>	
+                                            
 					</p:tab>
 
 					<p:tab id="ONG_AUTRES_DOCS"
@@ -325,7 +342,7 @@
 			<div class="actionButton">
 
 				<p:commandButton id="saveButton"
-					actionListener="#{essaiManager.save()}" onclick="showWait();"
+					action="save" onclick="showWait();"
 					ajax="true" disabled="#{droitAccesHelper.isEssaiLectureSeule()}"
 					update="editEssai tabEssai"
 					oncomplete="clearMenuButton(); hideWait(); window.scrollTo(0,0);

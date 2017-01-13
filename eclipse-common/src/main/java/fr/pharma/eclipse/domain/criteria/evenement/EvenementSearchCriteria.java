@@ -65,6 +65,11 @@ public class EvenementSearchCriteria extends AbstractSearchCriteria {
      * Booléen indiquant la date de reception est vide (Cession PUI)
      */
     private Boolean dateReceptionVide;
+    
+    /**
+     * Booléen indiquant l'essai est vide
+     */
+    private Boolean essaiVide;
 
     /**
      * Liste d'identifiants d'essais.
@@ -77,6 +82,8 @@ public class EvenementSearchCriteria extends AbstractSearchCriteria {
     @Override
     public void clear() {
         this.setEssai(null);
+        this.setEssaiDTO(null);
+        this.setIdsEssais(null);
         this.setTypeEvenement(null);
         this.setTypeVisite(null);
         this.setResultatVisite(null);
@@ -245,5 +252,19 @@ public class EvenementSearchCriteria extends AbstractSearchCriteria {
     public void setEssaiDTO(final EssaiDTO essaiDTO) {
         this.essaiDTO = essaiDTO;
     }
+
+	/**
+	 * @return the essaiVide
+	 */
+	public Boolean getEssaiVide() {
+		return essaiVide;
+	}
+
+	/**
+	 * @param essaiVide the essaiVide to set
+	 */
+	public void setEssaiVide(Boolean essaiVide) {
+		this.essaiVide = essaiVide;
+	}
 
 }

@@ -69,7 +69,7 @@ public class PromoteurRemoveValidatorTest {
     public void testValidateOK() {
         final Promoteur promoteur = new Promoteur();
         try {
-            Mockito.when(this.mockEssaiService.hasResult((SearchCriteria) Matchers.any())).thenReturn(Boolean.FALSE);
+            Mockito.when(this.mockEssaiService.count((SearchCriteria) Matchers.any())).thenReturn(0L);
             this.validator.validate(promoteur);
         } catch (final ValidationException e) {
             Assert.fail("ValidationException not expected");
@@ -82,7 +82,7 @@ public class PromoteurRemoveValidatorTest {
     @Test(expected = ValidationException.class)
     public void testValidateKOEssais() {
         final Promoteur promoteur = new Promoteur();
-        Mockito.when(this.mockEssaiService.hasResult((SearchCriteria) Matchers.any())).thenReturn(Boolean.TRUE);
+        Mockito.when(this.mockEssaiService.count((SearchCriteria) Matchers.any())).thenReturn(1L);
         this.validator.validate(promoteur);
     }
 
@@ -92,7 +92,7 @@ public class PromoteurRemoveValidatorTest {
     @Test(expected = ValidationException.class)
     public void testValidateKOArcPromoteurs() {
         final Promoteur promoteur = new Promoteur();
-        Mockito.when(this.mockEssaiService.hasResult((SearchCriteria) Matchers.any())).thenReturn(Boolean.FALSE);
+        Mockito.when(this.mockEssaiService.count((SearchCriteria) Matchers.any())).thenReturn(0L);
         final SortedSet<ArcPromoteur> arcPromoteurs = new TreeSet<ArcPromoteur>(new BeanWithNomComparator());
         final ArcPromoteur arcPromoteur = new ArcPromoteur();
         arcPromoteur.setNom("nom");
@@ -107,7 +107,7 @@ public class PromoteurRemoveValidatorTest {
     @Test(expected = ValidationException.class)
     public void testValidateKOContactPromoteurs() {
         final Promoteur promoteur = new Promoteur();
-        Mockito.when(this.mockEssaiService.hasResult((SearchCriteria) Matchers.any())).thenReturn(Boolean.FALSE);
+        Mockito.when(this.mockEssaiService.count((SearchCriteria) Matchers.any())).thenReturn(0L);
         final SortedSet<ContactPromoteur> contactPromoteurs = new TreeSet<ContactPromoteur>(new BeanWithNomComparator());
         final ContactPromoteur contactPromoteur = new ContactPromoteur();
         contactPromoteur.setNom("nom");

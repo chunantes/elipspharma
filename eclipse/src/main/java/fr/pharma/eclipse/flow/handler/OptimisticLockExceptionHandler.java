@@ -4,6 +4,7 @@
  */
 package fr.pharma.eclipse.flow.handler;
 
+import javax.persistence.OptimisticLockException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.binding.message.MessageBuilder;
@@ -36,6 +37,6 @@ public class OptimisticLockExceptionHandler implements ExceptionHandler {
         final String excAtt2 = TransitionExecutingFlowExecutionExceptionHandler.ROOT_CAUSE_EXCEPTION_ATTRIBUTE;
         context.getFlashScope().put(excAtt2, exception);
 
-        logger.info("optimisticLockError occurs", exception);
+        logger.warn("optimisticLockError occurs" +((OptimisticLockException)exception.getCause()).getEntity(), exception);
     }
 }

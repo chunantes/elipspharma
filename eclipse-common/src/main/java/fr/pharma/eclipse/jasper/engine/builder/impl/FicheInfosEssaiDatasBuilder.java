@@ -3,7 +3,6 @@ package fr.pharma.eclipse.jasper.engine.builder.impl;
 import java.util.HashMap;
 import java.util.Map;
 
-import net.sf.jasperreports.engine.JRDataSource;
 import fr.pharma.eclipse.domain.enums.jasper.TypeRapportJasper;
 import fr.pharma.eclipse.domain.jasper.model.common.JRBeanHeader;
 import fr.pharma.eclipse.domain.jasper.model.fiche.essai.JRBeanFicheEssai;
@@ -17,6 +16,7 @@ import fr.pharma.eclipse.jasper.engine.helper.SourceCheckingHandler;
 import fr.pharma.eclipse.jasper.exception.JasperReportBuildException;
 import fr.pharma.eclipse.jasper.utils.JasperUtils;
 import fr.pharma.eclipse.service.habilitation.helper.HabilitationsHelper;
+import net.sf.jasperreports.engine.JRDataSource;
 
 /**
  * Classe en charge de constuire les données pour le rapport Jasper de type

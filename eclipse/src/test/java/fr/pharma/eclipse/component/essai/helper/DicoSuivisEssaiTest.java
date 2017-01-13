@@ -82,7 +82,11 @@ public class DicoSuivisEssaiTest {
         essai.getDetailDonneesPharma().getModifs().add(expectedModifOngPharma);
         essai.getDetailDesign().getModifs().add(expectedModifOngDesign);
         essai.getDetailAutresDocuments().getModifs().add(expectedModifOngAutresDocs);
-        final int expectedSizeDico = 10;
+        
+        //Les derniers historiques pour l'onglet design à été mis en
+        //commentaire le 23/10/2014 (nom commit : Nouvelle correction du NPE sur la création d'un essai)
+        //ancienne valeur expectedSizeDico = 10
+        final int expectedSizeDico = 9;
 
         this.dico.init(essai);
         Assert.assertEquals(expectedSizeDico, this.dico.getDerniersHistoriques().size());
@@ -94,7 +98,10 @@ public class DicoSuivisEssaiTest {
         Assert.assertEquals(expectedModifOngAdmin, this.dico.getDerniersHistoriques().get(TypeHistoriqueEssai.ONG_ADMIN_REG));
         Assert.assertEquals(expectedModifOngProduit, this.dico.getDerniersHistoriques().get(TypeHistoriqueEssai.ONG_PRODUITS));
         Assert.assertEquals(expectedModifOngPharma, this.dico.getDerniersHistoriques().get(TypeHistoriqueEssai.ONG_DATA_PHARMA));
-        Assert.assertEquals(expectedModifOngDesign, this.dico.getDerniersHistoriques().get(TypeHistoriqueEssai.ONG_DESIGN));
+        
+        //Idem que pour le commentaire cité plus haut
+        //Assert.assertEquals(expectedModifOngDesign, this.dico.getDerniersHistoriques().get(TypeHistoriqueEssai.ONG_DESIGN));
+        
         Assert.assertEquals(expectedModifOngAutresDocs, this.dico.getDerniersHistoriques().get(TypeHistoriqueEssai.ONG_AUTRES_DOCS));
     }
 

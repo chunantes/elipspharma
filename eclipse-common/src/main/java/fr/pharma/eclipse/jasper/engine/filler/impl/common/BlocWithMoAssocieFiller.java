@@ -3,7 +3,6 @@ package fr.pharma.eclipse.jasper.engine.filler.impl.common;
 import java.util.ArrayList;
 import java.util.List;
 
-import net.sf.jasperreports.engine.JRDataSource;
 import fr.pharma.eclipse.domain.jasper.model.common.JRBeanBlocWithMoAssocie;
 import fr.pharma.eclipse.domain.jasper.model.common.JasperReportBean;
 import fr.pharma.eclipse.domain.model.essai.Essai;
@@ -11,6 +10,7 @@ import fr.pharma.eclipse.jasper.engine.builder.helper.common.JRBeanBlocWithMoAss
 import fr.pharma.eclipse.jasper.engine.factory.JRDataSourceFactory;
 import fr.pharma.eclipse.jasper.engine.filler.JasperReportBeanFiller;
 import fr.pharma.eclipse.utils.introspection.BeanTool;
+import net.sf.jasperreports.engine.JRDataSource;
 
 /**
  * Filler en charge de construire une source de données<br>

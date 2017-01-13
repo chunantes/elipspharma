@@ -43,6 +43,11 @@ public class PersonneSearchCriteriaMaker extends AbstractCriteriaMaker {
             CriteriaMakerUtils.addSqlCritere(criteria, "this_.nom", crit.getNom());
         }
 
+        // Prénom
+        if (StringUtils.isNotEmpty(crit.getPrenom())) {
+            CriteriaMakerUtils.addSqlCritere(criteria, "this_.prenom", crit.getPrenom());
+        }
+
         // Type de personne
         if (crit.getTypePersonne() != null) {
             CriteriaMakerUtils.addCritere(criteria, "type", crit.getTypePersonne());

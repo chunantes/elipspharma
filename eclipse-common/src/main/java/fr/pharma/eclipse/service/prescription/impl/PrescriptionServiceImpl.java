@@ -57,7 +57,7 @@ public class PrescriptionServiceImpl extends GenericServiceImpl<Prescription> im
     public boolean isSequenceUsedInPrescriptions(final Sequence sequence) {
         final PrescriptionSearchCriteria criteria = new PrescriptionSearchCriteria();
         criteria.setSequence(sequence);
-        return !this.getAll(criteria).isEmpty();
+        return this.count(criteria) > 0;
     }
 
     /**

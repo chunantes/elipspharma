@@ -156,6 +156,7 @@ public class OrdonnancierDispServiceImplTest {
         criteria.setPharmacie(pharmacie);
 
         final List<Dispensation> dispensations = new ArrayList<Dispensation>();
+        Mockito.when(this.mockDispensationService.count((SearchCriteria) Matchers.any())).thenReturn(0L);
         Mockito.when(this.mockDispensationService.getAll((SearchCriteria) Matchers.any())).thenReturn(dispensations);
 
         this.service.calculerOrdonnancier(criteria);
@@ -174,6 +175,7 @@ public class OrdonnancierDispServiceImplTest {
         final Dispensation dispensation = new Dispensation();
         dispensations.add(dispensation);
 
+        Mockito.when(this.mockDispensationService.count((SearchCriteria) Matchers.any())).thenReturn(1L);
         Mockito.when(this.mockDispensationService.getAll((SearchCriteria) Matchers.any())).thenReturn(dispensations);
 
         final OrdonnancierDisp ordonnancier = Mockito.mock(OrdonnancierDisp.class);

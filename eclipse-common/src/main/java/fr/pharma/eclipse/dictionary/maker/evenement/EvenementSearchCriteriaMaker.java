@@ -63,7 +63,7 @@ public class EvenementSearchCriteriaMaker extends AbstractCriteriaMaker {
         if (crit.getDateReceptionVide() != null && crit.getDateReceptionVide()) {
             criteria.add(Restrictions.isNull("dateReception"));
         }
-
+        
         // Date de début
         if (crit.getDateDebut() != null) {
             criteria.add(Restrictions.ge("dateDebut", crit.getDateDebut()));
@@ -81,27 +81,38 @@ public class EvenementSearchCriteriaMaker extends AbstractCriteriaMaker {
 
     /**
      * Méthode en charge de gérer les critères posés sur les essais.
+     * Les critères sur essais ne peuvent être combiné. 
+     * La méthode prend également en charge le cas des évènements sans essais.
      * @param criteria Criteria Hibernate.
      * @param crit Critère de recherche sur Evenement.
      */
     private void handleCriteriaEssai(final Criteria criteria,
                                      final EvenementSearchCriteria crit) {
+        final Criteria critEssai;
+
+        if ((crit.getEssaiVide() == null || crit.getEssaiVide())) {
+            critEssai = criteria.createCriteria("essai", Criteria.LEFT_JOIN);
+        } else {
+            critEssai = criteria.createCriteria("essai",Criteria.INNER_JOIN);   
+        }
+        
         // Essai
         if (crit.getEssai() != null) {
-            final Criteria critEssai = criteria.createCriteria("essai");
             critEssai.add(Restrictions.idEq(crit.getEssai().getId()));
-        }
+        } else
 
         // Essai
         if (crit.getEssaiDTO() != null) {
-            final Criteria critEssai = criteria.createCriteria("essai");
             critEssai.add(Restrictions.idEq(crit.getEssaiDTO().getId()));
-        }
-
+        } else
+        
         // Liste d'identifiants d'essais
         if (crit.getIdsEssais() != null && crit.getIdsEssais().size() > 0) {
-            CriteriaMakerUtils.addInCritere(criteria, "essai.id", crit.getIdsEssais().toArray(new Long[crit.getIdsEssais().size()]));
+            if ((crit.getEssaiVide() == null || crit.getEssaiVide())) { 
+                criteria.add(Restrictions.or(Restrictions.isNull("essai"),  Restrictions.in("essai.id", crit.getIdsEssais().toArray(new Long[crit.getIdsEssais().size()]))));
+            } else {
+                CriteriaMakerUtils.addInCritere(critEssai, "id", crit.getIdsEssais().toArray(new Long[crit.getIdsEssais().size()]));
+            }
         }
     }
-
 }

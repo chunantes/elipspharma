@@ -2,6 +2,8 @@ package fr.pharma.eclipse.service.localisation.impl;
 
 import javax.annotation.Resource;
 
+import org.hibernate.Hibernate;
+
 import fr.pharma.eclipse.dao.common.GenericDao;
 import fr.pharma.eclipse.domain.model.localisation.Service;
 import fr.pharma.eclipse.domain.model.suivi.localisation.ServiceSuivi;
@@ -32,6 +34,15 @@ public class ServiceServiceImpl extends GenericServiceImpl<Service> implements S
      */
     public ServiceServiceImpl(final GenericDao<Service> serviceDao) {
         super(serviceDao);
+    }
+    
+    @Override
+    public Service get(Long id) {
+    	final Service service = super.get(id);
+    	Hibernate.initialize(service);
+    	Hibernate.initialize(service.getArcInvestigateurs());
+    	Hibernate.initialize(service.getInvestigateurs());
+    	return service;
     }
 
     /**

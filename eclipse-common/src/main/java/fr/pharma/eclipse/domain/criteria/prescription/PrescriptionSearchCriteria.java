@@ -82,6 +82,7 @@ public class PrescriptionSearchCriteria extends AbstractSearchCriteria {
         this.inclusion = null;
         this.patient = null;
         this.essai = null;
+        this.essaiDTO = null;
         this.dispense = null;
         this.dateDebut = null;
         this.sequence = null;

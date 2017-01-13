@@ -45,7 +45,7 @@ public class FileCreatorTest extends AbstractEclipseJUnitTest {
         final Map<TypeCalcul, SheetBuilder> map = new HashMap<TypeCalcul, SheetBuilder>();
         map.put(TypeCalcul.PREVISIONNEL, this.builder);
         this.creator.setBuilders(map);
-        this.creator.setDocumentsDirectory(new File("doc"));
+        this.creator.setDocumentsDirectory(new File("target/doc"));
     }
 
     /**

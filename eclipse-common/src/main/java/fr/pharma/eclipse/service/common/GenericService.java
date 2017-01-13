@@ -57,14 +57,13 @@ public interface GenericService<BEAN extends BeanObject> {
      * @return La liste de tous les objets filtrés.
      */
     List<BEAN> getAll();
-
+    
     /**
-     * Méthode générique permettant de savoir si des enregistrements répondant
-     * au critère de recherche existe.
-     * @param criteria Critère de recherche.
-     * @return Résultat de l'existence de résultats.
+     * Méthode générique de comptage du nombre de rows d'un type particulier dans la base de données
+     * @param criteria Le critère de recherche
+     * @return Le nomre de rows 
      */
-    Boolean hasResult(SearchCriteria criteria);
+    Long count(SearchCriteria criteria);
 
     /**
      * Méthode générique de récupération d'un objet d'un type particulier, en

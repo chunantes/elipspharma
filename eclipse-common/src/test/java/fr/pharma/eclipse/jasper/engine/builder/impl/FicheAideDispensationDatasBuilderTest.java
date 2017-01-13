@@ -3,8 +3,6 @@ package fr.pharma.eclipse.jasper.engine.builder.impl;
 import java.util.Arrays;
 import java.util.Map;
 
-import net.sf.jasperreports.engine.JRDataSource;
-
 import org.junit.Assert;
 import org.junit.Test;
 import org.mockito.Matchers;
@@ -24,6 +22,7 @@ import fr.pharma.eclipse.jasper.engine.helper.SourceCheckingHandler;
 import fr.pharma.eclipse.jasper.exception.JasperReportBuildException;
 import fr.pharma.eclipse.utils.AbstractEclipseJUnitTest;
 import fr.pharma.eclipse.utils.EssaiUtils;
+import net.sf.jasperreports.engine.JRDataSource;
 
 /**
  * Test de la classe {@link FicheAideDispensationDatasBuilder}.

@@ -13,6 +13,7 @@ import fr.pharma.eclipse.utils.converter.filler.Filler;
 
 /**
  * Filler en charge de populer un Essai à partir du promoteur d'un EssaiSigec.
+ *
  * @author Netapsys
  * @version $Revision$ $Date$
  */
@@ -29,16 +30,21 @@ public class PromoteurFiller implements Filler<EssaiSigrec, Essai> {
      */
     @Override
     public void fill(final EssaiSigrec source,
-                     final Essai destination) {
+            final Essai destination) {
         // recherche des tous les promoteurs correspondants à l'identifiant du
         // promoteur courant.
         final PromoteurSearchCriteria crit = new PromoteurSearchCriteria();
-        crit.setIdentifiant(source.getPromoteur().getIdentifiant());
-        final List<Promoteur> promoteurs = this.promoteurService.getAll(crit);
+        if (source.getPromoteur().getIdentifiant() != null || source.getPromoteur().getContact().getRaisonSociale() != null) {
+            crit.setIdentifiant(source.getPromoteur().getIdentifiant());
+            if (source.getPromoteur().getContact()!=null) {
+                crit.setRaisonSociale(source.getPromoteur().getContact().getRaisonSociale());
+            }
+            final List<Promoteur> promoteurs = this.promoteurService.getAll(crit);
 
-        // SI un promoteur est trouvé alors on l'affecte.
-        if (promoteurs.size() > 0) {
-            destination.setPromoteur(promoteurs.get(0));
+            // SI un promoteur est trouvé alors on l'affecte.
+            if (promoteurs.size() > 0) {
+                destination.setPromoteur(promoteurs.get(0));
+            }
         }
 
     }
@@ -53,6 +59,7 @@ public class PromoteurFiller implements Filler<EssaiSigrec, Essai> {
 
     /**
      * Setter pour promoteurService.
+     *
      * @param promoteurService le promoteurService à écrire.
      */
     public void setPromoteurService(final GenericService<Promoteur> promoteurService) {

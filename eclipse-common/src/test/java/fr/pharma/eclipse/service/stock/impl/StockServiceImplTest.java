@@ -2,13 +2,18 @@ package fr.pharma.eclipse.service.stock.impl;
 
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Calendar;
 import java.util.List;
 
+import org.joda.time.DateTime;
+import org.joda.time.format.DateTimeFormat;
+import org.joda.time.format.DateTimeFormatter;
 import org.junit.After;
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
 import org.mockito.ArgumentCaptor;
+import org.mockito.ArgumentMatcher;
 import org.mockito.InjectMocks;
 import org.mockito.Matchers;
 import org.mockito.Mock;
@@ -19,6 +24,7 @@ import org.mockito.stubbing.Answer;
 
 import fr.pharma.eclipse.dao.common.GenericDao;
 import fr.pharma.eclipse.domain.criteria.common.SearchCriteria;
+import fr.pharma.eclipse.domain.criteria.stock.LigneStockSearchCriteria;
 import fr.pharma.eclipse.domain.enums.TypeDispensation;
 import fr.pharma.eclipse.domain.enums.stock.TypeMvtStock;
 import fr.pharma.eclipse.domain.model.essai.Essai;
@@ -31,8 +37,10 @@ import fr.pharma.eclipse.domain.model.stock.MvtStock;
 import fr.pharma.eclipse.domain.model.stock.Sortie;
 import fr.pharma.eclipse.domain.model.stockage.Pharmacie;
 import fr.pharma.eclipse.domain.model.stockage.Stockage;
+import fr.pharma.eclipse.service.common.impl.GenericServiceImpl;
 import fr.pharma.eclipse.service.produit.ProduitService;
 import fr.pharma.eclipse.service.stock.MvtStockService;
+import fr.pharma.eclipse.utils.constants.EclipseConstants;
 
 /**
  * Classe en charge de tester le service de gestion des stocks.
@@ -52,6 +60,8 @@ public class StockServiceImplTest {
     @Mock
     private GenericDao<LigneStock> mockDao;
     @Mock
+    private GenericServiceImpl<LigneStock> mockService;
+    @Mock
     private MvtStockService<MvtStock> mvtStockServiceMock;
     @Mock
     private ProduitService<Produit> produitServiceMock;
@@ -63,6 +73,7 @@ public class StockServiceImplTest {
     @SuppressWarnings("unchecked")
     public void init() {
         this.mockDao = Mockito.mock(GenericDao.class);
+        this.mockService = Mockito.mock(GenericServiceImpl.class);
         this.service = new StockServiceImpl(this.mockDao);
         MockitoAnnotations.initMocks(this);
     }
@@ -82,6 +93,7 @@ public class StockServiceImplTest {
         Assert.assertNotNull(this.service);
         Assert.assertNotNull(this.mvtStockServiceMock);
         Assert.assertNotNull(this.produitServiceMock);
+        Assert.assertNotNull(this.mockService);
     }
 
     @Test
@@ -449,6 +461,165 @@ public class StockServiceImplTest {
         // Verify
         Mockito.verify(this.mockDao, Mockito.never()).save((LigneStock) Matchers.any());
     }
+    
+    @Test
+    /**
+     * Test de la méthode updateLigneStock dans le cas 
+     * indiqué par le ticket PHARMA-670 :
+     * Modification de la date de péremption pour que deux lignes de stock 
+     * du même numéro de lot ait la même date de péremption
+     * 
+     */
+	public void testUpdateLigneStockAvecLigneStockNewDate() {
+    	
+    	//Prepare
+    	Essai essai = new Essai();
+    	Pharmacie pharmacie = new Pharmacie();
+    	Produit produit = new Medicament();
+    	Conditionnement conditionnement = new Conditionnement();
+    	String numLot = "numLot";
+    	String numTraitement = "numTraitement";
+    	DateTimeFormatter fmt = DateTimeFormat.forPattern("dd/MM/yyyy");
+    	DateTime oldDt = fmt.parseDateTime("01/01/2015");
+    	Calendar oldDatePeremption = oldDt.toCalendar(EclipseConstants.LOCALE);
+    	DateTime newDt = fmt.parseDateTime("15/05/2015");
+    	Calendar newDatePeremption = newDt.toCalendar(EclipseConstants.LOCALE);
+    	
+    	
+    	Approvisionnement mvtstockOldDate = new Approvisionnement();
+    	mvtstockOldDate.setId(new Long(1));
+    	mvtstockOldDate.setEssai(essai);
+    	mvtstockOldDate.setPharmacie(pharmacie);
+    	mvtstockOldDate.setProduit(produit);
+    	mvtstockOldDate.setConditionnement(conditionnement);
+    	mvtstockOldDate.setNumLot(numLot);
+    	mvtstockOldDate.setNumTraitement(numTraitement);
+    	mvtstockOldDate.setDatePeremption(oldDatePeremption);
+    	mvtstockOldDate.setApproApprouve(true);
+    	
+    	Approvisionnement mvtstockNewDate = new Approvisionnement();
+    	mvtstockNewDate.setId(new Long(2));
+    	mvtstockNewDate.setEssai(essai);
+    	mvtstockNewDate.setPharmacie(pharmacie);
+    	mvtstockNewDate.setProduit(produit);
+    	mvtstockNewDate.setConditionnement(conditionnement);
+    	mvtstockNewDate.setNumLot(numLot);
+    	mvtstockNewDate.setNumTraitement(numTraitement);
+    	mvtstockNewDate.setDatePeremption(newDatePeremption);
+    	mvtstockNewDate.setApproApprouve(true);
+    	
+    	LigneStock ligneStockOldDate = new LigneStock();
+    	ligneStockOldDate.setId(new Long(1));
+    	ligneStockOldDate.setEssai(essai);
+    	ligneStockOldDate.setPharmacie(pharmacie);
+    	ligneStockOldDate.setProduit(produit);
+    	ligneStockOldDate.setConditionnement(conditionnement);
+    	ligneStockOldDate.setNumLot(numLot);
+    	ligneStockOldDate.setNumTraitement(numTraitement);
+    	ligneStockOldDate.setDatePeremption(oldDatePeremption);
+    	ligneStockOldDate.setQtePharmacie(20);
+    	
+    	List<LigneStock> listeLigneStockOldDate = new ArrayList<LigneStock>();
+    	listeLigneStockOldDate.add(ligneStockOldDate);
+    	
+    	LigneStock ligneStockNewDate = new LigneStock();
+    	ligneStockNewDate.setId(new Long(2));
+    	ligneStockNewDate.setEssai(essai);
+    	ligneStockNewDate.setPharmacie(pharmacie);
+    	ligneStockNewDate.setProduit(produit);
+    	ligneStockNewDate.setConditionnement(conditionnement);
+    	ligneStockNewDate.setNumLot(numLot);
+    	ligneStockNewDate.setNumTraitement(numTraitement);
+    	ligneStockNewDate.setDatePeremption(newDatePeremption);
+    	ligneStockNewDate.setQtePharmacie(8);
+    	
+    	List<LigneStock> listeLigneStockNewDate = new ArrayList<LigneStock>();
+    	listeLigneStockNewDate.add(ligneStockNewDate);
+    	
+    	final LigneStockSearchCriteria criteriaOldDate = new LigneStockSearchCriteria();
+    	criteriaOldDate.setEssai(essai);
+    	criteriaOldDate.setPharmacie(pharmacie);
+    	criteriaOldDate.setProduit(produit);
+    	criteriaOldDate.setConditionnement(conditionnement);
+    	criteriaOldDate.setNumLot(numLot);
+    	criteriaOldDate.setNumTraitement(numTraitement);
+    	criteriaOldDate.setApproApprouve(true);
+    	criteriaOldDate.setDatePeremption(oldDatePeremption);
+    	
+    	final LigneStockSearchCriteria criteriaNewDate = new LigneStockSearchCriteria();
+    	criteriaNewDate.setEssai(essai);
+    	criteriaNewDate.setPharmacie(pharmacie);
+    	criteriaNewDate.setProduit(produit);
+    	criteriaNewDate.setConditionnement(conditionnement);
+    	criteriaNewDate.setNumLot(numLot);
+    	criteriaNewDate.setNumTraitement(numTraitement);
+    	criteriaNewDate.setApproApprouve(true);
+    	criteriaNewDate.setDatePeremption(newDatePeremption);
+    	
+    	Mockito.when(this.mockDao.getAll((LigneStockSearchCriteria)Mockito.argThat(new IsOldDateMatcher()))).thenReturn(listeLigneStockOldDate);
+    	Mockito.when(this.mockDao.getAll((LigneStockSearchCriteria)Mockito.argThat(new IsNewDateMatcher()))).thenReturn(listeLigneStockNewDate);
+    	
+    	Mockito.when(this.mockDao.save(ligneStockOldDate)).thenReturn(ligneStockOldDate);
+    	Mockito.when(this.mockDao.save(ligneStockNewDate)).thenReturn(ligneStockNewDate);
+    	
+    	
+    	Mockito.doAnswer(new Answer<Void>() {
+            @Override
+            public Void answer(InvocationOnMock invocation) throws Throwable {
+
+                return null;
+            }
+        }).when(this.mockDao).remove(Matchers.any(LigneStock.class));
+  	
+    	
+    	//Appel de la méthode testée
+    	this.service.updateLigneStock(mvtstockOldDate, mvtstockNewDate);
+    	
+    	//Vérifications
+    	Assert.assertEquals(new Integer(28), ligneStockOldDate.getQtePharmacie());
+    	Assert.assertEquals(newDatePeremption, ligneStockOldDate.getDatePeremption());
+    	Mockito.verify(this.mockDao).remove(Matchers.any(LigneStock.class));
+    	Mockito.verify(this.mockDao).save(Matchers.any(LigneStock.class));
+    	
+	}
+    
+    /**
+     * Matcher utilisé dans la méthode testUpdateLigneStockAvecLigneStockNewDate
+     *
+     */
+    private class IsOldDateMatcher extends ArgumentMatcher {
+        @Override
+        public boolean matches(Object argument) {
+        	DateTimeFormatter fmt = DateTimeFormat.forPattern("dd/MM/yyyy");
+        	DateTime oldDt = fmt.parseDateTime("01/01/2015");
+        	Calendar oldDatePeremption = oldDt.toCalendar(EclipseConstants.LOCALE);
+            LigneStockSearchCriteria l = (LigneStockSearchCriteria) argument;
+            if(l!=null && l.getDatePeremption().getTimeInMillis()==oldDatePeremption.getTimeInMillis()){
+            	return true;
+            }else{
+            	return false;
+            }            	
+        }
+    }
+    
+    /**
+     * Matcher utilisé dans la méthode testUpdateLigneStockAvecLigneStockNewDate
+     *
+     */
+    private class IsNewDateMatcher extends ArgumentMatcher {
+        @Override
+        public boolean matches(Object argument) {
+        	DateTimeFormatter fmt = DateTimeFormat.forPattern("dd/MM/yyyy");
+        	DateTime Dt = fmt.parseDateTime("15/05/2015");
+        	Calendar datePeremption = Dt.toCalendar(EclipseConstants.LOCALE);
+            LigneStockSearchCriteria l = (LigneStockSearchCriteria) argument;
+            if(l!=null && l.getDatePeremption().getTimeInMillis()==datePeremption.getTimeInMillis()){
+            	return true;
+            }else{
+            	return false;
+            }            	
+        }
+    }
 
     /**
      * @return Essai de test
@@ -505,5 +676,7 @@ public class StockServiceImplTest {
 
         return mvt;
     }
+    
+    
 
 }

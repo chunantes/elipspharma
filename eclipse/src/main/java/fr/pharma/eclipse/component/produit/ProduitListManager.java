@@ -17,6 +17,7 @@ import fr.pharma.eclipse.domain.model.produit.Medicament;
 import fr.pharma.eclipse.domain.model.produit.Preparation;
 import fr.pharma.eclipse.domain.model.produit.Produit;
 import fr.pharma.eclipse.domain.model.produit.ProduitTherapeutique;
+import fr.pharma.eclipse.exception.ValidationException;
 import fr.pharma.eclipse.predicate.GenericPredicate;
 import fr.pharma.eclipse.utils.introspection.BeanTool;
 import fr.pharma.eclipse.validator.remove.RemoveValidator;
@@ -139,15 +140,24 @@ public class ProduitListManager extends BeanListManager<Produit> {
     }
 
     public void addToEssaiCollection(final Essai essai,
-                                     final Produit produit) {
-        final SortedSet<Produit> collection = (SortedSet) BeanTool.getPropriete(essai.getDetailProduit(), this.typeProduitDictionary.get(produit.getType()));
+            final Produit produit) {
+        final SortedSet<Produit> collection = (SortedSet) BeanTool.getPropriete(
+                essai.getDetailProduit(),
+                this.typeProduitDictionary.get(produit.getType()));
+
 
         if (produit.getId() == null) {
+            if (collection.contains(produit)) {
+                throw new ValidationException("produit.denomination", new String[]{"unique"}, produit);
+            }
             collection.add(produit);
             ((SortedSet) BeanTool.getPropriete(essai.getDetailProduit(), "produits")).add(produit);
         } else {
             final Produit p = (Produit) CollectionUtils.find(collection, new GenericPredicate("id", produit.getId()));
             collection.remove(p);
+            if (collection.contains(produit)) {
+                throw new ValidationException("produit.denomination", new String[]{"unique"}, produit);
+            }
             collection.add(produit);
 
             ((SortedSet) BeanTool.getPropriete(essai.getDetailProduit(), "produits")).remove(p);

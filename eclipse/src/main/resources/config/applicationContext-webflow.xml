@@ -37,7 +37,7 @@
 	<!-- Configure conversation lock timeout -->
     <beans:bean id="webFlowHelper" class="fr.pharma.eclipse.utils.WebFlowHelper">
 		<beans:constructor-arg index="0" ref="flowExecutor" />
-   		<beans:property name="lockTimeoutSeconds" value="80"/>
+   		<beans:property name="lockTimeoutSeconds" value="300"/>
    	</beans:bean>
 
 </beans:beans>

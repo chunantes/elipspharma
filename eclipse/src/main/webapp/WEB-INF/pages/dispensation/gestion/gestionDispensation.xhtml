@@ -155,6 +155,18 @@
 						    			<f:convertDateTime pattern="#{resourceBundle['date.pattern.default']}" />
 						    		</h:outputText>
 			    			</p:column>
+			    			
+			    			
+			    			<!-- Ajout Strasbourg -->
+			    			<c:if test="#{applicationController.strasbourg}">
+				    			<p:column id="produitDispense" style="width:35px;text-align:center">
+				    				<f:facet name="header">
+				    					<h:outputText value="#{resourceBundle['gestionPrescription.numPrescription']}"/>
+				    				</f:facet>
+				    				<h:outputText value="#{dispensation.numPrescription}"/>
+				    			</p:column>
+				    		</c:if>
+			    			
 			    		</p:dataTable>
 			    		<br />
 			    		

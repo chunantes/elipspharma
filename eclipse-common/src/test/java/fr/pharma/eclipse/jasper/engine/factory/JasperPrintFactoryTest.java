@@ -8,12 +8,6 @@ import java.util.Collection;
 import java.util.HashMap;
 import java.util.Map;
 
-import net.sf.jasperreports.engine.JRDataSource;
-import net.sf.jasperreports.engine.JRException;
-import net.sf.jasperreports.engine.JasperPrint;
-import net.sf.jasperreports.engine.JasperReport;
-import net.sf.jasperreports.engine.data.JRBeanCollectionDataSource;
-
 import org.junit.Assert;
 import org.junit.Test;
 import org.mockito.Matchers;
@@ -24,6 +18,11 @@ import org.springframework.util.StringUtils;
 import fr.pharma.eclipse.jasper.engine.helper.JasperPrintHelper;
 import fr.pharma.eclipse.jasper.exception.JasperReportBuildException;
 import fr.pharma.eclipse.utils.AbstractEclipseJUnitTest;
+import net.sf.jasperreports.engine.JRDataSource;
+import net.sf.jasperreports.engine.JRException;
+import net.sf.jasperreports.engine.JasperPrint;
+import net.sf.jasperreports.engine.JasperReport;
+import net.sf.jasperreports.engine.data.JRBeanCollectionDataSource;
 
 /**
  * Test de la classe JasperPrintFactory.

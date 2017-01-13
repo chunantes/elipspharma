@@ -63,21 +63,25 @@ public class LigneStockSearchCriteriaMaker extends AbstractCriteriaMaker {
         }
 
         // Numéro de traitement
-        if (StringUtils.isNotEmpty(crit.getNumTraitement()) && !EclipseConstants.NON_APPLICABLE.equals(crit.getNumTraitement())) {
-            CriteriaMakerUtils.addCritere(criteria, "numTraitement", crit.getNumTraitement());
-        } else {
-            criteria.add(Restrictions.isNull("numTraitement"));
-        }
+        if(crit.getNumTraitementNA() == null || !crit.getNumTraitementNA()){
+        	if (StringUtils.isNotEmpty(crit.getNumTraitement()) && !EclipseConstants.NON_APPLICABLE.equals(crit.getNumTraitement())) {
+                CriteriaMakerUtils.addCritere(criteria, "numTraitement", crit.getNumTraitement());
+            } else {
+                criteria.add(Restrictions.isNull("numTraitement"));
+            }
+        }        
 
         if (crit.getApproApprouve() != null) {
             CriteriaMakerUtils.addCritere(criteria, "approApprouve", crit.getApproApprouve());
         }
 
-        // Date de péremption
-        if (crit.getDatePeremption() != null) {
-            criteria.add(Restrictions.eq("datePeremption", crit.getDatePeremption()));
-        } else {
-            criteria.add(Restrictions.isNull("datePeremption"));
+        // Date de péremption    
+        if(crit.getDatePeremptionNA() == null || !crit.getDatePeremptionNA()){
+        	if (crit.getDatePeremption() != null) {
+                criteria.add(Restrictions.eq("datePeremption", crit.getDatePeremption()));
+            } else {
+                criteria.add(Restrictions.isNull("datePeremption"));
+            }
         }
     }
 }

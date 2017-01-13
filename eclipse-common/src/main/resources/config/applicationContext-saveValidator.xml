@@ -88,4 +88,5 @@
 	<!-- ==================================== -->					
 	<bean id="etablissementSaveValidator" class="fr.pharma.eclipse.validator.save.impl.EtablissementSaveValidator"/>
 
+        <bean id="evenementSaveValidator" class="fr.pharma.eclipse.validator.save.impl.EvenementSaveValidator"/> 
 </beans>

@@ -83,9 +83,9 @@ public class EtablissementRemoveValidatorTest {
     @Test
     public void testValidateOK() {
         final Etablissement etablissement = new Etablissement();
-        Mockito.when(this.mockPharmacieService.hasResult((SearchCriteria) Matchers.any())).thenReturn(Boolean.FALSE);
-        Mockito.when(this.mockPoleService.hasResult((SearchCriteria) Matchers.any())).thenReturn(Boolean.FALSE);
-        Mockito.when(this.mockSiteService.hasResult((SearchCriteria) Matchers.any())).thenReturn(Boolean.FALSE);
+        Mockito.when(this.mockPharmacieService.count((SearchCriteria) Matchers.any())).thenReturn(0L);
+        Mockito.when(this.mockPoleService.count((SearchCriteria) Matchers.any())).thenReturn(0L);
+        Mockito.when(this.mockSiteService.count((SearchCriteria) Matchers.any())).thenReturn(0L);
         try {
             this.validator.validate(etablissement);
         } catch (final ValidationException e) {
@@ -100,7 +100,7 @@ public class EtablissementRemoveValidatorTest {
     @Test(expected = ValidationException.class)
     public void testValidateKOPharma() {
         final Etablissement etablissement = new Etablissement();
-        Mockito.when(this.mockPharmacieService.hasResult((SearchCriteria) Matchers.any())).thenReturn(Boolean.TRUE);
+        Mockito.when(this.mockPharmacieService.count((SearchCriteria) Matchers.any())).thenReturn(1L);
         this.validator.validate(etablissement);
     }
 
@@ -111,8 +111,8 @@ public class EtablissementRemoveValidatorTest {
     @Test(expected = ValidationException.class)
     public void testValidateKOPole() {
         final Etablissement etablissement = new Etablissement();
-        Mockito.when(this.mockPharmacieService.hasResult((SearchCriteria) Matchers.any())).thenReturn(Boolean.FALSE);
-        Mockito.when(this.mockPoleService.hasResult((SearchCriteria) Matchers.any())).thenReturn(Boolean.TRUE);
+        Mockito.when(this.mockPharmacieService.count((SearchCriteria) Matchers.any())).thenReturn(0L);
+        Mockito.when(this.mockPoleService.count((SearchCriteria) Matchers.any())).thenReturn(1L);
         this.validator.validate(etablissement);
     }
 
@@ -123,9 +123,9 @@ public class EtablissementRemoveValidatorTest {
     @Test(expected = ValidationException.class)
     public void testValidateKOSite() {
         final Etablissement etablissement = new Etablissement();
-        Mockito.when(this.mockPharmacieService.hasResult((SearchCriteria) Matchers.any())).thenReturn(Boolean.FALSE);
-        Mockito.when(this.mockPoleService.hasResult((SearchCriteria) Matchers.any())).thenReturn(Boolean.FALSE);
-        Mockito.when(this.mockSiteService.hasResult((SearchCriteria) Matchers.any())).thenReturn(Boolean.TRUE);
+        Mockito.when(this.mockPharmacieService.count((SearchCriteria) Matchers.any())).thenReturn(0L);
+        Mockito.when(this.mockPoleService.count((SearchCriteria) Matchers.any())).thenReturn(0L);
+        Mockito.when(this.mockSiteService.count((SearchCriteria) Matchers.any())).thenReturn(1L);
         this.validator.validate(etablissement);
     }
 

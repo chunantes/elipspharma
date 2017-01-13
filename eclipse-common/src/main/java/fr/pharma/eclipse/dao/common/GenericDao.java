@@ -59,6 +59,14 @@ public interface GenericDao<BEAN extends BeanObject> {
      * @return L'objet recherché.
      */
     BEAN get(Long id);
+    
+    
+    /**
+     * Méthode générique de comptage du nombre de rows d'un type particulier dans la base de données
+     * @param criteria Le critère de recherche
+     * @return Le nomre de rows ( 0 s'il n'y aucune row)
+     */
+    Long count(SearchCriteria criteria);
 
     /**
      * Méthode générique de sauvegarde d'un objet d'un type particulier - doit

@@ -78,4 +78,16 @@ public class OrdonnancierDispComparatorTest {
         disp2.setNumOrdonnancier(1);
         Assert.assertTrue(this.comparator.compare(disp1, disp2) > 0);
     }
+
+    /**
+     * Méthode en charge de tester le comparator.
+     */
+    @Test
+    public void testCompareSuperieur10() {
+        final Dispensation disp1 = new Dispensation();
+        disp1.setNumOrdonnancier(11);
+        final Dispensation disp2 = new Dispensation();
+        disp2.setNumOrdonnancier(2);
+        Assert.assertTrue(this.comparator.compare(disp1, disp2) > 0);
+    }
 }

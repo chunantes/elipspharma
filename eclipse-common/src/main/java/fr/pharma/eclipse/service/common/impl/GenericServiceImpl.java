@@ -5,6 +5,8 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
+import org.springframework.transaction.annotation.Transactional;
+
 import fr.pharma.eclipse.dao.common.GenericDao;
 import fr.pharma.eclipse.domain.criteria.common.SearchCriteria;
 import fr.pharma.eclipse.domain.model.common.BeanObject;
@@ -63,6 +65,7 @@ public class GenericServiceImpl<BEAN extends BeanObject> implements GenericServi
      */
     @Override
     public BEAN get(final Long id) {
+
         return this.getGenericDao().get(id);
     }
 
@@ -79,14 +82,11 @@ public class GenericServiceImpl<BEAN extends BeanObject> implements GenericServi
                              final int maxResults) {
         return this.genericDao.getAll(criteria, maxResults);
     }
-
-    /**
-     * {@inheritDoc}
-     */
+    
     @Override
-    public Boolean hasResult(final SearchCriteria criteria) {
-        return this.getAll(criteria).size() > 0;
-    }
+	public Long count(SearchCriteria criteria) {
+    	return this.genericDao.count(criteria);
+	}
 
     /**
      * {@inheritDoc}
@@ -136,6 +136,7 @@ public class GenericServiceImpl<BEAN extends BeanObject> implements GenericServi
      * {@inheritDoc}
      */
     @Override
+    @Transactional
     public void remove(final List<BEAN> objects) {
         boolean launchValidationException = false;
         for (final BEAN bean : objects) {
@@ -256,4 +257,6 @@ public class GenericServiceImpl<BEAN extends BeanObject> implements GenericServi
     public SaveValidator<BEAN> getSaveValidator() {
         return this.saveValidator;
     }
+
+	
 }

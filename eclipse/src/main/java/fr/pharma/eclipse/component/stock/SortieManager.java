@@ -6,6 +6,7 @@ import java.util.List;
 import java.util.Map;
 
 import javax.annotation.Resource;
+import javax.faces.application.FacesMessage;
 import javax.faces.component.html.HtmlSelectOneMenu;
 import javax.faces.event.AjaxBehaviorEvent;
 
@@ -28,6 +29,9 @@ import fr.pharma.eclipse.service.essai.EssaiService;
 import fr.pharma.eclipse.service.localisation.EtablissementService;
 import fr.pharma.eclipse.service.produit.ProduitService;
 import fr.pharma.eclipse.service.stock.StockService;
+import fr.pharma.eclipse.service.user.UserService;
+import fr.pharma.eclipse.utils.CacheUtils;
+import fr.pharma.eclipse.utils.FacesUtils;
 import fr.pharma.eclipse.utils.Utils;
 import fr.pharma.eclipse.utils.constants.EclipseConstants;
 
@@ -59,8 +63,11 @@ public class SortieManager implements Serializable {
      */
     @Resource(name = "stockService")
     private StockService stockService;
+    
+    @Resource(name = "userService")
+    private UserService userService;
 
-    /**
+	/**
      * Essai sélectionné.
      */
     private Essai essaiSelected;
@@ -164,6 +171,8 @@ public class SortieManager implements Serializable {
      * Etablissement destiation.
      */
     private Etablissement etablissementDest;
+    
+    private boolean essaiSelectedIsUsed;
 
     /**
      * Etablissement service.
@@ -176,6 +185,18 @@ public class SortieManager implements Serializable {
      */
     @Resource(name = "mapFactoriesByTypeMouvement")
     private Map<TypeMvtStock, MvtStockFactory<MvtStock>> mapFactories;
+    
+    /**
+     * Utilitaire de gestion de cache.
+     */
+    @Resource(name = "cacheUtilsPreparation")
+    private CacheUtils cacheUtils;
+    
+    /**
+     * Utils Faces.
+     */
+    @Resource(name = "facesUtils")
+    private FacesUtils facesUtils;
 
     /**
      * Méthode d'initialisation.
@@ -327,22 +348,61 @@ public class SortieManager implements Serializable {
             this.pharmaciesDest = new ArrayList<Pharmacie>(etablissement.getPharmacies());
         }
     }
+    
+    /**
+     * Methode permettant de savoir si un essai est utilisé par un autre utilisateur
+     * @param idEssai
+     * @return
+     */
+    private boolean isEssaiUsed(Long idEssai) {
+    	boolean use = false;
+    	this.essaiSelectedIsUsed = false;
+    	Serializable cache = this.cacheUtils.getCachedObject(Long.toString(idEssai));
+    	if(null != cache && !userService.getUser().getUsername().equals(cache.toString())) {
+    		use = true;
+    		this.essaiSelectedIsUsed = true;
+    	}
+    	return use;
+    }
+    
     /**
      * Méthode appelée pour ajouter une nouvelle sortie.
      */
     public void addSortie() {
         if (this.getTypeSortie() != null) {
-            final Sortie sortie = new Sortie();
-            // Création du bon mouvement par rapport au type de sortie
-            final MvtStockFactory<MvtStock> factory = this.mapFactories.get(this.getTypeSortie());
-            final MvtStock mvt = factory.getInitializedObject();
-            mvt.setEssai(this.getEssaiSelected());
-            mvt.setPharmacie(this.getPharmacieSelected());
-            sortie.setMvtSortie(mvt);
-            this.sortieCurrent = sortie;
-            this.actionSortieCurrent = "ADD";
-        }
+            createMouvementSortie();
+    	}
     }
+    
+    /**
+     * Méthode appelée pour ajouter une nouvelle sortie pour une préparation.
+     */
+    public void addSortiePourPreparation() {
+    	boolean isUse = isEssaiUsed(essaiSelected.getId());
+    	if(!isUse) {
+	        if (this.getTypeSortie() != null) {
+	            createMouvementSortie();
+	            this.cacheUtils.store(Long.toString(essaiSelected.getId()), userService.getUser().getUsername());
+	        }
+    	} else {
+    		this.facesUtils.addMessage(FacesMessage.SEVERITY_ERROR, "concurrenceError.preparation");
+    	}
+    }
+
+	/**
+	 * 
+	 */
+	private void createMouvementSortie() {
+		final Sortie sortie = new Sortie();
+		// Création du bon mouvement par rapport au type de sortie
+		final MvtStockFactory<MvtStock> factory = this.mapFactories.get(this.getTypeSortie());
+		final MvtStock mvt = factory.getInitializedObject();
+		mvt.setEssai(this.getEssaiSelected());
+		mvt.setPharmacie(this.getPharmacieSelected());
+		sortie.setMvtSortie(mvt);
+		this.sortieCurrent = sortie;
+		this.actionSortieCurrent = "ADD";
+	}
 
     /**
      * Méthode en charge de construire la composition.
@@ -370,6 +430,7 @@ public class SortieManager implements Serializable {
         }
         return sb.toString();
     }
+	
     /**
      * Méthode appelée lors de la modification d'une sortie.
      */
@@ -786,11 +847,37 @@ public class SortieManager implements Serializable {
     }
 
     /**
+     * Getter pour userService.
+     * @return Le userService
+     */
+    public void setUserService(UserService userService) {
+		this.userService = userService;
+	}
+
+    /**
      * Setter pour etablissementService.
      * @param etablissementService Le etablissementService à écrire.
      */
     public void setEtablissementService(final EtablissementService etablissementService) {
         this.etablissementService = etablissementService;
     }
+
+	public boolean isEssaiSelectedIsUsed() {
+		return essaiSelectedIsUsed;
+	}
+
+	public void setEssaiSelectedIsUsed(boolean essaiSelectedIsUsed) {
+		this.essaiSelectedIsUsed = essaiSelectedIsUsed;
+	}
+
+	public CacheUtils getCacheUtils() {
+		return cacheUtils;
+	}
+
+	public void setCacheUtils(CacheUtils cacheUtils) {
+		this.cacheUtils = cacheUtils;
+	}
+    
+    
 
 }

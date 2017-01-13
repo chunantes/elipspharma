@@ -153,4 +153,44 @@ public final class Utils {
         final String message = writer.toString();
         return message;
     }
+    
+    /**
+     * Méthode en charge d'échapper les caractères spéciaux pour une recherche sql.
+     * @param string
+     * @return 
+     */
+    public static String escapingSpecialChar(final String string){
+        // Mise en majuscules de la chaîne
+        final String str = string.toUpperCase();
+
+        String retour = "";
+        for (int i = 0; i < str.length(); i++)
+        {
+            final char car = str.charAt(i);
+            switch (car) {
+                case '(' :
+                	retour += "\\(";
+                	break;
+                case ')' :
+                	retour += "\\)";
+                	break;
+                case '*' :
+                    retour += "\\*";
+                    break;
+                case '+' :
+                    retour += "\\+";
+                    break;
+                case '[' :
+                    retour += "\\[";
+                    break;
+                case ']' :
+                    retour += "\\]";
+                    break;
+                default :
+                    retour += car;
+                    break;
+            }
+        }
+        return retour;
+    }
 }

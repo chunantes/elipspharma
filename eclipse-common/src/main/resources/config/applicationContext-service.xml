@@ -42,6 +42,13 @@
 		<constructor-arg index="0" ref="promoteurDao" />
 		<property name="removeValidator" ref="promoteurRemoveValidator"/>
 	</bean>
+        
+	<!-- ============================= -->
+	<!-- PROMOTEUR                     -->
+	<!-- ============================= -->		
+	<bean id="detailDesignService" parent="commonService">
+		<constructor-arg index="0" ref="detailDesignDao" />
+	</bean>        
 	
 	<!-- ============================= -->
 	<!-- ESSAI                         -->
@@ -74,7 +81,7 @@
 				<entry key="ONG_ADMIN_REG" value-ref="detailAdministratifSuiviWithParentFactory" />
 				<entry key="ONG_PRODUITS" value-ref="detailProduitSuiviWithParentFactory" />
 				<entry key="ONG_DATA_PHARMA" value-ref="detailDonneesPharmaSuiviWithParentFactory" />
-				<entry key="ONG_DESIGN" value-ref="detailDesignSuiviWithParentFactory" />
+				<!---<entry key="ONG_DESIGN" value-ref="detailDesignSuiviWithParentFactory" />-->
 				<entry key="ONG_AUTRES_DOCS" value-ref="detailAutresDocsSuiviWithParentFactory" />
 				<entry key="ONG_SURCOUTS" value-ref="detailSurcoutSuiviWithParentFactory" />
 			</map>
@@ -480,6 +487,7 @@
 				
 			</list>
 		</property>
+                <property name="saveValidator" ref="evenementSaveValidator"/>
 	</bean>
 	
 	<!-- ============================= -->

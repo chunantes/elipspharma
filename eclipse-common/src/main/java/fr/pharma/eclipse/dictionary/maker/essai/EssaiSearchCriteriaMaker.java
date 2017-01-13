@@ -218,7 +218,7 @@ public class EssaiSearchCriteriaMaker extends AbstractCriteriaMaker {
         if (crit.getPharmacie() != null) {
             final Criteria detail = criteria.createCriteria("detailDonneesPharma", "detailDonneesPharma");
 
-            detail.createCriteria("pharmacies", "aliasPharmacies", CriteriaSpecification.LEFT_JOIN);
+            detail.createCriteria("pharmacies", "aliasPharmacies", CriteriaSpecification.FULL_JOIN);
             // Pharmacie
             if (crit.getPharmacie() != null) {
                 final Disjunction disjonctionPharma = Restrictions.disjunction();

@@ -4,9 +4,6 @@ import java.io.ByteArrayOutputStream;
 import java.util.HashMap;
 import java.util.Map;
 
-import net.sf.jasperreports.engine.JRDataSource;
-import net.sf.jasperreports.engine.JasperPrint;
-
 import org.junit.Assert;
 import org.junit.Test;
 import org.mockito.Mockito;
@@ -20,6 +17,8 @@ import fr.pharma.eclipse.jasper.engine.helper.CommonParametersHelper;
 import fr.pharma.eclipse.jasper.exception.JasperReportBuildException;
 import fr.pharma.eclipse.utils.AbstractEclipseJUnitTest;
 import fr.pharma.eclipse.utils.EssaiUtils;
+import net.sf.jasperreports.engine.JRDataSource;
+import net.sf.jasperreports.engine.JasperPrint;
 
 /**
  * Test de la classe {@link JasperReportBuildManager}.

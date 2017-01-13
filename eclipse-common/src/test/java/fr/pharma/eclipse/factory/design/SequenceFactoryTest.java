@@ -8,8 +8,6 @@ import org.springframework.beans.factory.BeanFactory;
 import fr.pharma.eclipse.domain.enums.TypeDesignable;
 import fr.pharma.eclipse.domain.model.design.Bras;
 import fr.pharma.eclipse.domain.model.design.Sequence;
-import fr.pharma.eclipse.domain.model.essai.Essai;
-import fr.pharma.eclipse.domain.model.essai.detail.design.DetailDesign;
 import fr.pharma.eclipse.utils.AbstractEclipseJUnitTest;
 
 /**
@@ -60,18 +58,14 @@ public class SequenceFactoryTest extends AbstractEclipseJUnitTest {
      */
     @Test
     public void testGetInitializedObject() {
-        final Essai essai = new Essai();
-        essai.setId(1L);
-
         final Bras b = new Bras();
         b.setId(1L);
         b.setNom("b");
-        essai.setDetailDesign(new DetailDesign());
-        essai.getDetailDesign().getBras().add(b);
+
 
         Mockito.when(this.mockedBeanFactory.getBean(Sequence.class.getSimpleName())).thenReturn(new Sequence());
 
-        final Sequence result = this.factory.getInitializedObject(essai, "b");
+        final Sequence result = this.factory.getInitializedObject(b, "b");
 
         Assert.assertEquals(TypeDesignable.SEQUENCE, result.getType());
         Assert.assertEquals(b.getId(), result.getParent().getId());

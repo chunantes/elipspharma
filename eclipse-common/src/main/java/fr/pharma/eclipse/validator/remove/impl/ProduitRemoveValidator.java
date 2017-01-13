@@ -43,14 +43,14 @@ public class ProduitRemoveValidator implements RemoveValidator<Produit>, Seriali
     public void validate(final Produit produit) {
         final MvtStockSearchCriteria mvtStockCriteria = new MvtStockSearchCriteria();
         mvtStockCriteria.setProduit(produit);
-        if (!this.mvtStockService.getAll(mvtStockCriteria).isEmpty()) {
+        if (this.mvtStockService.count(mvtStockCriteria) > 0) {
 
             throw new ValidationException("remove", new String[]{"impossible" }, produit);
         }
 
         final ProduitPrescritSearchCriteria crit = new ProduitPrescritSearchCriteria();
         crit.setProduit(produit);
-        if (!this.produitPrescritService.getAll(crit).isEmpty()) {
+        if (this.produitPrescritService.count(crit) > 0) {
 
             throw new ValidationException("remove", new String[]{"impossible" }, produit);
         }

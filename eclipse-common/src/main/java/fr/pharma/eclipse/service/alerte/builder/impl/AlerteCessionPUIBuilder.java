@@ -8,6 +8,7 @@ import java.util.List;
 import javax.annotation.Resource;
 
 import org.apache.commons.collections.CollectionUtils;
+import org.apache.commons.collections.PredicateUtils;
 import org.apache.commons.collections.Transformer;
 
 import fr.pharma.eclipse.domain.criteria.evenement.EvenementSearchCriteria;
@@ -69,6 +70,7 @@ public class AlerteCessionPUIBuilder implements AlerteBuilder, Serializable {
                 return ((EssaiAlerte) input).getId();
             }
         });
+        CollectionUtils.filter(idsEssais, PredicateUtils.notNullPredicate());
 
         criteria.setIdsEssais(idsEssais);
         criteria.setDateReceptionVide(true);

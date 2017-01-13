@@ -94,7 +94,7 @@
 		</band>
 	</pageHeader>
 	<detail>
-		<band height="661" splitType="Stretch">
+		<band height="450" splitType="Stretch">
 			<textField isBlankWhenNull="true">
 				<reportElement mode="Opaque" x="247" y="6" width="275" height="30" backcolor="#E9E8E8"/>
 				<textElement textAlignment="Center" verticalAlignment="Middle" markup="none">
@@ -134,127 +134,6 @@
 				<reportElement mode="Transparent" x="247" y="6" width="275" height="30"/>
 			</rectangle>
 			<staticText>
-				<reportElement x="33" y="444" width="41" height="29"/>
-				<box padding="3"/>
-				<textElement verticalAlignment="Bottom">
-					<font fontName="Arial" size="12" isBold="false"/>
-				</textElement>
-				<text><![CDATA[Motif :]]></text>
-			</staticText>
-			<staticText>
-				<reportElement x="179" y="544" width="20" height="29"/>
-				<box padding="3"/>
-				<textElement verticalAlignment="Bottom">
-					<font fontName="Arial" size="12" isBold="false"/>
-				</textElement>
-				<text><![CDATA[le]]></text>
-			</staticText>
-			<staticText>
-				<reportElement x="33" y="572" width="63" height="29"/>
-				<box padding="3"/>
-				<textElement verticalAlignment="Bottom">
-					<font fontName="Arial" size="12" isBold="false"/>
-				</textElement>
-				<text><![CDATA[Par (nom) :]]></text>
-			</staticText>
-			<staticText>
-				<reportElement x="95" y="572" width="166" height="29"/>
-				<box padding="3"/>
-				<textElement verticalAlignment="Bottom">
-					<font fontName="Arial" size="12" isBold="false"/>
-				</textElement>
-				<text><![CDATA[....................................................................................................................]]></text>
-			</staticText>
-			<staticText>
-				<reportElement x="33" y="600" width="75" height="29"/>
-				<box padding="3"/>
-				<textElement verticalAlignment="Bottom">
-					<font fontName="Arial" size="12" isBold="false"/>
-				</textElement>
-				<text><![CDATA[Signature :]]></text>
-			</staticText>
-			<staticText>
-				<reportElement x="199" y="543" width="62" height="29"/>
-				<box padding="3"/>
-				<textElement verticalAlignment="Bottom">
-					<font fontName="Arial" size="12" isBold="false"/>
-				</textElement>
-				<text><![CDATA[..........................................................................................................................]]></text>
-			</staticText>
-			<rectangle>
-				<reportElement mode="Transparent" x="86" y="457" width="10" height="10">
-					<printWhenExpression><![CDATA[!$F{motif}.equals("QUARANTAINE_PERIME")]]></printWhenExpression>
-				</reportElement>
-			</rectangle>
-			<staticText>
-				<reportElement x="108" y="449" width="87" height="23"/>
-				<box padding="3"/>
-				<textElement verticalAlignment="Bottom">
-					<font fontName="Arial" size="12" isBold="false"/>
-				</textElement>
-				<text><![CDATA[Produit périmé]]></text>
-			</staticText>
-			<staticText>
-				<reportElement x="108" y="472" width="87" height="23"/>
-				<box padding="3"/>
-				<textElement verticalAlignment="Bottom">
-					<font fontName="Arial" size="12" isBold="false"/>
-				</textElement>
-				<text><![CDATA[Fin de l'étude]]></text>
-			</staticText>
-			<rectangle>
-				<reportElement mode="Transparent" x="86" y="479" width="10" height="10">
-					<printWhenExpression><![CDATA[!$F{motif}.equals("FIN_ETUDE")]]></printWhenExpression>
-				</reportElement>
-			</rectangle>
-			<rectangle>
-				<reportElement mode="Transparent" x="224" y="457" width="10" height="10">
-					<printWhenExpression><![CDATA[!$F{motif}.equals("QUARANTAINE_RETRAIT")]]></printWhenExpression>
-				</reportElement>
-			</rectangle>
-			<staticText>
-				<reportElement x="247" y="450" width="77" height="23"/>
-				<box padding="3"/>
-				<textElement verticalAlignment="Bottom">
-					<font fontName="Arial" size="12" isBold="false"/>
-				</textElement>
-				<text><![CDATA[Retrait de lot]]></text>
-			</staticText>
-			<rectangle>
-				<reportElement mode="Transparent" x="224" y="479" width="10" height="10">
-					<printWhenExpression><![CDATA[!$F{motif}.equals("QUARANTAINE_RETRAIT")]]></printWhenExpression>
-				</reportElement>
-			</rectangle>
-			<staticText>
-				<reportElement x="247" y="472" width="165" height="23"/>
-				<box padding="3"/>
-				<textElement verticalAlignment="Bottom">
-					<font fontName="Arial" size="12" isBold="false"/>
-				</textElement>
-				<text><![CDATA[Unités dispensées retournées à la PUI]]></text>
-			</staticText>
-			<staticText>
-				<reportElement x="108" y="495" width="43" height="23"/>
-				<box padding="3"/>
-				<textElement verticalAlignment="Bottom">
-					<font fontName="Arial" size="12" isBold="false"/>
-				</textElement>
-				<text><![CDATA[Autre :]]></text>
-			</staticText>
-			<rectangle>
-				<reportElement mode="Transparent" x="86" y="500" width="10" height="10">
-					<printWhenExpression><![CDATA[!$F{motif}.equals("AUTRE")]]></printWhenExpression>
-				</reportElement>
-			</rectangle>
-			<staticText>
-				<reportElement x="151" y="495" width="370" height="23"/>
-				<box padding="3"/>
-				<textElement verticalAlignment="Bottom">
-					<font fontName="Arial" size="12" isBold="false"/>
-				</textElement>
-				<text><![CDATA[..................................................................................................]]></text>
-			</staticText>
-			<staticText>
 				<reportElement x="33" y="48" width="214" height="20"/>
 				<textElement>
 					<font fontName="Arial" size="14" isBold="true"/>
@@ -272,27 +151,33 @@
 				<dataSourceExpression><![CDATA[$F{produits}]]></dataSourceExpression>
 				<subreportExpression class="java.lang.String"><![CDATA[$P{SUBREPORT_DIR} + "/2_certificatSorti_produits.jasper"]]></subreportExpression>
 			</subreport>
+		</band>
+	</detail>
+	<lastPageFooter>
+		<band height="220">
 			<staticText>
-				<reportElement x="32" y="543" width="42" height="29"/>
+				<reportElement x="215" y="6" width="77" height="23"/>
 				<box padding="3"/>
 				<textElement verticalAlignment="Bottom">
 					<font fontName="Arial" size="12" isBold="false"/>
 				</textElement>
-				<text><![CDATA[Fait à :]]></text>
+				<text><![CDATA[Retrait de lot]]></text>
 			</staticText>
 			<staticText>
-				<reportElement x="74" y="543" width="105" height="29"/>
+				<reportElement x="63" y="128" width="166" height="29"/>
 				<box padding="3"/>
 				<textElement verticalAlignment="Bottom">
 					<font fontName="Arial" size="12" isBold="false"/>
 				</textElement>
-				<text><![CDATA[..........................................................................................................................]]></text>
+				<text><![CDATA[....................................................................................................................]]></text>
 			</staticText>
 			<rectangle>
-				<reportElement x="363" y="544" width="159" height="106"/>
+				<reportElement mode="Transparent" x="54" y="35" width="10" height="10">
+					<printWhenExpression><![CDATA[!$F{motif}.equals("FIN_ETUDE")]]></printWhenExpression>
+				</reportElement>
 			</rectangle>
 			<staticText>
-				<reportElement x="282" y="543" width="59" height="29"/>
+				<reportElement x="250" y="99" width="59" height="29"/>
 				<box padding="3"/>
 				<textElement verticalAlignment="Bottom">
 					<font fontName="Arial" size="12" isBold="false"/>
@@ -300,29 +185,148 @@
 				<text><![CDATA[CACHET :]]></text>
 			</staticText>
 			<image>
-				<reportElement x="86" y="457" width="10" height="10">
-					<printWhenExpression><![CDATA[$F{motif}.equals("QUARANTAINE_PERIME")]]></printWhenExpression>
-				</reportElement>
-				<imageExpression class="java.lang.String"><![CDATA[$P{CHECKBOX_DIR}]]></imageExpression>
-			</image>
-			<image>
-				<reportElement x="86" y="479" width="10" height="10">
-					<printWhenExpression><![CDATA[$F{motif}.equals("FIN_ETUDE")]]></printWhenExpression>
-				</reportElement>
-				<imageExpression class="java.lang.String"><![CDATA[$P{CHECKBOX_DIR}]]></imageExpression>
-			</image>
-			<image>
-				<reportElement x="224" y="457" width="10" height="10">
+				<reportElement x="192" y="13" width="10" height="10">
 					<printWhenExpression><![CDATA[$F{motif}.equals("QUARANTAINE_RETRAIT")]]></printWhenExpression>
 				</reportElement>
 				<imageExpression class="java.lang.String"><![CDATA[$P{CHECKBOX_DIR}]]></imageExpression>
 			</image>
 			<image>
-				<reportElement x="86" y="500" width="10" height="10">
+				<reportElement x="54" y="35" width="10" height="10">
+					<printWhenExpression><![CDATA[$F{motif}.equals("FIN_ETUDE")]]></printWhenExpression>
+				</reportElement>
+				<imageExpression class="java.lang.String"><![CDATA[$P{CHECKBOX_DIR}]]></imageExpression>
+			</image>
+			<image>
+				<reportElement x="54" y="13" width="10" height="10">
+					<printWhenExpression><![CDATA[$F{motif}.equals("QUARANTAINE_PERIME")]]></printWhenExpression>
+				</reportElement>
+				<imageExpression class="java.lang.String"><![CDATA[$P{CHECKBOX_DIR}]]></imageExpression>
+			</image>
+			<rectangle>
+				<reportElement mode="Transparent" x="54" y="56" width="10" height="10">
+					<printWhenExpression><![CDATA[!$F{motif}.equals("AUTRE")]]></printWhenExpression>
+				</reportElement>
+			</rectangle>
+			<staticText>
+				<reportElement x="76" y="5" width="87" height="23"/>
+				<box padding="3"/>
+				<textElement verticalAlignment="Bottom">
+					<font fontName="Arial" size="12" isBold="false"/>
+				</textElement>
+				<text><![CDATA[Produit périmé]]></text>
+			</staticText>
+			<rectangle>
+				<reportElement mode="Transparent" x="192" y="35" width="10" height="10">
+					<printWhenExpression><![CDATA[!$F{motif}.equals("QUARANTAINE_RETRAIT")]]></printWhenExpression>
+				</reportElement>
+			</rectangle>
+			<staticText>
+				<reportElement x="147" y="100" width="20" height="29"/>
+				<box padding="3"/>
+				<textElement verticalAlignment="Bottom">
+					<font fontName="Arial" size="12" isBold="false"/>
+				</textElement>
+				<text><![CDATA[le]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="167" y="99" width="62" height="29"/>
+				<box padding="3"/>
+				<textElement verticalAlignment="Bottom">
+					<font fontName="Arial" size="12" isBold="false"/>
+				</textElement>
+				<text><![CDATA[..........................................................................................................................]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="1" y="0" width="41" height="29"/>
+				<box padding="3"/>
+				<textElement verticalAlignment="Bottom">
+					<font fontName="Arial" size="12" isBold="false"/>
+				</textElement>
+				<text><![CDATA[Motif :]]></text>
+			</staticText>
+			<image>
+				<reportElement x="54" y="56" width="10" height="10">
 					<printWhenExpression><![CDATA[$F{motif}.equals("AUTRE")]]></printWhenExpression>
 				</reportElement>
 				<imageExpression class="java.lang.String"><![CDATA[$P{CHECKBOX_DIR}]]></imageExpression>
 			</image>
+			<rectangle>
+				<reportElement x="331" y="100" width="159" height="106"/>
+			</rectangle>
+			<staticText>
+				<reportElement x="0" y="99" width="42" height="29"/>
+				<box padding="3"/>
+				<textElement verticalAlignment="Bottom">
+					<font fontName="Arial" size="12" isBold="false"/>
+				</textElement>
+				<text><![CDATA[Fait à :]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="42" y="99" width="105" height="29"/>
+				<box padding="3"/>
+				<textElement verticalAlignment="Bottom">
+					<font fontName="Arial" size="12" isBold="false"/>
+				</textElement>
+				<text><![CDATA[..........................................................................................................................]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="119" y="51" width="370" height="23"/>
+				<box padding="3"/>
+				<textElement verticalAlignment="Bottom">
+					<font fontName="Arial" size="12" isBold="false"/>
+				</textElement>
+				<text><![CDATA[..................................................................................................]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="76" y="51" width="43" height="23"/>
+				<box padding="3"/>
+				<textElement verticalAlignment="Bottom">
+					<font fontName="Arial" size="12" isBold="false"/>
+				</textElement>
+				<text><![CDATA[Autre :]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="215" y="28" width="165" height="23"/>
+				<box padding="3"/>
+				<textElement verticalAlignment="Bottom">
+					<font fontName="Arial" size="12" isBold="false"/>
+				</textElement>
+				<text><![CDATA[Unités dispensées retournées à la PUI]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="1" y="156" width="75" height="29"/>
+				<box padding="3"/>
+				<textElement verticalAlignment="Bottom">
+					<font fontName="Arial" size="12" isBold="false"/>
+				</textElement>
+				<text><![CDATA[Signature :]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="1" y="128" width="63" height="29"/>
+				<box padding="3"/>
+				<textElement verticalAlignment="Bottom">
+					<font fontName="Arial" size="12" isBold="false"/>
+				</textElement>
+				<text><![CDATA[Par (nom) :]]></text>
+			</staticText>
+			<rectangle>
+				<reportElement mode="Transparent" x="192" y="13" width="10" height="10">
+					<printWhenExpression><![CDATA[!$F{motif}.equals("QUARANTAINE_RETRAIT")]]></printWhenExpression>
+				</reportElement>
+			</rectangle>
+			<staticText>
+				<reportElement x="76" y="28" width="87" height="23"/>
+				<box padding="3"/>
+				<textElement verticalAlignment="Bottom">
+					<font fontName="Arial" size="12" isBold="false"/>
+				</textElement>
+				<text><![CDATA[Fin de l'étude]]></text>
+			</staticText>
+			<rectangle>
+				<reportElement mode="Transparent" x="54" y="13" width="10" height="10">
+					<printWhenExpression><![CDATA[!$F{motif}.equals("QUARANTAINE_PERIME")]]></printWhenExpression>
+				</reportElement>
+			</rectangle>
 		</band>
-	</detail>
+	</lastPageFooter>
 </jasperReport>

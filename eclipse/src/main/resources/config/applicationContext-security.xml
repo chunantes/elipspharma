@@ -16,14 +16,13 @@
 	<security:http pattern="/js/**" security="none" />
 	<security:http pattern="/index.html" security="none" />
 	<security:http pattern="/img/**" security="none" />
-	<security:http>
+	<security:http use-expressions="true" >
 		<security:form-login login-page="/flows/login"
 			authentication-failure-url="/flows/login?error=1" default-target-url="/flows/main"
 			always-use-default-target="true" />
 		<security:logout logout-success-url="/flows/login" />
-
-		<security:intercept-url pattern="/**"
-			access="IS_AUTHENTICATED_FULLY,IS_AUTHENTICATED_REMEMBERED" />
+       <security:intercept-url pattern="/api/**" access="permitAll() and hasIpAddress('127.0.0.1')" />
+		<security:intercept-url pattern="/**" access="isAuthenticated()" />
 	</security:http>
 
 	<security:authentication-manager>
