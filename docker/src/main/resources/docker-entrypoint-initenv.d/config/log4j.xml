@@ -1,0 +1,165 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE log4j:configuration SYSTEM "log4j.dtd">
+<!-- CONFIGURATION PAR DEFAUT DE LOG4J -->
+    <log4j:configuration xmlns:log4j='http://jakarta.apache.org/log4j/'
+        debug="false">
+        <!-- Sortie console -->
+        <appender name="CONSOLE" class="org.apache.log4j.ConsoleAppender">
+            <layout class="org.apache.log4j.PatternLayout">
+                <param name="ConversionPattern" value="[%d{dd/MM/yyyy HH:mm:ss,SSS}] %-5p (%10F:%L) %m%n" />
+            </layout>
+        </appender>
+
+
+        <logger name="org.hibernate.pretty.Printer" additivity="false">
+            <level value="ERROR" />
+            <appender-ref ref="CONSOLE" />
+            
+        </logger>
+        <logger name="org.hibernate.engine.TwoPhaseLoad" additivity="false">
+            <level value="ERROR" />
+            <appender-ref ref="CONSOLE" />
+            
+        </logger>
+        <logger name="org.hibernate.loader.Loader" additivity="false">
+            <level value="ERROR" />
+            <appender-ref ref="CONSOLE" />
+            
+        </logger>
+        <logger name="org.dbunit.database" additivity="false">
+            <level value="ERROR" />
+            <appender-ref ref="CONSOLE" />
+            
+        </logger>
+        <logger name="org.hibernate.persister.entity" additivity="false">
+            <level value="ERROR" />
+            <appender-ref ref="CONSOLE" />
+            
+        </logger>
+        <logger name="org.springframework.orm.hibernate3" additivity="false">
+            <level value="ERROR" />
+            <appender-ref ref="CONSOLE" />
+            
+        </logger>
+        <logger name="org.apache.commons.digester.Digester" additivity="false">
+            <level value="ERROR" />
+            <appender-ref ref="CONSOLE" />
+            
+        </logger>
+        <logger name="org.apache.commons.beanutils" additivity="false">
+            <level value="ERROR" />
+            <appender-ref ref="CONSOLE" />
+            
+        </logger>
+        <logger name="org.hibernate.cfg">
+            <level value="ERROR" />
+            <appender-ref ref="CONSOLE" />
+            
+        </logger>
+        <logger name="org.hibernate.loader.entity" additivity="false">
+            <level value="ERROR" />
+            <appender-ref ref="CONSOLE" />
+            
+        </logger>
+        <logger name="org.hibernate.util" additivity="false">
+            <level value="ERROR" />
+            <appender-ref ref="CONSOLE" />
+            
+        </logger>
+        <logger name="org.hibernate.connection" additivity="false">
+            <level value="ERROR" />
+            <appender-ref ref="CONSOLE" />
+            
+        </logger>
+        <logger name="org.hibernate.impl" additivity="false">
+            <level value="ERROR" />
+            <appender-ref ref="CONSOLE" />
+            
+        </logger>
+        <logger name="org.springframework.beans.factory" additivity="false">
+            <level value="ERROR" />
+            <appender-ref ref="CONSOLE" />
+            
+        </logger>
+        <logger name="org.springframework.context.support" additivity="false">
+            <level value="ERROR" />
+            <appender-ref ref="CONSOLE" />
+            
+        </logger>
+        <logger name="org.apache.catalina.startup.TldConfig" additivity="false">
+            <level value="ERROR" />
+            <appender-ref ref="CONSOLE" />
+            
+        </logger>
+        <logger name="org.acegisecurity.intercept" additivity="false">
+            <level value="ERROR" />
+            <appender-ref ref="CONSOLE" />
+            
+        </logger>
+        <logger name="org.apache.jasper.compiler" additivity="false">
+            <level value="ERROR" />
+            <appender-ref ref="CONSOLE" />
+            
+        </logger>
+        <logger name="org.apache.catalina.session.ManagerBase" additivity="false">
+            <level value="ERROR" />
+            <appender-ref ref="CONSOLE" />
+            
+        </logger>
+        <logger name="net.sf.ehcache" additivity="false">
+            <level value="ERROR" />
+            <appender-ref ref="CONSOLE" />
+            
+        </logger>
+        <logger name="fr.chu.gestfi.main" additivity="false">
+            <level value="DEBUG" />
+            <appender-ref ref="CONSOLE" />
+        </logger>
+        <logger name="fr.chu.gestfi.web.security" additivity="false">
+            <level value="INFO" />
+            <appender-ref ref="CONSOLE" />            
+        </logger>
+
+        <logger name="fr.chu.gestfi.schedule.financier" additivity="false">
+            <level value="DEBUG" />
+            <appender-ref ref="CONSOLE"  />
+            
+        </logger>
+        <logger name="fr.chu.gestfi.schedule.compta" additivity="false">
+            <level value="DEBUG" />
+            <appender-ref ref="CONSOLE"  />
+            
+        </logger>
+        <logger name="fr.chu.gestfi.schedule.acces" additivity="false">
+            <level value="DEBUG" />
+            <appender-ref ref="CONSOLE"  />
+            
+        </logger>
+        <logger name="fr.chu.gestfi.schedule.convention" additivity="false">
+            <level value="DEBUG" />
+            <appender-ref ref="CONSOLE"  />
+            
+        </logger>
+        <logger name="fr.chu.gestfi.admin.schedule" additivity="false">
+            <level value="DEBUG" />
+            <appender-ref ref="CONSOLE" />
+            
+        </logger>
+        <logger name="fr.chu.gestfi" additivity="false">
+            <level value="ERROR" />
+            <appender-ref ref="CONSOLE" />
+            
+        </logger>
+
+        <logger name="org.hibernate.tool.hbm2ddl.SchemaExport" additivity="false">
+            <level value="INFO" />
+            <appender-ref ref="CONSOLE" />
+            
+        </logger>
+
+        <!-- applique les sorties au root -->
+        <root>
+            <level value="INFO" />
+            <appender-ref ref="CONSOLE" />
+        </root>
+    </log4j:configuration>

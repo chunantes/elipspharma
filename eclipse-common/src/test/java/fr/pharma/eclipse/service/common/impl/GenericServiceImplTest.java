@@ -113,11 +113,11 @@ public class GenericServiceImplTest {
     }
 
     /**
-     * Méthode en charge de tester la recherche ou non de résultats à partir
-     * d'un SearchCriteria.
+     * Méthode en charge de tester la méthode count
+     * cas : le dao renvoie un nombre > 0
      */
     @Test
-    public void hasResultTrue() {
+    public void countTrue() {
         final SearchCriteria criteria = Mockito.mock(SearchCriteria.class);
         final List<Pharmacie> beans = new ArrayList<Pharmacie>();
         final Pharmacie bean1 = new Pharmacie();
@@ -126,17 +126,17 @@ public class GenericServiceImplTest {
         final Pharmacie bean2 = new Pharmacie();
         bean2.setId(1L);
         beans.add(bean2);
-        Mockito.when(this.dao.getAll(criteria)).thenReturn(beans);
-        final Boolean result = this.service.hasResult(criteria);
+        Mockito.when(this.dao.count(criteria)).thenReturn(2L);
+        final Boolean result = this.service.count(criteria) > 0;
         Assert.assertTrue(result);
     }
 
     /**
-     * Méthode en charge de tester la recherche ou non de résultats à partir
-     * d'un SearchCriteria.
+     * Méthode en charge de tester la méthode count.
+     * cas : le dao renvoie 0
      */
     @Test
-    public void hasResultFalse() {
+    public void countFalse() {
         final SearchCriteria criteria = Mockito.mock(SearchCriteria.class);
         final List<Pharmacie> beans = new ArrayList<Pharmacie>();
         final Pharmacie bean1 = new Pharmacie();
@@ -145,8 +145,8 @@ public class GenericServiceImplTest {
         final Pharmacie bean2 = new Pharmacie();
         bean2.setId(1L);
         beans.add(bean2);
-        Mockito.when(this.dao.getAll(criteria)).thenReturn(new ArrayList<Pharmacie>());
-        final Boolean result = this.service.hasResult(criteria);
+        Mockito.when(this.dao.count(criteria)).thenReturn(0L);
+        final Boolean result = this.service.count(criteria) > 0;
         Assert.assertFalse(result);
     }
 

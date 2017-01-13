@@ -42,14 +42,16 @@ public class PrescriptionTypeComparator implements Comparator<PrescriptionType>,
         builder.append(p.getDuree()).append(EclipseConstants.COMMA);
         builder.append(p.getDescription()).append(EclipseConstants.COMMA);
         builder.append(p.getDosageAsString()).append(EclipseConstants.COMMA);
-        if (p.getConditionnement().getUniteDosage() != null) {
+        if (p.getConditionnement()!=null && p.getConditionnement().getUniteDosage() != null) {
             builder.append(p.getConditionnement().getUniteDosage()).append(EclipseConstants.COMMA);
         }
         builder.append(p.getProduit().getNom()).append(EclipseConstants.COMMA);
         builder.append(p.getFrequence().toString()).append(EclipseConstants.COMMA);
+        if (p.getConditionnement()!=null) {
         builder.append(p.getConditionnement().getModePrescription()).append(EclipseConstants.COMMA);
+        }
         builder.append(p.getNbUniteDosage()).append(EclipseConstants.COMMA);
-        if (p.getConditionnement().getDosage() != null) {
+        if (p.getConditionnement()!=null && p.getConditionnement().getDosage() != null) {
             builder.append(p.getConditionnement().getDosage()).append(EclipseConstants.COMMA);
         }
         builder.append(p.getId()).append(EclipseConstants.COMMA);

@@ -4,8 +4,6 @@ import java.util.Collection;
 import java.util.HashSet;
 import java.util.Set;
 
-import net.sf.jasperreports.engine.JRDataSource;
-
 import org.junit.Assert;
 import org.junit.Test;
 import org.mockito.Matchers;
@@ -24,6 +22,7 @@ import fr.pharma.eclipse.jasper.engine.filler.impl.aidedispensation.helper.Group
 import fr.pharma.eclipse.service.helper.design.DesignHelper;
 import fr.pharma.eclipse.utils.AbstractEclipseJUnitTest;
 import fr.pharma.eclipse.utils.EssaiUtils;
+import net.sf.jasperreports.engine.JRDataSource;
 
 /**
  * Test de la classe {@link AideDispensationPart1GroupesTraitFiller}.
@@ -115,7 +114,7 @@ public class AideDispensationPart1GroupesTraitFillerTest extends AbstractEclipse
         final Set<Designable> roots = new HashSet<Designable>();
         roots.add(brasRoot1);
         roots.add(brasRoot2);
-        Mockito.when(this.mockedDesignHelper.getDesignRoots(essai)).thenReturn(roots);
+        Mockito.when(this.mockedDesignHelper.getDesignRoots(essai.getDetailDesign())).thenReturn(roots);
         Mockito.when(this.mockedHelper.transform(Matchers.any(Designable.class), Matchers.anyInt())).thenReturn(new JRBeanGroupeTraitement());
         Mockito.when(this.mockedFactory.getInitializedObject(Matchers.anyCollectionOf(JRBeanGroupeTraitement.class))).thenAnswer(new Answer<JRDataSource>() {
 
@@ -132,7 +131,7 @@ public class AideDispensationPart1GroupesTraitFillerTest extends AbstractEclipse
         Assert.assertNull(source.getGroupesTraitement());
         this.filler.fill(essai, source);
 
-        Mockito.verify(this.mockedDesignHelper).getDesignRoots(essai);
+        Mockito.verify(this.mockedDesignHelper).getDesignRoots(essai.getDetailDesign());
         Mockito.verify(this.mockedHelper).transform(brasRoot1, 0);
         Mockito.verify(this.mockedHelper).transform(brasRoot2, 0);
         Mockito.verify(this.mockedHelper).transform(sequence, 1);

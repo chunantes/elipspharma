@@ -91,7 +91,7 @@ public class DetailDonneesPharma extends BeanObjectSuivi implements Serializable
     @JoinTable(name = "essai_detail_pharma_etablissement", joinColumns = @JoinColumn(name = "id_detail_pharma"), inverseJoinColumns = @JoinColumn(name = "id_etablissement"))
     @LazyCollection(LazyCollectionOption.TRUE)
     @Sort(type = SortType.COMPARATOR, comparator = BeanWithNomComparator.class)
-    private final SortedSet<Etablissement> etablissements = new TreeSet<Etablissement>(new BeanWithNomComparator());
+    private SortedSet<Etablissement> etablissements = new TreeSet<Etablissement>(new BeanWithNomComparator());
 
     /**
      * Liste des modifications du dÃ©tail.
@@ -189,5 +189,11 @@ public class DetailDonneesPharma extends BeanObjectSuivi implements Serializable
     public SortedSet<Etablissement> getEtablissements() {
         return this.etablissements;
     }
+    
+    public void setEtablissement(final SortedSet<Etablissement> etablissements) {
+        this.etablissements = etablissements;
+    }
+    
+    
 
 }

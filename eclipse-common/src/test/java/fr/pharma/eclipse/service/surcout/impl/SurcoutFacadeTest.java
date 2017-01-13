@@ -67,7 +67,7 @@ public class SurcoutFacadeTest extends AbstractEclipseJUnitTest {
     @Test
     public void testCountNbPatients() {
         final List<Inclusion> liste = new ArrayList<Inclusion>();
-        Mockito.when(this.mockedInclusionService.getAll(Matchers.any(SearchCriteria.class))).thenReturn(liste);
+        Mockito.when(this.mockedInclusionService.count(Matchers.any(SearchCriteria.class))).thenReturn(0L);
         Assert.assertEquals(0, this.facade.countNbPatients(new Essai(), Calendar.getInstance(), Calendar.getInstance(), false));
     }
 
@@ -78,7 +78,7 @@ public class SurcoutFacadeTest extends AbstractEclipseJUnitTest {
     public void testCountNbPatientsNotEmpty() {
         final List<Inclusion> liste = new ArrayList<Inclusion>();
         liste.add(new Inclusion());
-        Mockito.when(this.mockedInclusionService.getAll(Matchers.any(SearchCriteria.class))).thenReturn(liste);
+        Mockito.when(this.mockedInclusionService.count(Matchers.any(SearchCriteria.class))).thenReturn(1L);
         Assert.assertEquals(1, this.facade.countNbPatients(new Essai(), Calendar.getInstance(), Calendar.getInstance(), false));
     }
 
@@ -133,38 +133,6 @@ public class SurcoutFacadeTest extends AbstractEclipseJUnitTest {
 
     }
 
-    // /**
-    // * Test de countNbAnnees.
-    // */
-    // @Test
-    // public void testCountNbAnnees()
-    // {
-    // final Calendar dateDebut = Calendar.getInstance();
-    //
-    // dateDebut.set(2005,
-    // 5,
-    // 2);
-    //
-    // final Calendar debutEssai = Calendar.getInstance();
-    // debutEssai.set(2001,
-    // 5,
-    // 2);
-    // final Essai essai = Mockito.mock(Essai.class);
-    // final DetailDates dates = Mockito.mock(DetailDates.class);
-    // Mockito.when(essai.getDetailDates()).thenReturn(dates);
-    // Mockito.when(dates.getDebutEtude()).thenReturn(debutEssai);
-    //
-    // final Calendar dateFin = Calendar.getInstance();
-    // dateFin.set(2009,
-    // 10,
-    // 2);
-    // final int result = this.facade.countNbAnnees(essai,
-    // dateDebut,
-    // dateFin);
-    // Assert.assertEquals(4,
-    // result);
-    // }
-
     /**
      * Test de countNbAnnees.
      */
@@ -187,35 +155,4 @@ public class SurcoutFacadeTest extends AbstractEclipseJUnitTest {
         Assert.assertEquals(4, result);
     }
 
-    // /**
-    // * Test de countNbAnnees.
-    // */
-    // @Test
-    // public void testCountNbAnneesZero()
-    // {
-    // final Calendar dateDebut = Calendar.getInstance();
-    //
-    // dateDebut.set(2005,
-    // 5,
-    // 2);
-    //
-    // final Calendar debutEssai = Calendar.getInstance();
-    // debutEssai.set(2001,
-    // 5,
-    // 2);
-    // final Essai essai = Mockito.mock(Essai.class);
-    // final DetailDates dates = Mockito.mock(DetailDates.class);
-    // Mockito.when(essai.getDetailDates()).thenReturn(dates);
-    // Mockito.when(dates.getDebutEtude()).thenReturn(debutEssai);
-    //
-    // final Calendar dateFin = Calendar.getInstance();
-    // dateFin.set(2009,
-    // 5,
-    // 1);
-    // final int result = this.facade.countNbAnnees(essai,
-    // dateDebut,
-    // dateFin);
-    // Assert.assertEquals(3,
-    // result);
-    // }
 }

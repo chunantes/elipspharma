@@ -4,14 +4,14 @@ import java.io.ByteArrayOutputStream;
 import java.io.Serializable;
 import java.util.Map;
 
-import net.sf.jasperreports.engine.JRDataSource;
-import net.sf.jasperreports.engine.JasperPrint;
 import fr.pharma.eclipse.domain.enums.jasper.TypeRapportJasper;
 import fr.pharma.eclipse.jasper.engine.builder.JasperReportDatasBuilder;
 import fr.pharma.eclipse.jasper.engine.exporter.JasperPrintExporter;
 import fr.pharma.eclipse.jasper.engine.factory.JasperPrintFactory;
 import fr.pharma.eclipse.jasper.engine.helper.CommonParametersHelper;
 import fr.pharma.eclipse.jasper.exception.JasperReportBuildException;
+import net.sf.jasperreports.engine.JRDataSource;
+import net.sf.jasperreports.engine.JasperPrint;
 
 /**
  * Classe en charge de manager la création d'un rapport Jasper.

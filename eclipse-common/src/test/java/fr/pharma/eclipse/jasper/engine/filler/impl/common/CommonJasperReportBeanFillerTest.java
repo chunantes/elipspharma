@@ -2,8 +2,6 @@ package fr.pharma.eclipse.jasper.engine.filler.impl.common;
 
 import java.util.Arrays;
 
-import net.sf.jasperreports.engine.JRDataSource;
-
 import org.junit.Assert;
 import org.junit.Test;
 import org.mockito.Mockito;
@@ -18,6 +16,7 @@ import fr.pharma.eclipse.jasper.engine.filler.JasperReportBeanFiller;
 import fr.pharma.eclipse.utils.AbstractEclipseJUnitTest;
 import fr.pharma.eclipse.utils.EssaiUtils;
 import fr.pharma.eclipse.utils.introspection.BeanTool;
+import net.sf.jasperreports.engine.JRDataSource;
 
 /**
  * Test de la classe {@link CommonJasperReportBeanFiller}.

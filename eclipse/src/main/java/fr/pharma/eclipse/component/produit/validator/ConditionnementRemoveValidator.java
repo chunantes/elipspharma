@@ -7,10 +7,15 @@ import javax.faces.application.FacesMessage;
 
 import fr.pharma.eclipse.domain.criteria.design.PrescriptionTypeSearchCriteria;
 import fr.pharma.eclipse.domain.criteria.prescription.ProduitPrescritSearchCriteria;
+import fr.pharma.eclipse.domain.criteria.stock.LigneStockSearchCriteria;
+import fr.pharma.eclipse.domain.criteria.stock.MvtStockSearchCriteria;
 import fr.pharma.eclipse.domain.model.design.PrescriptionType;
 import fr.pharma.eclipse.domain.model.prescription.ProduitPrescrit;
 import fr.pharma.eclipse.domain.model.produit.Conditionnement;
+import fr.pharma.eclipse.domain.model.stock.MvtStock;
 import fr.pharma.eclipse.service.common.GenericService;
+import fr.pharma.eclipse.service.stock.MvtStockService;
+import fr.pharma.eclipse.service.stock.StockService;
 import fr.pharma.eclipse.utils.FacesUtils;
 
 /**
@@ -35,6 +40,18 @@ public class ConditionnementRemoveValidator implements Serializable {
      */
     @Resource(name = "produitPrescritService")
     private GenericService<ProduitPrescrit> produitPrescritTypeService;
+    
+    /**
+     * Service mouvements stock.
+     */
+    @Resource(name = "mouvementStockService")
+    private MvtStockService<MvtStock> mvtStockService;
+    
+    /**
+     * Service Lignes stock.
+     */
+    @Resource(name = "stockService")
+    private StockService ligneStockService;
 
     /**
      * Faces utils.
@@ -53,7 +70,7 @@ public class ConditionnementRemoveValidator implements Serializable {
         final PrescriptionTypeSearchCriteria criteriaPrescriptionType = new PrescriptionTypeSearchCriteria();
         criteriaPrescriptionType.setConditionnement(conditionnement);
 
-        if (!this.prescriptionTypeService.getAll(criteriaPrescriptionType).isEmpty()) {
+        if (this.prescriptionTypeService.count(criteriaPrescriptionType) > 0) {
             this.facesUtils.addMessage(FacesMessage.SEVERITY_ERROR, "remove.impossible");
             return false;
         }
@@ -61,10 +78,29 @@ public class ConditionnementRemoveValidator implements Serializable {
         final ProduitPrescritSearchCriteria crit = new ProduitPrescritSearchCriteria();
         crit.setConditionnement(conditionnement);
 
-        if (!this.produitPrescritTypeService.getAll(crit).isEmpty()) {
+        if (this.produitPrescritTypeService.count(crit) > 0) {
             this.facesUtils.addMessage(FacesMessage.SEVERITY_ERROR, "remove.impossible");
             return false;
         }
+        
+        final MvtStockSearchCriteria mvtStockSearchCriteria = new MvtStockSearchCriteria();
+        mvtStockSearchCriteria.setConditionnement(conditionnement);
+
+        if(this.mvtStockService.count(mvtStockSearchCriteria) > 0){
+        	this.facesUtils.addMessage(FacesMessage.SEVERITY_ERROR, "remove.impossible");
+        	return false;
+        }
+        
+        final LigneStockSearchCriteria ligneStockSearchCriteria = new LigneStockSearchCriteria();
+        ligneStockSearchCriteria.setConditionnement(conditionnement);
+        ligneStockSearchCriteria.setDatePeremptionNA(true);
+        ligneStockSearchCriteria.setNumTraitementNA(true);
+        
+        if(this.ligneStockService.count(ligneStockSearchCriteria) > 0 ){
+        	 this.facesUtils.addMessage(FacesMessage.SEVERITY_ERROR, "remove.impossible");
+             return false;
+        }
+        
         return result;
 
     }
@@ -92,5 +128,33 @@ public class ConditionnementRemoveValidator implements Serializable {
     public void setFacesUtils(final FacesUtils facesUtils) {
         this.facesUtils = facesUtils;
     }
+
+	/**
+	 * @return the mvtStockService
+	 */
+	public MvtStockService<MvtStock> getMvtStockService() {
+		return mvtStockService;
+	}
+
+	/**
+	 * @param mvtStockService the mvtStockService to set
+	 */
+	public void setMvtStockService(MvtStockService<MvtStock> mvtStockService) {
+		this.mvtStockService = mvtStockService;
+	}
+
+	/**
+	 * @return the ligneStockService
+	 */
+	public StockService getLigneStockService() {
+		return ligneStockService;
+	}
+
+	/**
+	 * @param ligneStockService the ligneStockService to set
+	 */
+	public void setLigneStockService(StockService ligneStockService) {
+		this.ligneStockService = ligneStockService;
+	}
 
 }

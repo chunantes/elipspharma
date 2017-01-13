@@ -26,6 +26,7 @@ import fr.pharma.eclipse.domain.model.acteur.Personne;
 import fr.pharma.eclipse.domain.model.design.Designable;
 import fr.pharma.eclipse.domain.model.design.Sequence;
 import fr.pharma.eclipse.domain.model.essai.Essai;
+import fr.pharma.eclipse.domain.model.essai.detail.design.DetailDesign;
 import fr.pharma.eclipse.domain.model.localisation.Service;
 import fr.pharma.eclipse.domain.model.patient.Inclusion;
 import fr.pharma.eclipse.domain.model.patient.Patient;
@@ -34,7 +35,6 @@ import fr.pharma.eclipse.domain.model.prescription.ProduitPrescrit;
 import fr.pharma.eclipse.domain.model.produit.Produit;
 import fr.pharma.eclipse.factory.prescription.PrescriptionFactory;
 import fr.pharma.eclipse.service.common.GenericService;
-import fr.pharma.eclipse.service.essai.EssaiService;
 import fr.pharma.eclipse.service.habilitation.helper.HabilitationsHelper;
 import fr.pharma.eclipse.service.patient.PatientService;
 import fr.pharma.eclipse.transformer.design.GenericTransformer;
@@ -92,10 +92,10 @@ public class PrescriptionManager extends BeanManager<Prescription> implements Se
     private TreeNode designablesSelectable;
 
     /**
-     * Service essai.
+     * Service détail design.
      */
-    @Resource(name = "essaiService")
-    private EssaiService essaiService;
+    @Resource(name = "detailDesignService")
+    private GenericService<DetailDesign> detaildesignService;
 
     /**
      * Noeud sélectionné.
@@ -181,11 +181,11 @@ public class PrescriptionManager extends BeanManager<Prescription> implements Se
                 crit.setActiveOrder("numPrescription");
                 crit.setAscending(false);
 
-                final List<Prescription> liste = this.getService().getAll(crit);
-                if (liste.isEmpty()) {
+                final Long nombrePrescriptions = this.getService().count(crit);
+                if (nombrePrescriptions == 0) {
                     this.setBean(this.factory.getInitializedObject(inclusion));
                 } else {
-                    this.setBean(this.factory.getInitializedObject(liste.get(0)));
+                    this.setBean(this.factory.getInitializedObject(this.getService().getAll(crit).get(0)));
                 }
                 this.produits.addAll(inclusion.getEssai().getDetailProduit().getProduits());
                 this.services.addAll(inclusion.getEssai().getServices());
@@ -256,7 +256,7 @@ public class PrescriptionManager extends BeanManager<Prescription> implements Se
     public TreeNode getDesignablesSelectable() {
         // Récupération de la pharmacie sélectionnée
         if ((this.getBean() != null) && (this.getBean().getInclusion() != null) && (this.getBean().getInclusion().getEssai() != null)) {
-            this.designablesSelectable = this.treeDesignHelper.buildTree(this.essaiService.get(this.getBean().getInclusion().getEssai().getId()));
+            this.designablesSelectable = this.treeDesignHelper.buildTree(this.detaildesignService.get(this.getBean().getInclusion().getEssai().getId()));
             return this.designablesSelectable;
         } else {
             return null;
@@ -431,14 +431,6 @@ public class PrescriptionManager extends BeanManager<Prescription> implements Se
     }
 
     /**
-     * Setter pour essaiService.
-     * @param essaiService le essaiService à écrire.
-     */
-    public void setEssaiService(final EssaiService essaiService) {
-        this.essaiService = essaiService;
-    }
-
-    /**
      * Getter pour services.
      * @return Le services
      */
@@ -452,6 +444,14 @@ public class PrescriptionManager extends BeanManager<Prescription> implements Se
      */
     public void setServices(final Collection<Service> services) {
         this.services = services;
+    }
+
+    public GenericService<DetailDesign> getDetaildesignService() {
+        return detaildesignService;
+    }
+
+    public void setDetaildesignService(GenericService<DetailDesign> detaildesignService) {
+        this.detaildesignService = detaildesignService;
     }
 
 }

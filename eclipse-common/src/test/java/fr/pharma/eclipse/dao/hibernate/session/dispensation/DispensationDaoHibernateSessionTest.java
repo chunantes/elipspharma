@@ -35,7 +35,7 @@ import fr.pharma.eclipse.utils.constants.EclipseConstants;
  * @version $Revision$ $Date$
  */
 @RunWith(SpringJUnit4ClassRunner.class)
-@ContextConfiguration(locations = {"classpath*:config/applicationContext.xml" })
+@ContextConfiguration(locations = {"classpath*:config/applicationContext-test.xml" })
 @Transactional
 public class DispensationDaoHibernateSessionTest {
     /**

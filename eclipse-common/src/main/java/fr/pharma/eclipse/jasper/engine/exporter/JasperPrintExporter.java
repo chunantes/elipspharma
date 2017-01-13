@@ -6,17 +6,16 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.SortedMap;
 
-import net.sf.jasperreports.engine.JRException;
-import net.sf.jasperreports.engine.JRExporter;
-import net.sf.jasperreports.engine.JRExporterParameter;
-import net.sf.jasperreports.engine.JasperPrint;
-
 import org.springframework.util.Assert;
 
 import fr.pharma.eclipse.domain.enums.jasper.TypeRapportJasper;
 import fr.pharma.eclipse.factory.utils.IOStreamsFactory;
 import fr.pharma.eclipse.jasper.engine.factory.exporter.JRExporterFactory;
 import fr.pharma.eclipse.jasper.exception.JasperReportBuildException;
+import net.sf.jasperreports.engine.JRException;
+import net.sf.jasperreports.engine.JRExporter;
+import net.sf.jasperreports.engine.JRExporterParameter;
+import net.sf.jasperreports.engine.JasperPrint;
 
 /**
  * Classes en charge d'exporter un objet JasperPrint en InputStream.

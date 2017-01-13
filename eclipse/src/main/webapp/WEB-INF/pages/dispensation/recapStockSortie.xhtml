@@ -14,6 +14,7 @@
      	<h:form id="formRecapStockSortie" prependId="false">
 
 			<c:set var="result" value="#{sortieManager.result}"/>
+			<c:set var="detailLogistique" value="#{medicamentManager.bean.detailLogistique}" />
 
    			<fieldset>
    			
@@ -72,8 +73,27 @@
 								<h:outputText id="dteNaiss" value="#{dispensationManager.bean.prescription.inclusion.patient.dateNaissance.time}" >
 									<f:convertDateTime pattern="#{resourceBundle['date.pattern.withHeures']}"/>
 								</h:outputText>			
-	
 								
+								<!-- Rajout Strasbourg -->
+								<c:if test="#{applicationController.strasbourg}">
+									<!-- Numero inclusion/randomisation-->
+									<h:outputLabel id="labelNumInclusion" for="num_inclusion" value="#{resourceBundle['editPrescription.numInclusionRandomisation']}" />
+									<h:outputText id="num_inclusion" value="#{dispensationManager.bean.prescription.inclusion.numInclusion} / #{dispensationManager.bean.prescription.inclusion.numRandomisation}"/>
+									
+									<!-- Date dernière dispensation-->
+									<h:outputLabel id="labelDateLastDispensation" for="date_lastDispensation" value="#{resourceBundle['editPrescription.dateDerniereDispensation']}" />
+									<h:outputText id="date_lastDispensation" value="#{dispensationManager.bean.dateDispensation.time}">
+										<f:convertDateTime pattern="#{resourceBundle['date.pattern.withHeures']}"/>
+									</h:outputText>
+									
+									<!-- Commentaire prescription -->
+									<h:outputLabel id="labelCommentairePrescription" for="comment_prescription" value="#{resourceBundle['editDispensation.prescription.commentaire']}" />
+									<h:outputText id="comment_prescription" value="#{dispensationManager.bean.prescription.commentaire}" />
+									
+									<!-- Modalités de conservation -->
+									<h:outputLabel id="labelModaliteConservation" for="modalite_conservation" value="#{resourceBundle['stockSortie.modaliteConservation']}" />
+									<h:outputText id="modalite_conservation" value="#{detailLogistique.conditionConservation}" />
+								</c:if>
 							</h:panelGrid> 
 							
 							<h:panelGrid id="panelTransport" columns="4" columnClasses="panelCol_25,panelCol_25,panelCol_25,panelCol_25" cellpadding="0" cellspacing="0" border="0" width="100%"
@@ -132,17 +152,24 @@
 						<h:outputText value="#{sortie.mvtSortie.produit.denomination}"/>
 					</p:column>
 					
-					<!-- Conditionnement -->
-					<p:column>
-						<f:facet name="header">
-							<h:outputLabel value="#{resourceBundle['stockSortie.conditionnement']}"/>
-						</f:facet>
-						<h:outputText value="" />
-						<ui:repeat var="ligneStock" value="#{sortie.lignesStockCompletees}">
-						<br/>
-							<h:outputText value="#{ligneStock.conditionnement.libelle}"/>
-						</ui:repeat>
-					</p:column>
+					<!-- Conditionnement-->
+					<!-- STRASBOURG -->
+					<c:if test="#{applicationController.strasbourg}">
+						<p:column>
+							<f:facet name="header">
+								<h:outputLabel value="#{resourceBundle['stockSortie.conditionnementDosageContenance']}"/>
+							</f:facet>
+							<h:outputText value="" />
+							<ui:repeat var="ligneStock" value="#{sortie.lignesStockCompletees}">
+							<br/>
+								<h:outputText value="#{ligneStock.conditionnement.dosage} - #{ligneStock.conditionnement.contenance}."/>
+								<br/>
+								<h:outputText value=""/>
+								<br/>
+								<h:outputText value=""/>
+							</ui:repeat>
+						</p:column>
+					</c:if>	
 					
 					<!-- Numero Lot Num traitement Quantite -->
 					<p:column>

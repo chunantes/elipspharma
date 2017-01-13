@@ -1,0 +1,93 @@
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+    <modelVersion>4.0.0</modelVersion>
+
+    <name>Projet Elips’Pharma -distribution</name>
+    <artifactId>elips-dist</artifactId>
+    <parent>
+        <groupId>fr.pharma.elips</groupId>
+        <artifactId>elips-principal</artifactId>
+        <version>1.46-SNAPSHOT</version>
+    </parent>
+    
+    <packaging>pom</packaging>
+    
+    <!-- Build Settings -->
+    <build>
+        <resources>
+            <resource>
+                <directory>src/main/resources</directory>
+                <filtering>true</filtering>
+                <includes>
+                    <include>install.sh</include>
+                </includes>
+            </resource>
+        </resources>        
+        <plugins>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-deploy-plugin</artifactId>
+                <version>2.7</version>
+                <configuration>
+                    <skip>true</skip>
+                </configuration>
+            </plugin>
+        </plugins>
+    </build>
+    <profiles>
+        <profile>
+            <id>release-dist</id>
+            <dependencies>
+                <dependency>
+                    <groupId>org.apache.tomcat</groupId>
+                    <artifactId>apache-tomcat</artifactId>
+                    <version>6.0.36</version>
+                    <type>tar.gz</type>
+                </dependency>
+                <dependency>
+                    <groupId>com.oracle</groupId>
+                    <artifactId>jdk</artifactId>
+                    <version>6u41</version>
+                    <classifier>linux-x64</classifier>
+                    <type>bin</type>
+                </dependency>
+                <dependency>
+                    <groupId>org.postgresql</groupId>
+                    <artifactId>postgresql</artifactId>
+                    <version>8.4.16</version>
+                    <type>tar.gz</type>
+                </dependency>                    
+            </dependencies>
+            <build>
+                <plugins>
+                    <plugin>
+                        <groupId>org.apache.maven.plugins</groupId>
+                        <artifactId>maven-assembly-plugin</artifactId>
+             
+                        <configuration>
+                            <skipAssembly>false</skipAssembly>
+                            <appendAssemblyId>false</appendAssemblyId>
+                            <descriptors>
+                                <descriptor>
+                                    src/main/assembly/installation.xml
+                                </descriptor>
+                                <descriptor>
+                                    src/main/assembly/livraison.xml
+                                </descriptor>
+                            </descriptors>                 
+                        </configuration>
+                        <executions>
+                            <execution>
+                                <id>distro-assembly</id>
+                                <phase>package</phase>
+                                <goals>
+                                    <goal>single</goal>
+                                </goals>
+                            </execution>
+                        </executions>   
+                    </plugin>
+                </plugins>
+            </build>
+        </profile>
+    </profiles>
+</project>
+

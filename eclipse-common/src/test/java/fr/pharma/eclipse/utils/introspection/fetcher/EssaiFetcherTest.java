@@ -24,6 +24,7 @@ import fr.pharma.eclipse.domain.model.essai.detail.recherche.DetailRecherche;
 import fr.pharma.eclipse.domain.model.sigrec.essai.EssaiSigrec;
 import fr.pharma.eclipse.domain.model.sigrec.essai.detail.DetailRechercheSigrec;
 import fr.pharma.eclipse.domain.model.sigrec.essai.detail.PrevisionSigrec;
+import fr.pharma.eclipse.externe.EssaiExterne;
 import fr.pharma.eclipse.utils.constants.EclipseConstants;
 import fr.pharma.eclipse.utils.introspection.GenericFetcher;
 
@@ -85,7 +86,7 @@ public class EssaiFetcherTest {
      * @return
      */
     private EssaiSigrec initSource() {
-        final EssaiSigrec source = new EssaiSigrec();
+        final EssaiSigrec source = new EssaiExterne();
 
         source.setCodePromoteur("code");
         source.setNom("nom");

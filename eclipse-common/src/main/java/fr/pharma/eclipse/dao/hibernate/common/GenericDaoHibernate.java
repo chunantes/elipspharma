@@ -99,6 +99,8 @@ public class GenericDaoHibernate<BEAN extends BeanObject> implements GenericDao<
         final List<BEAN> resultat = crit.list();
         return resultat;
     }
+    
+    
 
     @Override
     public List<BEAN> getAll(final SearchCriteria criteria,
@@ -122,6 +124,15 @@ public class GenericDaoHibernate<BEAN extends BeanObject> implements GenericDao<
     @SuppressWarnings("unchecked")
     public List<BEAN> getAll() {
         return this.createCriteria().list();
+    }
+    
+    @Override
+    public Long count(final SearchCriteria criteria){
+    	 final Criteria crit = this.createCriteria();    	 
+    	 this.applySearchCriteria(crit, criteria);
+    	 crit.setProjection(Projections.rowCount());
+    	 Object result = crit.uniqueResult();    	 
+    	 return (null == result) ? 0 : ((Long) result);
     }
 
     /**
@@ -382,7 +393,7 @@ public class GenericDaoHibernate<BEAN extends BeanObject> implements GenericDao<
     public void handleException(final String nameMethod,
                                 final Throwable throwable,
                                 final String detailMessage) {
-        this.log.error("Exception dans la méthode : " + nameMethod + EclipseConstants.SAUT_LIGNE + throwable.getMessage() + EclipseConstants.SAUT_LIGNE + detailMessage);
+        this.log.error("Exception dans la méthode : " + nameMethod + EclipseConstants.SAUT_LIGNE + throwable.getMessage() + EclipseConstants.SAUT_LIGNE + detailMessage, throwable);
     }
 
     /**

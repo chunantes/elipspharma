@@ -1,8 +1,5 @@
 package fr.pharma.eclipse.component.produit.validator;
 
-import java.util.ArrayList;
-import java.util.List;
-
 import javax.faces.application.FacesMessage;
 
 import org.junit.Assert;
@@ -14,7 +11,10 @@ import fr.pharma.eclipse.domain.criteria.common.SearchCriteria;
 import fr.pharma.eclipse.domain.model.design.PrescriptionType;
 import fr.pharma.eclipse.domain.model.prescription.ProduitPrescrit;
 import fr.pharma.eclipse.domain.model.produit.Conditionnement;
+import fr.pharma.eclipse.domain.model.stock.MvtStock;
 import fr.pharma.eclipse.service.common.GenericService;
+import fr.pharma.eclipse.service.stock.MvtStockService;
+import fr.pharma.eclipse.service.stock.StockService;
 import fr.pharma.eclipse.utils.AbstractEclipseJUnitTest;
 import fr.pharma.eclipse.utils.FacesUtils;
 
@@ -39,8 +39,18 @@ public class ConditionnementRemoveValidatorTest extends AbstractEclipseJUnitTest
      * Service prescription Type.
      */
     private GenericService<ProduitPrescrit> produitPrescritService;
-
+    
     /**
+     * Service ligne stock.
+     */
+    private StockService ligneStockService;
+    
+    /**
+     * Service ligne stock.
+     */
+    private MvtStockService<MvtStock> mvtStockService;
+    
+	/**
      * Faces utils.
      */
     private FacesUtils facesUtils;
@@ -53,10 +63,14 @@ public class ConditionnementRemoveValidatorTest extends AbstractEclipseJUnitTest
         this.facesUtils = Mockito.mock(FacesUtils.class);
         this.produitPrescritService = Mockito.mock(GenericService.class);
         this.prescriptionTypeService = Mockito.mock(GenericService.class);
+        this.ligneStockService = Mockito.mock(StockService.class);
+        this.mvtStockService = Mockito.mock(MvtStockService.class);
         this.validator = new ConditionnementRemoveValidator();
         this.validator.setFacesUtils(this.facesUtils);
         this.validator.setPrescriptionTypeService(this.prescriptionTypeService);
         this.validator.setProduitPrescritTypeService(this.produitPrescritService);
+        this.validator.setLigneStockService(this.ligneStockService);
+        this.validator.setMvtStockService(this.mvtStockService);
     }
 
     /**
@@ -67,7 +81,9 @@ public class ConditionnementRemoveValidatorTest extends AbstractEclipseJUnitTest
         this.facesUtils = null;
         this.prescriptionTypeService = null;
         this.produitPrescritService = null;
+        this.ligneStockService = null;
         this.validator = null;
+        this.mvtStockService = null;
     }
 
     /**
@@ -79,7 +95,9 @@ public class ConditionnementRemoveValidatorTest extends AbstractEclipseJUnitTest
         Assert.assertNotNull(this.facesUtils);
         Assert.assertNotNull(this.prescriptionTypeService);
         Assert.assertNotNull(this.produitPrescritService);
+        Assert.assertNotNull(this.ligneStockService);
         Assert.assertNotNull(this.validator);
+        Assert.assertNotNull(this.mvtStockService);
     }
 
     /**
@@ -96,15 +114,30 @@ public class ConditionnementRemoveValidatorTest extends AbstractEclipseJUnitTest
      * Tes de la méthode validate.
      */
     @Test
+    public void validatePrescriptionPrescritLigneEmpty() {
+        final Conditionnement conditionnement = new Conditionnement();
+        conditionnement.setId(1L);
+        Mockito.when(this.prescriptionTypeService.count(Matchers.any(SearchCriteria.class))).thenReturn(0L);
+        Mockito.when(this.produitPrescritService.count(Matchers.any(SearchCriteria.class))).thenReturn(0L);
+        Mockito.when(this.ligneStockService.count(Matchers.any(SearchCriteria.class))).thenReturn(0L);
+        Mockito.when(this.mvtStockService.count(Matchers.any(SearchCriteria.class))).thenReturn(0L);
+        Assert.assertTrue(this.validator.validate(conditionnement));
+        Mockito.verify(this.facesUtils, Mockito.never()).addMessage(FacesMessage.SEVERITY_ERROR, "remove.impossible");
+    }
+    
+    /**
+     * Tes de la méthode validate.
+     */
+    @Test
     public void validatePrescriptionPrescritEmpty() {
         final Conditionnement conditionnement = new Conditionnement();
         conditionnement.setId(1L);
-        final List<PrescriptionType> prescriptions = new ArrayList<PrescriptionType>();
-        final List<ProduitPrescrit> produitPrescrits = new ArrayList<ProduitPrescrit>();
-        Mockito.when(this.prescriptionTypeService.getAll(Matchers.any(SearchCriteria.class))).thenReturn(prescriptions);
-        Mockito.when(this.produitPrescritService.getAll(Matchers.any(SearchCriteria.class))).thenReturn(produitPrescrits);
-        Assert.assertTrue(this.validator.validate(conditionnement));
-        Mockito.verify(this.facesUtils, Mockito.never()).addMessage(FacesMessage.SEVERITY_ERROR, "remove.impossible");
+        Mockito.when(this.prescriptionTypeService.count(Matchers.any(SearchCriteria.class))).thenReturn(0L);
+        Mockito.when(this.produitPrescritService.count(Matchers.any(SearchCriteria.class))).thenReturn(0L);
+        Mockito.when(this.ligneStockService.count(Matchers.any(SearchCriteria.class))).thenReturn(1L);
+        Mockito.when(this.mvtStockService.count(Matchers.any(SearchCriteria.class))).thenReturn(0L);
+        Assert.assertFalse(this.validator.validate(conditionnement));
+        Mockito.verify(this.facesUtils).addMessage(FacesMessage.SEVERITY_ERROR, "remove.impossible");
     }
 
     /**
@@ -114,11 +147,9 @@ public class ConditionnementRemoveValidatorTest extends AbstractEclipseJUnitTest
     public void validatePrescriptionEmpty() {
         final Conditionnement conditionnement = new Conditionnement();
         conditionnement.setId(1L);
-        final List<PrescriptionType> prescriptions = new ArrayList<PrescriptionType>();
-        final List<ProduitPrescrit> produitPrescrits = new ArrayList<ProduitPrescrit>();
-        produitPrescrits.add(new ProduitPrescrit());
-        Mockito.when(this.prescriptionTypeService.getAll(Matchers.any(SearchCriteria.class))).thenReturn(prescriptions);
-        Mockito.when(this.produitPrescritService.getAll(Matchers.any(SearchCriteria.class))).thenReturn(produitPrescrits);
+        Mockito.when(this.prescriptionTypeService.count(Matchers.any(SearchCriteria.class))).thenReturn(0L);
+        Mockito.when(this.produitPrescritService.count(Matchers.any(SearchCriteria.class))).thenReturn(1L);
+        Mockito.when(this.ligneStockService.count(Matchers.any(SearchCriteria.class))).thenReturn(0L);
         Assert.assertFalse(this.validator.validate(conditionnement));
         Mockito.verify(this.facesUtils).addMessage(FacesMessage.SEVERITY_ERROR, "remove.impossible");
     }
@@ -130,13 +161,42 @@ public class ConditionnementRemoveValidatorTest extends AbstractEclipseJUnitTest
     public void validatePrescritEmpty() {
         final Conditionnement conditionnement = new Conditionnement();
         conditionnement.setId(1L);
-        final List<PrescriptionType> prescriptions = new ArrayList<PrescriptionType>();
-        prescriptions.add(new PrescriptionType());
-        final List<ProduitPrescrit> produitPrescrits = new ArrayList<ProduitPrescrit>();
-        Mockito.when(this.prescriptionTypeService.getAll(Matchers.any(SearchCriteria.class))).thenReturn(prescriptions);
-        Mockito.when(this.produitPrescritService.getAll(Matchers.any(SearchCriteria.class))).thenReturn(produitPrescrits);
+        Mockito.when(this.prescriptionTypeService.count(Matchers.any(SearchCriteria.class))).thenReturn(1L);
+        Mockito.when(this.produitPrescritService.count(Matchers.any(SearchCriteria.class))).thenReturn(1L);
+        Mockito.when(this.ligneStockService.count(Matchers.any(SearchCriteria.class))).thenReturn(0L);
         Assert.assertFalse(this.validator.validate(conditionnement));
         Mockito.verify(this.facesUtils).addMessage(FacesMessage.SEVERITY_ERROR, "remove.impossible");
     }
+
+	/**
+	 * @return the ligneStockService
+	 */
+	public StockService getLigneStockService() {
+		return ligneStockService;
+	}
+
+	/**
+	 * @param ligneStockService the ligneStockService to set
+	 */
+	public void setLigneStockService(StockService ligneStockService) {
+		this.ligneStockService = ligneStockService;
+	}
+	
+
+
+    /**
+	 * @return the mvtStockService
+	 */
+	public MvtStockService<MvtStock> getMvtStockService() {
+		return mvtStockService;
+	}
+
+	/**
+	 * @param mvtStockService the mvtStockService to set
+	 */
+	public void setMvtStockService(MvtStockService<MvtStock> mvtStockService) {
+		this.mvtStockService = mvtStockService;
+	}
+
 
 }

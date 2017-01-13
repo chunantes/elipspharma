@@ -2,8 +2,6 @@ package fr.pharma.eclipse.jasper.engine.builder.impl;
 
 import java.util.Map;
 
-import net.sf.jasperreports.engine.JRDataSource;
-
 import org.junit.Assert;
 import org.junit.Test;
 import org.mockito.Matchers;
@@ -26,6 +24,7 @@ import fr.pharma.eclipse.service.common.GenericService;
 import fr.pharma.eclipse.utils.AbstractEclipseJUnitTest;
 import fr.pharma.eclipse.utils.EssaiUtils;
 import fr.pharma.eclipse.utils.PersonneUtils;
+import net.sf.jasperreports.engine.JRDataSource;
 
 /**
  * Test de la classe {@link ModelePrescNominativeDatasBuilder}.

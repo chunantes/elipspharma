@@ -4,6 +4,8 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.SortedSet;
+import java.util.TreeSet;
 
 import javax.faces.component.html.HtmlSelectOneMenu;
 import javax.faces.event.AjaxBehaviorEvent;
@@ -16,9 +18,10 @@ import org.mockito.Matchers;
 import org.mockito.Mockito;
 import org.primefaces.event.SelectEvent;
 
-import fr.pharma.eclipse.domain.criteria.common.SearchCriteria;
 import fr.pharma.eclipse.domain.enums.stock.TypeMvtStock;
 import fr.pharma.eclipse.domain.model.essai.Essai;
+import fr.pharma.eclipse.domain.model.essai.detail.pharma.DetailDonneesPharma;
+import fr.pharma.eclipse.domain.model.localisation.Etablissement;
 import fr.pharma.eclipse.domain.model.produit.Conditionnement;
 import fr.pharma.eclipse.domain.model.produit.Produit;
 import fr.pharma.eclipse.domain.model.stock.LigneStock;
@@ -32,6 +35,7 @@ import fr.pharma.eclipse.service.essai.EssaiService;
 import fr.pharma.eclipse.service.produit.ProduitService;
 import fr.pharma.eclipse.service.stock.StockService;
 import fr.pharma.eclipse.service.stockage.PharmacieService;
+import fr.pharma.eclipse.utils.CacheUtils;
 
 /**
  * Classe en charge de tester le manager de sortie.
@@ -73,6 +77,26 @@ public class SortieManagerTest {
      * Factory de retour de promoteur mocké.
      */
     private MvtStockFactory<MvtStock> mockRetourPromoteurFactory;
+    
+    /**
+     * CacheUtils
+     */
+    private CacheUtils cacheUtils;
+    
+    /**
+     * Essai
+     */
+    private Essai essai;
+    
+    /**
+     * DetailDonneesPharma
+     */
+    private DetailDonneesPharma detailDonneesPharma;
+    
+    /**
+     * Etablissement
+     */
+    private Etablissement etablissement;
 
     /**
      * Méthode en charge d'initialiser les données de test.
@@ -80,17 +104,30 @@ public class SortieManagerTest {
     @Before
     @SuppressWarnings("unchecked")
     public void init() {
+    	//Création d'un sortedSet d'établissement pour le tests testHandleSelectTypeSortieCessionPUI
+    	SortedSet<Etablissement> etablissements = new TreeSet<Etablissement>();
+    	etablissements.add(etablissement);
         this.manager = new SortieManager();
         this.pharmacieService = Mockito.mock(PharmacieService.class);
         this.mockEssaiService = Mockito.mock(EssaiService.class);
         this.mockProduitService = Mockito.mock(ProduitService.class);
         this.mockStockService = Mockito.mock(StockService.class);
+        this.cacheUtils = Mockito.mock(CacheUtils.class);
+        this.essai = Mockito.mock(Essai.class);
+        this.detailDonneesPharma = Mockito.mock(DetailDonneesPharma.class);
+        this.etablissement = Mockito.mock(Etablissement.class);
+        this.detailDonneesPharma.setEtablissement(etablissements);
         this.manager.setEssaiService(this.mockEssaiService);
         this.manager.setProduitService(this.mockProduitService);
         this.manager.setStockService(this.mockStockService);
+        this.manager.setCacheUtils(this.cacheUtils);
+        this.manager.setEssaiSelected(this.essai);
         this.mockRetourPromoteurFactory = Mockito.mock(MvtStockFactory.class);
         this.mapFactories.put(TypeMvtStock.RETOUR_PROMOTEUR, this.mockRetourPromoteurFactory);
         this.manager.setMapFactories(this.mapFactories);
+        Mockito.when(mockEssaiService.reattach(this.essai)).thenReturn(this.essai);
+        Mockito.when(this.essai.getDetailDonneesPharma()).thenReturn(this.detailDonneesPharma);
+        Mockito.when(this.detailDonneesPharma.getEtablissements()).thenReturn(etablissements);
     }
 
     /**

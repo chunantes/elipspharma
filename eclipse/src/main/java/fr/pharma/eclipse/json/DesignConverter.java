@@ -54,9 +54,11 @@ public class DesignConverter {
                                      final Bras bras) {
         try {
             for (int i = 0; i < array.length(); i++) {
-                if (((JSONObject) array.get(i)).getLong("id") == bras.getId().longValue()) {
-                    return true;
-                }
+            	if(bras.getId()!=null){
+	                if (((JSONObject) array.get(i)).getLong("id") == bras.getId().longValue()) {
+	                    return true;
+	                }
+            	}
             }
         } catch (final JSONException e) {
             throw new CommonException("Erreur lors de la generation des blocs.", e);

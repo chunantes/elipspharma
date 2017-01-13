@@ -25,7 +25,20 @@
 			http://www.springframework.org/schema/mvc/spring-mvc.xsd">
 
 	<!-- Import de la configuration WebFlow -->
-	<import resource="classpath:/config/applicationContext-webflow.xml" />	 
+	<import resource="classpath:/config/applicationContext-webflow.xml" />
+
+	<!-- The controllers are autodetected POJOs labeled with the @Controller annotation. -->
+	<context:component-scan base-package="fr.pharma.elips.controller" use-default-filters="false">
+		<context:include-filter expression="org.springframework.stereotype.Controller" type="annotation"/>
+	</context:component-scan>
+	<bean id="jacksonMessageConverter" class="org.springframework.http.converter.json.MappingJacksonHttpMessageConverter"></bean>
+	<bean class="org.springframework.web.servlet.mvc.annotation.AnnotationMethodHandlerAdapter">
+		<property name="messageConverters">
+			<list>
+				<ref bean="jacksonMessageConverter"/>
+			</list>
+		</property>
+	</bean>
 
 	<context:annotation-config />
 	

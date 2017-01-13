@@ -174,6 +174,7 @@ public class OrdonnancierFabReconstServiceImplTest {
         final PreparationEntree eltToCheck = new PreparationEntree();
         eltsToCheck.add(eltToCheck);
 
+        Mockito.when(this.mockApproService.count((SearchCriteria) Matchers.any())).thenReturn(1L);
         Mockito.when(this.mockApproService.getAll((SearchCriteria) Matchers.any())).thenReturn(eltsToCheck);
 
         final OrdonnancierFabReconst ordonnancier = Mockito.mock(OrdonnancierFabReconst.class);

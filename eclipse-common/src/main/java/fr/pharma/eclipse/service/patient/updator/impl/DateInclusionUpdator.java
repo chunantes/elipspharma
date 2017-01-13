@@ -36,7 +36,7 @@ public class DateInclusionUpdator implements InclusionBeforeSaveUpdator {
         final Essai essai = this.essaiService.get(inclusion.getEssai().getId());
         final InclusionSearchCriteria crit = new InclusionSearchCriteria();
         crit.setEssai(essai);
-        if (service.getAll(crit).isEmpty()) {
+        if (service.count(crit) == 0) {
             essai.getDetailDates().setDebutInclusion(inclusion.getDateInclusion());
             this.essaiService.save(essai);
         }

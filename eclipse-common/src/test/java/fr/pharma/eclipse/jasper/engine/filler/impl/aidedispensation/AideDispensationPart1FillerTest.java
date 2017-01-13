@@ -3,8 +3,6 @@ package fr.pharma.eclipse.jasper.engine.filler.impl.aidedispensation;
 import java.text.ParseException;
 import java.util.Arrays;
 
-import net.sf.jasperreports.engine.JRDataSource;
-
 import org.junit.Assert;
 import org.junit.Test;
 import org.mockito.Matchers;
@@ -30,6 +28,7 @@ import fr.pharma.eclipse.utils.EssaiUtils;
 import fr.pharma.eclipse.utils.PersonneUtils;
 import fr.pharma.eclipse.utils.Utils;
 import fr.pharma.eclipse.utils.constants.EclipseConstants;
+import net.sf.jasperreports.engine.JRDataSource;
 
 /**
  * Test de la classe AideDispensationPart1Filler.

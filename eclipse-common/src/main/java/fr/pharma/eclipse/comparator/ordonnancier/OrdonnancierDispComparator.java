@@ -29,14 +29,16 @@ public class OrdonnancierDispComparator implements Comparator<Dispensation>, Ser
 
     /**
      * Méthode en charge de construire la clé pour l'objet en paramètre.
-     * @param objet L'objet.
+     *
+     * @param objet
+     *            L'objet.
      * @return La clé.
      */
-    private String buildKey(final Dispensation objet) {
-        final StringBuffer sb = new StringBuffer();
-        if (objet.getNumOrdonnancier() != null) {
-            sb.append(objet.getNumOrdonnancier());
+    private Integer buildKey(final Dispensation objet) {
+        Integer num = 0;
+        if (null != objet.getNumOrdonnancier()) {
+            num = objet.getNumOrdonnancier();
         }
-        return sb.toString();
+        return num;
     }
 }

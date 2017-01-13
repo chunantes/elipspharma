@@ -123,7 +123,7 @@ public class StockServiceImpl extends GenericServiceImpl<LigneStock> implements 
      * de péremption d'un approvisionnement.
      * @param appro l'approvisionnement avec la date à jour
      */
-    private void updateLigneStock(Approvisionnement approOldDate, Approvisionnement approNewDate) {
+    protected void updateLigneStock(Approvisionnement approOldDate, Approvisionnement approNewDate) {
     	final LigneStock ligneStockOldDate = this.getOrCreateLigneStock(approOldDate);
     	final LigneStock ligneStockNewDate = this.getLigneStock(approNewDate);
     	
@@ -132,8 +132,9 @@ public class StockServiceImpl extends GenericServiceImpl<LigneStock> implements 
     		save(ligneStockOldDate);
     	} else {
     		// Fusion avec la ligne stock qui existe déjà
-    		ligneStockOldDate.setQtePharmacie(ligneStockOldDate.getQtePharmacie() + ligneStockOldDate.getQtePharmacie());
-    		ligneStockOldDate.setQteDispensationGlobal(ligneStockOldDate.getQteDispensationGlobal() + ligneStockOldDate.getQteDispensationGlobal());
+    		ligneStockOldDate.setQtePharmacie(ligneStockOldDate.getQtePharmacie() + ligneStockNewDate.getQtePharmacie());
+    		ligneStockOldDate.setQteDispensationGlobal(ligneStockOldDate.getQteDispensationGlobal() + ligneStockNewDate.getQteDispensationGlobal());
+    		ligneStockOldDate.setDatePeremption(approNewDate.getDatePeremption());
     		this.save(ligneStockOldDate);
     		// Suppression de la ligne de stock
     		this.remove(ligneStockNewDate);

@@ -14,6 +14,7 @@ import fr.pharma.eclipse.utils.introspection.BeanTool;
  * propriété + une valeur et de passer cette instance à une méthode de la classe
  * utilitaire CollectionUtils (countMatches, select, exists, filter, find,
  * select)
+ * 
  * @author Sébastien ROUL
  * @version $Revision$ $Date$
  */
@@ -45,8 +46,11 @@ public class GenericPredicate implements Predicate {
 
     /**
      * Constructeur.
-     * @param propriete Propriété à compararer
-     * @param value : objet de référence (doit implémenter Comparable)
+     * 
+     * @param propriete
+     *            Propriété à compararer
+     * @param value
+     *            : objet de référence (doit implémenter Comparable)
      */
     public GenericPredicate(final String propriete, final Object value) {
         this.propriete = propriete;
@@ -55,10 +59,14 @@ public class GenericPredicate implements Predicate {
 
     /**
      * Constructeur.
-     * @param propriete Propriété à compararer
-     * @param value Objet de référence (doit implémenter Comparable)
-     * @param allValue Si true : alors renvoie true lorsque le caractere "*" est
-     * trouvé.
+     * 
+     * @param propriete
+     *            Propriété à compararer
+     * @param value
+     *            Objet de référence (doit implémenter Comparable)
+     * @param allValue
+     *            Si true : alors renvoie true lorsque le caractere "*" est
+     *            trouvé.
      */
     public GenericPredicate(final String propriete, final Object value, final boolean allValue) {
         this(propriete, value);
@@ -93,7 +101,7 @@ public class GenericPredicate implements Predicate {
                 } else {
                     refObject = (Comparable) this.value;
                 }
-                if (compObject.compareTo(refObject) == 0) {
+                if (refObject != null && compObject.compareTo(refObject) == 0) {
                     return true;
                 }
             }
@@ -105,7 +113,9 @@ public class GenericPredicate implements Predicate {
 
     /**
      * Méthode en charge de traiter le predicator sur un BeanObject.
-     * @param propertyValueAsObject Valeur propriété.
+     * 
+     * @param propertyValueAsObject
+     *            Valeur propriété.
      * @return Résultat de comparaison.
      */
     public boolean handleBeanObject(final BeanObject propertyValueAsObject) {

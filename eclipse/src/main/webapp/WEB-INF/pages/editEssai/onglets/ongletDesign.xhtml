@@ -63,7 +63,8 @@
 				rendered="#{designable.type eq 'BRAS' }"
 				title="#{resourceBundle['designable.bras.modify']}" 
 				style="margin-right:5px;" immediate="true" 
-				actionListener="#{designsManager.editBras}" process="@this"
+				actionListener="#{designsManager.getActionEvent}"
+				action="#{designsManager.editBras(essaiManager.bean.detailDesign)}" process="@this"
 				oncomplete="popupChoixDesign.show();">
 				<h:graphicImage library="images" name="modify.gif" />
 				<f:attribute name="brasCurrent" value="#{designable}" />
@@ -72,7 +73,9 @@
 			<!--  Edition d'une sequence  --> 
 			
 			<p:commandLink ajax="false" styleClass="sequence_#{designable.id}"
-				rendered="#{designable.type eq 'SEQUENCE' }" action="editSequence"
+				rendered="#{designable.type eq 'SEQUENCE' }" 
+                                actionListener="#{designsManager.setCurrent(designable) }"
+                                action="editSequence"
 				title="#{resourceBundle['designable.sequence.modify']}"
 				style="margin-right:5px;">
 				<f:param name="id" value="#{designable.id}" />

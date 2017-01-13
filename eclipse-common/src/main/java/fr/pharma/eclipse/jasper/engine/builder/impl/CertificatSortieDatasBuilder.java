@@ -6,7 +6,6 @@ import java.util.Map;
 
 import javax.annotation.Resource;
 
-import net.sf.jasperreports.engine.JRDataSource;
 import fr.pharma.eclipse.domain.enums.jasper.TypeRapportJasper;
 import fr.pharma.eclipse.domain.jasper.model.certificat.JRBeanModeleCertificat;
 import fr.pharma.eclipse.domain.jasper.model.certificat.JRBeanProduitSorti;
@@ -21,6 +20,7 @@ import fr.pharma.eclipse.jasper.engine.filler.impl.certificat.helper.ProduitSort
 import fr.pharma.eclipse.jasper.engine.helper.ReportNameBuildHelper;
 import fr.pharma.eclipse.jasper.engine.helper.SourceCheckingHandler;
 import fr.pharma.eclipse.jasper.exception.JasperReportBuildException;
+import net.sf.jasperreports.engine.JRDataSource;
 
 /**
  * Classe en charge de constuire les données pour le rapport Jasper de type

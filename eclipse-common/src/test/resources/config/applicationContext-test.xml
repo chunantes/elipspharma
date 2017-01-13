@@ -18,7 +18,7 @@
     <bean id="inetAddress" class="java.net.InetAddress" factory-method="getLocalHost" />
 
 	<bean name="configPath" class="java.lang.String">
-		<constructor-arg value="#{systemProperties['elips-config-path']?:'classpath:META-INF/'+(inetAddress.hostName)}" />
+		<constructor-arg value="#{'classpath:config'}" />
 	</bean>
 	
 	<bean class="org.springframework.web.context.support.ServletContextPropertyPlaceholderConfigurer">
@@ -46,6 +46,7 @@
 	<import resource="classpath:/config/messages-resources.xml" />
 	<import resource="classpath:/config/applicationContext-common.xml" />
 	<import resource="classpath:/config/applicationContext-common-sir.xml" />
+    <import resource="classpath:/config/applicationContext-ext*.xml" />
 	
 	<!-- ===================================== -->
 	<!-- Redefinition des beans de persistence -->
@@ -65,7 +66,7 @@
         </property>
         <property name="jpaProperties">
             <props>
-            	<prop key="hibernate.connection.url">jdbc:h2:~/elips</prop>
+            	<prop key="hibernate.connection.url">jdbc:h2:mem:/elips</prop>
       			<prop key="hibernate.connection.username">app</prop>
       			<prop key="hibernate.connection.password">app</prop>
 			    <prop key="hibernate.connection.driver_class">org.h2.Driver</prop>
@@ -92,7 +93,7 @@
         </property>
         <property name="jpaProperties">
             <props>
-            	<prop key="hibernate.connection.url">jdbc:h2:elipsSir</prop>
+            	<prop key="hibernate.connection.url">jdbc:h2:mem:elipsSir</prop>
       			<prop key="hibernate.connection.username">app</prop>
       			<prop key="hibernate.connection.password">app</prop>
 			    <prop key="hibernate.connection.driver_class">org.h2.Driver</prop>

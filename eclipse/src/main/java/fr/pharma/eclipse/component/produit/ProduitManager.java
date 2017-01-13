@@ -2,8 +2,6 @@ package fr.pharma.eclipse.component.produit;
 
 import java.util.SortedMap;
 
-import javax.faces.model.DataModel;
-
 import org.primefaces.event.TabChangeEvent;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;

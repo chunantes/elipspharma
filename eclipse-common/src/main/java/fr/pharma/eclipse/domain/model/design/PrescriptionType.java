@@ -105,12 +105,14 @@ public class PrescriptionType extends BeanObject
             buff.append(" ");
             buff.append("doses - ");
         }
-        if (this.conditionnement.getDosage() != null) {
-            buff.append(this.conditionnement.getDosage());
-        }
-        if (this.conditionnement.getUniteDosage() != null) {
-            buff.append(" ");
-            buff.append(this.conditionnement.getUniteDosage());
+        if (this.conditionnement!=null) {
+            if (this.conditionnement.getDosage() != null) {
+                buff.append(this.conditionnement.getDosage());
+            }
+            if (this.conditionnement.getUniteDosage() != null) {
+                buff.append(" ");
+                buff.append(this.conditionnement.getUniteDosage());
+            }
         }
         if (buff.length() > 0) {
             buff.append(" : ");

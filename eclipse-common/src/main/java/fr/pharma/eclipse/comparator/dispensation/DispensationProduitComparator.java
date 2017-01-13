@@ -36,6 +36,9 @@ public class DispensationProduitComparator implements Comparator<DispensationPro
      */
     private String buildKey(final DispensationProduit p) {
         final StringBuilder builder = new StringBuilder();
+        /* Ajout du nom produit et type produit pou régler les problème de 2 produits ayant le même n° de lot */
+        builder.append(p.getProduit().getNom()).append(EclipseConstants.COMMA);
+        builder.append(p.getProduit().getType()).append(EclipseConstants.COMMA);
         builder.append(p.getNumLot()).append(EclipseConstants.COMMA);
         if (p.getNumTraitement() != null) {
             builder.append(p.getNumTraitement()).append(EclipseConstants.COMMA);

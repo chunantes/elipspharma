@@ -10,7 +10,6 @@ import org.hibernate.criterion.MatchMode;
 import org.hibernate.criterion.Restrictions;
 
 import fr.pharma.eclipse.dictionary.maker.common.AbstractCriteriaMaker;
-import fr.pharma.eclipse.dictionary.maker.common.utils.CriteriaMakerUtils;
 import fr.pharma.eclipse.domain.criteria.common.SearchCriteria;
 import fr.pharma.eclipse.domain.criteria.reprisePassif.ReprisePassifSearchCriteria;
 import fr.pharma.eclipse.utils.constants.EclipseConstants;

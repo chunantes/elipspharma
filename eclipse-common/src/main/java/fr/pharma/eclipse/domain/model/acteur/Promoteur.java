@@ -26,11 +26,13 @@ import fr.pharma.eclipse.domain.model.suivi.acteur.PromoteurSuivi;
 
 /**
  * Classe métier représentant un Promoteur.
+ * 
  * @author Netapsys
  * @version $Revision$ $Date$
  */
 @Entity(name = "promoteur")
 public class Promoteur extends BeanObjectSuivi {
+
     /**
      * Serial ID.
      */
@@ -61,11 +63,12 @@ public class Promoteur extends BeanObjectSuivi {
     /**
      * Liste des arc promoteurs.
      */
-    @OneToMany(mappedBy = "promoteur", cascade = CascadeType.ALL, orphanRemoval = true)
+    @OneToMany(mappedBy = "promoteur", cascade = CascadeType.ALL)
     @Where(clause = "type='ARC_PROMOTEUR'")
     @LazyCollection(LazyCollectionOption.TRUE)
     @Sort(type = SortType.COMPARATOR, comparator = BeanWithNomComparator.class)
-    private SortedSet<ArcPromoteur> arcPromoteurs = new TreeSet<ArcPromoteur>(new BeanWithNomComparator());
+    private SortedSet<ArcPromoteur> arcPromoteurs = new TreeSet<ArcPromoteur>(
+            new BeanWithNomComparator());
 
     /**
      * Liste des contacts promoteurs.
@@ -74,7 +77,8 @@ public class Promoteur extends BeanObjectSuivi {
     @Where(clause = "type='PROMOTEUR'")
     @LazyCollection(LazyCollectionOption.TRUE)
     @Sort(type = SortType.COMPARATOR, comparator = BeanWithNomComparator.class)
-    private SortedSet<ContactPromoteur> contactPromoteurs = new TreeSet<ContactPromoteur>(new BeanWithNomComparator());
+    private SortedSet<ContactPromoteur> contactPromoteurs = new TreeSet<ContactPromoteur>(
+            new BeanWithNomComparator());
 
     /**
      * Liste des modifications du promoteur.
@@ -82,10 +86,12 @@ public class Promoteur extends BeanObjectSuivi {
     @OneToMany(mappedBy = "promoteur", cascade = CascadeType.ALL)
     @LazyCollection(LazyCollectionOption.TRUE)
     @Sort(type = SortType.COMPARATOR, comparator = SuiviComparator.class)
-    private final SortedSet<PromoteurSuivi> modifs = new TreeSet<PromoteurSuivi>(new SuiviComparator());
+    private final SortedSet<PromoteurSuivi> modifs = new TreeSet<PromoteurSuivi>(
+            new SuiviComparator());
 
     /**
      * Getter sur raisonSociale.
+     * 
      * @return Retourne le raisonSociale.
      */
     public String getRaisonSociale() {
@@ -94,7 +100,9 @@ public class Promoteur extends BeanObjectSuivi {
 
     /**
      * Setter pour raisonSociale.
-     * @param raisonSociale le raisonSociale à écrire.
+     * 
+     * @param raisonSociale
+     *            le raisonSociale à écrire.
      */
     public void setRaisonSociale(final String raisonSociale) {
         this.raisonSociale = raisonSociale;
@@ -102,6 +110,7 @@ public class Promoteur extends BeanObjectSuivi {
 
     /**
      * Getter sur type.
+     * 
      * @return Retourne le type.
      */
     public TypePromoteur getType() {
@@ -110,7 +119,9 @@ public class Promoteur extends BeanObjectSuivi {
 
     /**
      * Setter pour type.
-     * @param type le type à écrire.
+     * 
+     * @param type
+     *            le type à écrire.
      */
     public void setType(final TypePromoteur type) {
         this.type = type;
@@ -118,6 +129,7 @@ public class Promoteur extends BeanObjectSuivi {
 
     /**
      * Getter sur identifiant.
+     * 
      * @return Retourne le identifiant.
      */
     public String getIdentifiant() {
@@ -126,7 +138,9 @@ public class Promoteur extends BeanObjectSuivi {
 
     /**
      * Setter pour identifiant.
-     * @param identifiant le identifiant à écrire.
+     * 
+     * @param identifiant
+     *            le identifiant à écrire.
      */
     public void setIdentifiant(final String identifiant) {
         this.identifiant = identifiant;
@@ -134,6 +148,7 @@ public class Promoteur extends BeanObjectSuivi {
 
     /**
      * Getter sur modifs.
+     * 
      * @return Retourne le modifs.
      */
     @Override
@@ -143,6 +158,7 @@ public class Promoteur extends BeanObjectSuivi {
 
     /**
      * Getter pour arcPromoteurs.
+     * 
      * @return Le arcPromoteurs
      */
     public SortedSet<ArcPromoteur> getArcPromoteurs() {
@@ -151,7 +167,9 @@ public class Promoteur extends BeanObjectSuivi {
 
     /**
      * Setter pour arcPromoteurs.
-     * @param arcPromoteurs Le arcPromoteurs à écrire.
+     * 
+     * @param arcPromoteurs
+     *            Le arcPromoteurs à écrire.
      */
     public void setArcPromoteurs(final SortedSet<ArcPromoteur> arcPromoteurs) {
         this.arcPromoteurs = arcPromoteurs;
@@ -159,6 +177,7 @@ public class Promoteur extends BeanObjectSuivi {
 
     /**
      * Getter pour contactPromoteurs.
+     * 
      * @return Le contactPromoteurs
      */
     public SortedSet<ContactPromoteur> getContactPromoteurs() {
@@ -167,9 +186,12 @@ public class Promoteur extends BeanObjectSuivi {
 
     /**
      * Setter pour contactPromoteurs.
-     * @param contactPromoteurs Le contactPromoteurs à écrire.
+     * 
+     * @param contactPromoteurs
+     *            Le contactPromoteurs à écrire.
      */
-    public void setContactPromoteurs(final SortedSet<ContactPromoteur> contactPromoteurs) {
+    public void setContactPromoteurs(
+            final SortedSet<ContactPromoteur> contactPromoteurs) {
         this.contactPromoteurs = contactPromoteurs;
     }
 

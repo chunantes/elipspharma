@@ -1,0 +1,21 @@
+sgbd:
+    image: postgres:8.4
+    volumes:
+        - ${build.outputDirectory}/docker-entrypoint-initdb.d:/docker-entrypoint-initdb.d
+    ports:
+      - "5432:5432"
+    environment:
+     - POSTGRES_USER=elips
+     - POSTGRES_PASSWORD=elips
+     - DB_PG_DUMP_FILE=/docker-entrypoint-initdb.d/elips.sql
+web:
+    image: docker.netapsys.fr/tomcat6jacoco
+    volumes:
+        - ${build.outputDirectory}/docker-entrypoint-initenv.d:/docker-entrypoint-initenv.d
+    links:
+      - sgbd:sgbd
+    ports:
+      - 8080:8080
+      - 8090:8090
+
+

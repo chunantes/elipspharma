@@ -24,6 +24,7 @@ import fr.pharma.eclipse.domain.model.common.BeanObject;
 import fr.pharma.eclipse.domain.model.essai.Essai;
 import fr.pharma.eclipse.domain.model.essai.detail.faisabilite.DetailFaisabilite;
 import fr.pharma.eclipse.domain.model.suivi.essai.EssaiSuivi;
+import fr.pharma.eclipse.exception.TechnicalException;
 import fr.pharma.eclipse.factory.common.BeanObjectWithParentFactory;
 import fr.pharma.eclipse.service.acl.AclService;
 import fr.pharma.eclipse.service.essai.impl.EssaiServiceImpl;
@@ -230,12 +231,12 @@ public class EssaiServiceTest {
         try {
             this.essaiService.save(essaiToSave);
             Assert.fail(EssaiServiceTest.NOT_TO_BE_REACHED);
-        } catch (final MockitoException exceptionLeve) {
-            Assert.assertEquals(exception, exceptionLeve);
+        } catch (final TechnicalException exceptionLeve) {
+            Assert.assertEquals(exception, exceptionLeve.getCause());
         }
         Mockito.verify(this.mockedSaveValidator).validate(essaiToSave, this.essaiService);
     }
-
+    
     /**
      * Test de l'appel de liste de tous les Essai avec un critère de recherche
      * OK.

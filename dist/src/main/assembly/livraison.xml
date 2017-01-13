@@ -1,0 +1,26 @@
+<assembly
+    xmlns="http://maven.apache.org/plugins/maven-assembly-plugin/assembly/1.1.0">
+    <id>${project.version}-livraison</id>
+    <formats>
+        <format>zip</format>
+    </formats>
+    <includeBaseDirectory>false</includeBaseDirectory>
+
+
+    <files>
+        <file>
+            <source>target/elips-dist-${project.version}.tar.gz</source>
+            <outputDirectory></outputDirectory>
+        </file>
+    </files>
+    <fileSets>
+        <fileSet>
+            <directory>src/main/resources/documents</directory>
+            <outputDirectory>/documents</outputDirectory>
+            <includes>
+                <include>**/**</include>
+            </includes>
+        </fileSet>
+    </fileSets>    	
+    	
+</assembly>

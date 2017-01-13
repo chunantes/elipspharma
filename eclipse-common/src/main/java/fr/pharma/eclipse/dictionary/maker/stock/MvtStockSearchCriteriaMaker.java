@@ -43,16 +43,17 @@ public class MvtStockSearchCriteriaMaker extends AbstractCriteriaMaker {
         Criteria critEssai = null;
         Criteria critPharmacie = null;
 
+        // Essai DTO
+        if (crit.getEssaiDTO() != null) {
+            critEssai = criteria.createCriteria("essai");
+            critEssai.add(Restrictions.idEq(crit.getEssaiDTO().getId()));
+        } else
         // Essai
         if (crit.getEssai() != null) {
             critEssai = criteria.createCriteria("essai");
             critEssai.add(Restrictions.idEq(crit.getEssai().getId()));
         }
-        // Essai DTO
-        if (crit.getEssaiDTO() != null) {
-            critEssai = criteria.createCriteria("essai");
-            critEssai.add(Restrictions.idEq(crit.getEssaiDTO().getId()));
-        }
+
 
         // Pharmacie
         if (crit.getPharmacie() != null) {

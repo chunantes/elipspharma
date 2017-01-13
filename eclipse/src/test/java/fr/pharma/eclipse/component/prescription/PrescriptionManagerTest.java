@@ -31,6 +31,7 @@ import fr.pharma.eclipse.domain.model.acteur.Personne;
 import fr.pharma.eclipse.domain.model.design.Bras;
 import fr.pharma.eclipse.domain.model.design.Sequence;
 import fr.pharma.eclipse.domain.model.essai.Essai;
+import fr.pharma.eclipse.domain.model.essai.detail.design.DetailDesign;
 import fr.pharma.eclipse.domain.model.essai.detail.pharma.DetailDonneesPharma;
 import fr.pharma.eclipse.domain.model.essai.detail.produit.DetailProduit;
 import fr.pharma.eclipse.domain.model.habilitation.Habilitation;
@@ -101,11 +102,8 @@ public class PrescriptionManagerTest extends AbstractEclipseJUnitTest {
      * Validator mocké.
      */
     private ProduitPrescritValidator validator;
-
-    /**
-     * Service Essai.
-     */
-    private EssaiService essaiService;
+    
+        private GenericService<DetailDesign> mockDetailDesignService;
 
     /**
      * {@inheritDoc}
@@ -116,11 +114,12 @@ public class PrescriptionManagerTest extends AbstractEclipseJUnitTest {
         this.mockedService = Mockito.mock(GenericService.class);
         this.mockedPrescriptionHelper = Mockito.mock(PrescriptionManagerHelper.class);
         this.mockedTreeHelper = Mockito.mock(TreeDesignHelper.class);
-        this.essaiService = Mockito.mock(EssaiService.class);
         this.mockedPatientService = Mockito.mock(PatientService.class);
         this.mockedHabilitationHelper = Mockito.mock(HabilitationsHelper.class);
         this.mockedFacesUtils = Mockito.mock(FacesUtils.class);
         this.mockedFactory = Mockito.mock(PrescriptionFactory.class);
+        this.mockDetailDesignService = Mockito.mock(GenericService.class);
+        
         this.manager = new PrescriptionManager(this.mockedService);
         this.manager.setHabilitationHelper(this.mockedHabilitationHelper);
         this.manager.setPatientService(this.mockedPatientService);
@@ -128,8 +127,8 @@ public class PrescriptionManagerTest extends AbstractEclipseJUnitTest {
         this.manager.setFacesUtils(this.mockedFacesUtils);
         this.manager.setPrescriptionManagerHelper(this.mockedPrescriptionHelper);
         this.manager.setFactory(this.mockedFactory);
-        this.manager.setEssaiService(this.essaiService);
         this.manager.setValidator(this.validator);
+        this.manager.setDetaildesignService(mockDetailDesignService);
     }
 
     /**
@@ -145,8 +144,8 @@ public class PrescriptionManagerTest extends AbstractEclipseJUnitTest {
         this.mockedTreeHelper = null;
         this.mockedFactory = null;
         this.manager = null;
-        this.essaiService = null;
         this.validator = null;
+        this.mockDetailDesignService=null;
     }
 
     /**
@@ -163,9 +162,9 @@ public class PrescriptionManagerTest extends AbstractEclipseJUnitTest {
         Assert.assertNotNull(this.mockedTreeHelper);
         Assert.assertNotNull(this.mockedHabilitationHelper);
         Assert.assertNotNull(this.mockedFactory);
+        Assert.assertNotNull(this.mockDetailDesignService);
         Assert.assertNotNull(this.validator);
         this.manager.setProduits(Mockito.mock(SortedSet.class));
-        Assert.assertNotNull(this.essaiService);
         Assert.assertNotNull(this.manager.getProduits());
     }
 
@@ -296,6 +295,7 @@ public class PrescriptionManagerTest extends AbstractEclipseJUnitTest {
 
         final List<Prescription> liste = new ArrayList<Prescription>();
         liste.add(new Prescription());
+        Mockito.when(this.mockedService.count(Matchers.any(SearchCriteria.class))).thenReturn(1L);
         Mockito.when(this.mockedService.getAll(Matchers.any(SearchCriteria.class))).thenReturn(liste);
 
         this.manager.handleSelectPatient(event);
@@ -405,7 +405,7 @@ public class PrescriptionManagerTest extends AbstractEclipseJUnitTest {
     public void testGetDesignablesSelectableNull1() {
 
         Assert.assertNull(this.manager.getDesignablesSelectable());
-        Mockito.verify(this.mockedTreeHelper, Mockito.never()).buildTree(Matchers.any(Essai.class));
+        Mockito.verify(this.mockedTreeHelper, Mockito.never()).buildTree(Matchers.any(DetailDesign.class));
     }
 
     /**
@@ -415,7 +415,7 @@ public class PrescriptionManagerTest extends AbstractEclipseJUnitTest {
     public void testGetDesignablesSelectableNull2() {
         this.manager.setBean(new Prescription());
         Assert.assertNull(this.manager.getDesignablesSelectable());
-        Mockito.verify(this.mockedTreeHelper, Mockito.never()).buildTree(Matchers.any(Essai.class));
+        Mockito.verify(this.mockedTreeHelper, Mockito.never()).buildTree(Matchers.any(DetailDesign.class));
     }
 
     /**
@@ -426,7 +426,7 @@ public class PrescriptionManagerTest extends AbstractEclipseJUnitTest {
         this.manager.setBean(new Prescription());
         this.manager.getBean().setInclusion(new Inclusion());
         Assert.assertNull(this.manager.getDesignablesSelectable());
-        Mockito.verify(this.mockedTreeHelper, Mockito.never()).buildTree(Matchers.any(Essai.class));
+        Mockito.verify(this.mockedTreeHelper, Mockito.never()).buildTree(Matchers.any(DetailDesign.class));
     }
 
     /**
@@ -438,9 +438,9 @@ public class PrescriptionManagerTest extends AbstractEclipseJUnitTest {
         this.manager.setBean(new Prescription());
         this.manager.getBean().setInclusion(new Inclusion());
         this.manager.getBean().getInclusion().setEssai(new Essai());
-        Mockito.when(this.mockedTreeHelper.buildTree(Matchers.any(Essai.class))).thenReturn(node);
-        Mockito.when(this.essaiService.get(Matchers.anyLong())).thenReturn(new Essai());
+        Mockito.when(this.mockedTreeHelper.buildTree(Matchers.any(DetailDesign.class))).thenReturn(node);
+        Mockito.when(this.mockDetailDesignService.get(Matchers.anyLong())).thenReturn(new DetailDesign());
         Assert.assertNotNull(this.manager.getDesignablesSelectable());
-        Mockito.verify(this.mockedTreeHelper).buildTree(Matchers.any(Essai.class));
+        Mockito.verify(this.mockedTreeHelper).buildTree(Matchers.any(DetailDesign.class));
     }
 }

@@ -53,7 +53,7 @@ public class AideDispensationPart1GroupesTraitFiller implements JasperReportBean
         // Création des beans.
         final List<JRBeanGroupeTraitement> groupesTraitement = new ArrayList<JRBeanGroupeTraitement>();
 
-        final Set<Designable> roots = this.designHelper.getDesignRoots(essai);
+        final Set<Designable> roots = this.designHelper.getDesignRoots(essai.getDetailDesign());
         final int nbAlineas = 0;
         for (final Designable root : roots) {
             this.handleTree(groupesTraitement, root, nbAlineas);

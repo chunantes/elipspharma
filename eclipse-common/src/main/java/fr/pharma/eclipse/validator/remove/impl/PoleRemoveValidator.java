@@ -35,7 +35,7 @@ public class PoleRemoveValidator implements RemoveValidator<Pole>, Serializable 
         // Vérification Relation Pole-Service
         final ServiceSearchCriteria criteria = new ServiceSearchCriteria();
         criteria.setPole(pole);
-        if (this.serviceService.hasResult(criteria)) {
+        if (this.serviceService.count(criteria) > 0) {
             throw new ValidationException("remove", new String[]{"impossible" }, pole);
         }
     }

@@ -64,6 +64,8 @@
 				<entry
 					key="fr.pharma.eclipse.domain.criteria.sigrec.essai.EssaiSigrecSearchCriteria"
 					value-ref="essaiSigrecSearchCriteriaMaker" />
+                                <entry key="fr.pharma.eclipse.externe.EssaiExterneSearchCriteria" 
+                                       value-ref="essaiSigrecSearchCriteriaMaker" />
 				<entry
 					key="fr.pharma.eclipse.domain.criteria.stock.MvtStockSearchCriteria"
 					value-ref="mouvementStockSearchCriteriaMaker" />

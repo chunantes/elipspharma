@@ -114,7 +114,7 @@ public final class CriteriaMakerUtils {
      * @param value
      * @return
      */
-    private static String preparerValuePourSQLLike(final String value) {
+    public static String preparerValuePourSQLLike(final String value) {
         final String str = CriteriaMakerUtils.ESCAPE_POSTGRE_SIMILAR_TO_SPECIAL_CHARS.matcher(value.toUpperCase().trim()).replaceAll("\\\\$1");
 
         final StringBuilder retour = new StringBuilder(CriteriaMakerUtils.MODULO);

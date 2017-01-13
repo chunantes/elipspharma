@@ -79,8 +79,8 @@ public class ProduitRemoveValidatorTest extends AbstractEclipseJUnitTest {
      */
     @Test
     public void testValidateOk() {
-        Mockito.when(this.mvtStockService.getAll(Matchers.any(MvtStockSearchCriteria.class))).thenReturn(new ArrayList<MvtStock>());
-        Mockito.when(this.produitPrescritService.getAll(Matchers.any(ProduitPrescritSearchCriteria.class))).thenReturn(new ArrayList<ProduitPrescrit>());
+        Mockito.when(this.mvtStockService.count(Matchers.any(MvtStockSearchCriteria.class))).thenReturn(0L);
+        Mockito.when(this.produitPrescritService.count(Matchers.any(ProduitPrescritSearchCriteria.class))).thenReturn(0L);
         this.validator.validate(new Medicament());
     }
 
@@ -91,8 +91,8 @@ public class ProduitRemoveValidatorTest extends AbstractEclipseJUnitTest {
     public void testValidateKo1() {
         final List<MvtStock> mvts = new ArrayList<MvtStock>();
         mvts.add(new DispensationProduit());
-        Mockito.when(this.mvtStockService.getAll(Matchers.any(MvtStockSearchCriteria.class))).thenReturn(mvts);
-        Mockito.when(this.produitPrescritService.getAll(Matchers.any(ProduitPrescritSearchCriteria.class))).thenReturn(new ArrayList<ProduitPrescrit>());
+        Mockito.when(this.mvtStockService.count(Matchers.any(MvtStockSearchCriteria.class))).thenReturn(1L);
+        Mockito.when(this.produitPrescritService.count(Matchers.any(ProduitPrescritSearchCriteria.class))).thenReturn(0L);
         this.validator.validate(new Medicament());
     }
 
@@ -101,11 +101,8 @@ public class ProduitRemoveValidatorTest extends AbstractEclipseJUnitTest {
      */
     @Test(expected = ValidationException.class)
     public void testValidateKo2() {
-        final List<MvtStock> mvts = new ArrayList<MvtStock>();
-        Mockito.when(this.mvtStockService.getAll(Matchers.any(MvtStockSearchCriteria.class))).thenReturn(mvts);
-        final List<ProduitPrescrit> prds = new ArrayList<ProduitPrescrit>();
-        prds.add(new ProduitPrescrit());
-        Mockito.when(this.produitPrescritService.getAll(Matchers.any(ProduitPrescritSearchCriteria.class))).thenReturn(prds);
+        Mockito.when(this.mvtStockService.count(Matchers.any(MvtStockSearchCriteria.class))).thenReturn(0L);
+        Mockito.when(this.produitPrescritService.count(Matchers.any(ProduitPrescritSearchCriteria.class))).thenReturn(1L);
         this.validator.validate(new Medicament());
     }
 }

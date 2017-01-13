@@ -79,7 +79,7 @@ public class ApprovisionnementServiceImpl<MVT extends Approvisionnement> extends
     public boolean hasAlreadyApprovisionnement(final Essai essai) {
         final MvtStockSearchCriteria crit = new MvtStockSearchCriteria();
         crit.setEssai(essai);
-        return !this.getAll(crit).isEmpty();
+        return this.count(crit) > 0;
     }
 
     /**
@@ -307,7 +307,7 @@ public class ApprovisionnementServiceImpl<MVT extends Approvisionnement> extends
         appro.setHistoriqueExtensionPeremption(historique.toString());
 
         // Est-ce que nous sommes en train de reporter la date ?
-        if (!appro.getExtensionPeremption() && (appro.getDatePeremption().getTimeInMillis() < newDatePeremption.getTimeInMillis())) {
+        if (!appro.getExtensionPeremption() && appro.getDatePeremption() != null && (appro.getDatePeremption().getTimeInMillis() < newDatePeremption.getTimeInMillis())) {
             appro.setExtensionPeremption(true);
         }
         appro.setDatePeremption(newDatePeremption);

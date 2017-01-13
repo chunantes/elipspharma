@@ -3,7 +3,6 @@ package fr.pharma.eclipse.jasper.engine.filler.impl.aidedispensation;
 import java.util.Collection;
 import java.util.Set;
 
-import net.sf.jasperreports.engine.JRDataSource;
 import fr.pharma.eclipse.domain.jasper.model.common.JasperReportBean;
 import fr.pharma.eclipse.domain.jasper.model.fiche.aidedispensation.JRBeanFicheAideDispensationPart2;
 import fr.pharma.eclipse.domain.jasper.model.fiche.aidedispensation.JRBeanProduit;
@@ -13,6 +12,7 @@ import fr.pharma.eclipse.jasper.engine.factory.JRDataSourceFactory;
 import fr.pharma.eclipse.jasper.engine.filler.JasperReportBeanFiller;
 import fr.pharma.eclipse.jasper.engine.filler.impl.aidedispensation.helper.ProduitsFillerHelper;
 import fr.pharma.eclipse.utils.introspection.BeanTool;
+import net.sf.jasperreports.engine.JRDataSource;
 
 /**
  * Filler en charge de construire un attribut de produits du

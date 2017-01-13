@@ -50,14 +50,14 @@ public class DetailStockageRemoveValidator implements Serializable {
         if (detail.getId() != null) {
             final MvtStockSearchCriteria criteria = new MvtStockSearchCriteria();
             criteria.setStockage(detail);
-            if (!this.mvtService.getAll(criteria).isEmpty()) {
+            if (this.mvtService.count(criteria) > 0) {
                 this.facesUtils.addMessage(FacesMessage.SEVERITY_ERROR, "remove.impossible");
                 valid = false;
             }
 
             final RetourPatientSearchCriteria criteria2 = new RetourPatientSearchCriteria();
             criteria2.setStockage(detail);
-            if (!this.retourPatientService.getAll(criteria2).isEmpty() && valid) {
+            if (this.retourPatientService.count(criteria2) > 0 && valid) {
                 this.facesUtils.addMessage(FacesMessage.SEVERITY_ERROR, "remove.impossible");
                 valid = false;
             }

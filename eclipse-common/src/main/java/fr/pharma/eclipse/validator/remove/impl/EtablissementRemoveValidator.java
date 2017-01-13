@@ -51,21 +51,21 @@ public class EtablissementRemoveValidator implements RemoveValidator<Etablisseme
         // Vérification Relation Etablissement-Pharmacie
         final PharmacieSearchCriteria pharmaCriteria = new PharmacieSearchCriteria();
         pharmaCriteria.setEtablissement(etablissement);
-        if (this.pharmacieService.hasResult(pharmaCriteria)) {
+        if (this.pharmacieService.count(pharmaCriteria) > 0) {
             throw new ValidationException("remove", new String[]{"impossible" }, etablissement);
         }
 
         // Vérification Relation Etablissement-Pole
         final PoleSearchCriteria poleCriteria = new PoleSearchCriteria();
         poleCriteria.setEtablissement(etablissement);
-        if (this.poleService.hasResult(poleCriteria)) {
+        if (this.poleService.count(poleCriteria) > 0) {
             throw new ValidationException("remove", new String[]{"impossible" }, etablissement);
         }
 
         // Vérification Relation Etablissement-Site
         final SiteSearchCriteria siteCriteria = new SiteSearchCriteria();
         siteCriteria.setEtablissement(etablissement);
-        if (this.siteService.hasResult(siteCriteria)) {
+        if (this.siteService.count(siteCriteria) > 0) {
             throw new ValidationException("remove", new String[]{"impossible" }, etablissement);
         }
 

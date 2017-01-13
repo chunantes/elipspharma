@@ -65,9 +65,9 @@ public class OrdonnancierDispServiceImpl extends OrdonnancierServiceImpl<Ordonna
         crit.setActiveOrder("dateDispensation");
         crit.setAscending(true);
 
-        final List<Dispensation> dispensations = this.dispensationService.getAll(crit);
+        final Long nombreDispensations = this.dispensationService.count(crit);
 
-        if (dispensations.isEmpty()) {
+        if (nombreDispensations == 0) {
             throw new ValidationException("ordonnancier.dispensations", new String[]{"empty" });
         } else {
             // Création de l'ordonnancier
@@ -76,6 +76,7 @@ public class OrdonnancierDispServiceImpl extends OrdonnancierServiceImpl<Ordonna
             ordonnancier.setDateFin(criteria.getDateFin());
             ordonnancier.setPharmacie(pharmacie);
 
+            final List<Dispensation> dispensations = this.dispensationService.getAll(crit);
             for (final Dispensation dispensation : dispensations) {
                 // Le numéro d'ordonnancier est créé à l'enregistrement de la
                 // dispensation

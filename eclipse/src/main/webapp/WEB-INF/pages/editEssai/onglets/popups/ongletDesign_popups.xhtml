@@ -61,7 +61,6 @@
 					style="display:block;margin-top:10px;">
 					<h:selectOneMenu id="common_typeDesign" 
 						rendered="#{designsManager.parent != null}"
-						disabled="#{designsManager.bras.id != null }"
 						value="#{designsManager.type}">
 						<f:selectItem noSelectionOption="true" />
 						<f:selectItems value="#{enumManager.getValues('TypeDesignable')}" />
@@ -70,7 +69,6 @@
 					</h:selectOneMenu>
 					<h:selectOneMenu id="common_typeDesign_bras" 
 						rendered="#{designsManager.parent == null}" 
-						disabled="#{designsManager.bras.id != null }"
 						value="#{designsManager.type}">
 						<f:selectItem noSelectionOption="true" />
 						<f:selectItem
@@ -99,7 +97,7 @@
 				<div class="popupButton"><p:commandButton
 					value="#{resourceBundle['btn.valider']}" ajax="true"
 					rendered="#{designsManager.type eq 'BRAS' }"
-					actionListener="#{designsManager.updateDesigns}" update="treeDesign idsNodesToExpand" oncomplete="popupChoixDesign.hide(); expand();">
+					actionListener="#{designsManager.updateDesigns(essaiManager.bean.detailDesign)}" update="treeDesign idsNodesToExpand" oncomplete="popupChoixDesign.hide(); expand();">
 				</p:commandButton></div>
 
 				<p:outputPanel rendered="#{designsManager.type eq 'SEQUENCE' }">

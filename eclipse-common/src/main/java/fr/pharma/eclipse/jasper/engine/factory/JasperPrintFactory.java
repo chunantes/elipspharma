@@ -4,15 +4,14 @@ import java.io.IOException;
 import java.io.Serializable;
 import java.util.Map;
 
-import net.sf.jasperreports.engine.JRDataSource;
-import net.sf.jasperreports.engine.JRException;
-import net.sf.jasperreports.engine.JasperPrint;
-import net.sf.jasperreports.engine.JasperReport;
-
 import org.springframework.core.io.Resource;
 
 import fr.pharma.eclipse.jasper.engine.helper.JasperPrintHelper;
 import fr.pharma.eclipse.jasper.exception.JasperReportBuildException;
+import net.sf.jasperreports.engine.JRDataSource;
+import net.sf.jasperreports.engine.JRException;
+import net.sf.jasperreports.engine.JasperPrint;
+import net.sf.jasperreports.engine.JasperReport;
 
 /**
  * Fabrique d'objets JasperPrint pour la génération de rapports Jasper.

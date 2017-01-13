@@ -3,10 +3,10 @@ package fr.pharma.eclipse.jasper.utils;
 import java.util.Collection;
 import java.util.Iterator;
 
-import net.sf.jasperreports.engine.data.JRBeanCollectionDataSource;
 import fr.pharma.eclipse.domain.model.acteur.Investigateur;
 import fr.pharma.eclipse.jasper.constants.JasperConstants;
 import fr.pharma.eclipse.utils.constants.EclipseConstants;
+import net.sf.jasperreports.engine.data.JRBeanCollectionDataSource;
 
 /**
  * Classe outil pour la génération des rapports Jasper.

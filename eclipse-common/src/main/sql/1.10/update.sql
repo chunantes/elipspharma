@@ -1,1 +1,0 @@
-ALTER TABLE mvtstock  ADD COLUMN datePeremption timestamp;

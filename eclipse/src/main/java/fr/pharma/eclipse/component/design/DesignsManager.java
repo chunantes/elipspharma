@@ -23,7 +23,6 @@ import org.slf4j.LoggerFactory;
 
 import fr.pharma.eclipse.comparator.produit.detail.ProduitComparator;
 import fr.pharma.eclipse.component.design.helper.TreeDesignHelper;
-import fr.pharma.eclipse.component.essai.EssaiManager;
 import fr.pharma.eclipse.domain.enums.TypeDesignable;
 import fr.pharma.eclipse.domain.model.design.Bras;
 import fr.pharma.eclipse.domain.model.design.Designable;
@@ -35,6 +34,7 @@ import fr.pharma.eclipse.domain.model.produit.Produit;
 import fr.pharma.eclipse.factory.common.BeanObjectFactory;
 import fr.pharma.eclipse.json.DesignConverter;
 import fr.pharma.eclipse.predicate.GenericPredicate;
+import fr.pharma.eclipse.service.common.GenericService;
 import fr.pharma.eclipse.service.helper.design.TimeHelper;
 import fr.pharma.eclipse.utils.FacesUtils;
 import fr.pharma.eclipse.validator.remove.RemoveValidator;
@@ -55,12 +55,6 @@ public class DesignsManager implements Serializable {
      * Logger.
      */
     private final Logger log = LoggerFactory.getLogger(DesignsManager.class);
-
-    /**
-     * EssaiManager.
-     */
-    private EssaiManager essaiManager;
-
     /**
      * Helper de l'arbre de design.
      */
@@ -136,11 +130,6 @@ public class DesignsManager implements Serializable {
     private RemoveValidator<Sequence> sequenceRemoveValidator;
 
     /**
-     * Sequence à editer.
-     */
-    private String nomCompletSequence;
-
-    /**
      * Converter de design.
      */
     @Resource(name = "designConverter")
@@ -173,6 +162,10 @@ public class DesignsManager implements Serializable {
      */
     private SortedSet<Produit> produits = new TreeSet<Produit>(new ProduitComparator());
 
+	private Essai essai;
+	
+	private ActionEvent event;
+
     public DesignsManager() {
         this.log.debug("Construction de l'objet DesignsManager : " + this);
     }
@@ -180,11 +173,11 @@ public class DesignsManager implements Serializable {
     /**
      * Intialiser les valeurs pour le diagramme de design.
      */
-    public void initDesignChrono() {
+    public void initDesignChrono(DetailDesign detailDesign) {
 
-        if (this.validateInitDesignChrono()) {
-            this.json = this.designConverter.convert(this.essaiManager.getBean().getDetailDesign(), this.dateDebut);
-            this.processDateFin(this.dateDebut);
+        if (this.validateInitDesignChrono(detailDesign)) {
+            this.json = this.designConverter.convert(detailDesign, this.dateDebut);
+            this.processDateFin(this.dateDebut, detailDesign);
             if (this.dateFin == null) {
                 this.facesUtils.addMessage(FacesMessage.SEVERITY_ERROR, "designs.data.invalid");
             } else {
@@ -210,8 +203,8 @@ public class DesignsManager implements Serializable {
     /**
      * @return true si données nécessaire pour l'init existent
      */
-    private boolean validateInitDesignChrono() {
-        if (this.essaiManager.getBean().getDetailDesign().getBras().isEmpty()) {
+    private boolean validateInitDesignChrono(DetailDesign detailDesign) {
+        if (detailDesign.getBras().isEmpty()) {
             this.facesUtils.addMessage(FacesMessage.SEVERITY_ERROR, "designs.data.empty");
             return false;
         } else if (this.dateDebut == null) {
@@ -228,8 +221,8 @@ public class DesignsManager implements Serializable {
      * dateFin sera null si le calcul ne marche pas
      * @param date Date de début.
      */
-    protected void processDateFin(final Calendar date) {
-        final TempsPrescription fin = this.timeHelper.getDateFinForDesign(this.essaiManager.getBean().getDetailDesign());
+    protected void processDateFin(final Calendar date, DetailDesign detailDesign) {
+        final TempsPrescription fin = this.timeHelper.getDateFinForDesign(detailDesign);
         if (fin == null) {
             this.dateFin = null;
         } else {
@@ -241,6 +234,9 @@ public class DesignsManager implements Serializable {
      * @param event Envenement.
      */
     public void initBras(final ActionEvent event) {
+    	// On met le type à null car en passant d'une edition d'un bras à une initialisation, la liste déroulante 
+    	// est initialisé à "Bras" pour les prochaines initialisations.
+    	this.setType(null);
         this.parent = (Bras) event.getComponent().getAttributes().get("designableParent");
         this.bras = this.brasFactory.getInitializedObject();
         this.bras.setParent(this.parent);
@@ -249,16 +245,11 @@ public class DesignsManager implements Serializable {
 
     /**
      * Méthode appelée afin d'intiialiser la séquence courante à éditer.
-     * @param nomComplet de la sequence.
-     * @param nomCompletParent Nom complet du parent.
+     * @param sequence
      * @return la séquence.
      */
-    public Sequence initSequence(final String nomComplet,
-                                 final String nomCompletParent) {
+    public Sequence initSequence(final Sequence sequence) {
         this.actionCurrent = "EDIT";
-        this.nomCompletSequence = nomComplet;
-        final Bras bras = this.findBras(nomCompletParent);
-        final Sequence sequence = (Sequence) CollectionUtils.find(bras.getSequences(), new GenericPredicate("nomComplet", nomComplet));
         return sequence;
 
     }
@@ -269,20 +260,25 @@ public class DesignsManager implements Serializable {
      * @param nomComplet Nom complet.
      * @return Le bras.
      */
-    public Bras findBras(final String nomComplet) {
-        return (Bras) CollectionUtils.find(this.essaiManager.getBean().getDetailDesign().getBras(), new GenericPredicate("nomComplet", nomComplet));
+    public Bras findBras(final String nomComplet, DetailDesign detailDesign) {
+        return (Bras) CollectionUtils.find(detailDesign.getBras(), new GenericPredicate("nomComplet", nomComplet));
     }
+    
     /**
      * Méthode en charged e réinitialiser les informations du manager.
+     * @param id
      */
-    public void init() {
+    public void init(Essai essai) {
+        
         this.log.debug("[init] " + this);
-        this.root = this.buildRoot();
-        this.initProduits();
+        
+        this.essai = essai;
+        
+        this.root = this.buildRoot(essai.getDetailDesign());
+        this.initProduits(essai);
         this.setBras(null);
         this.setType(null);
         this.actionCurrent = "";
-        this.nomCompletSequence = null;
         this.dateFin = null;
         this.json = null;
         this.jsonDate = null;
@@ -291,19 +287,28 @@ public class DesignsManager implements Serializable {
     /**
      * Méthode en charge d'initialiser la liste des produits.
      */
-    public void initProduits() {
+    public void initProduits(Essai essai) {
         this.produits.clear();
-        final Essai essai = this.essaiManager.getBean();
-        this.produits.addAll(essai.getDetailProduit().getProduits());
+        if (essai!=null) {
+            this.produits.addAll(essai.getDetailProduit().getProduits());
+        }
     }
+    
+    /**
+     * Permet de récupérer l'actionEvent pour la modification d'un bras
+     * @param event
+     */
+    public void getActionEvent(ActionEvent event){
+    	this.event = event;
+    }
+    
     /**
      * Méthode en charge d'éditer un bras.
      * @param event Evénement.
      */
-    public void editBras(final ActionEvent event) {
+    public void editBras(DetailDesign detailDesign) {
         final Bras b = (Bras) event.getComponent().getAttributes().get("brasCurrent");
-        final DetailDesign detail = this.essaiManager.getBean().getDetailDesign();
-        final Bras p = (Bras) CollectionUtils.find(detail.getBras(), new GenericPredicate("nomComplet", b.getNomComplet()));
+        final Bras p = (Bras) CollectionUtils.find(detailDesign.getBras(), new GenericPredicate("nomComplet", b.getNomComplet()));
         this.setBras(p);
         this.actionCurrent = "EDIT";
         this.setType(TypeDesignable.BRAS);
@@ -312,81 +317,77 @@ public class DesignsManager implements Serializable {
     /**
      * Méthode en charge de mettre à jour la liste des designs.
      */
-    public void updateDesigns() {
+    public void updateDesigns(DetailDesign detailDesign) {
         this.log.debug("[updateDesigns] " + this);
 
-        final DetailDesign detail = this.essaiManager.getBean().getDetailDesign();
         if ("ADD".equals(this.actionCurrent)) {
             this.bras.setType(TypeDesignable.BRAS);
             if (this.bras.getParent() == null) {
-                detail.getBras().add(this.bras);
-                this.bras.setDetailDesign(detail);
+            	detailDesign.getBras().add(this.bras);
+                this.bras.setDetailDesign(detailDesign);
             } else {
                 this.designableDisplay = this.bras;
                 final Bras designableParent = this.getParent();
-                final Bras p = (Bras) CollectionUtils.find(detail.getBras(), new GenericPredicate("nomComplet", designableParent.getNomComplet()));
-                new ArrayList<Bras>(detail.getBras());
+                final Bras p = (Bras) CollectionUtils.find(detailDesign.getBras(), new GenericPredicate("nomComplet", designableParent.getNomComplet()));
                 p.getSousBras().add(this.bras);
                 new ArrayList<Bras>(p.getSousBras());
-                detail.getBras().add(this.bras);
+                detailDesign.getBras().add(this.bras);
                 this.bras.setParent(p);
-                this.bras.setDetailDesign(detail);
-
+                this.bras.setDetailDesign(detailDesign);
             }
-
         }
-        this.buildRoot();
+        this.buildRoot(detailDesign);
         this.setType(null);
     }
     /**
      * Méthode en charge de supprimer une séquence.
      */
-    public void removeSequence() {
+    public void removeSequence(DetailDesign detailDesign) {
         this.log.debug("[removeSequence] " + this);
 
         final Sequence sequence =
-            (Sequence) CollectionUtils.find(this.findBras(this.getCurrent().getParent().getNomComplet()).getSequences(), new GenericPredicate("nomComplet", this.getCurrent()
+            (Sequence) CollectionUtils.find(this.findBras(this.getCurrent().getParent().getNomComplet(),detailDesign).getSequences(), new GenericPredicate("nomComplet", this.getCurrent()
                     .getNomComplet()));
         this.sequenceRemoveValidator.validate(sequence);
-        final Bras p = this.findBras(sequence.getParent().getNomComplet());
+        final Bras p = this.findBras(sequence.getParent().getNomComplet(),detailDesign);
         p.getSequences().remove(sequence);
-        this.buildRoot();
+        this.buildRoot(detailDesign);
     }
     /**
      * Méthode en charge de supprimer un bras.
      */
-    public void removeBras() {
+    public void removeBras(DetailDesign detailDesign) {
         this.log.debug("[removeBras] " + this);
 
-        final Bras b = this.findBras(this.getCurrent().getNomComplet());
+        final Bras b = this.findBras(this.getCurrent().getNomComplet(), detailDesign);
 
         if (b != null) {
             this.brasRemoveValidator.validate(b);
-            this.essaiManager.getBean().getDetailDesign().getBras().remove(b);
-            this.removeBras(b);
+            detailDesign.getBras().remove(b);
+            this.removeBras(b, detailDesign);
             if (b.getParent() != null) {
-                this.findBras(b.getParent().getNomComplet()).getSousBras().remove(b);
+                this.findBras(b.getParent().getNomComplet(), detailDesign).getSousBras().remove(b);
 
             }
         }
 
-        this.buildRoot();
+        this.buildRoot(detailDesign);
     }
     /**
      * Méthode en charge d'ajouter la sequence à son parent.
      * @param sequence La séquence.
      */
-    public void addSequence(final Sequence sequence) {
+    public void addSequence(final Sequence sequence, DetailDesign detailDesign) {
         this.log.debug("[addSequence] " + this);
 
-        final Bras bras = this.findBras(sequence.getParent().getNomComplet());
+        final Bras bras = this.findBras(sequence.getParent().getNomComplet(), detailDesign);
         if (this.actionCurrent.equals("EDIT")) {
-            bras.getSequences().remove(CollectionUtils.find(bras.getSequences(), new GenericPredicate("nomComplet", this.nomCompletSequence)));
+            bras.getSequences().remove(CollectionUtils.find(bras.getSequences(), new GenericPredicate("id", sequence.getId())));
         }
-
         bras.getSequences().add(sequence);
+        sequence.setParent(bras);
         this.setDesignableDisplay(sequence);
-        this.buildRoot();
+        this.buildRoot(detailDesign);
     }
 
     /**
@@ -394,10 +395,10 @@ public class DesignsManager implements Serializable {
      * (bras) de la liste passée en paramètre.
      * @param b Le bras.
      */
-    private void removeBras(final Bras b) {
+    private void removeBras(final Bras b, DetailDesign detailDesign) {
         for (final Bras sb : b.getSousBras()) {
-            this.removeBras(sb);
-            this.essaiManager.getBean().getDetailDesign().getBras().remove(sb);
+            this.removeBras(sb, detailDesign);
+            detailDesign.getBras().remove(sb);
         }
     }
 
@@ -405,11 +406,11 @@ public class DesignsManager implements Serializable {
      * Getter pour root.
      * @return Le root
      */
-    public TreeNode buildRoot() {
-        this.log.debug("[buildRoot] " + this + ", EssaiManager : " + this.essaiManager + ", Essai : " + this.essaiManager.getBean());
+    public TreeNode buildRoot(DetailDesign detailDesign) {
+        this.log.debug("[buildRoot] " + this + ", Essai : " + detailDesign.getEssai());
 
         // Construction des données de l'arbre
-        this.root = this.treeDesignHelper.buildTree(this.essaiManager.getBean());
+        this.root = this.treeDesignHelper.buildTree(detailDesign);
 
         // Construction de la liste des noeuds à expanded pour l'affichage
         if (this.designableDisplay != null) {
@@ -481,15 +482,6 @@ public class DesignsManager implements Serializable {
      */
     public void setTreeDesignHelper(final TreeDesignHelper treeDesignHelper) {
         this.treeDesignHelper = treeDesignHelper;
-    }
-
-    /**
-     * Setter pour essaiManager.
-     * @param essaiManager le essaiManager à écrire.
-     */
-    public void setEssaiManager(final EssaiManager essaiManager) {
-        this.log.debug("[setEssaiManager] " + essaiManager);
-        this.essaiManager = essaiManager;
     }
 
     /**
@@ -720,11 +712,4 @@ public class DesignsManager implements Serializable {
     public void setFacesUtils(final FacesUtils facesUtils) {
         this.facesUtils = facesUtils;
     }
-    public String getNomCompletSequence() {
-        return this.nomCompletSequence;
-    }
-    public void setNomCompletSequence(final String nomCompletSequence) {
-        this.nomCompletSequence = nomCompletSequence;
-    }
-
 }

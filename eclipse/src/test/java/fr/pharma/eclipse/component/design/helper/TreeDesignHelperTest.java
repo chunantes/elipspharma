@@ -88,9 +88,8 @@ public class TreeDesignHelperTest {
      */
     @Test
     public void testBuildTreeWithDesignablesEmpty() {
-        final Essai essai = new Essai();
-        essai.setDetailDesign(new DetailDesign());
-        final TreeNode tree = this.helper.buildTree(essai);
+        final DetailDesign design = new DetailDesign();
+        final TreeNode tree = this.helper.buildTree(design);
         Assert.assertNotNull(tree);
     }
 
@@ -99,9 +98,7 @@ public class TreeDesignHelperTest {
      */
     @Test
     public void testBuildTreeWithDesignablessNotEmpty() {
-        final Essai essai = new Essai();
         final DetailDesign design = new DetailDesign();
-        essai.setDetailDesign(design);
 
         final SortedSet<Bras> designables = new TreeSet<Bras>(new DesignableComparator());
 
@@ -122,7 +119,7 @@ public class TreeDesignHelperTest {
 
         design.setBras(designables);
 
-        final TreeNode tree = this.helper.buildTree(essai);
+        final TreeNode tree = this.helper.buildTree(design);
         Assert.assertNotNull(tree);
     }
 
@@ -131,9 +128,7 @@ public class TreeDesignHelperTest {
      */
     @Test
     public void testBuildTreeWithBrassNotEmptyNLevel() {
-        final Essai essai = new Essai();
         final DetailDesign design = new DetailDesign();
-        essai.setDetailDesign(design);
         final SortedSet<Bras> designables = new TreeSet<Bras>(new DesignableComparator());
 
         final Bras parent = new Bras();
@@ -159,7 +154,7 @@ public class TreeDesignHelperTest {
 
         design.setBras(designables);
 
-        final TreeNode tree = this.helper.buildTree(essai);
+        final TreeNode tree = this.helper.buildTree(design);
         Assert.assertNotNull(tree);
     }
 
@@ -168,9 +163,7 @@ public class TreeDesignHelperTest {
      */
     @Test
     public void testCalculateNodesToExpand1() {
-        final Essai essai = EssaiUtils.makeEssaiTest(1);
         final DetailDesign design = new DetailDesign();
-        essai.setDetailDesign(design);
         final SortedSet<Bras> designables = new TreeSet<Bras>(new DesignableComparator());
 
         final Bras parent = new Bras();
@@ -198,11 +191,11 @@ public class TreeDesignHelperTest {
         design.setBras(designables);
         final Set<Designable> expectedRoots = new HashSet<Designable>();
         expectedRoots.add(parent);
-        Mockito.when(this.mockedHelper.getDesignRoots(essai)).thenReturn(expectedRoots);
+        Mockito.when(this.mockedHelper.getDesignRoots(design)).thenReturn(expectedRoots);
 
-        final TreeNode tree = this.helper.buildTree(essai);
+        final TreeNode tree = this.helper.buildTree(design);
         final String nodesToExpand = this.helper.calculateNodesToExpand(tree, enfant11);
-        Mockito.verify(this.mockedHelper).getDesignRoots(essai);
+        Mockito.verify(this.mockedHelper).getDesignRoots(design);
         Assert.assertEquals("treeDesign_0_0,treeDesign_0", nodesToExpand);
     }
 
@@ -211,10 +204,8 @@ public class TreeDesignHelperTest {
      */
     @Test
     public void testCalculateNodesToExpand2() {
-        long id = 1;
-        final Essai essai = EssaiUtils.makeEssaiTest(id++);
+        long id = 2;
         final DetailDesign design = new DetailDesign();
-        essai.setDetailDesign(design);
         final SortedSet<Bras> designables = new TreeSet<Bras>(new DesignableComparator());
 
         final Bras parent = new Bras();
@@ -242,11 +233,11 @@ public class TreeDesignHelperTest {
         design.setBras(designables);
         final Set<Designable> expectedRoots = new HashSet<Designable>();
         expectedRoots.add(parent);
-        Mockito.when(this.mockedHelper.getDesignRoots(essai)).thenReturn(expectedRoots);
+        Mockito.when(this.mockedHelper.getDesignRoots(design)).thenReturn(expectedRoots);
 
-        final TreeNode tree = this.helper.buildTree(essai);
+        final TreeNode tree = this.helper.buildTree(design);
         final String nodesToExpand = this.helper.calculateNodesToExpand(tree, enfant2);
-        Mockito.verify(this.mockedHelper).getDesignRoots(essai);
+        Mockito.verify(this.mockedHelper).getDesignRoots(design);
         Assert.assertEquals("treeDesign_0", nodesToExpand);
     }
 
@@ -255,9 +246,7 @@ public class TreeDesignHelperTest {
      */
     @Test
     public void testCalculateNodesToExpand3() {
-        final Essai essai = EssaiUtils.makeEssaiTest(1);
         final DetailDesign design = new DetailDesign();
-        essai.setDetailDesign(design);
         final SortedSet<Bras> designables = new TreeSet<Bras>(new DesignableComparator());
 
         final Bras parent = new Bras();
@@ -290,11 +279,11 @@ public class TreeDesignHelperTest {
         design.setBras(designables);
         final Set<Designable> expectedRoots = new HashSet<Designable>();
         expectedRoots.add(parent);
-        Mockito.when(this.mockedHelper.getDesignRoots(essai)).thenReturn(expectedRoots);
+        Mockito.when(this.mockedHelper.getDesignRoots(design)).thenReturn(expectedRoots);
 
-        final TreeNode tree = this.helper.buildTree(essai);
+        final TreeNode tree = this.helper.buildTree(design);
         final String nodesToExpand = this.helper.calculateNodesToExpand(tree, enfant2);
-        Mockito.verify(this.mockedHelper).getDesignRoots(essai);
+        Mockito.verify(this.mockedHelper).getDesignRoots(design);
         Assert.assertEquals("treeDesign_0_1,treeDesign_0", nodesToExpand);
     }
 

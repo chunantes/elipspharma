@@ -3,8 +3,6 @@ package fr.pharma.eclipse.jasper.utils;
 import java.util.Arrays;
 import java.util.Collection;
 
-import net.sf.jasperreports.engine.data.JRBeanCollectionDataSource;
-
 import org.junit.Assert;
 import org.junit.Test;
 
@@ -12,6 +10,7 @@ import fr.pharma.eclipse.domain.model.acteur.Investigateur;
 import fr.pharma.eclipse.jasper.constants.JasperConstants;
 import fr.pharma.eclipse.utils.PersonneUtils;
 import fr.pharma.eclipse.utils.constants.EclipseConstants;
+import net.sf.jasperreports.engine.data.JRBeanCollectionDataSource;
 
 /**
  * Test de la classe utilitaire JasperUtils.

@@ -147,48 +147,48 @@
 							update="mouvementsStock formPopupDetailMouvementStock tableDispen"
 							onselectComplete="popupDetailMouvementStock.show();"  >
 						
-		    				<p:column  sortBy="#{flux.essai.numInterne}" style="width:100px">
+		    				<p:column  sortBy="#{flux.essai.numInterne}" style="width:95px">
 					    		<f:facet name="header">
 					    			<h:outputText value="#{resourceBundle['stockConsultation.essai']}"/>
 					    		</f:facet>
 					    		<h:outputText value="#{flux.essai.promoteur.raisonSociale} - #{flux.essai.codePromoteur} - #{flux.essai.nom}"/>
 				    		</p:column>
 				    		
-		    				<p:column  sortBy="#{flux.pharmacie.nom}" style="width:100px">
+		    				<p:column  sortBy="#{flux.pharmacie.nom}" style="width:82px">
 					    		<f:facet name="header">
 					    			<h:outputText value="#{resourceBundle['stockConsultation.pharmacie']}"/>
 					    		</f:facet>
 					    		<h:outputText value="#{flux.pharmacie.nom}"/>
 				    		</p:column>
 				    		
-		    				<p:column  sortBy="#{flux.produit.denomination} / #{flux.conditionnement.libelle}" style="width:100%;">
+		    				<p:column  sortBy="#{flux.produit.denomination} / #{flux.conditionnement.libelle}" style="width:95px;">
 					    		<f:facet name="header">
 					    			<h:outputText value="#{resourceBundle['stockConsultation.produit']}"/>
 					    		</f:facet>
 					    		<h:outputText value="#{flux.produit.denomination} / #{flux.conditionnement.libelle}"/>
 				    		</p:column>
 				    		
-		    				<p:column  sortBy="#{flux.quantite}" style="width:55px">
+		    				<p:column  sortBy="#{flux.quantite}" style="width:28px">
 					    		<f:facet name="header">
 					    			<h:outputText value="#{resourceBundle['stockConsultation.quantite']}"/>
 					    		</f:facet>
 					    			<h:outputText value="#{flux.quantite}" style="align:center;"/> 
 				    		</p:column>
-				    		<p:column id="quantitePrint"  style="text-align:center;display:none;width:70px" >
+				    		<p:column id="quantitePrint"  style="text-align:center;display:none;width:60px" >
 					    		<f:facet name="header">
 					    			<h:outputText value="#{resourceBundle['stockConsultation.qteEnStockDetail']}"/>
 					    		</f:facet>
 					    			<h:outputText value="#{fluxStockManager.getQuantites(flux)}"/>
 				    		</p:column> 
 				    		
-		    				<p:column  sortBy="#{flux.type}" style="width:100px" >
+		    				<p:column  sortBy="#{flux.type}" style="width:85px" >
 					    		<f:facet name="header">
 					    			<h:outputText value="#{resourceBundle['stockConsultation.type']}"/>
 					    		</f:facet>
 					    		<h:outputText value="#{flux.type.libelle}" />
 				    		</p:column>
 				    		
-		    				<p:column sortBy="#{flux.date}" style="text-align:center;width:55px"> 
+		    				<p:column sortBy="#{flux.date}" style="text-align:center;width:49px"> 
 					    		<f:facet name="header">
 					    			<h:outputText value="#{resourceBundle['stockConsultation.date']}"/>
 					    		</f:facet>
@@ -197,28 +197,45 @@
 						    		</h:outputText>
 				    		</p:column>
 				    		
-		    				<p:column sortBy="#{flux.personne.prenom} #{flux.personne.nom}" style="width:100px;">
+		    				<p:column sortBy="#{flux.personne.prenom} #{flux.personne.nom}" style="width:80px;">
 					    		<f:facet name="header">
 					    			<h:outputText value="#{resourceBundle['stockConsultation.realisePar']}"/>
 					    		</f:facet>
 					    		<h:outputText value="#{flux.personne.prenom} #{flux.personne.nom}"/>
 				    		</p:column>				    		 
-				    		 
-				    		
-		    				<p:column  style="width:100px; display:none;">
+
+		    				<p:column  style="width:80px; display:none;">
 					    		<f:facet name="header">
 					    			<h:outputText value="#{resourceBundle['gestionRetourPatient.numOrdonnancier']}"/>
 					    		</f:facet>
 					    		<h:outputText value="#{flux.numOrdonnancier}" rendered="#{flux.numOrdonnancier != null}"/>
 				    		</p:column>			    		 
 				    		 
-				    		
-		    				<p:column  style="width:100px; display:none;">
+		    				<p:column  style="width:80px; display:none;">
 					    		<f:facet name="header">
 					    			<h:outputText value="#{resourceBundle['stockSortie.patient']}"/>
 					    		</f:facet>
 					    		<h:outputText value="#{flux.patient.initiales}" rendered="#{flux.patient != null}"/>
-				    		</p:column>				
+				    		</p:column>
+				    		
+				    		<!-- Ajout strasbourg -->
+				    		<c:if test="#{applicationController.strasbourg}">
+					    		<p:column style="width:61px;">
+						    		<f:facet name="header">
+						    			<h:outputText value="#{resourceBundle['stockConsultation.traitement']}"/>
+						    		</f:facet>
+						    		<c:forEach var="numTraitement" items="#{flux.mvts}">
+						    			<h:outputText value="toto"/>
+						    		</c:forEach>
+					    		</p:column>
+					    		
+					    		<p:column style="width:45px;">
+						    		<f:facet name="header">
+						    			<h:outputText value="#{resourceBundle['stockConsultation.numeroLot']}"/>
+						    		</f:facet>
+						    		<h:outputText value="#{flux.numLot}"/>
+					    		</p:column>
+				    		</c:if>			
 			    		</p:dataTable>
 					</fieldset>
 				<br />

@@ -12,6 +12,7 @@ import org.slf4j.LoggerFactory;
 
 import fr.pharma.eclipse.domain.model.design.Designable;
 import fr.pharma.eclipse.domain.model.essai.Essai;
+import fr.pharma.eclipse.domain.model.essai.detail.design.DetailDesign;
 import fr.pharma.eclipse.service.helper.design.DesignHelper;
 import fr.pharma.eclipse.utils.constants.EclipseConstants;
 
@@ -48,10 +49,10 @@ public class TreeDesignHelper implements Serializable {
      * @param essai Essai.
      * @return Arbre.
      */
-    public TreeNode buildTree(final Essai essai) {
+    public TreeNode buildTree(final DetailDesign design) {
         final TreeNode root = new DefaultTreeNode("root", null);
 
-        final Set<Designable> designRoot = this.helper.getDesignRoots(essai);
+        final Set<Designable> designRoot = this.helper.getDesignRoots(design);
 
         this.log.debug("[buildTree] noeuds parents : " + designRoot);
 

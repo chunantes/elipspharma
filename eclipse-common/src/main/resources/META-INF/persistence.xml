@@ -161,7 +161,7 @@
 		<class>fr.pharma.eclipse.domain.model.acteur.document.DocumentCV</class>
 		<class>fr.pharma.eclipse.domain.model.acteur.document.DocumentValidationFormation</class>
 		<class>fr.pharma.eclipse.domain.model.reprisePassif.ReprisePassif</class>
-		<exclude-unlisted-classes>false</exclude-unlisted-classes>
+		<exclude-unlisted-classes>true</exclude-unlisted-classes>
 	</persistence-unit>
 	
 	<!-- ============================= -->

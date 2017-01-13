@@ -3,9 +3,9 @@ package fr.pharma.eclipse.jasper.engine.builder;
 import java.io.Serializable;
 import java.util.Map;
 
-import net.sf.jasperreports.engine.JRDataSource;
 import fr.pharma.eclipse.domain.enums.jasper.TypeRapportJasper;
 import fr.pharma.eclipse.jasper.exception.JasperReportBuildException;
+import net.sf.jasperreports.engine.JRDataSource;
 
 /**
  * Interface des classe en charge de construire les données d'entrée d'un

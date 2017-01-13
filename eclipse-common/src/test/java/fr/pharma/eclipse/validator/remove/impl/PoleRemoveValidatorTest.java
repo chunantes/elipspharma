@@ -62,7 +62,7 @@ public class PoleRemoveValidatorTest {
     @Test
     public void testValidateOK() {
         final Pole pole = new Pole();
-        Mockito.when(this.mockService.hasResult((SearchCriteria) Matchers.any())).thenReturn(Boolean.FALSE);
+        Mockito.when(this.mockService.count((SearchCriteria) Matchers.any())).thenReturn(0L);
         try {
             this.validator.validate(pole);
         } catch (final ValidationException e) {
@@ -76,7 +76,7 @@ public class PoleRemoveValidatorTest {
     @Test(expected = ValidationException.class)
     public void testValidateKO() {
         final Pole pole = new Pole();
-        Mockito.when(this.mockService.hasResult((SearchCriteria) Matchers.any())).thenReturn(Boolean.TRUE);
+        Mockito.when(this.mockService.count((SearchCriteria) Matchers.any())).thenReturn(1L);
         this.validator.validate(pole);
     }
 

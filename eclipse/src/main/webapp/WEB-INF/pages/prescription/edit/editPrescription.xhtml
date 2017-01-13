@@ -312,8 +312,9 @@
 										<!-- Num prescription -->
 										<h:outputLabel id="labelNumPrescription" for="numPrescription"
 											value="#{resourceBundle['editPrescription.numPrescription']}" />
-										<h:inputText id="numPrescription" value="#{prescriptionManager.bean.numPrescription}" disabled="#{prescriptionManager.readOnly}"/>
+										<h:outputText id="numPrescription" value="#{prescriptionManager.bean.numPrescription}" />
 									</h:panelGrid>
+									
 									
 									<!-- Si l'essai n'est pas en double aveugle -->
 									<p:panel id="produitsPrescritsPanel" header="#{resourceBundle['editPrescription.produitsPrescrits']}"

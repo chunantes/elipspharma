@@ -73,7 +73,14 @@
 	<bean id="detailRechercheDao" parent="commonDao">
 		<constructor-arg index="0" value="fr.pharma.eclipse.domain.model.essai.detail.recherche.DetailRecherche" />
 	</bean>
-	
+
+	<!-- ============================= -->
+	<!-- ESSAI : DETAIL DESIGN      -->
+	<!-- ============================= -->
+	<bean id="detailDesignDao" parent="commonDao">
+		<constructor-arg index="0" value="fr.pharma.eclipse.domain.model.essai.detail.design.DetailDesign" />
+        </bean>
+
 	<!-- ============================= -->
 	<!-- RECHERCHE PRESCRIPTION  	   -->
 	<!-- ============================= -->

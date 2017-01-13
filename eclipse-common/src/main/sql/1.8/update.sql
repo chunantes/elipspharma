@@ -1,1 +1,0 @@
-ALTER TABLE dispensation ADD COLUMN commentaire text;

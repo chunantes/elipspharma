@@ -39,7 +39,7 @@ public class PrevisionnelBuilder extends AbstractSheetBuilder implements SheetBu
      * Champs dans l'en-têtes.
      */
     private final String[][] headers = {{null, null, "Frais fixes", null, "Frais variables", null, null, null, "Total" },
-                                        {null, null, "Première année", "année suivantes", "Par patient", null, "Par esssai", null, null },
+                                        {null, null, "Première année", "années suivantes", "Par patient", null, "Par essai", null, null },
                                         {null, null, null, null, "Nombre", "Cout", "Nombre", "Cout", null }
 
     };

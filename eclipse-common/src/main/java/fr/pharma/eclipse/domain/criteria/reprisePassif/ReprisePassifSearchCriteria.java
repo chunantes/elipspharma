@@ -4,6 +4,7 @@
 package fr.pharma.eclipse.domain.criteria.reprisePassif;
 
 import java.util.Calendar;
+
 import fr.pharma.eclipse.domain.criteria.common.AbstractSearchCriteria;
 
 /**

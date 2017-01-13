@@ -1,8 +1,8 @@
 package fr.pharma.eclipse.jasper.engine.factory.exporter.impl;
 
+import fr.pharma.eclipse.jasper.engine.factory.exporter.JRExporterFactory;
 import net.sf.jasperreports.engine.JRExporter;
 import net.sf.jasperreports.engine.export.JRPdfExporter;
-import fr.pharma.eclipse.jasper.engine.factory.exporter.JRExporterFactory;
 
 /**
  * Fabrique d'exporteur RTF de rapport Jasper.

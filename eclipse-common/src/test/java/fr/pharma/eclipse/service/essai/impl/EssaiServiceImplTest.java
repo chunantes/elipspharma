@@ -206,7 +206,7 @@ public class EssaiServiceImplTest {
         essais.add(EssaiUtils.makeEssaiTest(ids++));
         essais.add(EssaiUtils.makeEssaiTest(ids++));
         essais.add(EssaiUtils.makeEssaiTest(ids++));
-        Mockito.when(this.mockDao.getAll(essaiSearchCriteria)).thenReturn(essais);
+        Mockito.when(this.mockDao.count(essaiSearchCriteria)).thenReturn(3L);
         // 3 essais
 
         Assert.assertNull(essai.getDetailRecherche().getNumEnregistrement());

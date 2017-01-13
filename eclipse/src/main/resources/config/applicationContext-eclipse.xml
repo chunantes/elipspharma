@@ -23,6 +23,7 @@
         'file:'+systemProperties['ELIPS_HOME']+'/config')}" />
     </bean>
 	
+
     <bean class="org.springframework.web.context.support.ServletContextPropertyPlaceholderConfigurer">
         <property name="ignoreResourceNotFound" value="false" />
         <property name="ignoreUnresolvablePlaceholders" value="false" />
@@ -69,5 +70,5 @@
     <import resource="classpath:/config/applicationContext-eclipse-factory.xml" />
     <import resource="classpath:/config/applicationContext-eclipse-helper.xml" />
     <import resource="classpath:/config/messages-resources-eclipse.xml" />
-
+        <import resource="classpath:/config/applicationContext-ext-*.xml" />
 </beans>

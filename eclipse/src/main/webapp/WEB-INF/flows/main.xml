@@ -190,6 +190,7 @@
 		<transition on="goStockPreparation" to="viewStockPreparation" />
 		<transition on="goRepertoireEssais" to="viewRepertoireEssais" />
 		<transition on="goRepertoireEssaisSigrec" to="viewRepertoireEssaisSigrec" />
+		<transition on="goRepertoireEssaisExterne" to="viewRepertoireEssaisExterne" />
 		<transition on="goGestionEtablissement" to="viewGestionEtablissement" />
 		<transition on="goGestionPersonne" to="viewGestionPersonne" />
 		<transition on="goGestionPharmacie" to="viewGestionPharmacie" />

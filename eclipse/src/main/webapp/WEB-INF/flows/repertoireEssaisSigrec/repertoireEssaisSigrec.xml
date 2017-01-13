@@ -6,9 +6,12 @@
 	<!-- Démarrage -->
 	<on-start>
 		<evaluate expression="essaiSigrecSearchCriteria.clear()" />
-
+		<evaluate expression="serviceSearchCriteria.clear()" />
 		<!-- Initialisation complétion automatique des promoteurs -->
 		<evaluate expression="'raisonSociale'" result="autoCompletePromoteurSigrecManager.searchCriteriaProperty" result-type="java.lang.String" />
+ 		<!-- Initialisation complétion automatique des services -->
+		<evaluate expression="'nom'" result="autoCompleteServiceManager.searchCriteria.activeOrder" />
+		<evaluate expression="'nom'" result="autoCompleteServiceManager.searchCriteriaProperty" />
 
 		<!-- Initialisation complétion automatique des investigateurs -->
 		<!-- <evaluate expression="'nom'" result="autoCompleteInvestigateurManager.searchCriteria.activeOrder" /> -->
@@ -16,7 +19,7 @@
 	</on-start>
 
 	<!-- Page principale -->
-	<view-state id="repertoireEssaisSigrec" view="../../pages/repertoireEssaisSigrec/search.xhtml">
+	<view-state id="repertoireEssaisSigrec" view="../../pages/#{pageRepertoireExterne}/search.xhtml">
 		<transition on="search" to="search" />
 		<transition on="create" to="editEssai" />
 		<transition on="edit" to="editEssai">

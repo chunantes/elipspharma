@@ -1,8 +1,6 @@
 package fr.pharma.eclipse.component.design.validator;
 
 import javax.faces.application.FacesMessage;
-import javax.faces.context.FacesContext;
-
 import org.junit.Assert;
 import org.junit.Test;
 import org.mockito.Matchers;

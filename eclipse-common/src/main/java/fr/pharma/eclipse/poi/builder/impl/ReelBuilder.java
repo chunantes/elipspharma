@@ -39,7 +39,7 @@ public class ReelBuilder extends AbstractSheetBuilder implements SheetBuilder, S
      * Champs dans l'en-têtes.
      */
     private final String[][] headers = {{null, null, "Frais fixes", null, "Frais variables", null, null, "Total" },
-                                        {null, null, "Première année", "année suivantes", "Par patient", "Par esssai", null, null },
+                                        {null, null, "Première année", "années suivantes", "Par patient", "Par essai", null, null },
                                         {null, null, null, null, "Cout", "Nombre", "Cout", null }
 
     };

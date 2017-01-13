@@ -7,7 +7,7 @@
 	<parent> 
 		<groupId>fr.pharma.elips</groupId>
 		<artifactId>elips-principal</artifactId>
-        <version>1.40.1</version>
+        <version>1.57-SNAPSHOT</version>
 	</parent>
 
 	<packaging>war</packaging>
@@ -69,6 +69,10 @@
 		<dependency>
 			<groupId>commons-lang</groupId>
 			<artifactId>commons-lang</artifactId>
+		</dependency>
+		<dependency>
+			<groupId>org.apache.commons</groupId>
+			<artifactId>commons-lang3</artifactId>
 		</dependency>
 		<dependency>
 			<groupId>commons-logging</groupId>
@@ -258,6 +262,16 @@
 			<groupId>com.sun.facelets</groupId>
 			<artifactId>jsf-facelets</artifactId>
 		</dependency>
+		<dependency>
+			<groupId>org.codehaus.jackson</groupId>
+			<artifactId>jackson-core-asl</artifactId>
+			<version>1.9.13</version>
+		</dependency>
+		<dependency>
+			<groupId>org.codehaus.jackson</groupId>
+			<artifactId>jackson-mapper-asl</artifactId>
+			<version>1.9.13</version>
+		</dependency>
 	</dependencies>
 
 	<build>
@@ -275,7 +289,7 @@
 	               </execution>
 	           </executions>
 	           <configuration>
-	               <file>./eclipse/target/classes/LabelResources.properties</file>
+	               <file>${basedir}/target/classes/LabelResources.properties</file>
 	               <encoding>ISO-8859-1</encoding>
 	               <replacements>
 	                   <replacement>
@@ -287,5 +301,4 @@
 	       </plugin>
  	    </plugins>
 	</build>
-
 </project>

@@ -1,5 +1,20 @@
 package fr.pharma.eclipse.service.evenement.impl;
 
+import java.text.MessageFormat;
+import java.util.Arrays;
+import java.util.Calendar;
+import java.util.Date;
+import java.util.Iterator;
+import java.util.List;
+
+import javax.annotation.Resource;
+
+import org.apache.commons.lang.StringUtils;
+import org.joda.time.DateMidnight;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
+
 import fr.pharma.eclipse.dao.common.GenericDao;
 import fr.pharma.eclipse.dao.search.AclSearchDao;
 import fr.pharma.eclipse.domain.criteria.common.SearchCriteria;
@@ -16,16 +31,6 @@ import fr.pharma.eclipse.service.essai.EssaiService;
 import fr.pharma.eclipse.service.evenement.EvenementService;
 import fr.pharma.eclipse.service.evenement.updator.EvenementBeforeSaveUpdator;
 import fr.pharma.eclipse.utils.constants.EclipseConstants;
-import java.text.MessageFormat;
-import java.util.Arrays;
-import java.util.Calendar;
-import java.util.Date;
-import java.util.Iterator;
-import java.util.List;
-import javax.annotation.Resource;
-import org.apache.commons.lang.StringUtils;
-import org.joda.time.DateMidnight;
-import org.springframework.beans.factory.annotation.Autowired;
 
 /**
  * Classe d'implémentation du service de gestion des événements.
@@ -35,6 +40,8 @@ import org.springframework.beans.factory.annotation.Autowired;
  */
 public class EvenementServiceImpl extends GenericServiceImpl<Evenement> implements EvenementService {
 
+	private final Logger log = LoggerFactory.getLogger(this.getClass());
+	
     /**
      * Serial ID.
      */
@@ -130,6 +137,10 @@ public class EvenementServiceImpl extends GenericServiceImpl<Evenement> implemen
             }
         }
 
+        if (null == evenementToSave.getEssai()) {
+        	log.warn("Sauvegarde d'un Evenement sans Essai (id '" + evenementToSave.getId() + "', type '" + evenementToSave.getTypeEvenement() + "') : '" + evenementToSave.getLibelle() + "'.");
+        }
+        
         final EvenementSuivi evenementSuivi = this.evtSuiviFactory.getInitializedObject();
         evenementSuivi.setEvenement(evenementToSave);
         evenementToSave.getModifs().add(evenementSuivi);
@@ -145,9 +156,9 @@ public class EvenementServiceImpl extends GenericServiceImpl<Evenement> implemen
         criteria.setEssai(essai);
         criteria.setTypeEvenement(TypeEvenement.VISITE);
         criteria.setTypeVisite(TypeVisite.MISE_EN_PLACE);
-        final List<Evenement> results = this.getAll(criteria);
-        if (!results.isEmpty()) {
-            return results.get(0);
+        final Long nombreResult = this.count(criteria);
+        if (nombreResult > 0) {
+            return this.getAll(criteria).get(0);
         }
         return null;
     }
@@ -210,22 +221,25 @@ public class EvenementServiceImpl extends GenericServiceImpl<Evenement> implemen
      */
     @Override
     public List<Evenement> getAll(final SearchCriteria criteria) {
+    	
         final EvenementSearchCriteria evenementSearchCriteria = (EvenementSearchCriteria) criteria;
-
+        
         if (evenementSearchCriteria.getIdsEssais()==null || evenementSearchCriteria.getIdsEssais().isEmpty()) {
             evenementSearchCriteria.setIdsEssais(this.aclSearchDao.findIdsEssais());
         } else {
             List<Long> idACL = this.aclSearchDao.findIdsEssais();
             Iterator<Long> idsEssaisIT = evenementSearchCriteria.getIdsEssais().iterator();
+
             while (idsEssaisIT.hasNext()) {
                 Long id = idsEssaisIT.next();
                 if (!idACL.contains(id)) {
-                    evenementSearchCriteria.getIdsEssais().remove(id);
+                    idsEssaisIT.remove();
                 }
             }
         }
-
-        return super.getAll(evenementSearchCriteria);
+        
+        List<Evenement> listeResults = super.getAll(evenementSearchCriteria);
+        return listeResults;
     }
 
     /**

@@ -43,14 +43,14 @@ public class PatientRemoveValidator implements RemoveValidator<Patient>, Seriali
         // Vérification Relation Patient-Inclusion
         final InclusionSearchCriteria crit = new InclusionSearchCriteria();
         crit.setPatient(patient);
-        if (this.inclusionService.hasResult(crit)) {
+        if (this.inclusionService.count(crit) > 0) {
             throw new ValidationException("remove", new String[]{"impossible" }, patient);
         }
 
         // Vérification Relation Patient-Prescription
         final PrescriptionSearchCriteria critPre = new PrescriptionSearchCriteria();
         critPre.setPatient(patient);
-        if (this.prescriptionService.hasResult(critPre)) {
+        if (this.prescriptionService.count(critPre) > 0) {
             throw new ValidationException("remove", new String[]{"impossible" }, patient);
         }
 
